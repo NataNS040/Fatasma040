@@ -660,7 +660,12 @@ function initCarousel() {
     }
 }
 
-initCarousel();
+// Inicializar carrossel quando o DOM estiver pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousel);
+} else {
+    initCarousel();
+}
 
 // ============================================
 // Modal Functions
