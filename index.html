@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EngMarq Solution | Engenharia de Segurança do Trabalho</title>
+    <meta name="description" content="Assessoria em Segurança do Trabalho focada em Segurança Jurídica para sua empresa. Conformidade legal, redução de riscos trabalhistas. PGR, PCMSO, LTCAT em Natal/RN.">
+    <meta name="author" content="EngMarq Solution">
+    <meta name="keywords" content="segurança jurídica, segurança do trabalho, conformidade legal, PGR, PCMSO, LTCAT, NR, assessoria jurídica trabalhista, Natal, RN">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logoengmarq.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="logo-img">
+                </a>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#home" class="nav-link">Início</a></li>
+                    <li><a href="#servicos" class="nav-link">Serviços</a></li>
+                    <li><a href="#nrs" class="nav-link">NRs</a></li>
+                    <li><a href="#sobre" class="nav-link">Sobre</a></li>
+                    <li><a href="#contato" class="nav-link">Contato</a></li>
+                </ul>
+                <a href="https://w.app/engmarqsolution" target="_blank" class="btn btn-whatsapp-header">
+                    <i class="fab fa-whatsapp"></i> Fale Conosco
+                </a>
+                <button class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="hero-particles" id="particles"></div>
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <div class="hero-logo-mobile" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="assets/logoengmarq.png" alt="EngMarq Solution">
+                </div>
+                <span class="hero-badge">
+                    <i class="fas fa-shield-alt"></i> Sua Segurança Jurídica é Nossa Prioridade
+                </span>
+                <h1 class="hero-title">
+                    <span class="highlight">Segurança Jurídica</span> para sua Empresa
+                </h1>
+                <p class="hero-subtitle">
+                    Assessoria especializada em Engenharia de Segurança do Trabalho, garantindo <strong>proteção jurídica total</strong> para sua empresa através de <strong>conformidade legal</strong> e <strong>redução de riscos trabalhistas</strong>.
+                </p>
+                
+                <!-- Destaque Garantia Jurídica -->
+                <div class="juridica-highlight" data-aos="fade-up" data-aos-delay="200">
+                    <div class="juridica-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="juridica-content">
+                        <h3><i class="fas fa-check-circle"></i> Segurança Jurídica Garantida</h3>
+                        <p>Proteja sua empresa com <strong>conformidade legal total</strong> nas normas de Segurança do Trabalho. Evite multas, processos trabalhistas e garanta <strong>tranquilidade jurídica</strong> para focar no crescimento do seu negócio.</p>
+                    </div>
+                </div>
+                
+                <div class="hero-buttons">
+                    <a href="https://w.app/engmarqsolution" target="_blank" class="btn btn-primary btn-glow">
+                        <i class="fab fa-whatsapp"></i> Garantir Segurança Jurídica
+                    </a>
+                    <a href="#servicos" class="btn btn-secondary btn-outline">
+                        <i class="fas fa-arrow-down"></i> Conheça Nossos Serviços
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat" data-aos="fade-up" data-aos-delay="100">
+                        <div class="stat-icon"><i class="fas fa-building"></i></div>
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Empresas Protegidas</span>
+                    </div>
+                    <div class="stat" data-aos="fade-up" data-aos-delay="200">
+                        <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Anos de Experiência</span>
+                    </div>
+                    <div class="stat" data-aos="fade-up" data-aos-delay="300">
+                        <div class="stat-icon"><i class="fas fa-gavel"></i></div>
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Segurança Jurídica</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#ffffff"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Serviços Section -->
+    <section class="servicos" id="servicos">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">Soluções em Segurança Jurídica</span>
+                <h2 class="section-title">Nossos <span class="highlight">Serviços</span></h2>
+                <p class="section-subtitle">Documentação técnica e assessoria completa para garantir a segurança jurídica da sua empresa perante órgãos fiscalizadores e processos trabalhistas.</p>
+            </div>
+            <div class="servicos-grid">
+                <div class="servico-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="servico-icon-wrapper">
+                        <div class="servico-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="servico-icon-bg"></div>
+                    </div>
+                    <h3>PGR</h3>
+                    <p>Programa de Gerenciamento de Riscos obrigatório. Garante conformidade legal e protege sua empresa de autuações e processos trabalhistas.</p>
+                </div>
+                <div class="servico-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="servico-icon-wrapper">
+                        <div class="servico-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="servico-icon-bg"></div>
+                    </div>
+                    <h3>PCMSO</h3>
+                    <p>Programa de Controle Médico obrigatório. Previne doenças ocupacionais e resguarda juridicamente a empresa contra ações trabalhistas.</p>
+                </div>
+                <div class="servico-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="servico-icon-wrapper">
+                        <div class="servico-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="servico-icon-bg"></div>
+                    </div>
+                    <h3>LTCAT</h3>
+                    <p>Laudo essencial para comprovar exposição a agentes nocivos. Evita questionamentos previdenciários e processos judiciais.</p>
+                </div>
+                <div class="servico-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="servico-icon-wrapper">
+                        <div class="servico-icon">
+                            <i class="fas fa-fire-extinguisher"></i>
+                        </div>
+                        <div class="servico-icon-bg"></div>
+                    </div>
+                    <h3>PPCI</h3>
+                    <p>Projeto de Prevenção e Combate a Incêndio - Segurança contra incêndios.</p>
+                </div>
+                <div class="servico-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="servico-icon-wrapper">
+                        <div class="servico-icon">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <div class="servico-icon-bg"></div>
+                    </div>
+                    <h3>Laudos Técnicos</h3>
+                    <p>Laudos técnicos de insalubridade e periculosidade com validade jurídica para defesa em fiscalizações e ações judiciais.</p>
+                </div>
+                <div class="servico-card" data-aos="fade-up" data-aos-delay="350">
+                    <div class="servico-icon-wrapper">
+                        <div class="servico-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="servico-icon-bg"></div>
+                    </div>
+                    <h3>Treinamentos</h3>
+                    <p>Capacitações em NRs, CIPA, primeiros socorros, trabalho em altura e mais.</p>
+                </div>
+                <div class="servico-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="servico-icon-wrapper">
+                        <div class="servico-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="servico-icon-bg"></div>
+                    </div>
+                    <h3>Laudos Elétricos</h3>
+                    <p>Análise e adequação de instalações elétricas conforme NR-10.</p>
+                </div>
+                <div class="servico-card" data-aos="fade-up" data-aos-delay="450">
+                    <div class="servico-icon-wrapper">
+                        <div class="servico-icon">
+                            <i class="fas fa-users-cog"></i>
+                        </div>
+                        <div class="servico-icon-bg"></div>
+                    </div>
+                    <h3>Gestão de SST</h3>
+                    <p>Gestão completa de Segurança do Trabalho, mantendo sua empresa sempre em dia com as obrigações legais e protegida juridicamente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NRs Section -->
+    <section class="nrs" id="nrs">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">Normas Regulamentadoras</span>
+                <h2 class="section-title">Principais <span class="highlight">NRs</span></h2>
+                <p class="section-subtitle">Trabalhamos com todas as Normas Regulamentadoras do Ministério do Trabalho. Conheça as principais:</p>
+            </div>
+            <div class="nrs-grid">
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="nr-number">NR-01</div>
+                    <h4>Disposições Gerais e GRO</h4>
+                    <p>Gerenciamento de Riscos Ocupacionais e disposições gerais sobre SST.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="150">
+                    <div class="nr-number">NR-04</div>
+                    <h4>SESMT</h4>
+                    <p>Serviços Especializados em Engenharia de Segurança e Medicina do Trabalho.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="nr-number">NR-05</div>
+                    <h4>CIPA</h4>
+                    <p>Comissão Interna de Prevenção de Acidentes e Assédio.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="250">
+                    <div class="nr-number">NR-06</div>
+                    <h4>EPI</h4>
+                    <p>Equipamento de Proteção Individual - Uso, conservação e responsabilidades.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="nr-number">NR-07</div>
+                    <h4>PCMSO</h4>
+                    <p>Programa de Controle Médico de Saúde Ocupacional.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="350">
+                    <div class="nr-number">NR-09</div>
+                    <h4>Agentes Físicos</h4>
+                    <p>Avaliação e Controle das Exposições Ocupacionais a Agentes Físicos.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="nr-number">NR-10</div>
+                    <h4>Eletricidade</h4>
+                    <p>Segurança em Instalações e Serviços em Eletricidade.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="450">
+                    <div class="nr-number">NR-11</div>
+                    <h4>Transporte e Movimentação</h4>
+                    <p>Transporte, Movimentação, Armazenagem e Manuseio de Materiais.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="nr-number">NR-12</div>
+                    <h4>Máquinas e Equipamentos</h4>
+                    <p>Segurança no Trabalho em Máquinas e Equipamentos.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="550">
+                    <div class="nr-number">NR-15</div>
+                    <h4>Insalubridade</h4>
+                    <p>Atividades e Operações Insalubres - Limites de tolerância.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="nr-number">NR-16</div>
+                    <h4>Periculosidade</h4>
+                    <p>Atividades e Operações Perigosas.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="650">
+                    <div class="nr-number">NR-17</div>
+                    <h4>Ergonomia</h4>
+                    <p>Adaptação das condições de trabalho às características dos trabalhadores.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="nr-number">NR-18</div>
+                    <h4>Construção Civil</h4>
+                    <p>Segurança e Saúde na Indústria da Construção.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="750">
+                    <div class="nr-number">NR-20</div>
+                    <h4>Inflamáveis e Combustíveis</h4>
+                    <p>Segurança e Saúde no Trabalho com Inflamáveis e Combustíveis.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="800">
+                    <div class="nr-number">NR-23</div>
+                    <h4>Proteção Contra Incêndios</h4>
+                    <p>Proteção Contra Incêndios - Equipamentos e procedimentos.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="850">
+                    <div class="nr-number">NR-33</div>
+                    <h4>Espaço Confinado</h4>
+                    <p>Segurança e Saúde nos Trabalhos em Espaços Confinados.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="900">
+                    <div class="nr-number">NR-35</div>
+                    <h4>Trabalho em Altura</h4>
+                    <p>Trabalho em Altura - Requisitos mínimos de proteção.</p>
+                </div>
+                <div class="nr-card" data-aos="zoom-in" data-aos-delay="950">
+                    <div class="nr-number">NR-38</div>
+                    <h4>Limpeza Urbana</h4>
+                    <p>Segurança e Saúde no Trabalho nas Atividades de Limpeza Urbana.</p>
+                </div>
+            </div>
+            <div class="nrs-cta" data-aos="fade-up">
+                <p>Garanta a conformidade legal da sua empresa em todas as NRs aplicáveis</p>
+                <a href="https://w.app/engmarqsolution" target="_blank" class="btn btn-primary">
+                    <i class="fab fa-whatsapp"></i> Solicitar Avaliação Jurídica Gratuita
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section class="sobre" id="sobre">
+        <div class="container">
+            <div class="sobre-grid">
+                <div class="sobre-content" data-aos="fade-right">
+                    <span class="section-badge">Quem somos</span>
+                    <h2 class="section-title">Sobre a <span class="highlight">EngMarq Solution</span></h2>
+                    <p>Somos especialistas em <strong>Segurança Jurídica</strong> para empresas através da Engenharia de Segurança do Trabalho. Nossa missão é proteger seu negócio de riscos legais, multas e processos trabalhistas.</p>
+                    <p>Com mais de <strong>15 anos de experiência</strong>, garantimos que sua empresa esteja em total conformidade com a legislação vigente, oferecendo tranquilidade jurídica para você focar no crescimento do seu negócio com segurança.</p>
+                    <div class="sobre-features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Proteção jurídica contra multas e processos</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Conformidade legal garantida</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Documentação com validade técnica e jurídica</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Defesa em fiscalizações e auditorias</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Atualização constante com a legislação trabalhista</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sobre-image" data-aos="fade-left">
+                    <div class="image-wrapper">
+                        <div class="image-placeholder">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Sua segurança é nossa prioridade</span>
+                        </div>
+                    </div>
+                    <div class="floating-card">
+                        <div class="card-icon"><i class="fas fa-award"></i></div>
+                        <div class="card-text">
+                            <span class="card-number">15+</span>
+                            <span class="card-label">Anos de Experiência</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Por que nos escolher -->
+    <section class="diferenciais">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">Seu Escudo Jurídico</span>
+                <h2 class="section-title">Por que confiar na <span class="highlight">EngMarq Solution</span>?</h2>
+            </div>
+            <div class="diferenciais-grid">
+                <div class="diferencial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="diferencial-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Segurança Jurídica Total</h3>
+                    <p>Documentação técnica com respaldo legal para proteger sua empresa em fiscalizações e processos.</p>
+                </div>
+                <div class="diferencial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="diferencial-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Conformidade Legal</h3>
+                    <p>Mantemos sua empresa sempre em dia com todas as obrigações trabalhistas e previdenciárias.</p>
+                </div>
+                <div class="diferencial-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="diferencial-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Redução de Riscos</h3>
+                    <p>Prevenção de multas, interdições e ações judiciais através de gestão preventiva.</p>
+                </div>
+                <div class="diferencial-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="diferencial-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Tranquilidade para Empreender</h3>
+                    <p>Foque no seu negócio enquanto cuidamos da sua proteção jurídica trabalhista.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Section -->
+    <section class="contato" id="contato">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">Fale Conosco</span>
+                <h2 class="section-title">Entre em <span class="highlight">Contato</span></h2>
+                <p class="section-subtitle">Estamos prontos para atender sua empresa. Entre em contato conosco!</p>
+            </div>
+            <div class="contato-grid">
+                <div class="contato-info" data-aos="fade-right">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>WhatsApp</h4>
+                            <p>+55 84 9928-5888</p>
+                            <a href="https://w.app/engmarqsolution" target="_blank" class="info-link">Enviar mensagem</a>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Telefone</h4>
+                            <p>+55 84 9928-5888</p>
+                            <a href="tel:+5584992885888" class="info-link">Ligar agora</a>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Localização</h4>
+                            <p>Natal - RN</p>
+                            <span class="info-link">Rio Grande do Norte, Brasil</span>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Horário de Atendimento</h4>
+                            <p>Segunda a Sexta: 8h às 18h</p>
+                            <span class="info-link">Sábado: 8h às 12h</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="contato-cta" data-aos="fade-left">
+                    <div class="cta-card">
+                        <div class="cta-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3>Proteja Sua Empresa Agora</h3>
+                        <p>Fale com nossos especialistas e descubra como garantir segurança jurídica total para sua empresa. Avaliação gratuita!</p>
+                        <a href="https://w.app/engmarqsolution" target="_blank" class="btn btn-whatsapp-large">
+                            <i class="fab fa-whatsapp"></i> Solicitar Avaliação Gratuita
+                        </a>
+                        <div class="cta-phone">
+                            <span>Ou ligue para</span>
+                            <a href="tel:+5584992885888">+55 84 9928-5888</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="footer-logo-img">
+                    </a>
+                    <p>Especialistas em Segurança Jurídica para empresas. Protegemos seu negócio através da conformidade legal em Segurança do Trabalho.</p>
+                    <div class="footer-social">
+                        <a href="https://w.app/engmarqsolution" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#servicos">Serviços</a></li>
+                        <li><a href="#nrs">NRs</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-services">
+                    <h4>Serviços</h4>
+                    <ul>
+                        <li><a href="#servicos">PGR</a></li>
+                        <li><a href="#servicos">PCMSO</a></li>
+                        <li><a href="#servicos">LTCAT</a></li>
+                        <li><a href="#servicos">Treinamentos</a></li>
+                        <li><a href="#servicos">Laudos Técnicos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li><i class="fab fa-whatsapp"></i> +55 84 9928-5888</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Natal - RN</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 EngMarq Solution. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://w.app/engmarqsolution" target="_blank" class="whatsapp-float" title="Fale conosco pelo WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">Fale Conosco</span>
+    </a>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
