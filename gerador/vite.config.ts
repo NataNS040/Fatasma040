@@ -19,11 +19,11 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'gerador-propostas.html'),
+        main: resolve(__dirname, 'index.html'),
       },
     },
   },
   server: {
-    open: '/gerador-propostas.html',
+    open: '/index.html',
   },
 });

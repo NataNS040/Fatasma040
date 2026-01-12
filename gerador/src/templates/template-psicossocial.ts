@@ -3,7 +3,7 @@
 // =====================================================
 
 import { DadosTemplate } from '../types/proposta.types';
-import { formatMoeda, valorPorExtenso, formatData } from '../utils/formatters';
+import { formatMoeda, valorPorExtenso } from '../utils/formatters';
 
 /**
  * Gera o template HTML completo para proposta de Riscos Psicossociais
