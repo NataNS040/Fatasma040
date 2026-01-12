@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: '.',
-  base: './',
+  base: '/Fatasma040/gerador/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
