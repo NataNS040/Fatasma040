@@ -13,7 +13,7 @@ permissions:
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -47,7 +47,8 @@ jobs:
           cp styles.css _site/
           cp script.js _site/
           cp -r assets _site/
-          cp *.html _site/ || true
+          cp presentation.html _site/ || true
+          cp proposta-*.html _site/ || true
           mkdir -p _site/gerador
           cp -r gerador/dist/* _site/gerador/
 
