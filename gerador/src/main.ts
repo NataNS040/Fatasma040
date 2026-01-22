@@ -70,6 +70,12 @@ const previewConfigs: Record<string, { icon: string; titleTop: string; titleMain
         titleTop: 'AVALIAÇÃO',
         titleMain: 'RISCOS PSICOSSOCIAIS',
         subtitle: 'Avaliação dos Fatores de Riscos Psicossociais conforme exigência da NR-01 atualizada'
+    },
+    assessoria: {
+        icon: 'fas fa-shield-alt',
+        titleTop: 'ASSESSORIA EM',
+        titleMain: 'SEGURANÇA DO TRABALHO',
+        subtitle: 'Equipe técnica especializada, gestão de programas de SST e treinamentos de capacitação para conformidade legal'
     }
 };
 

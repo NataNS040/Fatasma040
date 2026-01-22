@@ -3,11 +3,11 @@
 // =====================================================
 
 import { TipoProposta, DadosTemplate, DadosCliente } from '../types/proposta.types';
-import { configs } from '../config/proposta-config';
 import { getPropostaStyles } from '../styles/proposta-styles';
 import { getTemplateBrigada } from '../templates/template-brigada';
 import { getTemplatePlataforma } from '../templates/template-plataforma';
 import { getTemplatePsicossocial } from '../templates/template-psicossocial';
+import { getTemplateAssessoria } from '../templates/template-assessoria';
 import { formatData } from '../utils/formatters';
 
 /**
@@ -48,6 +48,8 @@ function selecionarTemplate(
             return getTemplatePlataforma(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         case 'psicossocial':
             return getTemplatePsicossocial(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
+        case 'assessoria':
+            return getTemplateAssessoria(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         default:
             throw new Error(`Tipo de proposta não suportado: ${tipo}`);
     }
@@ -71,7 +73,6 @@ export function gerarHTMLProposta(
     percentualDesc: number,
     temDesconto: boolean
 ): string {
-    const config = configs[tipo];
     const dados = prepararDadosTemplate(dadosCliente);
     
     // Obtém o template do conteúdo
@@ -87,12 +88,7 @@ export function gerarHTMLProposta(
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        ${getPropostaStyles()}
-        
-        /* Ajuste de cor por tipo de proposta */
-        :root {
-            --accent-color: ${config.color};
-        }
+        ${getPropostaStyles(tipo)}
     </style>
 </head>
 <body>

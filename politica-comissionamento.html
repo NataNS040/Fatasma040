@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Comissionamento Comercial | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --success-color: #38a169;
+            --purple-color: #805ad5;
+            --alert-color: #e53e3e;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --dark-color: #2d3748;
+            --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: var(--light-color);
+            overflow-x: hidden;
+        }
+
+        /* ====== ANIMAÇÕES ====== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Classes de animação */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-left.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-right.animated {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-scale.animated {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(245, 166, 35, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 60%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(128, 90, 213, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-logo {
+            width: 180px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .hero-badge {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .hero h1 {
+            font-family: var(--font-primary);
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        .hero h1 span {
+            color: var(--secondary-color);
+        }
+
+        .hero > .hero-content > p {
+            font-size: 16px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hero-date {
+            margin-top: 25px;
+            font-size: 13px;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.8s forwards;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Section */
+        .section {
+            padding: 50px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #234876 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(26, 54, 93, 0.3);
+        }
+
+        .section-icon i {
+            font-size: 26px;
+            color: var(--secondary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .section-icon:hover i {
+            transform: scale(1.1);
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: clamp(24px, 4vw, 32px);
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--gray-color);
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-highlight {
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .card h3 {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h3 i {
+            color: var(--secondary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover h3 i {
+            transform: scale(1.2);
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        /* Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        /* Objetivo Section */
+        .objetivo-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .objetivo-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #234876 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+        }
+
+        .objetivo-card.orange {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #e09000 100%);
+        }
+
+        .objetivo-card.purple {
+            background: linear-gradient(135deg, var(--purple-color) 0%, #6b46c1 100%);
+        }
+
+        .objetivo-card i {
+            font-size: 32px;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .objetivo-card h3 {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .objetivo-card p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* Comissão Destaque */
+        .comissao-destaque {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border: 3px solid var(--secondary-color);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .comissao-destaque:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(245, 166, 35, 0.3);
+        }
+
+        .comissao-valor {
+            font-family: var(--font-primary);
+            font-size: clamp(50px, 10vw, 80px);
+            font-weight: 800;
+            color: var(--secondary-color);
+            line-height: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .comissao-label {
+            font-size: 14px;
+            color: var(--primary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        /* Serviços Cards */
+        .servico-card {
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .servico-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .servico-card.blue {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #234876 100%);
+        }
+
+        .servico-card.orange {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #e09000 100%);
+        }
+
+        .servico-card.purple {
+            background: linear-gradient(135deg, var(--purple-color) 0%, #6b46c1 100%);
+        }
+
+        .servico-card i {
+            font-size: 36px;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .servico-card:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .servico-card h3 {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .servico-card p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* Meta Box */
+        .meta-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .meta-box {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .meta-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(26, 54, 93, 0.3);
+        }
+
+        .meta-box-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .meta-box-valor {
+            font-family: var(--font-primary);
+            font-size: clamp(32px, 6vw, 45px);
+            font-weight: 800;
+            color: var(--secondary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .meta-box:hover .meta-box-valor {
+            transform: scale(1.1);
+        }
+
+        .meta-box-desc {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        /* Bônus List */
+        .bonus-list {
+            flex: 1;
+            min-width: 280px;
+            max-width: 400px;
+        }
+
+        .bonus-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bonus-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .bonus-item.blue {
+            background: linear-gradient(135deg, #e8f4fd 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .bonus-item.orange {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .bonus-item.green {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .bonus-percent {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            min-width: 55px;
+            text-align: center;
+        }
+
+        .bonus-percent.blue { background: var(--primary-color); }
+        .bonus-percent.orange { background: var(--secondary-color); }
+        .bonus-percent.green { background: var(--success-color); }
+
+        .bonus-info h4 {
+            font-family: var(--font-primary);
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .bonus-info h4.blue { color: var(--primary-color); }
+        .bonus-info h4.orange { color: var(--secondary-color); }
+        .bonus-info h4.green { color: var(--success-color); }
+
+        .bonus-info p {
+            font-size: 12px;
+            color: var(--gray-color);
+        }
+
+        /* Premiação */
+        .premiacao-box {
+            background: linear-gradient(135deg, var(--purple-color) 0%, #553c9a 100%);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: white;
+            max-width: 700px;
+            margin: 0 auto;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .premiacao-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(128, 90, 213, 0.3);
+        }
+
+        .premiacao-icon {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            min-width: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .premiacao-box:hover .premiacao-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .premiacao-icon i {
+            font-size: 24px;
+            color: #ffd700;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .premiacao-content h3 {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .premiacao-content p {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* Regras */
+        .regra-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .regra-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .regra-icon {
+            background: var(--success-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .regra-item:hover .regra-icon {
+            transform: scale(1.2);
+        }
+
+        .regra-content h4 {
+            font-family: var(--font-primary);
+            font-size: 14px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .regra-content p {
+            font-size: 13px;
+            color: var(--gray-color);
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 20px;
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-primary);
+            font-size: 14px;
+            color: var(--alert-color);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box p {
+            font-size: 13px;
+            color: var(--dark-color);
+        }
+
+        /* Carreira Timeline */
+        .carreira-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .carreira-step {
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            width: 200px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .carreira-step:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .carreira-step.atual {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #234876 100%);
+            color: white;
+        }
+
+        .carreira-step.proximo {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #e09000 100%);
+            color: white;
+        }
+
+        .carreira-step.futuro {
+            background: white;
+            border: 2px dashed var(--gray-color);
+            color: var(--dark-color);
+        }
+
+        .carreira-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .carreira-step.atual .carreira-badge {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .carreira-step.proximo .carreira-badge {
+            background: white;
+            color: var(--secondary-color);
+        }
+
+        .carreira-step i {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .carreira-step.atual i { color: var(--secondary-color); }
+        .carreira-step.futuro i { color: var(--purple-color); }
+
+        .carreira-step h3 {
+            font-family: var(--font-primary);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .carreira-step p {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .carreira-percent {
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            display: inline-block;
+        }
+
+        .carreira-step.futuro .carreira-percent {
+            background: var(--light-color);
+        }
+
+        .carreira-percent span {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .carreira-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: var(--secondary-color);
+        }
+
+        .carreira-arrow i {
+            font-size: 24px;
+        }
+
+        .carreira-arrow span {
+            font-size: 10px;
+            color: var(--gray-color);
+            font-weight: 600;
+        }
+
+        /* Promoção Box */
+        .promocao-box {
+            background: linear-gradient(135deg, var(--success-color) 0%, #276749 100%);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: white;
+            max-width: 650px;
+            margin: 0 auto;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .promocao-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(56, 161, 105, 0.3);
+        }
+
+        .promocao-icon {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            min-width: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .promocao-box:hover .promocao-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .promocao-icon i {
+            font-size: 24px;
+            color: #ffd700;
+        }
+
+        .promocao-content h3 {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .promocao-content p {
+            font-size: 13px;
+        }
+
+        /* Filosofia */
+        .filosofia-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            color: white;
+        }
+
+        .filosofia-section .section-icon {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .filosofia-section .section-title {
+            color: white;
+        }
+
+        .filosofia-section .section-subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .quote-box {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 80px;
+            font-family: Georgia, serif;
+            color: var(--secondary-color);
+            opacity: 0.3;
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            line-height: 1;
+        }
+
+        .quote-box blockquote {
+            font-size: clamp(16px, 3vw, 20px);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .quote-box blockquote strong {
+            color: var(--secondary-color);
+        }
+
+        .pilares {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .pilar {
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pilar:hover {
+            transform: translateY(-10px);
+        }
+
+        .pilar-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 28px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .pilar:hover .pilar-icon {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .pilar-icon.blue { background: linear-gradient(135deg, #234876 0%, #1a365d 100%); }
+        .pilar-icon.orange { background: linear-gradient(135deg, var(--secondary-color) 0%, #e09000 100%); }
+        .pilar-icon.green { background: linear-gradient(135deg, var(--success-color) 0%, #2f855a 100%); }
+
+        .pilar h4 {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .pilar p {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: linear-gradient(135deg, #1a365d 0%, #0f2744 100%);
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .footer-cta h2 {
+            font-family: var(--font-primary);
+            font-size: clamp(24px, 4vw, 36px);
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .footer-cta h2 span {
+            color: var(--secondary-color);
+        }
+
+        .footer-cta p {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+
+        .contatos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .contato-item {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .contato-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .contato-item i {
+            font-size: 28px;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .contato-item:hover i {
+            transform: scale(1.2);
+        }
+
+        .contato-item p {
+            font-size: 14px;
+        }
+
+        .footer-text {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 20px;
+        }
+
+        /* Background alternado */
+        .bg-light {
+            background: var(--light-color);
+        }
+
+        .bg-white {
+            background: white;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .carreira-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+            
+            .meta-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .bonus-list {
+                width: 100%;
+            }
+            
+            .premiacao-box,
+            .promocao-box {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Print */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="hero-logo">
+            <div class="hero-badge">Documento Interno</div>
+            <h1>Política de <span>Comissionamento</span> Comercial</h1>
+            <p>Diretrizes e critérios para remuneração variável da equipe comercial EngMarq Solution</p>
+            <div class="hero-date">
+                <i class="fas fa-calendar-alt"></i> Janeiro de 2026
+            </div>
+        </div>
+    </section>
+
+    <!-- Objetivo -->
+    <section class="section bg-white">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h2 class="section-title">Objetivo</h2>
+                <p class="section-subtitle">Por que criamos esta política?</p>
+            </div>
+
+            <div class="card card-highlight" style="max-width: 800px; margin: 0 auto 25px;">
+                <h3><i class="fas fa-lightbulb"></i> Nossa Missão</h3>
+                <p style="font-size: 15px; line-height: 1.7;">
+                    Estabelecer <strong>critérios claros e justos</strong> para remuneração variável da equipe comercial, 
+                    <strong>estimulando resultados consistentes</strong> e alinhados à visão de <strong>excelência</strong> da EngMarq Solution.
+                </p>
+            </div>
+
+            <div class="objetivo-cards">
+                <div class="objetivo-card">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Transparência</h3>
+                    <p>Regras claras e objetivas para todos os consultores</p>
+                </div>
+                <div class="objetivo-card orange">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Meritocracia</h3>
+                    <p>Recompensas proporcionais ao desempenho individual</p>
+                </div>
+                <div class="objetivo-card purple">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Crescimento</h3>
+                    <p>Oportunidades de evolução profissional contínua</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Estrutura de Remuneração -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h2 class="section-title">Estrutura de Remuneração</h2>
+                <p class="section-subtitle">Consultor Comercial</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3><i class="fas fa-percentage"></i> Tipo de Remuneração</h3>
+                    <p><strong style="font-size: 18px; color: var(--secondary-color);">100% Variável</strong><br>Sem salário fixo - ganhos ilimitados!</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-credit-card"></i> Forma de Pagamento</h3>
+                    <p>Crédito em conta do consultor, devidamente cadastrado em nossa base de dados.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-calculator"></i> Base de Cálculo</h3>
+                    <p>Comissão (%) sobre o <strong>valor líquido das vendas</strong> (não faturado), menos dedução de impostos.</p>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--purple-color);">
+                    <h3><i class="fas fa-calendar-check" style="color: var(--purple-color);"></i> Periodicidade</h3>
+                    <p><strong>Quinzenal até 31/03/2026</strong><br>
+                    1ª Quinzena: Dia 01 ao 15 | 2ª Quinzena: Dia 16 ao 30/31<br>
+                    <small style="color: var(--purple-color);"><i class="fas fa-info-circle"></i> Data base: Recebimento do cliente</small></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Percentual de Comissão -->
+    <section class="section bg-white">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-percent"></i>
+                </div>
+                <h2 class="section-title">Percentual de Comissão</h2>
+                <p class="section-subtitle">Válido para todos os serviços e produtos</p>
+            </div>
+
+            <div class="comissao-destaque">
+                <div class="comissao-valor">8%</div>
+                <div class="comissao-label">Comissão Fixa</div>
+            </div>
+
+            <p style="text-align: center; color: var(--gray-color); margin-bottom: 25px;">
+                <i class="fas fa-check-circle" style="color: var(--success-color);"></i> 
+                Aplicada sobre <strong>qualquer venda concluída</strong>, independente do tipo de serviço.
+            </p>
+
+            <h4 style="text-align: center; font-family: var(--font-primary); font-size: 14px; color: var(--gray-color); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">
+                <i class="fas fa-tags" style="color: var(--secondary-color);"></i> Serviços Inclusos
+            </h4>
+
+            <div class="grid-3">
+                <div class="servico-card blue">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Consultorias</h3>
+                    <p>PGR, PCMSO, LTCAT e outros</p>
+                </div>
+                <div class="servico-card orange">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>Treinamentos</h3>
+                    <p>NRs, CIPA, Brigada e outros</p>
+                </div>
+                <div class="servico-card purple">
+                    <i class="fas fa-brain"></i>
+                    <h3>Riscos Psicossociais</h3>
+                    <p>Avaliações e programas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metas e Bonificações -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2 class="section-title">Metas e Bonificações</h2>
+                <p class="section-subtitle">🚀 Quanto mais você vende, mais você ganha!</p>
+            </div>
+
+            <div class="meta-container">
+                <div class="meta-box">
+                    <div class="meta-box-label"><i class="fas fa-flag-checkered"></i> Meta Mensal</div>
+                    <div class="meta-box-valor">R$ 30.000</div>
+                    <div class="meta-box-desc">em contratos fechados e recebidos</div>
+                </div>
+
+                <div class="bonus-list">
+                    <div class="bonus-item blue">
+                        <div class="bonus-percent blue">8%</div>
+                        <div class="bonus-info">
+                            <h4 class="blue">Comissão Base</h4>
+                            <p>Em todas as vendas</p>
+                        </div>
+                    </div>
+                    <div class="bonus-item orange">
+                        <div class="bonus-percent orange">+1%</div>
+                        <div class="bonus-info">
+                            <h4 class="orange">100% da Meta 🎯</h4>
+                            <p>Acima de R$ 30.000</p>
+                        </div>
+                    </div>
+                    <div class="bonus-item green">
+                        <div class="bonus-percent green">+2%</div>
+                        <div class="bonus-info">
+                            <h4 class="green">150% da Meta 🚀</h4>
+                            <p>Acima de R$ 45.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premiacao-box">
+                <div class="premiacao-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="premiacao-content">
+                    <h3>🏆 Premiação Trimestral "Comercial Destaque EngMarq"</h3>
+                    <p>Reconhecimento interno + bônus especial para o consultor com melhor desempenho!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regras Gerais -->
+    <section class="section bg-white">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h2 class="section-title">Regras Gerais</h2>
+                <p class="section-subtitle">Diretrizes importantes para o processo comercial</p>
+            </div>
+
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="regra-item">
+                    <div class="regra-icon"><i class="fas fa-check"></i></div>
+                    <div class="regra-content">
+                        <h4>Liberação da comissão</h4>
+                        <p>Será feita dentro da faixa quinzenal estabelecida, <strong>após o recebimento do pagamento do cliente</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="regra-item">
+                    <div class="regra-icon"><i class="fas fa-check"></i></div>
+                    <div class="regra-content">
+                        <h4>Cadastro obrigatório</h4>
+                        <p>Todos os contratos e propostas devem ser cadastrados no sistema de controle comercial (planilha/CRM).</p>
+                    </div>
+                </div>
+
+                <div class="regra-item">
+                    <div class="regra-icon"><i class="fas fa-check"></i></div>
+                    <div class="regra-content">
+                        <h4>Pós-venda e fidelização</h4>
+                        <p>O vendedor participa do acompanhamento pós-venda, sendo este critério considerado para bonificações futuras.</p>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Atenção</h4>
+                    <p><strong>Cancelamentos ou inadimplências</strong> anulam a comissão referente ao contrato em questão.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Evolução de Carreira -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-stairs"></i>
+                </div>
+                <h2 class="section-title">Evolução de Carreira Comercial</h2>
+                <p class="section-subtitle">⭐ Seu crescimento é nossa prioridade!</p>
+            </div>
+
+            <div class="carreira-timeline">
+                <div class="carreira-step atual">
+                    <div class="carreira-badge">VOCÊ ESTÁ AQUI</div>
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Consultor Comercial</h3>
+                    <p>Início da jornada</p>
+                    <div class="carreira-percent">
+                        <span>8%</span> comissão
+                    </div>
+                </div>
+
+                <div class="carreira-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>6 MESES</span>
+                </div>
+
+                <div class="carreira-step proximo">
+                    <div class="carreira-badge">🎯 PRÓXIMA META</div>
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Consultor Pleno</h3>
+                    <p>Após 6 meses de metas</p>
+                    <div class="carreira-percent">
+                        <span>9%</span> (+1%)
+                    </div>
+                </div>
+
+                <div class="carreira-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                    <span>12 MESES</span>
+                </div>
+
+                <div class="carreira-step futuro">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Próximo Nível</h3>
+                    <p>Após 12 meses</p>
+                    <div class="carreira-percent">
+                        <span style="font-size: 14px; font-style: italic;">Em construção</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="promocao-box">
+                <div class="promocao-icon">
+                    <i class="fas fa-medal"></i>
+                </div>
+                <div class="promocao-content">
+                    <h3>🏅 Critério para Promoção</h3>
+                    <p><strong>6 meses consecutivos</strong> de metas atingidas = <strong>+1% fixo</strong> em todas as comissões!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filosofia -->
+    <section class="section filosofia-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2 class="section-title">Filosofia EngMarq Solution</h2>
+            </div>
+
+            <div class="quote-box">
+                <blockquote>
+                    "O sucesso do nosso time é construído sobre três pilares:<br>
+                    <strong>Disciplina, Relacionamento e Resultado.</strong><br><br>
+                    Cada cliente atendido com excelência é uma conquista para a empresa e para a vida."
+                </blockquote>
+            </div>
+
+            <div class="pilares">
+                <div class="pilar">
+                    <div class="pilar-icon blue">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h4>Disciplina</h4>
+                    <p>Consistência e comprometimento</p>
+                </div>
+                <div class="pilar">
+                    <div class="pilar-icon orange">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Relacionamento</h4>
+                    <p>Conexão e parceria</p>
+                </div>
+                <div class="pilar">
+                    <div class="pilar-icon green">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Resultado</h4>
+                    <p>Entrega e excelência</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <h2>Boas Vendas! <span>🚀</span></h2>
+        <p>Conte conosco nessa jornada. Dúvidas? Entre em contato com a Diretoria Técnica.</p>
+
+        <div class="contatos">
+            <div class="contato-item">
+                <i class="fab fa-whatsapp"></i>
+                <p>+55 84 99928-5888</p>
+            </div>
+            <div class="contato-item">
+                <i class="fas fa-envelope"></i>
+                <p>engmarqsolution@gmail.com</p>
+            </div>
+        </div>
+
+        <img src="assets/logoengmarq.png" alt="EngMarq Solution" style="width: 120px; filter: brightness(0) invert(1); opacity: 0.8;">
+
+        <p class="footer-text">
+            EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN
+        </p>
+    </section>
+
+    <script>
+        // Intersection Observer para animações ao scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const animateOnScroll = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    
+                    // Animar filhos com delay escalonado
+                    const children = entry.target.querySelectorAll('.animate-child');
+                    children.forEach((child, index) => {
+                        child.style.animationDelay = `${index * 0.1}s`;
+                        child.classList.add('animated');
+                    });
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(animateOnScroll, observerOptions);
+
+        // Observar seções
+        document.querySelectorAll('.section, .footer-cta').forEach(section => {
+            section.classList.add('fade-in-section');
+            observer.observe(section);
+        });
+
+        // Efeito parallax suave no hero
+        window.addEventListener('scroll', () => {
+            const hero = document.querySelector('.hero');
+            const scrolled = window.pageYOffset;
+            hero.style.backgroundPositionY = scrolled * 0.3 + 'px';
+        });
+
+        // Adicionar classe para animação suave de entrada
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+
+    <style>
+        /* Animações de Scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .fade-in-section.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-child {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-child.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Shimmer effect para valores importantes */
+        .comissao-valor,
+        .meta-box-valor {
+            background: linear-gradient(90deg, 
+                var(--secondary-color) 0%, 
+                #ffd700 50%, 
+                var(--secondary-color) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Carreira arrow animation */
+        .carreira-arrow i {
+            animation: bounceRight 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bounceRight {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        /* Quote animation */
+        .quote-box blockquote {
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Staggered animation for cards grid */
+        .cards-grid .card:nth-child(1) { transition-delay: 0.1s; }
+        .cards-grid .card:nth-child(2) { transition-delay: 0.2s; }
+        .cards-grid .card:nth-child(3) { transition-delay: 0.3s; }
+        .cards-grid .card:nth-child(4) { transition-delay: 0.4s; }
+
+        .servico-card:nth-child(1) { transition-delay: 0.1s; }
+        .servico-card:nth-child(2) { transition-delay: 0.2s; }
+        .servico-card:nth-child(3) { transition-delay: 0.3s; }
+
+        .carreira-step:nth-child(1) { transition-delay: 0.1s; }
+        .carreira-step:nth-child(2) { transition-delay: 0.3s; }
+        .carreira-step:nth-child(3) { transition-delay: 0.5s; }
+
+        .pilar:nth-child(1) { transition-delay: 0.1s; }
+        .pilar:nth-child(2) { transition-delay: 0.2s; }
+        .pilar:nth-child(3) { transition-delay: 0.3s; }
+
+        /* Body transition */
+        body {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        /* Smooth hover for all interactive elements */
+        a, button, .card, .servico-card, .bonus-item, .regra-item, 
+        .carreira-step, .pilar, .meta-box, .contato-item {
+            cursor: pointer;
+        }
+
+        /* Glow effect for important elements */
+        .comissao-destaque::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--secondary-color), transparent, var(--secondary-color));
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .comissao-destaque {
+            position: relative;
+        }
+    </style>
+</body>
+</html>

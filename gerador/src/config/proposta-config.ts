@@ -34,6 +34,24 @@ export const configs: PropostaConfigs = {
         subtitle: 'Avaliação dos Fatores de Riscos Psicossociais relacionados ao trabalho conforme atualização da NR-01',
         color: '#805ad5',
         headerTitle: 'Proposta Comercial - Riscos Psicossociais'
+    },
+    assessoria: {
+        icon: 'fa-shield-alt',
+        badge: 'Assessoria Técnica Especializada',
+        titleTop: 'ASSESSORIA EM',
+        titleMain: 'SEGURANÇA DO TRABALHO',
+        subtitle: 'Equipe técnica especializada, gestão de programas de SST e treinamentos de capacitação para conformidade legal',
+        color: '#38a169',
+        headerTitle: 'Proposta Comercial - Assessoria em SST'
+    },
+    'kit-sst': {
+        icon: 'fa-file-medical-alt',
+        badge: 'Kit Integrado SST',
+        titleTop: 'KIT INTEGRADO',
+        titleMain: 'DOCUMENTAÇÃO SST',
+        subtitle: 'PGR, PCMSO, LTCAT e Laudos Técnicos para conformidade com as Normas Regulamentadoras',
+        color: '#3182ce',
+        headerTitle: 'Proposta Comercial - Kit Integrado SST'
     }
 };
 
@@ -48,5 +66,5 @@ export function getConfig(tipo: TipoProposta): PropostaConfig {
  * Verifica se um tipo é válido
  */
 export function isValidTipo(tipo: string): tipo is TipoProposta {
-    return tipo === 'brigada' || tipo === 'plataforma' || tipo === 'psicossocial';
+    return tipo === 'brigada' || tipo === 'plataforma' || tipo === 'psicossocial' || tipo === 'assessoria' || tipo === 'kit-sst';
 }

@@ -457,3 +457,23 @@ body {
     background: rgba(128, 90, 213, 0.2);
     border-left-color: #805ad5;
 }
+
+/* Assessoria em SST */
+.preview-page.assessoria {
+    background: linear-gradient(180deg, #276749 0%, #1a4731 100%);
+}
+.preview-page.assessoria .preview-icon {
+    border-color: #68d391;
+}
+.preview-page.assessoria .preview-icon i,
+.preview-page.assessoria .preview-title-main,
+.preview-page.assessoria .preview-date i {
+    color: #68d391;
+}
+.preview-page.assessoria .preview-divider {
+    background: #68d391;
+}
+.preview-page.assessoria .preview-client {
+    background: rgba(104, 211, 145, 0.2);
+    border-left-color: #68d391;
+}

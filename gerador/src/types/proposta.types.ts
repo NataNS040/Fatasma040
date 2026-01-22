@@ -5,7 +5,7 @@
 /**
  * Tipos de proposta disponíveis no sistema
  */
-export type TipoProposta = 'brigada' | 'plataforma' | 'psicossocial';
+export type TipoProposta = 'brigada' | 'plataforma' | 'psicossocial' | 'assessoria' | 'kit-sst';
 
 /**
  * Configuração específica de cada tipo de proposta
