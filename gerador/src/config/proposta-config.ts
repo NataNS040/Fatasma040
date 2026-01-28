@@ -26,6 +26,15 @@ export const configs: PropostaConfigs = {
         color: '#4a5568',
         headerTitle: 'Proposta Comercial - Plataforma Secundária'
     },
+    'plataforma-principal': {
+        icon: 'fa-layer-group',
+        badge: 'Projeto Técnico – EPC',
+        titleTop: 'ELABORAÇÃO DE PROJETO',
+        titleMain: 'PLATAFORMA PRINCIPAL E SECUNDÁRIA',
+        subtitle: 'Equipamento de Proteção Coletiva (EPC) conforme NR 18 – Condições e Meio Ambiente de Trabalho na Indústria da Construção',
+        color: '#c05621',
+        headerTitle: 'Proposta Comercial - Plataforma Principal e Secundária'
+    },
     psicossocial: {
         icon: 'fa-brain',
         badge: 'Avaliação Técnica – NR-01',
@@ -52,6 +61,15 @@ export const configs: PropostaConfigs = {
         subtitle: 'PGR, PCMSO, LTCAT e Laudos Técnicos para conformidade com as Normas Regulamentadoras',
         color: '#3182ce',
         headerTitle: 'Proposta Comercial - Kit Integrado SST'
+    },
+    treinamentos: {
+        icon: 'fa-chalkboard-teacher',
+        badge: 'Treinamentos em SST',
+        titleTop: 'PROPOSTA COMERCIAL',
+        titleMain: 'TREINAMENTOS EM SST',
+        subtitle: 'Capacitação especializada em Normas Regulamentadoras com metodologia prática, certificação imediata e total conformidade legal',
+        color: '#dd6b20',
+        headerTitle: 'Proposta Comercial - Treinamentos em SST'
     }
 };
 
@@ -66,5 +84,5 @@ export function getConfig(tipo: TipoProposta): PropostaConfig {
  * Verifica se um tipo é válido
  */
 export function isValidTipo(tipo: string): tipo is TipoProposta {
-    return tipo === 'brigada' || tipo === 'plataforma' || tipo === 'psicossocial' || tipo === 'assessoria' || tipo === 'kit-sst';
+    return tipo === 'brigada' || tipo === 'plataforma' || tipo === 'plataforma-principal' || tipo === 'psicossocial' || tipo === 'assessoria' || tipo === 'kit-sst' || tipo === 'treinamentos';
 }

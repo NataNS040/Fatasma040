@@ -38,7 +38,7 @@ export function getTemplatePsicossocial(
         <div class="page page-cover">
             <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--accent-color); letter-spacing: 3px;">${dados.numero}</span>
             
-            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            <img src="${dados.logoUrl}" alt="EngMarq Solution" class="cover-logo">
             
             <span class="cover-badge">
                 <i class="fas fa-exclamation-circle"></i>
@@ -75,7 +75,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -145,7 +145,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 3: DADOS DA EMPRESA CONTRATADA ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -161,7 +161,7 @@ export function getTemplatePsicossocial(
 
             <div style="background: var(--light-color); border-radius: 12px; padding: 30px; margin-bottom: 25px;">
                 <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid var(--accent-color);">
-                    <img src="assets/logoengmarq.png" alt="EngMarq Solution" style="height: 60px;">
+                    <img src="${dados.logoUrl}" alt="EngMarq Solution" style="height: 60px;">
                     <div>
                         <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 20px; margin-bottom: 5px;">EngMarq Solution LTDA</h3>
                         <p style="margin: 0; color: var(--gray-color); font-size: 13px;">Engenharia de Segurança e Saúde do Trabalho</p>
@@ -193,7 +193,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 4: CONTEXTO E OBRIGAÇÃO LEGAL ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -238,7 +238,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 5: O QUE SÃO FATORES DE RISCOS PSICOSSOCIAIS ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -302,7 +302,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 6: IMPORTÂNCIA E BENEFÍCIOS ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -346,7 +346,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 7: METODOLOGIA ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -411,7 +411,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 8: ENTREGÁVEIS ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -479,7 +479,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 9: SERVIÇOS COMPLEMENTARES ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -533,7 +533,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 10: INVESTIMENTO ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -546,51 +546,54 @@ export function getTemplatePsicossocial(
                 <p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrangência:</strong> Serviço dimensionado para <strong>${dados.qtdColaboradores || '—'} colaboradores</strong></p>
             </div>
 
-            <p>O valor abaixo corresponde ao investimento global para execução completa dos serviços de <strong>Avaliação de Fatores de Riscos Psicossociais</strong> descritos nesta proposta:</p>
+            <p>O valor abaixo corresponde ao investimento para execução completa dos serviços de <strong>Avaliação de Fatores de Riscos Psicossociais</strong>:</p>
 
             ${descontoHTML}
 
-            <div class="investment-highlight" style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: #fff; padding: 30px 35px; border-radius: 12px; text-align: center; margin: 15px 0;">
-                <p style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.9;">Investimento</p>
-                <p style="font-size: 48px; font-weight: 800; font-family: 'Montserrat', sans-serif; margin-bottom: 8px; letter-spacing: 1px;">R$ ${formatMoeda(valorFinal)}</p>
-                <p style="font-size: 13px; opacity: 0.85;">(${valorPorExtenso(valorFinal)})</p>
-            </div>
+            <table class="investment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Serviço</th>
+                        <th style="width: 20%; text-align: center;">Nº Colaboradores</th>
+                        <th style="width: 30%; text-align: right;">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-brain" style="color: var(--purple-color);"></i> Avaliação de Fatores de Riscos Psicossociais (NR-01)</td>
+                        <td style="text-align: center;">${dados.qtdColaboradores || '—'}</td>
+                        <td style="text-align: right; font-weight: 600;">R$ ${formatMoeda(valorFinal)}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><i class="fas fa-calculator"></i> INVESTIMENTO TOTAL</td>
+                        <td style="text-align: right;">R$ ${formatMoeda(valorFinal)}</td>
+                    </tr>
+                </tfoot>
+            </table>
 
-            <div class="info-box" style="margin: 10px 0; padding: 10px 12px;">
-                <h4><i class="fas fa-money-bill-wave"></i> Forma de Pagamento</h4>
-                <p><strong>50%</strong> na aprovação da proposta e <strong>50%</strong> na entrega do relatório final. Outras condições podem ser negociadas.</p>
-            </div>
+            <p style="font-size: 10px; color: var(--gray-color); text-align: center; margin-top: 5px;">(${valorPorExtenso(valorFinal)})</p>
 
             <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
-            
-            <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 10px;">
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Aplicação de questionário validado cientificamente</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Análise técnica dos dados coletados</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Relatório Técnico de Avaliação de Riscos Psicossociais</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Plano de Ação com medidas preventivas</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>AEP – Avaliação Ergonômica Preliminar</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>2 Palestras de Conscientização sobre Riscos Psicossociais</span>
-                </div>
+            <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; font-size: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Aplicação de questionário validado cientificamente</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Análise técnica dos dados coletados</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Relatório Técnico de Avaliação de Riscos Psicossociais</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Plano de Ação com medidas preventivas</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>AEP – Avaliação Ergonômica Preliminar</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>2 Palestras de Conscientização sobre Riscos Psicossociais</span></div>
             </div>
 
-            <div class="info-box" style="background: linear-gradient(135deg, #f9f0ff 0%, #ede9fe 100%); border-left-color: var(--accent-color); margin-bottom: 15px;">
+            <h3 class="subsection-title"><i class="fas fa-credit-card"></i> Condições de Pagamento</h3>
+            <div class="company-info-grid">
+                <div class="company-info-item"><label>Forma de Pagamento</label><span>Transferência Bancária ou PIX</span></div>
+                <div class="company-info-item"><label>Prazo</label><span>50% na aprovação | 50% na entrega</span></div>
+                <div class="company-info-item"><label>Validade da Proposta</label><span>15 dias corridos</span></div>
+                <div class="company-info-item"><label>Prazo de Execução</label><span>20 dias úteis após aprovação</span></div>
+            </div>
+
+            <div class="info-box" style="background: linear-gradient(135deg, #f9f0ff 0%, #ede9fe 100%); border-left-color: var(--accent-color); margin-top: 15px;">
                 <h4 style="color: var(--accent-color);"><i class="fas fa-gift"></i> Bônus Inclusos no Pacote</h4>
                 <p style="margin-bottom: 5px;"><strong>• Campanha Janeiro Branco</strong> – Material de conscientização sobre saúde mental</p>
                 <p style="margin: 0;"><strong>• Reavaliação Trimestral</strong> – Uma reavaliação dos riscos psicossociais após 3 meses</p>
@@ -605,7 +608,7 @@ export function getTemplatePsicossocial(
         <!-- ====== PÁGINA 11: CONDIÇÕES COMERCIAIS ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
@@ -671,56 +674,156 @@ export function getTemplatePsicossocial(
             </div>
         </div>
 
-        <!-- ====== PÁGINA 12: ENCERRAMENTO E CONTATO ====== -->
+        <!-- ====== PÁGINA 12: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">10</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <p style="text-align: center; margin-bottom: 30px; color: var(--gray-color);">
+                Esta proposta comercial foi elaborada para atender às exigências da NR-01 atualizada, garantindo segurança jurídica e promovendo um ambiente de trabalho saudável.
+            </p>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
+                <h3 class="responsible-name">${dados.elaborador.nome}</h3>
+                <p class="responsible-role">${dados.elaborador.cargo}</p>
+                <p class="responsible-company">EngMarq Solution</p>
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item"><i class="fab fa-whatsapp"></i><span>${dados.elaborador.telefone}</span></div>
+                    <div class="responsible-contact-item"><i class="fas fa-envelope"></i><span>${dados.elaborador.email}</span></div>
+                    <div class="responsible-contact-item"><i class="fas fa-map-marker-alt"></i><span>Natal - RN</span></div>
+                </div>
+            </div>
+
+            <div class="purple-box" style="margin-top: 30px;">
+                <h4><i class="fas fa-headset"></i> Atendimento Especializado</h4>
+                <p>Estamos à disposição para esclarecer qualquer dúvida sobre o escopo dos serviços, ajustar a proposta conforme necessidade e acompanhar todo o processo de avaliação dos riscos psicossociais na sua empresa.</p>
+            </div>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <h4><i class="fas fa-clock"></i> Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 08h às 18h | Sábado: 08h às 12h</p>
+                <p style="margin-top: 10px;"><strong>Atendimento via WhatsApp:</strong> Resposta em até 2 horas durante o horário comercial</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 13: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite da Proposta</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 20px;">
+                <h4><i class="fas fa-check-circle"></i> Declaração de Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços especificados.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.elaborador.nome} - ${dados.elaborador.cargo}</p>
+                </div>
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.razaoSocial}</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.cnpj}</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Nome Completo</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.solicitante.nome || 'A definir'}</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Cargo / Função</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.solicitante.cargo || 'A definir'}</p>
+                    </div>
+                </div>
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 14: CONTATO ====== -->
         <div class="page page-contact">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Riscos Psicossociais</span>
             </div>
 
             <div class="contact-content">
                 <div class="contact-icon">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-handshake"></i>
                 </div>
-                <h2 class="contact-title">Garanta a Segurança Jurídica da sua Empresa</h2>
+                <h2 class="contact-title">Fale Conosco</h2>
                 <p class="contact-subtitle">
-                    A avaliação dos Fatores de Riscos Psicossociais é uma <strong>obrigação legal</strong> prevista na NR-01 atualizada. Conte com o apoio técnico especializado da EngMarq Solution para adequar sua empresa e protegê-la de passivos trabalhistas.
+                    Estamos à disposição para dar continuidade ao processo de contratação e esclarecer eventuais dúvidas sobre a avaliação de riscos psicossociais.
                 </p>
 
-                <div class="alert-box" style="text-align: left; max-width: 450px; margin: 0 auto 30px;">
-                    <h4><i class="fas fa-gavel"></i> Não deixe para depois</h4>
-                    <p>Empresas que não realizarem a avaliação estão sujeitas a multas, autuações e responsabilização em processos trabalhistas relacionados à saúde mental dos colaboradores.</p>
-                </div>
-
-                <div class="responsible-card">
-                    <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
-                    <p class="responsible-name">${dados.elaborador.nome}</p>
-                    <p class="responsible-role">${dados.elaborador.cargo}</p>
-                    <p class="responsible-company">EngMarq Solution Ltda.</p>
-                    <div class="responsible-contacts">
-                        <div class="responsible-contact-item"><i class="fas fa-envelope"></i><span>${dados.elaborador.email}</span></div>
-                        <div class="responsible-contact-item"><i class="fab fa-whatsapp"></i><span>${dados.elaborador.telefone}</span></div>
-                        <div class="responsible-contact-item"><i class="fab fa-instagram"></i><span>${dados.elaborador.instagram}</span></div>
-                    </div>
-                </div>
-
                 <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>+55 84 99928-5888</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <span>engmarqsolution@gmail.com</span>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-instagram"></i>
-                        <span>@engmarq_solution</span>
-                    </div>
+                    <div class="contact-item"><i class="fab fa-whatsapp"></i><span>+55 84 99928-5888</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>engmarqsolution@gmail.com</span></div>
+                    <div class="contact-item"><i class="fab fa-instagram"></i><span>@engmarq_solution</span></div>
+                    <div class="contact-item"><i class="fas fa-globe"></i><span>www.engmarqsolution.com</span></div>
                 </div>
 
                 <div class="contact-signature">
-                    <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="signature-logo">
+                    <img src="${dados.logoUrl}" alt="EngMarq Solution" class="signature-logo">
                     <p class="signature-text">
                         <strong>EngMarq Solution</strong><br>
                         Engenharia de Segurança e Saúde do Trabalho<br>
@@ -732,7 +835,7 @@ export function getTemplatePsicossocial(
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">12</span>
+                <span class="page-number">14</span>
             </div>
         </div>
     `;

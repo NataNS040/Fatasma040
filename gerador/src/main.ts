@@ -65,6 +65,12 @@ const previewConfigs: Record<string, { icon: string; titleTop: string; titleMain
         titleMain: 'PLATAFORMA SECUNDÁRIA',
         subtitle: 'Projeto técnico de engenharia para plataforma secundária em conformidade com a NR-18'
     },
+    'plataforma-principal': {
+        icon: 'fas fa-layer-group',
+        titleTop: 'PROJETO TÉCNICO',
+        titleMain: 'PLATAFORMA PRINCIPAL E SECUNDÁRIA',
+        subtitle: 'Equipamento de Proteção Coletiva (EPC) conforme NR 18 – Condições e Meio Ambiente de Trabalho na Indústria da Construção'
+    },
     psicossocial: {
         icon: 'fas fa-brain',
         titleTop: 'AVALIAÇÃO',

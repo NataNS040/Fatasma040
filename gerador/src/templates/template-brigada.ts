@@ -44,7 +44,7 @@ export function getTemplateBrigada(
         <!-- CAPA -->
         <div class="page page-cover">
             <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--fire-color); letter-spacing: 3px;">${dados.numero}</span>
-            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            <img src="${dados.logoUrl}" alt="EngMarq Solution" class="cover-logo">
             <span class="cover-badge"><i class="fas fa-fire-extinguisher"></i> Treinamento Especializado</span>
             <div class="cover-icon"><i class="fas fa-fire"></i></div>
             <h1 class="cover-title">TREINAMENTO<span>BRIGADA DE INCÊNDIO</span></h1>
@@ -60,7 +60,7 @@ export function getTemplateBrigada(
         <!-- PÁGINA 2: EMPRESA CONTRATANTE -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <h2 class="section-title"><span class="section-number">1</span><span class="section-title-text">Sobre a Empresa Contratante</span></h2>
@@ -95,7 +95,7 @@ export function getTemplateBrigada(
         <!-- PÁGINA 3: EMPRESA CONTRATADA -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <h2 class="section-title"><span class="section-number"><i class="fas fa-building"></i></span><span class="section-title-text">Dados da Empresa Contratada</span></h2>
@@ -105,7 +105,7 @@ export function getTemplateBrigada(
             </div>
             <div style="background: var(--light-color); border-radius: 12px; padding: 30px; margin-bottom: 25px;">
                 <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid var(--fire-color);">
-                    <img src="assets/logoengmarq.png" alt="EngMarq Solution" style="height: 60px;">
+                    <img src="${dados.logoUrl}" alt="EngMarq Solution" style="height: 60px;">
                     <div>
                         <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 20px; margin-bottom: 5px;">EngMarq Solution LTDA</h3>
                         <p style="margin: 0; color: var(--gray-color); font-size: 13px;">Engenharia de Segurança e Saúde do Trabalho</p>
@@ -134,7 +134,7 @@ export function getTemplateBrigada(
         <!-- PÁGINA 4: APRESENTAÇÃO -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <h2 class="section-title"><span class="section-number">2</span><span class="section-title-text">Apresentação</span></h2>
@@ -168,7 +168,7 @@ export function getTemplateBrigada(
         <!-- PÁGINA 5: OBJETIVO E EMBASAMENTO -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <h2 class="section-title"><span class="section-number">3</span><span class="section-title-text">Objetivo do Treinamento</span></h2>
@@ -203,7 +203,7 @@ export function getTemplateBrigada(
         <!-- PÁGINA 6: CARGA HORÁRIA E CONTEÚDO -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <h2 class="section-title"><span class="section-number">5</span><span class="section-title-text">Carga Horária</span></h2>
@@ -242,7 +242,7 @@ export function getTemplateBrigada(
         <!-- PÁGINA 7: ENTREGÁVEIS -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <h2 class="section-title"><span class="section-number">7</span><span class="section-title-text">Entregáveis</span></h2>
@@ -277,38 +277,69 @@ export function getTemplateBrigada(
         <!-- PÁGINA 8: INVESTIMENTO -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <h2 class="section-title"><span class="section-number">8</span><span class="section-title-text">Investimento</span></h2>
-            <p>O valor abaixo corresponde ao investimento para realização do <strong>Treinamento de Brigada de Incêndio</strong> completo, com 4 horas de duração:</p>
+            
+            <div class="highlight-box" style="margin-bottom: 15px;">
+                <p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrangência:</strong> Treinamento dimensionado para <strong>${dados.qtdColaboradores} colaboradores</strong></p>
+            </div>
+
+            <p>O valor abaixo corresponde ao investimento para realização do <strong>Treinamento de Brigada de Incêndio</strong> completo:</p>
+            
             ${descontoHTML}
-            <div class="investment-highlight" style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: #fff; padding: 25px 30px; border-radius: 12px; text-align: center; margin: 15px 0;">
-                <p style="font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.9;">Valor do Treinamento</p>
-                <p style="font-size: 38px; font-weight: 800; font-family: 'Montserrat', sans-serif; margin-bottom: 8px; letter-spacing: 1px;">R$ ${formatMoeda(valorFinal)}</p>
-                <p style="font-size: 12px; opacity: 0.85;">(${valorPorExtenso(valorFinal)})</p>
-            </div>
+            
+            <table class="investment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 35%;">Treinamento</th>
+                        <th style="width: 15%; text-align: center;">Carga Horária</th>
+                        <th style="width: 20%; text-align: center;">Nº Colaboradores</th>
+                        <th style="width: 30%; text-align: right;">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-fire" style="color: var(--fire-color);"></i> Brigada de Incêndio (IT 17/2025)</td>
+                        <td style="text-align: center;">04h</td>
+                        <td style="text-align: center;">${dados.qtdColaboradores}</td>
+                        <td style="text-align: right; font-weight: 600;">R$ ${formatMoeda(valorFinal)}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><i class="fas fa-calculator"></i> INVESTIMENTO TOTAL</td>
+                        <td style="text-align: right;">R$ ${formatMoeda(valorFinal)}</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <p style="font-size: 10px; color: var(--gray-color); text-align: center; margin-top: 5px;">(${valorPorExtenso(valorFinal)})</p>
+
             <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
-            <ul class="feature-list">
-                <li>Treinamento teórico completo (conceitos, normas, procedimentos)</li>
-                <li>Treinamento prático supervisionado</li>
-                <li>Instrutor qualificado e habilitado</li>
-                <li>Material didático expositivo (não físico)</li>
-                <li>Lista de presença dos participantes</li>
-                <li>Certificados digitais de participação individuais</li>
-                <li>Documentação para auditorias e fiscalizações</li>
-            </ul>
-            <div class="highlight-box">
-                <p><strong><i class="fas fa-clock"></i> Carga Horária:</strong> 4 horas de treinamento (teórico + prático), em data e horário a serem acordados com a empresa.</p>
+            <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; font-size: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Treinamento teórico completo (conceitos, normas, procedimentos)</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Treinamento prático supervisionado</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Instrutor qualificado e habilitado</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Material didático expositivo (não físico)</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Lista de presença dos participantes</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Certificados digitais de participação</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Documentação para auditorias e fiscalizações</span></div>
             </div>
-            <div class="info-box">
-                <h4><i class="fas fa-handshake"></i> Forma de Pagamento</h4>
-                <p><strong>50%</strong> no fechamento do contrato<br><strong>50%</strong> na finalização do treinamento</p>
+
+            <h3 class="subsection-title"><i class="fas fa-credit-card"></i> Condições de Pagamento</h3>
+            <div class="company-info-grid">
+                <div class="company-info-item"><label>Forma de Pagamento</label><span>Transferência Bancária ou PIX</span></div>
+                <div class="company-info-item"><label>Prazo</label><span>50% no fechamento | 50% após conclusão</span></div>
+                <div class="company-info-item"><label>Validade da Proposta</label><span>15 dias corridos</span></div>
+                <div class="company-info-item"><label>Data do Treinamento</label><span>A combinar conforme disponibilidade</span></div>
             </div>
-            <div class="fire-box">
-                <h4><i class="fas fa-users"></i> Abrangência</h4>
-                <p>Treinamento dimensionado para <strong>${dados.qtdColaboradores} colaboradores</strong>.</p>
+
+            <div class="info-box" style="margin-top: 15px;">
+                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Observação:</strong> Os valores apresentados contemplam todos os custos de execução, incluindo deslocamento, material didático e certificação. Não há custos adicionais.</p>
             </div>
+
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
                 <span class="page-number">08</span>
@@ -318,7 +349,7 @@ export function getTemplateBrigada(
         <!-- PÁGINA 9: DIFERENCIAIS E ENCERRAMENTO -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <h2 class="section-title"><span class="section-number">9</span><span class="section-title-text">Diferenciais da EngMarq Solution</span></h2>
@@ -356,10 +387,82 @@ export function getTemplateBrigada(
             </div>
         </div>
 
-        <!-- PÁGINA 10: CONTATO -->
+        <!-- PÁGINA 10: TERMO DE ACEITE E ASSINATURAS -->
+        <div class="page">
+            <div class="page-header">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">${cfg.headerTitle}</span>
+            </div>
+            <h2 class="section-title"><span class="section-number"><i class="fas fa-file-signature"></i></span><span class="section-title-text">Termo de Aceite da Proposta</span></h2>
+            <div class="info-box" style="margin-bottom: 20px;">
+                <h4><i class="fas fa-check-circle"></i> Declaração de Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços especificados.</p>
+            </div>
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--fire-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--fire-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.elaborador.nome} - ${dados.elaborador.cargo}</p>
+                </div>
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.razaoSocial}</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.cnpj || '-'}</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Nome Completo</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.solicitante.nome || '-'}</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Cargo / Função</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">${dados.solicitante.cargo || '-'}</p>
+                    </div>
+                </div>
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- PÁGINA 11: CONTATO -->
         <div class="page page-contact">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">${cfg.headerTitle}</span>
             </div>
             <div class="contact-content">
@@ -373,7 +476,7 @@ export function getTemplateBrigada(
                     <div class="contact-item"><i class="fas fa-globe"></i><span>www.engmarqsolution.com</span></div>
                 </div>
                 <div class="contact-signature">
-                    <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="signature-logo">
+                    <img src="${dados.logoUrl}" alt="EngMarq Solution" class="signature-logo">
                     <p class="signature-text">
                         <strong>EngMarq Solution</strong><br>
                         Engenharia de Segurança e Saúde do Trabalho<br>
@@ -384,8 +487,9 @@ export function getTemplateBrigada(
             </div>
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">10</span>
+                <span class="page-number">11</span>
             </div>
         </div>
     `;
 }
+

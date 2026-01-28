@@ -5,7 +5,7 @@
 /**
  * Tipos de proposta disponíveis no sistema
  */
-export type TipoProposta = 'brigada' | 'plataforma' | 'psicossocial' | 'assessoria' | 'kit-sst';
+export type TipoProposta = 'brigada' | 'plataforma' | 'plataforma-principal' | 'psicossocial' | 'assessoria' | 'kit-sst' | 'treinamentos';
 
 /**
  * Configuração específica de cada tipo de proposta
@@ -81,6 +81,7 @@ export interface DadosTemplate {
     qtdColaboradores: string;
     elaborador: DadosElaborador;
     solicitante: DadosSolicitante;
+    logoUrl: string;
 }
 
 /**

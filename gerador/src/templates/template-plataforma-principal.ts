@@ -1,12 +1,12 @@
 // =====================================================
-// TEMPLATE PLATAFORMA SECUNDÁRIA - COMPLETO
+// TEMPLATE PLATAFORMA PRINCIPAL E SECUNDÁRIA - COMPLETO
 // =====================================================
 
 import { DadosTemplate } from '../types/proposta.types';
-import { formatMoeda, valorPorExtenso } from '../utils/formatters';
+import { formatMoeda } from '../utils/formatters';
 
 /**
- * Gera o template HTML completo para proposta de Plataforma Secundária
+ * Gera o template HTML completo para proposta de Plataforma Principal e Secundária
  * @param dados - Dados do cliente/proposta
  * @param valorOriginal - Valor original sem desconto
  * @param valorFinal - Valor final após desconto
@@ -14,7 +14,7 @@ import { formatMoeda, valorPorExtenso } from '../utils/formatters';
  * @param temDesconto - Se há desconto aplicado
  * @returns String HTML do template completo (9 páginas)
  */
-export function getTemplatePlataforma(
+export function getTemplatePlataformaPrincipal(
     dados: DadosTemplate,
     valorOriginal: number,
     valorFinal: number,
@@ -51,7 +51,7 @@ export function getTemplatePlataforma(
             
             <h1 class="cover-title">
                 ELABORAÇÃO DE PROJETO
-                <span>PLATAFORMA SECUNDÁRIA</span>
+                <span>PLATAFORMA PRINCIPAL E SECUNDÁRIA</span>
             </h1>
             <p class="cover-subtitle">
                 Equipamento de Proteção Coletiva (EPC) conforme NR 18 – Condições e Meio Ambiente de Trabalho na Indústria da Construção
@@ -76,7 +76,7 @@ export function getTemplatePlataforma(
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
@@ -113,19 +113,9 @@ export function getTemplatePlataforma(
                 </div>
             </div>
 
-            ${dados.solicitante.nome ? `
-            <h3 class="subsection-title" style="margin-top: 20px;"><i class="fas fa-user"></i> Solicitante</h3>
-            <div class="company-info-grid">
-                <div class="company-info-item"><label>Nome</label><span>${dados.solicitante.nome}</span></div>
-                <div class="company-info-item"><label>Cargo</label><span>${dados.solicitante.cargo || '-'}</span></div>
-                <div class="company-info-item"><label>E-mail</label><span>${dados.solicitante.email || '-'}</span></div>
-                <div class="company-info-item"><label>Telefone</label><span>${dados.solicitante.telefone || '-'}</span></div>
-            </div>
-            ` : ''}
-
             <div class="info-box" style="margin-top: 25px;">
                 <h4><i class="fas fa-hard-hat"></i> Proposta Especializada</h4>
-                <p>Esta proposta foi desenvolvida para atender às necessidades de elaboração do Projeto Técnico de Plataforma Secundária, em conformidade com a NR 18 e com foco na segurança dos trabalhadores e segurança jurídica da empresa.</p>
+                <p>Esta proposta foi desenvolvida para atender às necessidades de elaboração do Projeto Técnico de Plataforma Principal e Secundária, em conformidade com a NR 18 e com foco na segurança dos trabalhadores e segurança jurídica da empresa.</p>
             </div>
 
             <div class="page-footer">
@@ -138,7 +128,7 @@ export function getTemplatePlataforma(
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
@@ -146,8 +136,8 @@ export function getTemplatePlataforma(
                 <span class="section-title-text">Dados da Empresa Contratada</span>
             </h2>
 
-            <div class="info-box" style="margin-bottom: 25px; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-left-color: var(--accent-color);">
-                <h4 style="color: var(--accent-color);"><i class="fas fa-info-circle"></i> Informações para Faturamento e Contrato</h4>
+            <div class="construction-box" style="margin-bottom: 25px;">
+                <h4><i class="fas fa-info-circle"></i> Informações para Faturamento e Contrato</h4>
                 <p>Abaixo estão os dados cadastrais da EngMarq Solution para formalização contratual e emissão de documentos fiscais.</p>
             </div>
 
@@ -186,7 +176,7 @@ export function getTemplatePlataforma(
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
@@ -196,11 +186,11 @@ export function getTemplatePlataforma(
 
             <p>A <strong>EngMarq Solution Ltda.</strong> é uma empresa especializada em Engenharia de Segurança e Saúde do Trabalho, com atuação técnica focada em soluções de engenharia para a indústria da construção civil. Oferecemos serviços de alta qualidade técnica, com compromisso com a conformidade normativa e a proteção efetiva dos trabalhadores.</p>
 
-            <p>É com satisfação que apresentamos esta proposta para a <strong>elaboração do Projeto Técnico de Plataforma Secundária</strong>, equipamento de proteção coletiva (EPC) essencial para obras verticais, conforme exigências da <strong>NR 18 – Condições e Meio Ambiente de Trabalho na Indústria da Construção</strong>.</p>
+            <p>É com satisfação que apresentamos esta proposta para a <strong>elaboração do Projeto Técnico de Plataforma Principal e Secundária</strong>, equipamento de proteção coletiva (EPC) essencial para obras verticais, conforme exigências da <strong>NR 18 – Condições e Meio Ambiente de Trabalho na Indústria da Construção</strong>.</p>
 
-            <div class="info-box" style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-left-color: var(--accent-color);">
-                <h4 style="color: var(--accent-color);"><i class="fas fa-hard-hat"></i> Plataforma Secundária de Proteção</h4>
-                <p>A plataforma secundária é um <strong>equipamento de proteção coletiva (EPC)</strong> instalado em obras de edificações verticais, com a função de aparar e reter materiais e ferramentas que possam cair durante a execução dos serviços, protegendo trabalhadores e terceiros que circulam nos pavimentos inferiores e no entorno da obra.</p>
+            <div class="construction-box">
+                <h4><i class="fas fa-hard-hat"></i> Plataforma Principal e Secundária de Proteção</h4>
+                <p>A Plataforma Principal e Secundária é um <strong>equipamento de proteção coletiva (EPC)</strong> instalado em obras de edificações verticais, com a função de aparar e reter materiais e ferramentas que possam cair durante a execução dos serviços, protegendo trabalhadores e terceiros que circulam nos pavimentos inferiores e no entorno da obra.</p>
             </div>
 
             <h3 class="subsection-title"><i class="fas fa-shield-alt"></i> Importância do Projeto</h3>
@@ -229,7 +219,7 @@ export function getTemplatePlataforma(
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
@@ -237,7 +227,7 @@ export function getTemplatePlataforma(
                 <span class="section-title-text">Objetivo do Projeto</span>
             </h2>
 
-            <p>O objetivo desta proposta é a <strong>elaboração do Projeto Técnico da Plataforma Secundária</strong>, dimensionado conforme as características específicas da edificação e da obra, garantindo a proteção coletiva dos trabalhadores e o atendimento às normas de segurança vigentes.</p>
+            <p>O objetivo desta proposta é a <strong>elaboração do Projeto Técnico da Plataforma Principal e Secundária</strong>, dimensionado conforme as características específicas da edificação e da obra, garantindo a proteção coletiva dos trabalhadores e o atendimento às normas de segurança vigentes.</p>
 
             <h3 class="subsection-title"><i class="fas fa-bullseye"></i> O Projeto Garantirá</h3>
 
@@ -277,7 +267,7 @@ export function getTemplatePlataforma(
                 </div>
             </div>
 
-            <ul class="feature-list">
+            <ul class="build-list">
                 <li><strong>Normas técnicas aplicáveis</strong> ao dimensionamento estrutural de plataformas</li>
                 <li><strong>Boas práticas de engenharia</strong> e segurança do trabalho na construção civil</li>
                 <li><strong>Legislação profissional CREA/CONFEA</strong> – Responsabilidade técnica do profissional</li>
@@ -294,15 +284,41 @@ export function getTemplatePlataforma(
             </div>
         </div>
 
-        <!-- ====== PÁGINA 6: ENTREGÁVEIS ====== -->
+        <!-- ====== PÁGINA 6: RESPONSABILIDADE TÉCNICA E ENTREGÁVEIS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">5</span>
+                <span class="section-title-text">Responsabilidade Técnica</span>
+            </h2>
+
+            <p>O projeto técnico será elaborado por <strong>profissional legalmente habilitado</strong>, com registro ativo no Conselho Regional de Engenharia e Agronomia (CREA), assumindo integralmente a responsabilidade técnica pelo dimensionamento e concepção do projeto.</p>
+
+            <div class="art-box">
+                <h4><i class="fas fa-certificate"></i> Emissão de ART – Anotação de Responsabilidade Técnica</h4>
+                <p>Será emitida <strong>ART junto ao CREA</strong>, vinculada exclusivamente ao projeto da Plataforma Principal e Secundária, formalizando a responsabilidade técnica do profissional pelo trabalho executado.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-user-tie"></i> O Profissional Responsável</h3>
+
+            <ul class="feature-list">
+                <li>Possui habilitação legal para elaboração de projetos de segurança na construção</li>
+                <li>Assume responsabilidade técnica integral pelo dimensionamento</li>
+                <li>Garante a conformidade do projeto com as normas vigentes</li>
+                <li>Responde tecnicamente perante os órgãos de fiscalização</li>
+            </ul>
+
+            <div class="info-box">
+                <h4><i class="fas fa-shield-alt"></i> Garantia de Qualidade Técnica</h4>
+                <p>A elaboração do projeto por profissional habilitado, com emissão de ART, é a garantia de que o trabalho foi desenvolvido com <strong>critério técnico, responsabilidade profissional e conformidade normativa</strong>.</p>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 25px;">
+                <span class="section-number">6</span>
                 <span class="section-title-text">Escopo do Projeto – Entregáveis</span>
             </h2>
 
@@ -312,7 +328,7 @@ export function getTemplatePlataforma(
                 <div class="deliverable-section">
                     <div class="deliverable-header">
                         <i class="fas fa-drafting-compass"></i>
-                        <h4>1. Projeto Técnico da Plataforma Secundária</h4>
+                        <h4>1. Projeto Técnico da Plataforma Principal e Secundária</h4>
                     </div>
                     <div class="deliverable-content">
                         <ul>
@@ -323,7 +339,27 @@ export function getTemplatePlataforma(
                         </ul>
                     </div>
                 </div>
+            </div>
 
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: ENTREGÁVEIS (CONTINUAÇÃO) ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Escopo do Projeto – Entregáveis (Continuação)</span>
+            </h2>
+
+            <div class="deliverables-list">
                 <div class="deliverable-section">
                     <div class="deliverable-header">
                         <i class="fas fa-file-alt"></i>
@@ -331,7 +367,7 @@ export function getTemplatePlataforma(
                     </div>
                     <div class="deliverable-content">
                         <ul>
-                            <li>Descrição completa da plataforma secundária projetada</li>
+                            <li>Descrição completa da Plataforma Principal e Secundária projetada</li>
                             <li>Especificação dos materiais a serem utilizados</li>
                             <li>Características técnicas do sistema de proteção</li>
                             <li>Condições de uso e limitações do equipamento</li>
@@ -377,7 +413,7 @@ export function getTemplatePlataforma(
                     <div class="deliverable-content">
                         <ul>
                             <li>ART registrada junto ao CREA</li>
-                            <li>Vinculada exclusivamente ao projeto da plataforma secundária</li>
+                            <li>Vinculada exclusivamente ao projeto da Plataforma Principal e Secundária</li>
                             <li>Formalização da responsabilidade técnica do profissional</li>
                         </ul>
                     </div>
@@ -386,25 +422,25 @@ export function getTemplatePlataforma(
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">06</span>
+                <span class="page-number">07</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 7: OBSERVAÇÃO E BENEFÍCIOS ====== -->
+        <!-- ====== PÁGINA 8: OBSERVAÇÃO IMPORTANTE E BENEFÍCIOS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
-                <span class="section-number">6</span>
+                <span class="section-number">7</span>
                 <span class="section-title-text">Observação Importante</span>
             </h2>
 
             <div class="alert-box" style="margin-bottom: 15px;">
                 <h4><i class="fas fa-exclamation-triangle"></i> Responsabilidade de Execução</h4>
-                <p style="margin-bottom: 8px;">Esta proposta refere-se <strong>exclusivamente à elaboração do projeto técnico</strong> da plataforma secundária.</p>
+                <p style="margin-bottom: 8px;">Esta proposta refere-se <strong>exclusivamente à elaboração do projeto técnico</strong> da Plataforma Principal e Secundária.</p>
                 <p style="margin-bottom: 8px;">A <strong>execução, montagem e instalação</strong> da plataforma são de <strong>responsabilidade da empresa executora</strong> da obra.</p>
                 <p>A empresa executora deverá respeitar integralmente as <strong>orientações técnicas contidas no projeto</strong> para garantir a segurança e eficácia do sistema de proteção.</p>
             </div>
@@ -414,11 +450,11 @@ export function getTemplatePlataforma(
             </div>
 
             <h2 class="section-title" style="margin-top: 25px;">
-                <span class="section-number">7</span>
+                <span class="section-number">8</span>
                 <span class="section-title-text">Benefícios para a Empresa Contratante</span>
             </h2>
 
-            <p>A contratação do projeto técnico de plataforma secundária oferece benefícios significativos para a empresa:</p>
+            <p>A contratação do projeto técnico de Plataforma Principal e Secundária oferece benefícios significativos para a empresa:</p>
 
             <div class="benefits-grid">
                 <div class="benefit-item">
@@ -455,48 +491,56 @@ export function getTemplatePlataforma(
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">07</span>
+                <span class="page-number">08</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 8: INVESTIMENTO ====== -->
+        <!-- ====== PÁGINA 9: VALOR E DIFERENCIAIS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
-                <span class="section-number">8</span>
-                <span class="section-title-text">Investimento</span>
+                <span class="section-number">9</span>
+                <span class="section-title-text">Valor da Proposta</span>
             </h2>
 
-            <p>O valor abaixo corresponde ao investimento para elaboração do <strong>Projeto Técnico de Plataforma Secundária</strong> completo:</p>
+            <p>O valor para elaboração do Projeto Técnico de Plataforma Principal e Secundária está apresentado abaixo:</p>
 
             ${descontoHTML}
 
             <table class="investment-table">
                 <thead>
                     <tr>
-                        <th style="width: 50%;">Serviço</th>
-                        <th style="width: 50%; text-align: right;">Valor Total</th>
+                        <th style="width: 60%;">Serviço</th>
+                        <th style="width: 20%;">Unidade</th>
+                        <th style="width: 20%;">Valor</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="training-name"><i class="fas fa-layer-group" style="color: var(--secondary-color);"></i> Projeto Técnico de Plataforma Secundária (NR 18)</td>
-                        <td style="text-align: right; font-weight: 600;">R$ ${formatMoeda(valorFinal)}</td>
+                        <td>
+                            <div class="training-name">
+                                <i class="fas fa-layer-group" style="color: var(--accent-color);"></i>
+                                Projeto Técnico de Plataforma Principal e Secundária
+                            </div>
+                            <div style="font-size: 9px; color: var(--gray-color); margin-top: 4px;">
+                                Projeto completo conforme NR 18, incluindo memorial descritivo, memória de cálculo, orientações para instalação e ART
+                            </div>
+                        </td>
+                        <td style="text-align: center;">1 Projeto</td>
+                        <td style="text-align: center; font-weight: 600;">R$ ${formatMoeda(valorFinal)}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td><i class="fas fa-calculator"></i> INVESTIMENTO TOTAL</td>
-                        <td style="text-align: right;">R$ ${formatMoeda(valorFinal)}</td>
+                        <td colspan="2" style="text-align: right;">VALOR TOTAL</td>
+                        <td style="text-align: center;">R$ ${formatMoeda(valorFinal)}</td>
                     </tr>
                 </tfoot>
             </table>
-
-            <p style="font-size: 10px; color: var(--gray-color); text-align: center; margin-top: 5px;">(${valorPorExtenso(valorFinal)})</p>
 
             <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
             <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; font-size: 10px;">
@@ -522,19 +566,19 @@ export function getTemplatePlataforma(
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">08</span>
+                <span class="page-number">09</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 9: DIFERENCIAIS E PRÓXIMOS PASSOS ====== -->
+        <!-- ====== PÁGINA 10: DIFERENCIAIS E PRÓXIMOS PASSOS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
-                <span class="section-number">9</span>
+                <span class="section-number">10</span>
                 <span class="section-title-text">Diferenciais da EngMarq Solution</span>
             </h2>
 
@@ -562,7 +606,7 @@ export function getTemplatePlataforma(
             </div>
 
             <h2 class="section-title" style="margin-top: 20px;">
-                <span class="section-number">10</span>
+                <span class="section-number">11</span>
                 <span class="section-title-text">Próximos Passos</span>
             </h2>
 
@@ -574,22 +618,22 @@ export function getTemplatePlataforma(
                 <li><strong>Formalização da contratação</strong> – Envio de contrato e condições comerciais</li>
             </ul>
 
-            <div class="info-box" style="margin: 20px 0; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-left-color: var(--accent-color);">
-                <h4 style="color: var(--accent-color);"><i class="fas fa-hard-hat"></i> Projeto Técnico de Qualidade</h4>
+            <div class="construction-box" style="margin-top: 20px;">
+                <h4><i class="fas fa-hard-hat"></i> Projeto Técnico de Qualidade</h4>
                 <p>Investir em um projeto técnico elaborado por profissional habilitado é investir na <strong>segurança dos trabalhadores</strong> e na <strong>proteção jurídica da empresa</strong>. Um projeto bem elaborado faz a diferença na execução segura da obra.</p>
             </div>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">09</span>
+                <span class="page-number">10</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 10: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <!-- ====== PÁGINA 11: RESPONSÁVEL PELA PROPOSTA ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
@@ -623,15 +667,15 @@ export function getTemplatePlataforma(
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">10</span>
+                <span class="page-number">11</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 11: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <!-- ====== PÁGINA 12: TERMO DE ACEITE E ASSINATURAS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <h2 class="section-title">
@@ -703,15 +747,15 @@ export function getTemplatePlataforma(
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">11</span>
+                <span class="page-number">12</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 12: CONTATO ====== -->
+        <!-- ====== PÁGINA 13: CONTATO ====== -->
         <div class="page page-contact">
             <div class="page-header">
                 <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Plataforma Secundária</span>
+                <span class="page-header-title">Proposta Comercial - Plataforma Principal e Secundária</span>
             </div>
 
             <div class="contact-content">
@@ -755,9 +799,8 @@ export function getTemplatePlataforma(
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">12</span>
+                <span class="page-number">13</span>
             </div>
         </div>
     `;
 }
-

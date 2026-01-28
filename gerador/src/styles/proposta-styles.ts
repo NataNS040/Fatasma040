@@ -11,6 +11,7 @@ function getAccentColor(tipo: TipoProposta): string {
     switch (tipo) {
         case 'brigada': return '#dd6b20';
         case 'plataforma': return '#f5a623';
+        case 'plataforma-principal': return '#c05621';
         case 'psicossocial': return '#805ad5';
         case 'assessoria': return '#38a169';
         default: return '#f5a623';
@@ -58,11 +59,11 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
         .page { width: 210mm; height: 297mm; min-height: 297mm; max-height: 297mm; padding: 15mm 15mm 22mm 15mm; page-break-after: always; position: relative; background: var(--white-color); box-sizing: border-box; overflow: hidden; }
         .page:last-child { page-break-after: auto; }
         
-        .page-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; margin-bottom: 12px; border-bottom: 2px solid var(--light-color); position: relative; }
-        .page-header-logo { height: 35px; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--light-color); position: relative; }
+        .page-header-logo { height: 40px; }
         .page-header-title { font-family: var(--font-primary); font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; }
         
-        .page-footer { position: absolute; bottom: 15mm; left: 18mm; right: 18mm; display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--light-color); font-size: 10px; color: var(--gray-color); background: var(--white-color); z-index: 10; }
+        .page-footer { position: absolute; bottom: 15mm; left: 15mm; right: 15mm; display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--light-color); font-size: 10px; color: var(--gray-color); background: var(--white-color); z-index: 10; }
         .page-number { font-weight: 600; color: var(--primary-color); }
         
         /* ====== CAPA ====== */
@@ -71,26 +72,26 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
         .cover-logo { width: 180px; margin-bottom: 30px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
         .cover-badge { background: ${accentColor}e6; color: var(--white-color); padding: 10px 25px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; position: relative; z-index: 1; }
         .cover-badge i { font-size: 12px; }
-        .cover-icon { width: 60px; height: 60px; background: rgba(245, 166, 35, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; z-index: 1; }
-        .cover-icon i { font-size: 28px; color: var(--secondary-color); }
-        .cover-title { font-family: var(--font-primary); font-size: 26px; font-weight: 800; margin-bottom: 15px; line-height: 1.25; position: relative; z-index: 1; }
-        .cover-title span { color: var(--secondary-color); display: block; }
+        .cover-icon { width: 70px; height: 70px; background: ${accentColor}33; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; z-index: 1; }
+        .cover-icon i { font-size: 32px; color: ${accentColor}; }
+        .cover-title { font-family: var(--font-primary); font-size: 28px; font-weight: 800; margin-bottom: 15px; line-height: 1.25; position: relative; z-index: 1; }
+        .cover-title span { color: ${accentColor}; display: block; }
         .cover-subtitle { font-size: 14px; font-weight: 300; margin-bottom: 30px; opacity: 0.95; max-width: 450px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; line-height: 1.5; }
         .cover-client { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 18px 35px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); position: relative; z-index: 1; margin: 0 auto; max-width: 380px; }
         .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 6px; text-align: center; }
-        .cover-client-name { font-family: var(--font-primary); font-size: 18px; font-weight: 700; color: var(--secondary-color); text-align: center; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 18px; font-weight: 700; color: ${accentColor}; text-align: center; }
         .cover-date { margin-top: 25px; font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
         .cover-footer { position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center; font-size: 10px; opacity: 0.7; padding: 0 18mm; display: flex; justify-content: center; align-items: center; }
         .cover-footer p { margin: 0; text-align: center; width: 100%; }
         
         /* ====== TÍTULOS E TEXTOS ====== */
-        .section-number { display: inline-block; background: var(--secondary-color); color: var(--white-color); width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-family: var(--font-primary); font-weight: 700; font-size: 12px; margin-right: 10px; }
-        .section-title { font-family: var(--font-primary); font-size: 18px; font-weight: 700; color: var(--primary-color); margin-bottom: 14px; display: flex; align-items: center; padding-bottom: 10px; border-bottom: 3px solid var(--secondary-color); }
+        .section-number { display: inline-block; background: ${accentColor}; color: var(--white-color); width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-family: var(--font-primary); font-weight: 700; font-size: 13px; margin-right: 10px; }
+        .section-title { font-family: var(--font-primary); font-size: 18px; font-weight: 700; color: var(--primary-color); margin-bottom: 14px; display: flex; align-items: center; padding-bottom: 10px; border-bottom: 3px solid ${accentColor}; }
         .section-title-text { flex: 1; }
-        .subsection-title { font-family: var(--font-primary); font-size: 13px; font-weight: 700; color: var(--primary-color); margin: 12px 0 8px; display: flex; align-items: center; gap: 8px; }
-        .subsection-title i { color: var(--secondary-color); }
+        .subsection-title { font-family: var(--font-primary); font-size: 13px; font-weight: 700; color: var(--primary-color); margin: 14px 0 10px; display: flex; align-items: center; gap: 8px; }
+        .subsection-title i { color: ${accentColor}; }
         
-        p { margin-bottom: 8px; text-align: justify; font-size: 11px; line-height: 1.5; }
+        p { margin-bottom: 10px; text-align: justify; font-size: 11px; line-height: 1.55; }
         
         /* Alert box vermelho */
         .alert-box { background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-left: 4px solid var(--alert-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
@@ -122,6 +123,47 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
         .fire-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--fire-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .fire-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
         
+        /* Construction box laranja */
+        .construction-box { background: linear-gradient(135deg, #fffaf0 0%, #feebc8 100%); border-left: 4px solid ${accentColor}; padding: 12px 14px; margin: 12px 0; border-radius: 0 8px 8px 0; }
+        .construction-box h4 { font-family: var(--font-primary); font-size: 12px; color: ${accentColor}; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .construction-box p { margin-bottom: 0; font-size: 11px; line-height: 1.45; }
+        
+        /* NR Box especial */
+        .nr-box { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); color: var(--white-color); padding: 15px 18px; border-radius: 10px; margin: 15px 0; display: flex; align-items: center; gap: 15px; }
+        .nr-box-icon { width: 50px; height: 50px; background: ${accentColor}33; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .nr-box-icon i { font-size: 22px; color: ${accentColor}; }
+        .nr-box-content h4 { font-family: var(--font-primary); font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+        .nr-box-content p { font-size: 10px; margin: 0; opacity: 0.9; text-align: left; }
+        
+        /* ART Box verde */
+        .art-box { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-left: 4px solid var(--success-color); padding: 12px 14px; margin: 12px 0; border-radius: 0 8px 8px 0; }
+        .art-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .art-box p { margin-bottom: 0; font-size: 11px; line-height: 1.45; }
+        
+        /* Build list com ícone de construção */
+        .build-list { list-style: none; margin: 12px 0; }
+        .build-list li { padding: 6px 0; padding-left: 24px; position: relative; font-size: 11px; border-bottom: 1px solid var(--light-color); }
+        .build-list li:last-child { border-bottom: none; }
+        .build-list li::before { content: '\\f6e3'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: ${accentColor}; font-size: 10px; }
+        
+        /* Benefits grid */
+        .benefits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 15px 0; }
+        .benefit-item { background: var(--light-color); padding: 12px; border-radius: 8px; text-align: center; border-bottom: 3px solid ${accentColor}; }
+        .benefit-item i { font-size: 22px; color: ${accentColor}; margin-bottom: 8px; display: block; }
+        .benefit-item h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 4px; }
+        .benefit-item p { font-size: 9px; margin: 0; color: var(--gray-color); }
+        
+        /* Entregáveis lista */
+        .deliverables-list { margin: 15px 0; }
+        .deliverable-section { background: var(--light-color); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+        .deliverable-header { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); color: var(--white-color); padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+        .deliverable-header i { color: ${accentColor}; font-size: 16px; }
+        .deliverable-header h4 { font-family: var(--font-primary); font-size: 12px; font-weight: 700; margin: 0; }
+        .deliverable-content { padding: 10px 14px; }
+        .deliverable-content ul { list-style: none; margin: 0; }
+        .deliverable-content li { padding: 4px 0; padding-left: 18px; position: relative; font-size: 10px; }
+        .deliverable-content li::before { content: '\\f054'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: ${accentColor}; font-size: 8px; top: 6px; }
+        
         /* Lista de itens */
         .feature-list { list-style: none; margin: 10px 0; }
         .feature-list li { padding: 5px 0; padding-left: 22px; position: relative; font-size: 11px; border-bottom: 1px solid var(--light-color); }
@@ -143,9 +185,9 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
         
         /* Content grid */
         .content-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 12px 0; }
-        .content-card { background: var(--light-color); padding: 10px 12px; border-radius: 8px; border-left: 3px solid var(--secondary-color); }
+        .content-card { background: var(--light-color); padding: 10px 12px; border-radius: 8px; border-left: 3px solid ${accentColor}; }
         .content-card h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-        .content-card h4 i { color: var(--secondary-color); font-size: 12px; }
+        .content-card h4 i { color: ${accentColor}; font-size: 12px; }
         .content-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
         
         /* Metodologia */
@@ -156,11 +198,11 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
         .step-content p { font-size: 10px; margin-bottom: 0; line-height: 1.35; }
         
         /* Entregáveis */
-        .deliverables-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; }
-        .deliverable-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px; background: var(--light-color); border-radius: 6px; }
-        .deliverable-icon { width: 26px; height: 26px; background: var(--secondary-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--white-color); font-size: 11px; flex-shrink: 0; }
-        .deliverable-text h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 2px; }
-        .deliverable-text p { font-size: 9px; margin-bottom: 0; line-height: 1.35; }
+        .deliverables-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 12px 0; }
+        .deliverable-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px; background: var(--light-color); border-radius: 8px; }
+        .deliverable-icon { width: 28px; height: 28px; background: ${accentColor}; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--white-color); font-size: 12px; flex-shrink: 0; }
+        .deliverable-text h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 3px; }
+        .deliverable-text p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
         
         /* Condições */
         .conditions-list { margin: 12px 0; }
@@ -172,52 +214,72 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
         
         /* Carga horária */
         .carga-horaria { display: flex; gap: 12px; margin: 12px 0; }
-        .carga-item { flex: 1; background: var(--light-color); padding: 12px; border-radius: 8px; text-align: center; border-top: 3px solid var(--secondary-color); }
-        .carga-item i { font-size: 20px; color: var(--secondary-color); margin-bottom: 6px; display: block; }
+        .carga-item { flex: 1; background: var(--light-color); padding: 12px; border-radius: 8px; text-align: center; border-top: 3px solid ${accentColor}; }
+        .carga-item i { font-size: 20px; color: ${accentColor}; margin-bottom: 6px; display: block; }
         .carga-item h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 3px; }
         .carga-item p { font-size: 10px; margin: 0; color: var(--gray-color); }
         .carga-total { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); color: white; padding: 12px 15px; border-radius: 8px; text-align: center; margin: 12px 0; }
         .carga-total h3 { font-family: var(--font-primary); font-size: 12px; margin-bottom: 4px; }
-        .carga-total p { font-size: 24px; font-weight: 800; color: var(--secondary-color); margin: 0; }
+        .carga-total p { font-size: 24px; font-weight: 800; color: ${accentColor}; margin: 0; }
         
         /* Empresa contratante */
         .company-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
-        .company-info-item { padding: 8px 10px; background: var(--light-color); border-radius: 6px; border-left: 3px solid var(--secondary-color); }
-        .company-info-item label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-color); font-weight: 600; display: block; margin-bottom: 3px; }
-        .company-info-item span { font-size: 11px; color: var(--dark-color); font-weight: 500; }
+        .company-info-item { padding: 10px 12px; background: var(--light-color); border-radius: 8px; border-left: 3px solid ${accentColor}; }
+        .company-info-item label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-color); font-weight: 600; display: block; margin-bottom: 4px; }
+        .company-info-item span { font-size: 12px; color: var(--dark-color); font-weight: 500; }
         
         /* Responsável */
         .responsible-card { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); padding: 18px; border-radius: 10px; color: var(--white-color); text-align: center; margin: 15px 0; }
-        .responsible-avatar { width: 60px; height: 60px; background: rgba(245, 166, 35, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 26px; color: var(--secondary-color); border: 2px solid var(--secondary-color); }
+        .responsible-avatar { width: 60px; height: 60px; background: ${accentColor}33; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 26px; color: ${accentColor}; border: 2px solid ${accentColor}; }
         .responsible-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; margin-bottom: 3px; text-align: center; }
         .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; text-align: center; }
         .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; text-align: center; }
         .responsible-contacts { display: flex; flex-direction: column; gap: 6px; align-items: center; }
         .responsible-contact-item { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 10px; }
-        .responsible-contact-item i { color: var(--secondary-color); width: 15px; text-align: center; }
+        .responsible-contact-item i { color: ${accentColor}; width: 15px; text-align: center; }
         
         /* Diferenciais */
         .diferenciais-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 12px 0; }
-        .diferencial-item { background: var(--light-color); padding: 10px; border-radius: 6px; text-align: center; border-bottom: 3px solid var(--secondary-color); }
-        .diferencial-item i { font-size: 20px; color: var(--secondary-color); margin-bottom: 6px; display: block; }
-        .diferencial-item h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 3px; }
-        .diferencial-item p { font-size: 9px; margin: 0; color: var(--gray-color); }
+        .diferencial-item { background: var(--light-color); padding: 12px; border-radius: 8px; text-align: center; border-bottom: 3px solid ${accentColor}; }
+        .diferencial-item i { font-size: 22px; color: ${accentColor}; margin-bottom: 8px; display: block; }
+        .diferencial-item h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 4px; }
+        .diferencial-item p { font-size: 10px; margin: 0; color: var(--gray-color); line-height: 1.4; }
         
         /* Página de contato */
         .page-contact { display: flex; flex-direction: column; justify-content: center; text-align: center; }
         .contact-content { margin: auto 0; }
-        .contact-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 26px; color: var(--secondary-color); }
+        .contact-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 26px; color: ${accentColor}; }
         .contact-title { font-family: var(--font-primary); font-size: 20px; font-weight: 700; color: var(--primary-color); margin-bottom: 8px; }
         .contact-subtitle { font-size: 11px; color: var(--gray-color); margin-bottom: 15px; max-width: 400px; margin-left: auto; margin-right: auto; }
         .contact-info { display: flex; flex-direction: column; gap: 8px; align-items: center; }
         .contact-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--dark-color); }
-        .contact-item i { color: var(--secondary-color); font-size: 14px; width: 20px; }
+        .contact-item i { color: ${accentColor}; font-size: 14px; width: 20px; }
         .contact-signature { margin-top: 20px; padding-top: 15px; border-top: 2px solid var(--light-color); }
         .signature-logo { height: 35px; margin-bottom: 8px; }
         .signature-text { font-size: 10px; color: var(--gray-color); line-height: 1.5; }
         
         /* Included services */
         .included-services { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; font-size: 10px; }
+        
+        /* Tabela de investimento */
+        .investment-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 11px; }
+        .investment-table thead tr { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); color: white; }
+        .investment-table th { padding: 10px 12px; font-family: var(--font-primary); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid var(--primary-color); }
+        .investment-table tbody tr { background: white; }
+        .investment-table tbody tr:nth-child(even) { background: var(--light-color); }
+        .investment-table td { padding: 10px 12px; border: 1px solid #cbd5e0; vertical-align: middle; }
+        .investment-table .training-name { font-weight: 600; color: var(--primary-color); display: flex; align-items: center; gap: 8px; }
+        .investment-table .training-name i { font-size: 14px; }
+        .investment-table tfoot tr { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); color: white; }
+        .investment-table tfoot td { padding: 12px; font-family: var(--font-primary); font-weight: 700; font-size: 12px; border: 1px solid var(--primary-color); }
+        .investment-table tfoot td:last-child { font-size: 14px; }
+        
+        /* Directors grid */
+        .directors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 12px 0; }
+        .director-card { background: var(--light-color); padding: 12px; border-radius: 8px; text-align: center; }
+        .director-card i { font-size: 26px; color: var(--primary-color); margin-bottom: 8px; display: block; }
+        .director-card h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 2px; }
+        .director-card p { font-size: 10px; margin: 0; color: var(--gray-color); }
         
         @media print {
             .pdf-controls { display: none !important; }

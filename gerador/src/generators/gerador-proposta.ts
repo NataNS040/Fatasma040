@@ -6,9 +6,12 @@ import { TipoProposta, DadosTemplate, DadosCliente } from '../types/proposta.typ
 import { getPropostaStyles } from '../styles/proposta-styles';
 import { getTemplateBrigada } from '../templates/template-brigada';
 import { getTemplatePlataforma } from '../templates/template-plataforma';
+import { getTemplatePlataformaPrincipal } from '../templates/template-plataforma-principal';
 import { getTemplatePsicossocial } from '../templates/template-psicossocial';
 import { getTemplateAssessoria } from '../templates/template-assessoria';
+import { getTemplateTreinamentos } from '../templates/template-treinamentos';
 import { formatData } from '../utils/formatters';
+import logoEngmarq from '../../assets/logoengmarq.png';
 
 /**
  * Converte dados do cliente para dados formatados do template
@@ -26,7 +29,8 @@ export function prepararDadosTemplate(dados: DadosCliente): DadosTemplate {
         uf: dados.estado,
         qtdColaboradores: dados.qtdColaboradores,
         elaborador: dados.elaborador,
-        solicitante: dados.solicitante
+        solicitante: dados.solicitante,
+        logoUrl: logoEngmarq
     };
 }
 
@@ -46,10 +50,14 @@ function selecionarTemplate(
             return getTemplateBrigada(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         case 'plataforma':
             return getTemplatePlataforma(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
+        case 'plataforma-principal':
+            return getTemplatePlataformaPrincipal(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         case 'psicossocial':
             return getTemplatePsicossocial(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         case 'assessoria':
             return getTemplateAssessoria(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
+        case 'treinamentos':
+            return getTemplateTreinamentos(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         default:
             throw new Error(`Tipo de proposta não suportado: ${tipo}`);
     }

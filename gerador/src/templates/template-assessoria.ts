@@ -32,7 +32,7 @@ export function getTemplateAssessoria(
         <div class="page page-cover">
             <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--accent-color); letter-spacing: 3px;">${dados.numero}</span>
             
-            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            <img src="${dados.logoUrl}" alt="EngMarq Solution" class="cover-logo">
             
             <span class="cover-badge">
                 <i class="fas fa-shield-alt"></i>
@@ -69,7 +69,7 @@ export function getTemplateAssessoria(
         <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
             </div>
 
@@ -135,7 +135,7 @@ export function getTemplateAssessoria(
         <!-- ====== PÁGINA 3: FORNECIMENTO DE EQUIPE TÉCNICA ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
             </div>
 
@@ -202,7 +202,7 @@ export function getTemplateAssessoria(
         <!-- ====== PÁGINA 4: TREINAMENTOS DE CAPACITAÇÃO TÉCNICA ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
             </div>
 
@@ -299,7 +299,7 @@ export function getTemplateAssessoria(
         <!-- ====== PÁGINA 5: INVESTIMENTO ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
             </div>
 
@@ -310,73 +310,51 @@ export function getTemplateAssessoria(
 
             ${descontoHTML}
 
-            <table style="width: 100%; border-collapse: collapse; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+            <table class="investment-table">
                 <thead>
-                    <tr style="background: #2c5282; color: white;">
-                        <th style="padding: 12px 15px; text-align: left; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Descrição</th>
-                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Valor Mensal</th>
+                    <tr>
+                        <th style="width: 70%;">Serviço</th>
+                        <th style="width: 30%; text-align: right;">Valor Mensal</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="background: white;">
-                        <td style="padding: 12px 15px; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">Assessoria Personalizada em SST (1 visita técnica mensal + suporte sob demanda + programa de treinamentos incluso)</td>
-                        <td style="padding: 12px 15px; text-align: center; font-size: 14px; color: #2d3748; font-weight: 700; border: 1px solid #cbd5e0;">R$ ${formatMoeda(valorFinal)}</td>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-hard-hat" style="color: var(--secondary-color);"></i> Assessoria Personalizada em SST (1 visita/mês + suporte sob demanda + treinamentos inclusos)</td>
+                        <td style="text-align: right; font-weight: 600;">R$ ${formatMoeda(valorFinal)}</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td><i class="fas fa-calculator"></i> INVESTIMENTO MENSAL</td>
+                        <td style="text-align: right;">R$ ${formatMoeda(valorFinal)}</td>
+                    </tr>
+                </tfoot>
             </table>
 
             <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
-            
-            <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 10px;">
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>1 Técnico de Segurança do Trabalho</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>1 visita técnica mensal</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Assessoria online sob demanda</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Gestão de PGR, PCMSO e LTCAT</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Treinamento Admissional NR-18 (1/mês)</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Treinamento CIPA (1/ano)</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Treinamento Brigada de Incêndio (1/ano)</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Treinamento NR-10 (1/ano)</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Treinamento NR-35 (1/ano)</span>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 8px;">
-                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Inspeções de EPIs e EPCs</span>
-                </div>
+            <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; font-size: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>1 Técnico de Segurança do Trabalho</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>1 visita técnica mensal</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Assessoria online sob demanda</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Gestão de PGR, PCMSO e LTCAT</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Treinamento Admissional NR-18 (1/mês)</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Treinamento CIPA (1/ano)</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Treinamento Brigada de Incêndio (1/ano)</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Treinamento NR-10 (1/ano)</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Treinamento NR-35 (1/ano)</span></div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;"><i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i><span>Inspeções de EPIs e EPCs</span></div>
             </div>
 
-            <div class="green-box" style="margin-top: 15px;">
-                <h4><i class="fas fa-star"></i> Diferenciais EngMarq Solution</h4>
-                <p>Equipe especializada em Segurança e Saúde do Trabalho (SST), metodologia baseada em resultados, relatórios mensais de acompanhamento e total comprometimento com a segurança dos seus colaboradores.</p>
+            <h3 class="subsection-title"><i class="fas fa-credit-card"></i> Condições de Pagamento</h3>
+            <div class="company-info-grid">
+                <div class="company-info-item"><label>Forma de Pagamento</label><span>Transferência Bancária ou PIX</span></div>
+                <div class="company-info-item"><label>Vencimento</label><span>Todo dia 10 do mês vigente</span></div>
+                <div class="company-info-item"><label>Validade da Proposta</label><span>15 dias corridos</span></div>
+                <div class="company-info-item"><label>Vigência do Contrato</label><span>12 meses (renovável)</span></div>
             </div>
 
-            <div class="highlight-box" style="margin-top: 15px;">
-                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Esta proposta é válida por 15 (quinze) dias a partir da data de emissão. Serviços adicionais não contemplados nesta proposta podem ser negociados separadamente.</p>
+            <div class="info-box" style="margin-top: 15px;">
+                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Observação:</strong> Serviços adicionais não contemplados nesta proposta podem ser negociados separadamente.</p>
             </div>
 
             <div class="page-footer">
@@ -388,7 +366,7 @@ export function getTemplateAssessoria(
         <!-- ====== PÁGINA 6: RESPONSÁVEL PELA PROPOSTA ====== -->
         <div class="page page-contact">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
             </div>
 
@@ -461,7 +439,7 @@ export function getTemplateAssessoria(
         <!-- ====== PÁGINA 7: TERMO DE ACEITE ====== -->
         <div class="page">
             <div class="page-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
                 <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
             </div>
 
@@ -543,5 +521,58 @@ export function getTemplateAssessoria(
                 <span class="page-number">07</span>
             </div>
         </div>
+
+        <!-- ====== PÁGINA 8: CONTATO ====== -->
+        <div class="page page-contact">
+            <div class="page-header">
+                <img src="${dados.logoUrl}" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h2 class="contact-title">Fale Conosco</h2>
+                <p class="contact-subtitle">
+                    Estamos à disposição para dar continuidade ao processo de contratação e esclarecer eventuais dúvidas sobre a assessoria em SST.
+                </p>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-instagram"></i>
+                        <span>@engmarq_solution</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <span>www.engmarqsolution.com</span>
+                    </div>
+                </div>
+
+                <div class="contact-signature">
+                    <img src="${dados.logoUrl}" alt="EngMarq Solution" class="signature-logo">
+                    <p class="signature-text">
+                        <strong>EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        <em style="color: var(--primary-color); font-style: italic; font-size: 11px;">Garantindo segurança jurídica para sua empresa.</em><br>
+                        Natal - Rio Grande do Norte
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
     `;
 }
+
