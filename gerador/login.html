@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | EngMarq Solution - Gerador de Propostas</title>
+    <link rel="icon" type="image/png" href="./src/assets/logoengmarq.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./src/styles/login-styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="./src/assets/logoengmarq.png" alt="EngMarq Solution" class="login-logo">
+                <h1 class="login-title">Gerador de Propostas</h1>
+                <p class="login-subtitle">Acesso exclusivo para equipe EngMarq</p>
+            </div>
+            
+            <form class="login-form" id="loginForm">
+                <div class="login-error" id="loginError">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="errorMessage">E-mail ou senha incorretos</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">
+                        <i class="fas fa-envelope"></i> E-mail
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        class="form-input" 
+                        placeholder="seu.email@engmarqsolution.com"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="senha">
+                        <i class="fas fa-lock"></i> Senha
+                    </label>
+                    <div class="password-wrapper">
+                        <input 
+                            type="password" 
+                            id="senha" 
+                            class="form-input" 
+                            placeholder="Digite sua senha"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="password-toggle" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="remember-me">
+                    <input type="checkbox" id="lembrar">
+                    <label for="lembrar">Manter conectado</label>
+                </div>
+                
+                <button type="submit" class="btn-login" id="btnLogin">
+                    <i class="fas fa-sign-in-alt"></i> Entrar
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Problemas com acesso? <br>Fale com a equipe interna.</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./src/login.ts"></script>
+</body>
+</html>

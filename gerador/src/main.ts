@@ -6,6 +6,16 @@ import { TipoProposta, DadosCliente, PropostaConfigs, TreinamentoSelecionado, Tr
 import { configs, isValidTipo } from './config/proposta-config';
 import { formatMoeda, parseValorMonetario, calcularDesconto, formatData } from './utils/formatters';
 import { gerarHTMLProposta } from './generators/gerador-proposta';
+import { obterSessao, removerSessao } from './auth/usuarios';
+
+// =====================================================
+// VERIFICAÇÃO DE AUTENTICAÇÃO
+// =====================================================
+const sessao = obterSessao();
+if (!sessao.logado) {
+    // Redireciona para o login se não estiver autenticado
+    window.location.href = './login.html';
+}
 
 // Expor globalmente para uso no HTML
 declare global {
@@ -16,6 +26,24 @@ declare global {
         formatMoeda: (v: number) => string;
         adicionarEmpresa: () => void;
         removerEmpresa: (index: number) => void;
+        fazerLogout: () => void;
+    }
+}
+
+/**
+ * Função para fazer logout
+ */
+function fazerLogout(): void {
+    removerSessao();
+    window.location.href = './login.html';
+}
+window.fazerLogout = fazerLogout;
+
+// Mostrar nome do usuário logado no header
+if (sessao.usuario) {
+    const userNameText = document.getElementById('userNameText');
+    if (userNameText) {
+        userNameText.textContent = sessao.usuario.nome || '';
     }
 }
 

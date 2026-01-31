@@ -20,11 +20,12 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        login: resolve(__dirname, 'login.html'),
       },
     },
   },
   server: {
     port: 5174,
-    open: '/index.html',
+    open: '/login.html',
   },
 });
