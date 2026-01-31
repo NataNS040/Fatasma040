@@ -2,8 +2,264 @@
 // TEMPLATE RISCOS PSICOSSOCIAIS - COMPLETO
 // =====================================================
 
-import { DadosTemplate } from '../types/proposta.types';
+import { DadosTemplate, EntregavelPsico, EmpresaGrupo } from '../types/proposta.types';
 import { formatMoeda, valorPorExtenso } from '../utils/formatters';
+
+/**
+ * Gera HTML para uma empresa do grupo
+ */
+function gerarEmpresaGrupoHTML(empresa: EmpresaGrupo, index: number): string {
+    return `
+        <div style="background: var(--light-color); border-radius: 10px; padding: 15px; margin-bottom: 12px; border-left: 4px solid var(--accent-color);">
+            <h4 style="font-family: var(--font-primary); font-size: 13px; color: var(--accent-color); margin-bottom: 10px;">
+                <i class="fas fa-building" style="margin-right: 6px;"></i>Empresa ${index + 1}: ${empresa.razaoSocial}
+            </h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px;">
+                <div><strong>CNPJ:</strong> ${empresa.cnpj || '—'}</div>
+                <div><strong>Colaboradores:</strong> ${empresa.qtdColaboradores || '—'}</div>
+                <div style="grid-column: 1 / -1;"><strong>Endereço:</strong> ${empresa.endereco || '—'}, ${empresa.bairro || ''} - ${empresa.cidade || ''} / ${empresa.estado || ''}</div>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Gera a tabela de investimento por empresa (para proposta em grupo)
+ */
+function gerarTabelaInvestimentoGrupo(dados: DadosTemplate, valorFinal: number): string {
+    if (!dados.isGrupo || !dados.empresasGrupo || dados.empresasGrupo.length === 0) {
+        // Proposta individual - tabela simples
+        return `
+            <table class="investment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Serviço</th>
+                        <th style="width: 20%; text-align: center;">Nº Colaboradores</th>
+                        <th style="width: 30%; text-align: right;">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-brain" style="color: var(--purple-color);"></i> Avaliação de Fatores de Riscos Psicossociais (NR-01)</td>
+                        <td style="text-align: center;">${dados.qtdColaboradores || '—'}</td>
+                        <td style="text-align: right; font-weight: 600;">R$ ${formatMoeda(valorFinal)}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><i class="fas fa-calculator"></i> INVESTIMENTO TOTAL</td>
+                        <td style="text-align: right;">R$ ${formatMoeda(valorFinal)}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        `;
+    }
+    
+    // Proposta em grupo - tabela detalhada por empresa
+    const totalColaboradores = dados.empresasGrupo.reduce((acc, emp) => acc + (parseInt(emp.qtdColaboradores || '0') || 0), 0);
+    const totalValor = dados.empresasGrupo.reduce((acc, emp) => acc + (emp.valor || 0), 0);
+    
+    const linhasEmpresas = dados.empresasGrupo.map((emp) => `
+        <tr>
+            <td class="training-name">
+                <i class="fas fa-building" style="color: var(--accent-color);"></i> 
+                ${emp.razaoSocial}
+            </td>
+            <td style="text-align: center;">${emp.qtdColaboradores || '—'}</td>
+            <td style="text-align: right; font-weight: 600;">R$ ${formatMoeda(emp.valor || 0)}</td>
+        </tr>
+    `).join('');
+    
+    return `
+        <table class="investment-table">
+            <thead>
+                <tr>
+                    <th style="width: 50%;">Empresa</th>
+                    <th style="width: 20%; text-align: center;">Nº Colaboradores</th>
+                    <th style="width: 30%; text-align: right;">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${linhasEmpresas}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><i class="fas fa-calculator"></i> INVESTIMENTO TOTAL</td>
+                    <td style="text-align: center;"><strong>${totalColaboradores}</strong></td>
+                    <td style="text-align: right;">R$ ${formatMoeda(totalValor > 0 ? totalValor : valorFinal)}</td>
+                </tr>
+            </tfoot>
+        </table>
+    `;
+}
+
+/**
+ * Gera a seção de empresas (individual ou grupo)
+ */
+function gerarSecaoEmpresas(dados: DadosTemplate): string {
+    if (dados.isGrupo && dados.empresasGrupo && dados.empresasGrupo.length > 0) {
+        // Proposta em grupo
+        const empresasHTML = dados.empresasGrupo.map((emp, i) => gerarEmpresaGrupoHTML(emp, i)).join('');
+        const totalColaboradores = dados.empresasGrupo.reduce((acc, emp) => acc + (parseInt(emp.qtdColaboradores || '0') || 0), 0);
+        
+        return `
+            <div class="info-box" style="margin-bottom: 15px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-left-color: #10b981;">
+                <h4 style="color: #10b981;"><i class="fas fa-layer-group"></i> Proposta para Grupo: ${dados.nomeGrupo || dados.razaoSocial}</h4>
+                <p>Esta proposta abrange <strong>${dados.empresasGrupo.length} empresas</strong> do grupo, totalizando <strong>${totalColaboradores} colaboradores</strong>.</p>
+            </div>
+            
+            <h3 class="subsection-title"><i class="fas fa-building"></i> Empresas do Grupo</h3>
+            ${empresasHTML}
+        `;
+    } else {
+        // Proposta individual
+        return `
+            <h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>
+            
+            <div class="company-info-grid">
+                <div class="company-info-item">
+                    <label>Razão Social</label>
+                    <span>${dados.razaoSocial}</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>${dados.cnpj}</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nome Fantasia</label>
+                    <span>${dados.razaoSocial}</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Quantidade de Colaboradores</label>
+                    <span>${dados.qtdColaboradores || '—'} colaboradores</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Endereço</label>
+                    <span>${dados.endereco}</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Bairro</label>
+                    <span>${dados.bairro}</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CEP</label>
+                    <span>${dados.cep}</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Município / UF</label>
+                    <span>${dados.cidade} - ${dados.uf}</span>
+                </div>
+            </div>
+        `;
+    }
+}
+
+/**
+ * Entregáveis padrão caso não sejam fornecidos
+ */
+const entregaveisPadrao: EntregavelPsico[] = [
+    {
+        id: 'relatorio',
+        titulo: 'Relatório Técnico de Avaliação de Riscos Psicossociais',
+        icon: 'fas fa-file-alt',
+        descricao: 'Documento completo com diagnóstico organizacional, análise quantitativa e qualitativa, classificação por criticidade e probabilidade, mapeamento por setor/função e indicadores de risco.',
+        ativo: true
+    },
+    {
+        id: 'plano',
+        titulo: 'Plano de Ação Preventivo e Corretivo',
+        icon: 'fas fa-tasks',
+        descricao: 'Recomendações técnicas estruturadas com medidas de controle, prazos sugeridos, responsáveis indicados e priorização conforme matriz de risco.',
+        ativo: true
+    },
+    {
+        id: 'aep',
+        titulo: 'AEP – Avaliação Ergonômica Preliminar',
+        icon: 'fas fa-clipboard-check',
+        descricao: 'Análise das condições ergonômicas correlacionadas aos fatores psicossociais identificados (quando aplicável ao contexto).',
+        ativo: true
+    },
+    {
+        id: 'palestras',
+        titulo: 'Palestras de Conscientização',
+        icon: 'fas fa-chalkboard-teacher',
+        descricao: 'Palestras sobre Fatores de Riscos Psicossociais no ambiente de trabalho para sensibilização dos colaboradores.',
+        quantidade: 2,
+        ativo: true
+    },
+    {
+        id: 'janeiro_branco',
+        titulo: 'Campanha Janeiro Branco',
+        icon: 'fas fa-ribbon',
+        descricao: 'Material de conscientização sobre saúde mental para divulgação interna',
+        ativo: true
+    },
+    {
+        id: 'reavaliacao',
+        titulo: 'Reavaliação Trimestral',
+        icon: 'fas fa-redo',
+        descricao: 'Uma reavaliação dos fatores de riscos psicossociais após 3 meses da entrega do relatório inicial',
+        ativo: true
+    }
+];
+
+/**
+ * Gera HTML para os entregáveis principais (excluindo bônus)
+ */
+function gerarEntregaveisDinamicos(entregaveis?: EntregavelPsico[]): string {
+    const lista = entregaveis && entregaveis.length > 0 ? entregaveis : entregaveisPadrao;
+    
+    // Filtrar apenas os entregáveis principais (não bônus) que estão ativos
+    const principais = lista.filter(e => 
+        e.ativo && e.id !== 'janeiro_branco' && e.id !== 'reavaliacao'
+    );
+    
+    return principais.map(entregavel => {
+        // Para palestras, adicionar quantidade no título
+        let titulo = entregavel.titulo;
+        if (entregavel.id === 'palestras' && entregavel.quantidade) {
+            titulo = `${entregavel.quantidade} ${entregavel.titulo}`;
+        }
+        
+        return `
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="${entregavel.icon}"></i></div>
+                <div class="deliverable-text">
+                    <h4>${titulo}</h4>
+                    <p>${entregavel.descricao}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+/**
+ * Gera HTML para os bônus selecionados
+ */
+function gerarBonusDinamico(entregaveis?: EntregavelPsico[]): string {
+    const lista = entregaveis && entregaveis.length > 0 ? entregaveis : entregaveisPadrao;
+    
+    const bonus = lista.filter(e => 
+        (e.id === 'janeiro_branco' || e.id === 'reavaliacao') && e.ativo
+    );
+    
+    if (bonus.length === 0) return '';
+    
+    const bonusItens = bonus.map((b, index) => {
+        let texto = `<strong>• ${b.titulo}</strong>`;
+        if (b.descricao) {
+            texto += ` – ${b.descricao}`;
+        }
+        return `<p style="margin-bottom: ${index === bonus.length - 1 ? '0' : '8px'};">${texto}</p>`;
+    }).join('');
+    
+    return `
+        <div class="info-box" style="margin-top: 15px; background: linear-gradient(135deg, #f9f0ff 0%, #ede9fe 100%); border-left-color: var(--accent-color);">
+            <h4 style="color: var(--accent-color);"><i class="fas fa-gift"></i> Bônus Inclusos no Pacote</h4>
+            ${bonusItens}
+        </div>
+    `;
+}
 
 /**
  * Gera o template HTML completo para proposta de Riscos Psicossociais
@@ -81,45 +337,10 @@ export function getTemplatePsicossocial(
 
             <h2 class="section-title">
                 <span class="section-number">1</span>
-                <span class="section-title-text">Sobre a Empresa Contratante</span>
+                <span class="section-title-text">Sobre ${dados.isGrupo ? 'as Empresas Contratantes' : 'a Empresa Contratante'}</span>
             </h2>
 
-            <h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>
-            
-            <div class="company-info-grid">
-                <div class="company-info-item">
-                    <label>Razão Social</label>
-                    <span>${dados.razaoSocial}</span>
-                </div>
-                <div class="company-info-item">
-                    <label>CNPJ</label>
-                    <span>${dados.cnpj}</span>
-                </div>
-                <div class="company-info-item">
-                    <label>Nome Fantasia</label>
-                    <span>${nomeFantasia}</span>
-                </div>
-                <div class="company-info-item">
-                    <label>Quantidade de Colaboradores</label>
-                    <span>${dados.qtdColaboradores || '—'} colaboradores</span>
-                </div>
-                <div class="company-info-item">
-                    <label>Endereço</label>
-                    <span>${dados.endereco}</span>
-                </div>
-                <div class="company-info-item">
-                    <label>Bairro</label>
-                    <span>${dados.bairro}</span>
-                </div>
-                <div class="company-info-item">
-                    <label>CEP</label>
-                    <span>${dados.cep}</span>
-                </div>
-                <div class="company-info-item">
-                    <label>Município / UF</label>
-                    <span>${dados.cidade} - ${dados.uf}</span>
-                </div>
-            </div>
+            ${gerarSecaoEmpresas(dados)}
 
             ${dados.solicitante.nome ? `
             <h3 class="subsection-title" style="margin-top: 20px;"><i class="fas fa-user"></i> Solicitante</h3>
@@ -429,34 +650,7 @@ export function getTemplatePsicossocial(
             <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos (PDF)</h3>
 
             <div class="deliverables-grid">
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-file-alt"></i></div>
-                    <div class="deliverable-text">
-                        <h4>Relatório Técnico de Avaliação de Riscos Psicossociais</h4>
-                        <p>Documento completo com diagnóstico organizacional, análise quantitativa e qualitativa, classificação por criticidade e probabilidade, mapeamento por setor/função e indicadores de risco.</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-tasks"></i></div>
-                    <div class="deliverable-text">
-                        <h4>Plano de Ação Preventivo e Corretivo</h4>
-                        <p>Recomendações técnicas estruturadas com medidas de controle, prazos sugeridos, responsáveis indicados e priorização conforme matriz de risco.</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-clipboard-check"></i></div>
-                    <div class="deliverable-text">
-                        <h4>AEP – Avaliação Ergonômica Preliminar</h4>
-                        <p>Análise das condições ergonômicas correlacionadas aos fatores psicossociais identificados (quando aplicável ao contexto).</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <div class="deliverable-text">
-                        <h4>2 Palestras de Conscientização</h4>
-                        <p>Duas palestras sobre Fatores de Riscos Psicossociais no ambiente de trabalho para sensibilização dos colaboradores.</p>
-                    </div>
-                </div>
+                ${gerarEntregaveisDinamicos(dados.entregaveisPsico)}
             </div>
 
             <div class="info-box" style="margin-top: 15px;">
@@ -464,11 +658,7 @@ export function getTemplatePsicossocial(
                 <p>Todos os documentos são assinados por profissionais habilitados, em conformidade com a NR-01 e metodologias validadas cientificamente, garantindo aceitação em fiscalizações do MTE e processos trabalhistas.</p>
             </div>
 
-            <div class="info-box" style="margin-top: 15px; background: linear-gradient(135deg, #f9f0ff 0%, #ede9fe 100%); border-left-color: var(--accent-color);">
-                <h4 style="color: var(--accent-color);"><i class="fas fa-gift"></i> Bônus Inclusos no Pacote</h4>
-                <p style="margin-bottom: 8px;"><strong>• Campanha Janeiro Branco</strong> – Material de conscientização sobre saúde mental para divulgação interna</p>
-                <p style="margin: 0;"><strong>• Reavaliação Trimestral</strong> – Uma reavaliação dos fatores de riscos psicossociais após 3 meses da entrega do relatório inicial</p>
-            </div>
+            ${gerarBonusDinamico(dados.entregaveisPsico)}
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
@@ -543,37 +733,23 @@ export function getTemplatePsicossocial(
             </h2>
 
             <div class="highlight-box" style="margin-bottom: 15px;">
-                <p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrangência:</strong> Serviço dimensionado para <strong>${dados.qtdColaboradores || '—'} colaboradores</strong></p>
+                ${dados.isGrupo && dados.empresasGrupo && dados.empresasGrupo.length > 0 
+                    ? `<p style="margin: 0;"><strong><i class="fas fa-building"></i> Proposta para ${dados.nomeGrupo || 'Grupo'}:</strong> ${dados.empresasGrupo.length} empresas | <strong>${dados.empresasGrupo.reduce((acc, emp) => acc + (parseInt(emp.qtdColaboradores || '0') || 0), 0)} colaboradores</strong></p>`
+                    : `<p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrangência:</strong> Serviço dimensionado para <strong>${dados.qtdColaboradores || '—'} colaboradores</strong></p>`
+                }
             </div>
 
             <p>O valor abaixo corresponde ao investimento para execução completa dos serviços de <strong>Avaliação de Fatores de Riscos Psicossociais</strong>:</p>
 
             ${descontoHTML}
 
-            <table class="investment-table">
-                <thead>
-                    <tr>
-                        <th style="width: 50%;">Serviço</th>
-                        <th style="width: 20%; text-align: center;">Nº Colaboradores</th>
-                        <th style="width: 30%; text-align: right;">Valor Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="training-name"><i class="fas fa-brain" style="color: var(--purple-color);"></i> Avaliação de Fatores de Riscos Psicossociais (NR-01)</td>
-                        <td style="text-align: center;">${dados.qtdColaboradores || '—'}</td>
-                        <td style="text-align: right; font-weight: 600;">R$ ${formatMoeda(valorFinal)}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2"><i class="fas fa-calculator"></i> INVESTIMENTO TOTAL</td>
-                        <td style="text-align: right;">R$ ${formatMoeda(valorFinal)}</td>
-                    </tr>
-                </tfoot>
-            </table>
+            ${gerarTabelaInvestimentoGrupo(dados, valorFinal)}
 
-            <p style="font-size: 10px; color: var(--gray-color); text-align: center; margin-top: 5px;">(${valorPorExtenso(valorFinal)})</p>
+            <p style="font-size: 10px; color: var(--gray-color); text-align: center; margin-top: 5px;">(${
+                dados.isGrupo && dados.empresasGrupo && dados.empresasGrupo.length > 0 
+                    ? valorPorExtenso(dados.empresasGrupo.reduce((acc, emp) => acc + (emp.valor || 0), 0) || valorFinal)
+                    : valorPorExtenso(valorFinal)
+            })</p>
 
             <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
             <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; font-size: 10px;">

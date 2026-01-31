@@ -3,7 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: '.',
-  base: './',
+  base: '/gerador-de-proposta/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -24,6 +24,7 @@ export default defineConfig({
     },
   },
   server: {
+    port: 5174,
     open: '/index.html',
   },
 });

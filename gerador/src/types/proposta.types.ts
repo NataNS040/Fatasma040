@@ -8,6 +8,42 @@
 export type TipoProposta = 'brigada' | 'plataforma' | 'plataforma-principal' | 'psicossocial' | 'assessoria' | 'kit-sst' | 'treinamentos';
 
 /**
+ * IDs dos treinamentos disponíveis
+ */
+export type TreinamentoId = 'nr10' | 'nr12' | 'nr33' | 'nr35' | 'brigada' | 'cipa' | 'primeiros-socorros';
+
+/**
+ * Treinamento selecionado com seus dados
+ */
+export interface TreinamentoSelecionado {
+    id: TreinamentoId;
+    nome: string;
+    icon: string;
+    descricao: string;
+    cargaHoraria?: string;
+    qtdAlunos?: number;
+    qtdTurmas?: number;
+    valor?: number;
+}
+
+/**
+ * IDs dos entregáveis psicossociais
+ */
+export type EntregavelPsicoId = 'relatorio' | 'plano' | 'aep' | 'palestras' | 'janeiro_branco' | 'reavaliacao';
+
+/**
+ * Entregável psicossocial selecionado
+ */
+export interface EntregavelPsico {
+    id: EntregavelPsicoId;
+    titulo: string;
+    icon: string;
+    descricao: string;
+    quantidade?: number;
+    ativo: boolean;
+}
+
+/**
  * Configuração específica de cada tipo de proposta
  */
 export interface PropostaConfig {
@@ -26,6 +62,21 @@ export interface PropostaConfig {
 export type PropostaConfigs = Record<TipoProposta, PropostaConfig>;
 
 /**
+ * Dados de uma empresa individual (para grupo)
+ */
+export interface EmpresaGrupo {
+    razaoSocial: string;
+    cnpj: string;
+    endereco: string;
+    bairro: string;
+    cep: string;
+    cidade: string;
+    estado: string;
+    qtdColaboradores?: string;
+    valor?: number;
+}
+
+/**
  * Dados do cliente/empresa para a proposta
  */
 export interface DadosCliente {
@@ -42,6 +93,12 @@ export interface DadosCliente {
     qtdColaboradores: string;
     elaborador: DadosElaborador;
     solicitante: DadosSolicitante;
+    treinamentos?: TreinamentoSelecionado[];
+    entregaveisPsico?: EntregavelPsico[];
+    // Campos para proposta em grupo
+    isGrupo?: boolean;
+    nomeGrupo?: string;
+    empresasGrupo?: EmpresaGrupo[];
 }
 
 /**
@@ -82,6 +139,12 @@ export interface DadosTemplate {
     elaborador: DadosElaborador;
     solicitante: DadosSolicitante;
     logoUrl: string;
+    treinamentos?: TreinamentoSelecionado[];
+    entregaveisPsico?: EntregavelPsico[];
+    // Campos para proposta em grupo
+    isGrupo?: boolean;
+    nomeGrupo?: string;
+    empresasGrupo?: EmpresaGrupo[];
 }
 
 /**

@@ -477,3 +477,420 @@ body {
     background: rgba(104, 211, 145, 0.2);
     border-left-color: #68d391;
 }
+
+/* =====================================================
+   SEÇÃO DE TREINAMENTOS SELECIONÁVEIS
+   ===================================================== */
+
+.form-hint {
+    font-size: 12px;
+    color: var(--gray);
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.training-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.training-item {
+    background: var(--light);
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.training-item:hover {
+    border-color: var(--primary);
+}
+
+.training-item input[type="checkbox"] {
+    display: none;
+}
+
+.training-item > label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--dark);
+    margin: 0;
+    text-transform: none;
+    font-size: 14px;
+}
+
+.training-item > label i {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.training-item > label span {
+    flex: 1;
+}
+
+.training-item input[type="checkbox"]:checked + label {
+    color: var(--primary);
+}
+
+.training-item input[type="checkbox"]:checked + label i {
+    background: var(--accent);
+}
+
+.training-item:has(input[type="checkbox"]:checked) {
+    border-color: var(--primary);
+    background: rgba(30, 58, 138, 0.05);
+}
+
+.training-details {
+    display: none;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.training-item:has(input[type="checkbox"]:checked) .training-details {
+    display: block;
+}
+
+.training-details .form-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.training-details .form-group {
+    margin: 0;
+}
+
+.training-details .form-group label {
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.training-details .form-group input {
+    padding: 8px 10px;
+    font-size: 13px;
+}
+
+.training-total {
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.training-total span {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin-left: 10px;
+}
+
+/* ====== ENTREGÁVEIS PSICOSSOCIAL ====== */
+.deliverables-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.deliverable-check-item {
+    background: var(--light);
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.deliverable-check-item:hover {
+    border-color: var(--accent);
+}
+
+.deliverable-check-item input[type="checkbox"] {
+    display: none;
+}
+
+.deliverable-check-item > label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--dark);
+    margin: 0;
+    text-transform: none;
+    font-size: 14px;
+}
+
+.deliverable-check-item > label i {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.deliverable-check-item > label span {
+    flex: 1;
+}
+
+.deliverable-check-item input[type="checkbox"]:checked + label {
+    color: var(--accent);
+}
+
+.deliverable-check-item:has(input[type="checkbox"]:checked) {
+    border-color: var(--accent);
+    background: rgba(139, 92, 246, 0.05);
+}
+
+.deliverable-check-item:not(:has(input[type="checkbox"]:checked)) > label {
+    opacity: 0.5;
+}
+
+.deliverable-check-item:not(:has(input[type="checkbox"]:checked)) > label i {
+    background: #999;
+}
+
+.deliverable-edit {
+    display: none;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.deliverable-check-item:has(input[type="checkbox"]:checked) .deliverable-edit {
+    display: block;
+}
+
+.deliverable-edit textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    resize: vertical;
+    background: white;
+}
+
+.deliverable-edit textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.deliverable-edit .form-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.deliverable-edit .form-group {
+    margin: 0;
+}
+
+.deliverable-edit .form-group label {
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.deliverable-edit .form-group input {
+    padding: 8px 10px;
+    font-size: 13px;
+}
+
+/* Treinamentos Preview */
+.preview-page.treinamentos {
+    background: linear-gradient(180deg, #1e3a8a 0%, #1e40af 100%);
+}
+.preview-page.treinamentos .preview-icon {
+    border-color: #60a5fa;
+}
+.preview-page.treinamentos .preview-icon i,
+.preview-page.treinamentos .preview-title-main,
+.preview-page.treinamentos .preview-date i {
+    color: #60a5fa;
+}
+.preview-page.treinamentos .preview-divider {
+    background: #60a5fa;
+}
+.preview-page.treinamentos .preview-client {
+    background: rgba(96, 165, 250, 0.2);
+    border-left-color: #60a5fa;
+}
+
+/* ====== GRUPO DE EMPRESAS ====== */
+.grupo-toggle {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-radius: 8px;
+    border: 1px solid #86efac;
+}
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--dark);
+    margin: 0 !important;
+    text-transform: none !important;
+}
+
+.toggle-label input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-switch {
+    width: 44px;
+    height: 24px;
+    background: #cbd5e1;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-label input:checked + .toggle-switch {
+    background: var(--accent);
+}
+
+.toggle-label input:checked + .toggle-switch::after {
+    left: 22px;
+}
+
+#grupo-nome-container {
+    margin-bottom: 15px;
+    animation: fadeIn 0.3s ease;
+}
+
+#grupo-nome-container .form-group label {
+    color: var(--accent);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.empresa-item {
+    background: var(--light);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.empresa-item:hover {
+    border-color: var(--primary);
+}
+
+.empresa-item.is-grupo {
+    border-left: 4px solid var(--accent);
+}
+
+.empresa-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.empresa-numero {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--primary);
+}
+
+.btn-remover-empresa {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: #fee2e2;
+    color: #dc2626;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-remover-empresa:hover {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-adicionar-empresa {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px dashed var(--accent);
+    background: transparent;
+    color: var(--accent);
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-adicionar-empresa:hover {
+    background: var(--accent);
+    color: white;
+    border-style: solid;
+}
+
+.empresa-item .form-group {
+    margin-bottom: 12px;
+}
+
+.empresa-item .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.empresa-item .form-group:last-child {
+    margin-bottom: 0;
+}

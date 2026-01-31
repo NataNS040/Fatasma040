@@ -30,7 +30,12 @@ export function prepararDadosTemplate(dados: DadosCliente): DadosTemplate {
         qtdColaboradores: dados.qtdColaboradores,
         elaborador: dados.elaborador,
         solicitante: dados.solicitante,
-        logoUrl: logoEngmarq
+        logoUrl: logoEngmarq,
+        treinamentos: dados.treinamentos,
+        entregaveisPsico: dados.entregaveisPsico,
+        isGrupo: dados.isGrupo,
+        nomeGrupo: dados.nomeGrupo,
+        empresasGrupo: dados.empresasGrupo
     };
 }
 

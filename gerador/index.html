@@ -58,42 +58,88 @@
                 <!-- Cliente -->
                 <div class="form-section">
                     <h3><i class="fas fa-building"></i> Dados do Cliente</h3>
-                    <div class="form-group">
-                        <label>Razão Social *</label>
-                        <input type="text" id="razao_social" placeholder="Nome da empresa">
+                    
+                    <!-- Opção de Grupo -->
+                    <div class="grupo-toggle">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="proposta_grupo">
+                            <span class="toggle-switch"></span>
+                            <span>Proposta para Grupo de Empresas</span>
+                        </label>
                     </div>
-                    <div class="form-group">
-                        <label>CNPJ</label>
-                        <input type="text" id="cnpj" placeholder="00.000.000/0000-00">
-                    </div>
-                    <div class="form-group">
-                        <label>Endereço</label>
-                        <input type="text" id="endereco" placeholder="Rua, número">
-                    </div>
-                    <div class="form-row">
+                    
+                    <!-- Nome do Grupo (visível apenas quando grupo ativo) -->
+                    <div id="grupo-nome-container" style="display: none;">
                         <div class="form-group">
-                            <label>Bairro</label>
-                            <input type="text" id="bairro">
-                        </div>
-                        <div class="form-group">
-                            <label>CEP</label>
-                            <input type="text" id="cep" placeholder="00000-000">
+                            <label><i class="fas fa-layer-group"></i> Nome do Grupo</label>
+                            <input type="text" id="grupo_nome" placeholder="Ex: ML Group, Unimetais">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Cidade</label>
-                            <input type="text" id="cidade" value="Natal">
+                    
+                    <!-- Container de Empresas -->
+                    <div id="empresas-container">
+                        <div class="empresa-item" data-index="0">
+                            <div class="empresa-header">
+                                <span class="empresa-numero">Empresa 1</span>
+                                <button type="button" class="btn-remover-empresa" style="display: none;" onclick="removerEmpresa(0)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label>Razão Social *</label>
+                                <input type="text" class="empresa-razao" placeholder="Nome da empresa">
+                            </div>
+                            <div class="form-group">
+                                <label>CNPJ</label>
+                                <input type="text" class="empresa-cnpj" placeholder="00.000.000/0000-00">
+                            </div>
+                            <div class="form-group">
+                                <label>Endereço</label>
+                                <input type="text" class="empresa-endereco" placeholder="Rua, número">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Bairro</label>
+                                    <input type="text" class="empresa-bairro">
+                                </div>
+                                <div class="form-group">
+                                    <label>CEP</label>
+                                    <input type="text" class="empresa-cep" placeholder="00000-000">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Cidade</label>
+                                    <input type="text" class="empresa-cidade" value="Natal">
+                                </div>
+                                <div class="form-group">
+                                    <label>UF</label>
+                                    <select class="empresa-uf">
+                                        <option value="RN" selected>RN</option>
+                                        <option value="PB">PB</option>
+                                        <option value="CE">CE</option>
+                                        <option value="PE">PE</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row empresa-valores-row" style="display: none;">
+                                <div class="form-group">
+                                    <label><i class="fas fa-users"></i> Nº de Colaboradores</label>
+                                    <input type="number" class="empresa-colaboradores" value="20" min="1">
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-dollar-sign"></i> Valor (R$)</label>
+                                    <input type="text" class="empresa-valor" placeholder="0,00">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>UF</label>
-                            <select id="uf">
-                                <option value="RN" selected>RN</option>
-                                <option value="PB">PB</option>
-                                <option value="CE">CE</option>
-                                <option value="PE">PE</option>
-                            </select>
-                        </div>
+                    </div>
+                    
+                    <!-- Botão Adicionar Empresa (visível apenas quando grupo ativo) -->
+                    <div id="btn-adicionar-empresa-container" style="display: none;">
+                        <button type="button" class="btn-adicionar-empresa" onclick="adicionarEmpresa()">
+                            <i class="fas fa-plus"></i> Adicionar Empresa ao Grupo
+                        </button>
                     </div>
                 </div>
 
@@ -126,6 +172,301 @@
                     <div class="form-group">
                         <label>Nº de Colaboradores</label>
                         <input type="number" id="num_colaboradores" value="20">
+                    </div>
+                </div>
+
+                <!-- Entregáveis Psicossocial (visível apenas para tipo psicossocial) -->
+                <div class="form-section" id="section-psicossocial" style="display: none;">
+                    <h3><i class="fas fa-brain"></i> Entregáveis da Proposta</h3>
+                    <p class="form-hint">Selecione os entregáveis que deseja incluir na proposta</p>
+                    
+                    <div class="deliverables-checkboxes">
+                        <div class="deliverable-check-item">
+                            <input type="checkbox" id="psico_relatorio" value="relatorio" checked>
+                            <label for="psico_relatorio">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Relatório Técnico de Avaliação de Riscos Psicossociais</span>
+                            </label>
+                            <div class="deliverable-edit">
+                                <textarea id="psico_relatorio_desc" rows="2">Documento completo com diagnóstico organizacional, análise quantitativa e qualitativa, classificação por criticidade e probabilidade, mapeamento por setor/função e indicadores de risco.</textarea>
+                            </div>
+                        </div>
+
+                        <div class="deliverable-check-item">
+                            <input type="checkbox" id="psico_plano" value="plano" checked>
+                            <label for="psico_plano">
+                                <i class="fas fa-tasks"></i>
+                                <span>Plano de Ação Preventivo e Corretivo</span>
+                            </label>
+                            <div class="deliverable-edit">
+                                <textarea id="psico_plano_desc" rows="2">Recomendações técnicas estruturadas com medidas de controle, prazos sugeridos, responsáveis indicados e priorização conforme matriz de risco.</textarea>
+                            </div>
+                        </div>
+
+                        <div class="deliverable-check-item">
+                            <input type="checkbox" id="psico_aep" value="aep" checked>
+                            <label for="psico_aep">
+                                <i class="fas fa-clipboard-check"></i>
+                                <span>AEP – Avaliação Ergonômica Preliminar</span>
+                            </label>
+                            <div class="deliverable-edit">
+                                <textarea id="psico_aep_desc" rows="2">Análise das condições ergonômicas correlacionadas aos fatores psicossociais identificados (quando aplicável ao contexto).</textarea>
+                            </div>
+                        </div>
+
+                        <div class="deliverable-check-item">
+                            <input type="checkbox" id="psico_palestras" value="palestras" checked>
+                            <label for="psico_palestras">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <span>Palestras de Conscientização</span>
+                            </label>
+                            <div class="deliverable-edit">
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 0 0 120px;">
+                                        <label>Quantidade</label>
+                                        <input type="number" id="psico_palestras_qtd" value="2" min="1">
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <label>Descrição</label>
+                                        <textarea id="psico_palestras_desc" rows="1">Palestras sobre Fatores de Riscos Psicossociais no ambiente de trabalho para sensibilização dos colaboradores.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin-top: 20px; margin-bottom: 10px; color: var(--accent-color);"><i class="fas fa-gift"></i> Bônus (opcional)</h4>
+                    <div class="deliverables-checkboxes">
+                        <div class="deliverable-check-item">
+                            <input type="checkbox" id="psico_janeiro_branco" value="janeiro_branco" checked>
+                            <label for="psico_janeiro_branco">
+                                <i class="fas fa-ribbon"></i>
+                                <span>Campanha Janeiro Branco</span>
+                            </label>
+                            <div class="deliverable-edit">
+                                <textarea id="psico_janeiro_branco_desc" rows="1">Material de conscientização sobre saúde mental para divulgação interna</textarea>
+                            </div>
+                        </div>
+
+                        <div class="deliverable-check-item">
+                            <input type="checkbox" id="psico_reavaliacao" value="reavaliacao" checked>
+                            <label for="psico_reavaliacao">
+                                <i class="fas fa-redo"></i>
+                                <span>Reavaliação Trimestral</span>
+                            </label>
+                            <div class="deliverable-edit">
+                                <textarea id="psico_reavaliacao_desc" rows="1">Uma reavaliação dos fatores de riscos psicossociais após 3 meses da entrega do relatório inicial</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Treinamentos (visível apenas para tipo treinamentos) -->
+                <div class="form-section" id="section-treinamentos" style="display: none;">
+                    <h3><i class="fas fa-chalkboard-teacher"></i> Selecione os Treinamentos</h3>
+                    <p class="form-hint">Marque os treinamentos que deseja incluir na proposta</p>
+                    
+                    <div class="training-checkboxes">
+                        <div class="training-item">
+                            <input type="checkbox" id="treinamento_nr10" value="nr10">
+                            <label for="treinamento_nr10">
+                                <i class="fas fa-bolt"></i>
+                                <span>NR-10 - Segurança em Instalações Elétricas</span>
+                            </label>
+                            <div class="training-details">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Carga Horária</label>
+                                        <input type="text" id="nr10_carga" value="40h">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Alunos/Turma</label>
+                                        <input type="number" id="nr10_alunos" value="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Turmas</label>
+                                        <input type="number" id="nr10_turmas" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor (R$)</label>
+                                        <input type="text" id="nr10_valor" value="2.500,00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="training-item">
+                            <input type="checkbox" id="treinamento_nr12" value="nr12">
+                            <label for="treinamento_nr12">
+                                <i class="fas fa-cogs"></i>
+                                <span>NR-12 - Segurança em Máquinas e Equipamentos</span>
+                            </label>
+                            <div class="training-details">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Carga Horária</label>
+                                        <input type="text" id="nr12_carga" value="16h">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Alunos/Turma</label>
+                                        <input type="number" id="nr12_alunos" value="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Turmas</label>
+                                        <input type="number" id="nr12_turmas" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor (R$)</label>
+                                        <input type="text" id="nr12_valor" value="1.800,00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="training-item">
+                            <input type="checkbox" id="treinamento_nr33" value="nr33">
+                            <label for="treinamento_nr33">
+                                <i class="fas fa-hard-hat"></i>
+                                <span>NR-33 - Segurança em Espaços Confinados</span>
+                            </label>
+                            <div class="training-details">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Carga Horária</label>
+                                        <input type="text" id="nr33_carga" value="16h">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Alunos/Turma</label>
+                                        <input type="number" id="nr33_alunos" value="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Turmas</label>
+                                        <input type="number" id="nr33_turmas" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor (R$)</label>
+                                        <input type="text" id="nr33_valor" value="2.200,00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="training-item">
+                            <input type="checkbox" id="treinamento_nr35" value="nr35">
+                            <label for="treinamento_nr35">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>NR-35 - Trabalho em Altura</span>
+                            </label>
+                            <div class="training-details">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Carga Horária</label>
+                                        <input type="text" id="nr35_carga" value="8h">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Alunos/Turma</label>
+                                        <input type="number" id="nr35_alunos" value="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Turmas</label>
+                                        <input type="number" id="nr35_turmas" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor (R$)</label>
+                                        <input type="text" id="nr35_valor" value="1.500,00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="training-item">
+                            <input type="checkbox" id="treinamento_brigada" value="brigada">
+                            <label for="treinamento_brigada">
+                                <i class="fas fa-fire-extinguisher"></i>
+                                <span>Brigada de Incêndio</span>
+                            </label>
+                            <div class="training-details">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Carga Horária</label>
+                                        <input type="text" id="brigada_carga" value="8h">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Alunos/Turma</label>
+                                        <input type="number" id="brigada_alunos" value="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Turmas</label>
+                                        <input type="number" id="brigada_turmas" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor (R$)</label>
+                                        <input type="text" id="brigada_valor" value="1.800,00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="training-item">
+                            <input type="checkbox" id="treinamento_cipa" value="cipa">
+                            <label for="treinamento_cipa">
+                                <i class="fas fa-users"></i>
+                                <span>CIPA - Comissão Interna de Prevenção de Acidentes</span>
+                            </label>
+                            <div class="training-details">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Carga Horária</label>
+                                        <input type="text" id="cipa_carga" value="20h">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Alunos/Turma</label>
+                                        <input type="number" id="cipa_alunos" value="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Turmas</label>
+                                        <input type="number" id="cipa_turmas" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor (R$)</label>
+                                        <input type="text" id="cipa_valor" value="2.000,00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="training-item">
+                            <input type="checkbox" id="treinamento_primeiros_socorros" value="primeiros-socorros">
+                            <label for="treinamento_primeiros_socorros">
+                                <i class="fas fa-first-aid"></i>
+                                <span>Primeiros Socorros</span>
+                            </label>
+                            <div class="training-details">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Carga Horária</label>
+                                        <input type="text" id="primeiros_socorros_carga" value="8h">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Alunos/Turma</label>
+                                        <input type="number" id="primeiros_socorros_alunos" value="20">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Qtd. Turmas</label>
+                                        <input type="number" id="primeiros_socorros_turmas" value="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Valor (R$)</label>
+                                        <input type="text" id="primeiros_socorros_valor" value="1.500,00">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="training-total">
+                        <strong>Total dos Treinamentos: </strong>
+                        <span id="total-treinamentos">R$ 0,00</span>
                     </div>
                 </div>
 
