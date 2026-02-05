@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Recibos | EngMarq Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./gerador-styles.css">
+    <style>
+        .recibo-preview {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .recibo-preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #1a365d;
+            margin-bottom: 20px;
+        }
+        .recibo-preview-title {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .recibo-preview-title h2 {
+            font-size: 24px;
+            color: #1a365d;
+            letter-spacing: 4px;
+        }
+        .recibo-valor-preview {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .recibo-valor-preview .valor {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .recibo-campo {
+            background: #f8fafc;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid #667eea;
+        }
+        .recibo-campo label {
+            font-size: 10px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .recibo-campo p {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-top: 3px;
+        }
+    </style>
+    <script type="module" crossorigin src="./src/recibo.ts"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-logo">
+            <img src="./assets/logoengmarq.png" alt="EngMarq">
+            <div>
+                <h1>Gerador de Recibos</h1>
+                <span>Sistema de Geração de Recibos de Pagamento</span>
+            </div>
+        </div>
+        <div class="header-user">
+            <a href="./index.html" class="btn-logout" style="margin-right: 10px;">
+                <i class="fas fa-file-alt"></i> Propostas
+            </a>
+            <span id="userName"><i class="fas fa-user-circle"></i> <span id="userNameText"></span></span>
+            <button class="btn-logout" onclick="fazerLogout()" title="Sair">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Painel do Formulário -->
+        <div class="form-panel">
+            <div class="form-header">
+                <h2><i class="fas fa-receipt"></i> Dados do Recibo</h2>
+            </div>
+            <div class="form-content">
+                <!-- Identificação -->
+                <div class="form-section">
+                    <h3><i class="fas fa-hashtag"></i> Identificação</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nº do Recibo</label>
+                            <input type="text" id="numero_recibo" placeholder="REC-001" value="REC-001">
+                        </div>
+                        <div class="form-group">
+                            <label>Data de Emissão</label>
+                            <input type="date" id="data_emissao">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Local</label>
+                        <input type="text" id="local" placeholder="Natal - RN" value="Natal - RN">
+                    </div>
+                </div>
+
+                <!-- Dados do Vendedor/Beneficiário -->
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Dados do Beneficiário</h3>
+                    <div class="form-group">
+                        <label>Nome Completo *</label>
+                        <input type="text" id="vendedor_nome" placeholder="Nome completo do vendedor">
+                    </div>
+                    <div class="form-group">
+                        <label>CPF *</label>
+                        <input type="text" id="vendedor_cpf" placeholder="000.000.000-00">
+                    </div>
+                </div>
+
+                <!-- Dados do Recebimento -->
+                <div class="form-section">
+                    <h3><i class="fas fa-hand-holding-usd"></i> Dados do Recebimento</h3>
+                    <div class="form-group">
+                        <label>Valor Recebido (R$) *</label>
+                        <input type="text" id="valor_recibo" placeholder="0,00" oninput="atualizarPreviewRecibo()">
+                    </div>
+                    <div class="form-group">
+                        <label>Referência do Pagamento *</label>
+                        <select id="referencia_pagamento">
+                            <option value="Comissão de Vendas">Comissão de Vendas</option>
+                            <option value="Adiantamento de Comissão">Adiantamento de Comissão</option>
+                            <option value="Bônus de Desempenho">Bônus de Desempenho</option>
+                            <option value="Premiação por Metas">Premiação por Metas</option>
+                            <option value="Reembolso de Despesas">Reembolso de Despesas</option>
+                            <option value="Ajuda de Custo">Ajuda de Custo</option>
+                            <option value="Outro">Outro (especificar)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="referencia_outro_container" style="display: none;">
+                        <label>Especifique a Referência</label>
+                        <input type="text" id="referencia_outro" placeholder="Descreva a referência do pagamento">
+                    </div>
+                    <div class="form-group">
+                        <label>Data do Recebimento</label>
+                        <input type="date" id="data_recebimento">
+                    </div>
+                </div>
+
+                <!-- Botão Gerar -->
+                <div class="form-section" style="border: none; padding-top: 0;">
+                    <button class="btn-generate" onclick="gerarRecibo()">
+                        <i class="fas fa-file-invoice-dollar"></i> Gerar Recibo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel de Preview -->
+        <div class="preview-panel">
+            <div class="preview-header">
+                <h2><i class="fas fa-eye"></i> Prévia do Recibo</h2>
+            </div>
+            <div class="preview-content">
+                <div class="recibo-preview">
+                    <div class="recibo-preview-header">
+                        <img src="./assets/logoengmarq.png" alt="EngMarq" style="height: 40px;">
+                        <div style="text-align: right; font-size: 11px; color: #6b7280;">
+                            <strong style="color: #1a365d;">ENGMARQ SOLUTION LTDA</strong><br>
+                            CNPJ: 60.545.359/0001-76
+                        </div>
+                    </div>
+                    
+                    <div class="recibo-preview-title">
+                        <h2><i class="fas fa-file-invoice-dollar"></i> RECIBO</h2>
+                        <p style="color: #6b7280; font-size: 12px;">Nº <span id="preview_numero">REC-001</span></p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <div class="recibo-campo">
+                            <label>Beneficiário</label>
+                            <p id="preview_nome">—</p>
+                        </div>
+                        <div class="recibo-campo">
+                            <label>CPF</label>
+                            <p id="preview_cpf">—</p>
+                        </div>
+                    </div>
+                    
+                    <div class="recibo-valor-preview">
+                        <p style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9;">Valor Recebido</p>
+                        <p class="valor" id="preview_valor">R$ 0,00</p>
+                    </div>
+                    
+                    <div class="recibo-campo">
+                        <label>Referência</label>
+                        <p id="preview_referencia">—</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                        <div class="recibo-campo">
+                            <label>Data do Recebimento</label>
+                            <p id="preview_data_recebimento">—</p>
+                        </div>
+                        <div class="recibo-campo">
+                            <label>Local/Data Emissão</label>
+                            <p id="preview_local_data">—</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; padding: 15px; background: #f0fdf4; border-radius: 8px; border-left: 3px solid #38a169;">
+                        <p style="font-size: 11px; color: #166534;">
+                            <i class="fas fa-check-circle"></i> Declaração de quitação será incluída no documento final
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

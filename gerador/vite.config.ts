@@ -21,6 +21,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         login: resolve(__dirname, 'login.html'),
+        recibo: resolve(__dirname, 'recibo.html'),
       },
     },
   },
