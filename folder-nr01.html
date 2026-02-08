@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder NR-01 | EngMarq Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #0f2744;
+            --secondary: #2c5282;
+            --accent: #667eea;
+            --accent-light: #818cf8;
+            --success: #38a169;
+            --warning: #dd6b20;
+            --danger: #e53e3e;
+            --purple: #805ad5;
+            --cyan: #0891b2;
+            --gold: #d69e2e;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --dark: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        body.scroll-mode {
+            overflow-y: auto;
+        }
+
+        body.scroll-mode .slide {
+            min-height: auto;
+            height: auto;
+        }
+
+        /* ===== SLIDE BASE ===== */
+        .presentation-mode .slide {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .presentation-mode .slide.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: var(--white);
+            page-break-after: always;
+            overflow: hidden;
+        }
+
+        /* ===== SLIDE 1: CAPA ===== */
+        .slide-capa {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--secondary) 100%);
+            color: var(--white);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .slide-capa::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(128, 90, 213, 0.1) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 0;
+        }
+
+        .slide-capa > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .capa-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 28px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .capa-logo {
+            width: 220px;
+            margin-bottom: 50px;
+            filter: brightness(0) invert(1);
+        }
+
+        .capa-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1.5px;
+        }
+
+        .capa-title span {
+            display: block;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .capa-subtitle {
+            font-size: 20px;
+            opacity: 0.8;
+            font-weight: 400;
+            margin-bottom: 50px;
+            max-width: 600px;
+        }
+
+        .capa-visual {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .capa-visual-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 12px 22px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .capa-visual-item i {
+            font-size: 20px;
+            color: var(--gold);
+        }
+
+        .capa-footer {
+            position: absolute;
+            bottom: 30px;
+            left: 0; right: 0;
+            text-align: center;
+            font-size: 13px;
+            opacity: 0.5;
+        }
+
+        .capa-corner-top {
+            position: absolute;
+            top: 0; right: 0;
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, transparent 50%, rgba(102, 126, 234, 0.08) 50%);
+        }
+
+        .capa-corner-bottom {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(315deg, transparent 50%, rgba(128, 90, 213, 0.06) 50%);
+        }
+
+        /* ===== SLIDE 2: QUEM SOMOS ===== */
+        .slide-quem-somos {
+            padding: 70px 90px;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--purple));
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            line-height: 1.15;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 45px;
+            max-width: 650px;
+        }
+
+        .quem-somos-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            flex: 1;
+            align-items: center;
+        }
+
+        .quem-somos-text {
+            font-size: 16px;
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .quem-somos-text strong {
+            color: var(--primary);
+        }
+
+        .quem-somos-pillars {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .pillar-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+
+        .pillar-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .pillar-icon-blue { background: linear-gradient(135deg, var(--accent), #4f46e5); box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3); }
+        .pillar-icon-green { background: linear-gradient(135deg, var(--success), #059669); box-shadow: 0 6px 20px rgba(56, 161, 105, 0.3); }
+        .pillar-icon-purple { background: linear-gradient(135deg, var(--purple), #6d28d9); box-shadow: 0 6px 20px rgba(128, 90, 213, 0.3); }
+        .pillar-icon-cyan { background: linear-gradient(135deg, var(--cyan), #0e7490); box-shadow: 0 6px 20px rgba(8, 145, 178, 0.3); }
+
+        .pillar-text h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .pillar-text p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .quem-somos-visual {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 25px;
+            box-shadow: 0 25px 60px rgba(26, 54, 93, 0.3);
+        }
+
+        .visual-stat {
+            text-align: center;
+        }
+
+        .visual-stat-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 44px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .visual-stat-label {
+            font-size: 13px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .visual-stats-row {
+            display: flex;
+            gap: 40px;
+        }
+
+        .visual-divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), rgba(214, 158, 46, 0.3));
+            border-radius: 2px;
+        }
+
+        .visual-mission {
+            font-size: 15px;
+            opacity: 0.85;
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        /* ===== SLIDE 3: SERVIÇOS ===== */
+        .slide-servicos {
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 60px 80px;
+        }
+
+        .section-label-light {
+            color: var(--gold);
+        }
+
+        .section-label-light::before {
+            background: linear-gradient(90deg, var(--gold), rgba(214, 158, 46, 0.3));
+        }
+
+        .section-title-light {
+            color: white;
+        }
+
+        .section-subtitle-light {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .servicos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+
+        .servico-card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 28px;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .servico-card:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .servico-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .servico-icon-gold { background: linear-gradient(135deg, #fbbf24, #d97706); color: #78350f; box-shadow: 0 6px 20px rgba(251, 191, 36, 0.25); }
+        .servico-icon-blue { background: linear-gradient(135deg, var(--accent), #4f46e5); color: white; box-shadow: 0 6px 20px rgba(102, 126, 234, 0.25); }
+        .servico-icon-green { background: linear-gradient(135deg, #34d399, #059669); color: white; box-shadow: 0 6px 20px rgba(52, 211, 153, 0.25); }
+        .servico-icon-purple { background: linear-gradient(135deg, #a78bfa, #7c3aed); color: white; box-shadow: 0 6px 20px rgba(167, 139, 250, 0.25); }
+        .servico-icon-cyan { background: linear-gradient(135deg, #22d3ee, #0891b2); color: white; box-shadow: 0 6px 20px rgba(34, 211, 238, 0.25); }
+        .servico-icon-orange { background: linear-gradient(135deg, #fb923c, #ea580c); color: white; box-shadow: 0 6px 20px rgba(251, 146, 60, 0.25); }
+        .servico-icon-red { background: linear-gradient(135deg, #f87171, #dc2626); color: white; box-shadow: 0 6px 20px rgba(248, 113, 113, 0.25); }
+        .servico-icon-teal { background: linear-gradient(135deg, #2dd4bf, #0d9488); color: white; box-shadow: 0 6px 20px rgba(45, 212, 191, 0.25); }
+
+        .servico-content h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .servico-content p {
+            font-size: 13px;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+
+        /* ===== SLIDE 4: DIFERENCIAIS ===== */
+        .slide-diferenciais {
+            padding: 60px 80px;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .diff-card {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: all 0.3s;
+        }
+
+        .diff-card:hover {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transform: translateY(-3px);
+        }
+
+        .diff-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .diff-content h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .diff-content p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .cta-final {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
+            border-radius: 20px;
+            padding: 35px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: white;
+            box-shadow: 0 20px 50px rgba(26, 54, 93, 0.25);
+        }
+
+        .cta-final-text h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .cta-final-text p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .cta-final-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .cta-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .cta-contact-item i {
+            color: var(--gold);
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* ===== SLIDE FOOTER ===== */
+        .slide-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0; right: 0;
+            padding: 18px 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .slide-footer-dark {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .slide-page {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(150%);
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+            transition: transform 0.4s ease;
+        }
+
+        .nav-controls.visible {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .nav-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255,255,255,0.95);
+            color: var(--primary);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .progress-bar-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--purple));
+            z-index: 1000;
+            transition: width 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .progress-bar-nav.visible {
+            opacity: 1;
+        }
+
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .mode-toggle.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mode-toggle button {
+            background: rgba(255,255,255,0.95);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .mode-toggle button:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s, opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .fullscreen-btn.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .fullscreen-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            body { overflow: visible !important; background: white !important; }
+            .slide { 
+                page-break-after: always;
+                page-break-inside: avoid;
+                min-height: 100vh;
+                position: relative !important;
+                opacity: 1 !important;
+                pointer-events: all !important;
+            }
+            .nav-controls, .mode-toggle, .fullscreen-btn, .progress-bar-nav, .print-section { display: none !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+
+        @media (max-width: 1024px) {
+            .slide { padding: 40px 50px; }
+            .capa-title { font-size: 38px; }
+            .section-title { font-size: 34px; }
+            .quem-somos-grid { grid-template-columns: 1fr; }
+            .servicos-grid { gap: 14px; }
+            .diff-grid { gap: 14px; }
+        }
+    </style>
+</head>
+<body class="presentation-mode">
+
+    <!-- ===== SLIDE 1: CAPA ===== -->
+    <div class="slide slide-capa active">
+        <div class="capa-corner-top"></div>
+        <div class="capa-corner-bottom"></div>
+        
+        <img src="./assets/logoengmarq.png" alt="EngMarq Solution" class="capa-logo">
+        
+        <div class="capa-badge">
+            <i class="fas fa-shield-halved"></i>
+            Engenharia em Segurança do Trabalho
+        </div>
+        
+        <h1 class="capa-title">
+            Soluções em NR-01
+            <span>GRO & PGR</span>
+        </h1>
+        
+        <p class="capa-subtitle">Gestão de Riscos Ocupacionais com excelência técnica, conformidade legal e foco na proteção dos seus colaboradores.</p>
+        
+        <div class="capa-visual">
+            <div class="capa-visual-item">
+                <i class="fas fa-hard-hat"></i>
+                Segurança do Trabalho
+            </div>
+            <div class="capa-visual-item">
+                <i class="fas fa-clipboard-check"></i>
+                Conformidade NR-01
+            </div>
+            <div class="capa-visual-item">
+                <i class="fas fa-chart-line"></i>
+                Redução de Riscos
+            </div>
+        </div>
+        
+        <div class="capa-footer">
+            EngMarq Solution &bull; Engenharia &amp; Consultoria em SST
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 2: QUEM SOMOS ===== -->
+    <div class="slide slide-quem-somos">
+        <div class="section-label">Institucional</div>
+        <h2 class="section-title">Quem Somos</h2>
+        <p class="section-subtitle">Referência em soluções de Segurança e Saúde do Trabalho para empresas que buscam excelência e conformidade.</p>
+        
+        <div class="quem-somos-grid">
+            <div>
+                <p class="quem-somos-text">
+                    A <strong>EngMarq Solution</strong> é uma empresa de engenharia especializada em <strong>Segurança e Saúde do Trabalho (SST)</strong>, com foco na implementação da <strong>NR-01 – Gerenciamento de Riscos Ocupacionais</strong>.
+                </p>
+                <p class="quem-somos-text">
+                    Atuamos lado a lado com nossos clientes, transformando obrigações legais em oportunidades para construir ambientes de trabalho mais seguros, produtivos e em total conformidade com a legislação vigente.
+                </p>
+                
+                <div class="quem-somos-pillars">
+                    <div class="pillar-item">
+                        <div class="pillar-icon pillar-icon-blue"><i class="fas fa-shield-halved"></i></div>
+                        <div class="pillar-text">
+                            <h4>Especialistas em GRO</h4>
+                            <p>Gestão de Riscos Ocupacionais com metodologia técnica</p>
+                        </div>
+                    </div>
+                    <div class="pillar-item">
+                        <div class="pillar-icon pillar-icon-green"><i class="fas fa-scale-balanced"></i></div>
+                        <div class="pillar-text">
+                            <h4>Conformidade com a NR-01</h4>
+                            <p>Documentação e processos alinhados às exigências legais</p>
+                        </div>
+                    </div>
+                    <div class="pillar-item">
+                        <div class="pillar-icon pillar-icon-purple"><i class="fas fa-people-group"></i></div>
+                        <div class="pillar-text">
+                            <h4>Cultura de Segurança</h4>
+                            <p>Apoio na prevenção e conscientização dos colaboradores</p>
+                        </div>
+                    </div>
+                    <div class="pillar-item">
+                        <div class="pillar-icon pillar-icon-cyan"><i class="fas fa-handshake"></i></div>
+                        <div class="pillar-text">
+                            <h4>Parceria Estratégica</h4>
+                            <p>Suporte contínuo e atendimento personalizado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quem-somos-visual">
+                <img src="./assets/logoengmarq.png" alt="EngMarq" style="width: 160px; filter: brightness(0) invert(1); opacity: 0.9;">
+                <div class="visual-divider"></div>
+                <div class="visual-stats-row">
+                    <div class="visual-stat">
+                        <div class="visual-stat-number" style="color: var(--gold);">NR-01</div>
+                        <div class="visual-stat-label">Especialidade</div>
+                    </div>
+                    <div class="visual-stat">
+                        <div class="visual-stat-number" style="color: #34d399;">GRO</div>
+                        <div class="visual-stat-label">Gerenciamento</div>
+                    </div>
+                </div>
+                <div class="visual-divider"></div>
+                <p class="visual-mission"><i class="fas fa-quote-left" style="color: var(--gold); margin-right: 6px;"></i>Proteger vidas e garantir a conformidade legal de cada empresa que atendemos.<i class="fas fa-quote-right" style="color: var(--gold); margin-left: 6px;"></i></p>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            <span>EngMarq Solution &bull; Folder Institucional</span>
+            <span class="slide-page">02 / 04</span>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 3: NOSSOS SERVIÇOS ===== -->
+    <div class="slide slide-servicos">
+        <div class="section-label section-label-light">Foco NR-01</div>
+        <h2 class="section-title section-title-light">Nossos Serviços</h2>
+        <p class="section-subtitle section-subtitle-light" style="margin-bottom: 35px;">Soluções completas para a gestão de riscos ocupacionais da sua empresa</p>
+        
+        <div class="servicos-grid">
+            <div class="servico-card">
+                <div class="servico-icon servico-icon-gold"><i class="fas fa-sitemap"></i></div>
+                <div class="servico-content">
+                    <h4>Elaboração e Implantação do GRO</h4>
+                    <p>Estruturação completa do Gerenciamento de Riscos Ocupacionais conforme NR-01</p>
+                </div>
+            </div>
+            <div class="servico-card">
+                <div class="servico-icon servico-icon-blue"><i class="fas fa-file-shield"></i></div>
+                <div class="servico-content">
+                    <h4>Elaboração do PGR</h4>
+                    <p>Programa de Gerenciamento de Riscos com inventário e plano de ação detalhados</p>
+                </div>
+            </div>
+            <div class="servico-card">
+                <div class="servico-icon servico-icon-green"><i class="fas fa-magnifying-glass-chart"></i></div>
+                <div class="servico-content">
+                    <h4>Inventário de Riscos</h4>
+                    <p>Identificação, análise e classificação de todos os riscos do ambiente de trabalho</p>
+                </div>
+            </div>
+            <div class="servico-card">
+                <div class="servico-icon servico-icon-purple"><i class="fas fa-list-check"></i></div>
+                <div class="servico-content">
+                    <h4>Plano de Ação</h4>
+                    <p>Medidas de prevenção e controle com cronograma e responsáveis definidos</p>
+                </div>
+            </div>
+            <div class="servico-card">
+                <div class="servico-icon servico-icon-cyan"><i class="fas fa-rotate"></i></div>
+                <div class="servico-content">
+                    <h4>Gerenciamento Contínuo</h4>
+                    <p>Monitoramento, revisão e atualização permanente dos riscos ocupacionais</p>
+                </div>
+            </div>
+            <div class="servico-card">
+                <div class="servico-icon servico-icon-orange"><i class="fas fa-puzzle-piece"></i></div>
+                <div class="servico-content">
+                    <h4>Integração com demais NRs</h4>
+                    <p>Conexão do PGR com NR-06, NR-07, NR-09, NR-12, NR-15, NR-35 e demais</p>
+                </div>
+            </div>
+            <div class="servico-card">
+                <div class="servico-icon servico-icon-red"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="servico-content">
+                    <h4>Treinamentos e Capacitações</h4>
+                    <p>Formação de equipes em segurança, prevenção e cultura de riscos</p>
+                </div>
+            </div>
+            <div class="servico-card">
+                <div class="servico-icon servico-icon-teal"><i class="fas fa-user-tie"></i></div>
+                <div class="servico-content">
+                    <h4>Consultoria em SST</h4>
+                    <p>Assessoria técnica completa em Segurança e Saúde do Trabalho</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-footer slide-footer-dark">
+            <span>EngMarq Solution &bull; Folder Institucional</span>
+            <span class="slide-page" style="color: rgba(255,255,255,0.5);">03 / 04</span>
+        </div>
+    </div>
+
+    <!-- ===== SLIDE 4: DIFERENCIAIS ===== -->
+    <div class="slide slide-diferenciais">
+        <div class="section-label">Por que nos escolher</div>
+        <h2 class="section-title">Nossos Diferenciais</h2>
+        <p class="section-subtitle" style="margin-bottom: 35px;">O que torna a EngMarq Solution a parceira ideal para a gestão de riscos da sua empresa</p>
+        
+        <div class="diff-grid">
+            <div class="diff-card">
+                <div class="diff-icon" style="background: linear-gradient(135deg, var(--accent), #4f46e5); box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);"><i class="fas fa-user-graduate"></i></div>
+                <div class="diff-content">
+                    <h4>Equipe Técnica Especializada</h4>
+                    <p>Profissionais qualificados em engenharia de segurança do trabalho, com experiência prática em GRO e PGR.</p>
+                </div>
+            </div>
+            <div class="diff-card">
+                <div class="diff-icon" style="background: linear-gradient(135deg, var(--success), #059669); box-shadow: 0 8px 25px rgba(56, 161, 105, 0.3);"><i class="fas fa-file-circle-check"></i></div>
+                <div class="diff-content">
+                    <h4>Documentação Legal Completa</h4>
+                    <p>Toda documentação elaborada em conformidade com as exigências legais e normas regulamentadoras.</p>
+                </div>
+            </div>
+            <div class="diff-card">
+                <div class="diff-icon" style="background: linear-gradient(135deg, var(--purple), #6d28d9); box-shadow: 0 8px 25px rgba(128, 90, 213, 0.3);"><i class="fas fa-headset"></i></div>
+                <div class="diff-content">
+                    <h4>Atendimento Personalizado</h4>
+                    <p>Cada empresa recebe uma solução sob medida, adequada ao seu porte, segmento e necessidades específicas.</p>
+                </div>
+            </div>
+            <div class="diff-card">
+                <div class="diff-icon" style="background: linear-gradient(135deg, var(--cyan), #0e7490); box-shadow: 0 8px 25px rgba(8, 145, 178, 0.3);"><i class="fas fa-clipboard-check"></i></div>
+                <div class="diff-content">
+                    <h4>Suporte para Auditorias</h4>
+                    <p>Preparação e acompanhamento em auditorias fiscais, garantindo segurança e conformidade total.</p>
+                </div>
+            </div>
+            <div class="diff-card" style="grid-column: span 2;">
+                <div class="diff-icon" style="background: linear-gradient(135deg, #fbbf24, #d97706); box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);"><i class="fas fa-shield-halved"></i></div>
+                <div class="diff-content">
+                    <h4>Foco em Redução de Riscos e Passivos</h4>
+                    <p>Nossa atuação vai além da documentação: trabalhamos para reduzir efetivamente os riscos do seu ambiente de trabalho, minimizando passivos trabalhistas e promovendo a saúde dos seus colaboradores.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-final">
+            <div class="cta-final-text">
+                <h3><i class="fas fa-rocket" style="color: var(--gold); margin-right: 10px;"></i>Vamos proteger sua empresa?</h3>
+                <p>Entre em contato e solicite uma avaliação personalizada.</p>
+            </div>
+            <div class="cta-final-contact">
+                <div class="cta-contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>(84) 99999-0000</span>
+                </div>
+                <div class="cta-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>contato@engmarq.com.br</span>
+                </div>
+                <div class="cta-contact-item">
+                    <i class="fas fa-globe"></i>
+                    <span>www.engmarq.com.br</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-footer">
+            <span>EngMarq Solution &bull; Folder Institucional</span>
+            <span class="slide-page">04 / 04</span>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-nav" id="progressBar"></div>
+
+    <!-- Mode Toggle -->
+    <div class="mode-toggle">
+        <button onclick="toggleMode()" id="modeBtn">
+            <i class="fas fa-scroll"></i> Modo Scroll
+        </button>
+    </div>
+
+    <!-- Fullscreen Button -->
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">
+        <i class="fas fa-expand"></i>
+    </button>
+
+    <!-- Navigation -->
+    <div class="nav-controls" id="navControls">
+        <button class="nav-btn" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let isScrollMode = false;
+        let hideTimeout;
+
+        function showSlide(index) {
+            if (index < 0) index = 0;
+            if (index >= totalSlides) index = totalSlides - 1;
+            currentSlide = index;
+            
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === currentSlide);
+            });
+            
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+                showControls();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+                showControls();
+            }
+        }
+
+        function toggleMode() {
+            isScrollMode = !isScrollMode;
+            document.body.classList.toggle('presentation-mode', !isScrollMode);
+            document.body.classList.toggle('scroll-mode', isScrollMode);
+            
+            const btn = document.getElementById('modeBtn');
+            if (isScrollMode) {
+                btn.innerHTML = '<i class="fas fa-desktop"></i> Modo Apresentação';
+                slides.forEach(s => { s.classList.remove('active'); s.style.opacity = '1'; s.style.pointerEvents = 'all'; s.style.position = 'relative'; });
+                showControlsPermanent();
+            } else {
+                btn.innerHTML = '<i class="fas fa-scroll"></i> Modo Scroll';
+                slides.forEach(s => { s.style.opacity = ''; s.style.pointerEvents = ''; s.style.position = ''; });
+                showSlide(currentSlide);
+                setupAutoHideControls();
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function showControls() {
+            document.getElementById('navControls').classList.add('visible');
+            document.getElementById('progressBar').classList.add('visible');
+            document.querySelector('.mode-toggle').classList.add('visible');
+            document.querySelector('.fullscreen-btn').classList.add('visible');
+            
+            clearTimeout(hideTimeout);
+            if (!isScrollMode) {
+                hideTimeout = setTimeout(hideControls, 3000);
+            }
+        }
+
+        function hideControls() {
+            if (isScrollMode) return;
+            document.getElementById('navControls').classList.remove('visible');
+            document.getElementById('progressBar').classList.remove('visible');
+            document.querySelector('.mode-toggle').classList.remove('visible');
+            document.querySelector('.fullscreen-btn').classList.remove('visible');
+        }
+
+        function showControlsPermanent() {
+            document.getElementById('navControls').classList.add('visible');
+            document.getElementById('progressBar').classList.add('visible');
+            document.querySelector('.mode-toggle').classList.add('visible');
+            document.querySelector('.fullscreen-btn').classList.add('visible');
+            clearTimeout(hideTimeout);
+        }
+
+        function setupAutoHideControls() {
+            document.addEventListener('mousemove', showControls);
+            document.addEventListener('touchstart', showControls);
+            showControls();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (isScrollMode) return;
+            switch(e.key) {
+                case 'ArrowRight': case 'ArrowDown': case ' ': case 'PageDown':
+                    e.preventDefault(); nextSlide(); break;
+                case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+                    e.preventDefault(); prevSlide(); break;
+                case 'Home': e.preventDefault(); showSlide(0); break;
+                case 'End': e.preventDefault(); showSlide(totalSlides - 1); break;
+                case 'f': case 'F': e.preventDefault(); toggleFullscreen(); break;
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (isScrollMode || e.target.closest('.nav-controls, .mode-toggle, .fullscreen-btn')) return;
+            const x = e.clientX;
+            if (x > window.innerWidth * 0.5) nextSlide();
+            else prevSlide();
+        });
+
+        showSlide(0);
+        setupAutoHideControls();
+    </script>
+
+</body>
+</html>

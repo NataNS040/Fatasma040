@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EngMarq Solution | Segurança Jurídica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --success: #10b981;
+            --success-light: #34d399;
+            --warning: #f59e0b;
+            --gold: #fbbf24;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --white: #ffffff;
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+            --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-800);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SLIDES ===== */
+        .slide {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            scroll-snap-align: start;
+            overflow: hidden;
+        }
+
+        /* ===== SLIDE 1: CAPA ===== */
+        .slide-capa {
+            background: linear-gradient(165deg, var(--primary) 0%, #1e1b4b 50%, #312e81 100%);
+            color: var(--white);
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .capa-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .capa-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .capa-bg::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -20%;
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 60%);
+            animation: pulse 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .capa-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .capa-logo {
+            width: 160px;
+            margin-bottom: 35px;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+        }
+
+        .capa-tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--gold), #f59e0b);
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+            color: #78350f;
+            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.35);
+        }
+
+        .capa-tagline i {
+            font-size: 14px;
+        }
+
+        .capa-title {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            opacity: 0.95;
+        }
+
+        .capa-subtitle {
+            font-size: 15px;
+            opacity: 0.7;
+            font-weight: 400;
+            max-width: 320px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        .capa-stats {
+            display: flex;
+            gap: 24px;
+            padding: 24px 32px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius-lg);
+        }
+
+        .capa-stat {
+            text-align: center;
+        }
+
+        .capa-stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .capa-stat-label {
+            font-size: 11px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.4);
+            font-size: 10px;
+            letter-spacing: 1px;
+            animation: bounce 2s infinite;
+            z-index: 1;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* ===== SLIDE 2: QUEM SOMOS ===== */
+        .slide-quem-somos {
+            background: var(--white);
+            padding: 50px 24px 50px;
+        }
+
+        .section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .section-eyebrow::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+        }
+
+        .section-desc {
+            font-size: 15px;
+            color: var(--gray-500);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        .pillars {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .pillar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray-100);
+            transition: all 0.3s ease;
+        }
+
+        .pillar:active {
+            transform: scale(0.98);
+            background: var(--gray-100);
+        }
+
+        .pillar-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .pillar-icon.i1 { background: linear-gradient(135deg, #6366f1, #4f46e5); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25); }
+        .pillar-icon.i2 { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25); }
+        .pillar-icon.i3 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.25); }
+        .pillar-icon.i4 { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25); }
+
+        .pillar-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 3px;
+        }
+
+        .pillar-content p {
+            font-size: 13px;
+            color: var(--gray-500);
+            line-height: 1.4;
+        }
+
+        .mission-card {
+            background: linear-gradient(135deg, var(--primary), #1e1b4b);
+            border-radius: var(--radius-lg);
+            padding: 26px 22px;
+            color: white;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .mission-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        .mission-text {
+            font-size: 18px;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        .mission-text span {
+            color: var(--gold);
+        }
+
+        /* ===== SLIDE 3: SERVIÇOS ===== */
+        .slide-servicos {
+            background: linear-gradient(180deg, var(--gray-900) 0%, #1e1b4b 100%);
+            color: white;
+            padding: 50px 24px 50px;
+        }
+
+        .section-eyebrow-light {
+            color: var(--gold);
+        }
+
+        .section-eyebrow-light::before {
+            background: var(--gold);
+        }
+
+        .section-title-light {
+            color: white;
+        }
+
+        .section-desc-light {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .servicos-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .servico {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .servico:active {
+            background: rgba(255,255,255,0.08);
+            transform: scale(0.98);
+        }
+
+        .servico-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .servico-icon.s1 { background: linear-gradient(135deg, #fbbf24, #d97706); color: #78350f; }
+        .servico-icon.s2 { background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; }
+        .servico-icon.s3 { background: linear-gradient(135deg, #10b981, #059669); color: white; }
+        .servico-icon.s4 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; }
+        .servico-icon.s5 { background: linear-gradient(135deg, #06b6d4, #0891b2); color: white; }
+        .servico-icon.s6 { background: linear-gradient(135deg, #f97316, #ea580c); color: white; }
+        .servico-icon.s7 { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
+        .servico-icon.s8 { background: linear-gradient(135deg, #14b8a6, #0d9488); color: white; }
+
+        .servico-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .servico-content p {
+            font-size: 13px;
+            opacity: 0.6;
+            line-height: 1.5;
+        }
+
+        /* ===== SLIDE 4: CONTATO ===== */
+        .slide-contato {
+            background: var(--white);
+            padding: 50px 24px 35px;
+        }
+
+        .diffs {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .diff {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--gray-50), var(--gray-100));
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray-100);
+        }
+
+        .diff-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .diff-icon.d1 { background: linear-gradient(135deg, #6366f1, #4f46e5); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.25); }
+        .diff-icon.d2 { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.25); }
+        .diff-icon.d3 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.25); }
+        .diff-icon.d4 { background: linear-gradient(135deg, #fbbf24, #d97706); box-shadow: 0 6px 20px rgba(251, 191, 36, 0.25); }
+
+        .diff-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 4px;
+        }
+
+        .diff-content p {
+            font-size: 13px;
+            color: var(--gray-500);
+            line-height: 1.5;
+        }
+
+        .cta-card {
+            background: linear-gradient(135deg, var(--primary), #312e81);
+            border-radius: var(--radius-lg);
+            padding: 26px 22px;
+            color: white;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 26px;
+            color: var(--gold);
+        }
+
+        .cta-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .cta-subtitle {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 22px;
+        }
+
+        .cta-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cta-contact {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .cta-contact:active {
+            background: rgba(255,255,255,0.2);
+            transform: scale(0.98);
+        }
+
+        .cta-contact i {
+            font-size: 18px;
+            color: var(--gold);
+        }
+
+        .cta-contact.whatsapp {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        .cta-contact.whatsapp i {
+            color: white;
+        }
+
+        /* ===== SLIDE NR-01 ===== */
+        .slide-nr01 {
+            background: linear-gradient(165deg, #7c2d12 0%, #9a3412 50%, #c2410c 100%);
+            color: white;
+            padding: 50px 24px 50px;
+            position: relative;
+        }
+
+        .nr01-bg {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .nr01-bg::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -20%;
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.15) 0%, transparent 60%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        .nr01-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .nr01-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(251, 191, 36, 0.2);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .nr01-title {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 4px;
+            color: var(--gold);
+        }
+
+        .nr01-subtitle {
+            font-size: 22px;
+            font-weight: 700;
+            opacity: 0.95;
+            margin-bottom: 16px;
+        }
+
+        .nr01-desc {
+            font-size: 15px;
+            line-height: 1.7;
+            opacity: 0.85;
+            margin-bottom: 22px;
+        }
+
+        .nr01-items {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .nr01-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .nr01-item-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--gold), #f59e0b);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #78350f;
+            flex-shrink: 0;
+        }
+
+        .nr01-item-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nr01-item-text strong {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .nr01-item-text span {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .nr01-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 24px;
+            background: linear-gradient(135deg, var(--gold), #f59e0b);
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            color: #78350f;
+            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.35);
+        }
+
+        .nr01-cta i {
+            font-size: 20px;
+        }
+
+        /* ===== FOOTER ===== */
+        .folder-footer {
+            padding: 16px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--gray-400);
+            background: var(--gray-50);
+        }
+
+        /* ===== NAVIGATION DOTS ===== */
+        .nav-dots {
+            position: fixed;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            border: 2px solid rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            transform: scale(1.2);
+        }
+
+        .nav-dot.dark {
+            background: rgba(0,0,0,0.1);
+            border-color: rgba(0,0,0,0.2);
+        }
+
+        .nav-dot.dark.active {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+            
+            * { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+            }
+            
+            html { 
+                scroll-snap-type: none;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .slide { 
+                page-break-after: always;
+                page-break-inside: avoid;
+                min-height: 100vh !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                display: flex !important;
+                flex-direction: column !important;
+                overflow: hidden !important;
+            }
+            
+            .slide:last-child {
+                page-break-after: auto;
+            }
+            
+            .nav-dots, 
+            .scroll-indicator { 
+                display: none !important; 
+            }
+        } 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Dots -->
+    <div class="nav-dots" id="navDots">
+        <div class="nav-dot active" onclick="scrollToSlide(0)"></div>
+        <div class="nav-dot dark" onclick="scrollToSlide(1)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(2)"></div>
+        <div class="nav-dot dark" onclick="scrollToSlide(3)"></div>
+        <div class="nav-dot" onclick="scrollToSlide(4)"></div>
+    </div>
+
+    <!-- ===== SLIDE 1: CAPA ===== -->
+    <section class="slide slide-capa" id="slide1">
+        <div class="capa-bg"></div>
+        
+        <div class="capa-content">
+            <img src="./assets/logoengmarq.png" alt="EngMarq Solution" class="capa-logo">
+            
+            <div class="capa-tagline">
+                <i class="fas fa-shield-halved"></i>
+                Segurança Jurídica
+            </div>
+            
+            <h1 class="capa-title">Engenharia e Consultoria em Segurança do Trabalho</h1>
+            
+            <p class="capa-subtitle">Protegemos sua empresa com soluções técnicas em SST, garantindo conformidade legal e redução de passivos trabalhistas.</p>
+            
+            <div class="capa-stats">
+                <div class="capa-stat">
+                    <div class="capa-stat-value">100%</div>
+                    <div class="capa-stat-label">Conformidade</div>
+                </div>
+                <div class="capa-stat">
+                    <div class="capa-stat-value">SST</div>
+                    <div class="capa-stat-label">Especialistas</div>
+                </div>
+                <div class="capa-stat">
+                    <div class="capa-stat-value">+10</div>
+                    <div class="capa-stat-label">Anos exp.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+            DESLIZE
+        </div>
+    </section>
+
+    <!-- ===== SLIDE 2: QUEM SOMOS ===== -->
+    <section class="slide slide-quem-somos" id="slide2">
+        <div class="section-eyebrow">Institucional</div>
+        <h2 class="section-title">Quem Somos</h2>
+        <p class="section-desc">
+            A <strong>EngMarq Solution</strong> é uma empresa de engenharia especializada em <strong>Segurança e Saúde do Trabalho</strong>, atuando para garantir a conformidade legal das empresas.
+        </p>
+        
+        <div class="pillars">
+            <div class="pillar">
+                <div class="pillar-icon i1"><i class="fas fa-scale-balanced"></i></div>
+                <div class="pillar-content">
+                    <h4>Segurança Jurídica</h4>
+                    <p>Proteção legal para sua empresa</p>
+                </div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-icon i2"><i class="fas fa-file-shield"></i></div>
+                <div class="pillar-content">
+                    <h4>Documentação Técnica</h4>
+                    <p>Laudos, programas e relatórios completos</p>
+                </div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-icon i3"><i class="fas fa-user-tie"></i></div>
+                <div class="pillar-content">
+                    <h4>Equipe Especializada</h4>
+                    <p>Engenheiros e técnicos de segurança</p>
+                </div>
+            </div>
+            <div class="pillar">
+                <div class="pillar-icon i4"><i class="fas fa-handshake"></i></div>
+                <div class="pillar-content">
+                    <h4>Atendimento Personalizado</h4>
+                    <p>Soluções sob medida para cada cliente</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mission-card">
+            <div class="mission-badge">
+                <i class="fas fa-shield-halved"></i>
+                Nosso Compromisso
+            </div>
+            <p class="mission-text">
+                Garantir a <span>segurança jurídica</span> de cada empresa que atendemos.
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== SLIDE 3: SERVIÇOS ===== -->
+    <section class="slide slide-servicos" id="slide3">
+        <div class="section-eyebrow section-eyebrow-light">O que fazemos</div>
+        <h2 class="section-title section-title-light">Nossos Serviços</h2>
+        <p class="section-desc section-desc-light" style="margin-bottom: 20px;">
+            Soluções completas em Segurança e Saúde do Trabalho.
+        </p>
+        
+        <div class="servicos-list">
+            <div class="servico">
+                <div class="servico-icon s1"><i class="fas fa-file-contract"></i></div>
+                <div class="servico-content">
+                    <h4>PGR / GRO / PCMSO / LTCAT</h4>
+                    <p>Programas obrigatórios de SST</p>
+                </div>
+            </div>
+            <div class="servico">
+                <div class="servico-icon s2"><i class="fas fa-brain"></i></div>
+                <div class="servico-content">
+                    <h4>Avaliação Psicossocial</h4>
+                    <p>Conformidade com NR-01 atualizada</p>
+                </div>
+            </div>
+            <div class="servico">
+                <div class="servico-icon s3"><i class="fas fa-ruler-combined"></i></div>
+                <div class="servico-content">
+                    <h4>Laudos de Engenharia</h4>
+                    <p>Insalubridade, periculosidade e ergonomia</p>
+                </div>
+            </div>
+            <div class="servico">
+                <div class="servico-icon s4"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="servico-content">
+                    <h4>Treinamentos NRs</h4>
+                    <p>Capacitações obrigatórias e específicas</p>
+                </div>
+            </div>
+            <div class="servico">
+                <div class="servico-icon s5"><i class="fas fa-fire-extinguisher"></i></div>
+                <div class="servico-content">
+                    <h4>Brigada de Incêndio</h4>
+                    <p>Formação e reciclagem de brigadistas</p>
+                </div>
+            </div>
+            <div class="servico">
+                <div class="servico-icon s6"><i class="fas fa-user-nurse"></i></div>
+                <div class="servico-content">
+                    <h4>CIPA / SIPAT</h4>
+                    <p>Implantação e acompanhamento</p>
+                </div>
+            </div>
+            <div class="servico">
+                <div class="servico-icon s7"><i class="fas fa-laptop-medical"></i></div>
+                <div class="servico-content">
+                    <h4>eSocial SST</h4>
+                    <p>Envio de eventos obrigatórios</p>
+                </div>
+            </div>
+            <div class="servico">
+                <div class="servico-icon s8"><i class="fas fa-clipboard-check"></i></div>
+                <div class="servico-content">
+                    <h4>Consultoria Completa</h4>
+                    <p>Assessoria técnica em todas as NRs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SLIDE 4: NR-01 ===== -->
+    <section class="slide slide-nr01" id="slide4">
+        <div class="nr01-bg"></div>
+        <div class="nr01-content">
+            <div class="nr01-badge">
+                <i class="fas fa-exclamation-triangle"></i>
+                Atualização 2025
+            </div>
+            
+            <h2 class="nr01-title">NR-01</h2>
+            <h3 class="nr01-subtitle">Riscos Psicossociais</h3>
+            
+            <p class="nr01-desc">
+                A nova NR-01 exige que empresas identifiquem e gerenciem <strong>riscos psicossociais</strong> no ambiente de trabalho.
+            </p>
+            
+            <div class="nr01-items">
+                <div class="nr01-item">
+                    <div class="nr01-item-icon"><i class="fas fa-brain"></i></div>
+                    <div class="nr01-item-text">
+                        <strong>Avaliação Psicossocial</strong>
+                        <span>Identificação de fatores de risco mental</span>
+                    </div>
+                </div>
+                <div class="nr01-item">
+                    <div class="nr01-item-icon"><i class="fas fa-file-shield"></i></div>
+                    <div class="nr01-item-text">
+                        <strong>Atualização do PGR</strong>
+                        <span>Inclusão obrigatória dos riscos psicossociais</span>
+                    </div>
+                </div>
+                <div class="nr01-item">
+                    <div class="nr01-item-icon"><i class="fas fa-list-check"></i></div>
+                    <div class="nr01-item-text">
+                        <strong>Plano de Ação</strong>
+                        <span>Medidas preventivas e corretivas</span>
+                    </div>
+                </div>
+                <div class="nr01-item">
+                    <div class="nr01-item-icon"><i class="fas fa-rotate"></i></div>
+                    <div class="nr01-item-text">
+                        <strong>Monitoramento Contínuo</strong>
+                        <span>Acompanhamento e reavaliação periódica</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nr01-cta">
+                <i class="fas fa-scale-balanced"></i>
+                <span>Garanta a <strong>segurança jurídica</strong> da sua empresa</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SLIDE 5: CONTATO ===== -->
+    <section class="slide slide-contato" id="slide5">
+        <div class="section-eyebrow">Por que nos escolher</div>
+        <h2 class="section-title">Diferenciais</h2>
+        <p class="section-desc" style="margin-bottom: 18px;">O que faz a EngMarq ser a parceira ideal.</p>
+        
+        <div class="diffs">
+            <div class="diff">
+                <div class="diff-icon d1"><i class="fas fa-scale-balanced"></i></div>
+                <div class="diff-content">
+                    <h4>Segurança Jurídica</h4>
+                    <p>Proteção contra passivos trabalhistas</p>
+                </div>
+            </div>
+            <div class="diff">
+                <div class="diff-icon d2"><i class="fas fa-file-circle-check"></i></div>
+                <div class="diff-content">
+                    <h4>Documentação Completa</h4>
+                    <p>Tudo conforme as exigências legais</p>
+                </div>
+            </div>
+            <div class="diff">
+                <div class="diff-icon d3"><i class="fas fa-headset"></i></div>
+                <div class="diff-content">
+                    <h4>Suporte Contínuo</h4>
+                    <p>Acompanhamento e apoio em auditorias</p>
+                </div>
+            </div>
+            <div class="diff">
+                <div class="diff-icon d4"><i class="fas fa-bolt"></i></div>
+                <div class="diff-content">
+                    <h4>Agilidade na Entrega</h4>
+                    <p>Prazos cumpridos com qualidade</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-card">
+            <div class="cta-icon"><i class="fas fa-comments"></i></div>
+            <h3 class="cta-title">Fale com a gente</h3>
+            <p class="cta-subtitle">Solicite um orçamento agora</p>
+            
+            <div class="cta-contacts">
+                <a href="https://wa.me/5584999285888" class="cta-contact whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                    (84) 99928-5888
+                </a>
+                <a href="mailto:engmarqsolution@gmail.com" class="cta-contact">
+                    <i class="fas fa-envelope"></i>
+                    engmarqsolution@gmail.com
+                </a>
+                <a href="https://instagram.com/engmarq_solution" class="cta-contact">
+                    <i class="fab fa-instagram"></i>
+                    @engmarq_solution
+                </a>
+            </div>
+        </div>
+        
+        <div class="folder-footer">
+            EngMarq Solution &bull; Engenharia & Consultoria em SST
+        </div>
+    </section>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        
+        function updateDots() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            
+            slides.forEach((slide, index) => {
+                const slideTop = slide.offsetTop;
+                const slideHeight = slide.offsetHeight;
+                
+                if (scrollY >= slideTop - windowHeight / 2 && scrollY < slideTop + slideHeight - windowHeight / 2) {
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === index);
+                    });
+                }
+            });
+        }
+        
+        function scrollToSlide(index) {
+            slides[index].scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        window.addEventListener('scroll', updateDots);
+        updateDots();
+    </script>
+
+</body>
+</html>

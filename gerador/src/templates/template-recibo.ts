@@ -193,57 +193,82 @@ export function getTemplateRecibo(dados: DadosRecibo): string {
                     color: var(--dark-color);
                 }
                 
-                /* Box de Valor */
-                .valor-box {
-                    background: linear-gradient(135deg, var(--primary-color) 0%, #2c5282 100%);
+                /* Tabela de Valores */
+                .valor-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 25px 0;
+                    border: 2px solid var(--primary-color);
+                    border-radius: 8px;
+                    overflow: hidden;
+                }
+                
+                .valor-table thead {
+                    background: var(--primary-color);
                     color: white;
-                    padding: 25px;
-                    border-radius: 12px;
-                    text-align: center;
-                    margin: 30px 0;
                 }
                 
-                .valor-label {
-                    font-size: 11px;
-                    text-transform: uppercase;
-                    letter-spacing: 2px;
-                    opacity: 0.9;
-                    margin-bottom: 8px;
-                }
-                
-                .valor-numero {
-                    font-family: var(--font-primary);
-                    font-size: 28px;
-                    font-weight: 700;
-                    margin-bottom: 8px;
-                }
-                
-                .valor-extenso {
+                .valor-table th {
+                    padding: 12px 15px;
                     font-size: 12px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    font-weight: 600;
+                    text-align: left;
+                }
+                
+                .valor-table th:last-child {
+                    text-align: right;
+                }
+                
+                .valor-table tbody td {
+                    padding: 15px;
+                    font-size: 14px;
+                    border-bottom: 1px solid #e2e8f0;
+                }
+                
+                .valor-table tbody td:last-child {
+                    text-align: right;
+                    font-weight: 600;
+                    color: var(--primary-color);
+                    font-size: 16px;
+                }
+                
+                .valor-table tfoot {
+                    background: var(--light-color);
+                    font-weight: 700;
+                }
+                
+                .valor-table tfoot td {
+                    padding: 15px;
+                    font-size: 15px;
+                    color: var(--primary-color);
+                }
+                
+                .valor-table tfoot td:last-child {
+                    text-align: right;
+                    font-size: 18px;
+                }
+                
+                .valor-extenso-row {
+                    font-size: 11px;
+                    color: var(--gray-color);
                     font-style: italic;
-                    opacity: 0.9;
-                    padding: 8px 15px;
-                    background: rgba(255,255,255,0.1);
-                    border-radius: 6px;
-                    display: inline-block;
+                    text-align: right;
+                    margin-top: -20px;
+                    margin-bottom: 20px;
                 }
                 
                 @media print {
-                    .valor-box {
-                        background: linear-gradient(135deg, var(--primary-color) 0%, #2c5282 100%) !important;
+                    .valor-table thead {
+                        background: var(--primary-color) !important;
                         color: white !important;
                         -webkit-print-color-adjust: exact;
                         print-color-adjust: exact;
-                        padding: 25px !important;
                     }
                     
-                    .valor-numero {
-                        font-size: 28px !important;
-                        font-weight: 700 !important;
-                    }
-                    
-                    .valor-extenso {
-                        background: rgba(255,255,255,0.1) !important;
+                    .valor-table tfoot {
+                        background: var(--light-color) !important;
                         -webkit-print-color-adjust: exact;
                         print-color-adjust: exact;
                     }
@@ -379,24 +404,39 @@ export function getTemplateRecibo(dados: DadosRecibo): string {
                 
                 <!-- Dados do Recebimento -->
                 <div class="section">
-                    <h3 class="section-title"><i class="fas fa-hand-holding-usd"></i> Dados do Recebimento</h3>
+                    <h3 class="section-title"><i class="fas fa-calendar-check"></i> Data do Recebimento</h3>
                     <div class="data-grid">
-                        <div class="data-item">
-                            <p class="data-label">Referência do Pagamento</p>
-                            <p class="data-value">${dados.referencia}</p>
-                        </div>
-                        <div class="data-item">
-                            <p class="data-label">Data do Recebimento</p>
+                        <div class="data-item full">
+                            <p class="data-label">Data em que o valor foi recebido</p>
                             <p class="data-value">${dados.dataRecebimento}</p>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Valor -->
-                <div class="valor-box">
-                    <p class="valor-label">Valor Recebido</p>
-                    <p class="valor-numero">R$ ${formatMoeda(dados.valor)}</p>
-                    <p class="valor-extenso">(${valorExtenso})</p>
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-dollar-sign"></i> Discriminação do Valor</h3>
+                    <table class="valor-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;">Descrição</th>
+                                <th style="width: 40%;">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>${dados.referencia}</strong></td>
+                                <td>R$ ${formatMoeda(dados.valor)}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><i class="fas fa-calculator"></i> VALOR TOTAL RECEBIDO</td>
+                                <td>R$ ${formatMoeda(dados.valor)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <p class="valor-extenso-row">(${valorExtenso})</p>
                 </div>
                 
                 <!-- Declaração -->
