@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta - PCMSO | Esquadro Engenharia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --medical-color: #00838f;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        /* Controles de PDF */
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li {
+            margin-bottom: 4px;
+        }
+
+        .pdf-instructions strong {
+            color: var(--secondary-color);
+        }
+
+        /* Container do documento */
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Páginas */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Header de página */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .page-header-logo {
+            height: 35px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer de página */
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+            z-index: 10;
+        }
+
+        .page-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* ====== CAPA ====== */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(56, 161, 105, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            width: 180px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            background: rgba(245, 166, 35, 0.9);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge i {
+            font-size: 12px;
+        }
+
+        .cover-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-icon i {
+            font-size: 28px;
+            color: var(--secondary-color);
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title span {
+            color: var(--secondary-color);
+            display: block;
+        }
+
+        .cover-subtitle {
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            max-width: 380px;
+        }
+
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .cover-date {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+            padding: 0 18mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-footer p {
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* ====== TÍTULOS E TEXTOS ====== */
+        .section-number {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .section-title-text {
+            flex: 1;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title i {
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* Alert box vermelho */
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--alert-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        /* Highlight box amarelo */
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .highlight-box strong {
+            color: var(--primary-color);
+        }
+
+        /* Info box azul */
+        .info-box {
+            background: linear-gradient(135deg, #e6f0f8 0%, #cce0f0 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Green box */
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .green-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--success-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .green-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Lista de itens */
+        .feature-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+
+        .feature-list li {
+            padding: 5px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 11px;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        /* Grid de cards */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .factor-card {
+            background: var(--light-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .factor-card h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .factor-card h4 i {
+            color: var(--secondary-color);
+            font-size: 11px;
+        }
+
+        .factor-card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        /* Condições */
+        .conditions-list {
+            margin: 12px 0;
+        }
+
+        .condition-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .condition-item:last-child {
+            border-bottom: none;
+        }
+
+        .condition-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--light-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .condition-text strong {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .condition-text span {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.3;
+        }
+
+        /* Seção de empresa contratante */
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .company-info-item {
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .company-info-item span {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        /* Responsável card */
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            padding: 18px;
+            border-radius: 10px;
+            color: var(--white-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .responsible-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 28px;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .responsible-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-role {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-company {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .responsible-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .responsible-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+        }
+
+        .responsible-contact-item i {
+            color: var(--secondary-color);
+            width: 15px;
+        }
+
+        /* Impressão */
+        @media print {
+            .pdf-controls {
+                display: none !important;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            #pdf-content {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .page {
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                page-break-before: auto !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+                position: relative !important;
+            }
+
+            .page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
+            .page-cover {
+                padding: 20mm 18mm 18mm 18mm !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0017</span>
+            
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            
+            <span class="cover-badge">
+                <i class="fas fa-heartbeat"></i>
+                Saúde Ocupacional
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-user-md"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>PCMSO</span>
+            </h1>
+            <p class="cover-subtitle">
+                Programa de Controle Médico de Saúde Ocupacional conforme NR-07
+            </p>
+            
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Esquadro Engenharia</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                09 de Fevereiro de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>
+            
+            <div class="company-info-grid">
+                <div class="company-info-item">
+                    <label>Razão Social</label>
+                    <span>Esquadro Engenharia E Instalacoes Ltda</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>53.804.468/0001-03</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nome Fantasia</label>
+                    <span>Esquadro Engenharia</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Grau de Risco</label>
+                    <span>3</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Endereço</label>
+                    <span>R Doutor Gilberto Studart, nº 55, Sala 1018T-1</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Bairro</label>
+                    <span>Coco</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CEP</label>
+                    <span>60192-105</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Município / UF</label>
+                    <span>Fortaleza - CE</span>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 25px;">
+                <h4><i class="fas fa-heartbeat"></i> PCMSO - NR-07</h4>
+                <p>Esta proposta contempla a elaboração do <strong>Programa de Controle Médico de Saúde Ocupacional</strong>, documento obrigatório para todas as empresas que possuam empregados regidos pela CLT, conforme determina a Norma Regulamentadora nº 07.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: O QUE É O PCMSO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span class="section-title-text">O que é o PCMSO</span>
+            </h2>
+
+            <p>O <strong>PCMSO - Programa de Controle Médico de Saúde Ocupacional</strong> é um documento técnico estabelecido pela Norma Regulamentadora nº 07 (NR-07) do Ministério do Trabalho e Emprego, que tem como objetivo promover e preservar a saúde dos trabalhadores.</p>
+
+            <div class="info-box" style="margin: 15px 0;">
+                <h4><i class="fas fa-balance-scale"></i> Fundamentação Legal</h4>
+                <p>O PCMSO é obrigatório para todas as empresas e organizações que possuam empregados regidos pela Consolidação das Leis do Trabalho (CLT), independentemente do número de funcionários ou do grau de risco da atividade.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-bullseye"></i> Objetivos do PCMSO</h3>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-shield-alt"></i> Prevenção</h4>
+                    <p>Prevenir, rastrear e diagnosticar precocemente agravos à saúde relacionados ao trabalho.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-search"></i> Monitoramento</h4>
+                    <p>Acompanhar a saúde dos trabalhadores expostos a riscos ocupacionais.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-medical"></i> Conformidade</h4>
+                    <p>Atender às exigências legais e evitar autuações e passivos trabalhistas.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-user-md"></i> Aptidão</h4>
+                    <p>Definir exames ocupacionais necessários para cada função da empresa.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-clipboard-list"></i> Exames Ocupacionais Previstos</h3>
+
+            <ul class="feature-list">
+                <li><strong>Exame Admissional</strong> - Realizado antes do início das atividades</li>
+                <li><strong>Exame Periódico</strong> - Conforme periodicidade definida no programa</li>
+                <li><strong>Exame de Retorno ao Trabalho</strong> - Após afastamento superior a 30 dias</li>
+                <li><strong>Exame de Mudança de Função</strong> - Quando houver alteração de riscos</li>
+                <li><strong>Exame Demissional</strong> - Até a data da homologação da rescisão</li>
+            </ul>
+
+            <div class="alert-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-exclamation-triangle"></i> Importante</h4>
+                <p>A ausência do PCMSO pode resultar em multas administrativas, ações trabalhistas e interdição da empresa pelos órgãos fiscalizadores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: ESCOPO E INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Escopo dos Serviços e Investimento</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
+
+            <ul class="feature-list" style="margin-bottom: 15px;">
+                <li>Elaboração completa do PCMSO conforme NR-07</li>
+                <li>Definição da matriz de exames ocupacionais por função</li>
+                <li>Cronograma anual de exames periódicos</li>
+                <li>Integração com o PGR (Programa de Gerenciamento de Riscos)</li>
+                <li>Documento em PDF pronto para impressão e arquivo digital</li>
+                <li>Suporte técnico por 60 dias após a entrega</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-tags"></i> Investimento</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 15px 0; border: 1px solid #cbd5e0;">
+                <thead>
+                    <tr style="background: #1a365d; color: white;">
+                        <th style="padding: 12px 15px; text-align: left; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #1a365d;">Descrição</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #1a365d; width: 150px;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: white;">
+                        <td style="padding: 12px 15px; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;"><strong>PCMSO - Programa de Controle Médico de Saúde Ocupacional</strong><br><span style="font-size: 10px; color: #718096;">Elaboração completa conforme NR-07</span></td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 16px; color: #1a365d; font-weight: 700; border: 1px solid #cbd5e0;">R$ 1.000,00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title"><i class="fas fa-credit-card"></i> Condições Comerciais</h3>
+
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>15 (quinze) dias a partir da data de emissão.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>50% na aprovação e 50% na entrega. PIX, boleto ou transferência.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Entrega</strong>
+                        <span>Até 10 (dez) dias úteis após aprovação e recebimento das informações necessárias.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 15px;">
+                <p><strong><i class="fas fa-info-circle"></i> Observação:</strong> O PCMSO deve ser elaborado considerando os riscos ocupacionais identificados no PGR. Caso a empresa não possua PGR atualizado, podemos elaborá-lo em conjunto (solicite orçamento).</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: TERMO DE ACEITE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite e Assinaturas</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">Thiago Marques - Diretor</p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Esquadro Engenharia E Instalacoes Ltda</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">53.804.468/0001-03</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
