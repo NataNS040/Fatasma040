@@ -113,6 +113,12 @@ const previewConfigs: Record<string, { icon: string; titleTop: string; titleMain
         titleMain: 'SEGURANÇA DO TRABALHO',
         subtitle: 'Equipe técnica especializada, gestão de programas de SST e treinamentos de capacitação para conformidade legal'
     },
+    'kit-sst': {
+        icon: 'fas fa-file-medical-alt',
+        titleTop: 'KIT INTEGRADO',
+        titleMain: 'DOCUMENTAÇÃO SST',
+        subtitle: 'PGR, PCMSO, LTCAT e Laudos Técnicos para conformidade com as Normas Regulamentadoras'
+    },
     treinamentos: {
         icon: 'fas fa-chalkboard-teacher',
         titleTop: 'TREINAMENTOS EM',

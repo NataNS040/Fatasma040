@@ -9,6 +9,7 @@ import { getTemplatePlataforma } from '../templates/template-plataforma';
 import { getTemplatePlataformaPrincipal } from '../templates/template-plataforma-principal';
 import { getTemplatePsicossocial } from '../templates/template-psicossocial';
 import { getTemplateAssessoria } from '../templates/template-assessoria';
+import { getTemplateKitSST } from '../templates/template-kit-sst';
 import { getTemplateTreinamentos } from '../templates/template-treinamentos';
 import { formatData } from '../utils/formatters';
 import logoEngmarq from '../../assets/logoengmarq.png';
@@ -61,6 +62,8 @@ function selecionarTemplate(
             return getTemplatePsicossocial(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         case 'assessoria':
             return getTemplateAssessoria(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
+        case 'kit-sst':
+            return getTemplateKitSST(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         case 'treinamentos':
             return getTemplateTreinamentos(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         default:
