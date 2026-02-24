@@ -919,6 +919,15 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Google Ads Conversion Tracking for WhatsApp clicks -->
+    <script>
+        document.querySelectorAll('a[href*="wa.me"]').forEach(function(link) {
+            link.addEventListener('click', function() {
+                gtag('event', 'conversion', {'send_to': 'AW-17875424072/9xyTCKyKjfcbEMim1ctC'});
+            });
+        });
+    </script>
 </body>
 </html>
 
