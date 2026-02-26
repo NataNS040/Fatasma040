@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descritivo - Avaliação de Fatores de Riscos Psicossociais | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.5;
+            background: var(--white-color);
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Container do documento A4 */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            padding: 15mm 18mm;
+            background: var(--white-color);
+            position: relative;
+        }
+
+        /* Header Timbrado */
+        .header-timbrado {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .header-logo {
+            height: 90px;
+        }
+
+        .header-info {
+            text-align: right;
+            font-size: 11px;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+
+        .header-info strong {
+            color: var(--primary-color);
+            font-size: 13px;
+        }
+
+        /* Título */
+        .document-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .document-title h1 {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .document-title .subtitle {
+            font-size: 11px;
+            color: var(--gray-color);
+        }
+
+        .document-title .badge {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--white-color);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 9px;
+            font-weight: 600;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Seções */
+        .section {
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title i {
+            color: var(--secondary-color);
+            font-size: 12px;
+        }
+
+        .section p {
+            font-size: 10px;
+            line-height: 1.5;
+            text-align: justify;
+            margin-bottom: 0;
+        }
+
+        .section p + p {
+            margin-top: 5px;
+        }
+
+        /* Grid de metodologia */
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .methodology-item {
+            background: var(--light-color);
+            padding: 8px 10px;
+            border-radius: 5px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .methodology-item .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            background: var(--primary-color);
+            color: var(--white-color);
+            border-radius: 50%;
+            font-size: 9px;
+            font-weight: 700;
+            margin-right: 5px;
+        }
+
+        .methodology-item h4 {
+            font-family: var(--font-primary);
+            font-size: 9px;
+            color: var(--dark-color);
+            font-weight: 600;
+            display: inline;
+        }
+
+        .methodology-item p {
+            font-size: 8px;
+            color: var(--gray-color);
+            margin-top: 3px;
+            line-height: 1.3;
+        }
+
+        /* Entregáveis */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .deliverable-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #234876 100%);
+            color: var(--white-color);
+            padding: 10px 8px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .deliverable-card i {
+            font-size: 18px;
+            color: var(--secondary-color);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .deliverable-card h4 {
+            font-family: var(--font-primary);
+            font-size: 8px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            line-height: 1.2;
+        }
+
+        .deliverable-card p {
+            font-size: 7px;
+            opacity: 0.9;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        /* Grid duas colunas */
+        .two-column-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        /* Bônus box */
+        .bonus-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white-color);
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .bonus-box h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .bonus-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .bonus-box li {
+            font-size: 8px;
+            padding: 3px 0 3px 16px;
+            position: relative;
+            line-height: 1.3;
+        }
+
+        .bonus-box li::before {
+            content: '\f06b';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-size: 8px;
+        }
+
+        /* Info box */
+        .info-box {
+            background: #f0f9ff;
+            border-left: 3px solid var(--primary-color);
+            padding: 10px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .info-box h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .info-box p {
+            font-size: 8px;
+            margin: 0;
+            color: var(--dark-color);
+            line-height: 1.4;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #d4880f 100%);
+            color: var(--white-color);
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        .highlight-box h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .highlight-box p {
+            font-size: 8px;
+            margin: 0;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        .page-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            margin-top: 15px;
+            border-top: 2px solid var(--primary-color);
+            font-size: 9px;
+            color: var(--gray-color);
+        }
+
+        .footer-contact {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-contact i {
+            color: var(--secondary-color);
+            font-size: 10px;
+        }
+
+        /* ============ PRINT STYLES ============ */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            
+            body {
+                background: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .page {
+                margin: 0;
+                width: 210mm;
+                min-height: 297mm;
+                padding: 15mm 18mm;
+            }
+
+            .deliverable-card,
+            .bonus-box,
+            .highlight-box {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Página A4 -->
+    <div class="page">
+        <!-- Header Timbrado -->
+        <div class="header-timbrado">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="header-logo">
+            <div class="header-info">
+                <strong>EngMarq Solution</strong><br>
+                Engenharia de Segurança e Saúde do Trabalho<br>
+                CNPJ: 60.545.359/0001-76<br>
+                engmarqsolution@gmail.com | (84) 99928-5888
+            </div>
+        </div>
+
+        <!-- Título -->
+        <div class="document-title">
+            <h1>Avaliação de Fatores de Riscos Psicossociais</h1>
+            <p class="subtitle">Descritivo dos Serviços em Conformidade com a NR-01</p>
+            <span class="badge"><i class="fas fa-shield-alt"></i> Metodologia Cientificamente Validada</span>
+        </div>
+
+        <!-- O que fazemos -->
+        <div class="section">
+            <h3 class="section-title"><i class="fas fa-info-circle"></i> O Que Fazemos</h3>
+            <p>Realizamos a <strong>Avaliação de Fatores de Riscos Psicossociais</strong> no ambiente de trabalho, identificando elementos que impactam a saúde mental dos colaboradores, como estresse ocupacional, assédio, sobrecarga de trabalho, falta de autonomia, pressão por metas e conflitos interpessoais.</p>
+            <p>Nossa equipe multidisciplinar é composta por <strong>Engenheiros, Técnicos de SST</strong> e <strong>Psicólogos</strong>, garantindo abordagem técnica completa em conformidade com a NR-01 atualizada.</p>
+        </div>
+
+        <!-- Metodologia -->
+        <div class="section">
+            <h3 class="section-title"><i class="fas fa-cogs"></i> Nossa Metodologia</h3>
+            <div class="methodology-grid">
+                <div class="methodology-item">
+                    <span class="step-number">1</span>
+                    <h4>Planejamento</h4>
+                    <p>Reunião com lideranças para alinhamento organizacional</p>
+                </div>
+                <div class="methodology-item">
+                    <span class="step-number">2</span>
+                    <h4>Instrumentos Validados</h4>
+                    <p>Questionários padronizados cientificamente</p>
+                </div>
+                <div class="methodology-item">
+                    <span class="step-number">3</span>
+                    <h4>Análise Documental</h4>
+                    <p>Indicadores de RH e afastamentos CID-F</p>
+                </div>
+                <div class="methodology-item">
+                    <span class="step-number">4</span>
+                    <h4>Análise por Setor</h4>
+                    <p>Segmentação por áreas e grupos de exposição</p>
+                </div>
+                <div class="methodology-item">
+                    <span class="step-number">5</span>
+                    <h4>Classificação de Riscos</h4>
+                    <p>Matriz de criticidade e probabilidade</p>
+                </div>
+                <div class="methodology-item">
+                    <span class="step-number">6</span>
+                    <h4>Relatório Técnico</h4>
+                    <p>Diagnóstico completo com recomendações</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Entregáveis -->
+        <div class="section">
+            <h3 class="section-title"><i class="fas fa-file-alt"></i> Entregáveis</h3>
+            <div class="deliverables-grid">
+                <div class="deliverable-card">
+                    <i class="fas fa-file-medical-alt"></i>
+                    <h4>Relatório Técnico de Avaliação</h4>
+                    <p>Diagnóstico com análise quantitativa, qualitativa e mapeamento por setor</p>
+                </div>
+                <div class="deliverable-card">
+                    <i class="fas fa-tasks"></i>
+                    <h4>Plano de Ação</h4>
+                    <p>Medidas preventivas e corretivas com prazos e priorização</p>
+                </div>
+                <div class="deliverable-card">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h4>AEP - Avaliação Ergonômica</h4>
+                    <p>Análise ergonômica correlacionada aos fatores psicossociais</p>
+                </div>
+                <div class="deliverable-card">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h4>Palestra de Conscientização</h4>
+                    <p>Sensibilização sobre saúde mental e riscos psicossociais</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Duas colunas: Bônus + Conformidade -->
+        <div class="two-column-grid">
+            <div class="bonus-box">
+                <h4><i class="fas fa-gift"></i> Bônus Inclusos</h4>
+                <ul>
+                    <li><strong>Palestra de Conscientização</strong> – Antes da aplicação dos questionários</li>
+                </ul>
+                <p style="margin-top: 8px; font-size: 7px; opacity: 0.85;"><i class="fas fa-clock"></i> *Carga horária conforme necessidade do cliente</p>
+            </div>
+            <div class="info-box">
+                <h4><i class="fas fa-shield-alt"></i> Validade Legal e Conformidade</h4>
+                <p>Todos os documentos são assinados por profissionais habilitados, em conformidade com a <strong>NR-01</strong> e metodologias validadas cientificamente, garantindo aceitação em fiscalizações do MTE e processos trabalhistas.</p>
+            </div>
+        </div>
+
+        <!-- Destaque -->
+        <div class="highlight-box">
+            <h4><i class="fas fa-star"></i> Por que escolher a EngMarq Solution?</h4>
+            <p>Atuação integrada de Engenharia de SST + Psicologia do Trabalho | Metodologia validada | Suporte pós-entrega de 60 dias</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="page-footer">
+            <div class="footer-contact">
+                <span><i class="fas fa-envelope"></i> engmarqsolution@gmail.com</span>
+                <span><i class="fas fa-phone"></i> (84) 99928-5888</span>
+                <span><i class="fab fa-instagram"></i> @engmarq_solution</span>
+            </div>
+            <span>www.engmarqsolution.com.br</span>
+        </div>
+    </div>
+</body>
+</html>
