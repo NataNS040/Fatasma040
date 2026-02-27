@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0021 - Treinamentos em SST | Rafael Matheus Dantas da Silva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --accent-color: #dd6b20;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        /* Controles de PDF */
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(221, 107, 32, 0.4);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff5eb;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li {
+            margin-bottom: 4px;
+        }
+
+        .pdf-instructions strong {
+            color: var(--secondary-color);
+        }
+
+        /* Container do documento */
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Páginas */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Header de página */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .page-header-logo {
+            height: 35px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer de página */
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+            z-index: 10;
+        }
+
+        .page-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* ====== CAPA ====== */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(221, 107, 32, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            width: 180px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            background: rgba(221, 107, 32, 0.9);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge i {
+            font-size: 12px;
+        }
+
+        .cover-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(221, 107, 32, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-icon i {
+            font-size: 28px;
+            color: var(--accent-color);
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title span {
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .cover-subtitle {
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            max-width: 420px;
+        }
+
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-align: center;
+        }
+
+        .cover-date {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+            padding: 0 18mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-footer p {
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* ====== TÍTULOS E TEXTOS ====== */
+        .section-number {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .section-title-text {
+            flex: 1;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title i {
+            color: var(--accent-color);
+        }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* Boxes */
+        .info-box {
+            background: linear-gradient(135deg, #fff5eb 0%, #fed7aa 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .highlight-box strong {
+            color: var(--primary-color);
+        }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .green-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--success-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .green-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--alert-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Lista de itens */
+        .feature-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+
+        .feature-list li {
+            padding: 5px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 11px;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        /* Empresa contratante */
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .company-info-item {
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .company-info-item span {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        /* Tabela de investimento */
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10px;
+        }
+
+        .investment-table thead tr {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            color: white;
+        }
+
+        .investment-table th {
+            padding: 10px 8px;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .investment-table th:last-child {
+            text-align: right;
+        }
+
+        .investment-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--light-color);
+            vertical-align: middle;
+        }
+
+        .investment-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .investment-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .investment-table .training-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .investment-table .training-name i {
+            color: var(--accent-color);
+            margin-right: 6px;
+        }
+
+        .investment-table tfoot tr {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #c05621 100%);
+            color: white;
+        }
+
+        .investment-table tfoot td {
+            padding: 12px 8px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            border: none;
+        }
+
+        .investment-table tfoot td:last-child {
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Responsável */
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            padding: 18px;
+            border-radius: 10px;
+            color: var(--white-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .responsible-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(221, 107, 32, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 26px;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .responsible-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-role {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-company {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .responsible-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .responsible-contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 10px;
+        }
+
+        .responsible-contact-item i {
+            color: var(--accent-color);
+            width: 15px;
+            text-align: center;
+        }
+
+        /* Training cards */
+        .training-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .training-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .training-card h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .training-card h4 i {
+            color: var(--accent-color);
+        }
+
+        .training-card p {
+            font-size: 9px;
+            margin: 0;
+            line-height: 1.4;
+            color: var(--gray-color);
+        }
+
+        /* Contact signature */
+        .contact-signature {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid var(--light-color);
+        }
+
+        .signature-text {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* Print styles */
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            
+            .page { 
+                page-break-after: always !important; 
+                page-break-inside: avoid !important; 
+                page-break-before: auto !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                width: 210mm !important; 
+                height: 297mm !important; 
+                min-height: 297mm !important; 
+                max-height: 297mm !important; 
+                margin: 0 !important; 
+                padding: 12mm 15mm 18mm 15mm !important; 
+                box-sizing: border-box !important; 
+                overflow: hidden !important;
+                position: relative !important;
+            }
+            
+            .page:last-child { 
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+            
+            .page-cover {
+                padding: 20mm 18mm 18mm 18mm !important;
+            }
+            
+            .page-header {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                margin-bottom: 10px !important;
+                padding-bottom: 8px !important;
+            }
+            
+            .page-footer { 
+                position: absolute !important; 
+                bottom: 8mm !important; 
+                left: 15mm !important; 
+                right: 15mm !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                font-size: 9px !important;
+            }
+            
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--accent-color); letter-spacing: 3px;">TM0021</span>
+            
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            
+            <span class="cover-badge">
+                <i class="fas fa-chalkboard-teacher"></i>
+                Treinamentos em SST
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Treinamentos em SST</span>
+            </h1>
+            <p class="cover-subtitle">
+                Capacitação especializada em Segurança do Trabalho e Gestão de Resíduos, com entrega de material digital do treinamento e conformidade legal
+            </p>
+            
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Rafael Matheus Dantas da Silva</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                26 de Fevereiro de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | SST que traz segurança jurídica | Natal - RN</p> 
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: APRESENTAÇÃO E DADOS DO CLIENTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Treinamentos em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Apresentação</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i> SST que traz segurança jurídica</h4>
+                <p>A <strong>EngMarq Solution</strong> é uma empresa especializada em Engenharia de Segurança e Saúde do Trabalho. Nossa metodologia foi desenvolvida para garantir a <strong>conformidade legal</strong> da sua empresa com as Normas Regulamentadoras, através de treinamentos práticos e material digital.</p>
+            </div>
+
+            <p>Prezado <strong>Rafael Matheus</strong>,</p>
+
+            <p>Apresentamos nossa proposta comercial para a realização de treinamentos em Segurança e Saúde do Trabalho, desenvolvida especialmente para atender às necessidades da sua equipe de <strong>20 colaboradores</strong>.</p>
+
+            <p>Nossa metodologia contempla:</p>
+
+            <ul class="feature-list">
+                <li>Instrutores especializados e habilitados conforme cada Norma Regulamentadora</li>
+                <li>Treinamentos teóricos e práticos com abordagem dinâmica</li>
+                <li>Material didático digital, atualizado e contextualizado</li>
+                <li>Entrega exclusivamente digital do conteúdo do treinamento</li>
+                <li>Flexibilidade de horários adaptada à rotina da empresa</li>
+            </ul>
+
+            <h2 class="section-title" style="margin-top: 20px;">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Dados do Contratante</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-user"></i> Dados do Contratante</h3>
+            
+            <div class="company-info-grid">
+                <div class="company-info-item" style="grid-column: span 2;">
+                    <label>Nome Completo</label>
+                    <span>Rafael Matheus Dantas da Silva</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CPF</label>
+                    <span>072.452.854-70</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nº de Funcionários</label>
+                    <span>20 colaboradores</span>
+                </div>
+                <div class="company-info-item" style="grid-column: span 2;">
+                    <label>Endereço</label>
+                    <span>Avenida Ásia, 230 - Parque das Nações, Condomínio Yby Natureza, Lote 153 Quadra G</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Município / UF</label>
+                    <span>Parnamirim - RN</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CEP</label>
+                    <span>59158-757</span>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <h4><i class="fas fa-clipboard-check"></i> Proposta Personalizada</h4>
+                <p>Esta proposta contempla a realização de <strong>02 treinamentos</strong> voltados à capacitação da equipe em Integração de Segurança do Trabalho e Gestão de Resíduos, garantindo conformidade legal e boas práticas operacionais.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: ESCOPO DOS TREINAMENTOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Treinamentos em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Escopo dos Treinamentos</span>
+            </h2>
+
+            <p style="margin-bottom: 15px;">Os treinamentos propostos visam capacitar os colaboradores conforme as exigências legais e boas práticas de segurança do trabalho e meio ambiente.</p>
+
+            <div class="training-card" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-shield-alt"></i> Treinamento de Integração de Segurança do Trabalho</h4>
+                <p style="font-size: 11px; color: var(--dark-color); line-height: 1.5;">Capacitação obrigatória prevista na <strong>NR-01</strong> para todos os trabalhadores admitidos, transferidos ou que iniciem atividades em novo ambiente de trabalho. O treinamento aborda os riscos ocupacionais presentes no ambiente de trabalho, medidas de prevenção e controle, uso correto de EPIs, procedimentos de emergência e responsabilidades dos trabalhadores.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i> Conteúdo Programático - Integração de Segurança</h3>
+            <ul class="feature-list" style="margin-bottom: 20px;">
+                <li>Introdução à Segurança e Saúde do Trabalho e legislação aplicável</li>
+                <li>Identificação dos riscos ocupacionais do ambiente de trabalho</li>
+                <li>Medidas de prevenção e controle de riscos</li>
+                <li>Uso, conservação e higienização de Equipamentos de Proteção Individual (EPIs)</li>
+                <li>Procedimentos em situações de emergência</li>
+                <li>Direitos e deveres dos empregados e empregadores em SST</li>
+                <li>Comunicação de acidentes e incidentes de trabalho</li>
+                <li>Noções de primeiros socorros</li>
+            </ul>
+
+            <div class="training-card" style="margin-bottom: 15px; border-left-color: var(--success-color);">
+                <h4><i class="fas fa-recycle" style="color: var(--success-color);"></i> Treinamento de Gestão de Resíduos</h4>
+                <p style="font-size: 11px; color: var(--dark-color); line-height: 1.5;">Capacitação voltada à correta gestão de resíduos sólidos no ambiente de trabalho, abordando a classificação dos resíduos, segregação, acondicionamento, transporte interno, armazenamento temporário e destinação final, conforme a <strong>Política Nacional de Resíduos Sólidos (Lei 12.305/2010)</strong> e normas ambientais vigentes.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i> Conteúdo Programático - Gestão de Resíduos</h3>
+            <ul class="feature-list" style="margin-bottom: 20px;">
+                <li>Conceitos fundamentais de gestão de resíduos sólidos</li>
+                <li>Classificação e identificação dos tipos de resíduos</li>
+                <li>Segregação correta na fonte geradora</li>
+                <li>Acondicionamento, coleta e transporte interno</li>
+                <li>Armazenamento temporário e destinação final adequada</li>
+                <li>Legislação ambiental aplicável (PNRS, CONAMA)</li>
+                <li>Responsabilidades dos geradores de resíduos</li>
+                <li>Boas práticas de redução, reutilização e reciclagem</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-file-alt"></i> Entregável Digital</h3>
+            <ul class="feature-list">
+                <li>Material do treinamento em formato digital (PDF)</li>
+                <li>Entrega exclusivamente digital, sem emissão de material físico</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Treinamentos em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <p style="margin-bottom: 15px;">O quadro abaixo apresenta o investimento detalhado para a realização dos treinamentos propostos:</p>
+
+            <table class="investment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Treinamento</th>
+                        <th style="width: 20%; text-align: center;">Nº Colaboradores</th>
+                        <th style="width: 20%; text-align: center;">Turmas</th>
+                        <th style="width: 20%;">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-shield-alt"></i> Integração de Segurança do Trabalho</td>
+                        <td style="text-align: center;">20</td>
+                        <td style="text-align: center;">01 Turma</td>
+                        <td>R$ 1.200,00</td>
+                    </tr>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-recycle"></i> Gestão de Resíduos</td>
+                        <td style="text-align: center;">20</td>
+                        <td style="text-align: center;">01 Turma</td>
+                        <td>R$ 1.200,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><i class="fas fa-calculator"></i> INVESTIMENTO GLOBAL</td>
+                        <td>R$ 2.400,00</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="green-box">
+                <h4><i class="fas fa-star"></i> Benefícios Inclusos</h4>
+                <p>• Instrutores especializados e habilitados<br>
+                • Material didático digital do treinamento<br>
+                • Entrega exclusivamente digital</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-credit-card"></i> Condições de Pagamento</h3>
+
+            <div class="company-info-grid">
+                <div class="company-info-item">
+                    <label>Forma de Pagamento</label>
+                    <span>Transferência Bancária ou PIX</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Prazo</label>
+                    <span>50% no fechamento | 50% após conclusão</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Validade da Proposta</label>
+                    <span>15 dias corridos</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Início do Serviço</label>
+                    <span>A combinar conforme disponibilidade</span>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 15px;">
+                <p><strong><i class="fas fa-info-circle"></i> Observação:</strong> Os valores apresentados contemplam todos os custos de execução dos treinamentos. O único entregável incluso é o material do treinamento em formato digital. Não há custos adicionais. Cronograma detalhado será apresentado após aprovação da proposta.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: RESPONSÁVEL E CONTATO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Treinamentos em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <p style="text-align: center; margin-bottom: 20px; color: var(--gray-color); font-size: 11px;">
+                Esta proposta foi elaborada pela equipe técnica da EngMarq Solution, sob responsabilidade do profissional abaixo identificado.
+            </p>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <p class="responsible-name">Thiago Marques</p>
+                <p class="responsible-role">Diretor</p>
+                <p class="responsible-company">EngMarq Solution Ltda.</p>
+
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-instagram"></i>
+                        <span>@engmarq_solution</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 20px; border-left-color: var(--accent-color); background: linear-gradient(135deg, #fff5eb 0%, #fed7aa 100%);">
+                <h4><i class="fas fa-headset"></i> Atendimento Personalizado</h4>
+                <p>Estamos à disposição para esclarecer dúvidas, agendar reuniões e apresentar mais detalhes sobre nossa metodologia de trabalho. Entre em contato conosco!</p>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-clock"></i> Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 08h às 18h | Sábado: 08h às 12h</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: TERMO DE ACEITE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Treinamentos em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite e Assinaturas</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços especificados.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> CONTRATADA - EngMarq Solution
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">Thiago Marques - Diretor Técnico</p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura da Contratada</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px;">
+                    <i class="fas fa-user" style="color: var(--accent-color);"></i> CONTRATANTE
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Nome Completo</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Rafael Matheus Dantas da Silva</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CPF</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">072.452.854-70</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Endereço</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 500;">Av. Ásia, 230 - Parque das Nações, Cond. Yby Natureza, Lote 153 Quadra G - Parnamirim/RN - CEP 59158-757</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Contratante</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: FALE CONOSCO ====== -->
+        <div class="page" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div class="page-header" style="position: absolute; top: 15mm; left: 15mm; right: 15mm;">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Treinamentos em SST</span>
+            </div>
+
+            <div style="text-align: center; max-width: 450px;">
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--accent-color) 0%, #c05621 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
+                    <i class="fas fa-handshake" style="font-size: 36px; color: white;"></i>
+                </div>
+                
+                <h2 style="font-family: var(--font-primary); font-size: 28px; color: var(--primary-color); margin-bottom: 15px;">Fale Conosco</h2>
+                
+                <p style="font-size: 13px; color: var(--gray-color); margin-bottom: 30px; text-align: center;">
+                    Estamos à disposição para dar continuidade ao processo de contratação e esclarecer eventuais dúvidas sobre os treinamentos.
+                </p>
+
+                <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; background: var(--light-color); border-radius: 8px;">
+                        <i class="fab fa-whatsapp" style="font-size: 20px; color: var(--success-color);"></i>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--dark-color);">+55 84 99928-5888</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; background: var(--light-color); border-radius: 8px;">
+                        <i class="fas fa-envelope" style="font-size: 20px; color: var(--accent-color);"></i>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--dark-color);">engmarqsolution@gmail.com</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; background: var(--light-color); border-radius: 8px;">
+                        <i class="fab fa-instagram" style="font-size: 20px; color: #e1306c;"></i>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--dark-color);">@engmarq_solution</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; background: var(--light-color); border-radius: 8px;">
+                        <i class="fas fa-globe" style="font-size: 20px; color: var(--primary-color);"></i>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--dark-color);">www.engmarqsolution.com</span>
+                    </div>
+                </div>
+
+                <div style="padding-top: 25px; border-top: 2px solid var(--light-color);">
+                    <img src="assets/logoengmarq.png" alt="EngMarq Solution" style="height: 45px; margin-bottom: 15px;">
+                    <p style="font-size: 11px; color: var(--gray-color); margin: 0; text-align: center;">
+                        <strong style="color: var(--primary-color);">EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        <em style="color: var(--accent-color);">"SST que traz segurança jurídica"</em><br>
+                        Natal - Rio Grande do Norte
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        console.log('📄 EngMarq Solution - Proposta TM0021: Treinamentos em SST - Rafael Matheus Dantas da Silva');
+        console.log('💡 Clique em "Gerar PDF" ou pressione Ctrl+P');
+        console.log('✅ Selecione "Salvar como PDF" na janela de impressão');
+    </script>
+</body>
+</html>
