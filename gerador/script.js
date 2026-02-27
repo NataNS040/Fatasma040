@@ -1,13 +1,8 @@
-// ===== CALCULADORA DE PRECIFICAÇÃO ENGMARQ =====
+// ===== CALCULADORA DE PRECIFICAÇÃO ENGMARQ (MODO PLANILHA) =====
 
-// Modelo de precificação EngMarq: 40% CUSTO, 60% LUCRO
-const ENGMARQ_CUSTO_PERCENT = 0.40;
-const ENGMARQ_LUCRO_PERCENT = 0.60;
-
-// Elementos do DOM (serão carregados no init)
 let el = {};
+let itensPlanilha = [];
 
-// ===== FORMATAÇÃO DE MOEDA =====
 function formatCurrency(value) {
     if (isNaN(value) || value === null || value === undefined) {
         return 'R$ 0,00';
@@ -29,7 +24,7 @@ function formatPercent(value) {
 
 function parseCurrency(value) {
     if (!value) return 0;
-    let cleaned = value.toString()
+    const cleaned = value.toString()
         .replace(/[R$\s]/g, '')
         .replace(/\./g, '')
         .replace(',', '.');
@@ -38,280 +33,225 @@ function parseCurrency(value) {
 
 function parseNumber(value) {
     if (!value) return 0;
-    let cleaned = value.toString().replace(',', '.');
-    return parseFloat(cleaned) || 0;
+    return parseFloat(value.toString().replace(',', '.')) || 0;
 }
 
-// ===== MÁSCARA DE MOEDA =====
 function applyCurrencyMask(input) {
     if (!input) return;
-    input.addEventListener('input', function(e) {
+    input.addEventListener('input', (e) => {
         let value = e.target.value.replace(/\D/g, '');
         if (value === '') {
             e.target.value = '';
             calcularTudo();
             return;
         }
-        
-        value = parseInt(value);
+
+        value = parseInt(value, 10);
         value = (value / 100).toFixed(2);
-        
-        let parts = value.split('.');
-        let intPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        let decPart = parts[1];
-        
+
+        const parts = value.split('.');
+        const intPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        const decPart = parts[1];
+
         e.target.value = `R$ ${intPart},${decPart}`;
         calcularTudo();
     });
 }
 
-// ===== CÁLCULOS =====
-function calcularCustoTecnico() {
-    const horasTec = parseNumber(el.horasTecnico?.value || 0);
-    const valorHoraTec = parseCurrency(el.valorHoraTecnico?.value || 0);
-    const horasEng = parseNumber(el.horasEngenheiro?.value || 0);
-    const valorHoraEng = parseCurrency(el.valorHoraEngenheiro?.value || 0);
-    const qtdVisitas = parseNumber(el.qtdVisitas?.value || 0);
-    const valorVisita = parseCurrency(el.valorVisita?.value || 0);
-    const pgr = parseCurrency(el.valorPGR?.value || 0);
-    const pcmso = parseCurrency(el.valorPCMSO?.value || 0);
-    const ltcat = parseCurrency(el.valorLTCAT?.value || 0);
-    const gestaoNr01 = parseCurrency(el.valorGestaoNR01?.value || 0);
-    const treinamentos = parseCurrency(el.valorTreinamentos?.value || 0);
-    const acompanhamento = parseCurrency(el.valorAcompanhamento?.value || 0);
-    
-    return (horasTec * valorHoraTec) +
-           (horasEng * valorHoraEng) +
-           (qtdVisitas * valorVisita) +
-           pgr + pcmso + ltcat + gestaoNr01 + treinamentos + acompanhamento;
+function gerarIdItem() {
+    return `${Date.now()}-${Math.floor(Math.random() * 100000)}`;
 }
 
-function calcularCustoOperacional() {
-    const deslocamento = parseCurrency(el.valorDeslocamento?.value || 0);
-    const alimentacao = parseCurrency(el.valorAlimentacao?.value || 0);
-    const materiais = parseCurrency(el.valorMateriais?.value || 0);
-    const taxas = parseCurrency(el.valorTaxas?.value || 0);
-    const outros = parseCurrency(el.valorOutros?.value || 0);
-    
-    return deslocamento + alimentacao + materiais + taxas + outros;
+function adicionarItem(nome, quantidade, valorUnitario, opcoes = {}) {
+    if (!nome || quantidade <= 0 || valorUnitario <= 0) {
+        return;
+    }
+
+    const tipo = opcoes.tipo || 'Item livre';
+    const detalhe = opcoes.detalhe || '';
+
+    itensPlanilha.push({
+        id: gerarIdItem(),
+        nome,
+        tipo,
+        detalhe,
+        quantidade,
+        valorUnitario,
+        subtotal: quantidade * valorUnitario
+    });
+
+    renderizarLista();
+    calcularTudo();
 }
 
-function calcularImpostos(precoBase) {
-    const iss = parseNumber(el.issPercent?.value || 0);
-    const gerais = parseNumber(el.impostosPercent?.value || 0);
-    
-    return precoBase * ((iss + gerais) / 100);
+function adicionarItemManual() {
+    const nome = (el.itemNome?.value || '').trim();
+    const detalhe = (el.itemDetalhe?.value || '').trim();
+    const quantidade = parseNumber(el.itemQuantidade?.value || 0);
+    const valorUnitario = parseCurrency(el.itemValorUnitario?.value || 0);
+
+    adicionarItem(nome, quantidade, valorUnitario, {
+        tipo: 'Item livre',
+        detalhe
+    });
+
+    if (el.itemNome) el.itemNome.value = '';
+    if (el.itemQuantidade) el.itemQuantidade.value = '1';
+    if (el.itemValorUnitario) el.itemValorUnitario.value = '';
+    if (el.itemDetalhe) el.itemDetalhe.value = '';
 }
 
-function calcularComissao(preco) {
-    const comissaoPercent = parseNumber(el.comissaoPercent?.value || 0);
-    return preco * (comissaoPercent / 100);
+function adicionarTecnico() {
+    const qtdTecnicos = parseNumber(el.tecQuantidade?.value || 0);
+    const horasPorTecnico = parseNumber(el.tecHoras?.value || 0);
+    const valorHora = parseCurrency(el.tecValorHora?.value || 0);
+
+    const quantidade = qtdTecnicos * horasPorTecnico;
+    const detalhe = `${qtdTecnicos} técnico(s) x ${horasPorTecnico} hora(s)`;
+    adicionarItem('Técnico de Segurança', quantidade, valorHora, {
+        tipo: 'Técnico',
+        detalhe
+    });
+
+    if (el.tecQuantidade) el.tecQuantidade.value = '';
+    if (el.tecHoras) el.tecHoras.value = '';
+    if (el.tecValorHora) el.tecValorHora.value = '';
+}
+
+function adicionarPsicossocial() {
+    const colaboradores = parseNumber(el.psicoColaboradores?.value || 0);
+    const valorPorColaborador = parseCurrency(el.psicoValorColaborador?.value || 0);
+
+    const detalhe = `${colaboradores} colaborador(es)`;
+    adicionarItem('Avaliação Psicossocial', colaboradores, valorPorColaborador, {
+        tipo: 'Psicossocial',
+        detalhe
+    });
+
+    if (el.psicoColaboradores) el.psicoColaboradores.value = '';
+    if (el.psicoValorColaborador) el.psicoValorColaborador.value = '';
+}
+
+function adicionarTreinamento() {
+    const nomeTreinamento = (el.treinamentoNome?.value || '').trim();
+    const colaboradores = parseNumber(el.treinamentoColaboradores?.value || 0);
+    const qtdInstrutores = parseNumber(el.treinamentoQtdInstrutores?.value || 0);
+    const horasTreinamento = parseNumber(el.treinamentoHorasTreinamento?.value || 0);
+    const valorHoraInstrutor = parseCurrency(el.treinamentoValorHoraInstrutor?.value || 0);
+    const valorPorColaborador = parseCurrency(el.treinamentoValorPorColaborador?.value || 0);
+
+    const nome = nomeTreinamento ? `Treinamento: ${nomeTreinamento}` : 'Treinamento';
+    const custoInstrutor = qtdInstrutores * horasTreinamento * valorHoraInstrutor;
+    const custoColaboradores = colaboradores * valorPorColaborador;
+    const custoTotalTreinamento = custoInstrutor + custoColaboradores;
+    const detalhe = `${colaboradores} colaborador(es) x ${formatCurrency(valorPorColaborador)} + ${qtdInstrutores} instrutor(es) x ${horasTreinamento}h x ${formatCurrency(valorHoraInstrutor)}`;
+    adicionarItem(nome, 1, custoTotalTreinamento, {
+        tipo: 'Treinamento',
+        detalhe
+    });
+
+    if (el.treinamentoNome) el.treinamentoNome.value = '';
+    if (el.treinamentoColaboradores) el.treinamentoColaboradores.value = '';
+    if (el.treinamentoQtdInstrutores) el.treinamentoQtdInstrutores.value = '1';
+    if (el.treinamentoHorasTreinamento) el.treinamentoHorasTreinamento.value = '';
+    if (el.treinamentoValorHoraInstrutor) el.treinamentoValorHoraInstrutor.value = '';
+    if (el.treinamentoValorPorColaborador) el.treinamentoValorPorColaborador.value = '';
+}
+
+function removerItem(id) {
+    itensPlanilha = itensPlanilha.filter((item) => item.id !== id);
+    renderizarLista();
+    calcularTudo();
+}
+
+function renderizarLista() {
+    if (!el.planilhaLista) return;
+
+    if (itensPlanilha.length === 0) {
+        el.planilhaLista.innerHTML = '<p class="planilha-vazia">Nenhum item adicionado.</p>';
+        return;
+    }
+
+    el.planilhaLista.innerHTML = itensPlanilha
+        .map((item) => `
+            <div class="planilha-item-linha">
+                <div class="planilha-item-main">
+                    <div class="planilha-item-topo">
+                        <span class="planilha-item-tipo">${item.tipo}</span>
+                        <div class="planilha-item-nome">${item.nome}</div>
+                    </div>
+                    ${item.detalhe ? `<div class="planilha-item-detalhe">${item.detalhe}</div>` : ''}
+                    <div class="planilha-item-meta">Memória de cálculo: ${item.quantidade} x ${formatCurrency(item.valorUnitario)}</div>
+                </div>
+                <div class="planilha-item-right">
+                    <span class="planilha-item-subtotal">${formatCurrency(item.subtotal)}</span>
+                    <button type="button" class="btn-remover-item" data-id="${item.id}" title="Remover item">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `)
+        .join('');
+
+    el.planilhaLista.querySelectorAll('.btn-remover-item').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            if (id) removerItem(id);
+        });
+    });
 }
 
 function calcularTudo() {
-    // 1. Calcular custo total (técnico + operacional)
-    const custoTecnico = calcularCustoTecnico();
-    const custoOperacional = calcularCustoOperacional();
-    const custoTotal = custoTecnico + custoOperacional;
-    
-    // 2. Obter taxa de impostos
-    const iss = parseNumber(el.issPercent?.value || 0);
-    const gerais = parseNumber(el.impostosPercent?.value || 0);
-    const taxaImpostos = (iss + gerais) / 100;
-    
-    // 3. Calcular preço ideal considerando impostos
-    // Para manter 60% de lucro: preço = custo / (0.40 - taxaImpostos)
-    const divisor = ENGMARQ_CUSTO_PERCENT - taxaImpostos;
-    let precoIdeal = divisor > 0 ? custoTotal / divisor : custoTotal / ENGMARQ_CUSTO_PERCENT;
-    
-    // 4. Calcular impostos sobre o preço ideal
-    const impostos = precoIdeal * taxaImpostos;
-    
-    // 5. Calcular lucro (preço - custo - impostos)
-    const lucro = precoIdeal - custoTotal - impostos;
-    
-    // 6. Calcular margem real
-    const margem = precoIdeal > 0 ? (lucro / precoIdeal) * 100 : 0;
-    
-    // 7. Calcular preço mínimo (custo + impostos, sem lucro)
-    let precoMinimo = taxaImpostos < 1 ? custoTotal / (1 - taxaImpostos) : custoTotal;
-    
-    // 8. Calcular comissão
-    const comissao = calcularComissao(precoIdeal);
-    
-    // Atualizar resultados principais
+    const custoTotal = itensPlanilha.reduce((acc, item) => acc + item.subtotal, 0);
+    const lucroDesejado = parseCurrency(el.lucroDesejado?.value || 0);
+
+    let custoDesejadoPercent = parseNumber(el.custoDesejadoPercent?.value || 0);
+    if (custoDesejadoPercent <= 0) custoDesejadoPercent = 1;
+    if (custoDesejadoPercent > 100) custoDesejadoPercent = 100;
+
+    const precoPorCusto = custoTotal / (custoDesejadoPercent / 100);
+    const precoPorLucro = custoTotal + lucroDesejado;
+    const propostaFinal = Math.max(precoPorCusto, precoPorLucro);
+
+    const lucroFinal = propostaFinal - custoTotal;
+    const percentualCustoFinal = propostaFinal > 0 ? (custoTotal / propostaFinal) * 100 : 0;
+
     if (el.resultCustoTotal) el.resultCustoTotal.textContent = formatCurrency(custoTotal);
-    if (el.resultPrecoIdeal) el.resultPrecoIdeal.textContent = formatCurrency(precoIdeal);
-    if (el.resultLucro) el.resultLucro.textContent = formatCurrency(lucro);
-    if (el.resultMargem) el.resultMargem.textContent = formatPercent(margem);
-    if (el.resultPrecoMinimo) el.resultPrecoMinimo.textContent = formatCurrency(precoMinimo);
-    if (el.resultComissao) el.resultComissao.textContent = formatCurrency(comissao);
-    
-    // Calcular com desconto (APENAS se houver desconto informado)
-    const descontoPercent = parseNumber(el.descontoPercent?.value || 0);
-    
-    let precoComDesconto = precoIdeal;
-    let lucroComDesconto = lucro;
-    let margemComDesconto = margem;
-    
-    // Mostrar/esconder card de desconto
-    if (descontoPercent > 0) {
-        precoComDesconto = precoIdeal * (1 - descontoPercent / 100);
-        const impostosDesconto = precoComDesconto * taxaImpostos;
-        lucroComDesconto = precoComDesconto - custoTotal - impostosDesconto;
-        margemComDesconto = precoComDesconto > 0 ? (lucroComDesconto / precoComDesconto) * 100 : 0;
-        
-        if (el.cardDescontoResultados) el.cardDescontoResultados.classList.remove('hidden');
-        if (el.descontoLabel) el.descontoLabel.textContent = descontoPercent;
-    } else {
-        if (el.cardDescontoResultados) el.cardDescontoResultados.classList.add('hidden');
-    }
-    
-    if (el.resultPrecoDesconto) el.resultPrecoDesconto.textContent = formatCurrency(precoComDesconto);
-    if (el.resultNovoLucro) el.resultNovoLucro.textContent = formatCurrency(lucroComDesconto);
-    if (el.resultNovaMargem) el.resultNovaMargem.textContent = formatPercent(margemComDesconto);
-    
-    // Verificar alertas de margem
-    if (custoTotal > 0) {
-        // Alerta principal (sem desconto)
-        if (margem < ENGMARQ_LUCRO_PERCENT * 100) {
-            if (el.alertMargemPrincipal) el.alertMargemPrincipal.classList.remove('hidden');
-            if (el.alertMargemPrincipalOk) el.alertMargemPrincipalOk.classList.add('hidden');
-        } else {
-            if (el.alertMargemPrincipal) el.alertMargemPrincipal.classList.add('hidden');
-            if (el.alertMargemPrincipalOk) el.alertMargemPrincipalOk.classList.remove('hidden');
-        }
-        
-        // Alerta na seção de desconto (quando há desconto)
-        if (descontoPercent > 0) {
-            if (margemComDesconto < ENGMARQ_LUCRO_PERCENT * 100) {
-                if (el.alertMargem) el.alertMargem.classList.remove('hidden');
-                if (el.alertMargemOk) el.alertMargemOk.classList.add('hidden');
-            } else {
-                if (el.alertMargem) el.alertMargem.classList.add('hidden');
-                if (el.alertMargemOk) el.alertMargemOk.classList.remove('hidden');
-            }
-        }
-    } else {
-        // Esconder todos os alertas
-        if (el.alertMargemPrincipal) el.alertMargemPrincipal.classList.add('hidden');
-        if (el.alertMargemPrincipalOk) el.alertMargemPrincipalOk.classList.add('hidden');
-        if (el.alertMargem) el.alertMargem.classList.add('hidden');
-        if (el.alertMargemOk) el.alertMargemOk.classList.add('hidden');
-    }
-    
-    // Calcular comparação com valor do vendedor
-    const valorVendedor = parseCurrency(el.valorVendedor?.value || 0);
-    
-    if (valorVendedor > 0 && custoTotal > 0) {
-        const diferencaIdeal = valorVendedor - precoIdeal;
-        const impostosVendedor = valorVendedor * taxaImpostos;
-        const lucroVendedor = valorVendedor - custoTotal - impostosVendedor;
-        const margemVendedorCalc = valorVendedor > 0 ? (lucroVendedor / valorVendedor) * 100 : 0;
-        
-        // Mostrar card de resultados do vendedor
-        if (el.cardVendedorResultados) el.cardVendedorResultados.classList.remove('hidden');
-        
-        // Atualizar elementos nos resultados
-        if (el.resultPrecoVendedor) el.resultPrecoVendedor.textContent = formatCurrency(valorVendedor);
-        
-        if (el.resultDiferencaIdeal) {
-            el.resultDiferencaIdeal.textContent = formatCurrency(diferencaIdeal);
-            // Adicionar classe para cor
-            const itemDif = document.getElementById('itemDiferenca');
-            if (itemDif) {
-                itemDif.classList.remove('success', 'warning');
-                itemDif.classList.add(diferencaIdeal >= 0 ? 'success' : 'warning');
-            }
-        }
-        
-        if (el.resultLucroVendedor) {
-            el.resultLucroVendedor.textContent = formatCurrency(lucroVendedor);
-            const itemLucro = document.getElementById('itemLucroVendedor');
-            if (itemLucro) {
-                itemLucro.classList.remove('success', 'warning');
-                itemLucro.classList.add(lucroVendedor >= 0 ? 'success' : 'warning');
-            }
-        }
-        
-        if (el.resultMargemVendedor) {
-            el.resultMargemVendedor.textContent = formatPercent(margemVendedorCalc);
-            const itemMargem = document.getElementById('itemMargemVendedor');
-            if (itemMargem) {
-                itemMargem.classList.remove('success', 'warning');
-                itemMargem.classList.add(margemVendedorCalc >= ENGMARQ_LUCRO_PERCENT * 100 ? 'success' : 'warning');
-            }
-        }
-        
-        // Alertas do vendedor
-        if (margemVendedorCalc >= ENGMARQ_LUCRO_PERCENT * 100) {
-            if (el.alertVendedorOk) el.alertVendedorOk.classList.remove('hidden');
-            if (el.alertVendedorDanger) el.alertVendedorDanger.classList.add('hidden');
-        } else {
-            if (el.alertVendedorOk) el.alertVendedorOk.classList.add('hidden');
-            if (el.alertVendedorDanger) el.alertVendedorDanger.classList.remove('hidden');
-        }
-        
-        // Atualizar também a comparação inline (na seção de input)
-        if (el.diferencaIdeal) {
-            el.diferencaIdeal.textContent = formatCurrency(diferencaIdeal);
-            el.diferencaIdeal.classList.remove('positivo', 'negativo');
-            el.diferencaIdeal.classList.add(diferencaIdeal >= 0 ? 'positivo' : 'negativo');
-        }
-        
-        if (el.margemVendedor) {
-            el.margemVendedor.textContent = formatPercent(margemVendedorCalc);
-            el.margemVendedor.classList.remove('positivo', 'negativo');
-            el.margemVendedor.classList.add(margemVendedorCalc >= ENGMARQ_LUCRO_PERCENT * 100 ? 'positivo' : 'negativo');
-        }
-        
-        // Status inline
-        if (margemVendedorCalc >= ENGMARQ_LUCRO_PERCENT * 100) {
-            if (el.statusVendedor) el.statusVendedor.classList.remove('hidden');
-            if (el.statusVendedorDanger) el.statusVendedorDanger.classList.add('hidden');
-        } else {
-            if (el.statusVendedor) el.statusVendedor.classList.add('hidden');
-            if (el.statusVendedorDanger) el.statusVendedorDanger.classList.remove('hidden');
-        }
-    } else {
-        // Esconder card de resultados do vendedor
-        if (el.cardVendedorResultados) el.cardVendedorResultados.classList.add('hidden');
-        
-        // Resetar valores inline
-        if (el.diferencaIdeal) {
-            el.diferencaIdeal.textContent = 'R$ 0,00';
-            el.diferencaIdeal.classList.remove('positivo', 'negativo');
-        }
-        if (el.margemVendedor) {
-            el.margemVendedor.textContent = '0%';
-            el.margemVendedor.classList.remove('positivo', 'negativo');
-        }
-        if (el.statusVendedor) el.statusVendedor.classList.add('hidden');
-        if (el.statusVendedorDanger) el.statusVendedorDanger.classList.add('hidden');
-    }
-    
+    if (el.resultPrecoPorCusto) el.resultPrecoPorCusto.textContent = formatCurrency(precoPorCusto);
+    if (el.resultPrecoPorLucro) el.resultPrecoPorLucro.textContent = formatCurrency(precoPorLucro);
+    if (el.resultPropostaFinal) el.resultPropostaFinal.textContent = formatCurrency(propostaFinal);
+    if (el.resultLucroFinal) el.resultLucroFinal.textContent = formatCurrency(lucroFinal);
+    if (el.resultPercentualCustoFinal) el.resultPercentualCustoFinal.textContent = formatPercent(percentualCustoFinal);
+    if (el.resultQtdItens) el.resultQtdItens.textContent = String(itensPlanilha.length);
+
     return {
-        custoTecnico,
-        custoOperacional,
         custoTotal,
-        precoIdeal,
-        lucro,
-        margem,
-        precoMinimo,
-        comissao,
-        impostos,
-        precoComDesconto,
-        lucroComDesconto,
-        margemComDesconto,
-        descontoPercent
+        lucroDesejado,
+        custoDesejadoPercent,
+        precoPorCusto,
+        precoPorLucro,
+        propostaFinal,
+        lucroFinal,
+        percentualCustoFinal,
+        qtdItens: itensPlanilha.length
     };
 }
 
-// ===== GERAR RESUMO =====
 function gerarResumo() {
     const dados = calcularTudo();
     const dataAtual = new Date().toLocaleDateString('pt-BR');
-    
+
+    const itensHtml = itensPlanilha.length
+        ? itensPlanilha
+            .map((item) => `
+                <div class="resume-row">
+                    <span>[${item.tipo}] ${item.nome}${item.detalhe ? ` - ${item.detalhe}` : ''} (${item.quantidade} x ${formatCurrency(item.valorUnitario)})</span>
+                    <span>${formatCurrency(item.subtotal)}</span>
+                </div>
+            `)
+            .join('')
+        : '<div class="resume-row"><span>Nenhum item</span><span>R$ 0,00</span></div>';
+
     const html = `
         <div class="resume-section">
             <h4><i class="fas fa-calendar"></i> Data</h4>
@@ -320,363 +260,245 @@ function gerarResumo() {
                 <span>${dataAtual}</span>
             </div>
         </div>
-        
+
         <div class="resume-section">
-            <h4><i class="fas fa-calculator"></i> Custos</h4>
-            <div class="resume-row">
-                <span>Custos Técnicos</span>
-                <span>${formatCurrency(dados.custoTecnico)}</span>
-            </div>
-            <div class="resume-row">
-                <span>Custos Operacionais</span>
-                <span>${formatCurrency(dados.custoOperacional)}</span>
-            </div>
-            <div class="resume-row">
-                <span>Impostos</span>
-                <span>${formatCurrency(dados.impostos)}</span>
-            </div>
+            <h4><i class="fas fa-list-ul"></i> Itens da Planilha</h4>
+            ${itensHtml}
             <div class="resume-row total">
                 <span><strong>CUSTO TOTAL</strong></span>
                 <span>${formatCurrency(dados.custoTotal)}</span>
             </div>
         </div>
-        
+
         <div class="resume-section">
-            <h4><i class="fas fa-tags"></i> Precificação</h4>
+            <h4><i class="fas fa-bullseye"></i> Metas e Resultado</h4>
+            <div class="resume-row">
+                <span>Lucro desejado</span>
+                <span>${formatCurrency(dados.lucroDesejado)}</span>
+            </div>
+            <div class="resume-row">
+                <span>Custo alvo no final</span>
+                <span>${formatPercent(dados.custoDesejadoPercent)}</span>
+            </div>
+            <div class="resume-row">
+                <span>Preço por % de custo</span>
+                <span>${formatCurrency(dados.precoPorCusto)}</span>
+            </div>
+            <div class="resume-row">
+                <span>Preço por lucro desejado</span>
+                <span>${formatCurrency(dados.precoPorLucro)}</span>
+            </div>
             <div class="resume-row highlight">
-                <span>Preço Ideal (40% custo / 60% lucro)</span>
-                <span>${formatCurrency(dados.precoIdeal)}</span>
+                <span>VALOR FINAL DA PROPOSTA</span>
+                <span>${formatCurrency(dados.propostaFinal)}</span>
             </div>
             <div class="resume-row">
-                <span>Lucro Bruto</span>
-                <span>${formatCurrency(dados.lucro)}</span>
+                <span>Lucro previsto</span>
+                <span>${formatCurrency(dados.lucroFinal)}</span>
             </div>
             <div class="resume-row">
-                <span>Margem de Lucro</span>
-                <span>${formatPercent(dados.margem)}</span>
-            </div>
-            <div class="resume-row">
-                <span>Preço Mínimo (sem lucro)</span>
-                <span>${formatCurrency(dados.precoMinimo)}</span>
-            </div>
-            <div class="resume-row">
-                <span>Comissão do Vendedor</span>
-                <span>${formatCurrency(dados.comissao)}</span>
+                <span>% de custo no final</span>
+                <span>${formatPercent(dados.percentualCustoFinal)}</span>
             </div>
         </div>
-        
-        ${dados.descontoPercent > 0 ? `
-        <div class="resume-section">
-            <h4><i class="fas fa-percent"></i> Com Desconto de ${dados.descontoPercent}%</h4>
-            <div class="resume-row ${dados.margemComDesconto < ENGMARQ_LUCRO_PERCENT * 100 ? 'warning' : 'highlight'}">
-                <span>Preço com Desconto</span>
-                <span>${formatCurrency(dados.precoComDesconto)}</span>
-            </div>
-            <div class="resume-row">
-                <span>Novo Lucro</span>
-                <span>${formatCurrency(dados.lucroComDesconto)}</span>
-            </div>
-            <div class="resume-row ${dados.margemComDesconto < ENGMARQ_LUCRO_PERCENT * 100 ? 'warning' : ''}">
-                <span>Nova Margem</span>
-                <span>${formatPercent(dados.margemComDesconto)}</span>
-            </div>
-            ${dados.margemComDesconto < ENGMARQ_LUCRO_PERCENT * 100 ? `
-            <div style="background: #fff5f5; color: #e53e3e; padding: 12px; border-radius: 8px; text-align: center; margin-top: 12px;">
-                <i class="fas fa-exclamation-triangle"></i>
-                <strong>ATENÇÃO: Margem abaixo do padrão EngMarq (60%)</strong>
-            </div>
-            ` : ''}
-        </div>
-        ` : ''}
     `;
-    
+
     if (el.modalContent) el.modalContent.innerHTML = html;
     if (el.modalResumo) el.modalResumo.classList.remove('hidden');
 }
 
-// ===== COPIAR RESUMO =====
 function copiarResumo() {
     const dados = calcularTudo();
-    const dataAtual = new Date().toLocaleDateString('pt-BR');
-    
-    let texto = `📋 RESUMO DE PRECIFICAÇÃO ENGMARQ
-Data: ${dataAtual}
 
-💰 CUSTOS
-• Custos Técnicos: ${formatCurrency(dados.custoTecnico)}
-• Custos Operacionais: ${formatCurrency(dados.custoOperacional)}
-• Impostos: ${formatCurrency(dados.impostos)}
-• CUSTO TOTAL: ${formatCurrency(dados.custoTotal)}
+    const itensTexto = itensPlanilha.length
+        ? itensPlanilha
+            .map((item) => `• [${item.tipo}] ${item.nome}${item.detalhe ? ` (${item.detalhe})` : ''}: ${item.quantidade} x ${formatCurrency(item.valorUnitario)} = ${formatCurrency(item.subtotal)}`)
+            .join('\n')
+        : '• Nenhum item adicionado';
 
-🏷️ PRECIFICAÇÃO
-• Preço Ideal: ${formatCurrency(dados.precoIdeal)}
-• Lucro Bruto: ${formatCurrency(dados.lucro)}
-• Margem: ${formatPercent(dados.margem)}
-• Preço Mínimo: ${formatCurrency(dados.precoMinimo)}
-• Comissão: ${formatCurrency(dados.comissao)}`;
+    const texto = `📋 RESUMO DE PRECIFICAÇÃO ENGMARQ\n\n🧾 ITENS DA PLANILHA\n${itensTexto}\n\n💰 CUSTO TOTAL\n• ${formatCurrency(dados.custoTotal)}\n\n🎯 METAS\n• Lucro desejado: ${formatCurrency(dados.lucroDesejado)}\n• Custo alvo no final: ${formatPercent(dados.custoDesejadoPercent)}\n\n🏷️ PROPOSTA\n• Preço por % de custo: ${formatCurrency(dados.precoPorCusto)}\n• Preço por lucro desejado: ${formatCurrency(dados.precoPorLucro)}\n• VALOR FINAL DA PROPOSTA: ${formatCurrency(dados.propostaFinal)}\n• Lucro previsto: ${formatCurrency(dados.lucroFinal)}\n• % de custo no final: ${formatPercent(dados.percentualCustoFinal)}`;
 
-    if (dados.descontoPercent > 0) {
-        texto += `
-
-📊 COM DESCONTO DE ${dados.descontoPercent}%
-• Preço c/ Desconto: ${formatCurrency(dados.precoComDesconto)}
-• Novo Lucro: ${formatCurrency(dados.lucroComDesconto)}
-• Nova Margem: ${formatPercent(dados.margemComDesconto)}
-${dados.margemComDesconto < ENGMARQ_LUCRO_PERCENT * 100 ? '⚠️ ATENÇÃO: Margem abaixo do padrão EngMarq (60%)' : ''}`;
-    }
-    
-    navigator.clipboard.writeText(texto.trim()).then(() => {
+    navigator.clipboard.writeText(texto).then(() => {
         if (el.btnCopiar) {
-            const textoOriginal = el.btnCopiar.innerHTML;
+            const original = el.btnCopiar.innerHTML;
             el.btnCopiar.innerHTML = '<i class="fas fa-check"></i> Copiado!';
             setTimeout(() => {
-                el.btnCopiar.innerHTML = textoOriginal;
-            }, 2000);
+                el.btnCopiar.innerHTML = original;
+            }, 1800);
         }
     });
 }
 
-// ===== IMPRIMIR RESUMO =====
 function imprimirResumo() {
     window.print();
 }
 
-// ===== LIMPAR FORMULÁRIO =====
 function limparFormulario() {
     const allInputs = document.querySelectorAll('input');
-    allInputs.forEach(input => {
-        input.value = '';
+    allInputs.forEach((input) => {
+        if (input.type === 'number') {
+            input.value = '';
+        } else {
+            input.value = '';
+        }
     });
-    
-    // Resetar resultados
-    if (el.resultCustoTotal) el.resultCustoTotal.textContent = 'R$ 0,00';
-    if (el.resultPrecoIdeal) el.resultPrecoIdeal.textContent = 'R$ 0,00';
-    if (el.resultLucro) el.resultLucro.textContent = 'R$ 0,00';
-    if (el.resultMargem) el.resultMargem.textContent = '0%';
-    if (el.resultPrecoMinimo) el.resultPrecoMinimo.textContent = 'R$ 0,00';
-    if (el.resultComissao) el.resultComissao.textContent = 'R$ 0,00';
-    if (el.resultPrecoDesconto) el.resultPrecoDesconto.textContent = 'R$ 0,00';
-    if (el.resultNovoLucro) el.resultNovoLucro.textContent = 'R$ 0,00';
-    if (el.resultNovaMargem) el.resultNovaMargem.textContent = '0%';
-    
-    // Esconder card de desconto
-    if (el.cardDescontoResultados) el.cardDescontoResultados.classList.add('hidden');
-    
-    // Esconder todos os alertas
-    if (el.alertMargemPrincipal) el.alertMargemPrincipal.classList.add('hidden');
-    if (el.alertMargemPrincipalOk) el.alertMargemPrincipalOk.classList.add('hidden');
-    if (el.alertMargem) el.alertMargem.classList.add('hidden');
-    if (el.alertMargemOk) el.alertMargemOk.classList.add('hidden');
-    
-    // Resetar comparação vendedor
-    if (el.diferencaIdeal) {
-        el.diferencaIdeal.textContent = 'R$ 0,00';
-        el.diferencaIdeal.classList.remove('positivo', 'negativo');
-    }
-    if (el.margemVendedor) {
-        el.margemVendedor.textContent = '0%';
-        el.margemVendedor.classList.remove('positivo', 'negativo');
-    }
-    if (el.statusVendedor) el.statusVendedor.classList.add('hidden');
-    if (el.statusVendedorDanger) el.statusVendedorDanger.classList.add('hidden');
-    
-    // Esconder card de vendedor na coluna de resultados
-    if (el.cardVendedorResultados) el.cardVendedorResultados.classList.add('hidden');
-    if (el.alertVendedorOk) el.alertVendedorOk.classList.add('hidden');
-    if (el.alertVendedorDanger) el.alertVendedorDanger.classList.add('hidden');
-    
-    // Restaurar valores padrão
-    setDefaultValues();
+
+    if (el.itemQuantidade) el.itemQuantidade.value = '1';
+    if (el.treinamentoQtdInstrutores) el.treinamentoQtdInstrutores.value = '1';
+    if (el.custoDesejadoPercent) el.custoDesejadoPercent.value = '40';
+
+    itensPlanilha = [];
+    renderizarLista();
+    calcularTudo();
 }
 
-// ===== INICIALIZAÇÃO =====
+function carregarSessaoHeader() {
+    const token = localStorage.getItem('engmarq_session');
+    if (!token) return;
+
+    try {
+        const payload = JSON.parse(atob(token));
+        if (payload?.nome && el.userNameText) {
+            el.userNameText.textContent = payload.nome;
+        }
+    } catch {
+        // silêncio intencional
+    }
+}
+
+function fazerLogout() {
+    localStorage.removeItem('engmarq_session');
+    window.location.href = './login.html';
+}
+
+window.fazerLogout = fazerLogout;
+
 function init() {
-    // Carregar referências dos elementos
     el = {
-        // Custos Técnicos
-        horasTecnico: document.getElementById('horasTecnico'),
-        valorHoraTecnico: document.getElementById('valorHoraTecnico'),
-        horasEngenheiro: document.getElementById('horasEngenheiro'),
-        valorHoraEngenheiro: document.getElementById('valorHoraEngenheiro'),
-        qtdVisitas: document.getElementById('qtdVisitas'),
-        valorVisita: document.getElementById('valorVisita'),
-        valorPGR: document.getElementById('valorPGR'),
-        valorPCMSO: document.getElementById('valorPCMSO'),
-        valorLTCAT: document.getElementById('valorLTCAT'),
-        valorGestaoNR01: document.getElementById('valorGestaoNR01'),
-        valorTreinamentos: document.getElementById('valorTreinamentos'),
-        valorAcompanhamento: document.getElementById('valorAcompanhamento'),
-        
-        // Custos Operacionais
-        valorDeslocamento: document.getElementById('valorDeslocamento'),
-        valorAlimentacao: document.getElementById('valorAlimentacao'),
-        valorMateriais: document.getElementById('valorMateriais'),
-        valorTaxas: document.getElementById('valorTaxas'),
-        valorOutros: document.getElementById('valorOutros'),
-        
-        // Impostos e Comissão
-        issPercent: document.getElementById('issPercent'),
-        impostosPercent: document.getElementById('impostosPercent'),
-        comissaoPercent: document.getElementById('comissaoPercent'),
-        
-        // Desconto
-        descontoPercent: document.getElementById('descontoPercent'),
-        
-        // Resultados Principais
+        userNameText: document.getElementById('userNameText'),
+
+        itemNome: document.getElementById('itemNome'),
+        itemDetalhe: document.getElementById('itemDetalhe'),
+        itemQuantidade: document.getElementById('itemQuantidade'),
+        itemValorUnitario: document.getElementById('itemValorUnitario'),
+        btnAdicionarItemManual: document.getElementById('btnAdicionarItemManual'),
+
+        tecQuantidade: document.getElementById('tecQuantidade'),
+        tecHoras: document.getElementById('tecHoras'),
+        tecValorHora: document.getElementById('tecValorHora'),
+        btnAdicionarTecnico: document.getElementById('btnAdicionarTecnico'),
+
+        psicoColaboradores: document.getElementById('psicoColaboradores'),
+        psicoValorColaborador: document.getElementById('psicoValorColaborador'),
+        btnAdicionarPsicossocial: document.getElementById('btnAdicionarPsicossocial'),
+
+        treinamentoNome: document.getElementById('treinamentoNome'),
+        treinamentoColaboradores: document.getElementById('treinamentoColaboradores'),
+        treinamentoQtdInstrutores: document.getElementById('treinamentoQtdInstrutores'),
+        treinamentoHorasTreinamento: document.getElementById('treinamentoHorasTreinamento'),
+        treinamentoValorHoraInstrutor: document.getElementById('treinamentoValorHoraInstrutor'),
+        treinamentoValorPorColaborador: document.getElementById('treinamentoValorPorColaborador'),
+        btnAdicionarTreinamento: document.getElementById('btnAdicionarTreinamento'),
+
+        lucroDesejado: document.getElementById('lucroDesejado'),
+        custoDesejadoPercent: document.getElementById('custoDesejadoPercent'),
+
+        planilhaLista: document.getElementById('planilhaLista'),
+
         resultCustoTotal: document.getElementById('resultCustoTotal'),
-        resultPrecoIdeal: document.getElementById('resultPrecoIdeal'),
-        resultLucro: document.getElementById('resultLucro'),
-        resultMargem: document.getElementById('resultMargem'),
-        resultPrecoMinimo: document.getElementById('resultPrecoMinimo'),
-        resultComissao: document.getElementById('resultComissao'),
-        
-        // Resultados com Desconto
-        resultPrecoDesconto: document.getElementById('resultPrecoDesconto'),
-        resultNovaMargem: document.getElementById('resultNovaMargem'),
-        resultNovoLucro: document.getElementById('resultNovoLucro'),
-        cardDescontoResultados: document.getElementById('cardDescontoResultados'),
-        descontoLabel: document.getElementById('descontoLabel'),
-        
-        // Alertas (principal)
-        alertMargemPrincipal: document.getElementById('alertMargemPrincipal'),
-        alertMargemPrincipalOk: document.getElementById('alertMargemPrincipalOk'),
-        
-        // Alertas (desconto)
-        alertMargem: document.getElementById('alertMargem'),
-        alertMargemOk: document.getElementById('alertMargemOk'),
-        
-        // Valor Vendedor (input)
-        valorVendedor: document.getElementById('valorVendedor'),
-        diferencaIdeal: document.getElementById('diferencaIdeal'),
-        margemVendedor: document.getElementById('margemVendedor'),
-        statusVendedor: document.getElementById('statusVendedor'),
-        statusVendedorDanger: document.getElementById('statusVendedorDanger'),
-        
-        // Resultados Vendedor (coluna de resultados)
-        cardVendedorResultados: document.getElementById('cardVendedorResultados'),
-        resultPrecoVendedor: document.getElementById('resultPrecoVendedor'),
-        resultDiferencaIdeal: document.getElementById('resultDiferencaIdeal'),
-        resultLucroVendedor: document.getElementById('resultLucroVendedor'),
-        resultMargemVendedor: document.getElementById('resultMargemVendedor'),
-        alertVendedorOk: document.getElementById('alertVendedorOk'),
-        alertVendedorDanger: document.getElementById('alertVendedorDanger'),
-        
-        // Botões
+        resultPrecoPorCusto: document.getElementById('resultPrecoPorCusto'),
+        resultPrecoPorLucro: document.getElementById('resultPrecoPorLucro'),
+        resultPropostaFinal: document.getElementById('resultPropostaFinal'),
+        resultLucroFinal: document.getElementById('resultLucroFinal'),
+        resultPercentualCustoFinal: document.getElementById('resultPercentualCustoFinal'),
+        resultQtdItens: document.getElementById('resultQtdItens'),
+
         btnLimpar: document.getElementById('btnLimpar'),
         btnGerarResumo: document.getElementById('btnGerarResumo'),
-        
-        // Modal
+
         modalResumo: document.getElementById('modalResumo'),
         modalClose: document.getElementById('modalClose'),
         modalContent: document.getElementById('modalContent'),
         btnCopiar: document.getElementById('btnCopiar'),
         btnImprimir: document.getElementById('btnImprimir')
     };
-    
-    // Aplicar máscaras de moeda
-    const currencyInputs = [
-        'valorHoraTecnico', 'valorHoraEngenheiro', 'valorVisita',
-        'valorPGR', 'valorPCMSO', 'valorLTCAT', 'valorGestaoNR01',
-        'valorTreinamentos', 'valorAcompanhamento', 'valorDeslocamento',
-        'valorAlimentacao', 'valorMateriais', 'valorTaxas', 'valorOutros'
-    ];
-    
-    currencyInputs.forEach(id => {
-        applyCurrencyMask(document.getElementById(id));
-    });
-    
-    // Aplicar máscara no campo valor vendedor
-    applyCurrencyMask(document.getElementById('valorVendedor'));
-    
-    // Adicionar listeners para recalcular em tempo real
-    const allInputs = document.querySelectorAll('input');
-    allInputs.forEach(input => {
+
+    [
+        el.itemValorUnitario,
+        el.tecValorHora,
+        el.psicoValorColaborador,
+        el.treinamentoValorHoraInstrutor,
+        el.treinamentoValorPorColaborador,
+        el.lucroDesejado
+    ].forEach((input) => applyCurrencyMask(input));
+
+    if (el.btnAdicionarItemManual) el.btnAdicionarItemManual.addEventListener('click', adicionarItemManual);
+    if (el.btnAdicionarTecnico) el.btnAdicionarTecnico.addEventListener('click', adicionarTecnico);
+    if (el.btnAdicionarPsicossocial) el.btnAdicionarPsicossocial.addEventListener('click', adicionarPsicossocial);
+    if (el.btnAdicionarTreinamento) el.btnAdicionarTreinamento.addEventListener('click', adicionarTreinamento);
+
+    const recalcInputs = [el.lucroDesejado, el.custoDesejadoPercent];
+    recalcInputs.forEach((input) => {
+        if (!input) return;
         input.addEventListener('input', calcularTudo);
         input.addEventListener('change', calcularTudo);
     });
-    
-    // Botão Limpar
-    if (el.btnLimpar) {
-        el.btnLimpar.addEventListener('click', limparFormulario);
-    }
-    
-    // Botão Gerar Resumo
-    if (el.btnGerarResumo) {
-        el.btnGerarResumo.addEventListener('click', gerarResumo);
-    }
-    
-    // Fechar modal
+
+    [
+        el.itemNome,
+        el.itemDetalhe,
+        el.itemQuantidade,
+        el.itemValorUnitario,
+        el.tecQuantidade,
+        el.tecHoras,
+        el.tecValorHora,
+        el.psicoColaboradores,
+        el.psicoValorColaborador,
+        el.treinamentoNome,
+        el.treinamentoColaboradores,
+        el.treinamentoQtdInstrutores,
+        el.treinamentoHorasTreinamento,
+        el.treinamentoValorHoraInstrutor,
+        el.treinamentoValorPorColaborador
+    ].forEach((input) => {
+        if (!input) return;
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+            }
+        });
+    });
+
+    if (el.btnLimpar) el.btnLimpar.addEventListener('click', limparFormulario);
+    if (el.btnGerarResumo) el.btnGerarResumo.addEventListener('click', gerarResumo);
+    if (el.btnCopiar) el.btnCopiar.addEventListener('click', copiarResumo);
+    if (el.btnImprimir) el.btnImprimir.addEventListener('click', imprimirResumo);
+
     if (el.modalClose) {
         el.modalClose.addEventListener('click', () => {
             if (el.modalResumo) el.modalResumo.classList.add('hidden');
         });
     }
-    
+
     if (el.modalResumo) {
         el.modalResumo.addEventListener('click', (e) => {
-            if (e.target === el.modalResumo) {
-                el.modalResumo.classList.add('hidden');
-            }
+            if (e.target === el.modalResumo) el.modalResumo.classList.add('hidden');
         });
     }
-    
-    // Botões do modal
-    if (el.btnCopiar) {
-        el.btnCopiar.addEventListener('click', copiarResumo);
-    }
-    
-    if (el.btnImprimir) {
-        el.btnImprimir.addEventListener('click', imprimirResumo);
-    }
-    
-    // Fechar modal com ESC
+
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && el.modalResumo && !el.modalResumo.classList.contains('hidden')) {
             el.modalResumo.classList.add('hidden');
         }
     });
-    
-    // Definir valores padrão
-    setDefaultValues();
-}
 
-// Função para definir valores padrão
-function setDefaultValues() {
-    // Valor hora Técnico: R$ 50,00
-    if (el.valorHoraTecnico) {
-        el.valorHoraTecnico.value = 'R$ 50,00';
-    }
-    
-    // Valor hora Engenheiro: R$ 70,00
-    if (el.valorHoraEngenheiro) {
-        el.valorHoraEngenheiro.value = 'R$ 70,00';
-    }
-    
-    // Programas SST: R$ 500,00 cada
-    if (el.valorPGR) {
-        el.valorPGR.value = 'R$ 500,00';
-    }
-    if (el.valorPCMSO) {
-        el.valorPCMSO.value = 'R$ 500,00';
-    }
-    if (el.valorLTCAT) {
-        el.valorLTCAT.value = 'R$ 500,00';
-    }
-    
-    // Comissão do Vendedor: 8%
-    if (el.comissaoPercent) {
-        el.comissaoPercent.value = '8';
-    }
-    
-    // Impostos Gerais: 6%
-    if (el.impostosPercent) {
-        el.impostosPercent.value = '6';
-    }
-    
-    // Calcular com valores padrão
+    if (el.itemQuantidade) el.itemQuantidade.value = '1';
+    if (el.treinamentoQtdInstrutores) el.treinamentoQtdInstrutores.value = '1';
+    if (el.custoDesejadoPercent) el.custoDesejadoPercent.value = '40';
+
+    carregarSessaoHeader();
+    renderizarLista();
     calcularTudo();
 }
 
-// Iniciar quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', init);
-
