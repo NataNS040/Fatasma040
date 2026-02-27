@@ -204,6 +204,9 @@ function renderizarLista() {
 function calcularTudo() {
     const custoTotal = itensPlanilha.reduce((acc, item) => acc + item.subtotal, 0);
     const lucroDesejado = parseCurrency(el.lucroDesejado?.value || 0);
+    let lucroDesejadoPercent = parseNumber(el.lucroDesejadoPercent?.value || 0);
+    if (lucroDesejadoPercent < 0) lucroDesejadoPercent = 0;
+    if (lucroDesejadoPercent >= 100) lucroDesejadoPercent = 99.9;
 
     let custoDesejadoPercent = parseNumber(el.custoDesejadoPercent?.value || 0);
     if (custoDesejadoPercent <= 0) custoDesejadoPercent = 1;
@@ -211,28 +214,35 @@ function calcularTudo() {
 
     const precoPorCusto = custoTotal / (custoDesejadoPercent / 100);
     const precoPorLucro = custoTotal + lucroDesejado;
-    const propostaFinal = Math.max(precoPorCusto, precoPorLucro);
+    const precoPorLucroPercent = custoTotal / (1 - (lucroDesejadoPercent / 100));
+    const propostaFinal = Math.max(precoPorCusto, precoPorLucro, precoPorLucroPercent);
 
     const lucroFinal = propostaFinal - custoTotal;
     const percentualCustoFinal = propostaFinal > 0 ? (custoTotal / propostaFinal) * 100 : 0;
+    const percentualLucroFinal = propostaFinal > 0 ? (lucroFinal / propostaFinal) * 100 : 0;
 
     if (el.resultCustoTotal) el.resultCustoTotal.textContent = formatCurrency(custoTotal);
     if (el.resultPrecoPorCusto) el.resultPrecoPorCusto.textContent = formatCurrency(precoPorCusto);
     if (el.resultPrecoPorLucro) el.resultPrecoPorLucro.textContent = formatCurrency(precoPorLucro);
+    if (el.resultPrecoPorLucroPercent) el.resultPrecoPorLucroPercent.textContent = formatCurrency(precoPorLucroPercent);
     if (el.resultPropostaFinal) el.resultPropostaFinal.textContent = formatCurrency(propostaFinal);
     if (el.resultLucroFinal) el.resultLucroFinal.textContent = formatCurrency(lucroFinal);
     if (el.resultPercentualCustoFinal) el.resultPercentualCustoFinal.textContent = formatPercent(percentualCustoFinal);
+    if (el.resultPercentualLucroFinal) el.resultPercentualLucroFinal.textContent = formatPercent(percentualLucroFinal);
     if (el.resultQtdItens) el.resultQtdItens.textContent = String(itensPlanilha.length);
 
     return {
         custoTotal,
         lucroDesejado,
+        lucroDesejadoPercent,
         custoDesejadoPercent,
         precoPorCusto,
         precoPorLucro,
+        precoPorLucroPercent,
         propostaFinal,
         lucroFinal,
         percentualCustoFinal,
+        percentualLucroFinal,
         qtdItens: itensPlanilha.length
     };
 }
@@ -277,6 +287,10 @@ function gerarResumo() {
                 <span>${formatCurrency(dados.lucroDesejado)}</span>
             </div>
             <div class="resume-row">
+                <span>Lucro desejado (%)</span>
+                <span>${formatPercent(dados.lucroDesejadoPercent)}</span>
+            </div>
+            <div class="resume-row">
                 <span>Custo alvo no final</span>
                 <span>${formatPercent(dados.custoDesejadoPercent)}</span>
             </div>
@@ -287,6 +301,10 @@ function gerarResumo() {
             <div class="resume-row">
                 <span>Preço por lucro desejado</span>
                 <span>${formatCurrency(dados.precoPorLucro)}</span>
+            </div>
+            <div class="resume-row">
+                <span>Preço por % de lucro</span>
+                <span>${formatCurrency(dados.precoPorLucroPercent)}</span>
             </div>
             <div class="resume-row highlight">
                 <span>VALOR FINAL DA PROPOSTA</span>
@@ -299,6 +317,10 @@ function gerarResumo() {
             <div class="resume-row">
                 <span>% de custo no final</span>
                 <span>${formatPercent(dados.percentualCustoFinal)}</span>
+            </div>
+            <div class="resume-row">
+                <span>% de lucro no final</span>
+                <span>${formatPercent(dados.percentualLucroFinal)}</span>
             </div>
         </div>
     `;
@@ -316,7 +338,7 @@ function copiarResumo() {
             .join('\n')
         : '• Nenhum item adicionado';
 
-    const texto = `📋 RESUMO DE PRECIFICAÇÃO ENGMARQ\n\n🧾 ITENS DA PLANILHA\n${itensTexto}\n\n💰 CUSTO TOTAL\n• ${formatCurrency(dados.custoTotal)}\n\n🎯 METAS\n• Lucro desejado: ${formatCurrency(dados.lucroDesejado)}\n• Custo alvo no final: ${formatPercent(dados.custoDesejadoPercent)}\n\n🏷️ PROPOSTA\n• Preço por % de custo: ${formatCurrency(dados.precoPorCusto)}\n• Preço por lucro desejado: ${formatCurrency(dados.precoPorLucro)}\n• VALOR FINAL DA PROPOSTA: ${formatCurrency(dados.propostaFinal)}\n• Lucro previsto: ${formatCurrency(dados.lucroFinal)}\n• % de custo no final: ${formatPercent(dados.percentualCustoFinal)}`;
+    const texto = `📋 RESUMO DE PRECIFICAÇÃO ENGMARQ\n\n🧾 ITENS DA PLANILHA\n${itensTexto}\n\n💰 CUSTO TOTAL\n• ${formatCurrency(dados.custoTotal)}\n\n🎯 METAS\n• Lucro desejado: ${formatCurrency(dados.lucroDesejado)}\n• Lucro desejado (%): ${formatPercent(dados.lucroDesejadoPercent)}\n• Custo alvo no final: ${formatPercent(dados.custoDesejadoPercent)}\n\n🏷️ PROPOSTA\n• Preço por % de custo: ${formatCurrency(dados.precoPorCusto)}\n• Preço por lucro desejado: ${formatCurrency(dados.precoPorLucro)}\n• Preço por % de lucro: ${formatCurrency(dados.precoPorLucroPercent)}\n• VALOR FINAL DA PROPOSTA: ${formatCurrency(dados.propostaFinal)}\n• Lucro previsto: ${formatCurrency(dados.lucroFinal)}\n• % de custo no final: ${formatPercent(dados.percentualCustoFinal)}\n• % de lucro no final: ${formatPercent(dados.percentualLucroFinal)}`;
 
     navigator.clipboard.writeText(texto).then(() => {
         if (el.btnCopiar) {
@@ -401,6 +423,7 @@ function init() {
         btnAdicionarTreinamento: document.getElementById('btnAdicionarTreinamento'),
 
         lucroDesejado: document.getElementById('lucroDesejado'),
+        lucroDesejadoPercent: document.getElementById('lucroDesejadoPercent'),
         custoDesejadoPercent: document.getElementById('custoDesejadoPercent'),
 
         planilhaLista: document.getElementById('planilhaLista'),
@@ -408,9 +431,11 @@ function init() {
         resultCustoTotal: document.getElementById('resultCustoTotal'),
         resultPrecoPorCusto: document.getElementById('resultPrecoPorCusto'),
         resultPrecoPorLucro: document.getElementById('resultPrecoPorLucro'),
+        resultPrecoPorLucroPercent: document.getElementById('resultPrecoPorLucroPercent'),
         resultPropostaFinal: document.getElementById('resultPropostaFinal'),
         resultLucroFinal: document.getElementById('resultLucroFinal'),
         resultPercentualCustoFinal: document.getElementById('resultPercentualCustoFinal'),
+        resultPercentualLucroFinal: document.getElementById('resultPercentualLucroFinal'),
         resultQtdItens: document.getElementById('resultQtdItens'),
 
         btnLimpar: document.getElementById('btnLimpar'),
@@ -437,7 +462,7 @@ function init() {
     if (el.btnAdicionarPsicossocial) el.btnAdicionarPsicossocial.addEventListener('click', adicionarPsicossocial);
     if (el.btnAdicionarTreinamento) el.btnAdicionarTreinamento.addEventListener('click', adicionarTreinamento);
 
-    const recalcInputs = [el.lucroDesejado, el.custoDesejadoPercent];
+    const recalcInputs = [el.lucroDesejado, el.lucroDesejadoPercent, el.custoDesejadoPercent];
     recalcInputs.forEach((input) => {
         if (!input) return;
         input.addEventListener('input', calcularTudo);
@@ -494,6 +519,7 @@ function init() {
 
     if (el.itemQuantidade) el.itemQuantidade.value = '1';
     if (el.treinamentoQtdInstrutores) el.treinamentoQtdInstrutores.value = '1';
+    if (el.lucroDesejadoPercent) el.lucroDesejadoPercent.value = '30';
     if (el.custoDesejadoPercent) el.custoDesejadoPercent.value = '40';
 
     carregarSessaoHeader();

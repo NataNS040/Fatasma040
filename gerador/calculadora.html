@@ -203,9 +203,16 @@
                                     <input type="text" id="lucroDesejado" class="currency" placeholder="R$ 0,00">
                                 </div>
                                 <div class="input-group">
+                                    <label for="lucroDesejadoPercent">Quanto quer lucrar (%)</label>
+                                    <input type="number" id="lucroDesejadoPercent" min="0" max="99.9" step="0.1" value="30">
+                                </div>
+                            </div>
+                            <div class="input-row">
+                                <div class="input-group">
                                     <label for="custoDesejadoPercent">Quanto quer de custo no valor final (%)</label>
                                     <input type="number" id="custoDesejadoPercent" min="1" max="100" step="0.1" value="40">
                                 </div>
+                                <div class="input-group"></div>
                             </div>
                         </div>
                     </section>
@@ -235,6 +242,11 @@
                                 <span class="result-value" id="resultPrecoPorLucro">R$ 0,00</span>
                             </div>
 
+                            <div class="result-item">
+                                <span class="result-label"><i class="fas fa-percent"></i>Preço por % de Lucro</span>
+                                <span class="result-value" id="resultPrecoPorLucroPercent">R$ 0,00</span>
+                            </div>
+
                             <div class="result-item highlight">
                                 <span class="result-label"><i class="fas fa-file-signature"></i>Valor Final da Proposta</span>
                                 <span class="result-value large" id="resultPropostaFinal">R$ 0,00</span>
@@ -243,6 +255,11 @@
                             <div class="result-item success">
                                 <span class="result-label"><i class="fas fa-chart-line"></i>Lucro Previsto</span>
                                 <span class="result-value" id="resultLucroFinal">R$ 0,00</span>
+                            </div>
+
+                            <div class="result-item">
+                                <span class="result-label"><i class="fas fa-percentage"></i>% de Lucro no Final</span>
+                                <span class="result-value" id="resultPercentualLucroFinal">0%</span>
                             </div>
 
                             <div class="result-item">
