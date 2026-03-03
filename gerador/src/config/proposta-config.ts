@@ -70,6 +70,15 @@ export const configs: PropostaConfigs = {
         subtitle: 'Capacitação especializada em Normas Regulamentadoras com metodologia prática, certificação imediata e total conformidade legal',
         color: '#dd6b20',
         headerTitle: 'Proposta Comercial - Treinamentos em SST'
+    },
+    personalizada: {
+        icon: 'fa-file-invoice',
+        badge: 'Proposta Personalizada',
+        titleTop: 'PROPOSTA COMERCIAL',
+        titleMain: 'SERVIÇOS PERSONALIZADOS',
+        subtitle: 'Soluções sob medida em Segurança e Saúde do Trabalho para atender às necessidades específicas da sua empresa',
+        color: '#2b6cb0',
+        headerTitle: 'Proposta Comercial - Personalizada'
     }
 };
 
@@ -84,5 +93,5 @@ export function getConfig(tipo: TipoProposta): PropostaConfig {
  * Verifica se um tipo é válido
  */
 export function isValidTipo(tipo: string): tipo is TipoProposta {
-    return tipo === 'brigada' || tipo === 'plataforma' || tipo === 'plataforma-principal' || tipo === 'psicossocial' || tipo === 'assessoria' || tipo === 'kit-sst' || tipo === 'treinamentos';
+    return tipo === 'brigada' || tipo === 'plataforma' || tipo === 'plataforma-principal' || tipo === 'psicossocial' || tipo === 'assessoria' || tipo === 'kit-sst' || tipo === 'treinamentos' || tipo === 'personalizada';
 }

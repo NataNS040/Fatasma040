@@ -14,6 +14,7 @@ function getAccentColor(tipo: TipoProposta): string {
         case 'plataforma-principal': return '#c05621';
         case 'psicossocial': return '#805ad5';
         case 'assessoria': return '#38a169';
+        case 'personalizada': return '#2b6cb0';
         default: return '#f5a623';
     }
 }

@@ -11,6 +11,7 @@ import { getTemplatePsicossocial } from '../templates/template-psicossocial';
 import { getTemplateAssessoria } from '../templates/template-assessoria';
 import { getTemplateKitSST } from '../templates/template-kit-sst';
 import { getTemplateTreinamentos } from '../templates/template-treinamentos';
+import { getTemplatePersonalizada } from '../templates/template-personalizada';
 import { formatData } from '../utils/formatters';
 import logoEngmarq from '../../assets/logoengmarq.png';
 
@@ -34,6 +35,7 @@ export function prepararDadosTemplate(dados: DadosCliente): DadosTemplate {
         logoUrl: logoEngmarq,
         treinamentos: dados.treinamentos,
         entregaveisPsico: dados.entregaveisPsico,
+        itensPersonalizada: dados.itensPersonalizada,
         isGrupo: dados.isGrupo,
         nomeGrupo: dados.nomeGrupo,
         empresasGrupo: dados.empresasGrupo
@@ -66,6 +68,8 @@ function selecionarTemplate(
             return getTemplateKitSST(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         case 'treinamentos':
             return getTemplateTreinamentos(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
+        case 'personalizada':
+            return getTemplatePersonalizada(dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
         default:
             throw new Error(`Tipo de proposta não suportado: ${tipo}`);
     }

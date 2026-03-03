@@ -5,7 +5,7 @@
 /**
  * Tipos de proposta disponíveis no sistema
  */
-export type TipoProposta = 'brigada' | 'plataforma' | 'plataforma-principal' | 'psicossocial' | 'assessoria' | 'kit-sst' | 'treinamentos';
+export type TipoProposta = 'brigada' | 'plataforma' | 'plataforma-principal' | 'psicossocial' | 'assessoria' | 'kit-sst' | 'treinamentos' | 'personalizada';
 
 /**
  * IDs dos treinamentos disponíveis
@@ -41,6 +41,16 @@ export interface EntregavelPsico {
     descricao: string;
     quantidade?: number;
     ativo: boolean;
+}
+
+/**
+ * Item personalizado para proposta customizável
+ */
+export interface ItemPersonalizado {
+    descricao: string;
+    quantidade: number;
+    valorUnitario: number;
+    valorTotal: number;
 }
 
 /**
@@ -95,6 +105,7 @@ export interface DadosCliente {
     solicitante: DadosSolicitante;
     treinamentos?: TreinamentoSelecionado[];
     entregaveisPsico?: EntregavelPsico[];
+    itensPersonalizada?: ItemPersonalizado[];
     // Campos para proposta em grupo
     isGrupo?: boolean;
     nomeGrupo?: string;
@@ -141,6 +152,7 @@ export interface DadosTemplate {
     logoUrl: string;
     treinamentos?: TreinamentoSelecionado[];
     entregaveisPsico?: EntregavelPsico[];
+    itensPersonalizada?: ItemPersonalizado[];
     // Campos para proposta em grupo
     isGrupo?: boolean;
     nomeGrupo?: string;

@@ -2,7 +2,7 @@
 // SCRIPT PRINCIPAL DO GERADOR DE PROPOSTAS
 // =====================================================
 
-import { TipoProposta, DadosCliente, PropostaConfigs, TreinamentoSelecionado, TreinamentoId, EntregavelPsico, EntregavelPsicoId, EmpresaGrupo } from './types/proposta.types';
+import { TipoProposta, DadosCliente, PropostaConfigs, TreinamentoSelecionado, TreinamentoId, EntregavelPsico, EntregavelPsicoId, EmpresaGrupo, ItemPersonalizado } from './types/proposta.types';
 import { configs, isValidTipo } from './config/proposta-config';
 import { formatMoeda, parseValorMonetario, calcularDesconto, formatData } from './utils/formatters';
 import { gerarHTMLProposta } from './generators/gerador-proposta';
@@ -26,6 +26,8 @@ declare global {
         formatMoeda: (v: number) => string;
         adicionarEmpresa: () => void;
         removerEmpresa: (index: number) => void;
+        adicionarItemPersonalizado: () => void;
+        removerItemPersonalizado: (index: number) => void;
         fazerLogout: () => void;
     }
 }
@@ -124,6 +126,12 @@ const previewConfigs: Record<string, { icon: string; titleTop: string; titleMain
         titleTop: 'TREINAMENTOS EM',
         titleMain: 'SEGURANÇA DO TRABALHO',
         subtitle: 'Capacitações em Normas Regulamentadoras para garantir a conformidade legal e a segurança dos colaboradores'
+    },
+    personalizada: {
+        icon: 'fas fa-file-invoice',
+        titleTop: 'PROPOSTA COMERCIAL',
+        titleMain: 'SERVIÇOS PERSONALIZADOS',
+        subtitle: 'Soluções sob medida em Segurança e Saúde do Trabalho para atender às necessidades da sua empresa'
     }
 };
 
@@ -424,6 +432,131 @@ function capturarEmpresas(): EmpresaGrupo[] {
     return empresas;
 }
 
+// =====================================================
+// GERENCIAMENTO DE ITENS PERSONALIZADOS
+// =====================================================
+let itemPersonalizadoCounter = 0;
+
+/**
+ * Adiciona um novo item ao orçamento personalizado
+ */
+function adicionarItemPersonalizado(): void {
+    itemPersonalizadoCounter++;
+    const container = document.getElementById('itens-personalizada-container');
+    if (!container) return;
+
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'item-personalizado';
+    itemDiv.dataset.index = String(itemPersonalizadoCounter);
+    itemDiv.innerHTML = `
+        <div class="item-personalizado-header">
+            <span class="item-numero">Item ${container.children.length + 1}</span>
+            <button type="button" class="btn-remover-item" onclick="removerItemPersonalizado(${itemPersonalizadoCounter})" title="Remover item">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="form-group">
+            <label>Descrição do Serviço</label>
+            <textarea class="item-descricao" rows="2" placeholder="Descreva o serviço ou produto..."></textarea>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Quantidade</label>
+                <input type="number" class="item-quantidade" value="1" min="1">
+            </div>
+            <div class="form-group">
+                <label>Valor Unitário (R$)</label>
+                <input type="text" class="item-valor-unitario" placeholder="0,00">
+            </div>
+            <div class="form-group">
+                <label>Subtotal (R$)</label>
+                <input type="text" class="item-valor-total" placeholder="0,00" readonly style="background: #f0f4f8; font-weight: 600;">
+            </div>
+        </div>
+    `;
+    container.appendChild(itemDiv);
+
+    // Event listeners para cálculo automático
+    const qtdInput = itemDiv.querySelector('.item-quantidade') as HTMLInputElement;
+    const valorUnitInput = itemDiv.querySelector('.item-valor-unitario') as HTMLInputElement;
+    
+    const calcularSubtotal = () => {
+        const qtd = parseFloat(qtdInput.value) || 0;
+        const valorUnit = parseValorMonetario(valorUnitInput.value);
+        const subtotal = qtd * valorUnit;
+        const subtotalInput = itemDiv.querySelector('.item-valor-total') as HTMLInputElement;
+        if (subtotalInput) {
+            subtotalInput.value = formatMoeda(subtotal);
+        }
+        atualizarTotalPersonalizada();
+    };
+
+    qtdInput.addEventListener('input', calcularSubtotal);
+    valorUnitInput.addEventListener('input', calcularSubtotal);
+}
+
+/**
+ * Remove um item do orçamento personalizado
+ */
+function removerItemPersonalizado(index: number): void {
+    const container = document.getElementById('itens-personalizada-container');
+    if (!container) return;
+    
+    const item = container.querySelector(`.item-personalizado[data-index="${index}"]`);
+    if (item) {
+        item.remove();
+        // Renumerar itens
+        const itens = container.querySelectorAll('.item-personalizado');
+        itens.forEach((el, i) => {
+            const numero = el.querySelector('.item-numero');
+            if (numero) numero.textContent = `Item ${i + 1}`;
+        });
+        atualizarTotalPersonalizada();
+    }
+}
+
+/**
+ * Atualiza o total dos itens personalizados e o campo de valor da proposta
+ */
+function atualizarTotalPersonalizada(): void {
+    const itens = capturarItensPersonalizada();
+    const total = itens.reduce((acc, item) => acc + item.valorTotal, 0);
+    
+    const totalEl = document.getElementById('total-personalizada');
+    if (totalEl) {
+        totalEl.textContent = `R$ ${formatMoeda(total)}`;
+    }
+    
+    // Atualizar campo de valor da proposta
+    const valorInput = document.getElementById('valor_proposta') as HTMLInputElement;
+    if (valorInput && total > 0) {
+        valorInput.value = formatMoeda(total);
+        atualizarValor();
+    }
+}
+
+/**
+ * Captura os itens do orçamento personalizado
+ */
+function capturarItensPersonalizada(): ItemPersonalizado[] {
+    const itens: ItemPersonalizado[] = [];
+    const container = document.getElementById('itens-personalizada-container');
+    if (!container) return itens;
+
+    const itemEls = container.querySelectorAll('.item-personalizado');
+    itemEls.forEach(el => {
+        const descricao = (el.querySelector('.item-descricao') as HTMLTextAreaElement)?.value || '';
+        if (descricao.trim()) {
+            const quantidade = parseFloat((el.querySelector('.item-quantidade') as HTMLInputElement)?.value) || 1;
+            const valorUnitario = parseValorMonetario((el.querySelector('.item-valor-unitario') as HTMLInputElement)?.value || '0');
+            const valorTotal = quantidade * valorUnitario;
+            itens.push({ descricao, quantidade, valorUnitario, valorTotal });
+        }
+    });
+
+    return itens;
+}
+
 /**
  * Atualiza o total do grupo e o campo de valor da proposta
  */
@@ -528,6 +661,12 @@ function inicializarEventos(): void {
             sectionPsicossocial.style.display = tipo === 'psicossocial' ? 'block' : 'none';
         }
         
+        // Seção de itens personalizados (apenas para personalizada)
+        const sectionPersonalizada = document.getElementById('section-personalizada');
+        if (sectionPersonalizada) {
+            sectionPersonalizada.style.display = tipo === 'personalizada' ? 'block' : 'none';
+        }
+        
         atualizarPreview();
     });
     
@@ -551,6 +690,12 @@ function inicializarEventos(): void {
     const sectionPsicossocial = document.getElementById('section-psicossocial');
     if (sectionPsicossocial) {
         sectionPsicossocial.style.display = tipoInicial === 'psicossocial' ? 'block' : 'none';
+    }
+    
+    // Inicializar visibilidade da seção de personalizada
+    const sectionPersonalizada = document.getElementById('section-personalizada');
+    if (sectionPersonalizada) {
+        sectionPersonalizada.style.display = tipoInicial === 'personalizada' ? 'block' : 'none';
     }
     
     // Event listeners para checkboxes de treinamentos
@@ -651,9 +796,18 @@ function gerarProposta(): void {
     // Capturar entregáveis psicossociais se for proposta de psicossocial
     const entregaveisPsico = tipo === 'psicossocial' ? capturarEntregaveisPsico() : undefined;
     
+    // Capturar itens personalizados se for proposta personalizada
+    const itensPersonalizada = tipo === 'personalizada' ? capturarItensPersonalizada() : undefined;
+    
     // Validar se tem pelo menos um treinamento selecionado
     if (tipo === 'treinamentos' && (!treinamentos || treinamentos.length === 0)) {
         alert('Por favor, selecione pelo menos um treinamento para a proposta');
+        return;
+    }
+    
+    // Validar se tem pelo menos um item personalizado
+    if (tipo === 'personalizada' && (!itensPersonalizada || itensPersonalizada.length === 0)) {
+        alert('Por favor, adicione pelo menos um item ao orçamento');
         return;
     }
     
@@ -712,6 +866,7 @@ function gerarProposta(): void {
         },
         treinamentos,
         entregaveisPsico,
+        itensPersonalizada,
         isGrupo,
         nomeGrupo: isGrupo ? nomeGrupo : undefined,
         empresasGrupo: isGrupo ? empresasGrupo : undefined
@@ -756,6 +911,8 @@ window.atualizarValor = atualizarValor;
 window.formatMoeda = formatMoeda;
 window.adicionarEmpresa = adicionarEmpresa;
 window.removerEmpresa = removerEmpresa;
+window.adicionarItemPersonalizado = adicionarItemPersonalizado;
+window.removerItemPersonalizado = removerItemPersonalizado;
 
 // Re-exportar módulos para acesso externo se necessário
 export {
