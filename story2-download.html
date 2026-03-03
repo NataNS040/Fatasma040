@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story 2 - Download | Engmarq Solution</title>
+    <link rel="icon" type="image/png" href="assets/logoengmarq.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --primary-light: #2d4a6f;
+            --secondary-color: #f5a623;
+            --secondary-dark: #e09112;
+            --secondary-light: #ffc857;
+            --accent-color: #10b981;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --light-color: #f8fafc;
+            --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            background: #1a1a2e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+
+        /* Download button */
+        .download-area {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(245,166,35,0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(245,166,35,0.5);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .download-hint {
+            font-family: var(--font-secondary);
+            color: rgba(255,255,255,0.4);
+            font-size: 14px;
+        }
+
+        .download-status {
+            font-family: var(--font-primary);
+            color: var(--accent-color);
+            font-size: 16px;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* ===== STORY FRAME ===== */
+        .story {
+            width: 1080px;
+            height: 1920px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+            transform-origin: top center;
+        }
+
+        /* Scale for screen viewing */
+        @media (max-width: 1200px) {
+            .story {
+                transform: scale(0.35);
+                margin-bottom: -1200px;
+            }
+        }
+
+        @media (min-width: 1201px) {
+            .story {
+                transform: scale(0.45);
+                margin-bottom: -1050px;
+            }
+        }
+
+        /* ============================================ */
+        /* STORY 2 — O QUE BUSCAMOS                     */
+        /* ============================================ */
+        .story-2 {
+            background: var(--white-color);
+        }
+
+        .s2-header {
+            background: linear-gradient(160deg, #0f2744 0%, #1a365d 50%, #234876 100%);
+            padding: 80px 60px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .s2-header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: -80px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245,166,35,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .s2-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .s2-logo {
+            width: 180px;
+            filter: brightness(0) invert(1);
+        }
+
+        .s2-page-num {
+            color: rgba(255,255,255,0.4);
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .s2-header-title {
+            position: relative;
+            z-index: 2;
+        }
+
+        .s2-header-title .label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: var(--white-color);
+            padding: 8px 22px;
+            border-radius: 9999px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .s2-header-title h2 {
+            font-family: var(--font-primary);
+            font-size: 52px;
+            font-weight: 900;
+            color: var(--white-color);
+            line-height: 1.15;
+        }
+
+        .s2-header-title h2 span {
+            color: var(--secondary-color);
+        }
+
+        .s2-body {
+            padding: 50px 60px;
+        }
+
+        .s2-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            padding: 30px 0;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .s2-item:last-child {
+            border-bottom: none;
+        }
+
+        .s2-item-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        .s2-item-text h3 {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+        }
+
+        .s2-item-text p {
+            font-size: 20px;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+
+        .s2-highlight-bar {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            padding: 36px 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .s2-highlight-bar i {
+            font-size: 36px;
+            color: var(--white-color);
+        }
+
+        .s2-highlight-bar p {
+            font-family: var(--font-primary);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white-color);
+            line-height: 1.4;
+        }
+
+        .s2-offers {
+            padding: 45px 60px 30px;
+            background: #f8fafc;
+        }
+
+        .s2-offers-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .s2-offers-title i {
+            font-size: 28px;
+            color: var(--accent-color);
+        }
+
+        .s2-offers-title h3 {
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .s2-offers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .s2-offer-card {
+            background: var(--white-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 2px solid #e8ecf1;
+        }
+
+        .s2-offer-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .s2-offer-icon.green { background: rgba(16,185,129,0.12); color: var(--accent-color); }
+        .s2-offer-icon.blue { background: rgba(26,54,93,0.1); color: var(--primary-color); }
+        .s2-offer-icon.gold { background: rgba(245,166,35,0.12); color: var(--secondary-dark); }
+        .s2-offer-icon.purple { background: rgba(139,92,246,0.12); color: #7c3aed; }
+
+        .s2-offer-text {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-color);
+            line-height: 1.3;
+        }
+
+        .s2-footer-bar {
+            background: var(--primary-color);
+            padding: 30px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .s2-footer-bar i {
+            color: var(--secondary-color);
+            font-size: 22px;
+        }
+
+        .s2-footer-bar span {
+            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: var(--font-primary);
+            font-weight: 600;
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .story {
+                transform: none !important;
+                margin: 0 !important;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .download-area { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="download-area">
+        <button class="download-btn" onclick="downloadStory()">
+            <i class="fas fa-download"></i> Baixar Story 2 como Imagem
+        </button>
+        <span class="download-hint">Será salvo como PNG em 1080×1920 (tamanho real do story)</span>
+        <span class="download-status" id="status"></span>
+    </div>
+
+    <div class="story story-2" id="story2">
+        <div class="s2-header">
+            <div class="s2-header-top">
+                <img src="assets/logoengmarq.png" alt="Engmarq Solution" class="s2-logo">
+                <span class="s2-page-num">2/3</span>
+            </div>
+            <div class="s2-header-title">
+                <div class="label"><i class="fas fa-clipboard-check"></i> PERFIL DESEJADO</div>
+                <h2>O que buscamos<br>em <span>você</span></h2>
+            </div>
+        </div>
+
+        <div class="s2-body">
+            <div class="s2-item">
+                <div class="s2-item-icon"><i class="fas fa-comment-dots"></i></div>
+                <div class="s2-item-text">
+                    <h3>Boa Comunicação</h3>
+                    <p>Capacidade de se conectar com pessoas e transmitir confiança</p>
+                </div>
+            </div>
+
+            <div class="s2-item">
+                <div class="s2-item-icon" style="background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));"><i class="fas fa-bullseye"></i></div>
+                <div class="s2-item-text">
+                    <h3>Foco em Resultados</h3>
+                    <p>Proatividade e vontade de bater metas</p>
+                </div>
+            </div>
+
+            <div class="s2-item">
+                <div class="s2-item-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="s2-item-text">
+                    <h3>Vontade de Aprender</h3>
+                    <p>Não precisa ter experiência em SST — nós capacitamos você!</p>
+                </div>
+            </div>
+
+            <div class="s2-item">
+                <div class="s2-item-icon" style="background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));"><i class="fas fa-heart"></i></div>
+                <div class="s2-item-text">
+                    <h3>Perfil Comercial</h3>
+                    <p>Gostar de se relacionar e construir conexões</p>
+                </div>
+            </div>
+
+            <div class="s2-item">
+                <div class="s2-item-icon"><i class="fas fa-laptop"></i></div>
+                <div class="s2-item-text">
+                    <h3>Ferramentas Digitais</h3>
+                    <p>Familiaridade com WhatsApp, redes sociais e tecnologia</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra destaque -->
+        <div class="s2-highlight-bar">
+            <i class="fas fa-lightbulb"></i>
+            <p>Não exigimos experiência prévia em SST.<br>Nós treinamos e capacitamos você do zero!</p>
+        </div>
+
+        <!-- O que oferecemos -->
+        <div class="s2-offers">
+            <div class="s2-offers-title">
+                <i class="fas fa-gift"></i>
+                <h3>O que oferecemos</h3>
+            </div>
+            <div class="s2-offers-grid">
+                <div class="s2-offer-card">
+                    <div class="s2-offer-icon gold"><i class="fas fa-coins"></i></div>
+                    <span class="s2-offer-text">Comissão atrativa por venda</span>
+                </div>
+                <div class="s2-offer-card">
+                    <div class="s2-offer-icon blue"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <span class="s2-offer-text">Treinamento completo em SST</span>
+                </div>
+                <div class="s2-offer-card">
+                    <div class="s2-offer-icon green"><i class="fas fa-clock"></i></div>
+                    <span class="s2-offer-text">Flexibilidade de horários</span>
+                </div>
+                <div class="s2-offer-card">
+                    <div class="s2-offer-icon purple"><i class="fas fa-chart-line"></i></div>
+                    <span class="s2-offer-text">Crescimento profissional real</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="s2-footer-bar">
+            <i class="fas fa-arrow-right"></i>
+            <span>Toque para o lado</span>
+        </div>
+    </div>
+
+    <script>
+        async function downloadStory() {
+            const status = document.getElementById('status');
+            const btn = document.querySelector('.download-btn');
+            const story = document.getElementById('story2');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Gerando imagem...';
+            status.style.display = 'block';
+            status.textContent = 'Processando...';
+
+            try {
+                // Remove transform temporarily for full-res capture
+                const originalTransform = story.style.transform;
+                const originalMargin = story.style.marginBottom;
+                story.style.transform = 'none';
+                story.style.marginBottom = '0';
+
+                const canvas = await html2canvas(story, {
+                    width: 1080,
+                    height: 1920,
+                    scale: 1,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    logging: false
+                });
+
+                // Restore transform
+                story.style.transform = originalTransform;
+                story.style.marginBottom = originalMargin;
+
+                // Download
+                const link = document.createElement('a');
+                link.download = 'story2-vaga-comercial-engmarq.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                status.textContent = '✅ Imagem baixada com sucesso!';
+                status.style.color = '#10b981';
+            } catch (err) {
+                status.textContent = '❌ Erro ao gerar imagem: ' + err.message;
+                status.style.color = '#ef4444';
+                console.error(err);
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-download"></i> Baixar Story 2 como Imagem';
+
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

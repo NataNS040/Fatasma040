@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stories - Vaga Comercial | Engmarq Solution</title>
+    <link rel="icon" type="image/png" href="assets/logoengmarq.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --primary-light: #2d4a6f;
+            --secondary-color: #f5a623;
+            --secondary-dark: #e09112;
+            --secondary-light: #ffc857;
+            --accent-color: #10b981;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --light-color: #f8fafc;
+            --white-color: #ffffff;
+            --whatsapp-color: #25d366;
+            --whatsapp-dark: #128c7e;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            background: #1a1a2e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 60px;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .page-label {
+            font-family: var(--font-primary);
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: -40px;
+        }
+
+        /* ===== STORY FRAME ===== */
+        .story {
+            width: 1080px;
+            height: 1920px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+            transform-origin: top center;
+        }
+
+        /* Scale for screen viewing */
+        @media (max-width: 1200px) {
+            .story {
+                transform: scale(0.35);
+                margin-bottom: -1200px;
+            }
+        }
+
+        @media (min-width: 1201px) {
+            .story {
+                transform: scale(0.45);
+                margin-bottom: -1050px;
+            }
+        }
+
+        /* ============================================ */
+        /* STORY 1 — CHAMADA PRINCIPAL                  */
+        /* ============================================ */
+        .story-1 {
+            background: linear-gradient(160deg, #0f2744 0%, #1a365d 40%, #234876 70%, #0f2744 100%);
+        }
+
+        .story-1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .story-1::after {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -150px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(245,166,35,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .s1-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 60px;
+        }
+
+        .s1-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .s1-logo {
+            width: 220px;
+            filter: brightness(0) invert(1);
+        }
+
+        .s1-badge-top {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: var(--white-color);
+            padding: 12px 28px;
+            border-radius: 9999px;
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .s1-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .s1-hiring-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--secondary-color);
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .s1-hiring-label .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        .s1-title {
+            font-family: var(--font-primary);
+            font-size: 82px;
+            font-weight: 900;
+            color: var(--white-color);
+            line-height: 1.1;
+            margin-bottom: 30px;
+        }
+
+        .s1-title .highlight {
+            color: var(--secondary-color);
+            display: block;
+        }
+
+        .s1-subtitle {
+            font-size: 28px;
+            color: rgba(255,255,255,0.75);
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 750px;
+        }
+
+        .s1-bottom {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .s1-divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(245,166,35,0.5), transparent);
+            margin-bottom: 10px;
+        }
+
+        .s1-stats-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .s1-stat {
+            text-align: center;
+        }
+
+        .s1-stat-num {
+            font-family: var(--font-primary);
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--secondary-color);
+        }
+
+        .s1-stat-label {
+            font-size: 16px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .s1-swipe {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .s1-swipe i {
+            color: rgba(255,255,255,0.5);
+            font-size: 32px;
+            animation: swipeUp 1.5s ease-in-out infinite;
+        }
+
+        .s1-swipe span {
+            display: block;
+            font-size: 15px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ============================================ */
+        /* STORY 2 — O QUE BUSCAMOS                     */
+        /* ============================================ */
+        .story-2 {
+            background: var(--white-color);
+        }
+
+        .s2-header {
+            background: linear-gradient(160deg, #0f2744 0%, #1a365d 50%, #234876 100%);
+            padding: 80px 60px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .s2-header::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            right: -80px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245,166,35,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .s2-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .s2-logo {
+            width: 180px;
+            filter: brightness(0) invert(1);
+        }
+
+        .s2-page-num {
+            color: rgba(255,255,255,0.4);
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .s2-header-title {
+            position: relative;
+            z-index: 2;
+        }
+
+        .s2-header-title .label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: var(--white-color);
+            padding: 8px 22px;
+            border-radius: 9999px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .s2-header-title h2 {
+            font-family: var(--font-primary);
+            font-size: 52px;
+            font-weight: 900;
+            color: var(--white-color);
+            line-height: 1.15;
+        }
+
+        .s2-header-title h2 span {
+            color: var(--secondary-color);
+        }
+
+        .s2-body {
+            padding: 50px 60px;
+        }
+
+        .s2-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            padding: 30px 0;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .s2-item:last-child {
+            border-bottom: none;
+        }
+
+        .s2-item-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: 26px;
+            flex-shrink: 0;
+        }
+
+        .s2-item-text h3 {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+        }
+
+        .s2-item-text p {
+            font-size: 20px;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+
+        .s2-highlight-bar {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            padding: 36px 60px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .s2-highlight-bar i {
+            font-size: 36px;
+            color: var(--white-color);
+        }
+
+        .s2-highlight-bar p {
+            font-family: var(--font-primary);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--white-color);
+            line-height: 1.4;
+        }
+
+        .s2-offers {
+            padding: 45px 60px 30px;
+            background: #f8fafc;
+        }
+
+        .s2-offers-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .s2-offers-title i {
+            font-size: 28px;
+            color: var(--accent-color);
+        }
+
+        .s2-offers-title h3 {
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .s2-offers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .s2-offer-card {
+            background: var(--white-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 2px solid #e8ecf1;
+            transition: transform 0.2s;
+        }
+
+        .s2-offer-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .s2-offer-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .s2-offer-icon.green { background: rgba(16,185,129,0.12); color: var(--accent-color); }
+        .s2-offer-icon.blue { background: rgba(26,54,93,0.1); color: var(--primary-color); }
+        .s2-offer-icon.gold { background: rgba(245,166,35,0.12); color: var(--secondary-dark); }
+        .s2-offer-icon.purple { background: rgba(139,92,246,0.12); color: #7c3aed; }
+
+        .s2-offer-text {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-color);
+            line-height: 1.3;
+        }
+
+        .s2-footer-bar {
+            background: var(--primary-color);
+            padding: 30px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .s2-footer-bar i {
+            color: var(--secondary-color);
+            font-size: 22px;
+            animation: swipeRight 1.5s ease-in-out infinite;
+        }
+
+        .s2-footer-bar span {
+            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: var(--font-primary);
+            font-weight: 600;
+        }
+
+        /* ============================================ */
+        /* STORY 3 — CTA / CONTATO                      */
+        /* ============================================ */
+        .story-3 {
+            background: linear-gradient(160deg, #0f2744 0%, #1a365d 40%, #234876 70%, #0f2744 100%);
+        }
+
+        .story-3::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .story-3::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .s3-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 80px 60px;
+        }
+
+        .s3-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .s3-logo {
+            width: 200px;
+            filter: brightness(0) invert(1);
+        }
+
+        .s3-center {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .s3-emoji {
+            font-size: 80px;
+            margin-bottom: 30px;
+        }
+
+        .s3-title {
+            font-family: var(--font-primary);
+            font-size: 62px;
+            font-weight: 900;
+            color: var(--white-color);
+            line-height: 1.15;
+            margin-bottom: 25px;
+        }
+
+        .s3-title .highlight {
+            color: var(--secondary-color);
+        }
+
+        .s3-subtitle {
+            font-size: 26px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 60px;
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 700px;
+        }
+
+        .s3-contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 750px;
+        }
+
+        .s3-contact-card {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 30px 36px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .s3-contact-card.whatsapp {
+            background: linear-gradient(135deg, rgba(37,211,102,0.2), rgba(18,140,126,0.2));
+            border: 2px solid rgba(37,211,102,0.4);
+        }
+
+        .s3-contact-card.email {
+            background: linear-gradient(135deg, rgba(245,166,35,0.15), rgba(224,145,18,0.15));
+            border: 2px solid rgba(245,166,35,0.35);
+        }
+
+        .s3-card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            color: var(--white-color);
+            flex-shrink: 0;
+        }
+
+        .s3-card-icon.green { background: linear-gradient(135deg, var(--whatsapp-color), var(--whatsapp-dark)); }
+        .s3-card-icon.gold { background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark)); }
+
+        .s3-card-text {
+            text-align: left;
+        }
+
+        .s3-card-text .label {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .s3-card-text .value {
+            font-family: var(--font-primary);
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--white-color);
+        }
+
+        .s3-card-text .hint {
+            font-size: 18px;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
+        .s3-bottom {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .s3-arrow {
+            color: rgba(255,255,255,0.4);
+            font-size: 36px;
+            animation: swipeUp 1.5s ease-in-out infinite;
+        }
+
+        .s3-cta-text {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .s3-footer-tag {
+            font-size: 16px;
+            color: rgba(255,255,255,0.35);
+            margin-top: 30px;
+            letter-spacing: 1px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        @keyframes swipeUp {
+            0%, 100% { transform: translateY(0); opacity: 0.5; }
+            50% { transform: translateY(-10px); opacity: 1; }
+        }
+
+        @keyframes swipeRight {
+            0%, 100% { transform: translateX(0); opacity: 0.5; }
+            50% { transform: translateX(8px); opacity: 1; }
+        }
+
+        /* ===== PRINT / SCREENSHOT ===== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                gap: 0;
+            }
+            .story {
+                transform: none !important;
+                margin: 0 !important;
+                border-radius: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .page-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== STORY 1 — CHAMADA PRINCIPAL ===== -->
+    <p class="page-label">Story 1 — Chamada Principal</p>
+    <div class="story story-1">
+        <div class="s1-content">
+            <div class="s1-top">
+                <img src="assets/logoengmarq.png" alt="Engmarq Solution" class="s1-logo">
+                <div class="s1-badge-top">VAGA ABERTA</div>
+            </div>
+
+            <div class="s1-center">
+                <div class="s1-hiring-label">
+                    <span class="dot"></span> ESTAMOS CONTRATANDO
+                </div>
+
+                <h1 class="s1-title">
+                    Consultor(a)
+                    <span class="highlight">Comercial</span>
+                </h1>
+
+                <p class="s1-subtitle">
+                    Buscamos profissionais com perfil comercial para integrar nosso time e ajudar empresas a garantirem sua segurança jurídica em SST.
+                </p>
+            </div>
+
+            <div class="s1-bottom">
+                <div class="s1-divider"></div>
+                <p style="text-align: center; font-family: var(--font-primary); font-size: 28px; font-weight: 700; color: var(--secondary-color); letter-spacing: 1px; line-height: 1.5; padding: 15px 0;">
+                    Venha fazer parte de um dos melhores<br>mercados para vendedores
+                </p>
+
+                <div class="s1-swipe">
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Toque para o lado</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== STORY 2 — O QUE BUSCAMOS ===== -->
+    <p class="page-label">Story 2 — O Que Buscamos</p>
+    <div class="story story-2">
+        <div class="s2-header">
+            <div class="s2-header-top">
+                <img src="assets/logoengmarq.png" alt="Engmarq Solution" class="s2-logo">
+                <span class="s2-page-num">2/3</span>
+            </div>
+            <div class="s2-header-title">
+                <div class="label"><i class="fas fa-clipboard-check"></i> PERFIL DESEJADO</div>
+                <h2>O que buscamos<br>em <span>você</span></h2>
+            </div>
+        </div>
+
+        <div class="s2-body">
+            <div class="s2-item">
+                <div class="s2-item-icon"><i class="fas fa-comment-dots"></i></div>
+                <div class="s2-item-text">
+                    <h3>Boa Comunicação</h3>
+                    <p>Capacidade de se conectar com pessoas e transmitir confiança</p>
+                </div>
+            </div>
+
+            <div class="s2-item">
+                <div class="s2-item-icon" style="background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));"><i class="fas fa-bullseye"></i></div>
+                <div class="s2-item-text">
+                    <h3>Foco em Resultados</h3>
+                    <p>Proatividade e vontade de bater metas</p>
+                </div>
+            </div>
+
+            <div class="s2-item">
+                <div class="s2-item-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="s2-item-text">
+                    <h3>Vontade de Aprender</h3>
+                    <p>Não precisa ter experiência em SST — nós capacitamos você!</p>
+                </div>
+            </div>
+
+            <div class="s2-item">
+                <div class="s2-item-icon" style="background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));"><i class="fas fa-heart"></i></div>
+                <div class="s2-item-text">
+                    <h3>Perfil Comercial</h3>
+                    <p>Gostar de se relacionar e construir conexões</p>
+                </div>
+            </div>
+
+            <div class="s2-item">
+                <div class="s2-item-icon"><i class="fas fa-laptop"></i></div>
+                <div class="s2-item-text">
+                    <h3>Ferramentas Digitais</h3>
+                    <p>Familiaridade com WhatsApp, redes sociais e tecnologia</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barra destaque -->
+        <div class="s2-highlight-bar">
+            <i class="fas fa-lightbulb"></i>
+            <p>Não exigimos experiência prévia em SST.<br>Nós treinamos e capacitamos você do zero!</p>
+        </div>
+
+        <!-- O que oferecemos -->
+        <div class="s2-offers">
+            <div class="s2-offers-title">
+                <i class="fas fa-gift"></i>
+                <h3>O que oferecemos</h3>
+            </div>
+            <div class="s2-offers-grid">
+                <div class="s2-offer-card">
+                    <div class="s2-offer-icon gold"><i class="fas fa-coins"></i></div>
+                    <span class="s2-offer-text">Comissão atrativa por venda</span>
+                </div>
+                <div class="s2-offer-card">
+                    <div class="s2-offer-icon blue"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <span class="s2-offer-text">Treinamento completo em SST</span>
+                </div>
+                <div class="s2-offer-card">
+                    <div class="s2-offer-icon green"><i class="fas fa-clock"></i></div>
+                    <span class="s2-offer-text">Flexibilidade de horários</span>
+                </div>
+                <div class="s2-offer-card">
+                    <div class="s2-offer-icon purple"><i class="fas fa-chart-line"></i></div>
+                    <span class="s2-offer-text">Crescimento profissional real</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="s2-footer-bar">
+            <i class="fas fa-arrow-right"></i>
+            <span>Toque para o lado</span>
+        </div>
+    </div>
+
+    <!-- ===== STORY 3 — CTA / CONTATO ===== -->
+    <p class="page-label">Story 3 — Contato / CTA</p>
+    <div class="story story-3">
+        <div class="s3-content">
+            <div class="s3-top">
+                <img src="assets/logoengmarq.png" alt="Engmarq Solution" class="s3-logo">
+            </div>
+
+            <div class="s3-center">
+                <div class="s3-emoji">🚀</div>
+
+                <h2 class="s3-title">
+                    Quer fazer parte<br>do <span class="highlight">nosso time?</span>
+                </h2>
+
+                <p class="s3-subtitle">
+                    Envie seu currículo pelo WhatsApp ou por e-mail. É rápido e simples!
+                </p>
+
+                <div class="s3-contact-cards">
+                    <div class="s3-contact-card whatsapp">
+                        <div class="s3-card-icon green">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="s3-card-text">
+                            <div class="label">WhatsApp</div>
+                            <div class="value">(84) 98664-1073</div>
+                            <div class="hint">Envie currículo ou fale direto</div>
+                        </div>
+                    </div>
+
+                    <div class="s3-contact-card email">
+                        <div class="s3-card-icon gold">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="s3-card-text">
+                            <div class="label">E-mail</div>
+                            <div class="value">engmarqsolution@gmail.com</div>
+                            <div class="hint">Envie seu currículo em anexo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="s3-bottom">
+                <div class="s3-cta-text">Candidate-se agora!</div>
+                <div class="s3-footer-tag">@engmarq_solution • SST que garante Segurança Jurídica</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

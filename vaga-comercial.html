@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaga Comercial | Engmarq Solution</title>
+    <link rel="icon" type="image/png" href="assets/logoengmarq.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --primary-light: #2d4a6f;
+            --secondary-color: #f5a623;
+            --secondary-dark: #e09112;
+            --secondary-light: #ffc857;
+            --accent-color: #10b981;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --gray-light: #9ca3af;
+            --light-color: #f8fafc;
+            --white-color: #ffffff;
+            --whatsapp-color: #25d366;
+            --whatsapp-dark: #128c7e;
+            --success-color: #38a169;
+            --danger-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.25);
+            --shadow-glow: 0 0 30px rgba(245,166,35,0.4);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background: var(--secondary-color);
+            color: var(--white-color);
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: var(--light-color);
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(160deg, #1a365d 0%, #234876 30%, #1a365d 60%, #0f2744 100%);
+            overflow: hidden;
+            padding: 40px 20px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: 180px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: var(--white-color);
+            padding: 8px 24px;
+            border-radius: 9999px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-family: var(--font-primary);
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            color: var(--white-color);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .highlight {
+            color: var(--secondary-color);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-secondary);
+            font-size: clamp(16px, 2.5vw, 20px);
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 35px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            border-radius: 9999px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            border: none;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, var(--whatsapp-color), var(--whatsapp-dark));
+            color: var(--white-color);
+            box-shadow: 0 4px 15px rgba(37,211,102,0.4);
+            animation: btn-glow-pulse 2s ease-in-out infinite;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(37,211,102,0.5);
+        }
+
+        .btn-email {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: var(--white-color);
+            box-shadow: 0 4px 15px rgba(245,166,35,0.4);
+        }
+
+        .btn-email:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--secondary-color);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ===== SOBRE A VAGA ===== */
+        .section {
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: var(--white-color);
+            padding: 6px 20px;
+            border-radius: 9999px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 17px;
+            color: var(--gray-color);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        /* ===== CARDS GRID ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--white-color);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 16px 16px 0 0;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--white-color);
+            margin-bottom: 18px;
+        }
+
+        .card-icon.blue { background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); }
+        .card-icon.gold { background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark)); }
+        .card-icon.green { background: linear-gradient(135deg, var(--accent-color), var(--success-color)); }
+        .card-icon.purple { background: linear-gradient(135deg, var(--purple-color), #6b46c1); }
+
+        .card-title {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: var(--gray-color);
+            line-height: 1.7;
+        }
+
+        /* ===== REQUISITOS ===== */
+        .requisitos-section {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 30%, #1a365d 60%, #0f2744 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .requisitos-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        .requisitos-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .requisitos-section .section-title {
+            color: var(--white-color);
+        }
+
+        .requisitos-section .section-subtitle {
+            color: rgba(255,255,255,0.75);
+        }
+
+        .req-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .req-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 18px 20px;
+            transition: all var(--transition-normal);
+        }
+
+        .req-item:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateX(5px);
+        }
+
+        .req-icon {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: 14px;
+        }
+
+        .req-text {
+            color: rgba(255,255,255,0.9);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .req-text strong {
+            color: var(--secondary-color);
+        }
+
+        /* ===== DIFERENCIAIS ===== */
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .diff-card {
+            background: var(--white-color);
+            border-radius: 16px;
+            padding: 28px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+            border: 2px solid transparent;
+        }
+
+        .diff-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .diff-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .diff-title {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .diff-text {
+            font-size: 13px;
+            color: var(--gray-color);
+            line-height: 1.6;
+        }
+
+        /* ===== CTA FINAL ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .cta-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-family: var(--font-primary);
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 900;
+            color: var(--white-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .cta-subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 35px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.85);
+            font-size: 15px;
+        }
+
+        .contact-item i {
+            color: var(--secondary-color);
+            font-size: 18px;
+        }
+
+        .contact-item a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            transition: color var(--transition-normal);
+        }
+
+        .contact-item a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--primary-dark);
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            width: 120px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 15px;
+        }
+
+        .footer-text {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+            text-decoration: none;
+            transition: all var(--transition-normal);
+        }
+
+        .footer-social a:hover {
+            background: var(--secondary-color);
+            color: var(--white-color);
+            transform: translateY(-3px);
+        }
+
+        /* ===== FLOATING WHATSAPP ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--whatsapp-color), var(--whatsapp-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(37,211,102,0.4);
+            z-index: 1000;
+            transition: all var(--transition-normal);
+            animation: bounce 2s infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37,211,102,0.6);
+        }
+
+        .whatsapp-float .tooltip {
+            position: absolute;
+            right: 70px;
+            background: var(--white-color);
+            color: var(--dark-color);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .whatsapp-float:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* ===== PROCESSO ===== */
+        .processo-timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .processo-step {
+            flex: 1;
+            min-width: 200px;
+            max-width: 280px;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: var(--white-color);
+            font-family: var(--font-primary);
+            font-size: 24px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-title {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .step-text {
+            font-size: 13px;
+            color: var(--gray-color);
+            line-height: 1.6;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes btn-glow-pulse {
+            0%, 100% { box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37,211,102,0.6); }
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px 40px;
+            }
+
+            .hero-logo {
+                width: 140px;
+            }
+
+            .hero-cta-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 320px;
+                justify-content: center;
+                padding: 14px 28px;
+                font-size: 15px;
+            }
+
+            .hero-stats {
+                gap: 25px;
+            }
+
+            .stat-number {
+                font-size: 26px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .req-list {
+                grid-template-columns: 1fr;
+            }
+
+            .diff-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .processo-timeline {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .diff-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 50px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="assets/logoengmarq.png" alt="Engmarq Solution" class="hero-logo" data-aos="fade-down">
+            
+            <div class="hero-badge" data-aos="fade-up" data-aos-delay="200">
+                <i class="fas fa-briefcase"></i> VAGA ABERTA
+            </div>
+
+            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="300">
+                Faça Parte do <span class="highlight">Time Comercial</span> da Engmarq Solution
+            </h1>
+
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="400">
+                Estamos em expansão e buscando profissionais que queiram crescer junto conosco. 
+                Se você tem perfil comercial e vontade de fazer acontecer, essa vaga é pra você!
+            </p>
+
+            <div class="hero-cta-group" data-aos="fade-up" data-aos-delay="500">
+                <a href="https://wa.me/5584986641073?text=Ol%C3%A1!%20Tenho%20interesse%20na%20vaga%20comercial%20da%20Engmarq%20Solution.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es!" class="btn btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Candidatar pelo WhatsApp
+                </a>
+                <a href="mailto:engmarqsolution@gmail.com?subject=Candidatura%20-%20Vaga%20Comercial&body=Ol%C3%A1!%20Gostaria%20de%20me%20candidatar%20%C3%A0%20vaga%20comercial.%20Segue%20meu%20curr%C3%ADculo%20em%20anexo." class="btn btn-email">
+                    <i class="fas fa-envelope"></i> Enviar Currículo por E-mail
+                </a>
+            </div>
+
+            <p data-aos="fade-up" data-aos-delay="600" style="text-align: center; font-family: var(--font-primary); font-size: 22px; font-weight: 700; color: var(--secondary-color); letter-spacing: 1px; line-height: 1.5;">
+                Venha fazer parte de um dos melhores mercados para vendedores
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== SOBRE A VAGA ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-badge" data-aos="fade-up">
+                <i class="fas fa-star"></i> OPORTUNIDADE
+            </div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+                O que você vai fazer no <span style="color: var(--secondary-color);">dia a dia</span>
+            </h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">
+                Atuação direta na prospecção e fechamento de novos negócios na área de SST — Segurança e Saúde do Trabalho.
+            </p>
+
+            <div class="cards-grid">
+                <div class="card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="card-title">Prospecção de Clientes</h3>
+                    <p class="card-text">Identificar e abordar empresas que precisam de conformidade com as Normas Regulamentadoras (NRs), gerando novas oportunidades de negócio.</p>
+                </div>
+
+                <div class="card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-icon gold">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="card-title">Negociação e Fechamento</h3>
+                    <p class="card-text">Apresentar propostas comerciais, negociar condições e garantir o fechamento de contratos com foco em resultados e relacionamento.</p>
+                </div>
+
+                <div class="card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-icon green">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="card-title">Gestão de Carteira</h3>
+                    <p class="card-text">Acompanhar clientes ativos, identificar oportunidades de upsell e garantir a renovação de contratos com excelência no atendimento.</p>
+                </div>
+
+                <div class="card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-icon purple">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="card-title">Consultoria Comercial</h3>
+                    <p class="card-text">Entender as necessidades de cada empresa e oferecer a solução ideal dentro do portfólio de serviços da Engmarq Solution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== REQUISITOS ===== -->
+    <section class="section requisitos-section">
+        <div class="container">
+            <div class="section-badge" style="background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));" data-aos="fade-up">
+                <i class="fas fa-clipboard-check"></i> PERFIL DESEJADO
+            </div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+                O que buscamos em <span style="color: var(--secondary-color);">você</span>
+            </h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">
+                Não exigimos experiência prévia em SST — nós te capacitamos! Buscamos atitude e vontade de crescer.
+            </p>
+
+            <ul class="req-list">
+                <li class="req-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="req-icon"><i class="fas fa-comment-dots"></i></div>
+                    <span class="req-text"><strong>Comunicação</strong> — Boa capacidade de comunicação e persuasão</span>
+                </li>
+                <li class="req-item" data-aos="fade-up" data-aos-delay="150">
+                    <div class="req-icon"><i class="fas fa-bullseye"></i></div>
+                    <span class="req-text"><strong>Foco em resultados</strong> — Proatividade e orientação a metas</span>
+                </li>
+                <li class="req-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="req-icon"><i class="fas fa-laptop"></i></div>
+                    <span class="req-text"><strong>Conhecimento digital</strong> — Familiaridade com ferramentas digitais e redes sociais</span>
+                </li>
+                <li class="req-item" data-aos="fade-up" data-aos-delay="250">
+                    <div class="req-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <span class="req-text"><strong>Vontade de aprender</strong> — Disposição para se capacitar no mercado de SST</span>
+                </li>
+                <li class="req-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="req-icon"><i class="fas fa-car"></i></div>
+                    <span class="req-text"><strong>Disponibilidade</strong> — Para visitas externas e reuniões presenciais</span>
+                </li>
+                <li class="req-item" data-aos="fade-up" data-aos-delay="350">
+                    <div class="req-icon"><i class="fas fa-heart"></i></div>
+                    <span class="req-text"><strong>Perfil comercial</strong> — Gostar de se relacionar e construir conexões</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ===== DIFERENCIAIS ===== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-badge" data-aos="fade-up">
+                <i class="fas fa-gem"></i> POR QUE A ENGMARQ?
+            </div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+                O que oferecemos para <span style="color: var(--secondary-color);">você</span>
+            </h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200">
+                Aqui você não é só mais um — você é parte de um time que está transformando o mercado de SST.
+            </p>
+
+            <div class="diff-grid">
+                <div class="diff-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="diff-icon">💰</div>
+                    <h3 class="diff-title">Comissão Atrativa</h3>
+                    <p class="diff-text">Ganhos proporcionais ao seu desempenho, sem teto de comissão.</p>
+                </div>
+                <div class="diff-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="diff-icon">📚</div>
+                    <h3 class="diff-title">Capacitação Completa</h3>
+                    <p class="diff-text">Treinamento sobre todos os serviços e processos da empresa.</p>
+                </div>
+                <div class="diff-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="diff-icon">🚀</div>
+                    <h3 class="diff-title">Crescimento Real</h3>
+                    <p class="diff-text">Empresa em expansão com oportunidades reais de crescimento profissional.</p>
+                </div>
+                <div class="diff-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="diff-icon">🤝</div>
+                    <h3 class="diff-title">Ambiente Colaborativo</h3>
+                    <p class="diff-text">Time unido, suporte constante e cultura de valorização de resultados.</p>
+                </div>
+                <div class="diff-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="diff-icon">🛡️</div>
+                    <h3 class="diff-title">Mercado Aquecido</h3>
+                    <p class="diff-text">SST é obrigatório por lei — demanda constante e crescente.</p>
+                </div>
+                <div class="diff-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="diff-icon">🏆</div>
+                    <h3 class="diff-title">Ferramentas de Ponta</h3>
+                    <p class="diff-text">Sistema próprio de propostas, CRM e materiais comerciais prontos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== COMO SE CANDIDATAR ===== -->
+    <section class="section" style="background: var(--light-color);">
+        <div class="container" style="text-align: center;">
+            <div class="section-badge" data-aos="fade-up">
+                <i class="fas fa-route"></i> COMO PARTICIPAR
+            </div>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100">
+                O processo é <span style="color: var(--secondary-color);">simples e rápido</span>
+            </h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="200" style="margin-left: auto; margin-right: auto;">
+                Escolha o canal que preferir e entre em contato agora mesmo.
+            </p>
+
+            <div class="processo-timeline">
+                <div class="processo-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Entre em Contato</h3>
+                    <p class="step-text">Envie seu currículo pelo <strong>WhatsApp</strong> ou <strong>e-mail</strong> — o que for mais prático pra você.</p>
+                </div>
+                <div class="processo-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Bate-papo Inicial</h3>
+                    <p class="step-text">Vamos conversar para entender seu perfil e alinhar expectativas.</p>
+                </div>
+                <div class="processo-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Capacitação</h3>
+                    <p class="step-text">Se houver fit, você passa por um treinamento completo sobre nossos serviços.</p>
+                </div>
+                <div class="processo-step" data-aos="fade-up" data-aos-delay="400">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Início!</h3>
+                    <p class="step-text">Bem-vindo(a) ao time! Começa a atuar com todo suporte da equipe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA FINAL ===== -->
+    <section class="section cta-section">
+        <div class="container">
+            <h2 class="cta-title" data-aos="fade-up">
+                Pronto para <span style="color: var(--secondary-color);">fazer acontecer?</span>
+            </h2>
+            <p class="cta-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Envie seu currículo agora e venha construir sua história na Engmarq Solution.
+            </p>
+
+            <div class="cta-buttons" data-aos="fade-up" data-aos-delay="200">
+                <a href="https://wa.me/5584986641073?text=Ol%C3%A1!%20Tenho%20interesse%20na%20vaga%20comercial%20da%20Engmarq%20Solution.%20Gostaria%20de%20enviar%20meu%20curr%C3%ADculo!" class="btn btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Falar pelo WhatsApp
+                </a>
+                <a href="mailto:engmarqsolution@gmail.com?subject=Candidatura%20-%20Vaga%20Comercial&body=Ol%C3%A1!%20Gostaria%20de%20me%20candidatar%20%C3%A0%20vaga%20comercial.%20Segue%20meu%20curr%C3%ADculo%20em%20anexo." class="btn btn-email">
+                    <i class="fas fa-envelope"></i> Enviar por E-mail
+                </a>
+            </div>
+
+            <div class="contact-info" data-aos="fade-up" data-aos-delay="300">
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <a href="https://wa.me/5584986641073" target="_blank">(84) 98664-1073</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:engmarqsolution@gmail.com">engmarqsolution@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Natal - RN</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <img src="assets/logoengmarq.png" alt="Engmarq Solution" class="footer-logo">
+        <p class="footer-text">SST que garante Segurança Jurídica</p>
+        <div class="footer-social">
+            <a href="https://instagram.com/engmarq_solution" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/5584986641073" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:engmarqsolution@gmail.com" title="E-mail"><i class="fas fa-envelope"></i></a>
+        </div>
+        <p class="footer-text" style="margin-top: 15px;">© 2026 Engmarq Solution LTDA — Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- ===== FLOATING WHATSAPP ===== -->
+    <a href="https://wa.me/5584986641073?text=Ol%C3%A1!%20Vi%20a%20vaga%20comercial%20e%20tenho%20interesse!" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span class="tooltip">Candidatar-se agora!</span>
+    </a>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+    </script>
+</body>
+</html>
