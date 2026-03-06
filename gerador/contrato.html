@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Contratos | EngMarq Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./gerador-styles.css">
+    <script type="module" crossorigin src="./src/contrato.ts"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-logo">
+            <img src="./assets/logoengmarq.png" alt="EngMarq">
+            <div>
+                <h1>Gerador de Contratos</h1>
+                <span>Sistema de Geração de Contratos de Prestação de Serviços</span>
+            </div>
+        </div>
+        <div class="header-user">
+            <a href="./index.html" class="btn-logout" style="margin-right: 10px;">
+                <i class="fas fa-file-alt"></i> Propostas
+            </a>
+            <a href="./recibo.html" class="btn-logout" style="margin-right: 10px;">
+                <i class="fas fa-receipt"></i> Recibos
+            </a>
+            <a href="./calculadora.html" class="btn-logout" style="margin-right: 10px;">
+                <i class="fas fa-calculator"></i> Calculadora
+            </a>
+            <span id="userName"><i class="fas fa-user-circle"></i> <span id="userNameText"></span></span>
+            <button class="btn-logout" onclick="fazerLogout()" title="Sair">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Painel do Formulário -->
+        <div class="form-panel">
+            <div class="form-header">
+                <h2><i class="fas fa-file-contract"></i> Dados do Contrato</h2>
+            </div>
+            <div class="form-content">
+                <!-- Tipo de Contrato -->
+                <div class="form-section">
+                    <h3><i class="fas fa-file-alt"></i> Tipo de Contrato</h3>
+                    <select id="tipo_contrato">
+                        <option value="kit-sst">Kit Integrado SST (PGR + LTCAT + PCMSO)</option>
+                        <option value="brigada">Treinamento de Brigada de Incêndio</option>
+                        <optgroup label="🎓 Treinamentos em SST">
+                            <option value="trein-nr05">NR-05 – CIPA / Comissão Interna</option>
+                            <option value="trein-nr06">NR-06 – Uso de EPIs</option>
+                            <option value="trein-nr10">NR-10 – Segurança em Eletricidade</option>
+                            <option value="trein-nr11">NR-11 – Operação de Empilhadeira</option>
+                            <option value="trein-nr12">NR-12 – Máquinas e Equipamentos</option>
+                            <option value="trein-nr18">NR-18 – Segurança na Construção Civil</option>
+                            <option value="trein-nr20">NR-20 – Líquidos Inflamáveis e Combustíveis</option>
+                            <option value="trein-nr33">NR-33 – Espaços Confinados</option>
+                            <option value="trein-nr35">NR-35 – Trabalho em Altura</option>
+                            <option value="trein-primeiros-socorros">Primeiros Socorros</option>
+                            <option value="trein-outros">Outro Treinamento (personalizado)</option>
+                        </optgroup>
+                        <option value="tela-fachada">Projeto de Tela de Proteção de Fachada (NR-18)</option>
+                        <option value="psicossocial">Avaliação de Riscos Psicossociais</option>
+                        <option value="integrado">Serviços Integrados (Personalizado)</option>
+                    </select>
+                </div>
+
+                <!-- Data -->
+                <div class="form-section">
+                    <h3><i class="fas fa-calendar-alt"></i> Data do Contrato</h3>
+                    <div class="form-group">
+                        <label>Data</label>
+                        <input type="date" id="data_contrato">
+                    </div>
+                </div>
+
+                <!-- Dados da Contratante -->
+                <div class="form-section">
+                    <h3><i class="fas fa-building"></i> Dados da Contratante</h3>
+                    <div class="form-group">
+                        <label>Razão Social *</label>
+                        <input type="text" id="razao_social" placeholder="Nome da empresa contratante">
+                    </div>
+                    <div class="form-group">
+                        <label>CNPJ</label>
+                        <input type="text" id="cnpj" placeholder="00.000.000/0000-00">
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço Completo</label>
+                        <input type="text" id="endereco" placeholder="Rua, número, bairro, CEP">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cidade</label>
+                            <input type="text" id="cidade" value="Natal">
+                        </div>
+                        <div class="form-group">
+                            <label>UF</label>
+                            <select id="uf">
+                                <option value="RN" selected>RN</option>
+                                <option value="PB">PB</option>
+                                <option value="CE">CE</option>
+                                <option value="PE">PE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Representante Legal (opcional)</label>
+                        <input type="text" id="representante" placeholder="Nome do representante da contratante">
+                    </div>
+                </div>
+
+                <!-- Dados Específicos -->
+                <div class="form-section">
+                    <h3><i class="fas fa-cogs"></i> Dados Específicos</h3>
+                    <div class="form-row" id="row-colaboradores">
+                        <div class="form-group">
+                            <label><i class="fas fa-users"></i> Nº de Colaboradores</label>
+                            <input type="text" id="qtd_colaboradores" placeholder="Ex: 20">
+                        </div>
+                        <div class="form-group" id="group-funcoes">
+                            <label><i class="fas fa-briefcase"></i> Nº de Funções</label>
+                            <input type="text" id="qtd_funcoes" placeholder="Ex: 6">
+                        </div>
+                    </div>
+                    
+                    <!-- Campos Brigada -->
+                    <div id="campos-brigada" style="display: none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-users"></i> Qtd. de Alunos</label>
+                                <input type="text" id="qtd_alunos" placeholder="Ex: 120" value="30">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-chalkboard"></i> Qtd. de Turmas</label>
+                                <input type="text" id="qtd_turmas" placeholder="Ex: 4" value="1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Carga Horária por Turma (horas)</label>
+                            <input type="text" id="carga_horaria" placeholder="Ex: 4" value="4">
+                        </div>
+                    </div>
+
+                    <!-- Campos Tela de Fachada -->
+                    <div id="campos-fachada" style="display: none;">
+                        <div class="form-group">
+                            <label><i class="fas fa-building"></i> Nº de Pavimentos</label>
+                            <input type="text" id="qtd_pavimentos" placeholder="Ex: 15">
+                        </div>
+                    </div>
+
+                    <!-- Campos Treinamentos -->
+                    <div id="campos-treinamentos" style="display: none;">
+                        <div class="form-group">
+                            <label><i class="fas fa-chalkboard-teacher"></i> Nome do Treinamento</label>
+                            <input type="text" id="treinamento_nome" placeholder="Ex: Treinamento NR-35 – Trabalho em Altura">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-gavel"></i> Norma de Referência</label>
+                            <input type="text" id="norma_referencia" placeholder="Ex: Norma Regulamentadora nº 35 (NR-35)" value="Normas Regulamentadoras aplicáveis">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="fas fa-users"></i> Qtd. de Alunos</label>
+                                <input type="text" id="qtd_alunos_trein" placeholder="Ex: 20" value="20">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-chalkboard"></i> Qtd. de Turmas</label>
+                                <input type="text" id="qtd_turmas_trein" placeholder="Ex: 1" value="1">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Carga Horária por Turma (horas)</label>
+                            <input type="text" id="carga_horaria_trein" placeholder="Ex: 8" value="8">
+                        </div>
+                        
+                        <h4 style="margin-top: 15px; margin-bottom: 10px; color: #1a365d; font-size: 12px;"><i class="fas fa-list-ol"></i> Conteúdo Programático (opcional)</h4>
+                        <p class="form-hint">Adicione os tópicos do conteúdo programático do treinamento</p>
+                        <div id="conteudo-container">
+                            <!-- Itens adicionados dinamicamente -->
+                        </div>
+                        <button type="button" class="btn-adicionar-empresa" onclick="adicionarConteudo()">
+                            <i class="fas fa-plus"></i> Adicionar Tópico
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Serviços Integrados (apenas para tipo integrado) -->
+                <div class="form-section" id="section-integrado" style="display: none;">
+                    <h3><i class="fas fa-layer-group"></i> Serviços do Contrato</h3>
+                    <p class="form-hint">Liste os serviços que compõem o objeto do contrato</p>
+                    <div id="servicos-container">
+                        <div class="servico-item" data-index="0">
+                            <div class="form-row" style="align-items: flex-end;">
+                                <div class="form-group" style="flex: 1;">
+                                    <input type="text" class="servico-descricao" placeholder="Descrição do serviço (ex: Elaboração do PGR)">
+                                </div>
+                                <button type="button" class="btn-remover-servico" onclick="removerServico(0)" style="display:none; background: #e53e3e; color: white; border: none; border-radius: 6px; padding: 8px 12px; cursor: pointer; margin-bottom: 15px;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-adicionar-empresa" onclick="adicionarServico()">
+                        <i class="fas fa-plus"></i> Adicionar Serviço
+                    </button>
+                </div>
+
+                <!-- Escopo Customizado (apenas para tipo integrado) -->
+                <div class="form-section" id="section-escopo-custom" style="display: none;">
+                    <h3><i class="fas fa-list-check"></i> Escopo dos Serviços</h3>
+                    <p class="form-hint">Itens detalhados do escopo</p>
+                    <div id="escopo-container">
+                        <div class="escopo-item" data-index="0">
+                            <div class="form-row" style="align-items: flex-end;">
+                                <div class="form-group" style="flex: 1;">
+                                    <input type="text" class="escopo-descricao" placeholder="Item do escopo">
+                                </div>
+                                <button type="button" class="btn-remover-escopo" onclick="removerEscopo(0)" style="display:none; background: #e53e3e; color: white; border: none; border-radius: 6px; padding: 8px 12px; cursor: pointer; margin-bottom: 15px;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-adicionar-empresa" onclick="adicionarEscopo()">
+                        <i class="fas fa-plus"></i> Adicionar Item ao Escopo
+                    </button>
+                </div>
+
+                <!-- Entregáveis Customizados (apenas para tipo integrado) -->
+                <div class="form-section" id="section-entregaveis-custom" style="display: none;">
+                    <h3><i class="fas fa-box-open"></i> Entregáveis</h3>
+                    <p class="form-hint">Documentos/serviços que serão entregues</p>
+                    <div id="entregaveis-container">
+                        <div class="entregavel-item" data-index="0">
+                            <div class="form-row" style="align-items: flex-end;">
+                                <div class="form-group" style="flex: 1;">
+                                    <input type="text" class="entregavel-descricao" placeholder="Entregável (ex: Relatório técnico)">
+                                </div>
+                                <button type="button" class="btn-remover-entregavel" onclick="removerEntregavel(0)" style="display:none; background: #e53e3e; color: white; border: none; border-radius: 6px; padding: 8px 12px; cursor: pointer; margin-bottom: 15px;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-adicionar-empresa" onclick="adicionarEntregavel()">
+                        <i class="fas fa-plus"></i> Adicionar Entregável
+                    </button>
+                </div>
+
+                <!-- Prazos -->
+                <div class="form-section">
+                    <h3><i class="fas fa-clock"></i> Prazos</h3>
+                    <div class="form-group">
+                        <label>Prazo de Execução</label>
+                        <input type="text" id="prazo_execucao" placeholder="Ex: 20 (vinte) dias úteis" value="20 (vinte) dias úteis">
+                    </div>
+                    <div class="form-group">
+                        <label>Prazo de Aviso para Rescisão</label>
+                        <input type="text" id="prazo_aviso" placeholder="Ex: 15 (quinze)" value="15 (quinze)">
+                    </div>
+                </div>
+
+                <!-- Valores e Pagamento -->
+                <div class="form-section">
+                    <h3><i class="fas fa-dollar-sign"></i> Valores e Pagamento</h3>
+                    <div class="form-group">
+                        <label>Valor Total (R$)</label>
+                        <input type="text" id="valor_contrato" value="2.700,00">
+                    </div>
+                    <div class="form-group">
+                        <label>Forma de Pagamento</label>
+                        <select id="forma_pagamento">
+                            <option value="parcelado">Parcelado (50% + 50%)</option>
+                            <option value="avista">À Vista</option>
+                            <option value="pos-servico">Após Emissão de NF (30 dias)</option>
+                            <option value="personalizado">Personalizado</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Parcelas Personalizadas -->
+                    <div id="parcelas-container" style="display: none;">
+                        <p class="form-hint">Configure as parcelas do pagamento</p>
+                        <div id="parcelas-lista">
+                            <div class="parcela-item" data-index="0">
+                                <div class="form-row">
+                                    <div class="form-group" style="flex: 0 0 100px;">
+                                        <label>% do Valor</label>
+                                        <input type="number" class="parcela-percentual" value="50" min="1" max="100">
+                                    </div>
+                                    <div class="form-group" style="flex: 1;">
+                                        <label>Descrição/Condição</label>
+                                        <input type="text" class="parcela-descricao" placeholder="Ex: na aprovação do contrato" value="na aprovação do contrato">
+                                    </div>
+                                    <button type="button" class="btn-remover-parcela" onclick="removerParcela(0)" style="display:none; background: #e53e3e; color: white; border: none; border-radius: 6px; padding: 8px 12px; cursor: pointer; margin-bottom: 15px;">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-adicionar-empresa" onclick="adicionarParcela()">
+                            <i class="fas fa-plus"></i> Adicionar Parcela
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Funções Avaliadas (Anexo) -->
+                <div class="form-section" id="section-funcoes">
+                    <h3><i class="fas fa-id-badge"></i> Funções Avaliadas (Anexo – Opcional)</h3>
+                    <p class="form-hint">Adicione as funções para o Anexo II do contrato</p>
+                    <div id="funcoes-container">
+                        <!-- Funções serão adicionadas dinamicamente -->
+                    </div>
+                    <button type="button" class="btn-adicionar-empresa" onclick="adicionarFuncao()">
+                        <i class="fas fa-plus"></i> Adicionar Função
+                    </button>
+                </div>
+
+                <!-- Botão Gerar -->
+                <div class="form-actions">
+                    <button class="btn btn-success" id="btn-gerar-contrato">
+                        <i class="fas fa-file-contract"></i> Gerar Contrato
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel de Pré-visualização -->
+        <div class="preview-panel">
+            <div class="preview-header">
+                <h2><i class="fas fa-eye"></i> Pré-visualização</h2>
+            </div>
+            <div class="preview-content">
+                <div class="preview-page" id="preview-page" style="background: #1a365d; padding: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 400px;">
+                    <div style="margin-bottom: 20px;">
+                        <i class="fas fa-file-contract" style="font-size: 48px; color: #f5a623; opacity: 0.9;"></i>
+                    </div>
+                    <h3 style="color: white; font-family: 'Montserrat', sans-serif; font-size: 16px; margin-bottom: 8px;">CONTRATO DE PRESTAÇÃO DE SERVIÇOS</h3>
+                    <p id="preview-tipo-contrato" style="color: #f5a623; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; margin-bottom: 20px;">KIT INTEGRADO DE PROGRAMAS DE SST</p>
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px 25px; border: 1px solid rgba(255,255,255,0.2); max-width: 300px; width: 100%;">
+                        <p style="color: rgba(255,255,255,0.7); font-size: 9px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px;">Contratante</p>
+                        <p id="preview-razao-social" style="color: #f5a623; font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700;">Nome da Empresa</p>
+                    </div>
+                    <p id="preview-data" style="color: rgba(255,255,255,0.7); font-size: 11px; margin-top: 15px;"><i class="fas fa-calendar-alt"></i> —</p>
+                    <p id="preview-valor" style="color: white; font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 700; margin-top: 10px;">R$ 2.700,00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

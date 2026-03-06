@@ -23,6 +23,7 @@ export default defineConfig({
         login: resolve(__dirname, 'login.html'),
         recibo: resolve(__dirname, 'recibo.html'),
         calculadora: resolve(__dirname, 'calculadora.html'),
+        contrato: resolve(__dirname, 'contrato.html'),
       },
     },
   },
