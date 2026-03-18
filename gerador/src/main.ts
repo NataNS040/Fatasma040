@@ -828,13 +828,16 @@ function gerarProposta(): void {
         qtdColaboradores: ''
     };
     
-    // Calcular total de colaboradores se for grupo
+    // Calcular total de colaboradores
     let qtdColaboradoresTotal = '';
     if (isGrupo && empresasGrupo.length > 0) {
         const total = empresasGrupo.reduce((acc, emp) => {
             return acc + (parseInt(emp.qtdColaboradores || '0') || 0);
         }, 0);
         qtdColaboradoresTotal = total > 0 ? total.toString() : '';
+    } else if (tipo === 'psicossocial') {
+        // Para psicossocial individual, usar o campo dedicado de colaboradores
+        qtdColaboradoresTotal = getElement<HTMLInputElement>('num_colaboradores').value || primeiraEmpresa.qtdColaboradores || '';
     } else {
         qtdColaboradoresTotal = primeiraEmpresa.qtdColaboradores || '';
     }
