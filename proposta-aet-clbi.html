@@ -1,0 +1,2169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta - Análise Ergonômica do Trabalho (AET) - NR-17 | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        /* Controles de PDF */
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li {
+            margin-bottom: 4px;
+        }
+
+        .pdf-instructions strong {
+            color: var(--secondary-color);
+        }
+
+        /* Container do documento */
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Páginas */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Header de página */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .page-header-logo {
+            height: 35px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .proposal-code {
+            position: absolute;
+            top: -8px;
+            right: 0;
+            background: var(--secondary-color);
+            color: var(--white-color);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-family: var(--font-primary);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Footer de página */
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+            z-index: 10;
+        }
+
+        .page-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* ====== CAPA ====== */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(128, 90, 213, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            width: 180px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            background: rgba(229, 62, 62, 0.9);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge i {
+            font-size: 12px;
+        }
+
+        .cover-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-icon i {
+            font-size: 28px;
+            color: var(--secondary-color);
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title span {
+            color: var(--secondary-color);
+            display: block;
+        }
+
+        .cover-subtitle {
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            max-width: 420px;
+        }
+
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .cover-date {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+            padding: 0 18mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-footer p {
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* ====== TÍTULOS E TEXTOS ====== */
+        .section-number {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .section-title-text {
+            flex: 1;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title i {
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* Alert box vermelho */
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--alert-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        /* Highlight box amarelo */
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .highlight-box strong {
+            color: var(--primary-color);
+        }
+
+        /* Info box azul */
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Purple box */
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+            border-left: 4px solid var(--purple-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .purple-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--purple-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .purple-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Lista de itens */
+        .feature-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+
+        .feature-list li {
+            padding: 5px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 11px;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        /* Lista de fatores */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .factor-card {
+            background: var(--light-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--purple-color);
+        }
+
+        .factor-card h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .factor-card h4 i {
+            color: var(--purple-color);
+            font-size: 11px;
+        }
+
+        .factor-card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        /* Metodologia */
+        .methodology-steps {
+            margin: 12px 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            margin-bottom: 2px;
+        }
+
+        .step-content p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.35;
+        }
+
+        /* Entregáveis */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .deliverable-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 8px;
+            background: var(--light-color);
+            border-radius: 6px;
+        }
+
+        .deliverable-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--secondary-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .deliverable-text h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 2px;
+        }
+
+        .deliverable-text p {
+            font-size: 9px;
+            margin-bottom: 0;
+            line-height: 1.35;
+        }
+
+        /* Tabela de preços */
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 12px;
+        }
+
+        .price-table thead {
+            background: var(--primary-color);
+            color: var(--white-color);
+        }
+
+        .price-table th {
+            font-family: var(--font-primary);
+            font-weight: 600;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .price-table th:last-child {
+            text-align: right;
+        }
+
+        .price-table tbody tr {
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .price-table tbody tr:nth-child(even) {
+            background: var(--light-color);
+        }
+
+        .price-table td {
+            padding: 10px;
+        }
+
+        .price-table td:last-child {
+            text-align: right;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .price-table tfoot {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            color: var(--white-color);
+        }
+
+        .price-table tfoot td {
+            padding: 12px 10px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .price-table tfoot td:last-child {
+            color: var(--secondary-color);
+            font-size: 16px;
+        }
+
+        /* Condições */
+        .conditions-list {
+            margin: 12px 0;
+        }
+
+        .condition-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .condition-item:last-child {
+            border-bottom: none;
+        }
+
+        .condition-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--light-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .condition-text strong {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .condition-text span {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.3;
+        }
+
+        /* Página de contato final */
+        .page-contact {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .contact-content {
+            margin: auto 0;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 28px;
+            color: var(--secondary-color);
+        }
+
+        .contact-title {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .contact-subtitle {
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-bottom: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--dark-color);
+        }
+
+        .contact-item i {
+            color: var(--secondary-color);
+            font-size: 16px;
+            width: 22px;
+        }
+
+        .contact-signature {
+            margin-top: 25px;
+            padding-top: 18px;
+            border-top: 2px solid var(--light-color);
+        }
+
+        .signature-logo {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .signature-text {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+
+        /* Seção de empresa contratante */
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .company-info-item {
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .company-info-item span {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        .company-description {
+            margin-top: 12px;
+            padding: 12px 15px;
+            background: #f0f9ff;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .company-description p {
+            font-size: 11px;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Seção de responsável comercial */
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            padding: 18px;
+            border-radius: 10px;
+            color: var(--white-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .responsible-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 28px;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .responsible-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-role {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-company {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .responsible-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .responsible-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+        }
+
+        .responsible-contact-item i {
+            color: var(--secondary-color);
+            width: 15px;
+        }
+
+        /* Tabela de setores */
+        .sectors-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9px;
+            margin: 8px 0;
+        }
+
+        .sectors-table thead {
+            background: var(--primary-color);
+            color: var(--white-color);
+        }
+
+        .sectors-table th {
+            font-family: var(--font-primary);
+            font-weight: 600;
+            padding: 5px 6px;
+            text-align: left;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sectors-table th:last-child {
+            text-align: center;
+        }
+
+        .sectors-table tbody tr {
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .sectors-table tbody tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .sectors-table td {
+            padding: 3px 6px;
+            font-size: 9px;
+        }
+
+        .sectors-table td:first-child {
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            width: 25px;
+        }
+
+        .sectors-table td:nth-child(2) {
+            font-weight: 600;
+            color: var(--primary-color);
+            width: 50px;
+        }
+
+        .sectors-table td:last-child {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .sectors-table tfoot {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            color: var(--white-color);
+        }
+
+        .sectors-table tfoot td {
+            padding: 6px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 10px;
+        }
+
+        .sectors-table tfoot td:last-child {
+            text-align: center;
+            color: var(--secondary-color);
+            font-size: 12px;
+        }
+
+        /* Impressão */
+        @media print {
+            .pdf-controls {
+                display: none !important;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            #pdf-content {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .page {
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                page-break-before: auto !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+                position: relative !important;
+            }
+
+            .page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
+            .page-cover {
+                padding: 20mm 18mm 18mm 18mm !important;
+            }
+
+            .page-header {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                margin-bottom: 10px !important;
+                padding-bottom: 8px !important;
+            }
+
+            .page-footer {
+                position: absolute !important;
+                bottom: 8mm !important;
+                left: 15mm !important;
+                right: 15mm !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                font-size: 9px !important;
+            }
+
+            .section-title {
+                font-size: 18px !important;
+                margin-bottom: 14px !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            .subsection-title {
+                font-size: 13px !important;
+                margin-bottom: 10px !important;
+                margin-top: 12px !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            .info-box,
+            .highlight-box,
+            .purple-box,
+            .alert-box {
+                padding: 10px 12px !important;
+                margin-bottom: 10px !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .info-box p,
+            .purple-box p,
+            .alert-box p,
+            .highlight-box p {
+                font-size: 11px !important;
+                line-height: 1.5 !important;
+            }
+
+            .step,
+            .factor-card,
+            .deliverable-item,
+            .condition-item,
+            .responsible-card {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .feature-list li {
+                font-size: 11px !important;
+                padding: 5px 0 5px 24px !important;
+            }
+
+            .company-info-grid,
+            .company-info-item {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .factors-grid {
+                gap: 6px !important;
+            }
+
+            .factor-card {
+                padding: 8px 10px !important;
+            }
+
+            .methodology-steps {
+                gap: 6px !important;
+            }
+
+            .step {
+                padding: 6px 8px !important;
+            }
+
+            .step-number {
+                width: 24px !important;
+                height: 24px !important;
+                font-size: 11px !important;
+            }
+
+            .deliverables-grid {
+                gap: 6px !important;
+            }
+
+            .deliverable-item {
+                padding: 6px !important;
+            }
+
+            .deliverable-icon {
+                width: 30px !important;
+                height: 30px !important;
+                font-size: 13px !important;
+            }
+
+            .conditions-list {
+                gap: 6px !important;
+            }
+
+            .condition-item {
+                padding: 6px !important;
+            }
+
+            .condition-icon {
+                width: 24px !important;
+                height: 24px !important;
+            }
+
+            .investment-highlight {
+                padding: 30px 35px !important;
+            }
+            
+            .investment-highlight p:first-child {
+                font-size: 14px !important;
+            }
+            
+            .investment-highlight p:nth-child(2) {
+                font-size: 52px !important;
+                font-weight: 800 !important;
+            }
+            
+            .investment-highlight p:last-child {
+                font-size: 14px !important;
+            }
+
+            p {
+                font-size: 11px !important;
+                line-height: 1.5 !important;
+                margin-bottom: 10px !important;
+                orphans: 3;
+                widows: 3;
+            }
+
+            h2, h3, h4 {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            
+            <span class="cover-badge">
+                <i class="fas fa-exclamation-circle"></i>
+                Obrigação Legal - NR-17
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-chair"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Análise Ergonômica do Trabalho (AET)</span>
+            </h1>
+            <p class="cover-subtitle">
+                Proposta técnica para elaboração da Análise Ergonômica do Trabalho conforme NR-17 do Ministério do Trabalho e Emprego
+            </p>
+            
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">CLBI – Centro de Lançamento da Barreira do Inferno</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                09 de Março de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Instituição</h3>
+            
+            <div class="company-info-grid">
+                <div class="company-info-item">
+                    <label>Razão Social</label>
+                    <span>CLBI – Centro de Lançamento da Barreira do Inferno</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>00.394.429/0098-33</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Endereço</label>
+                    <span>Rodovia RN 063 - Km 11</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CEP / Caixa Postal</label>
+                    <span>59.140-970 / Caixa Postal 054</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Município / UF</label>
+                    <span>Parnamirim – RN</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Quantidade de Colaboradores</label>
+                    <span>Aproximadamente 240 colaboradores</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Setores / Divisões</label>
+                    <span>42 setores operacionais e administrativos</span>
+                </div>
+            </div>
+
+            <div class="company-description" style="margin-top: 15px;">
+                <p>O <strong>Centro de Lançamento da Barreira do Inferno (CLBI)</strong> é uma organização militar do Comando da Aeronáutica, vinculada ao Departamento de Ciência e Tecnologia Aeroespacial (DCTA). É o primeiro campo de lançamento de foguetes da América do Sul, localizado em Parnamirim/RN, com atividades que envolvem operações de lançamento, telemedidas, trajetografia, metrologia, meteorologia e apoio logístico-administrativo.</p>
+            </div>
+
+            <div class="info-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-handshake"></i> Proposta Especializada</h4>
+                <p>Esta proposta foi desenvolvida para atender às necessidades de Análise Ergonômica do Trabalho (AET) da instituição, abrangendo todos os 42 setores e aproximadamente 240 colaboradores, em total conformidade com a NR-17 e demais normas regulamentadoras aplicáveis.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: DADOS DA EMPRESA CONTRATADA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-building"></i></span>
+                <span class="section-title-text">Dados da Empresa Contratada</span>
+            </h2>
+
+            <div class="purple-box" style="margin-bottom: 25px;">
+                <h4><i class="fas fa-info-circle"></i> Informações para Faturamento e Contrato</h4>
+                <p>Abaixo estão os dados cadastrais da EngMarq Solution para formalização contratual e emissão de documentos fiscais.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 30px; margin-bottom: 25px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid var(--purple-color);">
+                    <img src="assets/logoengmarq.png" alt="EngMarq Solution" style="height: 60px;">
+                    <div>
+                        <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 20px; margin-bottom: 5px;">EngMarq Solution LTDA</h3>
+                        <p style="margin: 0; color: var(--gray-color); font-size: 13px;">Engenharia de Segurança e Saúde do Trabalho</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">60.545.359/0001-76</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">Engmarq Solution LTDA</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-file-contract"></i> Documentação:</strong> Todos os documentos societários, certidões e comprovações de regularidade fiscal estão disponíveis mediante solicitação para processo de homologação de fornecedores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: CONTEXTO E OBRIGAÇÃO LEGAL - NR-17 ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Contexto e Obrigação Legal – NR-17</span>
+            </h2>
+
+            <div class="alert-box">
+                <h4><i class="fas fa-gavel"></i> Atenção: Obrigação Legal</h4>
+                <p>A <strong>Norma Regulamentadora nº 17 (NR-17)</strong> do Ministério do Trabalho e Emprego estabelece que cabe ao empregador realizar a <strong>Análise Ergonômica do Trabalho (AET)</strong> para avaliar a adaptação das condições de trabalho às características psicofisiológicas dos trabalhadores.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-contract"></i> O que a NR-17 exige?</h3>
+            <p>
+                A NR-17 visa estabelecer as diretrizes e os requisitos que permitam a adaptação das condições de trabalho às características psicofisiológicas dos trabalhadores, de modo a proporcionar conforto, segurança, saúde e desempenho eficiente no trabalho.
+            </p>
+            <p>
+                A norma abrange aspectos como <strong>organização do trabalho</strong>, <strong>mobiliário e equipamentos dos postos de trabalho</strong>, <strong>condições ambientais</strong> (iluminação, conforto térmico, ruído), <strong>movimentação manual de cargas</strong> e <strong>trabalho com máquinas, equipamentos e ferramentas manuais</strong>.
+            </p>
+
+            <div class="highlight-box">
+                <p><strong>Quando a AET é obrigatória:</strong> A AET deve ser realizada quando indicada na Avaliação Ergonômica Preliminar (AEP), para aprofundar a avaliação de situações de trabalho que demandem maior detalhamento, ou quando houver necessidade de avaliar a adaptação das condições de trabalho, identificar inadequações e subsidiar ações corretivas.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> Riscos do Não Cumprimento</h3>
+            <ul class="feature-list">
+                <li><strong>Multas e autuações</strong> em fiscalizações do Ministério do Trabalho e Emprego</li>
+                <li><strong>Processos trabalhistas</strong> por doenças ocupacionais (LER/DORT, lombalgia, etc.)</li>
+                <li><strong>Ações regressivas</strong> do INSS por afastamentos decorrentes de problemas ergonômicos</li>
+                <li><strong>Interdição de postos</strong> de trabalho em situações de risco grave e iminente</li>
+                <li><strong>Responsabilização civil e criminal</strong> em casos de omissão comprovada</li>
+                <li><strong>Aumento do FAP</strong> (Fator Acidentário de Prevenção) e custos previdenciários</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: O QUE É A AET ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">O que é a Análise Ergonômica do Trabalho?</span>
+            </h2>
+
+            <p>
+                A <strong>Análise Ergonômica do Trabalho (AET)</strong> é um estudo técnico aprofundado, previsto na NR-17, que avalia as condições de trabalho de forma sistêmica, considerando aspectos biomecânicos, cognitivos, organizacionais e ambientais, com o objetivo de adequar os postos de trabalho às características dos trabalhadores.
+            </p>
+
+            <div class="purple-box">
+                <h4><i class="fas fa-chair"></i> Definição Técnica</h4>
+                <p>A AET é o instrumento técnico que permite identificar, avaliar e propor soluções para as inadequações ergonômicas presentes nos ambientes e postos de trabalho, abordando desde a organização do trabalho até as condições físicas e ambientais que impactam a saúde e o desempenho dos trabalhadores.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i> Principais Aspectos Avaliados na AET</h3>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-desktop"></i> Mobiliário e Postos de Trabalho</h4>
+                    <p>Avaliação de mesas, cadeiras, monitores, teclados e demais equipamentos quanto à adequação ergonômica e ajustabilidade.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-sun"></i> Condições Ambientais</h4>
+                    <p>Análise de iluminação, temperatura, ruído, ventilação e umidade nos ambientes de trabalho.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-person-walking"></i> Biomecânica e Postura</h4>
+                    <p>Avaliação das posturas adotadas, esforços físicos, movimentos repetitivos e carregamento de cargas.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-cogs"></i> Organização do Trabalho</h4>
+                    <p>Análise de jornadas, pausas, ritmo de trabalho, escalas, turnos e distribuição de tarefas.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-brain"></i> Aspectos Cognitivos</h4>
+                    <p>Avaliação da carga mental, atenção exigida, complexidade das tarefas e processo decisório.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-tools"></i> Equipamentos e Ferramentas</h4>
+                    <p>Análise da adequação de máquinas, ferramentas manuais e equipamentos utilizados nas atividades laborais.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-weight-hanging"></i> Manuseio Manual de Cargas</h4>
+                    <p>Avaliação de levantamento, transporte e descarga de materiais, observando limites de peso e frequência.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-laptop-code"></i> Trabalho com Processamento de Dados</h4>
+                    <p>Condições ergonômicas específicas para trabalho em terminais de vídeo e estações informatizadas.</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: IMPORTÂNCIA E BENEFÍCIOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Importância e Benefícios da AET</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-chart-line"></i> Cenário Atual</h3>
+            <p>
+                As <strong>doenças osteomusculares relacionadas ao trabalho (DORT)</strong> e as <strong>lesões por esforços repetitivos (LER)</strong> figuram entre as principais causas de afastamento no Brasil. Lombalgias, tendinites, bursites e síndrome do túnel do carpo são agravos diretamente relacionados a condições ergonômicas inadequadas nos postos de trabalho.
+            </p>
+
+            <div class="info-box">
+                <h4><i class="fas fa-shield-alt"></i> Segurança Jurídica</h4>
+                <p>A realização da AET é uma das principais ferramentas para demonstrar a diligência da instituição no cumprimento das obrigações legais de SST, protegendo-a de autuações, processos trabalhistas e responsabilizações decorrentes de doenças ocupacionais.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-star"></i> Benefícios para a Instituição</h3>
+            <ul class="feature-list">
+                <li><strong>Conformidade legal</strong> com a NR-17 e proteção contra autuações do MTE</li>
+                <li><strong>Prevenção de doenças ocupacionais</strong> como LER/DORT, lombalgias e cervicalgias</li>
+                <li><strong>Redução do absenteísmo</strong> por problemas musculoesqueléticos</li>
+                <li><strong>Diminuição de afastamentos</strong> junto ao INSS e custos previdenciários</li>
+                <li><strong>Melhoria da produtividade</strong> e conforto dos colaboradores</li>
+                <li><strong>Adequação dos postos de trabalho</strong> com recomendações técnicas fundamentadas</li>
+                <li><strong>Subsídio técnico</strong> para aquisição de mobiliário e equipamentos adequados</li>
+                <li><strong>Redução de custos</strong> com tratamentos médicos e planos de saúde</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Investimento preventivo:</strong> A AET representa um investimento na saúde organizacional, com impactos positivos na redução de custos operacionais, melhoria das condições de trabalho e proteção jurídica da instituição frente a passivos trabalhistas e previdenciários.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: SETORES PARTE 1 ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Mapeamento dos Setores – CLBI</span>
+            </h2>
+
+            <p>O CLBI possui <strong>42 setores</strong> com um total aproximado de <strong>240 colaboradores</strong>. Cada setor conta com a seguinte estrutura hierárquica: <strong>Chefe de Setor</strong>, <strong>Adjunto do Chefe de Setor</strong>, <strong>Encarregado de Setor</strong> e <strong>Auxiliar de Setor</strong>. A AET será realizada abrangendo todos os setores listados abaixo:</p>
+
+            <table class="sectors-table">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Sigla</th>
+                        <th>Setor</th>
+                        <th>Qtd.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>DIR</td><td>Direção</td><td>7</td></tr>
+                    <tr><td>2</td><td>SECDIR</td><td>Secretaria da Direção</td><td>6</td></tr>
+                    <tr><td>3</td><td>ASJ</td><td>Assessoria de Serviço Jurídico</td><td>3</td></tr>
+                    <tr><td>4</td><td>AINT</td><td>Assessoria de Inteligência</td><td>2</td></tr>
+                    <tr><td>5</td><td>ACS</td><td>Assessoria de Comunicação Social</td><td>7</td></tr>
+                    <tr><td>6</td><td>ACI</td><td>Assessoria de Controle Interno</td><td>4</td></tr>
+                    <tr><td>7</td><td>ASO</td><td>Assessoria de Segurança Operacional</td><td>2</td></tr>
+                    <tr><td>8</td><td>VDR</td><td>Vice Direção</td><td>1</td></tr>
+                    <tr><td>9</td><td>SPD</td><td>Seção de Prospecção e Desenvolvimento</td><td>4</td></tr>
+                    <tr><td>10</td><td>AGOV</td><td>Assessoria de Governança</td><td>3</td></tr>
+                    <tr><td>11</td><td>SGI</td><td>Seção de Gestão Integrada</td><td>8</td></tr>
+                    <tr><td>12</td><td>SDM</td><td>Seção de Doutrina Militar</td><td>14</td></tr>
+                    <tr><td>13</td><td>SMB</td><td>Seção de Material Bélico</td><td>3</td></tr>
+                    <tr><td>14</td><td>SCI</td><td>Seção de Contraincêndio</td><td>5</td></tr>
+                    <tr><td>15</td><td>DAI</td><td>Divisão de Apoio e Infraestrutura</td><td>3</td></tr>
+                    <tr><td>16</td><td>SECDAI</td><td>Secretaria da DAI</td><td>2</td></tr>
+                    <tr><td>17</td><td>SPT</td><td>Seção de Patrimônio</td><td>3</td></tr>
+                    <tr><td>18</td><td>SAP</td><td>Seção de Apoio</td><td>20</td></tr>
+                    <tr><td>19</td><td>SEC</td><td>Seção Elétrica e de Climatização</td><td>3</td></tr>
+                    <tr><td>20</td><td>STR</td><td>Seção de Transporte</td><td>3</td></tr>
+                    <tr><td>21</td><td>SEN</td><td>Seção de Engenharia</td><td>3</td></tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin-top: 10px;">
+                <p style="margin: 0;"><strong><i class="fas fa-arrow-right"></i></strong> Continuação dos setores na próxima página.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 8: SETORES PARTE 2 ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Mapeamento dos Setores – CLBI (cont.)</span>
+            </h2>
+
+            <table class="sectors-table">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Sigla</th>
+                        <th>Setor</th>
+                        <th>Qtd.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>22</td><td>SCO</td><td>Seção de Comunicação Operacional</td><td>12</td></tr>
+                    <tr><td>23</td><td>SIO</td><td>Seção de Informática Operacional</td><td>15</td></tr>
+                    <tr><td>24</td><td>DAM</td><td>Divisão Administrativa</td><td>1</td></tr>
+                    <tr><td>25</td><td>SECDAM</td><td>Secretaria da DAM</td><td>3</td></tr>
+                    <tr><td>26</td><td>SPM</td><td>Seção de Pessoal Militar</td><td>7</td></tr>
+                    <tr><td>27</td><td>SPC</td><td>Seção de Pessoal Civil</td><td>4</td></tr>
+                    <tr><td>28</td><td>SCT</td><td>Seção de Capacitação e Treinamento</td><td>3</td></tr>
+                    <tr><td>29</td><td>SOF</td><td>Seção de Orçamento e Finanças</td><td>4</td></tr>
+                    <tr><td>30</td><td>SAC</td><td>Seção de Aquisição e Contratos</td><td>4</td></tr>
+                    <tr><td>31</td><td>SMA</td><td>Seção de Material</td><td>5</td></tr>
+                    <tr><td>32</td><td>SRE</td><td>Seção de Registro</td><td>3</td></tr>
+                    <tr><td>33</td><td>DOP</td><td>Divisão de Operações</td><td>6</td></tr>
+                    <tr><td>34</td><td>SECDOP</td><td>Secretaria da DOP</td><td>5</td></tr>
+                    <tr><td>35</td><td>SGO</td><td>Seção de Gestão Operacional</td><td>3</td></tr>
+                    <tr><td>36</td><td>SPL</td><td>Seção de Preparação e Lançamento</td><td>10</td></tr>
+                    <tr><td>37</td><td>STM</td><td>Seção de Telemedidas</td><td>12</td></tr>
+                    <tr><td>38</td><td>SLA</td><td>Seção de Localização Adour</td><td>6</td></tr>
+                    <tr><td>39</td><td>SLB</td><td>Seção de Localização Bearn</td><td>5</td></tr>
+                    <tr><td>40</td><td>STS</td><td>Seção de Trajetografia e Sincronização</td><td>6</td></tr>
+                    <tr><td>41</td><td>SMT</td><td>Seção de Metrologia</td><td>5</td></tr>
+                    <tr><td>42</td><td>SME</td><td>Seção de Meteorologia</td><td>6</td></tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">TOTAL DE COLABORADORES</td>
+                        <td>240</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="highlight-box" style="margin-top: 12px;">
+                <p><strong><i class="fas fa-sitemap"></i> Estrutura Hierárquica por Setor:</strong> Cada setor segue a seguinte configuração funcional: <strong>Chefe de Setor</strong> → <strong>Adjunto do Chefe de Setor</strong> → <strong>Encarregado de Setor</strong> → <strong>Auxiliar de Setor</strong>. Esta estrutura será considerada na avaliação ergonômica de cada posto de trabalho.</p>
+            </div>
+
+            <div class="purple-box" style="margin-top: 10px;">
+                <h4><i class="fas fa-users-cog"></i> Abrangência da AET</h4>
+                <p>A Análise Ergonômica do Trabalho abrangerá <strong>todos os 42 setores</strong>, avaliando os postos de trabalho de cada função dentro da estrutura organizacional do CLBI, desde as áreas administrativas até os setores operacionais de lançamento, telemedidas, trajetografia e infraestrutura.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 9: METODOLOGIA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Metodologia da AET</span>
+            </h2>
+
+            <p>Nossa metodologia segue um fluxo técnico estruturado, em conformidade com a NR-17, utilizando instrumentos reconhecidos e validados para avaliação ergonômica dos postos de trabalho:</p>
+
+            <div class="methodology-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Análise da Demanda e Planejamento</h4>
+                        <p>Reunião inicial com a gestão e representantes dos setores para levantamento das demandas ergonômicas, definição do cronograma de visitas e alinhamento logístico para acesso às áreas do CLBI.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Análise da Tarefa e da Atividade</h4>
+                        <p>Observação sistemática das atividades realizadas em cada setor, identificando tarefas prescritas e atividades reais, posturas adotadas, movimentos repetitivos, esforços físicos e demandas cognitivas.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Avaliação das Condições Ambientais</h4>
+                        <p>Medições técnicas de iluminância, temperatura, umidade relativa do ar e nível de ruído nos ambientes de trabalho, utilizando instrumentos calibrados (luxímetro, decibelímetro, termohigrômetro).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Avaliação do Mobiliário e Postos de Trabalho</h4>
+                        <p>Verificação dimensional e funcional do mobiliário (mesas, cadeiras, monitores), layout dos postos de trabalho e adequação antropométrica dos equipamentos à população de trabalhadores.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Aplicação de Ferramentas Ergonômicas</h4>
+                        <p>Utilização de métodos consagrados como RULA, REBA, OWAS, Equação de NIOSH e Checklist de Couto para quantificação dos riscos ergonômicos identificados em cada posto de trabalho.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Diagnóstico e Elaboração do Relatório Técnico</h4>
+                        <p>Consolidação dos dados coletados em relatório técnico detalhado, com classificação dos riscos por criticidade, recomendações preventivas e corretivas e priorização de ações por setor.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 10: ENTREGÁVEIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Entregáveis e Escopo dos Serviços</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrangência:</strong> Análise Ergonômica do Trabalho para <strong>42 setores</strong> e aproximadamente <strong>240 colaboradores</strong> do CLBI</p>
+            </div>
+
+            <p>Ao final do trabalho, a instituição receberá os seguintes documentos técnicos, todos elaborados em conformidade com a NR-17 e metodologias ergonômicas reconhecidas:</p>
+
+            <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos (PDF)</h3>
+
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Relatório de Análise Ergonômica do Trabalho (AET)</h4>
+                        <p>Documento técnico completo com diagnóstico ergonômico de cada setor, análise dos postos de trabalho, avaliação biomecânica, classificação dos riscos e registro fotográfico.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Plano de Ação Ergonômico</h4>
+                        <p>Recomendações técnicas estruturadas com medidas preventivas e corretivas, prazos sugeridos, priorização por criticidade e estimativa de investimento por ação.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-user-md"></i> Atuação Técnica Especializada</h3>
+            <p style="margin-bottom: 15px;">Os serviços contam com a atuação de <strong>Engenheiro de Segurança do Trabalho</strong> e profissionais especializados em <strong>Ergonomia</strong>, garantindo:</p>
+            <ul class="feature-list" style="margin-bottom: 20px;">
+                <li>Visitas técnicas in loco em todos os 42 setores do CLBI</li>
+                <li>Medições ambientais com instrumentos calibrados e certificados</li>
+                <li>Aplicação de ferramentas ergonômicas validadas (RULA, REBA, OWAS, NIOSH)</li>
+                <li>Análise fotográfica e documental de cada posto de trabalho avaliado</li>
+                <li>Recomendações técnicas fundamentadas em normas e literatura científica</li>
+            </ul>
+
+            <div class="info-box">
+                <h4><i class="fas fa-shield-alt"></i> Validade Legal e Técnica</h4>
+                <p>Todos os documentos são assinados por profissionais habilitados, com registro no CREA, em conformidade com a NR-17 e normas técnicas aplicáveis, garantindo aceitação em fiscalizações do MTE e processos trabalhistas.</p>
+            </div>
+
+            <div class="alert-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-exclamation-triangle"></i> Importante: O que NÃO está incluso no escopo</h4>
+                <p>• Aquisição ou fornecimento de mobiliário ergonômico<br>
+                • Implementação direta das adequações recomendadas<br>
+                • Projetos arquitetônicos de reforma de ambientes<br>
+                • Treinamentos presenciais (disponíveis como serviço adicional)</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 11: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">8</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="highlight-box" style="margin-bottom: 15px;">
+                <p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrangência:</strong> Serviço dimensionado para <strong>42 setores</strong> e aproximadamente <strong>240 colaboradores</strong></p>
+            </div>
+
+            <p>O valor abaixo corresponde ao investimento global para execução completa dos serviços de <strong>Análise Ergonômica do Trabalho (AET)</strong> descritos nesta proposta:</p>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #cbd5e0;">
+                <thead>
+                    <tr style="background: #2c5282; color: white;">
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Unidade</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">CNPJ</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Localização</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Setores</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Colaboradores</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: white;">
+                        <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">CLBI</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">00.394.429/0098-33</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">Parnamirim/RN</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; font-weight: 600; border: 1px solid #cbd5e0;">42</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; font-weight: 600; border: 1px solid #cbd5e0;">240</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 14px; color: #1a365d; font-weight: 700; border: 1px solid #cbd5e0; font-family: 'Montserrat', sans-serif;">R$ 18.950,00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
+            
+            <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Visitas técnicas in loco em todos os 42 setores</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Medições ambientais (iluminação, ruído, temperatura)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Relatório Técnico de AET completo</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Plano de Ação Ergonômico com priorização</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Matriz de riscos ergonômicos por setor</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Aplicação de ferramentas RULA, REBA, OWAS, NIOSH</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Registro fotográfico dos postos de trabalho</span>
+                </div>
+            </div>
+
+            <div class="info-box" style="background: #f0f9ff; border-left: 4px solid #1a365d; padding: 12px 15px;">
+                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Este valor contempla a execução integral do escopo técnico descrito nesta proposta. Serviços complementares, caso solicitados, serão objeto de negociação em separado.</p>
+            </div>
+
+            <div class="purple-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-calculator"></i> Valor por Setor</h4>
+                <p>O investimento equivale a aproximadamente <strong>R$ 451,19 por setor</strong>, considerando os 42 setores avaliados – um custo-benefício expressivo para a abrangência e profundidade técnica do trabalho.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 12: CONDIÇÕES COMERCIAIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">9</span>
+                <span class="section-title-text">Condições Comerciais</span>
+            </h2>
+
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta comercial é válida por 15 (quinze) dias a partir da data de emissão.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-credit-card"></i></div>
+                    <div class="condition-text">
+                        <strong>Condições de Pagamento</strong>
+                        <span>50% na aprovação da proposta e 50% na entrega do relatório final. Outras condições podem ser negociadas.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Execução</strong>
+                        <span>A AET será concluída em até 45 (quarenta e cinco) dias úteis após a aprovação, condicionado à disponibilidade de acesso aos setores e fornecimento das informações necessárias pela instituição.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-user-shield"></i></div>
+                    <div class="condition-text">
+                        <strong>Confidencialidade</strong>
+                        <span>Garantimos total sigilo sobre as informações coletadas durante as visitas técnicas. Todos os dados são tratados com confidencialidade e utilizados exclusivamente para fins do relatório técnico.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-headset"></i></div>
+                    <div class="condition-text">
+                        <strong>Suporte Pós-Entrega</strong>
+                        <span>Suporte técnico por 60 dias após a entrega para esclarecimento de dúvidas sobre o relatório e orientações sobre o plano de ação ergonômico.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-hard-hat"></i></div>
+                    <div class="condition-text">
+                        <strong>Requisitos de Acesso</strong>
+                        <span>A equipe técnica da EngMarq Solution deverá ter acesso autorizado a todas as áreas e setores do CLBI para realização das visitas técnicas, medições e registros fotográficos.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-certificate"></i> Garantia Técnica</h4>
+                <p>Todos os trabalhos são realizados por profissionais qualificados, com habilitação legal e registro no CREA, utilizando metodologias reconhecidas e em conformidade com as exigências da NR-17.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-handshake"></i> O que a instituição precisa fornecer</h3>
+            <ul class="feature-list">
+                <li>Lista atualizada de colaboradores por setor/função</li>
+                <li>Acesso às instalações e setores para visitas técnicas e medições</li>
+                <li>Acompanhamento por um representante da instituição durante as visitas</li>
+                <li>Informações sobre jornadas de trabalho, turnos e escalas de cada setor</li>
+                <li>Planta baixa das instalações <em style="color: var(--gray-color);">(caso disponível)</em></li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 13: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">10</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <p style="text-align: center; margin-bottom: 30px; color: var(--gray-color);">
+                Esta proposta comercial foi elaborada para atender às exigências da NR-17, garantindo conformidade legal e promovendo condições ergonômicas adequadas nos ambientes de trabalho do CLBI.
+            </p>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="responsible-name">Thiago Marques</h3>
+                <p class="responsible-role">Diretor</p>
+                <p class="responsible-company">EngMarq Solution</p>
+                
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="purple-box" style="margin-top: 30px;">
+                <h4><i class="fas fa-headset"></i> Atendimento Especializado</h4>
+                <p>Estamos à disposição para esclarecer qualquer dúvida sobre o escopo dos serviços, ajustar a proposta conforme necessidade e acompanhar todo o processo de execução da Análise Ergonômica do Trabalho na sua instituição.</p>
+            </div>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <h4><i class="fas fa-clock"></i> Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 08h às 18h | Sábado: 08h às 12h</p>
+                <p style="margin-top: 10px;"><strong>Atendimento via WhatsApp:</strong> Resposta em até 2 horas durante o horário comercial</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 14: ENCERRAMENTO E CONTATO ====== -->
+        <div class="page page-contact">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="contact-title">Garanta a Conformidade Ergonômica da sua Instituição</h2>
+                <p class="contact-subtitle">
+                    A Análise Ergonômica do Trabalho é uma <strong>obrigação legal</strong> prevista na NR-17. Conte com o apoio técnico especializado da EngMarq Solution para adequar os postos de trabalho do CLBI e proteger a instituição de passivos trabalhistas.
+                </p>
+
+                <div class="alert-box" style="text-align: left; max-width: 450px; margin: 0 auto 30px;">
+                    <h4><i class="fas fa-gavel"></i> Não deixe para depois</h4>
+                    <p>Instituições que não realizarem a AET estão sujeitas a multas, autuações e responsabilização em processos trabalhistas relacionados a doenças ocupacionais de origem ergonômica.</p>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+
+                <div class="contact-signature">
+                    <p class="signature-text">
+                        <strong>EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        <em>Garantindo conformidade e segurança para sua instituição.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 15: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - AET / NR-17</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite da Proposta</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 20px;">
+                <h4><i class="fas fa-check-circle"></i> Declaração de Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços especificados.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">Thiago Marques - Diretor</p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">CLBI – Centro de Lançamento da Barreira do Inferno</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">00.394.429/0098-33</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        console.log('📄 EngMarq Solution - Proposta: Análise Ergonômica do Trabalho (AET) - NR-17');
+        console.log('💡 Clique em "Gerar PDF" ou pressione Ctrl+P');
+        console.log('✅ Selecione "Salvar como PDF" na janela de impressão');
+    </script>
+</body>
+</html>

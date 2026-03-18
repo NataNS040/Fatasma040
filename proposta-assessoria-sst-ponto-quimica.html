@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta - Assessoria em SST - Ponto da Química | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        /* Controles de PDF */
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li {
+            margin-bottom: 4px;
+        }
+
+        .pdf-instructions strong {
+            color: var(--secondary-color);
+        }
+
+        /* Container do documento */
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Páginas */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Header de página */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .page-header-logo {
+            height: 35px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer de página */
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+            z-index: 10;
+        }
+
+        .page-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* ====== CAPA ====== */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(56, 161, 105, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            width: 180px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            background: rgba(56, 161, 105, 0.9);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge i {
+            font-size: 12px;
+        }
+
+        .cover-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-icon i {
+            font-size: 28px;
+            color: var(--secondary-color);
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title span {
+            color: var(--secondary-color);
+            display: block;
+        }
+
+        .cover-subtitle {
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            max-width: 420px;
+        }
+
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .cover-date {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+            padding: 0 18mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-footer p {
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* ====== TÍTULOS E TEXTOS ====== */
+        .section-number {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .section-title-text {
+            flex: 1;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title i {
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* Alert box vermelho */
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--alert-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        /* Highlight box amarelo */
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .highlight-box strong {
+            color: var(--primary-color);
+        }
+
+        /* Info box azul */
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Green box */
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .green-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--success-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .green-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Purple box */
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+            border-left: 4px solid var(--purple-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .purple-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--purple-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .purple-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Success box verde */
+        .success-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--success-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .success-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* Lista de itens */
+        .feature-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+
+        .feature-list li {
+            padding: 5px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 11px;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        /* Lista de fatores */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .factor-card {
+            background: var(--light-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .factor-card h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .factor-card h4 i {
+            color: var(--secondary-color);
+            font-size: 11px;
+        }
+
+        .factor-card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        /* Entregáveis */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .deliverable-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 8px;
+            background: var(--light-color);
+            border-radius: 6px;
+        }
+
+        .deliverable-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--secondary-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .deliverable-text h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 2px;
+        }
+
+        .deliverable-text p {
+            font-size: 9px;
+            margin-bottom: 0;
+            line-height: 1.35;
+        }
+
+        /* Condições */
+        .conditions-list {
+            margin: 12px 0;
+        }
+
+        .condition-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .condition-item:last-child {
+            border-bottom: none;
+        }
+
+        .condition-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--light-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .condition-text strong {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .condition-text span {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.3;
+        }
+
+        /* Página de contato final */
+        .page-contact {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .contact-content {
+            margin: auto 0;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 28px;
+            color: var(--secondary-color);
+        }
+
+        .contact-title {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .contact-subtitle {
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-bottom: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--dark-color);
+        }
+
+        .contact-item i {
+            color: var(--secondary-color);
+            font-size: 16px;
+            width: 22px;
+        }
+
+        .contact-signature {
+            margin-top: 25px;
+            padding-top: 18px;
+            border-top: 2px solid var(--light-color);
+        }
+
+        .signature-logo {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .signature-text {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+
+        /* Seção de empresa contratante */
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .company-info-item {
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .company-info-item span {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        /* Seção de responsável comercial */
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            padding: 18px;
+            border-radius: 10px;
+            color: var(--white-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .responsible-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 28px;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .responsible-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-role {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-company {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .responsible-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .responsible-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+        }
+
+        .responsible-contact-item i {
+            color: var(--secondary-color);
+            width: 15px;
+        }
+
+        /* Impressão */
+        @media print {
+            .pdf-controls {
+                display: none !important;
+            }
+            
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            #pdf-content {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .page {
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                page-break-before: auto !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+                position: relative !important;
+            }
+
+            .page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
+            .page-cover {
+                padding: 20mm 18mm 18mm 18mm !important;
+            }
+
+            .page-header {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                margin-bottom: 10px !important;
+                padding-bottom: 8px !important;
+            }
+
+            .page-footer {
+                position: absolute !important;
+                bottom: 8mm !important;
+                left: 15mm !important;
+                right: 15mm !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                font-size: 9px !important;
+            }
+
+            .section-title {
+                font-size: 18px !important;
+                margin-bottom: 14px !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            .subsection-title {
+                font-size: 13px !important;
+                margin-bottom: 10px !important;
+                margin-top: 12px !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            .info-box,
+            .highlight-box,
+            .purple-box,
+            .alert-box,
+            .success-box,
+            .green-box {
+                padding: 10px 12px !important;
+                margin-bottom: 10px !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .info-box p,
+            .purple-box p,
+            .alert-box p,
+            .highlight-box p,
+            .success-box p,
+            .green-box p {
+                font-size: 11px !important;
+                line-height: 1.5 !important;
+            }
+
+            .step,
+            .factor-card,
+            .deliverable-item,
+            .condition-item,
+            .responsible-card {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .feature-list li {
+                font-size: 11px !important;
+                padding: 5px 0 5px 24px !important;
+            }
+
+            .company-info-grid,
+            .company-info-item {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            p {
+                font-size: 11px !important;
+                line-height: 1.5 !important;
+                margin-bottom: 10px !important;
+                orphans: 3;
+                widows: 3;
+            }
+
+            h2, h3, h4 {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            
+            <span class="cover-badge">
+                <i class="fas fa-shield-alt"></i>
+                Assessoria Técnica Especializada
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-hard-hat"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Assessoria em Saúde e Segurança do Trabalho</span>
+            </h1>
+            <p class="cover-subtitle">
+                Equipe técnica especializada, gestão de programas obrigatórios de SST, documentação legal e treinamentos de capacitação para conformidade com as Normas Regulamentadoras
+            </p>
+            
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Ponto da Química Indústria e Comércio LTDA</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                16 de Março de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>
+            
+            <div class="company-info-grid">
+                <div class="company-info-item">
+                    <label>Razão Social</label>
+                    <span>Ponto da Química Indústria e Comércio LTDA</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ (Matriz)</label>
+                    <span>22.453.634/0001-32</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Quantidade Total de Colaboradores</label>
+                    <span>40 colaboradores (3 unidades)</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Município / UF</label>
+                    <span>Parnamirim - RN</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top: 18px;"><i class="fas fa-sitemap"></i> Unidades Contempladas</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 10px;">
+                <thead>
+                    <tr style="background: var(--primary-color); color: white;">
+                        <th style="padding: 6px 10px; text-align: left; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 600; border: 1px solid var(--primary-color);">CNPJ</th>
+                        <th style="padding: 6px 10px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 600; border: 1px solid var(--primary-color);">Colaboradores</th>
+                        <th style="padding: 6px 10px; text-align: left; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 600; border: 1px solid var(--primary-color);">Funções Existentes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: white; border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 6px 10px; font-size: 10px; color: #2d3748; border: 1px solid #cbd5e0;">22.453.634/0001-32</td>
+                        <td style="padding: 6px 10px; text-align: center; font-size: 10px; color: #2d3748; border: 1px solid #cbd5e0; font-weight: 600;">18</td>
+                        <td style="padding: 6px 10px; font-size: 9px; color: #2d3748; border: 1px solid #cbd5e0;">ASG, Aux. de Produção, Estoquista, Analista Fiscal, Gerente de Produção</td>
+                    </tr>
+                    <tr style="background: #f7fafc; border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 6px 10px; font-size: 10px; color: #2d3748; border: 1px solid #cbd5e0;">22.453.634/0002-13</td>
+                        <td style="padding: 6px 10px; text-align: center; font-size: 10px; color: #2d3748; border: 1px solid #cbd5e0; font-weight: 600;">17</td>
+                        <td style="padding: 6px 10px; font-size: 9px; color: #2d3748; border: 1px solid #cbd5e0;">Gerente, Caixa, ASG, Almoxarifado, Repositor, Estoquista, Conferente de Mercadoria, Aux. Administrativo</td>
+                    </tr>
+                    <tr style="background: white;">
+                        <td style="padding: 6px 10px; font-size: 10px; color: #2d3748; border: 1px solid #cbd5e0;">22.453.634/0004-85</td>
+                        <td style="padding: 6px 10px; text-align: center; font-size: 10px; color: #2d3748; border: 1px solid #cbd5e0; font-weight: 600;">5</td>
+                        <td style="padding: 6px 10px; font-size: 9px; color: #2d3748; border: 1px solid #cbd5e0;">Vendedor, Operador de Caixa, Gerente</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title" style="margin-top: 18px;"><i class="fas fa-user-tie"></i> Responsável pelo Recebimento da Proposta</h3>
+            
+            <div class="company-info-grid">
+                <div class="company-info-item">
+                    <label>Nome do Responsável</label>
+                    <span>Nadiegio</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Cargo / Função</label>
+                    <span>A definir</span>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 18px;">
+                <h4><i class="fas fa-handshake"></i> Proposta Especializada</h4>
+                <p>Esta proposta contempla a prestação de serviços de assessoria completa em Saúde e Segurança do Trabalho, abrangendo todas as unidades operacionais da empresa, com equipe técnica dedicada, gestão de programas obrigatórios de SST, documentação legal e treinamentos de capacitação conforme as Normas Regulamentadoras.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: EQUIPE TÉCNICA RESPONSÁVEL ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Equipe Técnica Responsável</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-users-cog"></i> Assessoria Personalizada em SST</h4>
+                <p>A Ponto da Química Indústria e Comércio LTDA contará com uma equipe técnica multidisciplinar dedicada à gestão da Saúde e Segurança do Trabalho, atuando de forma preventiva e em conformidade com todas as Normas Regulamentadoras vigentes.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-user-shield"></i> Profissionais Alocados</h3>
+
+            <div class="factors-grid" style="margin-bottom: 15px;">
+                <div class="factor-card">
+                    <h4><i class="fas fa-id-badge"></i> Técnico em Segurança do Trabalho</h4>
+                    <p>Profissional habilitado e registrado conforme exigências do MTE, responsável pelo acompanhamento técnico in loco, inspeções de segurança, fiscalização do uso de EPIs/EPCs, investigação de acidentes e implementação das rotinas operacionais de SST nas unidades da empresa.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-hard-hat"></i> Engenheiro de Segurança do Trabalho</h4>
+                    <p>Profissional responsável pela elaboração dos programas obrigatórios (PGR, PCMSO, LTCAT, LIP), emissão de ART, análise técnica dos riscos ocupacionais, orientações legais e suporte estratégico à empresa, garantindo conformidade com a legislação trabalhista e previdenciária.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-tasks"></i> Atuação da Equipe Técnica</h3>
+
+            <p>A equipe será responsável pelo acompanhamento técnico contínuo da empresa, oferecendo suporte especializado para a implementação e manutenção das rotinas de Saúde e Segurança do Trabalho em todas as unidades operacionais. As principais atividades incluem:</p>
+
+            <ul class="feature-list" style="font-size: 10px;">
+                <li>Acompanhamento e emissão de Ordens de Serviço (OS), conforme NR-01, descrevendo deveres e obrigações dos colaboradores perante a segurança do trabalho</li>
+                <li>Orientação e fiscalização do uso de Equipamentos de Proteção Individual (EPIs) conforme NR-06</li>
+                <li>Inspeções de segurança e verificação das condições do ambiente de trabalho em todas as unidades</li>
+                <li>Investigação e análise de acidentes de trabalho, com emissão de CAT e evento S-2210 do eSocial</li>
+                <li>Orientações legais e suporte técnico quanto às obrigações das Normas Regulamentadoras aplicáveis</li>
+                <li>Gestão e acompanhamento dos programas de SST (PGR, PCMSO, LTCAT), cronogramas de ações, riscos ocupacionais, funções e equipamentos de proteção</li>
+                <li>Apoio técnico na adequação dos ambientes de trabalho às exigências legais de segurança e saúde ocupacional</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-route"></i> Visitas Técnicas Programadas</h3>
+
+            <div class="factors-grid">
+                <div class="factor-card" style="border-left-color: var(--success-color);">
+                    <h4><i class="fas fa-industry"></i> Unidade Matriz (0001-32)</h4>
+                    <p><strong>Quinzenal</strong> – 2 visitas por mês para acompanhamento das atividades industriais, inspeções de segurança e orientação técnica in loco.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--primary-color);">
+                    <h4><i class="fas fa-store"></i> Demais Unidades (0002-13 e 0004-85)</h4>
+                    <p><strong>Mensal</strong> – 1 visita por mês em cada unidade para verificação das condições de trabalho, inspeções e acompanhamento de SST.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-info-circle"></i> Abrangência:</strong> A assessoria técnica contempla as 3 unidades ativas da empresa (CNPJs vinculados), considerando as particularidades operacionais de cada estabelecimento, incluindo atividades de <strong>indústria, comércio e logística de produtos</strong>. As visitas técnicas totalizam <strong>4 visitas mensais</strong> (2 na matriz + 1 em cada filial).</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: GESTÃO ADMINISTRATIVA E DOCUMENTAL DE SST ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Gestão Administrativa e Documental de SST</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-folder-open"></i> Organização e Conformidade Documental</h4>
+                <p>A gestão documental é parte essencial da assessoria em Saúde e Segurança do Trabalho. A EngMarq Solution realizará o controle, organização e acompanhamento de toda a documentação exigida pela legislação trabalhista e previdenciária, garantindo que a <strong>Ponto da Química</strong> esteja sempre em conformidade com os órgãos fiscalizadores.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-alt"></i> Controle e Organização da Documentação de SST</h3>
+            <p>Manutenção e atualização de toda a documentação técnica obrigatória de Saúde e Segurança do Trabalho, incluindo programas, laudos, certificados de treinamentos, fichas de EPI, ordens de serviço e demais registros exigidos pelas Normas Regulamentadoras. A documentação será organizada por unidade (CNPJ), garantindo rastreabilidade e fácil acesso em caso de fiscalizações.</p>
+
+            <h3 class="subsection-title"><i class="fas fa-calendar-check"></i> Acompanhamento das Obrigações Legais</h3>
+            <p>Monitoramento contínuo dos prazos e obrigações legais relacionadas à segurança do trabalho, incluindo vencimento de programas, laudos técnicos, exames ocupacionais, treinamentos periódicos e reciclagens obrigatórias. A equipe técnica manterá um cronograma atualizado para garantir que todas as exigências sejam cumpridas dentro dos prazos estabelecidos.</p>
+
+            <h3 class="subsection-title"><i class="fas fa-database"></i> Gestão de Registros e Informações</h3>
+            <p>Apoio na organização e manutenção dos registros e informações exigidos pelos órgãos fiscalizadores, como Ministério do Trabalho e Emprego (MTE), INSS e Receita Federal. Isso inclui o controle de dados necessários para o envio dos eventos de SST ao eSocial, gestão de informações sobre acidentes de trabalho, afastamentos e demais dados obrigatórios.</p>
+
+            <div class="factors-grid" style="margin-top: 15px;">
+                <div class="factor-card">
+                    <h4><i class="fas fa-clipboard-list"></i> Programas e Laudos</h4>
+                    <p>Controle de vigência e atualização de PGR, PCMSO, LTCAT, LIP e demais documentos técnicos obrigatórios.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-id-card"></i> Fichas e Registros de EPI</h4>
+                    <p>Organização das fichas de entrega de EPIs, ordens de serviço e certificados de treinamento de cada colaborador.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-laptop-code"></i> Eventos do eSocial</h4>
+                    <p>Suporte no envio dos eventos S-2210, S-2220 e S-2240 de SST ao eSocial, conforme cronograma legal.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-search"></i> Preparação para Fiscalizações</h4>
+                    <p>Documentação sempre atualizada e organizada para apresentação em caso de auditorias ou fiscalizações do MTE.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 12px;">
+                <p><strong><i class="fas fa-shield-alt"></i> Segurança Jurídica:</strong> A manutenção adequada da documentação de SST é fundamental para a proteção da empresa contra autuações, multas e passivos trabalhistas. Com a assessoria da EngMarq Solution, a Ponto da Química terá total respaldo documental perante os órgãos fiscalizadores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: PROGRAMAS OBRIGATÓRIOS DE SST ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Programas Obrigatórios de Segurança do Trabalho</span>
+            </h2>
+
+            <div class="alert-box" style="margin-bottom: 12px;">
+                <h4><i class="fas fa-gavel"></i> Obrigações Legais Integradas</h4>
+                <p>A legislação trabalhista e previdenciária brasileira exige que todas as empresas elaborem, implementem e mantenham atualizados os programas de Saúde e Segurança do Trabalho. O descumprimento pode resultar em <strong>multas, autuações, processos trabalhistas e ações regressivas do INSS</strong>.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-clipboard-list"></i> Programas e Laudos Inclusos</h3>
+
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PGR – Programa de Gerenciamento de Riscos</h4>
+                        <p>Documento obrigatório conforme NR-01 que identifica, avalia e controla os riscos ocupacionais presentes nos ambientes de trabalho. Contempla inventário de riscos e plano de ação para todas as funções e unidades da empresa.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PCMSO – Programa de Controle Médico de Saúde Ocupacional</h4>
+                        <p>Programa exigido pela NR-07 que estabelece a vigilância da saúde dos trabalhadores, definindo os exames ocupacionais obrigatórios (admissional, periódico, demissional, mudança de risco e retorno ao trabalho).</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-file-medical-alt"></i></div>
+                    <div class="deliverable-text">
+                        <h4>LTCAT – Laudo Técnico das Condições Ambientais do Trabalho</h4>
+                        <p>Documento exigido pela IN 128/INSS que caracteriza as condições ambientais de trabalho para fins previdenciários, subsidiando a concessão de aposentadoria especial e o correto enquadramento no eSocial (evento S-2240).</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="deliverable-text">
+                        <h4>LIP – Laudo de Insalubridade e Periculosidade</h4>
+                        <p>Laudo técnico que avalia e caracteriza as atividades insalubres e/ou perigosas, conforme NR-15 e NR-16, determinando o direito ou não ao adicional de insalubridade/periculosidade dos trabalhadores.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 10px;">
+                <p><strong><i class="fas fa-info-circle"></i> Importante:</strong> A elaboração inicial dos programas e laudos contempla avaliação <strong>qualitativa</strong> dos riscos ocupacionais. <strong>Medições quantitativas</strong> (ruído, calor, poeiras, agentes químicos, vibração e outros, quando aplicáveis) <strong>não estão inclusas</strong> nesta proposta e poderão ser contratadas à parte, conforme necessidade técnica identificada.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-plus-circle"></i> Serviços Complementares Inclusos</h3>
+
+            <ul class="feature-list" style="font-size: 10px;">
+                <li><strong>Avaliação Psicossocial</strong> – Avaliação dos fatores de riscos psicossociais conforme atualização da NR-01, incluindo aplicação de instrumento validado e relatório técnico</li>
+                <li><strong>ART – Anotação de Responsabilidade Técnica</strong> – Emissão de ART para todos os documentos técnicos elaborados, conferindo validade legal e responsabilidade profissional</li>
+                <li><strong>Eventos de SST no eSocial</strong> – Envio dos eventos S-2210 (CAT), S-2220 (ASO) e S-2240 (Condições Ambientais) ao eSocial, conforme cronograma legal obrigatório</li>
+            </ul>
+
+            <div class="green-box">
+                <h4><i class="fas fa-check-double"></i> Conformidade Garantida</h4>
+                <p>Todos os programas e laudos serão elaborados em conformidade com as Normas Regulamentadoras vigentes (NR-01, NR-07, NR-09, NR-15, NR-16) e com a legislação previdenciária (IN 128/INSS), garantindo segurança jurídica e proteção contra passivos trabalhistas e previdenciários para a Ponto da Química.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: TREINAMENTOS E OBRIGAÇÕES OPERACIONAIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Treinamentos e Obrigações Operacionais</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-graduation-cap"></i> Capacitação Técnica Inclusa</h4>
+                <p>Programação de treinamentos obrigatórios integrada ao serviço de assessoria, voltada à capacitação dos colaboradores da Ponto da Química conforme as Normas Regulamentadoras vigentes, com o objetivo de reduzir riscos ocupacionais, prevenir acidentes e promover um ambiente de trabalho seguro.</p>
+            </div>
+
+            <!-- Treinamento 1 -->
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); font-weight: 600;">
+                        <i class="fas fa-hard-hat" style="color: var(--secondary-color); margin-right: 6px;"></i>Treinamento Admissional e Ordens de Serviço
+                    </h4>
+                    <div style="display: flex; gap: 8px; font-size: 10px;">
+                        <span style="color: var(--gray-color);"><i class="fas fa-clock"></i> 04h</span>
+                        <span style="background: #f7fafc; color: var(--primary-color); padding: 2px 8px; border-radius: 4px; font-weight: 600;">1x/mês</span>
+                    </div>
+                </div>
+                <p style="margin: 0; font-size: 10px; line-height: 1.6; color: var(--gray-color);">Capacitação obrigatória para novos colaboradores admitidos, conforme NR-01, abordando os riscos ocupacionais da função, medidas de proteção, uso correto de EPIs e orientações de segurança. Inclui a emissão da Ordem de Serviço (OS) individual, descrevendo deveres e obrigações do trabalhador perante a segurança do trabalho, com execução programada de <strong>1 turma mensal</strong>.</p>
+            </div>
+
+            <!-- Treinamento 2 -->
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); font-weight: 600;">
+                        <i class="fas fa-users" style="color: var(--secondary-color); margin-right: 6px;"></i>Treinamento de CIPA
+                    </h4>
+                    <div style="display: flex; gap: 8px; font-size: 10px;">
+                        <span style="color: var(--gray-color);"><i class="fas fa-clock"></i> 08h</span>
+                        <span style="background: #f7fafc; color: var(--primary-color); padding: 2px 8px; border-radius: 4px; font-weight: 600;">1x/ano</span>
+                    </div>
+                </div>
+                <p style="margin: 0; font-size: 10px; line-height: 1.6; color: var(--gray-color);">Capacitação anual para membros eleitos e designados da Comissão Interna de Prevenção de Acidentes e de Assédio (CIPA), conforme NR-05. Aborda prevenção de acidentes, identificação de riscos, noções de saúde no trabalho e combate ao assédio no ambiente laboral.</p>
+            </div>
+
+            <!-- Treinamento 3 -->
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); font-weight: 600;">
+                        <i class="fas fa-fire-extinguisher" style="color: var(--secondary-color); margin-right: 6px;"></i>Treinamento de Brigada de Incêndio
+                    </h4>
+                    <div style="display: flex; gap: 8px; font-size: 10px;">
+                        <span style="color: var(--gray-color);"><i class="fas fa-clock"></i> 08h</span>
+                        <span style="background: #f7fafc; color: var(--primary-color); padding: 2px 8px; border-radius: 4px; font-weight: 600;">1x/ano</span>
+                    </div>
+                </div>
+                <p style="margin: 0; font-size: 10px; line-height: 1.6; color: var(--gray-color);">Preparação de brigadistas voluntários para atuação em situações de emergência, com foco em prevenção e combate a princípios de incêndio, primeiros socorros, procedimentos de evacuação e uso de equipamentos de combate a incêndio. Treinamento essencial para proteção da vida dos colaboradores e do patrimônio da empresa.</p>
+            </div>
+
+            <!-- Treinamento 4 -->
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); font-weight: 600;">
+                        <i class="fas fa-truck" style="color: var(--secondary-color); margin-right: 6px;"></i>Treinamento para Operador de Empilhadeira
+                    </h4>
+                    <div style="display: flex; gap: 8px; font-size: 10px;">
+                        <span style="color: var(--gray-color);"><i class="fas fa-clock"></i> 16h</span>
+                        <span style="background: #f7fafc; color: var(--primary-color); padding: 2px 8px; border-radius: 4px; font-weight: 600;">1x/ano</span>
+                    </div>
+                </div>
+                <p style="margin: 0; font-size: 10px; line-height: 1.6; color: var(--gray-color);">Habilitação e capacitação de operadores de empilhadeira conforme NR-11, abordando operação segura, inspeção pré-uso, sinalização, estabilidade de carga, circulação em áreas de armazenamento e procedimentos de emergência. Treinamento dimensionado para as atividades de logística e estoque da empresa.</p>
+            </div>
+
+            <div class="highlight-box">
+                <p style="font-size: 10px; margin: 0;"><strong><i class="fas fa-calendar-check"></i> Execução:</strong> Todos os treinamentos seguem as Normas Regulamentadoras vigentes e serão ministrados mediante solicitação prévia e coordenação de agenda entre as partes. Turmas adicionais, reciclagens ou outras capacitações podem ser contratadas separadamente.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: BENEFÍCIOS DA ASSESSORIA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Benefícios da Assessoria</span>
+            </h2>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-gavel"></i> Conformidade Legal</h4>
+                    <p>Atendimento integral às Normas Regulamentadoras e legislação trabalhista vigente, evitando autuações e passivos.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-shield-alt"></i> Prevenção de Acidentes</h4>
+                    <p>Identificação e controle de riscos ocupacionais de forma proativa e sistemática em todas as unidades.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-chart-line"></i> Gestão Eficiente</h4>
+                    <p>Controle e acompanhamento de todos os programas de SST, prazos e obrigações legais centralizados.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-users"></i> Equipe Capacitada</h4>
+                    <p>Treinamentos periódicos para colaboradores, reduzindo riscos de acidentes e promovendo cultura de segurança.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-alt"></i> Documentação Completa</h4>
+                    <p>Manutenção de toda documentação de SST organizada, atualizada e pronta para fiscalizações.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-headset"></i> Suporte Contínuo</h4>
+                    <p>Assessoria online sob demanda para dúvidas técnicas, orientações legais e demandas emergenciais.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-check-double"></i> O Que Está Incluso no Contrato</h3>
+
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-user-shield"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Equipe Técnica de SST</h4>
+                        <p>Técnico de Segurança e Engenheiro de Segurança do Trabalho dedicados.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-laptop"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Assessoria Online</h4>
+                        <p>Suporte sob demanda via WhatsApp e e-mail para dúvidas e orientações.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-file-medical-alt"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Programas Obrigatórios</h4>
+                        <p>PGR, PCMSO, LTCAT, LIP e Avaliação Psicossocial completos.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Treinamentos Inclusos</h4>
+                        <p>Admissional, CIPA, Brigada de Incêndio e Operador de Empilhadeira.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-folder-open"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Gestão Documental</h4>
+                        <p>Organização completa da documentação de SST por unidade.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-laptop-code"></i></div>
+                    <div class="deliverable-text">
+                        <h4>eSocial (SST)</h4>
+                        <p>Envio dos eventos S-2210, S-2220 e S-2240 conforme obrigação legal.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="green-box" style="margin-top: 12px;">
+                <h4><i class="fas fa-star"></i> Diferenciais EngMarq Solution</h4>
+                <p>Equipe especializada em Engenharia de Segurança e Saúde do Trabalho, metodologia baseada em resultados, atendimento personalizado para múltiplas unidades e total comprometimento com a segurança dos colaboradores e a conformidade legal da sua empresa.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 8: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="highlight-box" style="margin-bottom: 15px;">
+                <p style="margin: 0;"><strong><i class="fas fa-calendar-alt"></i> Contrato:</strong> 12 meses de assessoria técnica em Saúde e Segurança do Trabalho</p>
+            </div>
+
+            <p>O valor abaixo corresponde ao investimento mensal para prestação dos serviços de <strong>Assessoria em Saúde e Segurança do Trabalho</strong> descritos nesta proposta, abrangendo todas as unidades operacionais da Ponto da Química:</p>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #cbd5e0;">
+                <thead>
+                    <tr style="background: #2c5282; color: white;">
+                        <th style="padding: 12px 15px; text-align: left; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Descrição</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Valor Mensal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: white;">
+                        <td style="padding: 12px 15px; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">Assessoria Completa em SST (equipe técnica + programas obrigatórios + gestão documental + treinamentos + eSocial)</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 14px; color: #2d3748; font-weight: 700; border: 1px solid #cbd5e0;">R$ 3.886,87</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box" style="margin: 12px 0;">
+                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-calculator"></i> Valor global do contrato (12 meses):</strong> <strong style="color: var(--primary-color); font-size: 12px;">R$ 46.642,40</strong></p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
+            
+            <div class="included-services" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Técnico em Segurança do Trabalho</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Engenheiro de Segurança do Trabalho</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>PGR – Programa de Gerenciamento de Riscos</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>PCMSO – Programa de Controle Médico</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>LTCAT – Laudo Técnico de Condições Ambientais</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>LIP – Laudo de Insalubridade e Periculosidade</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Avaliação de Riscos Psicossociais (NR-01)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>ART – Anotação de Responsabilidade Técnica</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Eventos de SST no eSocial</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Gestão documental completa por unidade</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Visitas técnicas (2x/mês matriz + 1x/mês filiais)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Treinamento Admissional + OS (1x/mês)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Treinamento CIPA (1x/ano)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Treinamento Brigada de Incêndio (1x/ano)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Treinamento Operador de Empilhadeira (1x/ano)</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-invoice-dollar"></i> Condições de Pagamento</h3>
+            
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>Pagamento mensal via boleto bancário, PIX ou transferência até o dia 10 de cada mês.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-file-contract"></i></div>
+                    <div class="condition-text">
+                        <strong>Vigência do Contrato</strong>
+                        <span>12 meses, com renovação automática, mediante aviso prévio de 30 dias para cancelamento.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-percent"></i></div>
+                    <div class="condition-text">
+                        <strong>Reajuste Anual</strong>
+                        <span>Reajuste pelo INPC/IBGE ou índice que o substitua, aplicado no aniversário do contrato.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 10px;">
+                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Esta proposta é válida por 15 (quinze) dias a partir da data de emissão. Serviços adicionais não contemplados nesta proposta podem ser negociados separadamente, incluindo medições quantitativas para composição complementar dos programas, quando tecnicamente necessárias.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 9: ENCERRAMENTO ====== -->
+        <div class="page page-contact">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <div class="contact-content" style="margin-top: 15px;">
+
+                <div class="responsible-card">
+                    <div class="responsible-avatar">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <p class="responsible-name">Thiago Marques</p>
+                    <p class="responsible-role">Diretor</p>
+                    <p class="responsible-company">EngMarq Solution</p>
+
+                    <div class="responsible-contacts">
+                        <div class="responsible-contact-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>+55 84 99928-5888</span>
+                        </div>
+                        <div class="responsible-contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>engmarqsolution@gmail.com</span>
+                        </div>
+                        <div class="responsible-contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Natal - RN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="purple-box" style="margin-top: 20px; text-align: left;">
+                    <h4><i class="fas fa-shield-alt"></i> Compromisso com a Segurança</h4>
+                    <p>A gestão de Saúde e Segurança do Trabalho é um investimento essencial para a proteção dos trabalhadores e para a sustentabilidade do negócio. Garantir a conformidade com a legislação trabalhista e previdenciária não apenas evita passivos jurídicos e financeiros, mas demonstra o compromisso da empresa com o bem-estar de seus colaboradores e com a construção de um ambiente de trabalho seguro e saudável.</p>
+                </div>
+
+                <div class="info-box" style="margin-top: 15px; text-align: left;">
+                    <h4><i class="fas fa-handshake"></i> Assessoria Especializada</h4>
+                    <p>Contar com o apoio de uma equipe técnica especializada em SST é a forma mais eficiente de manter sua empresa em conformidade com as Normas Regulamentadoras, prevenir acidentes, capacitar seus colaboradores e proteger sua organização contra riscos legais. A EngMarq Solution está preparada para acompanhar a Ponto da Química em todas as suas unidades, oferecendo uma assessoria completa, personalizada e comprometida com resultados.</p>
+                </div>
+
+                <div class="contact-signature" style="margin-top: 30px;">
+                    <p class="signature-text">
+                        <strong>EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        <em>Transformando ambientes de trabalho em espaços seguros e produtivos.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 10: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite e Assinaturas</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços especificados.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">Thiago Marques - Diretor</p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Ponto da Química Indústria e Comércio LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">22.453.634/0001-32</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        console.log('📄 EngMarq Solution - Proposta: Assessoria em SST - Ponto da Química');
+        console.log('💡 Clique em "Gerar PDF" ou pressione Ctrl+P');
+        console.log('✅ Selecione "Salvar como PDF" na janela de impressão');
+    </script>
+</body>
+</html>

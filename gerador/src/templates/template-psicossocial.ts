@@ -6,27 +6,6 @@
 import { DadosTemplate, EntregavelPsico, EmpresaGrupo } from '../types/proposta.types';
 import { formatMoeda } from '../utils/formatters';
 
-// =====================================================
-// TABELA DE FAIXAS DE PRECIFICAÇÃO
-// =====================================================
-const FAIXAS_PRECO = [
-    { min: 1, max: 10, label: '01 a 10', valorPorPessoa: 100 },
-    { min: 11, max: 25, label: '11 a 25', valorPorPessoa: 65 },
-    { min: 26, max: 50, label: '26 a 50', valorPorPessoa: 50 },
-    { min: 51, max: 100, label: '51 a 100', valorPorPessoa: 42 },
-    { min: 101, max: 200, label: '101 a 200', valorPorPessoa: 38 },
-    { min: 201, max: 300, label: '201 a 300', valorPorPessoa: 35 },
-    { min: 301, max: 400, label: '301 a 400', valorPorPessoa: 32 },
-    { min: 401, max: 500, label: '401 a 500', valorPorPessoa: 29 },
-];
-
-/**
- * Encontra a faixa de preço correspondente ao número de colaboradores
- */
-function encontrarFaixa(qtd: number) {
-    return FAIXAS_PRECO.find(f => qtd >= f.min && qtd <= f.max);
-}
-
 /**
  * Gera HTML para uma empresa do grupo
  */
@@ -46,53 +25,29 @@ function gerarEmpresaGrupoHTML(empresa: EmpresaGrupo, index: number): string {
 }
 
 /**
- * Gera a tabela de precificação por faixa de funcionários
+ * Gera a tabela de investimento para proposta individual
  */
 function gerarTabelaPrecificacao(qtdColaboradores: string, valorFinal: number): string {
     const qtd = parseInt(qtdColaboradores) || 0;
-    const faixaAtual = encontrarFaixa(qtd);
-    const valorPorPessoa = faixaAtual ? faixaAtual.valorPorPessoa : 0;
-
-    const rows = FAIXAS_PRECO.map((faixa, index) => {
-        const isAtual = faixaAtual && faixa.min === faixaAtual.min;
-        const bg = isAtual ? '#edf2f7' : (index % 2 === 0 ? 'white' : '#f7fafc');
-        const color = isAtual ? 'var(--primary-color)' : '#2d3748';
-        const padding = isAtual ? '8px 12px' : '6px 12px';
-        const arrow = isAtual ? '<i class="fas fa-arrow-right" style="color: var(--secondary-color); margin-right: 5px;"></i>' : '';
-        const badge = isAtual ? ' <span style="font-size: 9px; color: var(--success-color); margin-left: 5px;">← sua faixa</span>' : '';
-
-        return `
-                    <tr style="background: ${bg}; border-bottom: 1px solid #e2e8f0;${isAtual ? ' font-weight: 600;' : ''}">
-                        <td style="padding: ${padding}; font-size: 10px; color: ${color}; border: 1px solid #cbd5e0;">${arrow}${faixa.label}${badge}</td>
-                        <td style="padding: ${padding}; text-align: center; font-size: 10px; color: ${color}; border: 1px solid #cbd5e0;">R$ ${formatMoeda(faixa.valorPorPessoa)}</td>
-                    </tr>`;
-    }).join('\n');
-
-    const calcBox = faixaAtual ? `
-            <div class="info-box" style="margin: 12px 0; background: #ebf8ff; border-left: 4px solid var(--primary-color); padding: 10px 12px;">
-                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-calculator"></i> Cálculo para esta proposta:</strong> ${qtd} colaboradores × R$ ${formatMoeda(valorPorPessoa)} = <strong style="color: var(--primary-color); font-size: 12px;">R$ ${formatMoeda(valorFinal)}</strong></p>
-            </div>
-    ` : `
-            <div class="info-box" style="margin: 12px 0; background: #ebf8ff; border-left: 4px solid var(--primary-color); padding: 10px 12px;">
-                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-calculator"></i> Investimento total:</strong> <strong style="color: var(--primary-color); font-size: 12px;">R$ ${formatMoeda(valorFinal)}</strong></p>
-            </div>
-    `;
 
     return `
-            <h3 class="subsection-title"><i class="fas fa-table"></i> Tabela de Valores por Faixa</h3>
+            <h3 class="subsection-title"><i class="fas fa-table"></i> Tabela de Investimento</h3>
 
             <table style="width: 100%; border-collapse: collapse; margin: 10px 0; border: 1px solid #cbd5e0;">
                 <thead>
                     <tr style="background: var(--primary-color); color: white;">
-                        <th style="padding: 8px 12px; text-align: left; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; border: 1px solid var(--primary-color);">Faixa de Funcionários</th>
-                        <th style="padding: 8px 12px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; border: 1px solid var(--primary-color);">Valor por Pessoa (R$)</th>
+                        <th style="padding: 8px 12px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; border: 1px solid var(--primary-color);">Nº de Colaboradores</th>
+                        <th style="padding: 8px 12px; text-align: right; font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 600; border: 1px solid var(--primary-color);">Valor Final</th>
                     </tr>
                 </thead>
                 <tbody>
-${rows}
+                    <tr style="background: white; border-bottom: 1px solid #e2e8f0;">
+                        <td style="padding: 8px 12px; text-align: center; font-size: 10px; color: #2d3748; border: 1px solid #cbd5e0;">${qtd}</td>
+                        <td style="padding: 8px 12px; text-align: right; font-size: 10px; color: #2d3748; border: 1px solid #cbd5e0; font-weight: 600;">R$ ${formatMoeda(valorFinal)}</td>
+                    </tr>
                 </tbody>
             </table>
-${calcBox}`;
+    `;
 }
 
 /**
