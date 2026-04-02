@@ -779,6 +779,66 @@
             width: 15px;
         }
 
+        /* Entregáveis estilo lista */
+        .deliverables-list {
+            margin: 15px 0;
+        }
+
+        .deliverable-section {
+            background: var(--light-color);
+            border-radius: 10px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .deliverable-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            color: var(--white-color);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .deliverable-header i {
+            color: var(--secondary-color);
+            font-size: 16px;
+        }
+
+        .deliverable-header h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .deliverable-content {
+            padding: 10px 14px;
+        }
+
+        .deliverable-content ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .deliverable-content li {
+            padding: 4px 0;
+            padding-left: 18px;
+            position: relative;
+            font-size: 10px;
+        }
+
+        .deliverable-content li::before {
+            content: '\f054';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-size: 8px;
+            top: 6px;
+        }
+
         /* Print styles */
         @media print {
             @page {
@@ -895,7 +955,7 @@
                 <span>Linha de Vida Fixa para Cobertura</span>
             </h1>
             <p class="cover-subtitle">
-                Projeto, dimensionamento e instalação de sistema de linha de vida fixa horizontal para cobertura, em conformidade com a NR-35 e normas técnicas aplicáveis
+                Projeto e dimensionamento de sistema de linha de vida fixa horizontal para cobertura, em conformidade com a NR-35 e normas técnicas aplicáveis
             </p>
             
             <div class="cover-client">
@@ -1034,7 +1094,7 @@
                 <span class="section-title-text">Escopo dos Serviços</span>
             </h2>
 
-            <p>A presente proposta contempla o <strong>projeto, dimensionamento e instalação de sistema de linha de vida fixa horizontal para cobertura</strong>, com o objetivo de garantir a proteção contra quedas dos trabalhadores durante atividades de manutenção em altura, conforme exigências da <strong>NR-35</strong> e normas técnicas aplicáveis.</p>
+            <p>A presente proposta contempla o <strong>projeto e dimensionamento de sistema de linha de vida fixa horizontal para cobertura</strong>, com o objetivo de fornecer a documentação técnica necessária para garantir a proteção contra quedas dos trabalhadores durante atividades de manutenção em altura, conforme exigências da <strong>NR-35</strong> e normas técnicas aplicáveis.</p>
 
             <h3 class="subsection-title"><i class="fas fa-tasks"></i> Etapas de Execução</h3>
 
@@ -1056,32 +1116,26 @@
                 <div class="step">
                     <div class="step-number">3</div>
                     <div class="step-content">
-                        <h4>Fornecimento de Materiais</h4>
-                        <p>Fornecimento de todos os <strong>componentes do sistema</strong>: cabo de aço, esticadores, pontos de ancoragem intermediários e terminais, absorvedores de energia e demais acessórios necessários.</p>
+                        <h4>Elaboração da Documentação Técnica</h4>
+                        <p>Desenvolvimento do <strong>memorial descritivo</strong>, memória de cálculo e orientações técnicas para instalação do sistema de linha de vida conforme projeto.</p>
                     </div>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
                     <div class="step-content">
-                        <h4>Instalação do Sistema</h4>
-                        <p>Instalação completa do <strong>sistema de linha de vida fixa horizontal</strong> na cobertura, com fixação dos pontos de ancoragem, passagem e tensionamento do cabo de aço, conforme projeto.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h4>Emissão de ART e Documentação</h4>
-                        <p>Emissão da <strong>ART (Anotação de Responsabilidade Técnica)</strong> referente ao projeto e instalação do sistema, além de toda a documentação técnica exigida pela NR-35.</p>
+                        <h4>Emissão de ART</h4>
+                        <p>Emissão da <strong>ART (Anotação de Responsabilidade Técnica)</strong> referente ao projeto do sistema, registrada junto ao CREA.</p>
                     </div>
                 </div>
             </div>
 
             <div class="alert-box" style="margin-top: 10px;">
                 <h4><i class="fas fa-exclamation-triangle"></i> Importante: O que NÃO está incluso no escopo</h4>
-                <p>• Fornecimento de EPIs individuais (trava-quedas, cinturão, talabarte)<br>
+                <p>• Fornecimento de materiais e componentes do sistema<br>
+                • Instalação do sistema de linha de vida<br>
+                • Fornecimento de EPIs individuais (trava-quedas, cinturão, talabarte)<br>
                 • Treinamento de NR-35 para os trabalhadores<br>
-                • Reforço estrutural da cobertura (caso necessário, será orçado à parte)<br>
-                • Manutenção periódica do sistema após instalação</p>
+                • Reforço estrutural da cobertura (caso necessário, será orçado à parte)</p>
             </div>
 
             <div class="page-footer">
@@ -1099,61 +1153,90 @@
 
             <h2 class="section-title">
                 <span class="section-number">3</span>
-                <span class="section-title-text">Entregáveis</span>
+                <span class="section-title-text">Escopo do Projeto – Entregáveis</span>
             </h2>
 
-            <p>Ao final da execução, serão entregues os seguintes materiais e documentos técnicos:</p>
+            <p>A EngMarq Solution entregará os seguintes documentos técnicos:</p>
 
-            <div class="deliverables-grid" style="margin-top: 15px;">
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-drafting-compass"></i></div>
-                    <div class="deliverable-text">
-                        <h4>Projeto Técnico</h4>
-                        <p>Projeto completo do sistema de linha de vida fixa com plantas, cortes e detalhamentos dos pontos de ancoragem.</p>
+            <div class="deliverables-list">
+                <div class="deliverable-section">
+                    <div class="deliverable-header">
+                        <i class="fas fa-drafting-compass"></i>
+                        <h4>1. Projeto Técnico da Linha de Vida Fixa</h4>
+                    </div>
+                    <div class="deliverable-content">
+                        <ul>
+                            <li>Plantas e detalhamentos técnicos completos</li>
+                            <li>Representação gráfica do sistema e seus componentes</li>
+                            <li>Indicação dos pontos de ancoragem na cobertura</li>
+                            <li>Dimensões e especificações construtivas</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-calculator"></i></div>
-                    <div class="deliverable-text">
-                        <h4>Memorial de Cálculo</h4>
-                        <p>Dimensionamento estrutural completo com cálculos de carga, resistência dos pontos de ancoragem e fator de segurança.</p>
+
+                <div class="deliverable-section">
+                    <div class="deliverable-header">
+                        <i class="fas fa-file-alt"></i>
+                        <h4>2. Memorial Descritivo</h4>
+                    </div>
+                    <div class="deliverable-content">
+                        <ul>
+                            <li>Descrição completa do sistema de linha de vida projetado</li>
+                            <li>Especificação dos materiais a serem utilizados</li>
+                            <li>Características técnicas do sistema de proteção</li>
+                            <li>Condições de uso e limitações do equipamento</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-tools"></i></div>
-                    <div class="deliverable-text">
-                        <h4>Sistema Instalado</h4>
-                        <p>Linha de vida fixa horizontal instalada na cobertura, pronta para uso, com todos os componentes e acessórios.</p>
+
+                <div class="deliverable-section">
+                    <div class="deliverable-header">
+                        <i class="fas fa-calculator"></i>
+                        <h4>3. Memória de Cálculo</h4>
+                    </div>
+                    <div class="deliverable-content">
+                        <ul>
+                            <li>Critérios técnicos adotados para o dimensionamento</li>
+                            <li>Cargas consideradas no cálculo estrutural</li>
+                            <li>Metodologia de cálculo aplicada</li>
+                            <li>Demonstração da resistência e estabilidade estrutural</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-file-signature"></i></div>
-                    <div class="deliverable-text">
-                        <h4>ART de Projeto e Instalação</h4>
-                        <p>Anotação de Responsabilidade Técnica emitida por engenheiro habilitado, registrada no CREA.</p>
+
+                <div class="deliverable-section">
+                    <div class="deliverable-header">
+                        <i class="fas fa-tools"></i>
+                        <h4>4. Orientações para Instalação</h4>
+                    </div>
+                    <div class="deliverable-content">
+                        <ul>
+                            <li>Informações técnicas para correta instalação do sistema</li>
+                            <li>Premissas de segurança a serem observadas</li>
+                            <li>Diretrizes para montagem conforme projeto</li>
+                            <li>Recomendações para verificação após instalação</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="deliverable-section">
+                    <div class="deliverable-header">
+                        <i class="fas fa-stamp"></i>
+                        <h4>5. Emissão de ART</h4>
+                    </div>
+                    <div class="deliverable-content">
+                        <ul>
+                            <li>ART registrada junto ao CREA</li>
+                            <li>Vinculada exclusivamente ao projeto da Linha de Vida Fixa</li>
+                            <li>Formalização da responsabilidade técnica do profissional</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-
-            <h3 class="subsection-title" style="margin-top: 20px;"><i class="fas fa-check-double"></i> Detalhamento do Projeto Técnico</h3>
-
-            <div class="info-box">
-                <h4><i class="fas fa-file-alt"></i> Conteúdo do Projeto</h4>
-                <p>O projeto técnico contemplará:</p>
-            </div>
-
-            <ul class="feature-list" style="margin-top: 10px;">
-                <li>Planta de locação do sistema de linha de vida na cobertura</li>
-                <li>Detalhamento dos pontos de ancoragem (terminais e intermediários)</li>
-                <li>Especificação técnica de todos os componentes utilizados</li>
-                <li>Memorial de cálculo estrutural com verificação de cargas</li>
-                <li>Instruções de uso e limitações do sistema</li>
-                <li>Plano de manutenção preventiva recomendado</li>
-            </ul>
 
             <div class="green-box" style="margin-top: 20px;">
                 <h4><i class="fas fa-shield-alt"></i> Conformidade Normativa</h4>
-                <p>Todo o sistema será projetado e instalado em conformidade com a <strong>NR-35 (Trabalho em Altura)</strong>, <strong>NBR 16325 (Proteção contra quedas de altura)</strong> e demais normas técnicas aplicáveis, garantindo segurança e rastreabilidade documental.</p>
+                <p>Todo o projeto será elaborado em conformidade com a <strong>NR-35 (Trabalho em Altura)</strong>, <strong>NBR 16325 (Proteção contra quedas de altura)</strong> e demais normas técnicas aplicáveis, garantindo segurança e rastreabilidade documental.</p>
             </div>
 
             <div class="page-footer">
@@ -1174,7 +1257,7 @@
                 <span class="section-title-text">Investimento</span>
             </h2>
 
-            <p>O valor abaixo corresponde ao investimento para execução completa do <strong>projeto, fornecimento e instalação do sistema de linha de vida fixa horizontal para cobertura</strong>:</p>
+            <p>O valor abaixo corresponde ao investimento para elaboração do <strong>projeto técnico de sistema de linha de vida fixa horizontal para cobertura</strong>:</p>
 
             <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #cbd5e0;">
                 <thead>
@@ -1186,8 +1269,8 @@
                 <tbody>
                     <tr style="background: white;">
                         <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">
-                            Linha de Vida Fixa Horizontal para Cobertura<br>
-                            <span style="font-size: 10px; color: #718096;">Projeto + Materiais + Instalação + ART</span>
+                            Projeto de Linha de Vida Fixa Horizontal para Cobertura<br>
+                            <span style="font-size: 10px; color: #718096;">Projeto + Memorial Descritivo + Memória de Cálculo + ART</span>
                         </td>
                         <td style="padding: 12px 15px; text-align: center; font-size: 18px; color: #2d3748; font-weight: 700; border: 1px solid #cbd5e0;">R$ 6.000,00</td>
                     </tr>
@@ -1203,23 +1286,23 @@
                 </div>
                 <div style="display: flex; align-items: flex-start; gap: 8px;">
                     <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Projeto técnico com memorial de cálculo</span>
+                    <span>Projeto técnico completo com plantas e detalhamentos</span>
                 </div>
                 <div style="display: flex; align-items: flex-start; gap: 8px;">
                     <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Fornecimento de todos os materiais e componentes</span>
+                    <span>Memorial descritivo do sistema</span>
                 </div>
                 <div style="display: flex; align-items: flex-start; gap: 8px;">
                     <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Instalação completa do sistema na cobertura</span>
+                    <span>Memória de cálculo estrutural</span>
                 </div>
                 <div style="display: flex; align-items: flex-start; gap: 8px;">
                     <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>ART de projeto e instalação (CREA)</span>
+                    <span>Orientações técnicas para instalação</span>
                 </div>
                 <div style="display: flex; align-items: flex-start; gap: 8px;">
                     <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
-                    <span>Documentação técnica completa</span>
+                    <span>ART de projeto registrada no CREA</span>
                 </div>
             </div>
 
@@ -1237,14 +1320,14 @@
                     <div class="condition-icon"><i class="fas fa-money-bill-wave"></i></div>
                     <div class="condition-text">
                         <strong>Condições de Pagamento</strong>
-                        <span>50% na aprovação da proposta e 50% na conclusão da instalação, via PIX ou transferência bancária.</span>
+                        <span>50% na aprovação da proposta e 50% na entrega do projeto, via PIX ou transferência bancária.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-clock"></i></div>
                     <div class="condition-text">
                         <strong>Prazo de Execução</strong>
-                        <span>O projeto será entregue em até 10 (dez) dias úteis após aprovação. A instalação será realizada em até 05 (cinco) dias úteis após aprovação do projeto e disponibilidade do local.</span>
+                        <span>O projeto será entregue em até 10 (dez) dias úteis após aprovação da proposta e realização da visita técnica.</span>
                     </div>
                 </div>
                 <div class="condition-item">
@@ -1257,7 +1340,7 @@
             </div>
 
             <div class="highlight-box" style="margin-top: 10px;">
-                <p><strong><i class="fas fa-info-circle"></i> Nota:</strong> Caso o local de instalação seja fora da região metropolitana de Natal/RN, eventuais custos adicionais de deslocamento e hospedagem serão previamente acordados entre as partes.</p>
+                <p><strong><i class="fas fa-info-circle"></i> Nota:</strong> Caso o local da visita técnica seja fora da região metropolitana de Natal/RN, eventuais custos adicionais de deslocamento e hospedagem serão previamente acordados entre as partes.</p>
             </div>
 
             <div class="page-footer">
