@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17875424072"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-17875424072');
-    </script>
+    <!-- Google Analytics: carregado apenas após consentimento de cookies (cookie-consent.js) -->
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,16 +25,19 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="lgpd-pages.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Pular para o conteúdo</a>
+
     <!-- Header -->
-    <header class="header" id="header">
+    <header class="header" id="header" role="banner">
         <div class="container">
-            <nav class="navbar">
+            <nav class="navbar" aria-label="Navegação principal">
                 <a href="#" class="logo">
-                    <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="logo-img">
+                    <img src="assets/logoengmarq.png" alt="EngMarq Solution - Página Inicial" class="logo-img">
                 </a>
-                <ul class="nav-menu" id="nav-menu">
+                <ul class="nav-menu" id="nav-menu" role="list">
                     <li><a href="#home" class="nav-link">Início</a></li>
                     <li><a href="#servicos" class="nav-link">Serviços</a></li>
                     <li><a href="#treinamentos" class="nav-link">Treinamentos</a></li>
@@ -49,10 +45,10 @@
                     <li><a href="#sobre" class="nav-link">Sobre</a></li>
                     <li><a href="#contato" class="nav-link">Contato</a></li>
                 </ul>
-                <a href="https://wa.me/5584999285888" target="_blank" class="btn btn-whatsapp-header">
-                    <i class="fab fa-whatsapp"></i> Fale Conosco
+                <a href="https://wa.me/5584999285888" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-header" aria-label="Fale conosco pelo WhatsApp">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i> Fale Conosco
                 </a>
-                <button class="hamburger" id="hamburger">
+                <button class="hamburger" id="hamburger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="nav-menu">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -61,6 +57,7 @@
         </div>
     </header>
 
+    <main id="main-content">
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-overlay"></div>
@@ -71,7 +68,7 @@
                     <img src="assets/logoengmarq.png" alt="EngMarq Solution">
                 </div>
                 <span class="hero-badge">
-                    <i class="fas fa-hard-hat"></i> Engenharia de Segurança e Saúde do Trabalho
+                    <i class="fas fa-hard-hat" aria-hidden="true"></i> Engenharia de Segurança e Saúde do Trabalho
                 </span>
                 <h1 class="hero-title">
                     SST que garante <span class="highlight">Segurança Jurídica</span>
@@ -92,11 +89,11 @@
                 </div>
                 
                 <div class="hero-buttons">
-                    <a href="https://wa.me/5584999285888" target="_blank" class="btn btn-primary btn-glow">
-                        <i class="fab fa-whatsapp"></i> Fale com Especialistas em SST
+                    <a href="https://wa.me/5584999285888" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-glow" aria-label="Fale com Especialistas em SST pelo WhatsApp">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i> Fale com Especialistas em SST
                     </a>
                     <a href="#servicos" class="btn btn-secondary btn-outline">
-                        <i class="fas fa-arrow-down"></i> Conheça Nossos Serviços
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i> Conheça Nossos Serviços
                     </a>
                 </div>
                 <div class="hero-stats">
@@ -119,7 +116,7 @@
             </div>
         </div>
         <div class="hero-wave">
-            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation">
                 <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#ffffff"/>
             </svg>
         </div>
@@ -176,8 +173,8 @@
                 <div class="nr01-cta-content">
                     <h3><i class="fas fa-balance-scale"></i> Garanta a Conformidade da sua Empresa</h3>
                     <p>Não corra riscos de autuações e passivos trabalhistas. Nossa equipe técnica está preparada para avaliar sua empresa e garantir total conformidade com a atualização da NR-01.</p>
-                    <a href="https://wa.me/5584999285888" target="_blank" class="btn btn-primary btn-glow">
-                        <i class="fab fa-whatsapp"></i> Solicite Avaliação dos Fatores de Riscos Psicossociais
+                    <a href="https://wa.me/5584999285888" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-glow" aria-label="Solicite Avaliação dos Fatores de Riscos Psicossociais pelo WhatsApp">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i> Solicite Avaliação dos Fatores de Riscos Psicossociais
                     </a>
                 </div>
             </div>
@@ -692,30 +689,30 @@
                                 <div class="carousel-slide">
                                     <div class="equipe-card">
                                         <div class="equipe-img">
-                                            <img src="assets/pessoa%201.png" alt="Equipe EngMarq Solution">
+                                            <img src="assets/pessoa%201.png" alt="Membro da equipe EngMarq Solution em campo">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="carousel-slide">
                                     <div class="equipe-card">
                                         <div class="equipe-img">
-                                            <img src="assets/pessoa%202.png" alt="Equipe EngMarq Solution">
+                                            <img src="assets/pessoa%202.png" alt="Profissional de segurança do trabalho da EngMarq Solution">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="carousel-slide">
                                     <div class="equipe-card">
                                         <div class="equipe-img">
-                                            <img src="assets/pessoa%203.png" alt="Equipe EngMarq Solution">
+                                            <img src="assets/pessoa%203.png" alt="Engenheiro de segurança da EngMarq Solution">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-nav">
-                            <button class="carousel-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                            <button class="carousel-btn prev" id="prevBtn" aria-label="Foto anterior"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
                             <div class="carousel-dots" id="carouselDots"></div>
-                            <button class="carousel-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+                            <button class="carousel-btn next" id="nextBtn" aria-label="Próxima foto"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
                         </div>
                     </div>
                     <div class="floating-card">
@@ -849,8 +846,10 @@
         </div>
     </section>
 
+    </main>
+
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
@@ -859,10 +858,10 @@
                     </a>
                     <p>Especialistas em Engenharia de Segurança e Saúde do Trabalho. Mais de 500 empresas atendidas e 1.000 treinamentos realizados. Proteção para seus colaboradores e conformidade com NRs.</p>
                     <div class="footer-social">
-                        <a href="https://wa.me/5584999285888" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://wa.me/5584999285888" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp da EngMarq Solution"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                        <a href="#" title="Instagram" aria-label="Instagram da EngMarq Solution"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                        <a href="#" title="Facebook" aria-label="Facebook da EngMarq Solution"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+                        <a href="#" title="LinkedIn" aria-label="LinkedIn da EngMarq Solution"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -890,41 +889,55 @@
                 <div class="footer-contact">
                     <h4>Contato</h4>
                     <ul>
-                        <li><i class="fab fa-whatsapp"></i> +55 84 99928-5888</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Natal - RN</li>
+                        <li><i class="fab fa-whatsapp" aria-hidden="true"></i> +55 84 99928-5888</li>
+                        <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Natal - RN</li>
+                    </ul>
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="politica-privacidade.html">Política de Privacidade</a></li>
+                        <li><a href="politica-cookies.html">Política de Cookies</a></li>
+                        <li><a href="termos-de-uso.html">Termos de Uso</a></li>
                     </ul>
                     <div class="footer-badge">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
                         <span>Conformidade Legal</span>
                     </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 EngMarq Solution - Engenharia de Segurança e Saúde do Trabalho. Todos os direitos reservados.</p>
+                <p>&copy; 2026 EngMarq Solution - Engenharia de Segurança e Saúde do Trabalho. Todos os direitos reservados.</p>
+                <nav class="footer-legal-links" aria-label="Links legais">
+                    <a href="politica-privacidade.html">Política de Privacidade</a>
+                    <a href="politica-cookies.html">Política de Cookies</a>
+                    <a href="termos-de-uso.html">Termos de Uso</a>
+                </nav>
             </div>
         </div>
     </footer>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/5584999285888" target="_blank" class="whatsapp-float" title="Fale conosco pelo WhatsApp">
-        <i class="fab fa-whatsapp"></i>
+    <a href="https://wa.me/5584999285888" target="_blank" rel="noopener noreferrer" class="whatsapp-float" title="Fale conosco pelo WhatsApp" aria-label="Abrir WhatsApp para falar com a EngMarq Solution">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
         <span class="whatsapp-tooltip">Fale Conosco</span>
     </a>
 
     <!-- Back to Top Button -->
-    <a href="#" class="back-to-top" id="backToTop">
-        <i class="fas fa-chevron-up"></i>
+    <a href="#" class="back-to-top" id="backToTop" aria-label="Voltar ao topo da página">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
     </a>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
+    <script src="cookie-consent.js"></script>
     
-    <!-- Google Ads Conversion Tracking for WhatsApp clicks -->
+    <!-- Google Ads Conversion Tracking for WhatsApp clicks (only fires if consent given) -->
     <script>
         document.querySelectorAll('a[href*="wa.me"]').forEach(function(link) {
             link.addEventListener('click', function() {
-                gtag('event', 'conversion', {'send_to': 'AW-17875424072/9xyTCKyKjfcbEMim1ctC'});
+                if (typeof gtag === 'function') {
+                    gtag('event', 'conversion', {'send_to': 'AW-17875424072/9xyTCKyKjfcbEMim1ctC'});
+                }
             });
         });
     </script>

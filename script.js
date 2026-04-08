@@ -103,6 +103,9 @@ function toggleMobileMenu() {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
     document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    // Update aria-expanded for accessibility
+    var isExpanded = navMenu.classList.contains('active');
+    hamburger.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
 }
 
 hamburger.addEventListener('click', toggleMobileMenu);
@@ -532,6 +535,15 @@ console.log('%c Engenharia de Segurança do Trabalho com Excelência ', 'color: 
 console.log('%c Garantia Jurídica para sua Empresa ', 'color: #6b7280; font-size: 12px;');
 
 // ============================================
+// Accessibility: Mark all Font Awesome icons as decorative
+// ============================================
+document.querySelectorAll('i.fas, i.fab, i.far').forEach(icon => {
+    if (!icon.hasAttribute('aria-hidden') && !icon.hasAttribute('role')) {
+        icon.setAttribute('aria-hidden', 'true');
+    }
+});
+
+// ============================================
 // Performance Optimization
 // ============================================
 
@@ -674,7 +686,11 @@ function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        // Focus the close button for accessibility
+        const closeBtn = modal.querySelector('.modal-close');
+        if (closeBtn) closeBtn.focus();
     }
 }
 
@@ -682,9 +698,34 @@ function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
         modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
     }
 }
+
+// Make treinamento cards keyboard accessible
+document.querySelectorAll('.treinamento-card[onclick]').forEach(card => {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            card.click();
+        }
+    });
+});
+
+// Add aria-label to modal close buttons
+document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.setAttribute('aria-label', 'Fechar janela');
+});
+
+// Set aria-hidden on modals
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-hidden', 'true');
+});
 
 // Close modal when clicking outside
 document.querySelectorAll('.modal').forEach(modal => {

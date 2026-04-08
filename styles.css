@@ -14,8 +14,8 @@
     --gray-medium: #64748b;         /* Cinza médio */
     --dark-color: #1f2937;
     --dark-light: #374151;
-    --gray-color: #6b7280;
-    --gray-light: #9ca3af;
+    --gray-color: #4b5563;
+    --gray-light: #6b7280;
     --light-color: #f8fafc;
     --white-color: #ffffff;
     --whatsapp-color: #25d366;
@@ -76,6 +76,79 @@ body {
     color: var(--dark-color);
     background-color: var(--white-color);
     overflow-x: hidden;
+}
+
+/* ============================================
+   Accessibility: Skip to Content Link
+   ============================================ */
+.skip-to-content {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-color);
+    color: var(--white-color);
+    padding: 1rem 2rem;
+    border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    z-index: 100001;
+    transition: top 0.3s ease;
+    text-decoration: none;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: 3px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Accessibility: Focus Visible Styles
+   ============================================ */
+*:focus-visible {
+    outline: 3px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Accessibility: prefers-reduced-motion
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    .hero-badge,
+    .btn-glow,
+    .particle {
+        animation: none !important;
+    }
+
+    [data-aos] {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
 }
 
 /* Selection */
