@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Orçamento - EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="./gerador-styles.css">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        /* ===== ORÇAMENTO SPECIFIC ===== */
+        .orcamento-grid {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .servico-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: var(--light-color);
+            border: 2px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 8px;
+        }
+        .servico-checkbox:hover {
+            border-color: var(--primary-light);
+            background: #edf2f7;
+        }
+        .servico-checkbox.selected {
+            border-color: var(--primary-color);
+            background: #ebf4ff;
+        }
+        .servico-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+        .servico-info {
+            flex: 1;
+        }
+        .servico-info .nome {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        .servico-info .faixa {
+            font-size: 11px;
+            color: var(--gray-color);
+            margin-top: 2px;
+        }
+        .servico-valor-ref {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        /* Configuração do item selecionado */
+        .item-config {
+            background: #f0f9ff;
+            border: 1px solid #bee3f8;
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            margin-bottom: 12px;
+            animation: slideIn 0.2s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .item-config-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .item-config-header h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        .item-config-header .btn-remove {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .item-config-header .btn-remove:hover {
+            background: #fed7d7;
+        }
+        .item-config .config-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .item-config .config-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .item-config .config-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .item-config .config-group input,
+        .item-config .config-group select {
+            padding: 8px 12px;
+            font-size: 13px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            background: white;
+            color: var(--dark-color);
+            font-family: var(--font-secondary);
+        }
+        .item-config .config-group input:focus,
+        .item-config .config-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+        }
+        .item-config .valor-sugerido {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 14px;
+            background: white;
+            border-radius: 6px;
+            border: 1px dashed #a0aec0;
+        }
+        .item-config .valor-sugerido .label-sug {
+            font-size: 11px;
+            color: var(--gray-color);
+            font-weight: 600;
+        }
+        .item-config .valor-sugerido .valor-sug {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--success-color);
+        }
+
+        /* Margem de lucro section */
+        .margem-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px;
+            background: linear-gradient(135deg, #fffaf0, #fefcbf);
+            border: 2px solid #fbd38d;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+        }
+        .margem-section .margem-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--secondary-color), #ed8936);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            flex-shrink: 0;
+        }
+        .margem-section .margem-inputs {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .margem-section .config-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #744210;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .margem-section input {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 14px;
+            border: 2px solid #fbd38d;
+            border-radius: 8px;
+            background: white;
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        .margem-section input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.2);
+        }
+
+        /* Resultado card */
+        .resultado-total {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 24px;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .resultado-total .total-label {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.85;
+        }
+        .resultado-total .total-valor {
+            font-family: var(--font-primary);
+            font-size: 36px;
+            font-weight: 800;
+            margin: 8px 0;
+        }
+        .resultado-total .total-desc {
+            font-size: 12px;
+            opacity: 0.75;
+        }
+
+        .resultado-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+        }
+        .resultado-row:last-child { border-bottom: none; }
+        .resultado-row .res-label {
+            color: var(--gray-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .resultado-row .res-label i { font-size: 14px; }
+        .resultado-row .res-valor {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        .resultado-row.success .res-valor { color: var(--success-color); }
+        .resultado-row.warning .res-valor { color: var(--warning-color); }
+        .resultado-row.danger .res-valor { color: var(--danger-color); }
+
+        /* Itens selecionados no resumo */
+        .resumo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--light-color);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+        .resumo-item .ri-nome {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        .resumo-item .ri-detalhe {
+            font-size: 10px;
+            color: var(--gray-color);
+        }
+        .resumo-item .ri-valor {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        .resumo-vazio {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray-light);
+            font-size: 13px;
+        }
+        .resumo-vazio i {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .categoria-header {
+            font-family: var(--font-primary);
+            font-size: 14px;
+            font-weight: 700;
+            padding: 10px 0 8px;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .categoria-header:first-child { margin-top: 0; }
+        .categoria-header i { font-size: 16px; }
+        .cat-doc { color: #276749; }
+        .cat-doc i { color: #38a169; }
+        .cat-trein { color: #2c5282; }
+        .cat-trein i { color: #4299e1; }
+        .cat-consult { color: #553c9a; }
+        .cat-consult i { color: #805ad5; }
+        .cat-projeto { color: #c05621; }
+        .cat-projeto i { color: #dd6b20; }
+
+        .badge-sm {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-min { background: #f0fff4; color: #276749; }
+        .badge-med { background: #ebf8ff; color: #2c5282; }
+        .badge-max { background: #fff5f5; color: #c53030; }
+
+        /* Botões de ação */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+            flex: 1;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 4px 15px rgba(26, 54, 93, 0.3);
+            transform: translateY(-1px);
+        }
+        .btn-secondary {
+            background: var(--light-color);
+            color: var(--dark-color);
+            border: 2px solid #e2e8f0;
+        }
+        .btn-secondary:hover {
+            border-color: var(--primary-color);
+            background: #edf2f7;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #48bb78);
+            color: white;
+        }
+        .btn-success:hover {
+            box-shadow: 0 4px 15px rgba(56, 161, 105, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray-color);
+            font-size: 12px;
+            margin-top: 40px;
+        }
+
+        /* Print */
+        @media print {
+            .header, .pdf-controls, .footer, .action-buttons, .inputs-column .btn, .item-config-header .btn-remove { display: none !important; }
+            body { background: white; }
+            .orcamento-grid { grid-template-columns: 1fr; }
+            .card { box-shadow: none; break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-logo">
+            <img src="./assets/logoengmarq.png" alt="EngMarq">
+            <div>
+                <h1>Gerador de Orçamento</h1>
+                <span>Orçamento inteligente baseado no histórico de propostas</span>
+            </div>
+        </div>
+        <div class="header-user">
+            <a href="./index.html" class="btn-logout" style="margin-right: 10px;">
+                <i class="fas fa-file-alt"></i> Propostas
+            </a>
+            <a href="./calculadora.html" class="btn-logout" style="margin-right: 10px;">
+                <i class="fas fa-calculator"></i> Calculadora
+            </a>
+            <a href="./contrato.html" class="btn-logout" style="margin-right: 10px;">
+                <i class="fas fa-file-contract"></i> Contratos
+            </a>
+            <span id="userName"><i class="fas fa-user-circle"></i> <span id="userNameText"></span></span>
+            <button class="btn-logout" onclick="fazerLogout()" title="Sair">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+
+            <!-- MARGEM DE LUCRO -->
+            <div class="margem-section">
+                <div class="margem-icon"><i class="fas fa-bullseye"></i></div>
+                <div class="margem-inputs">
+                    <div class="config-group">
+                        <label>Margem de Lucro Desejada (%)</label>
+                        <input type="number" id="margemLucro" min="0" max="90" step="5" value="60">
+                    </div>
+                    <div class="config-group">
+                        <label>Desconto para o Cliente (%)</label>
+                        <input type="number" id="descontoCliente" min="0" max="50" step="5" value="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="orcamento-grid">
+                <!-- COLUNA ESQUERDA: Seleção de Serviços -->
+                <div class="inputs-column">
+
+                    <!-- DOCUMENTAÇÕES -->
+                    <section class="card">
+                        <div class="card-header">
+                            <div class="card-icon green"><i class="fas fa-file-alt"></i></div>
+                            <h2>Documentações e Programas de SST</h2>
+                        </div>
+                        <div class="card-body" id="listaDocumentacoes"></div>
+                    </section>
+
+                    <!-- TREINAMENTOS -->
+                    <section class="card">
+                        <div class="card-header">
+                            <div class="card-icon blue"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <h2>Treinamentos</h2>
+                        </div>
+                        <div class="card-body" id="listaTreinamentos"></div>
+                    </section>
+
+                    <!-- CONSULTORIAS -->
+                    <section class="card">
+                        <div class="card-header">
+                            <div class="card-icon purple"><i class="fas fa-brain"></i></div>
+                            <h2>Consultorias e Avaliações</h2>
+                        </div>
+                        <div class="card-body" id="listaConsultorias"></div>
+                    </section>
+
+                    <!-- PROJETOS TÉCNICOS -->
+                    <section class="card">
+                        <div class="card-header">
+                            <div class="card-icon orange"><i class="fas fa-drafting-compass"></i></div>
+                            <h2>Projetos Técnicos</h2>
+                        </div>
+                        <div class="card-body" id="listaProjetos"></div>
+                    </section>
+                </div>
+
+                <!-- COLUNA DIREITA: Resumo / Resultado -->
+                <div class="results-column">
+                    <section class="card card-results">
+                        <div class="card-header">
+                            <div class="card-icon gold"><i class="fas fa-receipt"></i></div>
+                            <h2>Orçamento Gerado</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="resultado-total" id="resultadoTotal">
+                                <div class="total-label">Valor Sugerido para o Cliente</div>
+                                <div class="total-valor" id="valorFinalCliente">R$ 0,00</div>
+                                <div class="total-desc" id="totalDesc">Selecione os serviços ao lado</div>
+                            </div>
+
+                            <div id="resumoItens">
+                                <div class="resumo-vazio">
+                                    <i class="fas fa-hand-pointer"></i>
+                                    Selecione serviços à esquerda para montar o orçamento
+                                </div>
+                            </div>
+
+                            <div id="resumoResultados" style="display: none;">
+                                <div style="height: 1px; background: #e2e8f0; margin: 16px 0;"></div>
+                                <div class="resultado-row">
+                                    <span class="res-label"><i class="fas fa-coins"></i> Custo Base (referência)</span>
+                                    <span class="res-valor" id="resCustoBase">R$ 0,00</span>
+                                </div>
+                                <div class="resultado-row success">
+                                    <span class="res-label"><i class="fas fa-chart-line"></i> Lucro Estimado</span>
+                                    <span class="res-valor" id="resLucro">R$ 0,00</span>
+                                </div>
+                                <div class="resultado-row">
+                                    <span class="res-label"><i class="fas fa-percentage"></i> Margem Real</span>
+                                    <span class="res-valor" id="resMargemReal">0%</span>
+                                </div>
+                                <div class="resultado-row" id="rowDesconto" style="display: none;">
+                                    <span class="res-label"><i class="fas fa-tag"></i> Desconto Aplicado</span>
+                                    <span class="res-valor" id="resDesconto">- R$ 0,00</span>
+                                </div>
+                                <div class="resultado-row">
+                                    <span class="res-label"><i class="fas fa-list"></i> Serviços Selecionados</span>
+                                    <span class="res-valor" id="resQtdServicos">0</span>
+                                </div>
+                                <div class="resultado-row">
+                                    <span class="res-label"><i class="fas fa-money-bill-wave"></i> Pagamento Sugerido</span>
+                                    <span class="res-valor" id="resPagamento">50% / 50%</span>
+                                </div>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button class="btn btn-secondary" id="btnLimpar">
+                                    <i class="fas fa-eraser"></i> Limpar
+                                </button>
+                                <button class="btn btn-success" id="btnCopiar">
+                                    <i class="fas fa-copy"></i> Copiar
+                                </button>
+                                <button class="btn btn-primary" id="btnEnviarCalc">
+                                    <i class="fas fa-calculator"></i> Enviar p/ Calc.
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="footer">
+        <p>EngMarq Solution &bull; Gerador de Orçamento &bull; Dados baseados em 30 propostas comerciais</p>
+    </div>
+
+    <script src="./orcamento.js"></script>
+</body>
+</html>

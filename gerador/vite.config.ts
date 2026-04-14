@@ -24,6 +24,7 @@ export default defineConfig({
         recibo: resolve(__dirname, 'recibo.html'),
         calculadora: resolve(__dirname, 'calculadora.html'),
         contrato: resolve(__dirname, 'contrato.html'),
+        orcamento: resolve(__dirname, 'orcamento.html'),
       },
     },
   },

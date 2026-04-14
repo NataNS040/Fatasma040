@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - SST | RC Moveis Planejados</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            background: #e2e8f0;
+            line-height: 1.55;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            max-width: 270px;
+        }
+
+        .btn-generate {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            padding: 13px 18px;
+            background: var(--primary-color);
+            color: var(--white-color);
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .pdf-instructions {
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--gray-color);
+            line-height: 1.45;
+        }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 15mm 20mm 15mm;
+            position: relative;
+            page-break-after: always;
+            overflow: hidden;
+            background: var(--white-color);
+        }
+
+        .page:last-child { page-break-after: auto; }
+
+        .page-cover {
+            background: linear-gradient(145deg, #0f2744 0%, #1a365d 45%, #224f83 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cover-logo {
+            width: 200px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 24px;
+        }
+
+        .cover-tag {
+            background: rgba(56, 161, 105, 0.2);
+            border: 1px solid rgba(56, 161, 105, 0.8);
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
+
+        .cover-subtitle {
+            max-width: 520px;
+            font-size: 14px;
+            opacity: 0.95;
+            margin-bottom: 24px;
+        }
+
+        .cover-client {
+            width: 100%;
+            max-width: 570px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px 18px;
+            margin-bottom: 18px;
+        }
+
+        .cover-client .label {
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-size: 10px;
+            opacity: 0.85;
+            margin-bottom: 4px;
+        }
+
+        .cover-client .value {
+            font-size: 16px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 9px;
+            margin-bottom: 12px;
+        }
+
+        .page-header-logo {
+            height: 34px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 10px;
+        }
+
+        .page-footer {
+            position: absolute;
+            left: 15mm;
+            right: 15mm;
+            bottom: 10mm;
+            border-top: 1px solid var(--light-color);
+            padding-top: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray-color);
+            font-size: 9px;
+        }
+
+        .page-number {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary-color);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 11px;
+            margin-bottom: 9px;
+            text-align: justify;
+        }
+
+        .box {
+            border-radius: 9px;
+            padding: 11px 12px;
+            margin: 10px 0;
+        }
+
+        .box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .box p, .box li { font-size: 10px; }
+
+        .box-info {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .box-success {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .box-highlight {
+            background: linear-gradient(135deg, #fffaf0 0%, #feebc8 100%);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .box-alert {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .card {
+            background: var(--light-color);
+            border-radius: 8px;
+            padding: 10px;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .card h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .list {
+            list-style: none;
+            margin-top: 8px;
+        }
+
+        .list li {
+            position: relative;
+            padding: 5px 0 5px 21px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 10px;
+        }
+
+        .list li:last-child { border-bottom: none; }
+
+        .list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin: 13px 0 7px;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 10px;
+        }
+
+        .table th {
+            background: #2c5282;
+            color: white;
+            padding: 7px 8px;
+            border: 1px solid #2c5282;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-size: 10px;
+        }
+
+        .table td {
+            border: 1px solid #e2e8f0;
+            padding: 6px 8px;
+            vertical-align: top;
+        }
+
+        .table tr:nth-child(even) td { background: #f8fafc; }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+            body {
+                margin: 0;
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            #pdf-content {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+            .page {
+                width: 210mm !important;
+                min-height: 297mm !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                padding: 13mm 15mm 18mm 15mm !important;
+            }
+            .page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            Clique em <strong>Gerar PDF</strong> e selecione <strong>Salvar como PDF</strong>.
+        </div>
+    </div>
+
+    <div id="pdf-content">
+        <section class="page page-cover">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            <div class="cover-tag">Proposta Comercial Premium</div>
+            <h1 class="cover-title">Proposta Comercial - Saúde e Segurança do Trabalho</h1>
+            <p class="cover-subtitle">Gestão completa de SST com foco em conformidade legal, adequação ao eSocial e redução de riscos trabalhistas.</p>
+            <div class="cover-client">
+                <div class="label">Proposta elaborada para</div>
+                <div class="value">RC Móveis Planejados</div>
+            </div>
+        </section>
+
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Saúde e Segurança do Trabalho</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">1</span>Empresa Contratante</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 28%;">Razão Social</th>
+                        <th style="width: 20%;">Nome Fantasia</th>
+                        <th style="width: 18%;">CNPJ</th>
+                        <th>Endereço</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rc Moveis Planejados LTDA</td>
+                        <td>Rc Moveis Planejados</td>
+                        <td>60.888.135/0001-67</td>
+                        <td>Rua Joaquim Afonso, 1005, Planalto Treze de Maio, Mossoró/RN, CEP 59631-450</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-handshake"></i>Atendimento Centralizado</h4>
+                <p>Esta proposta contempla atendimento técnico integrado de SST, reunindo programas legais, laudos, medições e obrigações do eSocial em um único fornecedor especializado.</p>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">2</span>Apresentação Institucional</h2>
+
+            <p>A <strong>EngMarq Solution</strong> é especializada em Engenharia de Segurança e Saúde do Trabalho, com atuação consultiva orientada à conformidade legal e à redução de passivos trabalhistas.</p>
+            <p>Nosso modelo combina análise técnica, execução estruturada e acompanhamento documental para atender às Normas Regulamentadoras e exigências de SST no eSocial.</p>
+            <p>Para empresas do segmento de marcenaria e móveis planejados, o escopo é conduzido com foco objetivo na identificação de riscos ocupacionais e na organização técnica dos controles exigidos por lei.</p>
+
+            <div class="box box-highlight">
+                <h4><i class="fas fa-star"></i>Proposta de Valor</h4>
+                <p>Serviço técnico completo, com entrega direta e profissional, mantendo alto padrão de qualidade e segurança jurídica para a operação da contratante.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888</span>
+                <span class="page-number">02</span>
+            </div>
+        </section>
+
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Escopo de Serviços</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">3</span>Escopo dos Serviços</h2>
+
+            <h3 class="subsection-title"><i class="fas fa-folder-open"></i>3.1 Programas e Laudos de SST</h3>
+            <ul class="list">
+                <li>PGR (Programa de Gerenciamento de Riscos).</li>
+                <li>PCMSO (Programa de Controle Médico de Saúde Ocupacional).</li>
+                <li>LTCAT (Laudo Técnico das Condições Ambientais de Trabalho).</li>
+                <li>LIP (Laudo de Insalubridade e Periculosidade).</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-wave-square"></i>3.2 Medição e Levantamento Técnico</h3>
+            <ul class="list">
+                <li>01 (uma) dosimetria de ruído.</li>
+                <li>Levantamento técnico no local da empresa.</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-cloud-upload-alt"></i>3.3 Gestão de SST no eSocial</h3>
+            <ul class="list">
+                <li>Envio dos eventos de SST para o eSocial.</li>
+                <li>Acompanhamento dos prazos e regularidade dos envios.</li>
+            </ul>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-shield-alt"></i>Foco do Atendimento</h4>
+                <p>Escopo estruturado para atender exigências legais, organizar a documentação de SST e dar suporte técnico à empresa para redução de riscos trabalhistas.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | escopo técnico da proposta</span>
+                <span class="page-number">03</span>
+            </div>
+        </section>
+
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Entregáveis, Diferenciais e Benefícios</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">4</span>Entregáveis e Diferenciais</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4><i class="fas fa-file-signature"></i>Entregáveis Técnicos</h4>
+                    <p>PGR, PCMSO, LTCAT, LIP e dosimetria de ruído, com documentação técnica estruturada para suporte legal e operacional.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-sitemap"></i>Gestão Integrada</h4>
+                    <p>Programas, laudos e eSocial centralizados em um único fornecedor, com comunicação técnica objetiva e acompanhamento contínuo.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-medal"></i>Conformidade Legal</h4>
+                    <p>Atendimento às exigências das Normas Regulamentadoras e obrigações de SST vinculadas ao eSocial.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-balance-scale"></i>Segurança Jurídica</h4>
+                    <p>Redução de exposição a autuações, passivos trabalhistas e inconsistências documentais.</p>
+                </div>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">5</span>Benefícios para a Contratante</h2>
+            <ul class="list">
+                <li>Atende às exigências legais de SST aplicáveis à atividade da empresa.</li>
+                <li>Organiza e atualiza a documentação técnica obrigatória.</li>
+                <li>Assegura adequação dos envios de SST no eSocial.</li>
+                <li>Reduz riscos trabalhistas e operacionais.</li>
+                <li>Melhora a preparação da empresa para fiscalizações.</li>
+                <li>Concentra a gestão de SST em uma solução profissional e objetiva.</li>
+            </ul>
+
+            <div class="box box-success">
+                <h4><i class="fas fa-shield-alt"></i>Resultado Esperado</h4>
+                <p>Empresa tecnicamente regularizada em SST, com documentação alinhada à legislação e processos estruturados para continuidade segura da operação.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | valor percebido com conformidade e controle</span>
+                <span class="page-number">04</span>
+            </div>
+        </section>
+
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Investimento e Condições</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">6</span>Investimento</h2>
+
+            <table class="table" style="margin-top: 12px;">
+                <thead>
+                    <tr>
+                        <th style="width: 45%;">Empresa</th>
+                        <th style="width: 25%;">CNPJ</th>
+                        <th>Valor Total da Proposta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rc Moveis Planejados LTDA</td>
+                        <td>60.888.135/0001-67</td>
+                        <td><strong>R$ 2.400,00</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-credit-card"></i>Condições de Pagamento</h4>
+                <ul class="list">
+                    <li>À vista: R$ 2.400,00.</li>
+                    <li>Parcelado: 2x de R$ 1.200,00.</li>
+                </ul>
+            </div>
+
+            <div class="box box-highlight" style="margin: 0;">
+                <h4><i class="fas fa-users"></i>Política de Colaboradores</h4>
+                <p>Valor válido para até <strong>5 colaboradores</strong>. Acima desse limite: <strong>R$ 10,00 por colaborador adicional</strong>.</p>
+            </div>
+
+            <div class="box box-success">
+                <h4><i class="fas fa-plus-circle"></i>Condições Comerciais Complementares</h4>
+                <ul class="list">
+                    <li>Medições adicionais serão cobradas à parte.</li>
+                    <li>Serviços complementares possuem condições especiais para clientes EngMarq Solution.</li>
+                    <li>Prazo de execução conforme padrão técnico da EngMarq Solution.</li>
+                </ul>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">7</span>Condições Comerciais</h2>
+            <ul class="list">
+                <li>Validade desta proposta: 15 dias corridos a partir da data de emissão.</li>
+                <li>Escopo limitado aos itens descritos nesta proposta.</li>
+                <li>Alterações de escopo serão formalizadas mediante aditivo comercial.</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | investimento e condições comerciais</span>
+                <span class="page-number">05</span>
+            </div>
+        </section>
+
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Termo de Aceite</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">8</span>Termo de Aceite</h2>
+
+            <p>Ao assinar este termo, as partes declaram ciência e concordância com o escopo técnico, condições comerciais, valores e responsabilidades estabelecidas nesta proposta comercial.</p>
+
+            <div class="box box-info" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i>Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições e prazos descritos nesta proposta comercial.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 14px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> ASSINATURA DA ENGMARQ SOLUTION
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Empresa</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">EngMarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura da EngMarq Solution</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 14px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-file-signature" style="color: var(--secondary-color);"></i> ASSINATURA DA CONTRATANTE
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">Rc Moveis Planejados LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">60.888.135/0001-67</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Responsável da Contratante</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

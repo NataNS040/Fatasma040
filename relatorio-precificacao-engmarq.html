@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Precificação - EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #1a365d;
+            --secondary: #f5a623;
+            --dark: #2d3748;
+            --gray: #718096;
+            --light: #f7fafc;
+            --white: #ffffff;
+            --success: #38a169;
+            --purple: #553c9a;
+            --blue: #2c5282;
+            --orange: #dd6b20;
+        }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        /* PDF Controls */
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+        .btn-generate {
+            background: var(--primary);
+            color: var(--white);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn-generate:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+        }
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        .pdf-instructions h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark);
+            padding-left: 18px;
+            margin: 0;
+        }
+        .pdf-instructions li {
+            margin-bottom: 4px;
+        }
+        .pdf-instructions strong {
+            color: var(--secondary);
+        }
+
+        .container {
+            width: 210mm;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--blue) 50%, var(--purple) 100%);
+            color: white;
+            padding: 50px 60px;
+            text-align: center;
+        }
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .header .subtitle {
+            font-size: 16px;
+            opacity: 0.85;
+            font-weight: 400;
+        }
+        .header .date {
+            margin-top: 15px;
+            font-size: 13px;
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        /* STATS CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 40px 60px 20px;
+        }
+        .stat-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 24px 20px;
+            text-align: center;
+            border-left: 4px solid var(--secondary);
+        }
+        .stat-card.blue { border-left-color: var(--blue); }
+        .stat-card.green { border-left-color: var(--success); }
+        .stat-card.purple { border-left-color: var(--purple); }
+        .stat-card.orange { border-left-color: var(--orange); }
+        .stat-card .number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .stat-card .label {
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 30px 60px;
+        }
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i { color: var(--secondary); }
+
+        /* TABLES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            font-size: 12px;
+        }
+        table thead th {
+            background: var(--primary);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 12px 15px;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        table tbody td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        table tbody tr:hover { background: #f7fafc; }
+        table tbody tr:nth-child(even) { background: #fafbfc; }
+        table tfoot td {
+            background: var(--primary);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            padding: 12px 15px;
+            font-size: 13px;
+        }
+
+        .valor { 
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 700; 
+            color: var(--primary);
+            white-space: nowrap;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-treinamento { background: #ebf8ff; color: #2c5282; }
+        .badge-consultoria { background: #faf5ff; color: #553c9a; }
+        .badge-documentacao { background: #f0fff4; color: #276749; }
+        .badge-projeto { background: #fffaf0; color: #c05621; }
+        .badge-misto { background: #fff5f5; color: #c53030; }
+
+        /* MEDIA TABLE */
+        .media-table thead th { background: var(--purple); }
+        .media-table tfoot td { background: var(--purple); }
+
+        /* TREINAMENTO TABLE */
+        .treinamento-table thead th { background: var(--blue); }
+        .treinamento-table tfoot td { background: var(--blue); }
+
+        /* CONSULTORIA TABLE */
+        .consultoria-table thead th { background: var(--purple); }
+        .consultoria-table tfoot td { background: var(--purple); }
+
+        /* DOC TABLE */
+        .doc-table thead th { background: var(--success); }
+        .doc-table tfoot td { background: var(--success); }
+
+        /* PROJETO TABLE */
+        .projeto-table thead th { background: var(--orange); }
+        .projeto-table tfoot td { background: var(--orange); }
+
+        /* INSIGHTS */
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .insight-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--secondary);
+        }
+        .insight-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+        .insight-card p {
+            font-size: 12px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+        .insight-card .highlight {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: var(--primary);
+            margin: 8px 0;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--primary);
+            color: white;
+            padding: 25px 60px;
+            text-align: center;
+            font-size: 11px;
+            opacity: 0.9;
+        }
+
+        .divider {
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--purple), var(--blue));
+            margin: 0;
+        }
+
+        /* Print / PDF */
+        @media print {
+            .pdf-controls {
+                display: none !important;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            .container {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .header {
+                padding: 30px 40px;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                padding: 25px 40px 15px;
+                gap: 12px;
+            }
+
+            .stat-card {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                border-left-width: 4px !important;
+                border-left-style: solid !important;
+            }
+
+            .section {
+                padding: 20px 40px;
+            }
+
+            table {
+                page-break-inside: auto;
+                font-size: 10px;
+            }
+
+            table thead {
+                display: table-header-group;
+            }
+
+            table thead th {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 8px 10px;
+                font-size: 9px;
+            }
+
+            table tbody td {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+
+            table tbody tr {
+                page-break-inside: avoid;
+            }
+
+            table tfoot td {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+
+            .badge {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 2px 8px;
+                font-size: 8px;
+            }
+
+            .divider {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                height: 3px !important;
+            }
+
+            .insight-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .insight-card {
+                padding: 14px;
+                page-break-inside: avoid;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .insight-card .highlight {
+                font-size: 18px;
+            }
+
+            .insight-card p {
+                font-size: 10px;
+            }
+
+            .nota-rodape {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                page-break-inside: avoid;
+                font-size: 9px;
+                padding: 8px 12px;
+            }
+
+            .section-title {
+                page-break-after: avoid;
+                font-size: 16px;
+            }
+
+            h3 {
+                page-break-after: avoid;
+            }
+
+            .footer {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 15px 40px;
+            }
+
+            /* Force page breaks between major sections */
+            .page-break-before {
+                page-break-before: always !important;
+                break-before: page !important;
+            }
+        }
+
+        .nota-rodape {
+            background: #fffaf0;
+            border: 1px solid #fbd38d;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 11px;
+            color: #744210;
+            margin-top: 10px;
+        }
+        .nota-rodape i { color: #dd6b20; margin-right: 5px; }
+    </style>
+</head>
+<body>
+    <!-- PDF Controls -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i> Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como salvar em PDF:</h4>
+            <ol>
+                <li>Clique em <strong>"Gerar PDF"</strong></li>
+                <li>Na janela de impressão, selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Em "Mais configurações", marque <strong>"Gráficos de plano de fundo"</strong></li>
+                <li>Margens: <strong>Nenhuma</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1><i class="fas fa-chart-bar"></i> Relatório de Precificação e Orçamento</h1>
+            <div class="subtitle">Análise completa de valores praticados pela EngMarq Solution</div>
+            <div class="date"><i class="fas fa-calendar-alt"></i> Gerado em 10 de Abril de 2026 &bull; Base: 30 propostas comerciais</div>
+        </div>
+        <div class="divider"></div>
+
+        <!-- STATS CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card blue">
+                <div class="number">30</div>
+                <div class="label">Propostas Analisadas</div>
+            </div>
+            <div class="stat-card green">
+                <div class="number">R$ 157.460</div>
+                <div class="label">Volume Total Identificado</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="number">R$ 5.629</div>
+                <div class="label">Ticket Médio por Proposta</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="number">4</div>
+                <div class="label">Categorias de Serviço</div>
+            </div>
+        </div>
+
+        <!-- ===== SEÇÃO 1: TABELA GERAL DE TODAS AS PROPOSTAS ===== -->
+        <div class="section">
+            <h2 class="section-title"><i class="fas fa-list-alt"></i> 1. Mapa Geral de Propostas</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 4%;">#</th>
+                        <th style="width: 26%;">Cliente</th>
+                        <th style="width: 24%;">Serviço Principal</th>
+                        <th style="width: 14%;">Categoria</th>
+                        <th style="width: 8%; text-align: center;">Colab.</th>
+                        <th style="width: 12%; text-align: right;">Valor Total</th>
+                        <th style="width: 12%;">Pagamento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>C&R / CAL / RLA Sports</strong> (3 empresas)</td>
+                        <td>Consultoria Integrada SST + eSocial + Psicossocial</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 4.280,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Rafael Matheus</strong></td>
+                        <td>2 Treinamentos (Integração + Gestão Resíduos)</td>
+                        <td><span class="badge badge-treinamento">Treinamento</span></td>
+                        <td style="text-align: center;">20</td>
+                        <td class="valor" style="text-align: right;">R$ 2.400,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Brigada Incêndio</strong> (modelo)</td>
+                        <td>Treinamento Brigada de Incêndio (4h)</td>
+                        <td><span class="badge badge-treinamento">Treinamento</span></td>
+                        <td style="text-align: center;">22</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Ponto da Química</strong> (3 unidades)</td>
+                        <td>Assessoria SST Completa 12 meses</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 46.642,40</td>
+                        <td>Mensal R$ 3.886,87</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Assessoria SST</strong> (modelo)</td>
+                        <td>Assessoria em SST 12 meses</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 21.600,00</td>
+                        <td>Mensal R$ 1.800</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><strong>Combo SST</strong> (modelo)</td>
+                        <td>Treinamento + Psicossocial + Kit SST</td>
+                        <td><span class="badge badge-misto">Misto</span></td>
+                        <td style="text-align: center;">5</td>
+                        <td class="valor" style="text-align: right;">R$ 3.500,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><strong>Alves Duarte TS</strong></td>
+                        <td>Kit Programas SST (PGR+LTCAT+PCMSO+LIP)</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 3.537,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><strong>Alfabeto Educacionais</strong></td>
+                        <td>Kit SST + Psicossocial + AEP</td>
+                        <td><span class="badge badge-misto">Misto</span></td>
+                        <td style="text-align: center;">19</td>
+                        <td class="valor" style="text-align: right;">R$ 2.600,00</td>
+                        <td>À vista</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><strong>Aço Plus</strong> (modelo)</td>
+                        <td>Kit SST + eSocial (PGR+LTCAT+PCMSO+LIP)</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><strong>Empresa Alfa</strong> (modelo)</td>
+                        <td>Kit SST Completo + 2 Treinamentos</td>
+                        <td><span class="badge badge-misto">Misto</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 9.000,00</td>
+                        <td>50/50 (até 3x s/ juros)</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td><strong>CLBI</strong> (Centro Barreira do Inferno)</td>
+                        <td>AET Completa - NR 17 (42 setores)</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">240</td>
+                        <td class="valor" style="text-align: right;">R$ 18.950,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td><strong>Esquadro Engenharia</strong></td>
+                        <td>PCMSO</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 1.000,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td><strong>Hospital do Coração</strong></td>
+                        <td>5 Treinamentos NR (10, 12, 33, 35, Brigada)</td>
+                        <td><span class="badge badge-treinamento">Treinamento</span></td>
+                        <td style="text-align: center;">120</td>
+                        <td class="valor" style="text-align: right;">R$ 14.430,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td><strong>Hospital do Coração</strong> (Brigada)</td>
+                        <td>Brigada de Incêndio (120 colab.)</td>
+                        <td><span class="badge badge-treinamento">Treinamento</span></td>
+                        <td style="text-align: center;">120</td>
+                        <td class="valor" style="text-align: right;">R$ 4.950,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td><strong>Sr Serviços LTDA</strong></td>
+                        <td>PGR + LTCAT + PCMSO</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 1.500,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td><strong>Barra Auto Peças</strong> (Juliana Medeiros)</td>
+                        <td>Combo SST Completo</td>
+                        <td><span class="badge badge-misto">Misto</span></td>
+                        <td style="text-align: center;">6</td>
+                        <td class="valor" style="text-align: right;">R$ 3.549,47</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td><strong>Líder Variedades</strong></td>
+                        <td>Kit SST + LIP + eSocial</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td><strong>ML 6 Empreendimentos</strong></td>
+                        <td>Projeto de Plataforma Secundária (EPC)</td>
+                        <td><span class="badge badge-projeto">Projeto Técnico</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 2.300,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td><strong>PREVENT Engenharia</strong></td>
+                        <td>Projeto de Linha de Vida</td>
+                        <td><span class="badge badge-projeto">Projeto Técnico</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 6.000,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>20</td>
+                        <td><strong>Rafael Matheus</strong> (Psicossocial)</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">20</td>
+                        <td class="valor" style="text-align: right;">R$ 1.638,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>21</td>
+                        <td><strong>RI Engenharia / Valecare</strong></td>
+                        <td>Visita Técnica</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 800,00</td>
+                        <td>À vista</td>
+                    </tr>
+                    <tr>
+                        <td>22</td>
+                        <td><strong>Prontoclínica da Criança</strong> (Dr. Paulo Gurgel)</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">227</td>
+                        <td class="valor" style="text-align: right;">R$ 7.945,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>23</td>
+                        <td><strong>Premium Services</strong></td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">45</td>
+                        <td class="valor" style="text-align: right;">R$ 1.000,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>24</td>
+                        <td><strong>ML5</strong></td>
+                        <td>Kit SST (PGR+LTCAT+PCMSO)</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: center;">64</td>
+                        <td class="valor" style="text-align: right;">R$ 2.700,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>25</td>
+                        <td><strong>Mirantes Empreendimentos</strong></td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">14</td>
+                        <td class="valor" style="text-align: right;">R$ 1.000,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>26</td>
+                        <td><strong>Grupo ML</strong> (4 empresas)</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">607</td>
+                        <td class="valor" style="text-align: right;">R$ 14.898,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>27</td>
+                        <td><strong>Grupo Unimetals</strong> (7 empresas)</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: center;">264</td>
+                        <td class="valor" style="text-align: right;">R$ 9.500,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>28</td>
+                        <td><strong>Setai Hotéis</strong> (2 unidades)</td>
+                        <td>Psicossocial + Treinamentos NR</td>
+                        <td><span class="badge badge-misto">Misto</span></td>
+                        <td style="text-align: center;">380</td>
+                        <td class="valor" style="text-align: right;">R$ 36.560,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>29</td>
+                        <td><strong>ML 6 Empreendimentos</strong></td>
+                        <td>Projeto Tela Proteção Fachada</td>
+                        <td><span class="badge badge-projeto">Projeto Técnico</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 2.500,00</td>
+                        <td>50/50</td>
+                    </tr>
+                    <tr>
+                        <td>30</td>
+                        <td><strong>W Autor Car</strong></td>
+                        <td>Kit SST + eSocial</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                        <td>50/50</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ===== SEÇÃO 2: ANÁLISE POR CATEGORIA ===== -->
+        <div class="section page-break-before">
+            <h2 class="section-title"><i class="fas fa-layer-group"></i> 2. Análise por Categoria de Serviço</h2>
+
+            <!-- 2.1 TREINAMENTOS -->
+            <h3 style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; color: #2c5282; margin: 25px 0 15px;">
+                <i class="fas fa-chalkboard-teacher" style="color: #2c5282;"></i> 2.1 Treinamentos
+            </h3>
+            <table class="treinamento-table">
+                <thead>
+                    <tr>
+                        <th>Treinamento</th>
+                        <th style="text-align: center;">Carga Horária</th>
+                        <th style="text-align: center;">Colaboradores</th>
+                        <th style="text-align: right;">Valor Praticado</th>
+                        <th style="text-align: right;">Valor por Colab.</th>
+                        <th>Proposta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Integração de Segurança do Trabalho</td>
+                        <td style="text-align: center;">4h</td>
+                        <td style="text-align: center;">20</td>
+                        <td class="valor" style="text-align: right;">R$ 1.200,00</td>
+                        <td style="text-align: right;">R$ 60,00</td>
+                        <td>Rafael Matheus</td>
+                    </tr>
+                    <tr>
+                        <td>Gestão de Resíduos</td>
+                        <td style="text-align: center;">4h</td>
+                        <td style="text-align: center;">20</td>
+                        <td class="valor" style="text-align: right;">R$ 1.200,00</td>
+                        <td style="text-align: right;">R$ 60,00</td>
+                        <td>Rafael Matheus</td>
+                    </tr>
+                    <tr>
+                        <td>Brigada de Incêndio</td>
+                        <td style="text-align: center;">4h</td>
+                        <td style="text-align: center;">22</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                        <td style="text-align: right;">R$ 77,27</td>
+                        <td>Brigada (modelo)</td>
+                    </tr>
+                    <tr>
+                        <td>NR-10 e SEP (Reciclagem)</td>
+                        <td style="text-align: center;">8h</td>
+                        <td style="text-align: center;">2</td>
+                        <td class="valor" style="text-align: right;">R$ 1.100,00</td>
+                        <td style="text-align: right;">R$ 550,00</td>
+                        <td>Hospital do Coração</td>
+                    </tr>
+                    <tr>
+                        <td>NR-12 - Segurança em Máquinas</td>
+                        <td style="text-align: center;">4h</td>
+                        <td style="text-align: center;">22</td>
+                        <td class="valor" style="text-align: right;">R$ 1.650,00</td>
+                        <td style="text-align: right;">R$ 75,00</td>
+                        <td>Hospital do Coração</td>
+                    </tr>
+                    <tr>
+                        <td>NR-33 - Espaço Confinado</td>
+                        <td style="text-align: center;">8h</td>
+                        <td style="text-align: center;">22</td>
+                        <td class="valor" style="text-align: right;">R$ 3.190,00</td>
+                        <td style="text-align: right;">R$ 145,00</td>
+                        <td>Hospital do Coração</td>
+                    </tr>
+                    <tr>
+                        <td>NR-35 - Trabalho em Altura</td>
+                        <td style="text-align: center;">8h</td>
+                        <td style="text-align: center;">22</td>
+                        <td class="valor" style="text-align: right;">R$ 3.190,00</td>
+                        <td style="text-align: right;">R$ 145,00</td>
+                        <td>Hospital do Coração</td>
+                    </tr>
+                    <tr>
+                        <td>Brigada de Incêndio (H3)</td>
+                        <td style="text-align: center;">4h</td>
+                        <td style="text-align: center;">120</td>
+                        <td class="valor" style="text-align: right;">R$ 5.300,00</td>
+                        <td style="text-align: right;">R$ 44,17</td>
+                        <td>Hospital do Coração</td>
+                    </tr>
+                    <tr>
+                        <td>Brigada de Incêndio (exclusiva)</td>
+                        <td style="text-align: center;">4h</td>
+                        <td style="text-align: center;">120</td>
+                        <td class="valor" style="text-align: right;">R$ 4.950,00</td>
+                        <td style="text-align: right;">R$ 41,25</td>
+                        <td>Hospital do Coração (2)</td>
+                    </tr>
+                    <tr>
+                        <td>Treinamentos NR 06,12,18,23,26,35 - Setai Miraj</td>
+                        <td style="text-align: center;">—</td>
+                        <td style="text-align: center;">50</td>
+                        <td class="valor" style="text-align: right;">R$ 6.000,00</td>
+                        <td style="text-align: right;">R$ 120,00</td>
+                        <td>Setai Hotéis</td>
+                    </tr>
+                    <tr>
+                        <td>Treinamentos NR 06,12,18,23,26,35 - Setai Beach</td>
+                        <td style="text-align: center;">—</td>
+                        <td style="text-align: center;">166</td>
+                        <td class="valor" style="text-align: right;">R$ 19.920,00</td>
+                        <td style="text-align: right;">R$ 120,00</td>
+                        <td>Setai Hotéis</td>
+                    </tr>
+                    <tr>
+                        <td>CIPA</td>
+                        <td style="text-align: center;">20h</td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 1.200,00</td>
+                        <td style="text-align: right;">—</td>
+                        <td>Empresa Alfa (modelo)</td>
+                    </tr>
+                    <tr>
+                        <td>NR-35 - Trabalho em Altura</td>
+                        <td style="text-align: center;">8h</td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 1.500,00</td>
+                        <td style="text-align: right;">—</td>
+                        <td>Empresa Alfa (modelo)</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">RESUMO TREINAMENTOS</td>
+                        <td style="text-align: right;">Média: R$ 4.000,00</td>
+                        <td style="text-align: right;">Média/colab: R$ 121,70</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="nota-rodape">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Faixa de preço por treinamento:</strong> R$ 1.100,00 a R$ 19.920,00 &bull;
+                <strong>Por colaborador:</strong> R$ 41,25 a R$ 550,00 (média R$ 121,70) &bull;
+                Treinamentos de 4h custam em média R$ 1.700; de 8h em média R$ 3.000
+            </div>
+
+            <!-- 2.2 CONSULTORIAS / AVALIAÇÕES PSICOSSOCIAIS -->
+            <h3 style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; color: #553c9a; margin: 35px 0 15px;">
+                <i class="fas fa-brain" style="color: #553c9a;"></i> 2.2 Consultorias e Avaliações Psicossociais
+            </h3>
+            <table class="consultoria-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Serviço</th>
+                        <th style="text-align: center;">Colaboradores</th>
+                        <th style="text-align: right;">Valor Total</th>
+                        <th style="text-align: right;">Valor/Colab.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>RI Engenharia / Valecare</td>
+                        <td>Visita Técnica</td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 800,00</td>
+                        <td style="text-align: right;">—</td>
+                    </tr>
+                    <tr>
+                        <td>Mirantes Empreendimentos</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td style="text-align: center;">14</td>
+                        <td class="valor" style="text-align: right;">R$ 1.000,00</td>
+                        <td style="text-align: right;">R$ 71,43</td>
+                    </tr>
+                    <tr>
+                        <td>Premium Services</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td style="text-align: center;">45</td>
+                        <td class="valor" style="text-align: right;">R$ 1.000,00</td>
+                        <td style="text-align: right;">R$ 22,22</td>
+                    </tr>
+                    <tr>
+                        <td>Rafael Matheus</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td style="text-align: center;">20</td>
+                        <td class="valor" style="text-align: right;">R$ 1.638,00</td>
+                        <td style="text-align: right;">R$ 81,90</td>
+                    </tr>
+                    <tr>
+                        <td>C&R / CAL / RLA Sports</td>
+                        <td>Consultoria Integrada SST (3 empresas)</td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 4.280,00</td>
+                        <td style="text-align: right;">—</td>
+                    </tr>
+                    <tr>
+                        <td>Prontoclínica (Dr. Paulo Gurgel)</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td style="text-align: center;">227</td>
+                        <td class="valor" style="text-align: right;">R$ 7.945,00</td>
+                        <td style="text-align: right;">R$ 35,00</td>
+                    </tr>
+                    <tr>
+                        <td>Grupo Unimetals (7 empresas)</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td style="text-align: center;">264</td>
+                        <td class="valor" style="text-align: right;">R$ 9.500,00</td>
+                        <td style="text-align: right;">R$ 35,98</td>
+                    </tr>
+                    <tr>
+                        <td>Setai Hotéis (2 unidades)</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td style="text-align: center;">380</td>
+                        <td class="valor" style="text-align: right;">R$ 10.640,00</td>
+                        <td style="text-align: right;">R$ 28,00</td>
+                    </tr>
+                    <tr>
+                        <td>Grupo ML (4 empresas)</td>
+                        <td>Avaliação Riscos Psicossociais</td>
+                        <td style="text-align: center;">607</td>
+                        <td class="valor" style="text-align: right;">R$ 14.898,00</td>
+                        <td style="text-align: right;">R$ 24,54</td>
+                    </tr>
+                    <tr>
+                        <td>CLBI</td>
+                        <td>AET Completa - NR 17 (42 setores)</td>
+                        <td style="text-align: center;">240</td>
+                        <td class="valor" style="text-align: right;">R$ 18.950,00</td>
+                        <td style="text-align: right;">R$ 78,96</td>
+                    </tr>
+                    <tr>
+                        <td>Ponto da Química (3 unidades)</td>
+                        <td>Assessoria SST 12 meses</td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 46.642,40</td>
+                        <td style="text-align: right;">—</td>
+                    </tr>
+                    <tr>
+                        <td>Assessoria SST (modelo)</td>
+                        <td>Assessoria SST 12 meses</td>
+                        <td style="text-align: center;">—</td>
+                        <td class="valor" style="text-align: right;">R$ 21.600,00</td>
+                        <td style="text-align: right;">—</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">RESUMO CONSULTORIAS</td>
+                        <td style="text-align: right;">Média: R$ 11.574,45</td>
+                        <td style="text-align: right;">Média/colab: R$ 47,25</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="nota-rodape">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Avaliação Psicossocial por colaborador:</strong> R$ 22,22 a R$ 81,90 (média ~R$ 42,72) &bull;
+                Quanto maior a base de colaboradores, menor o custo unitário &bull;
+                <strong>Assessoria mensal:</strong> R$ 1.800 a R$ 3.887/mês
+            </div>
+
+            <!-- 2.3 DOCUMENTAÇÕES SST -->
+            <h3 style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; color: #276749; margin: 35px 0 15px;">
+                <i class="fas fa-file-alt" style="color: #38a169;"></i> 2.3 Documentações e Programas de SST
+            </h3>
+            <table class="doc-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Documentos Incluídos</th>
+                        <th style="text-align: right;">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Esquadro Engenharia</td>
+                        <td>PCMSO (apenas)</td>
+                        <td class="valor" style="text-align: right;">R$ 1.000,00</td>
+                    </tr>
+                    <tr>
+                        <td>Sr Serviços LTDA</td>
+                        <td>PGR + LTCAT + PCMSO</td>
+                        <td class="valor" style="text-align: right;">R$ 1.500,00</td>
+                    </tr>
+                    <tr>
+                        <td>Aço Plus (modelo)</td>
+                        <td>PGR + LTCAT + PCMSO + LIP + eSocial</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                    </tr>
+                    <tr>
+                        <td>Líder Variedades</td>
+                        <td>PGR + LTCAT + PCMSO + LIP + eSocial</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                    </tr>
+                    <tr>
+                        <td>W Autor Car</td>
+                        <td>PGR + LTCAT + PCMSO + LIP + eSocial</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                    </tr>
+                    <tr>
+                        <td>ML5</td>
+                        <td>PGR + LTCAT + PCMSO</td>
+                        <td class="valor" style="text-align: right;">R$ 2.700,00</td>
+                    </tr>
+                    <tr>
+                        <td>Alves Duarte TS</td>
+                        <td>PGR + LTCAT + PCMSO + LIP</td>
+                        <td class="valor" style="text-align: right;">R$ 3.537,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">RESUMO DOCUMENTAÇÕES</td>
+                        <td style="text-align: right;">Média: R$ 1.976,71</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="nota-rodape">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Kit básico (PGR+LTCAT+PCMSO):</strong> R$ 1.500 a R$ 2.700 &bull;
+                <strong>Kit completo (+ LIP + eSocial):</strong> R$ 1.700 a R$ 3.537 &bull;
+                <strong>PCMSO avulso:</strong> R$ 1.000
+            </div>
+
+            <!-- 2.4 PROJETOS TÉCNICOS -->
+            <h3 style="font-family: 'Montserrat', sans-serif; font-size: 16px; font-weight: 700; color: #c05621; margin: 35px 0 15px;">
+                <i class="fas fa-drafting-compass" style="color: #dd6b20;"></i> 2.4 Projetos Técnicos
+            </h3>
+            <table class="projeto-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Tipo de Projeto</th>
+                        <th style="text-align: right;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ML 6 Empreendimentos</td>
+                        <td>Projeto de Plataforma Secundária (EPC)</td>
+                        <td class="valor" style="text-align: right;">R$ 2.300,00</td>
+                    </tr>
+                    <tr>
+                        <td>ML 6 Empreendimentos</td>
+                        <td>Projeto Tela de Proteção de Fachada</td>
+                        <td class="valor" style="text-align: right;">R$ 2.500,00</td>
+                    </tr>
+                    <tr>
+                        <td>PREVENT Engenharia</td>
+                        <td>Projeto de Linha de Vida</td>
+                        <td class="valor" style="text-align: right;">R$ 6.000,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">RESUMO PROJETOS TÉCNICOS</td>
+                        <td style="text-align: right;">Média: R$ 3.600,00</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ===== SEÇÃO 3: TABELA DE PRECIFICAÇÃO SUGERIDA ===== -->
+        <div class="section page-break-before">
+            <h2 class="section-title"><i class="fas fa-tags"></i> 3. Tabela de Precificação Base — EngMarq Solution</h2>
+
+            <p style="font-size: 12px; color: #718096; margin-bottom: 20px;">
+                Tabela consolidada com base nos valores praticados nas 30 propostas analisadas. Os valores representam a média e faixas reais cobradas.
+            </p>
+
+            <table class="media-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Serviço</th>
+                        <th style="width: 15%;">Categoria</th>
+                        <th style="width: 15%; text-align: right;">Valor Mínimo</th>
+                        <th style="width: 15%; text-align: right;">Valor Médio</th>
+                        <th style="width: 15%; text-align: right;">Valor Máximo</th>
+                        <th style="width: 10%; text-align: center;">Base</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- DOCUMENTAÇÕES -->
+                    <tr style="background: #f0fff4;">
+                        <td colspan="6" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #276749; font-size: 12px; padding: 8px 15px;">
+                            <i class="fas fa-file-alt"></i> DOCUMENTAÇÕES
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>PCMSO (avulso)</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: right;">R$ 1.000,00</td>
+                        <td class="valor" style="text-align: right;">R$ 1.000,00</td>
+                        <td style="text-align: right;">R$ 1.500,00</td>
+                        <td style="text-align: center;">2</td>
+                    </tr>
+                    <tr>
+                        <td>Kit Básico (PGR + LTCAT + PCMSO)</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: right;">R$ 1.500,00</td>
+                        <td class="valor" style="text-align: right;">R$ 2.100,00</td>
+                        <td style="text-align: right;">R$ 2.700,00</td>
+                        <td style="text-align: center;">2</td>
+                    </tr>
+                    <tr>
+                        <td>Kit Completo (PGR + LTCAT + PCMSO + LIP)</td>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: right;">R$ 1.700,00</td>
+                        <td class="valor" style="text-align: right;">R$ 2.159,25</td>
+                        <td style="text-align: right;">R$ 3.537,00</td>
+                        <td style="text-align: center;">4</td>
+                    </tr>
+
+                    <!-- TREINAMENTOS -->
+                    <tr style="background: #ebf8ff;">
+                        <td colspan="6" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #2c5282; font-size: 12px; padding: 8px 15px;">
+                            <i class="fas fa-chalkboard-teacher"></i> TREINAMENTOS
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Treinamento 4h (Integração, NR-12, Brigada)</td>
+                        <td><span class="badge badge-treinamento">Treinamento</span></td>
+                        <td style="text-align: right;">R$ 1.100,00</td>
+                        <td class="valor" style="text-align: right;">R$ 1.700,00</td>
+                        <td style="text-align: right;">R$ 5.300,00</td>
+                        <td style="text-align: center;">6</td>
+                    </tr>
+                    <tr>
+                        <td>Treinamento 8h (NR-10, NR-33, NR-35)</td>
+                        <td><span class="badge badge-treinamento">Treinamento</span></td>
+                        <td style="text-align: right;">R$ 1.100,00</td>
+                        <td class="valor" style="text-align: right;">R$ 2.245,00</td>
+                        <td style="text-align: right;">R$ 3.190,00</td>
+                        <td style="text-align: center;">4</td>
+                    </tr>
+                    <tr>
+                        <td>Treinamento CIPA (20h)</td>
+                        <td><span class="badge badge-treinamento">Treinamento</span></td>
+                        <td style="text-align: right;">R$ 1.200,00</td>
+                        <td class="valor" style="text-align: right;">R$ 1.200,00</td>
+                        <td style="text-align: right;">R$ 1.200,00</td>
+                        <td style="text-align: center;">1</td>
+                    </tr>
+                    <tr>
+                        <td>Pacote Multi-Treinamentos NR (por unidade)</td>
+                        <td><span class="badge badge-treinamento">Treinamento</span></td>
+                        <td style="text-align: right;">R$ 6.000,00</td>
+                        <td class="valor" style="text-align: right;">R$ 12.960,00</td>
+                        <td style="text-align: right;">R$ 25.920,00</td>
+                        <td style="text-align: center;">3</td>
+                    </tr>
+
+                    <!-- CONSULTORIAS -->
+                    <tr style="background: #faf5ff;">
+                        <td colspan="6" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #553c9a; font-size: 12px; padding: 8px 15px;">
+                            <i class="fas fa-brain"></i> CONSULTORIAS E AVALIAÇÕES
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Avaliação Psicossocial (até 20 colab.)</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: right;">R$ 1.000,00</td>
+                        <td class="valor" style="text-align: right;">R$ 1.212,67</td>
+                        <td style="text-align: right;">R$ 1.638,00</td>
+                        <td style="text-align: center;">3</td>
+                    </tr>
+                    <tr>
+                        <td>Avaliação Psicossocial (20-100 colab.)</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: right;">R$ 1.000,00</td>
+                        <td class="valor" style="text-align: right;">R$ 1.000,00</td>
+                        <td style="text-align: right;">R$ 1.000,00</td>
+                        <td style="text-align: center;">1</td>
+                    </tr>
+                    <tr>
+                        <td>Avaliação Psicossocial (100-300 colab.)</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: right;">R$ 7.945,00</td>
+                        <td class="valor" style="text-align: right;">R$ 9.361,67</td>
+                        <td style="text-align: right;">R$ 10.640,00</td>
+                        <td style="text-align: center;">3</td>
+                    </tr>
+                    <tr>
+                        <td>Avaliação Psicossocial (300+ colab.)</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: right;">R$ 10.640,00</td>
+                        <td class="valor" style="text-align: right;">R$ 12.769,00</td>
+                        <td style="text-align: right;">R$ 14.898,00</td>
+                        <td style="text-align: center;">2</td>
+                    </tr>
+                    <tr>
+                        <td>AET Completa - NR 17</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: right;">R$ 1.000,00</td>
+                        <td class="valor" style="text-align: right;">R$ 18.950,00</td>
+                        <td style="text-align: right;">R$ 18.950,00</td>
+                        <td style="text-align: center;">1</td>
+                    </tr>
+                    <tr>
+                        <td>Assessoria SST Mensal</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: right;">R$ 1.800,00/mês</td>
+                        <td class="valor" style="text-align: right;">R$ 2.843,44/mês</td>
+                        <td style="text-align: right;">R$ 3.886,87/mês</td>
+                        <td style="text-align: center;">2</td>
+                    </tr>
+                    <tr>
+                        <td>Visita Técnica (avulsa)</td>
+                        <td><span class="badge badge-consultoria">Consultoria</span></td>
+                        <td style="text-align: right;">R$ 800,00</td>
+                        <td class="valor" style="text-align: right;">R$ 800,00</td>
+                        <td style="text-align: right;">R$ 800,00</td>
+                        <td style="text-align: center;">1</td>
+                    </tr>
+
+                    <!-- PROJETOS -->
+                    <tr style="background: #fffaf0;">
+                        <td colspan="6" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #c05621; font-size: 12px; padding: 8px 15px;">
+                            <i class="fas fa-drafting-compass"></i> PROJETOS TÉCNICOS
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Projeto de Plataforma / Tela de Fachada</td>
+                        <td><span class="badge badge-projeto">Projeto</span></td>
+                        <td style="text-align: right;">R$ 2.300,00</td>
+                        <td class="valor" style="text-align: right;">R$ 2.400,00</td>
+                        <td style="text-align: right;">R$ 2.500,00</td>
+                        <td style="text-align: center;">2</td>
+                    </tr>
+                    <tr>
+                        <td>Projeto de Linha de Vida</td>
+                        <td><span class="badge badge-projeto">Projeto</span></td>
+                        <td style="text-align: right;">R$ 6.000,00</td>
+                        <td class="valor" style="text-align: right;">R$ 6.000,00</td>
+                        <td style="text-align: right;">R$ 6.000,00</td>
+                        <td style="text-align: center;">1</td>
+                    </tr>
+
+                    <!-- COMBOS -->
+                    <tr style="background: #fff5f5;">
+                        <td colspan="6" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: #c53030; font-size: 12px; padding: 8px 15px;">
+                            <i class="fas fa-cubes"></i> COMBOS / PACOTES INTEGRADOS
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Combo SST (Treinamento + Psicossocial + Kit)</td>
+                        <td><span class="badge badge-misto">Misto</span></td>
+                        <td style="text-align: right;">R$ 2.600,00</td>
+                        <td class="valor" style="text-align: right;">R$ 3.524,74</td>
+                        <td style="text-align: right;">R$ 9.000,00</td>
+                        <td style="text-align: center;">5</td>
+                    </tr>
+                    <tr>
+                        <td>Pacote Corporativo (Psicossocial + Treinamentos)</td>
+                        <td><span class="badge badge-misto">Misto</span></td>
+                        <td style="text-align: right;">R$ 36.560,00</td>
+                        <td class="valor" style="text-align: right;">R$ 36.560,00</td>
+                        <td style="text-align: right;">R$ 36.560,00</td>
+                        <td style="text-align: center;">1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ===== SEÇÃO 4: INSIGHTS ESTRATÉGICOS ===== -->
+        <div class="section page-break-before">
+            <h2 class="section-title"><i class="fas fa-chart-pie"></i> 4. Insights Estratégicos</h2>
+
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <h4><i class="fas fa-hand-holding-usd"></i> Ticket Médio por Proposta</h4>
+                    <div class="highlight">R$ 5.629,00</div>
+                    <p>Considerando todas as 28 propostas com valores identificados (excluindo templates sem valor). O ticket varia bastante — de R$ 800 (visita técnica avulsa) a R$ 46.642 (assessoria anual).</p>
+                </div>
+                <div class="insight-card">
+                    <h4><i class="fas fa-percentage"></i> Condição de Pagamento Predominante</h4>
+                    <div class="highlight">50% / 50%</div>
+                    <p>A esmagadora maioria das propostas usa o modelo 50% na aprovação e 50% na entrega. Apenas 2 propostas oferecem pagamento à vista e 1 oferece parcelamento em até 3x sem juros.</p>
+                </div>
+                <div class="insight-card">
+                    <h4><i class="fas fa-users"></i> Custo por Colaborador (Psicossocial)</h4>
+                    <div class="highlight">R$ 22 — R$ 82</div>
+                    <p><strong>Economia de escala clara:</strong> 14 colab. = R$ 71,43/cada; 45 colab. = R$ 22,22/cada; 607 colab. = R$ 24,54/cada. A faixa ideal é R$ 28 a R$ 35 para grandes volumes.</p>
+                </div>
+                <div class="insight-card">
+                    <h4><i class="fas fa-fire"></i> Serviço Mais Vendido</h4>
+                    <div class="highlight">Kit SST (PGR+LTCAT+PCMSO)</div>
+                    <p>Aparece em mais de 60% das propostas como item principal ou complementar. Seguido de perto por Avaliação de Riscos Psicossociais (presente em 9 propostas). Treinamentos de NR aparecem em 6 propostas.</p>
+                </div>
+                <div class="insight-card">
+                    <h4><i class="fas fa-trophy"></i> Proposta de Maior Valor</h4>
+                    <div class="highlight">R$ 46.642,40</div>
+                    <p><strong>Ponto da Química</strong> — Assessoria SST completa de 12 meses para 3 unidades (R$ 3.886,87/mês). Modelo recorrente que gera receita previsível e alto lifetime value.</p>
+                </div>
+                <div class="insight-card">
+                    <h4><i class="fas fa-arrow-trend-up"></i> Oportunidade de Crescimento</h4>
+                    <div class="highlight">Assessorias Mensais</div>
+                    <p>Apenas 2 propostas são de assessoria recorrente, mas representam o maior potencial de receita. Converter clientes one-shot em contratos mensais traz previsibilidade e fidelização.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- ===== SEÇÃO 5: DISTRIBUIÇÃO DE RECEITA ===== -->
+        <div class="section page-break-before">
+            <h2 class="section-title"><i class="fas fa-chart-bar"></i> 5. Distribuição de Receita por Categoria</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th style="text-align: center;">Qtd. Propostas</th>
+                        <th style="text-align: right;">Volume Total (R$)</th>
+                        <th style="text-align: right;">% do Total</th>
+                        <th style="text-align: right;">Ticket Médio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge badge-consultoria">Consultoria / Psicossocial</span></td>
+                        <td style="text-align: center;">12</td>
+                        <td class="valor" style="text-align: right;">R$ 117.293,40</td>
+                        <td style="text-align: right;"><strong>74,5%</strong></td>
+                        <td style="text-align: right;">R$ 9.774,45</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-treinamento">Treinamentos</span></td>
+                        <td style="text-align: center;">4</td>
+                        <td class="valor" style="text-align: right;">R$ 23.480,00</td>
+                        <td style="text-align: right;"><strong>14,9%</strong></td>
+                        <td style="text-align: right;">R$ 5.870,00</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-documentacao">Documentação</span></td>
+                        <td style="text-align: center;">7</td>
+                        <td class="valor" style="text-align: right;">R$ 13.837,00</td>
+                        <td style="text-align: right;"><strong>8,8%</strong></td>
+                        <td style="text-align: right;">R$ 1.976,71</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-projeto">Projetos Técnicos</span></td>
+                        <td style="text-align: center;">3</td>
+                        <td class="valor" style="text-align: right;">R$ 10.800,00</td>
+                        <td style="text-align: right;"><strong>6,9%</strong></td>
+                        <td style="text-align: right;">R$ 3.600,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong>TOTAL GERAL</strong></td>
+                        <td style="text-align: center;"><strong>26*</strong></td>
+                        <td style="text-align: right;"><strong>~R$ 157.460,00</strong></td>
+                        <td style="text-align: right;"><strong>100%</strong></td>
+                        <td style="text-align: right;"><strong>R$ 5.629,00</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <p style="font-size: 10px; color: #a0aec0; margin-top: -20px;">
+                * Excluindo 2 templates sem valor definido e propostas mistas contabilizadas nas subcategorias. Propostas de combo/misto distribuídas proporcionalmente nas categorias acima.
+            </p>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <strong>EngMarq Solution</strong> &bull; Relatório de Precificação e Orçamento &bull; Gerado em 10/04/2026<br>
+            Base de dados: 30 propostas comerciais &bull; Documento interno — uso exclusivo da equipe
+        </div>
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
