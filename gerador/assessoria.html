@@ -1297,6 +1297,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const hoje = new Date().toISOString().split('T')[0];
     document.getElementById('data_proposta').value = hoje;
     updateCounters();
+    // Renderizar detalhes dos treinamentos iniciais
+    renderTrainingDetails();
     // Gerar proposta automaticamente
     gerarProposta();
 });
@@ -1309,7 +1311,59 @@ function toggleItem(btn) {
 
 function toggleTraining(btn) {
     btn.classList.toggle('active');
+    renderTrainingDetails();
     updateCounters();
+}
+
+function renderTrainingDetails() {
+    const container = document.getElementById('training-details');
+    const ativos = document.querySelectorAll('.toggle-btn.active[data-id^="tr-"]');
+    if (ativos.length === 0) {
+        container.innerHTML = '';
+        return;
+    }
+    let html = '<div style="margin-top: 12px;">';
+    html += '<p style="font-size: 11px; color: var(--gray); margin-bottom: 8px;"><i class="fas fa-pen"></i> Edite horas e frequência de cada treinamento:</p>';
+    ativos.forEach(btn => {
+        const id = btn.dataset.id;
+        const tr = TREINAMENTOS[id];
+        if (!tr) return;
+        // Preserve existing values if already rendered
+        const existingHoras = document.getElementById(`${id}-horas`);
+        const existingFreq = document.getElementById(`${id}-freq`);
+        const existingTurmas = document.getElementById(`${id}-turmas`);
+        const horas = existingHoras ? existingHoras.value : tr.horas;
+        const freq = existingFreq ? existingFreq.value : tr.freq;
+        const turmas = existingTurmas ? existingTurmas.value : '1';
+        html += `
+        <div class="training-detail visible" style="margin-bottom: 8px; padding: 10px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; border-left: 3px solid var(--accent);">
+            <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <i class="${tr.icon}" style="color: var(--secondary);"></i> ${tr.nome.split(' - ')[0]}
+            </div>
+            <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 10px;">Carga Horária</label>
+                    <input type="text" id="${id}-horas" value="${horas}" placeholder="04" style="padding: 6px 8px; font-size: 12px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 10px;">Frequência</label>
+                    <select id="${id}-freq" style="padding: 6px 8px; font-size: 12px;">
+                        <option value="1x/mês" ${freq === '1x/mês' ? 'selected' : ''}>1x/mês</option>
+                        <option value="2x/mês" ${freq === '2x/mês' ? 'selected' : ''}>2x/mês</option>
+                        <option value="1x/ano" ${freq === '1x/ano' ? 'selected' : ''}>1x/ano</option>
+                        <option value="2x/ano" ${freq === '2x/ano' ? 'selected' : ''}>2x/ano</option>
+                        <option value="sob demanda" ${freq === 'sob demanda' ? 'selected' : ''}>Sob demanda</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 10px;">Turmas</label>
+                    <input type="number" id="${id}-turmas" value="${turmas}" min="1" max="20" style="padding: 6px 8px; font-size: 12px;">
+                </div>
+            </div>
+        </div>`;
+    });
+    html += '</div>';
+    container.innerHTML = html;
 }
 
 function updateCounters() {
@@ -1362,11 +1416,21 @@ function gerarProposta() {
     };
     const totalVisitas = parseInt(d.visitas) * parseInt(d.meses);
 
-    // Coletar treinamentos ativos
+    // Coletar treinamentos ativos (com valores editados)
     const trAtivos = [];
     document.querySelectorAll('.toggle-btn.active[data-id^="tr-"]').forEach(btn => {
         const id = btn.dataset.id;
-        if (TREINAMENTOS[id]) trAtivos.push({ id, ...TREINAMENTOS[id] });
+        if (!TREINAMENTOS[id]) return;
+        const horasEl = document.getElementById(`${id}-horas`);
+        const freqEl = document.getElementById(`${id}-freq`);
+        const turmasEl = document.getElementById(`${id}-turmas`);
+        trAtivos.push({
+            id,
+            ...TREINAMENTOS[id],
+            horas: horasEl ? horasEl.value : TREINAMENTOS[id].horas,
+            freq: freqEl ? freqEl.value : TREINAMENTOS[id].freq,
+            turmas: turmasEl ? turmasEl.value : '1'
+        });
     });
 
     // Coletar entregáveis ativos
@@ -1394,7 +1458,10 @@ function gerarProposta() {
     if (isActive('lip')) inclusos.push('Laudo de Insalubridade (LIP/LTIP)');
     if (isActive('aet')) inclusos.push('Análise Ergonômica do Trabalho (AET)');
     if (isActive('esocial-sst')) inclusos.push('Eventos eSocial SST (S-2220, S-2240)');
-    trAtivos.forEach(t => inclusos.push(`Treinamento ${t.nome.split(' - ')[0]} (${t.freq})`));
+    trAtivos.forEach(t => {
+        const turmasTxt = t.turmas && t.turmas !== '1' ? ` - ${t.turmas} turma(s)` : '';
+        inclusos.push(`Treinamento ${t.nome.split(' - ')[0]} (${t.freq}${turmasTxt})`);
+    });
     if (isActive('inspecao-epi')) inclusos.push('Inspeções de EPIs e EPCs');
     if (isActive('investigacao-acidente')) inclusos.push('Investigação de acidentes (CAT)');
 
@@ -1572,17 +1639,21 @@ function gerarProposta() {
                 <h4><i class="fas fa-graduation-cap"></i> Capacitação Técnica Inclusa</h4>
                 <p>Programação de treinamentos integrada ao serviço de assessoria, executada nas instalações do cliente durante as visitas agendadas ou mediante demanda específica.</p>
             </div>
-            ${trAtivos.map(t => `
+            ${trAtivos.map(t => {
+                const turmasTxt = t.turmas && t.turmas !== '1' ? `<span style="background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-weight: 600;">${t.turmas} turma(s)</span>` : '';
+                return `
             <div class="training-card-proposta">
                 <div class="training-card-header">
                     <h4><i class="${t.icon}"></i>${esc(t.nome)}</h4>
                     <div class="training-meta">
                         <span><i class="fas fa-clock"></i> ${t.horas}h</span>
                         <span class="freq">${t.freq}</span>
+                        ${turmasTxt}
                     </div>
                 </div>
                 <p>${esc(t.desc)}</p>
-            </div>`).join('')}
+            </div>`;
+            }).join('')}
             <div class="highlight-box">
                 <p style="font-size: 10px; margin: 0;"><strong><i class="fas fa-calendar-check"></i> Execução:</strong> Todos os treinamentos serão ministrados mediante solicitação prévia e coordenação de agenda entre as partes. Turmas adicionais, reciclagens ou outras capacitações podem ser contratadas separadamente.</p>
             </div>
