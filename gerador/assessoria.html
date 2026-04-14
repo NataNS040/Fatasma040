@@ -1158,7 +1158,43 @@
                             <span class="check-indicator"><i class="fas fa-check"></i></span>
                             <i class="fas fa-brain"></i> Riscos Psicossociais
                         </button>
+                        <button type="button" class="toggle-btn" data-id="tr-nr06" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-vest"></i> NR-06 (EPIs)
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-nr20" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-fire"></i> NR-20 (Inflamáveis)
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-nr23" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-fire-alt"></i> NR-23 (Incêndio)
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-direcao-defensiva" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-car"></i> Direção Defensiva
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-trabalho-quente" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-temperature-high"></i> Trabalho a Quente
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-movimentacao-cargas" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-dolly"></i> NR-11 (Cargas)
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-ergonomia" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-chair"></i> NR-17 (Ergonomia)
+                        </button>
                     </div>
+
+                    <!-- Treinamento personalizado -->
+                    <div style="margin-top: 10px;">
+                        <button type="button" class="toggle-btn" style="width: 100%; justify-content: center; border-style: dashed; color: var(--primary);" onclick="addCustomTraining()">
+                            <i class="fas fa-plus-circle"></i> Adicionar Treinamento Personalizado
+                        </button>
+                    </div>
+                    <div id="custom-trainings"></div>
 
                     <!-- Detalhes dos treinamentos ativos -->
                     <div id="training-details"></div>
@@ -1288,6 +1324,55 @@ const TREINAMENTOS = {
         horas: '04',
         freq: '1x/ano',
         desc: 'Capacitação sobre identificação e prevenção de fatores de risco psicossocial no ambiente de trabalho, conforme nova exigência da NR-01.'
+    },
+    'tr-nr06': {
+        nome: 'Uso de EPIs - NR-06',
+        icon: 'fas fa-vest',
+        horas: '04',
+        freq: '1x/ano',
+        desc: 'Orientação sobre seleção, uso, conservação e higienização dos Equipamentos de Proteção Individual conforme NR-06.'
+    },
+    'tr-nr20': {
+        nome: 'Inflamáveis e Combustíveis - NR-20',
+        icon: 'fas fa-fire',
+        horas: '08',
+        freq: '1x/ano',
+        desc: 'Capacitação para trabalhadores que manuseiam ou operam em áreas com líquidos combustíveis e inflamáveis, conforme NR-20.'
+    },
+    'tr-nr23': {
+        nome: 'Proteção Contra Incêndio - NR-23',
+        icon: 'fas fa-fire-alt',
+        horas: '04',
+        freq: '1x/ano',
+        desc: 'Treinamento sobre medidas de proteção contra incêndio, rotas de fuga, uso de extintores e procedimentos de evacuação.'
+    },
+    'tr-direcao-defensiva': {
+        nome: 'Direção Defensiva',
+        icon: 'fas fa-car',
+        horas: '08',
+        freq: '1x/ano',
+        desc: 'Capacitação para condutores sobre técnicas de direção defensiva, prevenção de acidentes de trânsito e legislação vigente.'
+    },
+    'tr-trabalho-quente': {
+        nome: 'Trabalho a Quente',
+        icon: 'fas fa-temperature-high',
+        horas: '08',
+        freq: '1x/ano',
+        desc: 'Formação para atividades envolvendo soldagem, corte, brasagem e operações que geram calor e faíscas em áreas com risco.'
+    },
+    'tr-movimentacao-cargas': {
+        nome: 'Movimentação de Cargas - NR-11',
+        icon: 'fas fa-dolly',
+        horas: '08',
+        freq: '1x/ano',
+        desc: 'Capacitação para operação de equipamentos de transporte, movimentação, armazenagem e manuseio de materiais conforme NR-11.'
+    },
+    'tr-ergonomia': {
+        nome: 'Ergonomia no Trabalho - NR-17',
+        icon: 'fas fa-chair',
+        horas: '04',
+        freq: '1x/ano',
+        desc: 'Orientação sobre postura, organização do posto de trabalho, pausas e exercícios laborais para prevenção de doenças ocupacionais.'
     }
 };
 
@@ -1315,6 +1400,79 @@ function toggleTraining(btn) {
     updateCounters();
 }
 
+let customTrainingCount = 0;
+
+function addCustomTraining() {
+    customTrainingCount++;
+    const id = `tr-custom-${customTrainingCount}`;
+    const container = document.getElementById('custom-trainings');
+    const div = document.createElement('div');
+    div.id = `custom-container-${customTrainingCount}`;
+    div.style.cssText = 'margin-top: 8px; padding: 12px; background: #fffbeb; border-radius: 6px; border: 1px solid #fbbf24; border-left: 3px solid #f59e0b;';
+    div.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 12px; font-weight: 600; color: #92400e;"><i class="fas fa-pen-fancy" style="color: #f59e0b;"></i> Treinamento Personalizado #${customTrainingCount}</span>
+            <button type="button" onclick="removeCustomTraining(${customTrainingCount})" style="background: none; border: none; color: var(--alert); cursor: pointer; font-size: 14px;" title="Remover"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <div class="form-group" style="margin-bottom: 8px;">
+            <label style="font-size: 10px;">Nome do Treinamento *</label>
+            <input type="text" id="${id}-nome" placeholder="Ex: Operação de Empilhadeira" style="padding: 6px 8px; font-size: 12px;">
+        </div>
+        <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 10px;">Carga Horária</label>
+                <input type="text" id="${id}-horas" value="04" placeholder="04" style="padding: 6px 8px; font-size: 12px;">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 10px;">Frequência</label>
+                <select id="${id}-freq" style="padding: 6px 8px; font-size: 12px;">
+                    <option value="1x/mês">1x/mês</option>
+                    <option value="2x/mês">2x/mês</option>
+                    <option value="1x/ano" selected>1x/ano</option>
+                    <option value="2x/ano">2x/ano</option>
+                    <option value="sob demanda">Sob demanda</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 10px;">Turmas</label>
+                <input type="number" id="${id}-turmas" value="1" min="1" max="20" style="padding: 6px 8px; font-size: 12px;">
+            </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 10px;">Descrição (aparece na proposta)</label>
+            <textarea id="${id}-desc" rows="2" placeholder="Descreva o treinamento..." style="padding: 6px 8px; font-size: 12px; resize: vertical;"></textarea>
+        </div>
+    `;
+    container.appendChild(div);
+    updateCounters();
+}
+
+function removeCustomTraining(num) {
+    const el = document.getElementById(`custom-container-${num}`);
+    if (el) el.remove();
+    updateCounters();
+}
+
+function getCustomTrainings() {
+    const customs = [];
+    document.querySelectorAll('[id^="custom-container-"]').forEach(div => {
+        const num = div.id.replace('custom-container-', '');
+        const id = `tr-custom-${num}`;
+        const nome = document.getElementById(`${id}-nome`)?.value?.trim();
+        if (!nome) return;
+        customs.push({
+            id,
+            nome,
+            icon: 'fas fa-pen-fancy',
+            horas: document.getElementById(`${id}-horas`)?.value || '04',
+            freq: document.getElementById(`${id}-freq`)?.value || '1x/ano',
+            turmas: document.getElementById(`${id}-turmas`)?.value || '1',
+            desc: document.getElementById(`${id}-desc`)?.value?.trim() || `Treinamento de ${nome} conforme programação e necessidade da empresa.`
+        });
+    });
+    return customs;
+}
+
 function renderTrainingDetails() {
     const container = document.getElementById('training-details');
     const ativos = document.querySelectorAll('.toggle-btn.active[data-id^="tr-"]');
@@ -1323,24 +1481,25 @@ function renderTrainingDetails() {
         return;
     }
     let html = '<div style="margin-top: 12px;">';
-    html += '<p style="font-size: 11px; color: var(--gray); margin-bottom: 8px;"><i class="fas fa-pen"></i> Edite horas e frequência de cada treinamento:</p>';
+    html += '<p style="font-size: 11px; color: var(--gray); margin-bottom: 8px;"><i class="fas fa-pen"></i> Edite horas, frequência e descrição de cada treinamento:</p>';
     ativos.forEach(btn => {
         const id = btn.dataset.id;
         const tr = TREINAMENTOS[id];
         if (!tr) return;
-        // Preserve existing values if already rendered
         const existingHoras = document.getElementById(`${id}-horas`);
         const existingFreq = document.getElementById(`${id}-freq`);
         const existingTurmas = document.getElementById(`${id}-turmas`);
+        const existingDesc = document.getElementById(`${id}-desc`);
         const horas = existingHoras ? existingHoras.value : tr.horas;
         const freq = existingFreq ? existingFreq.value : tr.freq;
         const turmas = existingTurmas ? existingTurmas.value : '1';
+        const desc = existingDesc ? existingDesc.value : tr.desc;
         html += `
         <div class="training-detail visible" style="margin-bottom: 8px; padding: 10px; background: #f8fafc; border-radius: 6px; border: 1px solid #e2e8f0; border-left: 3px solid var(--accent);">
             <div style="font-size: 12px; font-weight: 600; color: var(--primary); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
                 <i class="${tr.icon}" style="color: var(--secondary);"></i> ${tr.nome.split(' - ')[0]}
             </div>
-            <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+            <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 8px;">
                 <div class="form-group" style="margin-bottom: 0;">
                     <label style="font-size: 10px;">Carga Horária</label>
                     <input type="text" id="${id}-horas" value="${horas}" placeholder="04" style="padding: 6px 8px; font-size: 12px;">
@@ -1360,6 +1519,10 @@ function renderTrainingDetails() {
                     <input type="number" id="${id}-turmas" value="${turmas}" min="1" max="20" style="padding: 6px 8px; font-size: 12px;">
                 </div>
             </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label style="font-size: 10px;">Descrição</label>
+                <textarea id="${id}-desc" rows="2" style="padding: 6px 8px; font-size: 11px; resize: vertical;">${desc}</textarea>
+            </div>
         </div>`;
     });
     html += '</div>';
@@ -1369,7 +1532,7 @@ function renderTrainingDetails() {
 function updateCounters() {
     const assessoria = document.querySelectorAll('.toggle-btn.active[data-id^="tecnico"], .toggle-btn.active[data-id^="assessoria-"], .toggle-btn.active[data-id^="inspecao"], .toggle-btn.active[data-id^="ordem"], .toggle-btn.active[data-id^="investigacao"], .toggle-btn.active[data-id^="cat-"]').length;
     const programas = document.querySelectorAll('.toggle-btn.active[data-id="pgr"], .toggle-btn.active[data-id="pcmso"], .toggle-btn.active[data-id="ltcat"], .toggle-btn.active[data-id="lip"], .toggle-btn.active[data-id="aet"], .toggle-btn.active[data-id="esocial-sst"]').length;
-    const treinamentos = document.querySelectorAll('.toggle-btn.active[data-id^="tr-"]').length;
+    const treinamentos = document.querySelectorAll('.toggle-btn.active[data-id^="tr-"]').length + document.querySelectorAll('[id^="custom-container-"]').length;
     const bonus = document.querySelectorAll('.toggle-btn.bonus.active').length;
 
     document.getElementById('counter-bar').innerHTML = `
@@ -1424,14 +1587,18 @@ function gerarProposta() {
         const horasEl = document.getElementById(`${id}-horas`);
         const freqEl = document.getElementById(`${id}-freq`);
         const turmasEl = document.getElementById(`${id}-turmas`);
+        const descEl = document.getElementById(`${id}-desc`);
         trAtivos.push({
             id,
             ...TREINAMENTOS[id],
             horas: horasEl ? horasEl.value : TREINAMENTOS[id].horas,
             freq: freqEl ? freqEl.value : TREINAMENTOS[id].freq,
-            turmas: turmasEl ? turmasEl.value : '1'
+            turmas: turmasEl ? turmasEl.value : '1',
+            desc: descEl ? descEl.value : TREINAMENTOS[id].desc
         });
     });
+    // Adicionar treinamentos personalizados
+    getCustomTrainings().forEach(ct => trAtivos.push(ct));
 
     // Coletar entregáveis ativos
     const entregaveis = [];
