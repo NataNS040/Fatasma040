@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Assessoria SST | EngMarq Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #0f2744;
+            --secondary: #f5a623;
+            --accent: #10b981;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --alert: #e53e3e;
+            --purple: #805ad5;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+        .header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-logo img {
+            height: 40px;
+            filter: brightness(0) invert(1);
+        }
+        .header-logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+        }
+        .header-logo span {
+            font-size: 11px;
+            opacity: 0.8;
+            display: block;
+        }
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-nav {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+        }
+        .btn-nav:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .main-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* ===== PAINEL DE CONFIGURAÇÃO ===== */
+        .config-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        .config-panel::-webkit-scrollbar { width: 6px; }
+        .config-panel::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 3px; }
+
+        .config-header {
+            background: var(--primary);
+            color: white;
+            padding: 18px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .config-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .config-content {
+            padding: 20px;
+        }
+
+        /* Seções do formulário */
+        .config-section {
+            margin-bottom: 20px;
+        }
+        .config-section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .config-section h3 i { color: var(--secondary); }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Open Sans', sans-serif;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .form-group textarea { resize: vertical; min-height: 60px; }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* ===== BOTÕES DE ENTREGÁVEIS ===== */
+        .deliverables-section h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: var(--gray);
+            text-transform: uppercase;
+            margin: 15px 0 8px;
+            letter-spacing: 0.5px;
+        }
+        .toggle-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray);
+            user-select: none;
+        }
+        .toggle-btn i {
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+        .toggle-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #f0f4ff;
+        }
+        .toggle-btn.active {
+            border-color: var(--accent);
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            color: #065f46;
+        }
+        .toggle-btn.active i { color: var(--accent); }
+        .toggle-btn .check-indicator {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #cbd5e0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .toggle-btn.active .check-indicator {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Toggle Bônus */
+        .toggle-btn.bonus {
+            border-color: #fbbf24;
+            background: #fffbeb;
+        }
+        .toggle-btn.bonus.active {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+        }
+        .toggle-btn.bonus.active .check-indicator {
+            background: #f59e0b;
+            border-color: #f59e0b;
+        }
+
+        /* Detalhes editáveis dos treinamentos */
+        .training-detail {
+            display: none;
+            margin-top: 8px;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        .training-detail.visible { display: block; }
+        .training-detail .form-row {
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+        .training-detail .form-group { margin-bottom: 0; }
+        .training-detail .form-group label { font-size: 10px; }
+        .training-detail .form-group input {
+            padding: 6px 8px;
+            font-size: 12px;
+        }
+
+        /* Ações */
+        .config-actions {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid var(--light);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .btn-generate {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, var(--accent) 0%, #059669 100%);
+            color: white;
+        }
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16,185,129,0.3);
+        }
+        .btn-pdf {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        }
+        .btn-pdf:hover {
+            box-shadow: 0 8px 20px rgba(26,54,93,0.3);
+        }
+
+        /* Contadores */
+        .counter-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .counter-chip {
+            background: var(--light);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .counter-chip i { color: var(--secondary); font-size: 10px; }
+        .counter-chip .count {
+            background: var(--primary);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        /* ===== PAINEL DE PREVIEW / PROPOSTA ===== */
+        .preview-panel {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .preview-header {
+            background: linear-gradient(135deg, #dd6b20 0%, #c05621 100%);
+            color: white;
+            padding: 18px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .preview-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .preview-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-preview-action {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .btn-preview-action:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
+        /* ===== PROPOSTA RENDERIZADA ===== */
+        #proposta-output {
+            padding: 0;
+        }
+
+        /* Estilos inline da proposta */
+        .proposta-container {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            position: relative;
+            background: var(--white);
+            box-sizing: border-box;
+            page-break-after: always;
+        }
+        .page:last-child { page-break-after: auto; }
+
+        /* Capa */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(56,161,105,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .cover-logo {
+            width: 180px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+        .cover-badge {
+            background: rgba(56,161,105,0.9);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1;
+        }
+        .cover-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(245,166,35,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            z-index: 1;
+        }
+        .cover-icon i { font-size: 28px; color: var(--secondary); }
+        .cover-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.25;
+            z-index: 1;
+        }
+        .cover-title span { color: var(--secondary); display: block; }
+        .cover-subtitle {
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 450px;
+            z-index: 1;
+            line-height: 1.5;
+        }
+        .cover-client {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            z-index: 1;
+            max-width: 380px;
+        }
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+        }
+        .cover-client-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        .cover-date {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        .cover-numero {
+            position: absolute;
+            top: 25mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--secondary);
+            letter-spacing: 3px;
+        }
+
+        /* Headers e footers internos */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light);
+        }
+        .page-header-logo { height: 35px; }
+        .page-header-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light);
+            font-size: 10px;
+            color: var(--gray);
+            background: white;
+            z-index: 10;
+        }
+        .page-number { font-weight: 600; color: var(--primary); }
+
+        /* Seções */
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary);
+        }
+        .subsection-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .subsection-title i { color: var(--secondary); }
+
+        .proposta-container p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* Boxes */
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .info-box h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: var(--primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .info-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; color: var(--dark); }
+        .highlight-box strong { color: var(--primary); }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--accent);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .green-box h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            color: #276749;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .green-box h4 i { color: var(--accent); }
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Grids */
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .company-info-item {
+            padding: 8px 10px;
+            background: var(--light);
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary);
+        }
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+        .company-info-item span {
+            font-size: 11px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        /* Feature list */
+        .feature-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+        .feature-list li {
+            padding: 5px 0 5px 22px;
+            position: relative;
+            font-size: 11px;
+            border-bottom: 1px solid var(--light);
+        }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 10px;
+        }
+
+        /* Factors grid */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .factor-card {
+            background: var(--light);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+        .factor-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            color: var(--primary);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .factor-card h4 i { color: var(--accent); font-size: 11px; }
+        .factor-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
+
+        /* Deliverables grid */
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .deliverable-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            padding: 8px;
+            background: var(--light);
+            border-radius: 6px;
+        }
+        .deliverable-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--secondary);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+        .deliverable-text h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            color: var(--primary);
+            margin-bottom: 2px;
+        }
+        .deliverable-text p { font-size: 9px; margin-bottom: 0; line-height: 1.35; }
+
+        /* Conditions */
+        .conditions-list { margin: 12px 0; }
+        .condition-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light);
+        }
+        .condition-item:last-child { border-bottom: none; }
+        .condition-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--light);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+        .condition-text strong {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 2px;
+        }
+        .condition-text span { font-size: 10px; color: var(--gray); line-height: 1.3; }
+
+        /* Responsible card */
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary) 0%, #0f2744 100%);
+            padding: 18px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .responsible-avatar {
+            width: 60px; height: 60px;
+            background: rgba(245,166,35,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 28px;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+        .responsible-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; }
+        .responsible-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+        .responsible-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+        }
+        .responsible-contact-item i { color: var(--secondary); width: 15px; }
+
+        /* Training card */
+        .training-card-proposta {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+        .training-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .training-card-header h4 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .training-card-header h4 i {
+            color: var(--secondary);
+            margin-right: 6px;
+        }
+        .training-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 10px;
+        }
+        .training-meta span { color: var(--gray); }
+        .training-meta .freq {
+            background: #f7fafc;
+            color: var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .training-card-proposta p {
+            margin: 0;
+            font-size: 10px;
+            line-height: 1.6;
+            color: var(--gray);
+        }
+
+        /* Included services check grid */
+        .included-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 10px;
+        }
+        .included-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .included-item i { color: var(--accent); margin-top: 2px; font-size: 10px; }
+
+        /* Print */
+        @media print {
+            body { background: white !important; margin: 0; padding: 0; }
+            .header, .config-panel, .preview-header { display: none !important; }
+            .main-container { display: block !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            .preview-panel { box-shadow: none !important; border-radius: 0 !important; }
+            .proposta-container { width: 100% !important; margin: 0 !important; box-shadow: none !important; }
+            .page {
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                overflow: hidden !important;
+            }
+            .page:last-child { page-break-after: auto !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .config-panel {
+                position: static;
+                max-height: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-logo">
+            <img src="./assets/logoengmarq.png" alt="EngMarq">
+            <div>
+                <h1>Gerador de Assessoria SST</h1>
+                <span>Monte sua proposta clicando nos entregáveis</span>
+            </div>
+        </div>
+        <div class="header-nav">
+            <a href="./index.html" class="btn-nav"><i class="fas fa-file-alt"></i> Propostas</a>
+            <a href="./contrato.html" class="btn-nav"><i class="fas fa-file-contract"></i> Contratos</a>
+            <a href="./orcamento.html" class="btn-nav"><i class="fas fa-file-invoice-dollar"></i> Orçamentos</a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- PAINEL DE CONFIGURAÇÃO -->
+        <div class="config-panel">
+            <div class="config-header">
+                <h2><i class="fas fa-sliders-h"></i> Configurar Proposta</h2>
+            </div>
+            <div class="config-content">
+
+                <!-- Identificação -->
+                <div class="config-section">
+                    <h3><i class="fas fa-hashtag"></i> Identificação</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nº Proposta</label>
+                            <input type="text" id="numero_proposta" value="TM0001" placeholder="TM0001">
+                        </div>
+                        <div class="form-group">
+                            <label>Data</label>
+                            <input type="date" id="data_proposta">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dados do Cliente -->
+                <div class="config-section">
+                    <h3><i class="fas fa-building"></i> Dados do Cliente</h3>
+                    <div class="form-group">
+                        <label>Razão Social *</label>
+                        <input type="text" id="razao_social" placeholder="Nome da empresa">
+                    </div>
+                    <div class="form-group">
+                        <label>Nome Fantasia</label>
+                        <input type="text" id="nome_fantasia" placeholder="Nome fantasia (usado na capa)">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>CNPJ</label>
+                            <input type="text" id="cnpj" placeholder="00.000.000/0000-00">
+                        </div>
+                        <div class="form-group">
+                            <label>Nº Colaboradores</label>
+                            <input type="number" id="colaboradores" value="20" min="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço</label>
+                        <input type="text" id="endereco" placeholder="Rua, número">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Bairro</label>
+                            <input type="text" id="bairro">
+                        </div>
+                        <div class="form-group">
+                            <label>CEP</label>
+                            <input type="text" id="cep" placeholder="00000-000">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cidade</label>
+                            <input type="text" id="cidade" value="Natal">
+                        </div>
+                        <div class="form-group">
+                            <label>UF</label>
+                            <select id="uf">
+                                <option value="RN" selected>RN</option>
+                                <option value="PB">PB</option>
+                                <option value="CE">CE</option>
+                                <option value="PE">PE</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 15px;"><i class="fas fa-user-tie"></i> Responsável</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome</label>
+                            <input type="text" id="responsavel_nome" placeholder="Nome do responsável">
+                        </div>
+                        <div class="form-group">
+                            <label>Cargo</label>
+                            <input type="text" id="responsavel_cargo" placeholder="Diretor, Gerente...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equipe Técnica -->
+                <div class="config-section">
+                    <h3><i class="fas fa-users-cog"></i> Equipe & Visitas</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Visitas/Mês</label>
+                            <input type="number" id="visitas_mes" value="1" min="1" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label>Horas por visita</label>
+                            <input type="number" id="horas_visita" value="4" min="1" max="12">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Contrato (meses)</label>
+                        <input type="number" id="meses_contrato" value="12" min="1" max="60">
+                    </div>
+                </div>
+
+                <!-- ENTREGÁVEIS - Botões Toggle -->
+                <div class="config-section deliverables-section">
+                    <h3><i class="fas fa-check-double"></i> Entregáveis</h3>
+                    <p style="font-size: 11px; color: var(--gray); margin-bottom: 12px;">Clique para ativar/desativar cada item na proposta:</p>
+
+                    <h4><i class="fas fa-hard-hat"></i> Assessoria Técnica</h4>
+                    <div class="toggle-grid">
+                        <button type="button" class="toggle-btn active" data-id="tecnico" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-user-shield"></i> Técnico de Segurança
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="assessoria-online" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-laptop"></i> Assessoria Online
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="inspecao-epi" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-search"></i> Inspeção EPIs/EPCs
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="ordem-servico" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-clipboard-check"></i> Ordens de Serviço
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="investigacao-acidente" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-search-plus"></i> Investigação Acidentes
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="cat-esocial" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-file-upload"></i> CAT / eSocial
+                        </button>
+                    </div>
+
+                    <h4><i class="fas fa-file-medical-alt"></i> Programas / Documentos SST</h4>
+                    <div class="toggle-grid">
+                        <button type="button" class="toggle-btn active" data-id="pgr" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-file-alt"></i> PGR
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="pcmso" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-file-medical"></i> PCMSO
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="ltcat" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-file-contract"></i> LTCAT
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="lip" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-file-invoice"></i> LIP / LTIP
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="aet" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-chair"></i> AET (Ergonomia)
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="esocial-sst" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-cloud-upload-alt"></i> eSocial SST
+                        </button>
+                    </div>
+
+                    <h4><i class="fas fa-graduation-cap"></i> Treinamentos</h4>
+                    <div class="toggle-grid" id="treinamentos-grid">
+                        <button type="button" class="toggle-btn active" data-id="tr-admissional" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-hard-hat"></i> Admissional NR-18
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="tr-cipa" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-users"></i> CIPA
+                        </button>
+                        <button type="button" class="toggle-btn active" data-id="tr-brigada" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-fire-extinguisher"></i> Brigada de Incêndio
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-nr10" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-bolt"></i> NR-10 (Elétrica)
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-nr35" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-mountain"></i> NR-35 (Altura)
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-nr12" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-cogs"></i> NR-12 (Máquinas)
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-nr33" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-dungeon"></i> NR-33 (Confinado)
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-primeiros-socorros" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-first-aid"></i> Primeiros Socorros
+                        </button>
+                        <button type="button" class="toggle-btn" data-id="tr-psicossocial" onclick="toggleTraining(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-brain"></i> Riscos Psicossociais
+                        </button>
+                    </div>
+
+                    <!-- Detalhes dos treinamentos ativos -->
+                    <div id="training-details"></div>
+
+                    <h4><i class="fas fa-gift"></i> Bônus</h4>
+                    <div class="toggle-grid">
+                        <button type="button" class="toggle-btn bonus" data-id="bonus-ltip" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-gift"></i> LTIP Gratuito
+                        </button>
+                        <button type="button" class="toggle-btn bonus" data-id="bonus-relatorio" onclick="toggleItem(this)">
+                            <span class="check-indicator"><i class="fas fa-check"></i></span>
+                            <i class="fas fa-chart-bar"></i> Relatório Mensal
+                        </button>
+                    </div>
+
+                    <div class="counter-bar" id="counter-bar">
+                        <!-- preenchido via JS -->
+                    </div>
+                </div>
+
+                <!-- Investimento -->
+                <div class="config-section">
+                    <h3><i class="fas fa-dollar-sign"></i> Investimento</h3>
+                    <div class="form-group">
+                        <label>Valor Mensal (R$)</label>
+                        <input type="text" id="valor_mensal" value="1.800,00" placeholder="1.800,00">
+                    </div>
+                    <div class="form-group">
+                        <label>Validade da Proposta (dias)</label>
+                        <input type="number" id="validade_proposta" value="15" min="1">
+                    </div>
+                </div>
+
+                <!-- Ações -->
+                <div class="config-actions">
+                    <button class="btn-generate" onclick="gerarProposta()">
+                        <i class="fas fa-magic"></i> Gerar Proposta
+                    </button>
+                    <button class="btn-generate btn-pdf" onclick="window.print()">
+                        <i class="fas fa-file-pdf"></i> Exportar PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREVIEW DA PROPOSTA -->
+        <div class="preview-panel">
+            <div class="preview-header">
+                <h2><i class="fas fa-eye"></i> Preview da Proposta</h2>
+                <div class="preview-actions">
+                    <button class="btn-preview-action" onclick="gerarProposta()"><i class="fas fa-sync-alt"></i> Atualizar</button>
+                </div>
+            </div>
+            <div id="proposta-output">
+                <div style="padding: 60px 40px; text-align: center; color: var(--gray);">
+                    <i class="fas fa-hand-pointer" style="font-size: 48px; color: #cbd5e0; margin-bottom: 15px; display: block;"></i>
+                    <h3 style="font-family: 'Montserrat', sans-serif; color: var(--primary); margin-bottom: 8px;">Monte sua Proposta</h3>
+                    <p style="font-size: 13px;">Preencha os dados e ative/desative os entregáveis. Depois clique em <strong>"Gerar Proposta"</strong>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+// ===== DADOS DOS TREINAMENTOS =====
+const TREINAMENTOS = {
+    'tr-admissional': {
+        nome: 'Integração Admissional - NR-18',
+        icon: 'fas fa-hard-hat',
+        horas: '04',
+        freq: '1x/mês',
+        desc: 'Capacitação obrigatória para novos colaboradores admitidos, abordando segurança na construção civil. Realizado na empresa contratante durante visita técnica ou mediante agendamento específico.'
+    },
+    'tr-cipa': {
+        nome: 'Formação de CIPA',
+        icon: 'fas fa-users',
+        horas: '08',
+        freq: '1x/ano',
+        desc: 'Capacitação anual para membros eleitos e designados da Comissão Interna de Prevenção de Acidentes, incluindo titulares e suplentes, executada nas dependências do contratante.'
+    },
+    'tr-brigada': {
+        nome: 'Brigada de Emergência e Combate a Incêndio',
+        icon: 'fas fa-fire-extinguisher',
+        horas: '04',
+        freq: '1x/ano',
+        desc: 'Preparação de brigadistas voluntários para atuação em situações de emergência, com foco em prevenção e combate a princípios de incêndio, primeiros socorros e evacuação de áreas.'
+    },
+    'tr-nr10': {
+        nome: 'Segurança em Instalações Elétricas - NR-10',
+        icon: 'fas fa-bolt',
+        horas: '40',
+        freq: '1x/ano',
+        desc: 'Formação básica para colaboradores autorizados a intervir em instalações elétricas. Pode ser realizado na sede da EngMarq Solution.'
+    },
+    'tr-nr35': {
+        nome: 'Trabalho em Altura - NR-35',
+        icon: 'fas fa-mountain',
+        horas: '08',
+        freq: '1x/ano',
+        desc: 'Habilitação para atividades executadas acima de 2 metros do piso. Agendamento conforme disponibilidade de ambas as partes.'
+    },
+    'tr-nr12': {
+        nome: 'Segurança em Máquinas e Equipamentos - NR-12',
+        icon: 'fas fa-cogs',
+        horas: '08',
+        freq: '1x/ano',
+        desc: 'Capacitação para operação segura de máquinas e equipamentos, abordando proteções, dispositivos de segurança e procedimentos de trabalho seguros.'
+    },
+    'tr-nr33': {
+        nome: 'Espaço Confinado - NR-33',
+        icon: 'fas fa-dungeon',
+        horas: '16',
+        freq: '1x/ano',
+        desc: 'Formação para trabalhadores autorizados e vigias para entrada em espaços confinados, com ênfase em reconhecimento de riscos e procedimentos de resgate.'
+    },
+    'tr-primeiros-socorros': {
+        nome: 'Primeiros Socorros',
+        icon: 'fas fa-first-aid',
+        horas: '04',
+        freq: '1x/ano',
+        desc: 'Treinamento em técnicas de primeiros socorros para atendimento de emergências no ambiente de trabalho, incluindo RCP, imobilizações e curativos.'
+    },
+    'tr-psicossocial': {
+        nome: 'Riscos Psicossociais - NR-01',
+        icon: 'fas fa-brain',
+        horas: '04',
+        freq: '1x/ano',
+        desc: 'Capacitação sobre identificação e prevenção de fatores de risco psicossocial no ambiente de trabalho, conforme nova exigência da NR-01.'
+    }
+};
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+    // Data de hoje
+    const hoje = new Date().toISOString().split('T')[0];
+    document.getElementById('data_proposta').value = hoje;
+    updateCounters();
+    // Gerar proposta automaticamente
+    gerarProposta();
+});
+
+// ===== TOGGLE FUNÇÕES =====
+function toggleItem(btn) {
+    btn.classList.toggle('active');
+    updateCounters();
+}
+
+function toggleTraining(btn) {
+    btn.classList.toggle('active');
+    updateCounters();
+}
+
+function updateCounters() {
+    const assessoria = document.querySelectorAll('.toggle-btn.active[data-id^="tecnico"], .toggle-btn.active[data-id^="assessoria-"], .toggle-btn.active[data-id^="inspecao"], .toggle-btn.active[data-id^="ordem"], .toggle-btn.active[data-id^="investigacao"], .toggle-btn.active[data-id^="cat-"]').length;
+    const programas = document.querySelectorAll('.toggle-btn.active[data-id="pgr"], .toggle-btn.active[data-id="pcmso"], .toggle-btn.active[data-id="ltcat"], .toggle-btn.active[data-id="lip"], .toggle-btn.active[data-id="aet"], .toggle-btn.active[data-id="esocial-sst"]').length;
+    const treinamentos = document.querySelectorAll('.toggle-btn.active[data-id^="tr-"]').length;
+    const bonus = document.querySelectorAll('.toggle-btn.bonus.active').length;
+
+    document.getElementById('counter-bar').innerHTML = `
+        <span class="counter-chip"><i class="fas fa-hard-hat"></i> Assessoria <span class="count">${assessoria}</span></span>
+        <span class="counter-chip"><i class="fas fa-file-alt"></i> Programas <span class="count">${programas}</span></span>
+        <span class="counter-chip"><i class="fas fa-graduation-cap"></i> Treinamentos <span class="count">${treinamentos}</span></span>
+        ${bonus > 0 ? `<span class="counter-chip"><i class="fas fa-gift"></i> Bônus <span class="count">${bonus}</span></span>` : ''}
+    `;
+}
+
+// ===== HELPERS =====
+function val(id) { return document.getElementById(id).value.trim(); }
+function isActive(id) { return document.querySelector(`.toggle-btn[data-id="${id}"]`)?.classList.contains('active'); }
+
+function formatarData(dateStr) {
+    if (!dateStr) return '';
+    const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const [y, m, d] = dateStr.split('-');
+    return `${parseInt(d)} de ${meses[parseInt(m)-1]} de ${y}`;
+}
+
+// ===== GERAR PROPOSTA =====
+function gerarProposta() {
+    const d = {
+        numero: val('numero_proposta'),
+        data: val('data_proposta'),
+        dataFormatada: formatarData(val('data_proposta')),
+        razao: val('razao_social') || 'Empresa Cliente',
+        fantasia: val('nome_fantasia') || val('razao_social') || 'Empresa Cliente',
+        cnpj: val('cnpj') || 'A definir',
+        colaboradores: val('colaboradores') || '20',
+        endereco: val('endereco') || 'A definir',
+        bairro: val('bairro') || '',
+        cep: val('cep') || '',
+        cidade: val('cidade') || 'Natal',
+        uf: val('uf') || 'RN',
+        responsavel: val('responsavel_nome') || 'A definir',
+        cargo: val('responsavel_cargo') || 'A definir',
+        visitas: val('visitas_mes') || '1',
+        horas: val('horas_visita') || '4',
+        meses: val('meses_contrato') || '12',
+        valor: val('valor_mensal') || '1.800,00',
+        validade: val('validade_proposta') || '15'
+    };
+    const totalVisitas = parseInt(d.visitas) * parseInt(d.meses);
+
+    // Coletar treinamentos ativos
+    const trAtivos = [];
+    document.querySelectorAll('.toggle-btn.active[data-id^="tr-"]').forEach(btn => {
+        const id = btn.dataset.id;
+        if (TREINAMENTOS[id]) trAtivos.push({ id, ...TREINAMENTOS[id] });
+    });
+
+    // Coletar entregáveis ativos
+    const entregaveis = [];
+    if (isActive('tecnico')) entregaveis.push({ icon: 'fa-user-shield', nome: 'Técnico de Segurança', desc: `${d.visitas} profissional dedicado com visita mensal.` });
+    if (isActive('assessoria-online')) entregaveis.push({ icon: 'fa-laptop', nome: 'Assessoria Online', desc: 'Suporte sob demanda via WhatsApp e e-mail.' });
+    if (isActive('pgr') || isActive('pcmso') || isActive('ltcat')) {
+        const progs = [isActive('pgr') ? 'PGR' : '', isActive('pcmso') ? 'PCMSO' : '', isActive('ltcat') ? 'LTCAT' : ''].filter(Boolean).join(', ');
+        entregaveis.push({ icon: 'fa-file-medical-alt', nome: 'Gestão de Programas', desc: `${progs} e documentos de SST.` });
+    }
+    if (trAtivos.length > 0) {
+        const nomes = trAtivos.map(t => t.nome.split(' - ')[0].split(' (')[0]).slice(0, 3).join(', ');
+        entregaveis.push({ icon: 'fa-graduation-cap', nome: 'Treinamentos Inclusos', desc: `${nomes}${trAtivos.length > 3 ? ' e mais...' : ''}.` });
+    }
+    if (isActive('inspecao-epi')) entregaveis.push({ icon: 'fa-search', nome: 'Inspeções de Segurança', desc: 'Verificação de EPIs, EPCs e condições de trabalho.' });
+    if (isActive('ordem-servico')) entregaveis.push({ icon: 'fa-clipboard-check', nome: 'Acompanhamento de OS', desc: 'Ordens de serviço e procedimentos de segurança.' });
+
+    // Itens inclusos para a tabela de investimento
+    const inclusos = [];
+    if (isActive('tecnico')) inclusos.push('1 Técnico de Segurança do Trabalho');
+    inclusos.push(`${d.visitas} visita(s) técnica(s) mensal(is)`);
+    if (isActive('assessoria-online')) inclusos.push('Assessoria online sob demanda');
+    const progsInclusos = [isActive('pgr') ? 'PGR' : '', isActive('pcmso') ? 'PCMSO' : '', isActive('ltcat') ? 'LTCAT' : ''].filter(Boolean);
+    if (progsInclusos.length) inclusos.push(`Gestão de ${progsInclusos.join(', ')}`);
+    if (isActive('lip')) inclusos.push('Laudo de Insalubridade (LIP/LTIP)');
+    if (isActive('aet')) inclusos.push('Análise Ergonômica do Trabalho (AET)');
+    if (isActive('esocial-sst')) inclusos.push('Eventos eSocial SST (S-2220, S-2240)');
+    trAtivos.forEach(t => inclusos.push(`Treinamento ${t.nome.split(' - ')[0]} (${t.freq})`));
+    if (isActive('inspecao-epi')) inclusos.push('Inspeções de EPIs e EPCs');
+    if (isActive('investigacao-acidente')) inclusos.push('Investigação de acidentes (CAT)');
+
+    // Atividades do profissional
+    const atividades = [];
+    if (isActive('ordem-servico')) atividades.push('Acompanhamento de OS - Ordem de Serviço, conforme NR-01, descrevendo deveres e obrigações perante à segurança do trabalho');
+    if (isActive('inspecao-epi')) atividades.push('Acompanhamento técnico das atividades de inspeção de equipamento de proteção individual (NR-06)');
+    if (isActive('inspecao-epi')) atividades.push('Acompanhamento técnico das atividades de inspeção de equipamento de proteção coletiva (NR-18)');
+    if (isActive('investigacao-acidente')) atividades.push('Acompanhamento técnico das atividades de investigação e análise de acidente de trabalho (NR-04)');
+    if (isActive('cat-esocial')) atividades.push('Acompanhamento técnico das atividades de emissão da CAT, evento S-2210 do eSocial, além do envio');
+    atividades.push('Acompanhamento técnico das atividades fiscalização de segurança do trabalho');
+    if (isActive('pgr') || isActive('pcmso') || isActive('ltcat')) {
+        const progs = [isActive('pgr') ? 'PGR' : '', isActive('pcmso') ? 'PCMSO' : '', isActive('ltcat') ? 'LTCAT' : ''].filter(Boolean).join(', ');
+        atividades.push(`Gestão dos programas de SST (${progs}), acompanhamento dos cronogramas de ações, riscos ocupacionais, funções e equipamentos de ordem individuais e coletivos`);
+    }
+
+    // Montar HTML
+    let pageNum = 1;
+    let html = `<div class="proposta-container">`;
+
+    // ===== CAPA =====
+    html += `
+    <div class="page page-cover">
+        <span class="cover-numero">${esc(d.numero)}</span>
+        <img src="./assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+        <span class="cover-badge"><i class="fas fa-shield-alt"></i> Assessoria Técnica Especializada</span>
+        <div class="cover-icon"><i class="fas fa-hard-hat"></i></div>
+        <h1 class="cover-title">Proposta Comercial<br><span>Assessoria em Segurança do Trabalho</span></h1>
+        <p class="cover-subtitle">Equipe técnica especializada, gestão de programas de SST e treinamentos de capacitação para conformidade legal</p>
+        <div class="cover-client">
+            <p class="cover-client-label">Proposta elaborada para</p>
+            <p class="cover-client-name">${esc(d.fantasia)}</p>
+        </div>
+        <p class="cover-date"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;${esc(d.dataFormatada)}</p>
+        <div class="cover-footer"><p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p></div>
+    </div>`;
+    pageNum++;
+
+    // ===== PÁGINA EMPRESA CONTRATANTE =====
+    html += `
+    <div class="page">
+        ${pageHeader()}
+        <h2 class="section-title"><span class="section-number">1</span> Sobre a Empresa Contratante</h2>
+        <h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>
+        <div class="company-info-grid">
+            <div class="company-info-item"><label>Razão Social</label><span>${esc(d.razao)}</span></div>
+            <div class="company-info-item"><label>CNPJ</label><span>${esc(d.cnpj)}</span></div>
+            <div class="company-info-item"><label>Nome Fantasia</label><span>${esc(d.fantasia)}</span></div>
+            <div class="company-info-item"><label>Quantidade de Colaboradores</label><span>${esc(d.colaboradores)} colaboradores</span></div>
+            <div class="company-info-item"><label>Endereço</label><span>${esc(d.endereco)}${d.bairro ? ' - ' + esc(d.bairro) : ''}</span></div>
+            <div class="company-info-item"><label>CEP</label><span>${esc(d.cep) || 'A definir'}</span></div>
+            <div class="company-info-item"><label>Município / UF</label><span>${esc(d.cidade)} - ${esc(d.uf)}</span></div>
+        </div>
+        <h3 class="subsection-title" style="margin-top: 25px;"><i class="fas fa-user-tie"></i> Responsável pelo Recebimento</h3>
+        <div class="company-info-grid">
+            <div class="company-info-item"><label>Nome</label><span>${esc(d.responsavel)}</span></div>
+            <div class="company-info-item"><label>Cargo / Função</label><span>${esc(d.cargo)}</span></div>
+        </div>
+        <div class="info-box" style="margin-top: 25px;">
+            <h4><i class="fas fa-handshake"></i> Proposta Especializada</h4>
+            <p>Esta proposta contempla a prestação de serviços de assessoria em segurança do trabalho com equipe técnica dedicada, gestão de programas de SST e treinamentos de capacitação conforme as Normas Regulamentadoras.</p>
+        </div>
+        ${pageFooter(pageNum++)}
+    </div>`;
+
+    // ===== PÁGINA EQUIPE TÉCNICA =====
+    html += `
+    <div class="page">
+        ${pageHeader()}
+        <h2 class="section-title"><span class="section-number">2</span> Fornecimento de Equipe Técnica</h2>
+        <div class="info-box" style="margin-bottom: 15px;">
+            <h4><i class="fas fa-users-cog"></i> Assessoria Personalizada em SST</h4>
+            <p>Serviço customizado de acompanhamento e fiscalização dos processos de segurança do trabalho da empresa contratante, com profissional especializado e experiente no segmento.</p>
+        </div>
+        ${isActive('tecnico') ? `
+        <h3 class="subsection-title"><i class="fas fa-user-shield"></i> Profissionais Alocados</h3>
+        <div class="factor-card" style="margin: 10px 0;">
+            <h4><i class="fas fa-id-badge"></i> 1 Técnico de Segurança do Trabalho</h4>
+            <p>Profissional habilitado e registrado conforme exigências do MTE.</p>
+        </div>` : ''}
+        <h3 class="subsection-title"><i class="fas fa-calendar-check"></i> Modalidade de Visitas</h3>
+        <table style="width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10px;">
+            <tr style="background: var(--light);"><td style="padding: 8px 12px; border: 1px solid #e2e8f0; width: 50%;"><strong>Frequência:</strong></td><td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><i class="fas fa-check" style="color: var(--accent);"></i> Visita técnica ${d.visitas}x por mês</td></tr>
+            <tr><td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><strong>Total de visitas por mês:</strong></td><td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><strong style="color: var(--primary);">${d.visitas} visita(s)</strong></td></tr>
+            <tr style="background: var(--light);"><td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><strong>Total de visitas por ${d.meses} meses:</strong></td><td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><strong style="color: var(--primary);">${totalVisitas} visitas</strong></td></tr>
+            ${isActive('assessoria-online') ? `<tr><td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><strong>Assessoria online:</strong></td><td style="padding: 8px 12px; border: 1px solid #e2e8f0;"><strong style="color: var(--accent);">Sob demanda</strong></td></tr>` : ''}
+        </table>
+        <div class="highlight-box">
+            <p><strong><i class="fas fa-clock"></i> Observação:</strong> Cada visita técnica é contabilizada como sendo de 1 turno (manhã ou tarde), sendo realizada em <strong>${d.horas} horas de trabalho</strong>.</p>
+        </div>
+        ${atividades.length > 0 ? `
+        <h3 class="subsection-title"><i class="fas fa-tasks"></i> Atividades do Profissional</h3>
+        <ul class="feature-list" style="font-size: 10px;">
+            ${atividades.map(a => `<li>${a}</li>`).join('')}
+        </ul>` : ''}
+        ${pageFooter(pageNum++)}
+    </div>`;
+
+    // ===== PÁGINA DOCUMENTAÇÃO SST (se houver programas ativos) =====
+    const temProgramas = isActive('pgr') || isActive('pcmso') || isActive('ltcat') || isActive('lip') || isActive('aet') || isActive('esocial-sst');
+    let secNum = 3;
+    if (temProgramas) {
+        html += `
+        <div class="page">
+            ${pageHeader()}
+            <h2 class="section-title"><span class="section-number">${secNum}</span> Gestão de Programas e Documentação de SST</h2>
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-folder-open"></i> Documentação Técnica Integrada</h4>
+                <p>Elaboração, gestão e manutenção de todos os documentos e programas obrigatórios de Segurança e Saúde do Trabalho, garantindo conformidade legal e organização documental da empresa.</p>
+            </div>
+            <div class="factors-grid">
+                ${isActive('pgr') ? `
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-alt"></i> PGR - Programa de Gerenciamento de Riscos</h4>
+                    <p>Identificação de perigos, avaliação e controle de riscos ocupacionais conforme NR-01. Inclui inventário de riscos e plano de ação com cronograma.</p>
+                </div>` : ''}
+                ${isActive('pcmso') ? `
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-medical"></i> PCMSO - Programa de Controle Médico</h4>
+                    <p>Coordenação do programa de saúde ocupacional conforme NR-07, com planejamento de exames admissionais, periódicos, demissionais e complementares.</p>
+                </div>` : ''}
+                ${isActive('ltcat') ? `
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-contract"></i> LTCAT - Laudo Técnico das Condições Ambientais</h4>
+                    <p>Avaliação quantitativa e qualitativa dos agentes ambientais nos postos de trabalho para fins previdenciários e aposentadoria especial.</p>
+                </div>` : ''}
+                ${isActive('lip') ? `
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-invoice"></i> LIP / LTIP - Laudo de Insalubridade e Periculosidade</h4>
+                    <p>Avaliação técnica para caracterização ou descaracterização de atividades insalubres e/ou perigosas conforme NR-15 e NR-16.</p>
+                </div>` : ''}
+                ${isActive('aet') ? `
+                <div class="factor-card">
+                    <h4><i class="fas fa-chair"></i> AET - Análise Ergonômica do Trabalho</h4>
+                    <p>Avaliação das condições ergonômicas dos postos de trabalho conforme NR-17, com recomendações de adequação e melhorias.</p>
+                </div>` : ''}
+                ${isActive('esocial-sst') ? `
+                <div class="factor-card">
+                    <h4><i class="fas fa-cloud-upload-alt"></i> eSocial - Eventos de SST</h4>
+                    <p>Transmissão e gestão dos eventos S-2220 (Monitoramento da Saúde), S-2240 (Condições Ambientais) e S-2210 (CAT) ao eSocial.</p>
+                </div>` : ''}
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-sync-alt"></i> Ciclo de Gestão Documental</h3>
+            <div style="margin: 12px 0;">
+                <div style="display: flex; gap: 10px; margin-bottom: 8px; padding: 8px 10px; background: var(--light); border-radius: 6px;">
+                    <div style="background: var(--primary); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; flex-shrink: 0;">1</div>
+                    <div><h4 style="font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--primary); margin-bottom: 2px;">Elaboração / Revisão</h4><p style="font-size: 10px; margin: 0; line-height: 1.35;">Elaboração inicial ou revisão anual dos documentos conforme exigências normativas e alterações nos processos da empresa.</p></div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 8px; padding: 8px 10px; background: var(--light); border-radius: 6px;">
+                    <div style="background: var(--primary); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; flex-shrink: 0;">2</div>
+                    <div><h4 style="font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--primary); margin-bottom: 2px;">Implementação</h4><p style="font-size: 10px; margin: 0; line-height: 1.35;">Execução das medidas de controle, cronogramas de ações e acompanhamento das pendências identificadas.</p></div>
+                </div>
+                <div style="display: flex; gap: 10px; margin-bottom: 8px; padding: 8px 10px; background: var(--light); border-radius: 6px;">
+                    <div style="background: var(--primary); color: white; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 11px; flex-shrink: 0;">3</div>
+                    <div><h4 style="font-family: 'Montserrat', sans-serif; font-size: 11px; color: var(--primary); margin-bottom: 2px;">Monitoramento Contínuo</h4><p style="font-size: 10px; margin: 0; line-height: 1.35;">Acompanhamento nas visitas técnicas, atualização de dados e envio de eventos ao eSocial quando aplicável.</p></div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-info-circle"></i> Importante:</strong> Todos os documentos serão entregues em formato digital (PDF) e ficarão disponíveis para consulta da empresa. Revisões extraordinárias decorrentes de mudanças no processo produtivo ou layout estão incluídas durante a vigência do contrato.</p>
+            </div>
+            ${pageFooter(pageNum++)}
+        </div>`;
+        secNum++;
+    }
+
+    // ===== PÁGINA TREINAMENTOS (se houver) =====
+    if (trAtivos.length > 0) {
+        html += `
+        <div class="page">
+            ${pageHeader()}
+            <h2 class="section-title"><span class="section-number">${secNum}</span> Treinamentos de Capacitação Técnica</h2>
+            <div class="info-box" style="margin-bottom: 20px;">
+                <h4><i class="fas fa-graduation-cap"></i> Capacitação Técnica Inclusa</h4>
+                <p>Programação de treinamentos integrada ao serviço de assessoria, executada nas instalações do cliente durante as visitas agendadas ou mediante demanda específica.</p>
+            </div>
+            ${trAtivos.map(t => `
+            <div class="training-card-proposta">
+                <div class="training-card-header">
+                    <h4><i class="${t.icon}"></i>${esc(t.nome)}</h4>
+                    <div class="training-meta">
+                        <span><i class="fas fa-clock"></i> ${t.horas}h</span>
+                        <span class="freq">${t.freq}</span>
+                    </div>
+                </div>
+                <p>${esc(t.desc)}</p>
+            </div>`).join('')}
+            <div class="highlight-box">
+                <p style="font-size: 10px; margin: 0;"><strong><i class="fas fa-calendar-check"></i> Execução:</strong> Todos os treinamentos serão ministrados mediante solicitação prévia e coordenação de agenda entre as partes. Turmas adicionais, reciclagens ou outras capacitações podem ser contratadas separadamente.</p>
+            </div>
+            ${pageFooter(pageNum++)}
+        </div>`;
+        secNum++;
+    }
+
+    // ===== PÁGINA BENEFÍCIOS =====
+    html += `
+    <div class="page">
+        ${pageHeader()}
+        <h2 class="section-title"><span class="section-number">${secNum}</span> Benefícios da Assessoria</h2>
+        <div class="factors-grid">
+            <div class="factor-card"><h4><i class="fas fa-gavel"></i> Conformidade Legal</h4><p>Atendimento às NRs e legislação trabalhista vigente, evitando autuações e passivos.</p></div>
+            <div class="factor-card"><h4><i class="fas fa-shield-alt"></i> Prevenção de Acidentes</h4><p>Identificação e controle de riscos ocupacionais de forma proativa e sistemática.</p></div>
+            <div class="factor-card"><h4><i class="fas fa-chart-line"></i> Gestão Eficiente</h4><p>Controle e acompanhamento de todos os programas de SST em um só lugar.</p></div>
+            <div class="factor-card"><h4><i class="fas fa-users"></i> Equipe Capacitada</h4><p>Treinamentos periódicos para colaboradores, reduzindo riscos de acidentes.</p></div>
+            <div class="factor-card"><h4><i class="fas fa-file-alt"></i> Documentação Completa</h4><p>Manutenção de toda documentação de SST organizada e atualizada.</p></div>
+            <div class="factor-card"><h4><i class="fas fa-headset"></i> Suporte Contínuo</h4><p>Assessoria online sob demanda de acordo com disponibilidade de ambas as partes.</p></div>
+        </div>
+        <h3 class="subsection-title"><i class="fas fa-check-double"></i> O Que Está Incluso no Contrato</h3>
+        <div class="deliverables-grid">
+            ${entregaveis.map(e => `
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas ${e.icon}"></i></div>
+                <div class="deliverable-text"><h4>${esc(e.nome)}</h4><p>${esc(e.desc)}</p></div>
+            </div>`).join('')}
+        </div>
+        <div class="green-box" style="margin-top: 15px;">
+            <h4><i class="fas fa-star"></i> Diferenciais EngMarq Solution</h4>
+            <p>Equipe especializada em Segurança e Saúde do Trabalho (SST), metodologia baseada em resultados, relatórios mensais de acompanhamento e total comprometimento com a segurança dos seus colaboradores.</p>
+        </div>
+        ${pageFooter(pageNum++)}
+    </div>`;
+
+    // ===== PÁGINA INVESTIMENTO =====
+    secNum++;
+    html += `
+    <div class="page">
+        ${pageHeader()}
+        <h2 class="section-title"><span class="section-number">${secNum}</span> Investimento</h2>
+        <div class="highlight-box" style="margin-bottom: 15px;">
+            <p style="margin: 0;"><strong><i class="fas fa-calendar-alt"></i> Contrato:</strong> ${d.meses} meses de assessoria técnica em Segurança do Trabalho</p>
+        </div>
+        <p>O valor abaixo corresponde ao investimento mensal para prestação dos serviços de <strong>Assessoria em Segurança do Trabalho</strong> descritos nesta proposta:</p>
+        <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #cbd5e0;">
+            <thead><tr style="background: #2c5282; color: white;">
+                <th style="padding: 12px 15px; text-align: left; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Descrição</th>
+                <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Valor Mensal</th>
+            </tr></thead>
+            <tbody><tr style="background: white;">
+                <td style="padding: 12px 15px; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">Assessoria Personalizada em SST (${d.visitas} visita(s) técnica(s) mensal(is) + suporte sob demanda + programa de treinamentos incluso)</td>
+                <td style="padding: 12px 15px; text-align: center; font-size: 14px; color: #2d3748; font-weight: 700; border: 1px solid #cbd5e0;">R$ ${esc(d.valor)}</td>
+            </tr></tbody>
+        </table>
+        <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
+        <div class="included-grid">
+            ${inclusos.map(i => `<div class="included-item"><i class="fas fa-check"></i><span>${esc(i)}</span></div>`).join('')}
+        </div>
+        ${isActive('bonus-ltip') ? `
+        <div class="green-box" style="padding: 15px; margin: 15px 0;">
+            <h4><i class="fas fa-gift"></i> BÔNUS EXCLUSIVO</h4>
+            <p>Ao fechar esta proposta, você recebe <strong style="color: #276749;">GRATUITAMENTE</strong> a elaboração do <strong>Laudo Técnico de Insalubridade</strong> (LTIP), documento essencial para caracterização de atividades insalubres e cumprimento das obrigações trabalhistas.</p>
+        </div>` : ''}
+        ${isActive('bonus-relatorio') ? `
+        <div class="green-box" style="padding: 15px; margin: 15px 0;">
+            <h4><i class="fas fa-chart-bar"></i> BÔNUS: Relatório Mensal</h4>
+            <p>Relatório mensal detalhado com indicadores de SST, status dos programas, pendências e recomendações técnicas para acompanhamento gerencial.</p>
+        </div>` : ''}
+        <h3 class="subsection-title"><i class="fas fa-file-invoice-dollar"></i> Condições de Pagamento</h3>
+        <div class="conditions-list">
+            <div class="condition-item"><div class="condition-icon"><i class="fas fa-calendar-check"></i></div><div class="condition-text"><strong>Forma de Pagamento</strong><span>Pagamento mensal via boleto bancário, PIX ou transferência até o dia 10 de cada mês.</span></div></div>
+            <div class="condition-item"><div class="condition-icon"><i class="fas fa-file-contract"></i></div><div class="condition-text"><strong>Vigência do Contrato</strong><span>${d.meses} meses, com renovação automática, mediante aviso prévio de 30 dias para cancelamento.</span></div></div>
+            <div class="condition-item"><div class="condition-icon"><i class="fas fa-percent"></i></div><div class="condition-text"><strong>Reajuste Anual</strong><span>Reajuste pelo INPC/IBGE ou índice que o substitua, aplicado no aniversário do contrato.</span></div></div>
+        </div>
+        <div class="highlight-box" style="margin-top: 10px;">
+            <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Esta proposta é válida por ${d.validade} dias a partir da data de emissão. Serviços adicionais não contemplados nesta proposta podem ser negociados separadamente.</p>
+        </div>
+        ${pageFooter(pageNum++)}
+    </div>`;
+
+    // ===== PÁGINA RESPONSÁVEL =====
+    secNum++;
+    html += `
+    <div class="page" style="display: flex; flex-direction: column;">
+        ${pageHeader()}
+        <h2 class="section-title"><span class="section-number">${secNum}</span> Responsável pela Proposta</h2>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-start; margin-top: 15px;">
+            <div class="responsible-card">
+                <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
+                <p class="responsible-name">Thiago Marques</p>
+                <p class="responsible-role">Diretor</p>
+                <p class="responsible-company">EngMarq Solution</p>
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item"><i class="fab fa-whatsapp"></i><span>+55 84 99928-5888</span></div>
+                    <div class="responsible-contact-item"><i class="fas fa-envelope"></i><span>engmarqsolution@gmail.com</span></div>
+                    <div class="responsible-contact-item"><i class="fas fa-map-marker-alt"></i><span>Natal - RN</span></div>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-building"></i> Sobre a EngMarq Solution</h4>
+                <p>Somos uma empresa especializada em <strong>Engenharia de Segurança e Saúde do Trabalho</strong>, oferecendo soluções completas para adequação às Normas Regulamentadoras, gestão de riscos ocupacionais e promoção de ambientes de trabalho seguros e saudáveis.</p>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px;">
+                <div style="text-align: center; padding: 12px; background: var(--light); border-radius: 8px;"><i class="fas fa-award" style="font-size: 22px; color: var(--secondary); margin-bottom: 6px;"></i><p style="font-size: 10px; margin: 0; font-weight: 600; color: var(--primary);">Profissionais Qualificados</p></div>
+                <div style="text-align: center; padding: 12px; background: var(--light); border-radius: 8px;"><i class="fas fa-handshake" style="font-size: 22px; color: var(--secondary); margin-bottom: 6px;"></i><p style="font-size: 10px; margin: 0; font-weight: 600; color: var(--primary);">Compromisso com Resultados</p></div>
+                <div style="text-align: center; padding: 12px; background: var(--light); border-radius: 8px;"><i class="fas fa-shield-alt" style="font-size: 22px; color: var(--secondary); margin-bottom: 6px;"></i><p style="font-size: 10px; margin: 0; font-weight: 600; color: var(--primary);">Segurança em Primeiro Lugar</p></div>
+            </div>
+        </div>
+        ${pageFooter(pageNum++)}
+    </div>`;
+
+    // ===== PÁGINA ASSINATURAS =====
+    html += `
+    <div class="page">
+        ${pageHeader()}
+        <h2 class="section-title"><span class="section-number"><i class="fas fa-file-signature"></i></span> Termo de Aceite e Assinaturas</h2>
+        <div class="info-box" style="margin-bottom: 15px;">
+            <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+            <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços especificados.</p>
+        </div>
+        <div style="background: var(--light); border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+            <h3 style="font-family: 'Montserrat', sans-serif; color: var(--primary); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple); padding-bottom: 10px;">
+                <i class="fas fa-building" style="color: var(--purple);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">Razão Social</p><p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p></div>
+                <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">CNPJ</p><p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p></div>
+            </div>
+            <p style="margin: 0; font-size: 13px; font-weight: 600;">Thiago Marques - Diretor</p>
+            <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray);">
+                <div style="text-align: center;"><div style="border-bottom: 1px solid var(--dark); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div><p style="margin: 0; font-size: 11px; color: var(--gray);">Assinatura do Proponente</p></div>
+            </div>
+        </div>
+        <div style="background: var(--light); border-radius: 12px; padding: 20px;">
+            <h3 style="font-family: 'Montserrat', sans-serif; color: var(--primary); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary); padding-bottom: 10px;">
+                <i class="fas fa-user-tie" style="color: var(--secondary);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+            </h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">Razão Social</p><p style="margin: 0; font-size: 13px; font-weight: 600;">${esc(d.razao)}</p></div>
+                <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">CNPJ</p><p style="margin: 0; font-size: 13px; font-weight: 600;">${esc(d.cnpj)}</p></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">Nome Completo</p><p style="margin: 0; font-size: 13px; font-weight: 600;">${esc(d.responsavel)}</p></div>
+                <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">Cargo / Função</p><p style="margin: 0; font-size: 13px; font-weight: 600;">${esc(d.cargo)}</p></div>
+            </div>
+            <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray);">
+                <div style="text-align: center;"><div style="border-bottom: 1px solid var(--dark); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div><p style="margin: 0; font-size: 11px; color: var(--gray);">Assinatura do Aprovador</p></div>
+            </div>
+        </div>
+        ${pageFooter(pageNum++)}
+    </div>`;
+
+    html += `</div>`; // fecha proposta-container
+
+    document.getElementById('proposta-output').innerHTML = html;
+    // Scroll ao topo do preview
+    document.querySelector('.preview-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function pageHeader() {
+    return `<div class="page-header">
+        <img src="./assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+        <span class="page-header-title">Proposta Comercial - Assessoria em SST</span>
+    </div>`;
+}
+
+function pageFooter(num) {
+    return `<div class="page-footer">
+        <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+        <span class="page-number">${String(num).padStart(2, '0')}</span>
+    </div>`;
+}
+
+function esc(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+</script>
+</body>
+</html>
