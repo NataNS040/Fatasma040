@@ -1425,13 +1425,7 @@ function addCustomTraining() {
             </div>
             <div class="form-group" style="margin-bottom: 0;">
                 <label style="font-size: 10px;">Frequência</label>
-                <select id="${id}-freq" style="padding: 6px 8px; font-size: 12px;">
-                    <option value="1x/mês">1x/mês</option>
-                    <option value="2x/mês">2x/mês</option>
-                    <option value="1x/ano" selected>1x/ano</option>
-                    <option value="2x/ano">2x/ano</option>
-                    <option value="sob demanda">Sob demanda</option>
-                </select>
+                <input type="text" id="${id}-freq" value="1x/ano" placeholder="Ex: 1x/ano" style="padding: 6px 8px; font-size: 12px;">
             </div>
             <div class="form-group" style="margin-bottom: 0;">
                 <label style="font-size: 10px;">Turmas</label>
@@ -1506,13 +1500,7 @@ function renderTrainingDetails() {
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
                     <label style="font-size: 10px;">Frequência</label>
-                    <select id="${id}-freq" style="padding: 6px 8px; font-size: 12px;">
-                        <option value="1x/mês" ${freq === '1x/mês' ? 'selected' : ''}>1x/mês</option>
-                        <option value="2x/mês" ${freq === '2x/mês' ? 'selected' : ''}>2x/mês</option>
-                        <option value="1x/ano" ${freq === '1x/ano' ? 'selected' : ''}>1x/ano</option>
-                        <option value="2x/ano" ${freq === '2x/ano' ? 'selected' : ''}>2x/ano</option>
-                        <option value="sob demanda" ${freq === 'sob demanda' ? 'selected' : ''}>Sob demanda</option>
-                    </select>
+                    <input type="text" id="${id}-freq" value="${freq}" placeholder="Ex: 1x/ano" style="padding: 6px 8px; font-size: 12px;">
                 </div>
                 <div class="form-group" style="margin-bottom: 0;">
                     <label style="font-size: 10px;">Turmas</label>
