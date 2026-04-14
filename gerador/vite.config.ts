@@ -25,6 +25,7 @@ export default defineConfig({
         calculadora: resolve(__dirname, 'calculadora.html'),
         contrato: resolve(__dirname, 'contrato.html'),
         orcamento: resolve(__dirname, 'orcamento.html'),
+        assessoria: resolve(__dirname, 'assessoria.html'),
       },
     },
   },
