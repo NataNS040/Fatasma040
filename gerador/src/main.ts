@@ -6,7 +6,7 @@ import { TipoProposta, DadosCliente, PropostaConfigs, TreinamentoSelecionado, Tr
 import { configs, isValidTipo } from './config/proposta-config';
 import { formatMoeda, parseValorMonetario, calcularDesconto, formatData } from './utils/formatters';
 import { gerarHTMLProposta } from './generators/gerador-proposta';
-import { obterSessao, removerSessao } from './auth/usuarios';
+import { obterSessao, removerSessao, sincronizarSessaoSupabase } from './auth/usuarios';
 
 // =====================================================
 // VERIFICAÇÃO DE AUTENTICAÇÃO
@@ -16,6 +16,19 @@ if (!sessao.logado) {
     // Redireciona para o login se não estiver autenticado
     window.location.href = './login.html';
 }
+
+void sincronizarSessaoSupabase().then(() => {
+    const sessaoAtual = obterSessao();
+    if (!sessaoAtual.logado) {
+        window.location.href = './login.html';
+        return;
+    }
+
+    const userNameText = document.getElementById('userNameText');
+    if (userNameText) {
+        userNameText.textContent = sessaoAtual.usuario?.nome || '';
+    }
+});
 
 // Expor globalmente para uso no HTML
 declare global {

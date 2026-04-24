@@ -20,6 +20,7 @@
   "author": "EngMarq Solution",
   "license": "UNLICENSED",
   "devDependencies": {
+    "playwright": "^1.59.1",
     "typescript": "^5.4.0",
     "vite": "^5.2.0"
   }

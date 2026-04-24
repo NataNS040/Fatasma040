@@ -379,19 +379,32 @@ function limpar() {
 }
 
 // ===== AUTH (reused from gerador) =====
-function carregarSessaoHeader() {
+function obterUsuarioSessao() {
+    const token = localStorage.getItem('engmarq_session');
+    if (!token) return null;
+
     try {
-        const sessao = localStorage.getItem('engmarq_session');
-        if (!sessao) {
-            window.location.href = './login.html';
-            return;
+        const payload = JSON.parse(atob(token));
+        if (!payload || (payload.exp && payload.exp < Date.now())) {
+            localStorage.removeItem('engmarq_session');
+            return null;
         }
-        const dados = JSON.parse(sessao);
-        const el = document.getElementById('userNameText');
-        if (el) el.textContent = dados.nome || dados.email || 'Usuário';
+        return payload;
     } catch {
-        window.location.href = './login.html';
+        localStorage.removeItem('engmarq_session');
+        return null;
     }
+}
+
+function carregarSessaoHeader() {
+    const dados = obterUsuarioSessao();
+    if (!dados) {
+        window.location.href = './login.html';
+        return;
+    }
+
+    const el = document.getElementById('userNameText');
+    if (el) el.textContent = dados.nome || dados.email || 'Usuario';
 }
 
 function fazerLogout() {

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0039 - Gestão de SST com SOC | Lumen Energia e Automacao LTDA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.35);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li { margin-bottom: 4px; }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 16mm 18mm 16mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child { page-break-after: auto; }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+        }
+
+        .page-header-logo { height: 35px; }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 8mm;
+            left: 16mm;
+            right: 16mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+        }
+
+        .page-number {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .page-cover {
+            background: linear-gradient(155deg, #102746 0%, #1a365d 45%, #1c4f89 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 18mm;
+        }
+
+        .cover-logo {
+            width: 190px;
+            margin-bottom: 26px;
+            filter: brightness(0) invert(1);
+        }
+
+        .cover-chip {
+            background: rgba(56, 161, 105, 0.92);
+            color: white;
+            padding: 9px 20px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.7px;
+            margin-bottom: 18px;
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.22;
+            margin-bottom: 14px;
+        }
+
+        .cover-title span { color: var(--secondary-color); }
+
+        .cover-subtitle {
+            font-size: 14px;
+            max-width: 470px;
+            line-height: 1.5;
+            opacity: 0.95;
+            margin-bottom: 24px;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 12px;
+            padding: 16px 24px;
+            margin-bottom: 18px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .cover-client .label {
+            font-size: 10px;
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+            opacity: 0.85;
+            margin-bottom: 6px;
+        }
+
+        .cover-client .value {
+            font-family: var(--font-primary);
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .cover-date {
+            font-size: 12px;
+            opacity: 0.88;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin: 12px 0 7px;
+        }
+
+        p {
+            font-size: 11px;
+            line-height: 1.45;
+            text-align: justify;
+            margin-bottom: 7px;
+        }
+
+        .info-box, .highlight-box, .green-box {
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .info-box p,
+        .highlight-box p,
+        .green-box p {
+            margin-bottom: 0;
+            font-size: 10.5px;
+            line-height: 1.42;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 8px 0;
+        }
+
+        .feature-list li {
+            padding: 5px 0 5px 22px;
+            position: relative;
+            border-bottom: 1px solid var(--light-color);
+            font-size: 10.5px;
+            line-height: 1.35;
+        }
+
+        .feature-list li:last-child { border-bottom: none; }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .company-item {
+            background: var(--light-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .company-item label {
+            display: block;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .company-item span {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .cards-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: var(--light-color);
+            border-radius: 8px;
+            padding: 10px;
+            border-top: 3px solid var(--secondary-color);
+        }
+
+        .card h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            margin-bottom: 6px;
+            color: var(--primary-color);
+        }
+
+        .card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.35;
+        }
+
+        .sla-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 10px;
+        }
+
+        .sla-table th,
+        .sla-table td {
+            border: 1px solid #d6dde6;
+            padding: 7px 8px;
+            vertical-align: top;
+        }
+
+        .sla-table th {
+            background: var(--primary-color);
+            color: white;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-size: 10px;
+        }
+
+        .investment-box {
+            background: linear-gradient(145deg, #f8fafc 0%, #edf2f7 100%);
+            border: 1px solid #d8e0ea;
+            border-radius: 10px;
+            padding: 14px;
+            margin: 10px 0;
+        }
+
+        .investment-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #dbe4ee;
+            padding: 8px 0;
+            gap: 10px;
+        }
+
+        .investment-row:last-child { border-bottom: none; }
+
+        .investment-label {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .investment-value {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            #pdf-content {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .page {
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 14mm 15mm 17mm 15mm !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+
+            .page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
+            .page-footer {
+                bottom: 8mm !important;
+                left: 15mm !important;
+                right: 15mm !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>Salvar como PDF</strong></li>
+                <li>Clique em <strong>Salvar</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+        <div class="page page-cover">
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-chip"><i class="fas fa-cloud"></i> SOC Incluso na Solucao</span>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Gestao Digital de SST com SOC</span>
+            </h1>
+
+            <p class="cover-subtitle">
+                SST as a Service com plataforma SOC, documentos digitais, prontuario eletronico,
+                ASO com assinatura digital e automacao completa do eSocial.
+            </p>
+
+            <div class="cover-client">
+                <p class="label">Proposta para</p>
+                <p class="value">Lumen Energia e Automacao LTDA</p>
+            </div>
+
+            <p class="cover-date"><i class="fas fa-calendar-alt"></i> 17 de abril de 2026 | TM0039</p>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - SOC + SST as a Service</span>
+            </div>
+
+            <h2 class="section-title">1. Dados da Empresa e Escopo Geral</h2>
+
+            <div class="company-grid">
+                <div class="company-item" style="grid-column: 1 / -1;">
+                    <label>Razao Social</label>
+                    <span>Lumen Energia e Automacao LTDA</span>
+                </div>
+                <div class="company-item">
+                    <label>Nome Fantasia</label>
+                    <span>Lumen Energia e Automacao</span>
+                </div>
+                <div class="company-item">
+                    <label>CNPJ</label>
+                    <span>25.268.057/0001-05</span>
+                </div>
+                <div class="company-item" style="grid-column: 1 / -1;">
+                    <label>Endereco</label>
+                    <span>Rua Irma Reis Duarte, 05 B, Nova Parnamirim, CEP 59150-070, Parnamirim/RN</span>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Objeto da Proposta:</strong> Contratacao da gestao de Medicina e Seguranca do Trabalho em modelo digital,
+                com acesso ao SOC incluso, centralizacao documental e operacao integrada dos processos de SST e eSocial.</p>
+            </div>
+
+            <h3 class="subsection-title">Modelo de Entrega</h3>
+            <ul class="feature-list">
+                <li>Operacao continua em formato SST as a Service (mensalidade de gestao).</li>
+                <li>Portal para consulta de documentos, status de eventos e indicadores.</li>
+                <li>Fluxo paperless com guarda digital e trilha de auditoria.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Importante:</strong> Diferente de processos baseados em documentos isolados, a plataforma SOC permite
+                centralizacao operacional de ponta a ponta, com rastreabilidade, automacao e maior governanca dos dados de SST.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - SOC + SST as a Service</span>
+            </div>
+
+            <h2 class="section-title">2. Gestao de Medicina e Seguranca (Entregaveis Tecnicos)</h2>
+
+            <p>Com a disponibilizacao do acesso ao SOC para a Lumen, os entregaveis sao executados de forma integrada na plataforma, com validacao operacional e historico unificado.</p>
+
+            <div class="cards-2">
+                <div class="card">
+                    <h4><i class="fas fa-folder-open"></i> Gestao de Documentos Digitais</h4>
+                    <p>Entrega e gestao de <strong>PGR, PCMSO, LTCAT e PPP</strong> em formato 100% digital, com controle de versao e acesso centralizado.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-file-signature"></i> Prontuario Eletronico e ASO</h4>
+                    <p>Emissao de ASO com biometria e assinatura digital, garantindo validade juridica e rastreabilidade das acoes clinicas.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-cloud-upload-alt"></i> Mensageria eSocial</h4>
+                    <p>Automacao do envio dos eventos <strong>S-2210, S-2220 e S-2240</strong> diretamente ao governo via SOC.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-user-clock"></i> Absenteismo e Convocacoes</h4>
+                    <p>Controle de exames periodicos, convocacoes e acompanhamento de afastamentos em um unico painel de gestao.</p>
+                </div>
+            </div>
+
+            <div class="green-box" style="margin-top: 12px;">
+                <p><strong>Resultado para a empresa:</strong> maior previsibilidade operacional, reducao de risco de inconsistencias no eSocial,
+                padronizacao de processos e ganho de produtividade da equipe administrativa.</p>
+            </div>
+
+            <h3 class="subsection-title">Conformidade e Seguranca dos Dados</h3>
+            <ul class="feature-list">
+                <li>Estrutura aderente a LGPD para tratamento e guarda de dados de SST.</li>
+                <li>Alta disponibilidade e redundancia de informacoes na nuvem.</li>
+                <li>Historico de acoes e evidencias para auditorias e fiscalizacoes.</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - SOC + SST as a Service</span>
+            </div>
+
+            <h2 class="section-title">3. Treinamento e Suporte (SLA)</h2>
+
+            <p>A operacao contempla suporte continuo e capacitacao dos usuarios para utilizacao correta dos fluxos no SOC, com acompanhamento tecnico especializado.</p>
+
+            <table class="sla-table">
+                <thead>
+                    <tr>
+                        <th style="width: 34%;">Etapa</th>
+                        <th style="width: 26%;">Prazo de Referencia</th>
+                        <th style="width: 40%;">Descricao</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Treinamento aos Usuarios</strong></td>
+                        <td>ate 5 dias uteis apos assinatura</td>
+                        <td>Capacitacao focada nos fluxos reais da equipe (remoto ou presencial, conforme alinhamento operacional).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Suporte Especializado</strong></td>
+                        <td>continuo durante os 12 meses de contrato</td>
+                        <td>Atendimento para duvidas tecnicas, suporte de operacao e apoio na tratativa de inconsistencias.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <p><strong>Canal de suporte:</strong> atendimento tecnico especializado por equipe de SST, com foco em resolucao de causa e nao apenas em resposta operacional.</p>
+            </div>
+
+            <h3 class="subsection-title">Premissas Operacionais</h3>
+            <ul class="feature-list">
+                <li>Disponibilizacao de base cadastral da empresa e colaboradores.</li>
+                <li>Definicao de responsaveis internos para interface com a operacao de SST.</li>
+                <li>Disponibilidade para agenda de treinamento dos usuarios.</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - SOC + SST as a Service</span>
+            </div>
+
+            <h2 class="section-title">4. Modelo de Investimento (SST as a Service)</h2>
+
+            <div class="investment-box">
+                <div class="investment-row">
+                    <span class="investment-label">Mensalidade de Gestao (fee mensal)</span>
+                    <span class="investment-value">R$ 600,00/mes</span>
+                </div>
+                <div class="investment-row">
+                    <span class="investment-label">Escopo de Vidas</span>
+                    <span class="investment-value">Conforme custo da plataforma por faixa de vidas</span>
+                </div>
+                <div class="investment-row">
+                    <span class="investment-label">Vigencia Contratual</span>
+                    <span class="investment-value">12 meses</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">Composicao dos Custos</h3>
+            <ul class="feature-list">
+                <li><strong>Fee Mensal:</strong> manutencao do software, guarda de documentos em nuvem, suporte permanente e sustentacao da mensageria eSocial.</li>
+                <li><strong>Acesso SOC:</strong> incluso no modelo proposto, conforme condicoes comerciais definidas nesta proposta.</li>
+            </ul>
+
+            <h3 class="subsection-title">Condicoes de Cancelamento</h3>
+            <ul class="feature-list">
+                <li><strong>Aviso previo:</strong> 30 dias corridos, formalizado por escrito.</li>
+                <li><strong>Cancelamento antecipado:</strong> multa de 20% sobre o valor total do contrato.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Observacao comercial:</strong> esta proposta foi estruturada para previsibilidade financeira,
+                permitindo a empresa transformar SST em servico continuo com governanca, e nao em acoes pontuais.</p>
+            </div>
+
+            <div class="green-box">
+                <p><strong>Sustentabilidade (Paperless):</strong> operacao digital reduz custos com impressao, arquivamento fisico e retrabalho documental.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - SOC + SST as a Service</span>
+            </div>
+
+            <h2 class="section-title">5. Diferenciais Competitivos e Aceite</h2>
+
+            <h3 class="subsection-title">Diferenciais desta proposta</h3>
+            <ul class="feature-list">
+                <li><strong>Conformidade e seguranca:</strong> plataforma aderente a LGPD e com alta disponibilidade de dados.</li>
+                <li><strong>Portal do cliente:</strong> acesso para acompanhamento de relatorios, documentos e indicadores em tempo real.</li>
+                <li><strong>Automacao real:</strong> mensageria eSocial integrada, reduzindo trabalho manual e risco de erro.</li>
+                <li><strong>Jornada digital completa:</strong> de convocacao e ASO ate entrega de documentos e evidencias.</li>
+                <li><strong>Governanca de SST:</strong> visao executiva para tomada de decisao baseada em dados.</li>
+            </ul>
+
+            <div class="info-box" style="margin-top: 12px;">
+                <p><strong>Validade desta proposta:</strong> 15 dias corridos a partir da data de emissao.</p>
+            </div>
+
+            <div class="info-box" style="margin-bottom: 16px;">
+                <h4><i class="fas fa-check-circle"></i> Declaracao de Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com os termos, condicoes, valores e prazos descritos nesta proposta comercial.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 16px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--success-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--success-color);"></i> RESPONSAVEL PELA ELABORACAO DA PROPOSTA
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razao Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">EngMarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">Thiago Marques - Diretor</p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> RESPONSAVEL PELA APROVACAO DA PROPOSTA
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razao Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Lumen Energia e Automacao LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">25.268.057/0001-05</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        console.log('Proposta TM0039 - Lumen Energia e Automacao LTDA - SOC + SST as a Service');
+        console.log('Clique em Gerar PDF ou pressione Ctrl+P.');
+    </script>
+</body>
+</html>

@@ -2,14 +2,7 @@
  * Script de Login - EngMarq Solution
  */
 
-import { validarCredenciais, gerarToken, salvarSessao, obterSessao } from './auth/usuarios';
-
-// Verifica se já está logado
-const sessao = obterSessao();
-if (sessao.logado) {
-    // Redireciona para o gerador
-    window.location.href = './index.html';
-}
+import { loginComSenha, obterSessao, sincronizarSessaoSupabase } from './auth/usuarios';
 
 // Elementos do DOM
 const loginForm = document.getElementById('loginForm') as HTMLFormElement;
@@ -20,6 +13,16 @@ const loginError = document.getElementById('loginError') as HTMLDivElement;
 const errorMessage = document.getElementById('errorMessage') as HTMLSpanElement;
 const togglePassword = document.getElementById('togglePassword') as HTMLButtonElement;
 const lembrarCheckbox = document.getElementById('lembrar') as HTMLInputElement;
+
+async function inicializarLogin(): Promise<void> {
+    await sincronizarSessaoSupabase();
+    const sessao = obterSessao();
+    if (sessao.logado) {
+        window.location.href = './index.html';
+    }
+}
+
+void inicializarLogin();
 
 // Toggle visibilidade da senha
 togglePassword?.addEventListener('click', () => {
@@ -71,30 +74,22 @@ loginForm?.addEventListener('submit', async (e) => {
     btnLogin.classList.add('loading');
     btnLogin.disabled = true;
     
-    // Simular delay de autenticação
-    await new Promise(resolve => setTimeout(resolve, 800));
-    
-    // Validar credenciais
-    const usuario = validarCredenciais(email, senha);
-    
-    if (usuario) {
+    const resultadoLogin = await loginComSenha(email, senha);
+
+    if (resultadoLogin.ok) {
         // Salvar email se marcou "lembrar"
         if (lembrarCheckbox.checked) {
             localStorage.setItem('engmarq_email_salvo', email);
         } else {
             localStorage.removeItem('engmarq_email_salvo');
         }
-        
-        // Gerar e salvar token
-        const token = gerarToken(usuario);
-        salvarSessao(token);
-        
+
         // Redirecionar para o gerador
         window.location.href = './index.html';
     } else {
         btnLogin.classList.remove('loading');
         btnLogin.disabled = false;
-        mostrarErro('E-mail ou senha incorretos');
+        mostrarErro(resultadoLogin.mensagem || 'Nao foi possivel autenticar');
     }
 });
 

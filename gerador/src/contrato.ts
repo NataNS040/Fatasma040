@@ -2,7 +2,7 @@
 // SCRIPT DO GERADOR DE CONTRATOS
 // =====================================================
 
-import { obterSessao, removerSessao } from './auth/usuarios';
+import { obterSessao, removerSessao, sincronizarSessaoSupabase } from './auth/usuarios';
 import { formatMoeda, parseValorMonetario, formatData } from './utils/formatters';
 import { gerarHTMLContrato } from './generators/gerador-contrato';
 import type { TipoContrato, FuncaoAvaliada, ParcelaPagamento } from './templates/template-contrato';
@@ -14,6 +14,19 @@ const sessao = obterSessao();
 if (!sessao.logado) {
     window.location.href = './login.html';
 }
+
+void sincronizarSessaoSupabase().then(() => {
+    const sessaoAtual = obterSessao();
+    if (!sessaoAtual.logado) {
+        window.location.href = './login.html';
+        return;
+    }
+
+    const userNameText = document.getElementById('userNameText');
+    if (userNameText) {
+        userNameText.textContent = sessaoAtual.usuario?.nome || '';
+    }
+});
 
 // Expor globalmente para uso no HTML
 declare global {

@@ -2,7 +2,7 @@
 // SCRIPT DO GERADOR DE RECIBOS
 // =====================================================
 
-import { obterSessao, removerSessao } from './auth/usuarios';
+import { obterSessao, removerSessao, sincronizarSessaoSupabase } from './auth/usuarios';
 import { getTemplateRecibo, DadosRecibo } from './templates/template-recibo';
 import { parseValorMonetario, formatMoeda, formatData } from './utils/formatters';
 import logoEngmarq from '../assets/logoengmarq.png';
@@ -14,6 +14,19 @@ const sessao = obterSessao();
 if (!sessao.logado) {
     window.location.href = './login.html';
 }
+
+void sincronizarSessaoSupabase().then(() => {
+    const sessaoAtual = obterSessao();
+    if (!sessaoAtual.logado) {
+        window.location.href = './login.html';
+        return;
+    }
+
+    const userNameText = document.getElementById('userNameText');
+    if (userNameText) {
+        userNameText.textContent = sessaoAtual.usuario?.nome || '';
+    }
+});
 
 // Expor globalmente
 declare global {

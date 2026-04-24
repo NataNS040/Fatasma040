@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - SST | Casa do Bizote</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            background: #e2e8f0;
+            line-height: 1.55;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            max-width: 270px;
+        }
+
+        .btn-generate {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            padding: 13px 18px;
+            background: var(--primary-color);
+            color: var(--white-color);
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .pdf-instructions {
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--gray-color);
+            line-height: 1.45;
+        }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 15mm 20mm 15mm;
+            position: relative;
+            page-break-after: always;
+            overflow: hidden;
+            background: var(--white-color);
+        }
+
+        .page:last-child { page-break-after: auto; }
+
+        .page-cover {
+            background: linear-gradient(145deg, #0f2744 0%, #1a365d 45%, #224f83 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cover-logo {
+            width: 200px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 24px;
+        }
+
+        .cover-tag {
+            background: rgba(56, 161, 105, 0.2);
+            border: 1px solid rgba(56, 161, 105, 0.8);
+            border-radius: 999px;
+            padding: 8px 18px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
+
+        .cover-subtitle {
+            max-width: 520px;
+            font-size: 14px;
+            opacity: 0.95;
+            margin-bottom: 24px;
+        }
+
+        .cover-client {
+            width: 100%;
+            max-width: 570px;
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px 18px;
+            margin-bottom: 18px;
+        }
+
+        .cover-client .label {
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-size: 10px;
+            opacity: 0.85;
+            margin-bottom: 4px;
+        }
+
+        .cover-client .value {
+            font-size: 16px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 9px;
+            margin-bottom: 12px;
+        }
+
+        .page-header-logo {
+            height: 34px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 10px;
+        }
+
+        .page-footer {
+            position: absolute;
+            left: 15mm;
+            right: 15mm;
+            bottom: 10mm;
+            border-top: 1px solid var(--light-color);
+            padding-top: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray-color);
+            font-size: 9px;
+        }
+
+        .page-number {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary-color);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 11px;
+            margin-bottom: 9px;
+            text-align: justify;
+        }
+
+        .box {
+            border-radius: 9px;
+            padding: 11px 12px;
+            margin: 10px 0;
+        }
+
+        .box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .box p, .box li { font-size: 10px; }
+
+        .box-info {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .box-success {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .box-highlight {
+            background: linear-gradient(135deg, #fffaf0 0%, #feebc8 100%);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .box-alert {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .card {
+            background: var(--light-color);
+            border-radius: 8px;
+            padding: 10px;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .card h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .list {
+            list-style: none;
+            margin-top: 8px;
+        }
+
+        .list li {
+            position: relative;
+            padding: 5px 0 5px 21px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 10px;
+        }
+
+        .list li:last-child { border-bottom: none; }
+
+        .list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin: 13px 0 7px;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 10px;
+        }
+
+        .table th {
+            background: #2c5282;
+            color: white;
+            padding: 7px 8px;
+            border: 1px solid #2c5282;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-size: 10px;
+        }
+
+        .table td {
+            border: 1px solid #e2e8f0;
+            padding: 6px 8px;
+            vertical-align: top;
+        }
+
+        .table tr:nth-child(even) td { background: #f8fafc; }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+            body {
+                margin: 0;
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            #pdf-content {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+            .page {
+                width: 210mm !important;
+                min-height: 297mm !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                padding: 13mm 15mm 18mm 15mm !important;
+            }
+            .page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            Clique em <strong>Gerar PDF</strong> e selecione <strong>Salvar como PDF</strong>.
+        </div>
+    </div>
+
+    <div id="pdf-content">
+        <!-- ====== CAPA ====== -->
+        <section class="page page-cover">
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0037</span>
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            <div class="cover-tag">Proposta Comercial Premium</div>
+            <h1 class="cover-title">Proposta Comercial - Saúde e Segurança do Trabalho</h1>
+            <p class="cover-subtitle">Assessoria mensal em SST, avaliação psicossocial, programas legais e treinamentos de capacitação técnica.</p>
+            <div class="cover-client">
+                <div class="label">Proposta elaborada para</div>
+                <div class="value">Casa do Bizote</div>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 2: EMPRESA CONTRATANTE ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Saúde e Segurança do Trabalho</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">1</span>Empresa Contratante</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 28%;">Razão Social</th>
+                        <th style="width: 18%;">Nome Fantasia</th>
+                        <th style="width: 18%;">CNPJ</th>
+                        <th style="width: 10%;">Func.</th>
+                        <th>Endereço</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Casa do Bizote Industria e Comercio de Vidros Temperados LTDA</td>
+                        <td>Casa do Bizote</td>
+                        <td>21.516.336/0001-81</td>
+                        <td style="text-align: center;">45</td>
+                        <td>Rod BR-101, 5697, KM 110, Nova Esperança, Parnamirim/RN, CEP 59.143-360</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr style="background: #2c5282; color: white;">
+                        <td colspan="3" style="font-weight: 700; border: 1px solid #2c5282; text-align: right;">TOTAL DE FUNCIONÁRIOS</td>
+                        <td style="font-weight: 700; border: 1px solid #2c5282; text-align: center;">45</td>
+                        <td style="border: 1px solid #2c5282;"></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-industry"></i>Atividade Principal</h4>
+                <p>CNAE 23.11-7-00 — Fabricação de vidro plano e de segurança. Atividade industrial com exposição a riscos físicos, químicos, ergonômicos e de acidentes típicos do setor vidreiro, exigindo gestão técnica de SST estruturada e contínua.</p>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">2</span>Apresentação Institucional</h2>
+
+            <p>A <strong>EngMarq Solution</strong> é especializada em Engenharia de Segurança e Saúde do Trabalho, com atuação consultiva orientada à conformidade legal e à redução de passivos trabalhistas.</p>
+            <p>Nosso modelo combina análise técnica, execução estruturada e acompanhamento documental para atender às Normas Regulamentadoras e exigências de SST no eSocial.</p>
+            <p>O escopo é conduzido com foco objetivo na identificação de riscos ocupacionais e na organização técnica dos controles exigidos por lei.</p>
+
+            <div class="box box-highlight">
+                <h4><i class="fas fa-star"></i>Proposta de Valor</h4>
+                <p>Serviço técnico completo, com entrega direta e profissional, mantendo alto padrão de qualidade e segurança jurídica para a operação da contratante.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888</span>
+                <span class="page-number">02</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 3: ESCOPO DOS SERVIÇOS ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Escopo de Serviços</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">3</span>Escopo dos Serviços</h2>
+
+            <h3 class="subsection-title"><i class="fas fa-user-shield"></i>3.1 Assessoria Mensal em SST</h3>
+            <ul class="list">
+                <li>01 (uma) visita técnica mensal presencial nas instalações da empresa.</li>
+                <li>Acompanhamento e fiscalização dos processos de segurança do trabalho.</li>
+                <li>Gestão dos programas de SST (PGR, PCMSO, LTCAT), acompanhamento dos cronogramas de ações, riscos ocupacionais, funções e EPIs/EPCs.</li>
+                <li>Acompanhamento de Ordem de Serviço (OS) conforme NR-01.</li>
+                <li>Assessoria online sob demanda.</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-brain"></i>3.2 Avaliação de Riscos Psicossociais</h3>
+            <ul class="list">
+                <li>Avaliação dos fatores de riscos psicossociais conforme exigências atualizadas da NR-01.</li>
+                <li>Diagnóstico e recomendações preventivas.</li>
+                <li>Relatório técnico com plano de ação.</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-folder-open"></i>3.3 Programas e Laudos de SST</h3>
+            <ul class="list">
+                <li>PGR (Programa de Gerenciamento de Riscos).</li>
+                <li>PCMSO (Programa de Controle Médico de Saúde Ocupacional).</li>
+                <li>LTCAT (Laudo Técnico das Condições Ambientais de Trabalho).</li>
+                <li>LIP (Laudo de Insalubridade e Periculosidade).</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-cloud-upload-alt"></i>3.4 Gestão de SST no eSocial</h3>
+            <ul class="list">
+                <li><strong>S-2210</strong> — Comunicação de Acidente de Trabalho (CAT).</li>
+                <li><strong>S-2220</strong> — Monitoramento da Saúde do Trabalhador (ASO).</li>
+                <li><strong>S-2240</strong> — Condições Ambientais do Trabalho — Agentes Nocivos.</li>
+                <li>Acompanhamento dos prazos e regularidade dos envios.</li>
+            </ul>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-shield-alt"></i>Foco do Atendimento</h4>
+                <p>Escopo estruturado para atender exigências legais, organizar a documentação de SST e dar suporte técnico contínuo à empresa para redução de riscos trabalhistas.</p>
+            </div>
+
+            <div class="box box-alert">
+                <h4><i class="fas fa-exclamation-triangle"></i>Medições Quantitativas</h4>
+                <p>As medições quantitativas (ruído ocupacional, calor, agentes químicos, iluminância, entre outros) <strong>não estão inclusas</strong> nesta proposta. Caso necessárias, serão orçadas e cobradas separadamente, de acordo com a demanda da empresa.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | escopo técnico da proposta</span>
+                <span class="page-number">03</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 4: TREINAMENTOS ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Treinamentos de Capacitação</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">4</span>Treinamentos de Capacitação Técnica</h2>
+
+            <div class="box box-info" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-graduation-cap"></i>Capacitação Técnica Inclusa</h4>
+                <p>Programação de treinamentos integrada ao serviço de assessoria, executada nas instalações do cliente durante as visitas agendadas ou mediante demanda específica.</p>
+            </div>
+
+            <!-- Treinamento 1: Admissional NR-01 -->
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); font-weight: 600;">
+                        <i class="fas fa-hard-hat" style="color: var(--secondary-color); margin-right: 6px;"></i>Treinamento Admissional - NR 01
+                    </h4>
+                    <div style="display: flex; gap: 8px; font-size: 10px;">
+                        <span style="background: #f0fff4; color: var(--success-color); padding: 2px 8px; border-radius: 4px; font-weight: 600;">Ilimitado</span>
+                    </div>
+                </div>
+                <p style="margin: 0; font-size: 10px; line-height: 1.6; color: var(--gray-color);">Capacitação obrigatória para todos os novos colaboradores admitidos, abordando riscos ocupacionais, medidas de prevenção, uso correto de EPIs e procedimentos de emergência conforme NR-01. <strong>Sem limite de aplicações durante a vigência do contrato.</strong></p>
+            </div>
+
+            <!-- Treinamento 2: Brigada de Incêndio -->
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); font-weight: 600;">
+                        <i class="fas fa-fire-extinguisher" style="color: var(--secondary-color); margin-right: 6px;"></i>Brigada de Incêndio
+                    </h4>
+                    <div style="display: flex; gap: 8px; font-size: 10px;">
+                        <span style="background: #f7fafc; color: var(--primary-color); padding: 2px 8px; border-radius: 4px; font-weight: 600;">1x/ano</span>
+                    </div>
+                </div>
+                <p style="margin: 0; font-size: 10px; line-height: 1.6; color: var(--gray-color);">Capacitação teórica e prática para formação de brigadistas, abordando prevenção e combate a incêndios, primeiros socorros, abandono de área e procedimentos de emergência conforme normas vigentes.</p>
+            </div>
+
+            <!-- Treinamento 3: Direção Defensiva -->
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); font-weight: 600;">
+                        <i class="fas fa-car" style="color: var(--secondary-color); margin-right: 6px;"></i>Direção Defensiva
+                    </h4>
+                    <div style="display: flex; gap: 8px; font-size: 10px;">
+                        <span style="background: #f7fafc; color: var(--primary-color); padding: 2px 8px; border-radius: 4px; font-weight: 600;">1x/ano</span>
+                    </div>
+                </div>
+                <p style="margin: 0; font-size: 10px; line-height: 1.6; color: var(--gray-color);">Capacitação voltada à prevenção de acidentes de trânsito, abordando técnicas de direção defensiva, condições adversas, comportamento seguro ao volante e legislação de trânsito aplicável.</p>
+            </div>
+
+            <!-- Treinamento 4: CIPA -->
+            <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 14px; margin-bottom: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                    <h4 style="margin: 0; font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); font-weight: 600;">
+                        <i class="fas fa-users" style="color: var(--secondary-color); margin-right: 6px;"></i>CIPA — Comissão Interna de Prevenção de Acidentes
+                    </h4>
+                    <div style="display: flex; gap: 8px; font-size: 10px;">
+                        <span style="background: #f7fafc; color: var(--primary-color); padding: 2px 8px; border-radius: 4px; font-weight: 600;">1x/ano</span>
+                    </div>
+                </div>
+                <p style="margin: 0; font-size: 10px; line-height: 1.6; color: var(--gray-color);">Capacitação dos membros da CIPA conforme NR-05, abordando prevenção de acidentes e doenças ocupacionais, investigação de acidentes, mapa de riscos, noções de legislação trabalhista e previdenciária relativas à segurança e saúde no trabalho.</p>
+            </div>
+
+            <div class="box box-highlight">
+                <h4><i class="fas fa-info-circle"></i>Observações sobre Treinamentos</h4>
+                <ul class="list">
+                    <li>O treinamento admissional NR 01 poderá ser aplicado quantas vezes forem necessárias durante toda a vigência do contrato, sem custo adicional.</li>
+                    <li>Os treinamentos de Brigada de Incêndio, Direção Defensiva e CIPA serão realizados 1 (uma) vez por ano.</li>
+                    <li>Emissão de certificados para todos os participantes.</li>
+                </ul>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | treinamentos de capacitação técnica</span>
+                <span class="page-number">04</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 5: ENTREGÁVEIS E BENEFÍCIOS ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Entregáveis, Diferenciais e Benefícios</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">5</span>Entregáveis e Diferenciais</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4><i class="fas fa-file-signature"></i>Entregáveis Técnicos</h4>
+                    <p>PGR, PCMSO, LTCAT, LIP e avaliação psicossocial, com documentação técnica estruturada para suporte legal e operacional.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-sitemap"></i>Gestão Integrada</h4>
+                    <p>Programas, laudos, treinamentos e eSocial centralizados em um único fornecedor, com acompanhamento mensal presencial.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-chalkboard-teacher"></i>Treinamentos Inclusos</h4>
+                    <p>Admissional ilimitado, Brigada de Incêndio, Direção Defensiva e CIPA anuais, garantindo capacitação contínua dos colaboradores.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-brain"></i>Avaliação Psicossocial</h4>
+                    <p>Conformidade com as exigências atualizadas da NR-01 sobre fatores de riscos psicossociais no ambiente de trabalho.</p>
+                </div>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">6</span>Benefícios para a Contratante</h2>
+            <ul class="list">
+                <li>Atende às exigências legais de SST aplicáveis às atividades da empresa.</li>
+                <li>Organiza e atualiza a documentação técnica obrigatória.</li>
+                <li>Assegura adequação dos envios de SST no eSocial.</li>
+                <li>Reduz riscos trabalhistas e operacionais.</li>
+                <li>Melhora a preparação da empresa para fiscalizações.</li>
+                <li>Concentra a gestão de SST em uma solução profissional com visita técnica mensal.</li>
+                <li>Capacitação admissional sem limite garante conformidade para todas as novas contratações.</li>
+            </ul>
+
+            <div class="box box-success">
+                <h4><i class="fas fa-shield-alt"></i>Resultado Esperado</h4>
+                <p>Empresa tecnicamente regularizada em SST, com documentação alinhada à legislação, treinamentos em dia e processos estruturados para continuidade segura da operação.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | valor percebido com conformidade e controle</span>
+                <span class="page-number">05</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 6: INVESTIMENTO E CONDIÇÕES ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Investimento e Condições</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">7</span>Investimento</h2>
+
+            <table class="table" style="margin-top: 12px;">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Empresa</th>
+                        <th style="width: 22%;">CNPJ</th>
+                        <th style="width: 12%;">Func.</th>
+                        <th>Serviços</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Casa do Bizote</strong></td>
+                        <td>21.516.336/0001-81</td>
+                        <td style="text-align: center;">45</td>
+                        <td>Assessoria + Psicossocial + PGR/PCMSO/LTCAT/LIP + Treinamentos</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); border-radius: 12px; padding: 20px; margin: 15px 0; text-align: center; color: white;">
+                <p style="margin: 0 0 5px 0; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.9; color: white; text-align: center;">Valor Total da Proposta (Mensal)</p>
+                <p style="margin: 0; font-size: 32px; font-weight: 800; font-family: var(--font-primary); color: var(--secondary-color); text-align: center;">R$ 2.300,00</p>
+                <p style="margin: 5px 0 0 0; font-size: 11px; opacity: 0.9; color: white; text-align: center;">01 empresa • 45 funcionários • Atendimento completo</p>
+            </div>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-credit-card"></i>Condições de Pagamento</h4>
+                <ul class="list">
+                    <li>Valor mensal: <strong>R$ 2.300,00</strong> (dois mil e trezentos reais).</li>
+                    <li>Pagamento mensal recorrente durante a vigência do contrato.</li>
+                </ul>
+            </div>
+
+            <div class="box box-highlight">
+                <h4><i class="fas fa-clipboard-list"></i>O que está incluso no valor mensal</h4>
+                <ul class="list">
+                    <li>Assessoria mensal com 01 visita técnica presencial.</li>
+                    <li>Avaliação de riscos psicossociais (NR-01).</li>
+                    <li>Elaboração de PGR, PCMSO, LTCAT e LIP.</li>
+                    <li>Gestão e envio de eventos de SST no eSocial.</li>
+                    <li>Treinamento admissional NR 01 — ilimitado.</li>
+                    <li>Treinamento Brigada de Incêndio — 1x por ano.</li>
+                    <li>Treinamento Direção Defensiva — 1x por ano.</li>
+                    <li>Treinamento CIPA (NR-05) — 1x por ano.</li>
+                    <li>Assessoria online sob demanda.</li>
+                </ul>
+            </div>
+
+            <div class="box box-success">
+                <h4><i class="fas fa-plus-circle"></i>Condições Comerciais Complementares</h4>
+                <ul class="list">
+                    <li>Medições quantitativas (ruído, calor, agentes químicos, etc.) <strong>não estão inclusas</strong> no valor mensal e serão orçadas e cobradas separadamente, conforme demanda específica da empresa.</li>
+                    <li>Serviços complementares possuem condições especiais para clientes EngMarq Solution.</li>
+                    <li>Prazo de execução conforme padrão técnico da EngMarq Solution.</li>
+                </ul>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">8</span>Condições Comerciais</h2>
+            <ul class="list">
+                <li>Validade desta proposta: 15 dias corridos a partir da data de emissão.</li>
+                <li>Escopo limitado aos itens descritos nesta proposta.</li>
+                <li>Alterações de escopo serão formalizadas mediante aditivo comercial.</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | investimento e condições comerciais</span>
+                <span class="page-number">06</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 7: TERMO DE ACEITE ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Termo de Aceite</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">9</span>Termo de Aceite</h2>
+
+            <p>Ao assinar este termo, as partes declaram ciência e concordância com o escopo técnico, condições comerciais, valores e responsabilidades estabelecidas nesta proposta comercial.</p>
+
+            <div class="box box-info" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i>Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições e prazos descritos nesta proposta comercial.</p>
+            </div>
+
+            <!-- Assinatura EngMarq -->
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 14px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> ASSINATURA DA ENGMARQ SOLUTION
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Empresa</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">EngMarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura da EngMarq Solution</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assinatura Casa do Bizote -->
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 14px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-file-signature" style="color: var(--secondary-color);"></i> ASSINATURA DA CONTRATANTE — CASA DO BIZOTE
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Empresa</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">Casa do Bizote Industria e Comercio de Vidros Temperados LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">21.516.336/0001-81</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Responsável — Casa do Bizote</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

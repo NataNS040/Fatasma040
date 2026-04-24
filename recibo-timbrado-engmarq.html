@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recibo Timbrado - Engmarq Solution</title>
+  <style>
+    :root {
+      --primary: #0b4f6c;
+      --primary-dark: #083b51;
+      --accent: #17a2b8;
+      --text: #1f2933;
+      --muted: #6b7785;
+      --paper: #ffffff;
+      --line: #d8e1e8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: linear-gradient(145deg, #eef5f9 0%, #f8fbfd 100%);
+      padding: 28px;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(11, 79, 108, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+    }
+
+    .content {
+      padding: 34px 36px 28px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 26px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 78px;
+      height: 78px;
+      object-fit: contain;
+      border-radius: 10px;
+      border: 1px solid #e8edf2;
+      background: #fff;
+      padding: 6px;
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 23px;
+      letter-spacing: 0.5px;
+      color: var(--primary-dark);
+    }
+
+    .brand-text p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .title {
+      text-align: right;
+    }
+
+    .title h2 {
+      margin: 0;
+      font-size: 24px;
+      color: var(--primary);
+      letter-spacing: 1.2px;
+    }
+
+    .title span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .lead {
+      margin: 2px 0 18px;
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .buyer-box {
+      border: 1px solid var(--line);
+      background: #f9fcfe;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .buyer-box h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: var(--primary-dark);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .buyer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 18px;
+      font-size: 14px;
+    }
+
+    .label {
+      color: var(--muted);
+      margin-right: 6px;
+    }
+
+    .table-wrap {
+      margin-top: 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 11px 14px;
+      background: #f1f7fb;
+      color: var(--primary-dark);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    tbody td {
+      padding: 11px 14px;
+      border-top: 1px solid #edf2f6;
+    }
+
+    td.value,
+    th.value {
+      text-align: right;
+      white-space: nowrap;
+      width: 160px;
+    }
+
+    .summary {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #f6fbfe 0%, #edf7fc 100%);
+      border: 1px solid #dbeaf3;
+    }
+
+    .summary p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .summary strong {
+      color: var(--primary-dark);
+    }
+
+    .footer {
+      margin-top: 34px;
+      display: grid;
+      gap: 30px;
+    }
+
+    .place-date {
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .signature {
+      margin-top: 4px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .signature-line {
+      width: 320px;
+      border-top: 1px solid #8998a7;
+      padding-top: 8px;
+      font-size: 14px;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .signature-meta {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--primary-dark);
+      line-height: 1.45;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .actions {
+      width: 210mm;
+      margin: 14px auto 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn {
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    @page {
+      size: A4;
+      margin: 10mm;
+    }
+
+    @media print {
+      html,
+      body {
+        width: 210mm;
+        height: 297mm;
+      }
+
+      body {
+        background: #fff;
+        padding: 0;
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .actions {
+        display: none;
+      }
+
+      .page {
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      body {
+        padding: 10px;
+      }
+
+      .page,
+      .actions {
+        width: 100%;
+      }
+
+      .content {
+        padding: 22px 18px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .title {
+        text-align: left;
+      }
+
+      .buyer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .signature-line {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="content">
+      <header class="header">
+        <div class="brand">
+          <img class="logo" src="assets/logoengmarq.png" alt="Logo Engmarq Solution" />
+          <div class="brand-text">
+            <h1>ENGMARQ SOLUTION</h1>
+            <p>Saude e Seguranca do Trabalho</p>
+          </div>
+        </div>
+        <div class="title">
+          <h2>RECIBO</h2>
+          <span>Comprovante de pagamento</span>
+        </div>
+      </header>
+
+      <section class="buyer-box">
+        <h3>Dados do Comprador</h3>
+        <div class="buyer-grid">
+          <div><span class="label">Nome:</span> Alberto Cajazeira da Silva Junior</div>
+          <div><span class="label">CPF:</span> 010.118.004-70</div>
+          <div><span class="label">E-mail:</span> albertocajazeira1981@gmail.com</div>
+          <div><span class="label">Data de nascimento:</span> 20/03/1981</div>
+        </div>
+      </section>
+
+      <p class="lead">
+        Recebemos de <strong>Alberto Cajazeira da Silva Junior</strong> o valor de
+        <strong>R$ 380,00</strong> (trezentos e oitenta reais),
+        pago a vista via PIX, referente aos cursos abaixo.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Descricao</th>
+              <th class="value">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Curso NR 35</td>
+              <td class="value">R$ 120,00</td>
+            </tr>
+            <tr>
+              <td>Curso NR 10 Basico</td>
+              <td class="value">R$ 130,00</td>
+            </tr>
+            <tr>
+              <td>Curso NR 10 SEP</td>
+              <td class="value">R$ 130,00</td>
+            </tr>
+            <tr>
+              <td><strong>Total recebido (PIX a vista)</strong></td>
+              <td class="value"><strong>R$ 380,00</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="summary">
+        <p>
+          <strong>Forma de pagamento:</strong> PIX (a vista)<br />
+          <strong>Observacao:</strong> Valores dos cursos conforme informado para este recibo.
+        </p>
+      </div>
+
+      <footer class="footer">
+        <div class="place-date">
+          Local e data: 22/04/2026
+        </div>
+
+        <div class="signature">
+          <div>
+            <div class="signature-line">&nbsp;</div>
+            <div class="signature-meta">
+              Thiago Marques - Diretor<br />
+              ENGMARQ SOLUTION LTDA - CNPJ: 60.545.359/0001-76
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <p class="note">
+        Documento emitido para fins de comprovacao de pagamento.
+      </p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="window.print()">Imprimir / Salvar em PDF</button>
+  </div>
+</body>
+</html>

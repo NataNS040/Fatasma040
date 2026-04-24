@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato - Beniwood Ambientes Projetados LTDA | EngMarq Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.7;
+            background: #e2e8f0;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 25mm 25mm 25mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+        }
+
+        .page:last-child { page-break-after: auto; }
+
+        .contrato-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .contrato-logo { height: 45px; }
+
+        .contrato-titulo {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 20px 0 25px;
+            line-height: 1.5;
+        }
+
+        h3 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 20px 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            font-size: 11px;
+            line-height: 1.7;
+            text-align: justify;
+            margin-bottom: 8px;
+            orphans: 3;
+            widows: 3;
+        }
+
+        .item-lista {
+            padding-left: 20px;
+            margin-bottom: 4px;
+        }
+
+        .dados-bancarios {
+            background: var(--light-color);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+
+        .dados-bancarios p {
+            margin-bottom: 2px;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .contrato-assinaturas { margin-top: 40px; }
+
+        .contrato-local-data {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        .assinatura-bloco {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .assinatura-label {
+            font-weight: 700;
+            font-size: 11px;
+            margin-bottom: 30px;
+        }
+
+        .assinatura-linha {
+            border-bottom: 1px solid var(--dark-color);
+            max-width: 350px;
+            margin: 0 auto 5px;
+            height: 1px;
+        }
+
+        .assinatura-nome {
+            font-weight: 600;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .assinatura-cargo {
+            font-size: 10px;
+            color: var(--gray-color);
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body { background: white; margin: 0; padding: 0; }
+            .pdf-controls { display: none !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                padding: 20mm 25mm 25mm 25mm !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                margin: 0 !important;
+                overflow: visible !important;
+            }
+            h2, h3, .dados-bancarios, .assinatura-bloco, .contrato-assinaturas {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            .contrato-assinaturas { margin-top: 20px !important; }
+            .assinatura-bloco { margin-bottom: 24px !important; }
+            .assinatura-label { margin-bottom: 18px !important; }
+            .page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+        <div class="page">
+            <div class="contrato-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="contrato-logo">
+            </div>
+
+            <h2 class="contrato-titulo">
+                CONTRATO DE PRESTACAO DE SERVICOS DE ENGENHARIA DE SEGURANCA E SAUDE DO TRABALHO<br>
+                <span style="font-size: 13px; font-weight: 600;">PROPOSTA INTEGRADA DE SST - TREINAMENTO ADMISSIONAL + AVALIACAO PSICOSSOCIAL + KIT SST + ESOCIAL</span>
+            </h2>
+
+            <p>Pelo presente instrumento particular, as partes abaixo identificadas:</p>
+
+            <p><strong>CONTRATANTE:</strong><br>
+            BENIWOOD - AMBIENTES PROJETADOS LTDA, pessoa juridica de direito privado, inscrita no CNPJ no 62.626.021/0001-74, com sede na Rua Caminho dos Navegantes, 231, Cajupiranga, CEP 59.156-242, Parnamirim/RN, doravante denominada simplesmente CONTRATANTE.</p>
+
+            <p><strong>CONTRATADA:</strong><br>
+            ENGMARQ SOLUTION LTDA, pessoa juridica de direito privado, inscrita no CNPJ no 60.545.359/0001-76, com sede em Natal/RN, neste ato representada por seu Diretor Thiago Marques, doravante denominada CONTRATADA.</p>
+
+            <p>As partes resolvem celebrar o presente contrato, que se regera pelas clausulas e condicoes seguintes.</p>
+
+            <h3>CLAUSULA 1 - DO OBJETO</h3>
+            <p>1.1. O presente contrato tem por objeto a prestacao de servicos tecnicos especializados de Seguranca e Saude do Trabalho para atendimento integrado as obrigacoes legais da CONTRATANTE, compreendendo:</p>
+            <p class="item-lista">a) Treinamento admissional em SST, conforme NR-01;</p>
+            <p class="item-lista">b) Avaliacao de fatores de riscos psicossociais, conforme NR-01 atualizada;</p>
+            <p class="item-lista">c) Elaboracao do Kit de Programas de SST, composto por PGR, PCMSO, LTCAT e LIP;</p>
+            <p class="item-lista">d) Envio dos eventos de SST ao eSocial (S-2210, S-2220 e S-2240), conforme necessidade e informacoes disponibilizadas.</p>
+            <p>1.2. O servico esta dimensionado para ate 5 (cinco) colaboradores e 3 (tres) funcoes da CONTRATANTE.</p>
+            <p>1.3. Os servicos serao executados em conformidade com as Normas Regulamentadoras nos 01, 07, 15 e 16, legislacao previdenciaria aplicavel e obrigacoes acessorias do eSocial.</p>
+
+            <h3>CLAUSULA 2 - DO ESCOPO DOS SERVICOS</h3>
+            <p>2.1. Constituem atividades compreendidas neste contrato:</p>
+            <p class="item-lista">2.1.1. Reuniao de alinhamento inicial, levantamento de informacoes e planejamento de execucao;</p>
+            <p class="item-lista">2.1.2. Visita tecnica para reconhecimento dos ambientes e atividades de trabalho;</p>
+            <p class="item-lista">2.1.3. Elaboracao do PGR com inventario de riscos e plano de acao;</p>
+            <p class="item-lista">2.1.4. Elaboracao do PCMSO com matriz de exames ocupacionais por funcao;</p>
+            <p class="item-lista">2.1.5. Elaboracao do LTCAT para caracterizacao de exposicao a agentes nocivos;</p>
+            <p class="item-lista">2.1.6. Elaboracao do LIP para avaliacao de insalubridade e periculosidade;</p>
+            <p class="item-lista">2.1.7. Aplicacao e analise de avaliacao de fatores psicossociais;</p>
+            <p class="item-lista">2.1.8. Realizacao de treinamento admissional com registro e certificacao;</p>
+            <p class="item-lista">2.1.9. Envio dos eventos S-2210, S-2220 e S-2240 ao eSocial, conforme fatos geradores e dados fornecidos pela CONTRATANTE.</p>
+        </div>
+
+        <div class="page">
+            <div class="contrato-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="contrato-logo">
+            </div>
+
+            <h3>CLAUSULA 3 - DOS ENTREGAVEIS</h3>
+            <p>3.1. A CONTRATADA entregara a CONTRATANTE os seguintes documentos e comprovacoes:</p>
+            <p class="item-lista">3.1.1. Programa de Gerenciamento de Riscos (PGR);</p>
+            <p class="item-lista">3.1.2. Programa de Controle Medico de Saude Ocupacional (PCMSO);</p>
+            <p class="item-lista">3.1.3. Laudo Tecnico das Condicoes Ambientais do Trabalho (LTCAT);</p>
+            <p class="item-lista">3.1.4. Laudo de Insalubridade e Periculosidade (LIP);</p>
+            <p class="item-lista">3.1.5. Relatorio de avaliacao de fatores de riscos psicossociais com recomendacoes;</p>
+            <p class="item-lista">3.1.6. Certificados e lista de presenca do treinamento admissional;</p>
+            <p class="item-lista">3.1.7. Comprovantes de envio dos eventos de SST ao eSocial, quando aplicavel.</p>
+            <p>3.2. A entrega sera realizada em formato digital (PDF), podendo haver entrega fisica mediante ajuste previo entre as partes.</p>
+
+            <h3>CLAUSULA 4 - DO PRAZO DE EXECUCAO</h3>
+            <p>4.1. A execucao dos servicos tera inicio apos a confirmacao do pagamento inicial e envio das informacoes basicas pela CONTRATANTE.</p>
+            <p>4.2. O prazo estimado para conclusao dos servicos e de ate 20 (vinte) dias uteis, podendo sofrer ajuste por indisponibilidade de agenda, dados ou acesso aos ambientes.</p>
+            <p>4.3. Eventuais adequacoes de cronograma, por motivo operacional ou de comum acordo, nao caracterizam inadimplemento contratual.</p>
+
+            <h3>CLAUSULA 5 - DAS OBRIGACOES DAS PARTES</h3>
+            <p>5.1. Obriga-se a CONTRATADA a:</p>
+            <p class="item-lista">a) Executar os servicos com rigor tecnico e observancia da legislacao aplicavel;</p>
+            <p class="item-lista">b) Manter sigilo sobre informacoes, documentos e dados da CONTRATANTE;</p>
+            <p class="item-lista">c) Entregar os documentos no prazo ajustado;</p>
+            <p class="item-lista">d) Emitir Nota Fiscal de Servicos;</p>
+            <p class="item-lista">e) Prestar suporte tecnico por 60 (sessenta) dias apos a entrega final.</p>
+            <p>5.2. Obriga-se a CONTRATANTE a:</p>
+            <p class="item-lista">a) Fornecer documentos, informacoes e acesso aos ambientes necessarios;</p>
+            <p class="item-lista">b) Disponibilizar colaboradores para entrevistas, avaliacao psicossocial e treinamento;</p>
+            <p class="item-lista">c) Informar fatos geradores para envio dos eventos do eSocial;</p>
+            <p class="item-lista">d) Viabilizar o acesso aos sistemas necessarios ao envio dos eventos, quando aplicavel;</p>
+            <p class="item-lista">e) Efetuar os pagamentos nas condicoes pactuadas.</p>
+
+            <h3>CLAUSULA 6 - DO PRECO E DAS CONDICOES DE PAGAMENTO</h3>
+            <p>6.1. O valor global do presente contrato e de R$ 2.200,00 (dois mil e duzentos reais), contemplando o escopo completo para ate 5 (cinco) colaboradores e 3 (tres) funcoes.</p>
+            <p>6.2. O pagamento sera realizado da seguinte forma:</p>
+            <p class="item-lista">a) 50% (cinquenta por cento) na aprovacao do contrato, no valor de R$ 1.100,00;</p>
+            <p class="item-lista">b) 50% (cinquenta por cento) na entrega dos documentos finais, no valor de R$ 1.100,00.</p>
+            <p>6.3. O pagamento podera ser efetuado via PIX ou deposito/transferencia bancaria.</p>
+        </div>
+
+        <div class="page">
+            <div class="contrato-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="contrato-logo">
+            </div>
+
+            <p>6.4. Havendo aumento de quadro acima de 5 colaboradores, inclusao de novas funcoes ou necessidade de servicos adicionais, sera elaborado aditivo comercial especifico.</p>
+
+            <div class="dados-bancarios">
+                <p><strong>Dados bancarios da CONTRATADA:</strong></p>
+                <p>Banco: 748 - Banco Cooperativo Sicredi S.A.</p>
+                <p>Agencia: 2207</p>
+                <p>Conta Corrente: 65447-7</p>
+                <p>Razao Social: ENGMARQ SOLUTION LTDA</p>
+                <p>CNPJ: 60.545.359/0001-76</p>
+                <p>Chave PIX: CNPJ da CONTRATADA</p>
+            </div>
+
+            <h3>CLAUSULA 7 - DOS SERVICOS NAO INCLUSOS</h3>
+            <p>7.1. Nao estao inclusos no valor deste contrato servicos de medicoes quantitativas ambientais (ruido, calor, agentes quimicos, iluminancia, entre outros), os quais serao orcados e contratados separadamente, caso necessarios.</p>
+
+            <h3>CLAUSULA 8 - DO INADIMPLEMENTO</h3>
+            <p>8.1. O inadimplemento financeiro autoriza a suspensao dos servicos ate a regularizacao do debito.</p>
+            <p>8.2. Sobre valores em atraso incidira multa de 2% (dois por cento), acrescida de juros de 1% (um por cento) ao mes.</p>
+
+            <h3>CLAUSULA 9 - DA RESPONSABILIDADE TECNICA</h3>
+            <p>9.1. A responsabilidade da CONTRATADA limita-se a elaboracao tecnica dos documentos, realizacao das avaliacoes e orientacoes pertinentes, nao abrangendo a implementacao operacional das medidas recomendadas.</p>
+
+            <h3>CLAUSULA 10 - DA CONFIDENCIALIDADE E LGPD</h3>
+            <p>10.1. As informacoes obtidas no ambito deste contrato sao confidenciais e serao utilizadas exclusivamente para execucao do objeto contratual.</p>
+            <p>10.2. O tratamento de dados pessoais observara a Lei no 13.709/2018 (LGPD), com adocao de medidas tecnicas e administrativas adequadas.</p>
+
+            <h3>CLAUSULA 11 - DA RESCISAO</h3>
+            <p>11.1. O presente contrato podera ser rescindido por qualquer das partes mediante aviso previo de 15 (quinze) dias.</p>
+            <p>11.2. Em caso de rescisao apos o inicio da execucao, serao devidos os valores proporcionais aos servicos efetivamente prestados.</p>
+
+            <h3>CLAUSULA 12 - DO FORO</h3>
+            <p>12.1. Fica eleito o foro da Comarca de Natal/RN, com renuncia expressa de qualquer outro, por mais privilegiado que seja.</p>
+
+        </div>
+
+        <div class="page">
+            <div class="contrato-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="contrato-logo">
+            </div>
+
+            <h3>ASSINATURAS</h3>
+
+            <div class="contrato-assinaturas">
+                <p class="contrato-local-data">Natal/RN, 17 de abril de 2026.</p>
+
+                <div class="assinatura-bloco">
+                    <p class="assinatura-label">CONTRATADA:</p>
+                    <div class="assinatura-linha"></div>
+                    <p class="assinatura-nome">ENGMARQ SOLUTION LTDA</p>
+                    <p class="assinatura-cargo">Thiago Marques - Diretor</p>
+                </div>
+
+                <div class="assinatura-bloco">
+                    <p class="assinatura-label">CONTRATANTE:</p>
+                    <div class="assinatura-linha"></div>
+                    <p class="assinatura-nome">Beniwood - Ambientes Projetados LTDA</p>
+                    <p class="assinatura-cargo">CNPJ: 62.626.021/0001-74</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        console.log('Contrato - Beniwood Ambientes Projetados LTDA (TM0038)');
+        console.log('Pressione Ctrl+P ou clique em Gerar PDF');
+    </script>
+</body>
+</html>

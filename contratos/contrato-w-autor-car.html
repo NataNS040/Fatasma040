@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato - Willame Lourenco de Carvalho (W Autor Car) | EngMarq Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+        
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.7;
+            background: #e2e8f0;
+        }
+        
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+        .btn-generate {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+        
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+        
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm 25mm 25mm 25mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+        }
+        .page:last-child { page-break-after: auto; }
+        
+        .contrato-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .contrato-logo {
+            height: 45px;
+        }
+        
+        .contrato-titulo {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 20px 0 25px;
+            line-height: 1.5;
+        }
+        
+        h3 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 20px 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        p {
+            font-size: 11px;
+            line-height: 1.7;
+            text-align: justify;
+            margin-bottom: 8px;
+        }
+        
+        .item-lista {
+            padding-left: 20px;
+            margin-bottom: 4px;
+        }
+        
+        .dados-bancarios {
+            background: var(--light-color);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+        .dados-bancarios p {
+            margin-bottom: 2px;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+        
+        .contrato-assinaturas {
+            margin-top: 40px;
+        }
+        .contrato-local-data {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+        .assinatura-bloco {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .assinatura-label {
+            font-weight: 700;
+            font-size: 11px;
+            margin-bottom: 30px;
+        }
+        .assinatura-linha {
+            border-bottom: 1px solid var(--dark-color);
+            max-width: 350px;
+            margin: 0 auto 5px;
+            height: 1px;
+        }
+        .assinatura-nome {
+            font-weight: 600;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+        .assinatura-cargo {
+            font-size: 10px;
+            color: var(--gray-color);
+        }
+        
+        @media print {
+            body { background: white; margin: 0; padding: 0; }
+            .pdf-controls { display: none !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                width: 210mm;
+                min-height: 297mm;
+                padding: 20mm 25mm 25mm 25mm;
+                page-break-after: always;
+                margin: 0;
+            }
+            .page:last-child { page-break-after: auto; }
+        }
+        
+        @page {
+            size: A4;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+        <!-- ====== PÁGINA 1: CONTRATO ====== -->
+        <div class="page">
+            <div class="contrato-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="contrato-logo">
+            </div>
+            
+            <h2 class="contrato-titulo">
+                CONTRATO DE PRESTAÇÃO DE SERVIÇOS DE ENGENHARIA DE SEGURANÇA E SAÚDE DO TRABALHO<br>
+                <span style="font-size: 13px; font-weight: 600;">KIT INTEGRADO DE PROGRAMAS DE SST – PGR, LTCAT, PCMSO E LIP + eSocial</span>
+            </h2>
+            
+            <p>Pelo presente instrumento particular, as partes abaixo identificadas:</p>
+            
+            <p><strong>CONTRATANTE:</strong><br>
+            Willame Lourenco de Carvalho, pessoa jurídica de direito privado, inscrita no CNPJ nº 41.639.341/0001-99, com sede R Ipê Branco, 144 - Alto do Extremoz, CEP 59.575-000, Extremoz/RN, doravante denominada simplesmente CONTRATANTE.</p>
+            
+            <p><strong>CONTRATADA:</strong><br>
+            ENGMARQ SOLUTION LTDA, pessoa jurídica de direito privado, inscrita no CNPJ nº 60.545.359/0001-76, com sede em Natal/RN, neste ato representada por seu Diretor Thiago Marques, doravante denominada CONTRATADA.</p>
+            
+            <p>As partes resolvem celebrar o presente contrato, que se regerá pelas cláusulas e condições seguintes.</p>
+
+            <h3>CLÁUSULA 1 – DO OBJETO</h3>
+            <p>1.1. O presente contrato tem por objeto a prestação de serviços técnicos especializados para elaboração integrada dos Programas de Segurança e Saúde do Trabalho, compreendendo:</p>
+            <p class="item-lista">a) Programa de Gerenciamento de Riscos – PGR;</p>
+            <p class="item-lista">b) Laudo Técnico das Condições Ambientais do Trabalho – LTCAT;</p>
+            <p class="item-lista">c) Programa de Controle Médico de Saúde Ocupacional – PCMSO;</p>
+            <p class="item-lista">d) Laudo de Insalubridade e Periculosidade – LIP;</p>
+            <p class="item-lista">e) Envio dos eventos S-2240 e S-2220 do eSocial (por colaborador);</p>
+            <p>em conformidade com as Normas Regulamentadoras nº 01, 07, 15 e 16, legislação previdenciária vigente, obrigações do eSocial e demais normas aplicáveis.</p>
+            <p>1.2. Os serviços serão executados com base na avaliação das funções exercidas na CONTRATANTE.</p>
+
+            <h3>CLÁUSULA 2 – DO ESCOPO DOS SERVIÇOS</h3>
+            <p>2.1. Constituem atividades compreendidas neste contrato:</p>
+            <p class="item-lista">2.1.1. Visita técnica às instalações da CONTRATANTE;</p>
+            <p class="item-lista">2.1.2. Identificação e avaliação dos riscos ocupacionais por função;</p>
+            <p class="item-lista">2.1.3. Elaboração do Inventário de Riscos e Plano de Ação (PGR);</p>
+            <p class="item-lista">2.1.4. Elaboração do LTCAT com caracterização de exposição a agentes nocivos;</p>
+            <p class="item-lista">2.1.5. Elaboração do PCMSO com definição de exames ocupacionais por função;</p>
+            <p class="item-lista">2.1.6. Elaboração do LIP com avaliação de insalubridade e periculosidade (NR-15 e NR-16);</p>
+            <p class="item-lista">2.1.7. Integração técnica entre PGR, LTCAT, PCMSO e LIP;</p>
+            <p class="item-lista">2.1.8. Envio individual dos eventos S-2240 (Condições Ambientais) e S-2220 (Monitoramento da Saúde) ao eSocial, por colaborador;</p>
+            <p class="item-lista">2.1.9. Análise dos riscos considerando atividades, ambientes, processos de trabalho e exposição ocupacional, por função.</p>
+
+            <h3>CLÁUSULA 3 – DOS ENTREGÁVEIS</h3>
+            <p>3.1. A CONTRATADA entregará à CONTRATANTE os seguintes documentos/serviços:</p>
+            <p class="item-lista">3.1.1. Programa de Gerenciamento de Riscos – PGR;</p>
+            <p class="item-lista">3.1.2. Laudo Técnico das Condições Ambientais do Trabalho – LTCAT;</p>
+            <p class="item-lista">3.1.3. Programa de Controle Médico de Saúde Ocupacional – PCMSO;</p>
+            <p class="item-lista">3.1.4. Laudo de Insalubridade e Periculosidade – LIP;</p>
+            <p class="item-lista">3.1.5. Comprovantes de envio dos eventos S-2240 e S-2220 ao eSocial;</p>
+            <p class="item-lista">3.1.6. Matriz de riscos ocupacionais por função;</p>
+            <p class="item-lista">3.1.7. Plano de ação preventivo e corretivo.</p>
+        </div>
+        
+        <!-- ====== PÁGINA 2: PRAZO, OBRIGAÇÕES E VALOR ====== -->
+        <div class="page">
+            <div class="contrato-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="contrato-logo">
+            </div>
+            
+            <h3>CLÁUSULA 4 – DO PRAZO DE EXECUÇÃO</h3>
+            <p>4.1. A execução dos serviços terá início após a confirmação do pagamento inicial.</p>
+            <p>4.2. O prazo estimado para conclusão dos serviços é de até 15 (quinze) dias úteis.</p>
+            <p>4.3. As partes reconhecem que o cronograma depende da disponibilidade de agenda da CONTRATADA e da CONTRATANTE, especialmente para realização da visita técnica e acesso às informações e colaboradores.</p>
+            <p>4.4. Eventuais ajustes no prazo, decorrentes de imprevistos operacionais, limitações de agenda ou necessidade de reprogramação consensual, não caracterizam inadimplemento, permanecendo como objetivo das partes a conclusão dos serviços no menor prazo possível.</p>
+
+            <h3>CLÁUSULA 5 – DAS OBRIGAÇÕES DAS PARTES</h3>
+            <p>5.1. Obrigações da CONTRATADA:</p>
+            <p class="item-lista">a) Executar os serviços com competência técnica e em conformidade com as normas vigentes;</p>
+            <p class="item-lista">b) Manter sigilo sobre as informações da CONTRATANTE;</p>
+            <p class="item-lista">c) Entregar a documentação técnica no prazo acordado;</p>
+            <p class="item-lista">d) Emitir Nota Fiscal de Serviço.</p>
+            <p>5.2. Obrigações da CONTRATANTE:</p>
+            <p class="item-lista">a) Fornecer informações e documentos necessários;</p>
+            <p class="item-lista">b) Disponibilizar acesso aos ambientes e colaboradores;</p>
+            <p class="item-lista">c) Fornecer dados de acesso ao eSocial (certificado digital ou procuração eletrônica);</p>
+            <p class="item-lista">d) Apoiar a organização das agendas e atividades técnicas.</p>
+
+            <h3>CLÁUSULA 6 – DO PREÇO E DAS CONDIÇÕES DE PAGAMENTO</h3>
+            <p>6.1. O valor global do presente contrato é de R$ 1.700,00 (mil e setecentos reais).</p>
+            <p>6.2. O pagamento será realizado da seguinte forma:</p>
+            <p class="item-lista">a) 50% (cinquenta por cento) – R$ 850,00 – até 07/04/2026;</p>
+            <p class="item-lista">b) 50% (cinquenta por cento) – R$ 850,00 – até 07/05/2026 (30 dias após a primeira parcela).</p>
+            <p>6.3. O pagamento poderá ser efetuado via PIX ou depósito/transferência bancária.</p>
+            
+            <div class="dados-bancarios">
+                <p><strong>Dados bancários da CONTRATADA:</strong></p>
+                <p>Banco: 748 – Banco Cooperativo Sicredi S.A.</p>
+                <p>Agência: 2207</p>
+                <p>Conta Corrente: 65447-7</p>
+                <p>Razão Social: ENGMARQ SOLUTION LTDA</p>
+                <p>CNPJ: 60.545.359/0001-76</p>
+                <p>Chave PIX: CNPJ da CONTRATADA</p>
+            </div>
+        </div>
+        
+        <!-- ====== PÁGINA 3: CLÁUSULAS FINAIS E ASSINATURAS ====== -->
+        <div class="page">
+            <div class="contrato-header">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="contrato-logo">
+            </div>
+            
+            <h3>CLÁUSULA 7 – DO INADIMPLEMENTO</h3>
+            <p>7.1. O inadimplemento financeiro autoriza a suspensão imediata dos serviços até a regularização.</p>
+            <p>7.2. Incidirá multa de 2% (dois por cento) sobre o valor devido, além de juros de 1% (um por cento) ao mês.</p>
+
+            <h3>CLÁUSULA 8 – DA RESPONSABILIDADE TÉCNICA</h3>
+            <p>8.1. A responsabilidade da CONTRATADA limita-se à elaboração técnica, análise e recomendações, não abrangendo a implementação prática das ações sugeridas.</p>
+
+            <h3>CLÁUSULA 9 – DA CONFIDENCIALIDADE E PROPRIEDADE INTELECTUAL</h3>
+            <p>9.1. As informações coletadas são estritamente confidenciais.</p>
+            <p>9.2. Os documentos técnicos produzidos são de propriedade intelectual da CONTRATADA, sendo vedada a reprodução, cessão ou utilização para fins diversos do objeto deste contrato sem autorização expressa.</p>
+
+            <h3>CLÁUSULA 10 – DA RESCISÃO</h3>
+            <p>10.1. O presente contrato poderá ser rescindido por qualquer das partes mediante aviso prévio de 15 (quinze) dias.</p>
+
+            <h3>CLÁUSULA 11 – DO FORO</h3>
+            <p>11.1. Fica eleito o foro da Comarca de Natal/RN, com renúncia expressa a qualquer outro.</p>
+
+            <div class="contrato-assinaturas">
+                <p class="contrato-local-data">Natal/RN, 15 de abril de 2026.</p>
+                
+                <div class="assinatura-bloco">
+                    <p class="assinatura-label">CONTRATADA:</p>
+                    <div class="assinatura-linha"></div>
+                    <p class="assinatura-nome">ENGMARQ SOLUTION LTDA</p>
+                    <p class="assinatura-cargo">Thiago Marques – Diretor</p>
+                </div>
+                
+                <div class="assinatura-bloco">
+                    <p class="assinatura-label">CONTRATANTE:</p>
+                    <div class="assinatura-linha"></div>
+                    <p class="assinatura-nome">Willame Lourenco de Carvalho</p>
+                    <p class="assinatura-cargo">CNPJ: 41.639.341/0001-99</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+        console.log('📄 Contrato - W Autor Car (Willame Lourenco de Carvalho)');
+        console.log('💡 Pressione Ctrl+P ou clique em "Gerar PDF"');
+    </script>
+</body>
+</html>
