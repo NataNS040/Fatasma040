@@ -1,0 +1,1941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentação de SST — O que é e para que serve | EngMarq</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --primary-light: #2d4a6f;
+            --secondary-color: #f5a623;
+            --secondary-dark: #e09112;
+            --accent-color: #10b981;
+            --accent-light: #d1fae5;
+            --danger-color: #ef4444;
+            --danger-light: #fee2e2;
+            --warning-color: #f59e0b;
+            --warning-light: #fef3c7;
+            --info-color: #3b82f6;
+            --info-light: #dbeafe;
+            --purple-color: #8b5cf6;
+            --purple-light: #ede9fe;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --gray-light: #e5e7eb;
+            --light-color: #f8fafc;
+            --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-secondary);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 30px 0;
+            min-height: 100vh;
+        }
+
+        /* ===== SLIDE BASE ===== */
+        .slide {
+            width: 297mm;
+            height: 210mm;
+            background: var(--white-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            padding: 35px 45px 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-shrink: 0;
+        }
+
+        .slide-logo { height: 30px; object-fit: contain; }
+
+        .slide-number {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--primary-color);
+            background: linear-gradient(135deg, #e8eef5, #f0f4f8);
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+
+        .slide-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 9px 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            font-family: var(--font-secondary);
+        }
+
+        .slide-footer a { color: var(--secondary-color); text-decoration: none; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* ===== SECTION LABELS ===== */
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        /* ===== COVER SLIDE ===== */
+        .slide-cover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 55%, var(--primary-light) 100%);
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 25%, rgba(245,166,35,0.10) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(16,185,129,0.07) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cover-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 55px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-right {
+            width: 290px;
+            background: rgba(255,255,255,0.04);
+            border-left: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 40px 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(245,166,35,0.15);
+            border: 1px solid rgba(245,166,35,0.35);
+            color: var(--secondary-color);
+            padding: 7px 18px;
+            border-radius: 50px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            animation: fadeInUp 0.8s ease both;
+        }
+
+        .cover-logo {
+            height: 48px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 22px;
+            animation: scaleIn 0.9s ease 0.1s both;
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 40px;
+            color: white;
+            line-height: 1.15;
+            margin-bottom: 14px;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .cover-title .highlight { color: var(--secondary-color); }
+
+        .cover-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 15px;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.6;
+            margin-bottom: 28px;
+            max-width: 440px;
+            animation: fadeInUp 0.8s ease 0.45s both;
+        }
+
+        .cover-line {
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 3px;
+            margin-bottom: 18px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .cover-meta {
+            display: flex;
+            gap: 22px;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .cover-meta-item {
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            font-family: var(--font-secondary);
+        }
+
+        .cover-meta-item i { color: var(--secondary-color); margin-right: 5px; }
+
+        .cover-doc-pill {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 14px 18px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.8s ease both;
+        }
+
+        .cover-doc-pill .doc-abbr {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--secondary-color);
+            display: block;
+        }
+
+        .cover-doc-pill .doc-name {
+            font-size: 9px;
+            color: rgba(255,255,255,0.65);
+            font-family: var(--font-secondary);
+            line-height: 1.3;
+        }
+
+        /* ===== GRIDS ===== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; flex: 1; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; flex: 1; }
+        .grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 12px; flex: 1; }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--light-color);
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card .card-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .card h4 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            font-size: 10.5px;
+            color: var(--gray-color);
+            line-height: 1.55;
+        }
+
+        .card-tag {
+            display: inline-block;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 9px;
+            border-radius: 12px;
+            margin-bottom: 7px;
+        }
+
+        /* ICON COLORS */
+        .icon-blue { background: var(--info-light); color: var(--info-color); }
+        .icon-green { background: var(--accent-light); color: var(--accent-color); }
+        .icon-orange { background: var(--warning-light); color: var(--warning-color); }
+        .icon-red { background: var(--danger-light); color: var(--danger-color); }
+        .icon-navy { background: #e8eef5; color: var(--primary-color); }
+        .icon-purple { background: var(--purple-light); color: var(--purple-color); }
+
+        /* BORDER COLORS */
+        .border-orange { border-left-color: var(--secondary-color); }
+        .border-green { border-left-color: var(--accent-color); }
+        .border-red { border-left-color: var(--danger-color); }
+        .border-blue { border-left-color: var(--info-color); }
+        .border-purple { border-left-color: var(--purple-color); }
+        .border-navy { border-left-color: var(--primary-color); }
+
+        /* TAG COLORS */
+        .tag-blue { background: var(--info-light); color: var(--info-color); }
+        .tag-green { background: var(--accent-light); color: var(--accent-color); }
+        .tag-orange { background: var(--warning-light); color: var(--warning-color); }
+        .tag-red { background: var(--danger-light); color: var(--danger-color); }
+        .tag-navy { background: #e8eef5; color: var(--primary-color); }
+        .tag-purple { background: var(--purple-light); color: var(--purple-color); }
+
+        /* ===== DOC DETAIL SLIDE ===== */
+        .doc-detail-layout {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .doc-detail-left {
+            width: 230px;
+            background: linear-gradient(155deg, var(--primary-color), var(--primary-dark));
+            border-radius: 14px;
+            padding: 26px 22px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .doc-detail-left::before {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .doc-abbr-big {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 52px;
+            color: var(--secondary-color);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .doc-name-full {
+            font-family: var(--font-secondary);
+            font-size: 11px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+
+        .doc-nr-badge {
+            display: inline-block;
+            background: rgba(245,166,35,0.2);
+            border: 1px solid rgba(245,166,35,0.4);
+            color: var(--secondary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 10px;
+            margin-bottom: 16px;
+        }
+
+        .doc-mandatory-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(16,185,129,0.15);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: #10b981;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+        }
+
+        .doc-checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .doc-checklist li {
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.35;
+        }
+
+        .doc-checklist li i { color: var(--secondary-color); font-size: 9px; margin-top: 2px; flex-shrink: 0; }
+
+        .doc-detail-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .doc-section-label {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-color);
+            margin-bottom: 8px;
+        }
+
+        .doc-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .doc-info-item {
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 12px 14px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .doc-info-item h5 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 10px;
+            color: var(--dark-color);
+            margin-bottom: 4px;
+        }
+
+        .doc-info-item p {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+
+        /* ===== INTEGRATION FLOW ===== */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex: 1;
+        }
+
+        .flow-node {
+            background: linear-gradient(155deg, var(--primary-color), var(--primary-dark));
+            border-radius: 12px;
+            padding: 16px 14px;
+            text-align: center;
+            color: white;
+            min-width: 100px;
+        }
+
+        .flow-node .node-abbr {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--secondary-color);
+        }
+
+        .flow-node .node-name {
+            font-size: 8.5px;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.3;
+            margin-top: 3px;
+        }
+
+        .flow-arrow {
+            color: var(--gray-light);
+            font-size: 20px;
+            margin: 0 6px;
+        }
+
+        .flow-center {
+            background: linear-gradient(155deg, var(--secondary-color), var(--secondary-dark));
+            border-radius: 14px;
+            padding: 18px 16px;
+            text-align: center;
+            color: white;
+            min-width: 120px;
+            box-shadow: 0 8px 20px rgba(245,166,35,0.3);
+        }
+
+        .flow-center .node-abbr {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 22px;
+            color: white;
+        }
+
+        .flow-center .node-name {
+            font-size: 9px;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.3;
+            margin-top: 4px;
+        }
+
+        /* ===== LIST ITEMS ===== */
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 9px 12px;
+            background: var(--light-color);
+            border-radius: 9px;
+            margin-bottom: 7px;
+        }
+
+        .list-item i {
+            font-size: 13px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .list-item p {
+            font-size: 11px;
+            color: var(--gray-color);
+            line-height: 1.45;
+        }
+
+        .list-item p strong {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        /* ===== HIGHLIGHT BOX ===== */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .highlight-box i { font-size: 22px; color: var(--secondary-color); flex-shrink: 0; }
+
+        .highlight-box p {
+            font-size: 11.5px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.88);
+        }
+
+        .highlight-box p strong { color: var(--secondary-color); }
+
+        /* ===== WARNING BOX ===== */
+        .warning-box {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .warning-box i { font-size: 20px; color: #c4b5fd; flex-shrink: 0; }
+
+        .warning-box p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.88);
+        }
+
+        .warning-box p strong { color: #c4b5fd; }
+
+        /* ===== STAT PILLS ===== */
+        .stats-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat-pill {
+            flex: 1;
+            text-align: center;
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .stat-pill .stat-num {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-pill .stat-label {
+            font-size: 9.5px;
+            color: var(--gray-color);
+            line-height: 1.3;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .timeline-dot {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .timeline-content h5 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--dark-color);
+            margin-bottom: 3px;
+        }
+
+        .timeline-content p {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.45;
+        }
+
+        /* ===== TWO COLUMN LAYOUT ===== */
+        .two-col {
+            display: flex;
+            gap: 24px;
+            flex: 1;
+        }
+
+        .col-main { flex: 1; }
+        .col-side { width: 220px; flex-shrink: 0; }
+
+        /* ===== ESOCIAL ITEMS ===== */
+        .esocial-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+        }
+
+        .esocial-event {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 12px;
+            text-align: center;
+            min-width: 64px;
+            flex-shrink: 0;
+        }
+
+        .esocial-event span {
+            display: block;
+            font-size: 8px;
+            font-weight: 500;
+            opacity: 0.7;
+            margin-top: 1px;
+        }
+
+        .esocial-info h5 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--dark-color);
+            margin-bottom: 3px;
+        }
+
+        .esocial-info p {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.4;
+        }
+
+        /* ===== CLOSING SLIDE ===== */
+        .slide-closing {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 60%, var(--primary-light) 100%);
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-closing::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(245,166,35,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(16,185,129,0.06) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .closing-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 55px 55px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .closing-side {
+            width: 260px;
+            border-left: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+            padding: 40px 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(245,166,35,0.15);
+            border: 1px solid rgba(245,166,35,0.3);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .contact-text p { font-size: 10px; color: rgba(255,255,255,0.5); }
+        .contact-text strong { font-size: 12px; color: rgba(255,255,255,0.88); font-family: var(--font-primary); font-weight: 600; }
+
+        /* ===== RISK TABLE ===== */
+        .risk-table { width: 100%; border-collapse: collapse; flex: 1; }
+
+        .risk-table thead th {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 9px 12px;
+            text-align: left;
+        }
+
+        .risk-table thead th:first-child { border-radius: 8px 0 0 0; }
+        .risk-table thead th:last-child { border-radius: 0 8px 0 0; }
+
+        .risk-table tbody tr { border-bottom: 1px solid var(--gray-light); }
+        .risk-table tbody tr:last-child { border-bottom: none; }
+
+        .risk-table tbody td {
+            padding: 8px 12px;
+            font-size: 10.5px;
+            color: var(--dark-color);
+            vertical-align: top;
+        }
+
+        .risk-table tbody tr:nth-child(even) td { background: #fafbfc; }
+
+        .risk-pill {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 9px;
+        }
+
+        .risk-pill.alto { background: var(--danger-light); color: var(--danger-color); }
+        .risk-pill.medio { background: var(--warning-light); color: var(--warning-color); }
+        .risk-pill.baixo { background: var(--accent-light); color: var(--accent-color); }
+
+        /* ===== VERTICAL DIVIDER ===== */
+        .vdivider {
+            width: 1px;
+            background: var(--gray-light);
+            flex-shrink: 0;
+        }
+
+        /* ===== PRINT / PDF ===== */
+        @page {
+            size: 297mm 210mm landscape;
+            margin: 0;
+        }
+
+        @media print {
+            /* Forçar impressão de cores e fundos */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                animation: none !important;
+                transition: none !important;
+            }
+
+            html {
+                width: 297mm;
+            }
+
+            body {
+                width: 297mm !important;
+                background: white !important;
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                gap: 0 !important;
+            }
+
+            /* Base de todos os slides */
+            .slide {
+                width: 297mm !important;
+                height: 210mm !important;
+                min-height: 210mm !important;
+                max-height: 210mm !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                margin: 0 !important;
+                overflow: hidden !important;
+                position: relative !important;
+                /* mantém flex column e padding padrão do HTML — não sobreescreve aqui */
+            }
+
+            .slide:last-of-type {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
+            /* Cover e Closing são flex ROW com padding 0 — preservar */
+            .slide-cover,
+            .slide-closing {
+                display: flex !important;
+                flex-direction: row !important;
+                padding: 0 !important;
+                background: linear-gradient(135deg, #0f2744 0%, #1a365d 55%, #2d4a6f 100%) !important;
+            }
+
+            /* Garantir que os painéis laterais não somam */
+            .cover-left  { flex: 1 !important; min-width: 0 !important; }
+            .cover-right { width: 290px !important; min-width: 290px !important; flex-shrink: 0 !important; display: flex !important; flex-direction: column !important; }
+            .closing-content { flex: 1 !important; min-width: 0 !important; }
+            .closing-side    { width: 260px !important; min-width: 260px !important; flex-shrink: 0 !important; display: flex !important; flex-direction: column !important; }
+
+            /* Slides normais (não cover/closing) mantêm flex column + padding */
+            .slide:not(.slide-cover):not(.slide-closing) {
+                display: flex !important;
+                flex-direction: column !important;
+                padding: 35px 45px 50px !important;
+            }
+
+            /* backdrop-filter não funciona em PDF — substituir por cor sólida */
+            .cover-badge {
+                background: rgba(245,166,35,0.2) !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+
+            /* Fundos escuros explícitos */
+            .slide-footer {
+                background: #1a365d !important;
+            }
+
+            .doc-detail-left {
+                background: #1a365d !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ============================== -->
+<!-- SLIDE 01 — CAPA                -->
+<!-- ============================== -->
+<div class="slide slide-cover">
+    <div class="cover-left">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="cover-logo" onerror="this.style.display='none'">
+        <div class="cover-badge">
+            <i class="fas fa-hard-hat"></i>
+            Saúde e Segurança do Trabalho
+        </div>
+        <div class="cover-line"></div>
+        <div class="cover-title">
+            Documentação de <span class="highlight">SST</span><br>
+            O que é e para<br>que serve?
+        </div>
+        <div class="cover-subtitle">
+            Conheça os principais documentos obrigatórios de SST, suas finalidades, base legal e como protegem a empresa e os trabalhadores.
+        </div>
+        <div class="cover-meta">
+            <div class="cover-meta-item"><i class="fas fa-calendar-alt"></i> Atualizado — Abril 2026</div>
+            <div class="cover-meta-item"><i class="fas fa-map-marker-alt"></i> EngMarq Solution</div>
+        </div>
+    </div>
+    <div class="cover-right">
+        <div class="cover-doc-pill" style="animation-delay:0.3s">
+            <span class="doc-abbr">PGR</span>
+            <span class="doc-name">Programa de Gerenciamento de Riscos</span>
+        </div>
+        <div class="cover-doc-pill" style="animation-delay:0.4s">
+            <span class="doc-abbr">PCMSO</span>
+            <span class="doc-name">Controle Médico de Saúde Ocupacional</span>
+        </div>
+        <div class="cover-doc-pill" style="animation-delay:0.5s">
+            <span class="doc-abbr">LTCAT</span>
+            <span class="doc-name">Laudo Técnico das Condições Ambientais</span>
+        </div>
+        <div class="cover-doc-pill" style="animation-delay:0.6s">
+            <span class="doc-abbr">LIP</span>
+            <span class="doc-name">Laudo de Insalubridade e Periculosidade</span>
+        </div>
+        <div class="cover-doc-pill" style="animation-delay:0.7s">
+            <span class="doc-abbr" style="color:#10b981">PSI</span>
+            <span class="doc-name">Avaliação de Riscos Psicossociais — NR-01/2026</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 02 — O QUE É SST?        -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">01 / 10</div>
+    </div>
+
+    <div class="section-badge">Conceito</div>
+    <div class="section-title">O que é SST?</div>
+    <div class="section-subtitle">Saúde e Segurança do Trabalho é o conjunto de normas, práticas e documentos que garantem a proteção física e mental dos trabalhadores</div>
+
+    <div class="two-col">
+        <div class="col-main">
+            <div class="list-item">
+                <i class="fas fa-shield-alt" style="color:var(--primary-color)"></i>
+                <p><strong>Proteção legal do trabalhador:</strong> Garante que o empregador identifique, avalie e controle os riscos presentes no ambiente de trabalho, prevenindo acidentes e doenças ocupacionais.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-balance-scale" style="color:var(--secondary-color)"></i>
+                <p><strong>Obrigação legal da empresa:</strong> Prevista na CLT, regulamentada pelas Normas Regulamentadoras (NRs) do Ministério do Trabalho e Emprego — descumprimento gera multas e passivos trabalhistas.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-file-medical-alt" style="color:var(--accent-color)"></i>
+                <p><strong>Documentação como evidência:</strong> Os documentos de SST registram as condições do trabalho, as medidas adotadas e os exames realizados — são a prova da conformidade da empresa.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-laptop-code" style="color:var(--info-color)"></i>
+                <p><strong>Integração com eSocial:</strong> Desde 2023, dados de saúde e segurança do trabalho devem ser informados digitalmente ao governo via eSocial, tornando a documentação ainda mais crítica.</p>
+            </div>
+        </div>
+        <div class="vdivider"></div>
+        <div class="col-side">
+            <div style="background:linear-gradient(155deg,var(--primary-color),var(--primary-dark));border-radius:14px;padding:22px;color:white;height:100%;display:flex;flex-direction:column;justify-content:space-between;">
+                <div>
+                    <div style="font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--font-primary);font-weight:700;margin-bottom:14px;">Base Legal</div>
+                    <div style="display:flex;flex-direction:column;gap:10px;">
+                        <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                            <div style="font-family:var(--font-primary);font-weight:700;font-size:12px;color:var(--secondary-color);">CLT</div>
+                            <div style="font-size:9.5px;color:rgba(255,255,255,0.7);margin-top:2px;">Arts. 154 a 201 — normas gerais de segurança</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                            <div style="font-family:var(--font-primary);font-weight:700;font-size:12px;color:var(--secondary-color);">NRs 01 a 38</div>
+                            <div style="font-size:9.5px;color:rgba(255,255,255,0.7);margin-top:2px;">Normas Regulamentadoras do MTE — regras específicas por tema</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                            <div style="font-family:var(--font-primary);font-weight:700;font-size:12px;color:var(--secondary-color);">Lei 8.213/91</div>
+                            <div style="font-size:9.5px;color:rgba(255,255,255,0.7);margin-top:2px;">Benefícios previdenciários e aposentadoria especial</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                            <div style="font-family:var(--font-primary);font-weight:700;font-size:12px;color:var(--secondary-color);">eSocial</div>
+                            <div style="font-size:9.5px;color:rgba(255,255,255,0.7);margin-top:2px;">Obrigação digital — eventos S-2220 e S-2240</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 03 — PANORAMA DOCS       -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">02 / 10</div>
+    </div>
+
+    <div class="section-badge">Visão Geral</div>
+    <div class="section-title">Os principais documentos de SST</div>
+    <div class="section-subtitle">Cada documento cumpre uma função específica dentro do sistema integrado de gestão de saúde e segurança</div>
+
+    <div class="grid-4">
+        <div class="card border-navy">
+            <div class="card-tag tag-navy">NR-01</div>
+            <div class="card-icon icon-navy"><i class="fas fa-search"></i></div>
+            <h4>PGR</h4>
+            <p>Programa de Gerenciamento de Riscos — identifica e controla todos os riscos ocupacionais. Documento central do sistema.</p>
+        </div>
+        <div class="card border-blue">
+            <div class="card-tag tag-blue">NR-07</div>
+            <div class="card-icon icon-blue"><i class="fas fa-stethoscope"></i></div>
+            <h4>PCMSO</h4>
+            <p>Programa de Controle Médico de Saúde Ocupacional — define os exames médicos obrigatórios por função e risco.</p>
+        </div>
+        <div class="card border-orange">
+            <div class="card-tag tag-orange">INSS / Lei 8.213</div>
+            <div class="card-icon icon-orange"><i class="fas fa-hard-hat"></i></div>
+            <h4>LTCAT</h4>
+            <p>Laudo Técnico das Condições Ambientais — documenta agentes nocivos para fins previdenciários e eSocial.</p>
+        </div>
+        <div class="card border-red">
+            <div class="card-tag tag-red">NR-15 / NR-16</div>
+            <div class="card-icon icon-red"><i class="fas fa-exclamation-triangle"></i></div>
+            <h4>LIP</h4>
+            <p>Laudo de Insalubridade e Periculosidade — avalia exposição a agentes que geram adicional de remuneração.</p>
+        </div>
+    </div>
+
+    <div style="margin-top:14px;">
+        <div class="warning-box">
+            <i class="fas fa-star"></i>
+            <p><strong>Novidade 2026 — Riscos Psicossociais (NR-01 atualizada):</strong> A partir de maio de 2026, o PGR passa a exigir a avaliação obrigatória de fatores de riscos psicossociais — como estresse ocupacional, assédio, sobrecarga e conflitos interpessoais. As empresas precisam estar preparadas.</p>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 04 — PGR                 -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">03 / 10</div>
+    </div>
+
+    <div class="section-badge">Documento 1 de 4</div>
+    <div class="section-title">PGR — Programa de Gerenciamento de Riscos</div>
+
+    <div class="doc-detail-layout">
+        <div class="doc-detail-left">
+            <div class="doc-abbr-big">PGR</div>
+            <div class="doc-name-full">Programa de Gerenciamento de Riscos</div>
+            <div class="doc-nr-badge">Regido pela NR-01</div>
+            <div class="doc-mandatory-badge"><i class="fas fa-check-circle"></i> Obrigatório para todas as empresas CLT</div>
+            <ul class="doc-checklist" style="margin-top:16px;">
+                <li><i class="fas fa-circle"></i> Substitui o antigo PPRA</li>
+                <li><i class="fas fa-circle"></i> Exige participação de Eng. de Segurança ou Técnico de Segurança</li>
+                <li><i class="fas fa-circle"></i> Revisão obrigatória anual ou por mudança de processo</li>
+                <li><i class="fas fa-circle"></i> Inclui riscos psicossociais a partir de maio/2026</li>
+                <li><i class="fas fa-circle"></i> Base para emissão de todos os outros documentos SST</li>
+            </ul>
+        </div>
+        <div class="doc-detail-right">
+            <div class="doc-section-label"><i class="fas fa-list" style="margin-right:5px;"></i>O que o PGR contém?</div>
+            <div class="doc-info-grid">
+                <div class="doc-info-item" style="border-left-color:var(--primary-color)">
+                    <h5><i class="fas fa-map-marked-alt" style="color:var(--primary-color);margin-right:5px;"></i>Inventário de Riscos</h5>
+                    <p>Identificação de todos os perigos e riscos por função: físicos, químicos, biológicos, ergonômicos, mecânicos e psicossociais.</p>
+                </div>
+                <div class="doc-info-item" style="border-left-color:var(--secondary-color)">
+                    <h5><i class="fas fa-tasks" style="color:var(--secondary-color);margin-right:5px;"></i>Plano de Ação</h5>
+                    <p>Medidas de controle com responsáveis, prazos e prioridades. Hierarquia de eliminação → substituição → controle → EPC → EPI.</p>
+                </div>
+                <div class="doc-info-item" style="border-left-color:var(--accent-color)">
+                    <h5><i class="fas fa-users" style="color:var(--accent-color);margin-right:5px;"></i>Por Cargo / Função</h5>
+                    <p>Cada cargo recebe uma análise individual de riscos, alinhada ao PCMSO para definição dos exames médicos necessários.</p>
+                </div>
+                <div class="doc-info-item" style="border-left-color:var(--info-color)">
+                    <h5><i class="fas fa-laptop" style="color:var(--info-color);margin-right:5px;"></i>Integração eSocial</h5>
+                    <p>Evento S-2240: informa as condições de exposição de cada trabalhador ao governo digital. Obrigatório por colaborador.</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top:8px;">
+                <i class="fas fa-lightbulb"></i>
+                <p>O PGR é o <strong>documento-mãe</strong> do sistema SST: todas as ações, exames e laudos partem do inventário de riscos nele contido. Sem um PGR consistente, os demais documentos ficam inconsistentes e sem validade.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 05 — PCMSO               -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">04 / 10</div>
+    </div>
+
+    <div class="section-badge">Documento 2 de 4</div>
+    <div class="section-title">PCMSO — Programa de Controle Médico de Saúde Ocupacional</div>
+
+    <div class="doc-detail-layout">
+        <div class="doc-detail-left" style="background:linear-gradient(155deg,#1e40af,#1d4ed8)">
+            <div class="doc-abbr-big" style="font-size:40px;">PCMSO</div>
+            <div class="doc-name-full">Programa de Controle Médico de Saúde Ocupacional</div>
+            <div class="doc-nr-badge">Regido pela NR-07</div>
+            <div class="doc-mandatory-badge"><i class="fas fa-check-circle"></i> Obrigatório — todas as empresas</div>
+            <ul class="doc-checklist" style="margin-top:16px;">
+                <li><i class="fas fa-circle"></i> Elaborado por Médico do Trabalho</li>
+                <li><i class="fas fa-circle"></i> Baseado no inventário de riscos do PGR</li>
+                <li><i class="fas fa-circle"></i> Revisão anual ou por mudança de função/risco</li>
+                <li><i class="fas fa-circle"></i> Gera matriz de exames por cargo</li>
+                <li><i class="fas fa-circle"></i> eSocial evento S-2220 por empregado</li>
+            </ul>
+        </div>
+        <div class="doc-detail-right">
+            <div class="doc-section-label"><i class="fas fa-list" style="margin-right:5px;"></i>Tipos de exames que o PCMSO define</div>
+            <div class="grid-3" style="flex:unset;margin-bottom:10px;">
+                <div class="card border-blue" style="padding:13px;">
+                    <div class="card-icon icon-blue" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-user-plus"></i></div>
+                    <h4>Admissional</h4>
+                    <p>Antes do início das atividades — avalia aptidão do trabalhador para a função.</p>
+                </div>
+                <div class="card border-blue" style="padding:13px;">
+                    <div class="card-icon icon-blue" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-redo"></i></div>
+                    <h4>Periódico</h4>
+                    <p>Realizado em intervalos definidos pelo risco — monitora a saúde ao longo do tempo.</p>
+                </div>
+                <div class="card border-blue" style="padding:13px;">
+                    <div class="card-icon icon-blue" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-exchange-alt"></i></div>
+                    <h4>Mudança de Função</h4>
+                    <p>Antes de transferência para cargo com perfil de risco diferente.</p>
+                </div>
+                <div class="card border-blue" style="padding:13px;">
+                    <div class="card-icon icon-blue" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-procedures"></i></div>
+                    <h4>Retorno ao Trabalho</h4>
+                    <p>Após afastamento ≥ 30 dias por doença, acidente ou parto.</p>
+                </div>
+                <div class="card border-blue" style="padding:13px;">
+                    <div class="card-icon icon-blue" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-user-minus"></i></div>
+                    <h4>Demissional</h4>
+                    <p>Até 10 dias antes do desligamento — protege empresa de passivos pós-contrato.</p>
+                </div>
+                <div class="card border-blue" style="padding:13px;">
+                    <div class="card-icon icon-blue" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-vials"></i></div>
+                    <h4>Exames Complementares</h4>
+                    <p>Audiometria, espirometria, hemograma etc. — conforme agentes de risco.</p>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <i class="fas fa-file-medical"></i>
+                <p>O resultado de cada exame gera o <strong>ASO (Atestado de Saúde Ocupacional)</strong> — documento que declara se o trabalhador está apto ou inapto para a função. O ASO é exigido em qualquer fiscalização.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 06 — LTCAT               -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">05 / 10</div>
+    </div>
+
+    <div class="section-badge">Documento 3 de 4</div>
+    <div class="section-title">LTCAT — Laudo Técnico das Condições Ambientais do Trabalho</div>
+
+    <div class="doc-detail-layout">
+        <div class="doc-detail-left" style="background:linear-gradient(155deg,#b45309,#d97706)">
+            <div class="doc-abbr-big">LTCAT</div>
+            <div class="doc-name-full">Laudo Técnico das Condições Ambientais do Trabalho</div>
+            <div class="doc-nr-badge" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:white;">IN 128/INSS · Lei 8.213/91</div>
+            <div class="doc-mandatory-badge" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:white;"><i class="fas fa-check-circle"></i> Obrigatório com agentes nocivos</div>
+            <ul class="doc-checklist" style="margin-top:16px;">
+                <li><i class="fas fa-circle"></i> Elaborado por Médico do Trabalho ou Eng. de Segurança</li>
+                <li><i class="fas fa-circle"></i> Identifica exposição por cargo/função</li>
+                <li><i class="fas fa-circle"></i> Alimenta o eSocial evento S-2240</li>
+                <li><i class="fas fa-circle"></i> Base para aposentadoria especial (INSS)</li>
+                <li><i class="fas fa-circle"></i> Proteção em ações trabalhistas e previdenciárias</li>
+            </ul>
+        </div>
+        <div class="doc-detail-right">
+            <div class="doc-section-label"><i class="fas fa-list" style="margin-right:5px;"></i>Agentes nocivos avaliados no LTCAT</div>
+            <div class="grid-3" style="flex:unset;margin-bottom:10px;">
+                <div class="card border-orange" style="padding:13px;">
+                    <div class="card-icon icon-orange" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-volume-up"></i></div>
+                    <h4>Agentes Físicos</h4>
+                    <p>Ruído, calor, frio, vibração, radiações ionizantes e não ionizantes, pressão atmosférica.</p>
+                </div>
+                <div class="card border-orange" style="padding:13px;">
+                    <div class="card-icon icon-orange" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-flask"></i></div>
+                    <h4>Agentes Químicos</h4>
+                    <p>Solventes, poeiras, gases, vapores, névoas — conforme TLV e ACGIH.</p>
+                </div>
+                <div class="card border-orange" style="padding:13px;">
+                    <div class="card-icon icon-orange" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-biohazard"></i></div>
+                    <h4>Agentes Biológicos</h4>
+                    <p>Vírus, bactérias, fungos, parasitas — relevante em saúde, agropecuária e tratamento de resíduos.</p>
+                </div>
+            </div>
+            <div class="doc-section-label" style="margin-top:2px;"><i class="fas fa-star" style="margin-right:5px;color:var(--secondary-color);"></i>Para que serve o LTCAT?</div>
+            <div style="display:flex;gap:10px;">
+                <div style="flex:1;background:var(--warning-light);border-radius:10px;padding:11px 13px;border-left:3px solid var(--warning-color);">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:10px;color:var(--warning-color);margin-bottom:4px;"><i class="fas fa-piggy-bank" style="margin-right:5px;"></i>Aposentadoria Especial</div>
+                    <p style="font-size:10px;color:var(--gray-color);line-height:1.45;">Comprova exposição a agentes nocivos acima dos limites — garante ao trabalhador o direito à aposentadoria especial com menos tempo de contribuição.</p>
+                </div>
+                <div style="flex:1;background:var(--info-light);border-radius:10px;padding:11px 13px;border-left:3px solid var(--info-color);">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:10px;color:var(--info-color);margin-bottom:4px;"><i class="fas fa-gavel" style="margin-right:5px;"></i>Defesa em Processos</div>
+                    <p style="font-size:10px;color:var(--gray-color);line-height:1.45;">Documento técnico que ampara a empresa em ações trabalhistas e previdenciárias relacionadas a doenças ocupacionais e acidentes de trabalho.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 07 — LIP                 -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">06 / 10</div>
+    </div>
+
+    <div class="section-badge">Documento 4 de 4</div>
+    <div class="section-title">LIP — Laudo de Insalubridade e Periculosidade</div>
+
+    <div class="two-col">
+        <div class="col-main">
+            <div class="doc-section-label"><i class="fas fa-exclamation-circle" style="margin-right:5px;color:var(--danger-color);"></i>O que avalia o LIP?</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+                <div class="card border-red">
+                    <div class="card-icon icon-red" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-radiation"></i></div>
+                    <h4>Insalubridade (NR-15)</h4>
+                    <p>Exposição a agentes físicos, químicos ou biológicos acima dos limites de tolerância estabelecidos. Gera adicional de <strong>10%, 20% ou 40%</strong> sobre o salário mínimo.</p>
+                </div>
+                <div class="card border-red">
+                    <div class="card-icon icon-red" style="width:32px;height:32px;font-size:13px;"><i class="fas fa-bolt"></i></div>
+                    <h4>Periculosidade (NR-16)</h4>
+                    <p>Exposição a explosivos, inflamáveis, energia elétrica, radiações ionizantes, agentes biológicos ou roubos. Gera adicional de <strong>30%</strong> sobre o salário contratual.</p>
+                </div>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-user-tie" style="color:var(--primary-color)"></i>
+                <p><strong>Quem elabora:</strong> Médico do Trabalho (insalubridade biológica) ou Engenheiro de Segurança do Trabalho (demais agentes).</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-sync-alt" style="color:var(--secondary-color)"></i>
+                <p><strong>Atualização:</strong> Sempre que houver mudança de processo, layout, EPI/EPC ou introdução de novos agentes de risco no ambiente avaliado.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-hand-holding-usd" style="color:var(--danger-color)"></i>
+                <p><strong>Impacto financeiro:</strong> O LIP fundamenta o pagamento (ou não) dos adicionais — sem ele, a empresa fica exposta a ações trabalhistas por pagamento indevido ou supressão ilegal do adicional.</p>
+            </div>
+        </div>
+        <div class="vdivider"></div>
+        <div class="col-side">
+            <div class="doc-section-label"><i class="fas fa-table" style="margin-right:5px;"></i>Tabela de adicionais</div>
+            <table class="risk-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Grau / Situação</th>
+                        <th>Adicional</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Insalubridade</td>
+                        <td>Mínimo</td>
+                        <td><span class="risk-pill baixo">10%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Insalubridade</td>
+                        <td>Médio</td>
+                        <td><span class="risk-pill medio">20%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Insalubridade</td>
+                        <td>Máximo</td>
+                        <td><span class="risk-pill alto">40%</span></td>
+                    </tr>
+                    <tr>
+                        <td>Periculosidade</td>
+                        <td>Qualquer grau</td>
+                        <td><span class="risk-pill alto">30%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="margin-top:12px;background:var(--danger-light);border-radius:10px;padding:12px;border-left:3px solid var(--danger-color);">
+                <div style="font-family:var(--font-primary);font-weight:700;font-size:10px;color:var(--danger-color);margin-bottom:4px;"><i class="fas fa-gavel" style="margin-right:5px;"></i>Atenção — passivo trabalhista</div>
+                <p style="font-size:9.5px;color:var(--gray-color);line-height:1.45;">A ausência do LIP não isenta a empresa do pagamento — pelo contrário, o juiz presume a existência do risco quando não há laudo. O documento é a única forma de comprovar ou refutar o direito ao adicional.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 08 — RISCOS PSICOSSOCIAIS-->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">07 / 10</div>
+    </div>
+
+    <div class="section-badge" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)">NR-01 Atualizada — Maio 2026</div>
+    <div class="section-title" style="color:#5b21b6;">Riscos Psicossociais — A nova obrigação do PGR</div>
+    <div class="section-subtitle">A revisão da NR-01 tornou obrigatória a inclusão de fatores de riscos psicossociais no inventário de riscos do PGR a partir de maio de 2026</div>
+
+    <div class="two-col">
+        <div class="col-main">
+            <div class="doc-section-label"><i class="fas fa-brain" style="margin-right:5px;color:#7c3aed;"></i>Fatores avaliados</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px;">
+                <div class="list-item" style="margin-bottom:0;background:#faf5ff;border-left:3px solid #7c3aed;border-radius:8px;">
+                    <i class="fas fa-fire-alt" style="color:#7c3aed;"></i>
+                    <p style="font-size:10.5px;"><strong>Estresse ocupacional</strong> e sobrecarga de trabalho</p>
+                </div>
+                <div class="list-item" style="margin-bottom:0;background:#faf5ff;border-left:3px solid #7c3aed;border-radius:8px;">
+                    <i class="fas fa-user-slash" style="color:#7c3aed;"></i>
+                    <p style="font-size:10.5px;"><strong>Assédio moral e sexual</strong> no ambiente de trabalho</p>
+                </div>
+                <div class="list-item" style="margin-bottom:0;background:#faf5ff;border-left:3px solid #7c3aed;border-radius:8px;">
+                    <i class="fas fa-people-arrows" style="color:#7c3aed;"></i>
+                    <p style="font-size:10.5px;"><strong>Conflitos interpessoais</strong> e clima organizacional</p>
+                </div>
+                <div class="list-item" style="margin-bottom:0;background:#faf5ff;border-left:3px solid #7c3aed;border-radius:8px;">
+                    <i class="fas fa-lock" style="color:#7c3aed;"></i>
+                    <p style="font-size:10.5px;"><strong>Falta de autonomia</strong> nas decisões do trabalho</p>
+                </div>
+                <div class="list-item" style="margin-bottom:0;background:#faf5ff;border-left:3px solid #7c3aed;border-radius:8px;">
+                    <i class="fas fa-chart-line" style="color:#7c3aed;"></i>
+                    <p style="font-size:10.5px;"><strong>Pressão por metas</strong> e demandas desproporcionais</p>
+                </div>
+                <div class="list-item" style="margin-bottom:0;background:#faf5ff;border-left:3px solid #7c3aed;border-radius:8px;">
+                    <i class="fas fa-heart-broken" style="color:#7c3aed;"></i>
+                    <p style="font-size:10.5px;"><strong>Falta de reconhecimento</strong> e desvalorização profissional</p>
+                </div>
+            </div>
+            <div style="background:#faf5ff;border-radius:10px;padding:12px 14px;border-left:4px solid #7c3aed;">
+                <div style="font-family:var(--font-primary);font-weight:700;font-size:10px;color:#5b21b6;margin-bottom:5px;"><i class="fas fa-chart-bar" style="margin-right:5px;"></i>Por que isso importa?</div>
+                <p style="font-size:10.5px;color:var(--gray-color);line-height:1.5;">Afastamentos por transtornos mentais (CID-F) já representam uma das principais causas de absenteísmo no Brasil — e a tendência é de crescimento. A nova NR-01 formaliza a prevenção como obrigação legal.</p>
+            </div>
+        </div>
+        <div class="vdivider"></div>
+        <div class="col-side">
+            <div class="doc-section-label"><i class="fas fa-clipboard-list" style="margin-right:5px;"></i>O que a avaliação entrega?</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:#ede9fe;color:#7c3aed;"><i class="fas fa-search"></i></div>
+                    <div class="timeline-content">
+                        <h5>Relatório técnico de avaliação</h5>
+                        <p>Análise quantitativa e qualitativa por setor/função com instrumentos cientificamente validados.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:#ede9fe;color:#7c3aed;"><i class="fas fa-map"></i></div>
+                    <div class="timeline-content">
+                        <h5>Mapeamento de riscos</h5>
+                        <p>Matriz de criticidade × probabilidade por área — alimenta diretamente o PGR.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:#ede9fe;color:#7c3aed;"><i class="fas fa-tasks"></i></div>
+                    <div class="timeline-content">
+                        <h5>Plano de ação preventivo</h5>
+                        <p>Medidas corretivas e preventivas com responsáveis e prazos definidos.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:#ede9fe;color:#7c3aed;"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="timeline-content">
+                        <h5>Treinamento de conscientização</h5>
+                        <p>Capacitação para lideranças e colaboradores sobre saúde mental no trabalho.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:#ede9fe;color:#7c3aed;"><i class="fas fa-calendar-check"></i></div>
+                    <div class="timeline-content">
+                        <h5>Reavaliação em 3 meses</h5>
+                        <p>Verificação da eficácia das ações implementadas e atualização do PGR.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 09 — INTEGRAÇÃO          -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">08 / 10</div>
+    </div>
+
+    <div class="section-badge">Como tudo se conecta</div>
+    <div class="section-title">Integração entre os documentos de SST</div>
+    <div class="section-subtitle">Os documentos não são independentes — formam um sistema integrado onde cada um alimenta e valida o outro</div>
+
+    <!-- Flow diagram -->
+    <div style="display:flex;flex-direction:column;gap:14px;flex:1;">
+        <!-- Row 1: PGR central -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+            <div style="flex:1;text-align:right;">
+                <div style="display:inline-block;background:#faf5ff;border:2px solid #7c3aed;border-radius:12px;padding:12px 18px;">
+                    <div style="font-family:var(--font-primary);font-weight:800;font-size:16px;color:#7c3aed;">Avaliação</div>
+                    <div style="font-family:var(--font-primary);font-weight:800;font-size:16px;color:#7c3aed;">Psicossocial</div>
+                    <div style="font-size:9px;color:var(--gray-color);margin-top:3px;">NR-01 / 2026</div>
+                </div>
+            </div>
+            <div style="font-size:18px;color:var(--gray-light);">→</div>
+            <div style="background:linear-gradient(135deg,var(--secondary-color),var(--secondary-dark));border-radius:16px;padding:20px 24px;text-align:center;box-shadow:0 8px 24px rgba(245,166,35,0.3);min-width:170px;">
+                <div style="font-family:var(--font-primary);font-weight:800;font-size:30px;color:white;">PGR</div>
+                <div style="font-size:9.5px;color:rgba(255,255,255,0.85);line-height:1.3;margin-top:3px;">Inventário de Riscos<br>+ Plano de Ação</div>
+                <div style="font-size:8.5px;color:rgba(255,255,255,0.65);margin-top:5px;font-family:var(--font-primary);font-weight:700;">DOCUMENTO CENTRAL</div>
+            </div>
+            <div style="font-size:18px;color:var(--gray-light);">→</div>
+            <div style="flex:1;">
+                <div style="display:inline-block;background:var(--warning-light);border:2px solid var(--warning-color);border-radius:12px;padding:12px 18px;">
+                    <div style="font-family:var(--font-primary);font-weight:800;font-size:16px;color:var(--warning-color);">LTCAT</div>
+                    <div style="font-size:9px;color:var(--gray-color);margin-top:3px;">Agentes nocivos<br>IN 128/INSS</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arrows down -->
+        <div style="display:flex;justify-content:center;gap:200px;">
+            <div style="font-size:18px;color:var(--gray-light);">↓</div>
+            <div style="font-size:18px;color:var(--gray-light);">↓</div>
+        </div>
+
+        <!-- Row 2: PCMSO + LIP -->
+        <div style="display:flex;align-items:stretch;gap:16px;justify-content:center;">
+            <div style="background:var(--info-light);border:2px solid var(--info-color);border-radius:14px;padding:16px 22px;text-align:center;min-width:200px;">
+                <div style="font-family:var(--font-primary);font-weight:800;font-size:22px;color:var(--info-color);">PCMSO</div>
+                <div style="font-size:9.5px;color:var(--gray-color);line-height:1.35;margin-top:4px;">Exames médicos por função<br>e risco identificado no PGR</div>
+                <div style="margin-top:8px;background:var(--info-color);color:white;border-radius:8px;padding:4px 10px;font-size:8.5px;font-family:var(--font-primary);font-weight:700;">→ ASO por trabalhador</div>
+            </div>
+            <div style="background:var(--danger-light);border:2px solid var(--danger-color);border-radius:14px;padding:16px 22px;text-align:center;min-width:200px;">
+                <div style="font-family:var(--font-primary);font-weight:800;font-size:22px;color:var(--danger-color);">LIP</div>
+                <div style="font-size:9.5px;color:var(--gray-color);line-height:1.35;margin-top:4px;">Caracterização de insalubridade<br>e periculosidade por função</div>
+                <div style="margin-top:8px;background:var(--danger-color);color:white;border-radius:8px;padding:4px 10px;font-size:8.5px;font-family:var(--font-primary);font-weight:700;">→ Adicional salarial</div>
+            </div>
+        </div>
+
+        <!-- Arrows to eSocial -->
+        <div style="display:flex;justify-content:center;">
+            <div style="font-size:18px;color:var(--gray-light);">↓</div>
+        </div>
+
+        <!-- eSocial -->
+        <div style="background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));border-radius:12px;padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:24px;">
+            <i class="fas fa-laptop-code" style="font-size:24px;color:var(--secondary-color);"></i>
+            <div>
+                <div style="font-family:var(--font-primary);font-weight:800;font-size:14px;color:white;">eSocial — Obrigação Digital</div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.7);margin-top:2px;">S-2240 (condições ambientais por trabalhador) · S-2220 (monitoramento de saúde ocupacional)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 10 — ESOCIAL             -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">09 / 10</div>
+    </div>
+
+    <div class="section-badge">Obrigação Digital</div>
+    <div class="section-title">eSocial e a documentação de SST</div>
+    <div class="section-subtitle">Desde 2023, as informações de saúde e segurança do trabalho precisam ser informadas digitalmente ao governo via eSocial — por trabalhador</div>
+
+    <div class="two-col">
+        <div class="col-main">
+            <div class="esocial-item">
+                <div class="esocial-event">S-2240<span>por trabalhador</span></div>
+                <div class="esocial-info">
+                    <h5>Condições Ambientais do Trabalho</h5>
+                    <p>Registra exposição do trabalhador a agentes nocivos (físicos, químicos e biológicos) — baseado no LTCAT e no inventário de riscos do PGR. Enviado individualmente para cada colaborador exposto.</p>
+                </div>
+            </div>
+            <div class="esocial-item">
+                <div class="esocial-event" style="background:linear-gradient(135deg,#1e40af,#1d4ed8)">S-2220<span>por trabalhador</span></div>
+                <div class="esocial-info">
+                    <h5>Monitoramento da Saúde do Trabalhador</h5>
+                    <p>Registra o resultado de cada exame médico ocupacional (ASO) — admissional, periódico, demissional etc. Gerado a partir do PCMSO. Obrigatório para cada novo ASO emitido.</p>
+                </div>
+            </div>
+            <div class="esocial-item">
+                <div class="esocial-event" style="background:linear-gradient(135deg,#065f46,#059669)">S-2245<span>treinamentos</span></div>
+                <div class="esocial-info">
+                    <h5>Treinamentos, Capacitações e Exercícios Simulados</h5>
+                    <p>Registra treinamentos de segurança realizados com os trabalhadores — como NR-35 (altura), NR-10 (elétrica), brigada de incêndio etc.</p>
+                </div>
+            </div>
+        </div>
+        <div class="vdivider"></div>
+        <div class="col-side">
+            <div class="doc-section-label"><i class="fas fa-exclamation-circle" style="margin-right:5px;color:var(--danger-color);"></i>Consequências do não envio</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--danger-light);color:var(--danger-color);"><i class="fas fa-ban"></i></div>
+                    <div class="timeline-content">
+                        <h5>Multas administrativas</h5>
+                        <p>O MTE e a Previdência podem autuar a empresa pelo não cumprimento das obrigações digitais.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--danger-light);color:var(--danger-color);"><i class="fas fa-gavel"></i></div>
+                    <div class="timeline-content">
+                        <h5>Passivo previdenciário</h5>
+                        <p>Sem o S-2240, a empresa pode ser responsabilizada retroativamente pelo INSS por aposentadorias especiais não computadas.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--danger-light);color:var(--danger-color);"><i class="fas fa-building"></i></div>
+                    <div class="timeline-content">
+                        <h5>Irregularidade fiscal</h5>
+                        <p>O eSocial SST é cruzado com a RAIS e outros sistemas — inconsistências podem disparar fiscalizações.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" style="background:var(--warning-light);color:var(--warning-color);"><i class="fas fa-shield-alt"></i></div>
+                    <div class="timeline-content">
+                        <h5>Vulnerabilidade trabalhista</h5>
+                        <p>Sem registros digitais, a empresa perde a principal ferramenta de defesa em ações trabalhistas por doenças ocupacionais.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 11 — BENEFÍCIOS          -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number">10 / 10</div>
+    </div>
+
+    <div class="section-badge">Por que investir em SST</div>
+    <div class="section-title">Benefícios da documentação completa de SST</div>
+    <div class="section-subtitle">Empresas com documentação SST em dia reduzem custos, evitam autuações e constroem um ambiente de trabalho mais seguro e produtivo</div>
+
+    <div class="grid-3">
+        <div class="card border-navy">
+            <div class="card-icon icon-navy"><i class="fas fa-balance-scale"></i></div>
+            <h4>Segurança Jurídica</h4>
+            <p>Documentos técnicos são a principal defesa em fiscalizações do MTE, ações trabalhistas e demandas previdenciárias. Elimina presunção de responsabilidade.</p>
+        </div>
+        <div class="card border-green">
+            <div class="card-icon icon-green"><i class="fas fa-hand-holding-usd"></i></div>
+            <h4>Redução de Custos</h4>
+            <p>Prevenção de acidentes reduz afastamentos, indenizações, custos com substituição de pessoal e aumento da alíquota RAT junto ao INSS.</p>
+        </div>
+        <div class="card border-blue">
+            <div class="card-icon icon-blue"><i class="fas fa-laptop-code"></i></div>
+            <h4>Conformidade com eSocial</h4>
+            <p>Envio correto dos eventos S-2220, S-2240 e S-2245 evita multas, cruzamento de dados adverso e passivos previdenciários futuros.</p>
+        </div>
+        <div class="card border-orange">
+            <div class="card-icon icon-orange"><i class="fas fa-chart-line"></i></div>
+            <h4>Produtividade</h4>
+            <p>Ambientes seguros e trabalhadores saudáveis apresentam menor absenteísmo, maior engajamento e melhores resultados operacionais.</p>
+        </div>
+        <div class="card border-purple">
+            <div class="card-icon icon-purple"><i class="fas fa-brain"></i></div>
+            <h4>Saúde Mental (2026)</h4>
+            <p>Com a atualização da NR-01, empresas que já avaliam riscos psicossociais saem na frente — reduzindo CID-F e construindo cultura de bem-estar.</p>
+        </div>
+        <div class="card border-red">
+            <div class="card-icon icon-red"><i class="fas fa-award"></i></div>
+            <h4>Reputação e ESG</h4>
+            <p>Conformidade com SST contribui para critérios ESG, fortalece a marca empregadora e agrega valor no relacionamento com clientes e investidores.</p>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 11 — COMO VENDER         -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" class="slide-logo" onerror="this.style.display='none'">
+        <div class="slide-number" style="background:linear-gradient(135deg,#fef3c7,#fde68a);color:#b45309;">Estratégia Comercial</div>
+    </div>
+
+    <div class="section-badge" style="background:linear-gradient(135deg,#b45309,#d97706)">Como vender</div>
+    <div class="section-title">Cada documento puxa o próximo</div>
+    <div class="section-subtitle">Qualquer porta de entrada abre caminho para o pacote completo — use o argumento certo e o cliente entende que precisa de todos</div>
+
+    <!-- Table -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--gray-light);">
+
+        <!-- Header -->
+        <div style="display:grid;grid-template-columns:160px 1fr 160px 1fr;background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));">
+            <div style="padding:9px 14px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.6);">Porta de entrada</div>
+            <div style="padding:9px 14px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.6);border-left:1px solid rgba(255,255,255,0.1);">Gatilho — o que o documento revela</div>
+            <div style="padding:9px 14px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.6);border-left:1px solid rgba(255,255,255,0.1);">Puxa...</div>
+            <div style="padding:9px 14px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,0.6);border-left:1px solid rgba(255,255,255,0.1);">Argumento de venda</div>
+        </div>
+
+        <!-- Row 1: PGR -->
+        <div style="display:grid;grid-template-columns:160px 1fr 160px 1fr;background:white;border-bottom:1px solid var(--gray-light);align-items:center;">
+            <div style="padding:11px 14px;display:flex;align-items:center;gap:9px;">
+                <div style="width:34px;height:34px;background:#e8eef5;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <span style="font-family:var(--font-primary);font-weight:800;font-size:11px;color:var(--primary-color);">PGR</span>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:10.5px;color:var(--dark-color);">Cliente pede o PGR</div>
+                    <div style="font-size:9px;color:var(--gray-color);">NR-01 obrigatório</div>
+                </div>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;">O inventário de riscos mapeia <strong style="color:var(--dark-color);">agentes, funções e exposições</strong> — exatamente o que alimenta todos os outros documentos.</p>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);display:flex;flex-direction:column;gap:5px;">
+                <span style="background:var(--info-light);color:var(--info-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">PCMSO</span>
+                <span style="background:var(--warning-light);color:var(--warning-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">LTCAT</span>
+                <span style="background:var(--danger-light);color:var(--danger-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">LIP</span>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;"><i class="fas fa-quote-left" style="color:var(--secondary-color);font-size:8px;margin-right:4px;"></i><em>"O PGR mapeou os riscos por função — agora precisamos dos exames (PCMSO), do laudo previdenciário (LTCAT) e verificar se há adicional (LIP). São o mesmo trabalho, feitos juntos com desconto."</em></p>
+            </div>
+        </div>
+
+        <!-- Row 2: PCMSO -->
+        <div style="display:grid;grid-template-columns:160px 1fr 160px 1fr;background:#fafbfc;border-bottom:1px solid var(--gray-light);align-items:center;">
+            <div style="padding:11px 14px;display:flex;align-items:center;gap:9px;">
+                <div style="width:34px;height:34px;background:var(--info-light);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <span style="font-family:var(--font-primary);font-weight:800;font-size:9px;color:var(--info-color);">PCMSO</span>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:10.5px;color:var(--dark-color);">Cliente pede PCMSO</div>
+                    <div style="font-size:9px;color:var(--gray-color);">NR-07 / exames</div>
+                </div>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;">O PCMSO <strong style="color:var(--dark-color);">precisa do inventário de riscos do PGR</strong> para definir quais exames cada função exige — sem ele, o programa fica genérico e pode ser questionado em auditoria.</p>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);display:flex;flex-direction:column;gap:5px;">
+                <span style="background:#e8eef5;color:var(--primary-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">PGR</span>
+                <span style="background:var(--warning-light);color:var(--warning-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">LTCAT</span>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;"><i class="fas fa-quote-left" style="color:var(--secondary-color);font-size:8px;margin-right:4px;"></i><em>"Posso fazer o PCMSO, mas ele precisa estar fundamentado no PGR — caso contrário o MTE pode autuar por programa genérico. Já que vamos levantar os riscos de qualquer forma, aproveitamos e fazemos o PGR junto."</em></p>
+            </div>
+        </div>
+
+        <!-- Row 3: LTCAT -->
+        <div style="display:grid;grid-template-columns:160px 1fr 160px 1fr;background:white;border-bottom:1px solid var(--gray-light);align-items:center;">
+            <div style="padding:11px 14px;display:flex;align-items:center;gap:9px;">
+                <div style="width:34px;height:34px;background:var(--warning-light);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <span style="font-family:var(--font-primary);font-weight:800;font-size:9px;color:var(--warning-color);">LTCAT</span>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:10.5px;color:var(--dark-color);">Cliente pede LTCAT</div>
+                    <div style="font-size:9px;color:var(--gray-color);">INSS / eSocial S-2240</div>
+                </div>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;">O LTCAT confirma <strong style="color:var(--dark-color);">exposição a agentes nocivos</strong> — se a exposição existe, ela provavelmente gera insalubridade (LIP) e precisa estar alinhada ao PGR para coerência no eSocial.</p>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);display:flex;flex-direction:column;gap:5px;">
+                <span style="background:var(--danger-light);color:var(--danger-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">LIP</span>
+                <span style="background:#e8eef5;color:var(--primary-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">PGR</span>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;"><i class="fas fa-quote-left" style="color:var(--secondary-color);font-size:8px;margin-right:4px;"></i><em>"Se o LTCAT confirmou agente acima do limite, provavelmente há adicional de insalubridade — e sem o LIP, isso vira passivo trabalhista. Fazendo os dois juntos, a empresa fica coberta nos dois flancos: previdenciário e trabalhista."</em></p>
+            </div>
+        </div>
+
+        <!-- Row 4: LIP -->
+        <div style="display:grid;grid-template-columns:160px 1fr 160px 1fr;background:#fafbfc;border-bottom:1px solid var(--gray-light);align-items:center;">
+            <div style="padding:11px 14px;display:flex;align-items:center;gap:9px;">
+                <div style="width:34px;height:34px;background:var(--danger-light);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <span style="font-family:var(--font-primary);font-weight:800;font-size:11px;color:var(--danger-color);">LIP</span>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:10.5px;color:var(--dark-color);">Cliente pede LIP</div>
+                    <div style="font-size:9px;color:var(--gray-color);">NR-15 / NR-16 / adicional</div>
+                </div>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;">O LIP avalia os <strong style="color:var(--dark-color);">mesmos agentes do LTCAT</strong>, mas para fins trabalhistas. Quem precisa de um, precisa do outro — e ambos dependem do inventário do PGR para coerência.</p>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);display:flex;flex-direction:column;gap:5px;">
+                <span style="background:var(--warning-light);color:var(--warning-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">LTCAT</span>
+                <span style="background:#e8eef5;color:var(--primary-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">PGR</span>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;"><i class="fas fa-quote-left" style="color:var(--secondary-color);font-size:8px;margin-right:4px;"></i><em>"O LIP protege na Justiça do Trabalho, mas não na Previdência — o LTCAT é o que protege no INSS. São dois laudos diferentes para o mesmo risco. Fazer só um é deixar metade da empresa desprotegida."</em></p>
+            </div>
+        </div>
+
+        <!-- Row 5: Psicossocial -->
+        <div style="display:grid;grid-template-columns:160px 1fr 160px 1fr;background:white;align-items:center;">
+            <div style="padding:11px 14px;display:flex;align-items:center;gap:9px;">
+                <div style="width:34px;height:34px;background:var(--purple-light);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-brain" style="color:var(--purple-color);font-size:13px;"></i>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:10.5px;color:var(--dark-color);">Qualquer empresa</div>
+                    <div style="font-size:9px;color:#7c3aed;font-weight:600;">NR-01 Mai/2026 ★ novo</div>
+                </div>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;">A atualização da NR-01 tornou os <strong style="color:var(--dark-color);">riscos psicossociais obrigatórios no PGR</strong> — toda empresa com funcionários CLT precisa incluir essa avaliação, com ou sem PGR novo.</p>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);display:flex;flex-direction:column;gap:5px;">
+                <span style="background:var(--purple-light);color:var(--purple-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">Psicossocial</span>
+                <span style="background:#e8eef5;color:var(--primary-color);padding:3px 9px;border-radius:10px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-align:center;">PGR atualizado</span>
+            </div>
+            <div style="padding:11px 14px;border-left:1px solid var(--gray-light);">
+                <p style="font-size:10px;color:var(--gray-color);line-height:1.45;"><i class="fas fa-quote-left" style="color:var(--secondary-color);font-size:8px;margin-right:4px;"></i><em>"A lei mudou em maio de 2026 — seu PGR precisa incluir a avaliação psicossocial ou está desatualizado. Já que vamos revisar o PGR de qualquer forma, fazemos a avaliação completa e a empresa sai 100% em conformidade."</em></p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Saúde e Segurança do Trabalho</span>
+        <a href="https://engmarq.com.br">engmarq.com.br</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 12 — ENCERRAMENTO        -->
+<!-- ============================== -->
+<div class="slide slide-closing">
+    <div class="closing-content">
+        <img src="assets/logo-engmarq.png" alt="EngMarq" style="height:46px;filter:brightness(0) invert(1);margin-bottom:22px;" onerror="this.style.display='none'">
+        <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.35);color:var(--secondary-color);padding:6px 16px;border-radius:50px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;">
+            <i class="fas fa-hard-hat"></i> EngMarq Solution
+        </div>
+        <div style="width:45px;height:3px;background:var(--secondary-color);border-radius:3px;margin-bottom:18px;"></div>
+        <div style="font-family:var(--font-primary);font-weight:800;font-size:34px;color:white;line-height:1.2;margin-bottom:14px;">
+            Sua empresa está<br><span style="color:var(--secondary-color);">em conformidade?</span>
+        </div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.7);line-height:1.65;margin-bottom:28px;max-width:420px;">
+            Nossa equipe multidisciplinar de Engenheiros de Segurança, Técnicos e Psicólogos do Trabalho elabora todos os documentos SST de forma integrada, garantindo conformidade legal, eSocial e proteção jurídica completa.
+        </div>
+        <div style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--secondary-color),var(--secondary-dark));color:white;padding:12px 28px;border-radius:50px;font-family:var(--font-primary);font-weight:700;font-size:13px;">
+            <i class="fas fa-clipboard-check"></i>
+            Solicite uma avaliação gratuita
+        </div>
+    </div>
+    <div class="closing-side">
+        <div style="font-family:var(--font-primary);font-weight:700;font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;">Fale conosco</div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-globe"></i></div>
+            <div class="contact-text">
+                <p>Site</p>
+                <strong>engmarq.com.br</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-text">
+                <p>WhatsApp</p>
+                <strong>(62) 9 9449-3635</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-text">
+                <p>E-mail</p>
+                <strong>contato@engmarq.com.br</strong>
+            </div>
+        </div>
+        <div style="margin-top:16px;background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.25);border-radius:10px;padding:13px 15px;">
+            <div style="font-family:var(--font-primary);font-weight:700;font-size:10px;color:var(--secondary-color);margin-bottom:8px;"><i class="fas fa-check-circle" style="margin-right:5px;"></i>Documentos elaborados</div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                <span style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);padding:3px 9px;border-radius:12px;font-size:9px;font-family:var(--font-primary);font-weight:700;">PGR</span>
+                <span style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);padding:3px 9px;border-radius:12px;font-size:9px;font-family:var(--font-primary);font-weight:700;">PCMSO</span>
+                <span style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);padding:3px 9px;border-radius:12px;font-size:9px;font-family:var(--font-primary);font-weight:700;">LTCAT</span>
+                <span style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);padding:3px 9px;border-radius:12px;font-size:9px;font-family:var(--font-primary);font-weight:700;">LIP</span>
+                <span style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);padding:3px 9px;border-radius:12px;font-size:9px;font-family:var(--font-primary);font-weight:700;">Psicossocial</span>
+                <span style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);padding:3px 9px;border-radius:12px;font-size:9px;font-family:var(--font-primary);font-weight:700;">eSocial</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

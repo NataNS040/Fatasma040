@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NR-01 Story | EngMarq Solution</title>
+  <link rel="icon" type="image/png" href="assets/logoengmarq.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Viewport container ────────────────────────── */
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #c5cedb;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .viewport {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ─── Story canvas 1080×1920 (9:16) ────────────── */
+    .story {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      background: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      transform-origin: center center;
+    }
+
+    /* ─── Top accent bar ────────────────────────────── */
+    .story::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, #1a365d 60%, #f5a623 100%);
+      z-index: 10;
+    }
+
+    /* ─── Decorative blobs ──────────────────────────── */
+    .blob-1 {
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      background: #c8d8ec;
+      border-radius: 50%;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .blob-2 {
+      position: absolute;
+      bottom: 280px; left: -160px;
+      width: 400px; height: 400px;
+      background: #eef3f9;
+      border-radius: 50%;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* ─── Main content area ─────────────────────────── */
+    .inner {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 88px 100px 0;
+      gap: 48px;
+    }
+
+    /* ─── Logo badge ────────────────────────────────── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #1a365d;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 700;
+      padding: 14px 30px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+      align-self: flex-start;
+    }
+    .badge img {
+      height: 46px;
+      filter: brightness(0) invert(1);
+    }
+
+    /* ─── Headline ──────────────────────────────────── */
+    .headline {
+      font-size: 74px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.15;
+    }
+    .headline .highlight { color: #1a365d; }
+    .headline .danger {
+      color: #dc2626;
+      font-style: italic;
+    }
+
+    /* ─── Info box ──────────────────────────────────── */
+    .infobox {
+      background: #eef3f9;
+      border-left: 8px solid #1a365d;
+      border-radius: 20px;
+      padding: 40px 44px;
+    }
+    .urgency-tag {
+      display: inline-block;
+      background: #dc2626;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 700;
+      padding: 8px 24px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+    .infobox strong {
+      display: block;
+      color: #0f2744;
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.35;
+    }
+    .infobox p {
+      color: #374151;
+      font-size: 27px;
+      line-height: 1.6;
+    }
+
+    /* ─── Feature grid 2x2 ──────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .feature-card {
+      border: 3px solid #c8d8ec;
+      border-radius: 24px;
+      padding: 36px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      background: #eef3f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      flex-shrink: 0;
+    }
+
+    .feature-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      line-height: 1.3;
+    }
+    .feature-title::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #f5a623;
+      flex-shrink: 0;
+    }
+    .feature-desc {
+      font-size: 22px;
+      color: #6b7280;
+      line-height: 1.55;
+    }
+
+    /* ─── CTA banner ────────────────────────────────── */
+    .cta-banner {
+      background: #1a365d;
+      margin: auto -100px 0;
+      padding: 56px 100px 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+      text-align: center;
+    }
+
+    .cta-text {
+      color: #fff;
+      font-size: 34px;
+      font-weight: 600;
+      line-height: 1.5;
+      max-width: 840px;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #f5a623;
+      color: #111827;
+      font-family: 'Inter', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      padding: 32px 60px;
+      border-radius: 18px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .cta-btn:hover {
+      background: #e09112;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+<div class="viewport">
+  <div class="story">
+
+    <div class="blob-1"></div>
+    <div class="blob-2"></div>
+
+    <div class="inner">
+
+      <div class="badge">
+        <img src="assets/logoengmarq.png" alt="EngMarq Solution" />
+        EngMarq Solution
+      </div>
+
+      <h1 class="headline">
+        Sua empresa vai <span class="highlight">se adequar à NR-01</span> ou vai
+        <span class="danger">pagar multa</span> em maio de 2026?
+      </h1>
+
+      <div class="infobox">
+        <span class="urgency-tag">⚠ Prazo: Maio 2026</span>
+        <strong>A NR-01 foi atualizada e agora é obrigatória para todas as empresas</strong>
+        <p>
+          A nova NR-01 exige que riscos psicossociais — como estresse, assédio e sobrecarga —
+          sejam mapeados e incluídos no PGR. Empresas que não se adequarem estarão sujeitas
+          a embargos, multas do MTE e ações trabalhistas.
+        </p>
+      </div>
+
+      <div class="grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4CB;</div>
+          <div>
+            <div class="feature-title">PGR e GRO Atualizados</div>
+            <p class="feature-desc">Programa de Gerenciamento de Riscos completo com fatores psicossociais exigidos.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F9E0;</div>
+          <div>
+            <div class="feature-title">Mapeamento Psicossocial</div>
+            <p class="feature-desc">Identificamos estresse, assédio e sobrecarga com metodologia reconhecida.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F6E1;&#xFE0F;</div>
+          <div>
+            <div class="feature-title">Proteção contra Autuações</div>
+            <p class="feature-desc">Documentação técnica completa para blindar em fiscalizações do MTE.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">&#x1F4C5;</div>
+          <div>
+            <div class="feature-title">Adequação no Prazo</div>
+            <p class="feature-desc">Entregamos toda a documentação antes de maio/2026 com acompanhamento técnico.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cta-banner">
+      <p class="cta-text">
+        A EngMarq garante a adequação completa da sua empresa à NR-01 —
+        com segurança técnica, dentro do prazo e sem dor de cabeça
+      </p>
+      <a class="cta-btn"
+         href="https://wa.me/5511999999999?text=Ola!%20Preciso%20adequar%20minha%20empresa%20a%20NR-01.%20Podem%20me%20ajudar%3F"
+         target="_blank" rel="noopener noreferrer">
+        Quero me adequar agora &#x2192;
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function scaleStory() {
+    var story = document.querySelector('.story');
+    var s = Math.min(window.innerWidth / 1080, window.innerHeight / 1920);
+    story.style.transform = 'scale(' + s + ')';
+  }
+  scaleStory();
+  window.addEventListener('resize', scaleStory);
+</script>
+
+</body>
+</html>
