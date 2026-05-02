@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamentos NR — O que são e por que sua empresa precisa | EngMarq</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --primary-light: #2d4a6f;
+            --secondary-color: #f5a623;
+            --secondary-dark: #e09112;
+            --accent-color: #10b981;
+            --accent-light: #d1fae5;
+            --danger-color: #ef4444;
+            --danger-light: #fee2e2;
+            --warning-color: #f59e0b;
+            --warning-light: #fef3c7;
+            --info-color: #3b82f6;
+            --info-light: #dbeafe;
+            --purple-color: #8b5cf6;
+            --purple-light: #ede9fe;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --gray-light: #e5e7eb;
+            --light-color: #f8fafc;
+            --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-secondary);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 30px 0;
+            min-height: 100vh;
+        }
+
+        /* ===== SLIDE BASE ===== */
+        .slide {
+            width: 297mm;
+            height: 210mm;
+            background: var(--white-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            padding: 35px 45px 50px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-shrink: 0;
+        }
+
+        .slide-logo { height: 30px; object-fit: contain; }
+
+        .slide-number {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 12px;
+            color: var(--primary-color);
+            background: linear-gradient(135deg, #e8eef5, #f0f4f8);
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+
+        .slide-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 9px 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            font-family: var(--font-secondary);
+        }
+
+        .slide-footer a { color: var(--secondary-color); text-decoration: none; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* ===== SECTION LABELS ===== */
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        /* ===== COVER SLIDE ===== */
+        .slide-cover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 55%, var(--primary-light) 100%);
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-cover::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 25%, rgba(245,166,35,0.10) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(16,185,129,0.07) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cover-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 55px 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-right {
+            width: 290px;
+            background: rgba(255,255,255,0.04);
+            border-left: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 40px 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(245,166,35,0.15);
+            border: 1px solid rgba(245,166,35,0.35);
+            color: var(--secondary-color);
+            padding: 7px 18px;
+            border-radius: 50px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 18px;
+            animation: fadeInUp 0.8s ease both;
+        }
+
+        .cover-logo {
+            height: 60px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 22px;
+            animation: scaleIn 0.9s ease 0.1s both;
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 40px;
+            color: white;
+            line-height: 1.15;
+            margin-bottom: 14px;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .cover-title .highlight { color: var(--secondary-color); }
+
+        .cover-subtitle {
+            font-family: var(--font-secondary);
+            font-size: 15px;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.6;
+            margin-bottom: 28px;
+            max-width: 440px;
+            animation: fadeInUp 0.8s ease 0.45s both;
+        }
+
+        .cover-line {
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 3px;
+            margin-bottom: 18px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .cover-meta {
+            display: flex;
+            gap: 22px;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .cover-meta-item {
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            font-family: var(--font-secondary);
+        }
+
+        .cover-meta-item i { color: var(--secondary-color); margin-right: 5px; }
+
+        .cover-nr-pill {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 11px 18px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.8s ease both;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cover-nr-pill .nr-code {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--secondary-color);
+            min-width: 42px;
+            flex-shrink: 0;
+        }
+
+        .cover-nr-pill .nr-name {
+            font-size: 9.5px;
+            color: rgba(255,255,255,0.7);
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        /* ===== GRIDS ===== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; flex: 1; }
+        .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; flex: 1; }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--light-color);
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card .card-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+
+        .card h4 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            font-size: 10.5px;
+            color: var(--gray-color);
+            line-height: 1.55;
+        }
+
+        .card-tag {
+            display: inline-block;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 9px;
+            border-radius: 12px;
+            margin-bottom: 7px;
+        }
+
+        /* ICON / BORDER / TAG COLORS */
+        .icon-blue { background: var(--info-light); color: var(--info-color); }
+        .icon-green { background: var(--accent-light); color: var(--accent-color); }
+        .icon-orange { background: var(--warning-light); color: var(--warning-color); }
+        .icon-red { background: var(--danger-light); color: var(--danger-color); }
+        .icon-navy { background: #e8eef5; color: var(--primary-color); }
+        .icon-purple { background: var(--purple-light); color: var(--purple-color); }
+
+        .border-orange { border-left-color: var(--secondary-color); }
+        .border-green { border-left-color: var(--accent-color); }
+        .border-red { border-left-color: var(--danger-color); }
+        .border-blue { border-left-color: var(--info-color); }
+        .border-purple { border-left-color: var(--purple-color); }
+        .border-navy { border-left-color: var(--primary-color); }
+
+        .tag-blue { background: var(--info-light); color: var(--info-color); }
+        .tag-green { background: var(--accent-light); color: var(--accent-color); }
+        .tag-orange { background: var(--warning-light); color: var(--warning-color); }
+        .tag-red { background: var(--danger-light); color: var(--danger-color); }
+        .tag-navy { background: #e8eef5; color: var(--primary-color); }
+        .tag-purple { background: var(--purple-light); color: var(--purple-color); }
+
+        /* ===== NR DETAIL LAYOUT ===== */
+        .nr-detail-layout {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .nr-detail-left {
+            width: 230px;
+            background: linear-gradient(155deg, var(--primary-color), var(--primary-dark));
+            border-radius: 14px;
+            padding: 26px 22px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nr-detail-left::before {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .nr-code-big {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 48px;
+            color: var(--secondary-color);
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .nr-name-full {
+            font-family: var(--font-secondary);
+            font-size: 11px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+
+        .nr-mandatory-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(16,185,129,0.15);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: #10b981;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .nr-who-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(245,166,35,0.2);
+            border: 1px solid rgba(245,166,35,0.4);
+            color: var(--secondary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .nr-checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .nr-checklist li {
+            font-size: 10px;
+            color: rgba(255,255,255,0.7);
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            line-height: 1.35;
+        }
+
+        .nr-checklist li i { color: var(--secondary-color); font-size: 9px; margin-top: 2px; flex-shrink: 0; }
+
+        .nr-detail-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nr-section-label {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gray-color);
+            margin-bottom: 8px;
+        }
+
+        .nr-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .nr-info-item {
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 12px 14px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .nr-info-item h5 {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 10px;
+            color: var(--dark-color);
+            margin-bottom: 4px;
+        }
+
+        .nr-info-item p {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+
+        /* ===== LIST ITEMS ===== */
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 9px 12px;
+            background: var(--light-color);
+            border-radius: 9px;
+            margin-bottom: 7px;
+        }
+
+        .list-item i {
+            font-size: 13px;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .list-item p {
+            font-size: 11px;
+            color: var(--gray-color);
+            line-height: 1.45;
+        }
+
+        .list-item p strong {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        /* ===== HIGHLIGHT / WARNING BOX ===== */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .highlight-box i { font-size: 22px; color: var(--secondary-color); flex-shrink: 0; }
+
+        .highlight-box p {
+            font-size: 11.5px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.88);
+        }
+
+        .highlight-box p strong { color: var(--secondary-color); }
+
+        .warning-box {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .warning-box i { font-size: 20px; color: #c4b5fd; flex-shrink: 0; }
+
+        .warning-box p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.88);
+        }
+
+        .warning-box p strong { color: #c4b5fd; }
+
+        .danger-box {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .danger-box i { font-size: 20px; color: #fca5a5; flex-shrink: 0; }
+
+        .danger-box p {
+            font-size: 11px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.88);
+        }
+
+        .danger-box p strong { color: #fca5a5; }
+
+        /* ===== TWO COLUMN ===== */
+        .two-col { display: flex; gap: 24px; flex: 1; }
+        .col-main { flex: 1; }
+        .col-side { width: 220px; flex-shrink: 0; }
+        .vdivider { width: 1px; background: var(--gray-light); flex-shrink: 0; }
+
+        /* ===== STATS ROW ===== */
+        .stats-row { display: flex; gap: 12px; margin-bottom: 16px; }
+
+        .stat-pill {
+            flex: 1;
+            text-align: center;
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .stat-pill .stat-num {
+            font-family: var(--font-primary);
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-pill .stat-label {
+            font-size: 9.5px;
+            color: var(--gray-color);
+            line-height: 1.3;
+        }
+
+        /* ===== CLOSING SLIDE ===== */
+        .slide-closing {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 60%, var(--primary-light) 100%);
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-closing::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(245,166,35,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(16,185,129,0.06) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .closing-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 55px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .closing-side {
+            width: 260px;
+            border-left: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 14px;
+            padding: 40px 28px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-item { display: flex; align-items: center; gap: 12px; }
+
+        .contact-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(245,166,35,0.15);
+            border: 1px solid rgba(245,166,35,0.3);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .contact-text p { font-size: 10px; color: rgba(255,255,255,0.5); }
+        .contact-text strong { font-size: 12px; color: rgba(255,255,255,0.88); font-family: var(--font-primary); font-weight: 600; }
+
+        /* ===== PRINT ===== */
+        @page { size: 297mm 210mm landscape; margin: 0; }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                animation: none !important;
+                transition: none !important;
+            }
+            html { width: 297mm; }
+            body { width: 297mm !important; background: white !important; display: block !important; padding: 0 !important; margin: 0 !important; gap: 0 !important; }
+            .slide {
+                width: 297mm !important; height: 210mm !important;
+                min-height: 210mm !important; max-height: 210mm !important;
+                box-shadow: none !important; border-radius: 0 !important;
+                page-break-after: always !important; break-after: page !important;
+                page-break-inside: avoid !important; break-inside: avoid !important;
+                margin: 0 !important; overflow: hidden !important;
+            }
+            .slide:last-of-type { page-break-after: auto !important; break-after: auto !important; }
+            .slide-cover, .slide-closing {
+                display: flex !important; flex-direction: row !important; padding: 0 !important;
+                background: linear-gradient(135deg, #0f2744 0%, #1a365d 55%, #2d4a6f 100%) !important;
+            }
+            .cover-left  { flex: 1 !important; min-width: 0 !important; }
+            .cover-right { width: 290px !important; min-width: 290px !important; flex-shrink: 0 !important; display: flex !important; flex-direction: column !important; }
+            .closing-content { flex: 1 !important; min-width: 0 !important; }
+            .closing-side { width: 260px !important; min-width: 260px !important; flex-shrink: 0 !important; }
+            .slide:not(.slide-cover):not(.slide-closing) {
+                display: flex !important; flex-direction: column !important;
+                padding: 35px 45px 50px !important;
+            }
+            .slide-footer { background: #1a365d !important; }
+            .nr-detail-left { background: #1a365d !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================== -->
+<!-- SLIDE 01 — CAPA                -->
+<!-- ============================== -->
+<div class="slide slide-cover">
+    <div class="cover-left">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="cover-logo">
+        <div class="cover-badge">
+            <i class="fas fa-graduation-cap"></i>
+            Saúde e Segurança do Trabalho
+        </div>
+        <div class="cover-line"></div>
+        <div class="cover-title">
+            Treinamentos em <span class="highlight">NRs</span><br>
+            O que são e por que<br>sua empresa precisa?
+        </div>
+        <div class="cover-subtitle">
+            Conheça as principais Normas Regulamentadoras, os treinamentos obrigatórios, quem deve ser treinado e o que acontece quando a empresa não cumpre.
+        </div>
+        <div class="cover-meta">
+            <div class="cover-meta-item"><i class="fas fa-calendar-alt"></i> Atualizado — Abril 2026</div>
+            <div class="cover-meta-item"><i class="fas fa-map-marker-alt"></i> EngMarq Solution</div>
+        </div>
+    </div>
+    <div class="cover-right">
+        <div class="cover-nr-pill" style="animation-delay:0.3s">
+            <span class="nr-code">NR-01</span>
+            <span class="nr-name">Integração de Segurança — Admissional</span>
+        </div>
+        <div class="cover-nr-pill" style="animation-delay:0.38s">
+            <span class="nr-code">NR-05</span>
+            <span class="nr-name">CIPA — Comissão Interna de Prevenção de Acidentes</span>
+        </div>
+        <div class="cover-nr-pill" style="animation-delay:0.46s">
+            <span class="nr-code">NR-06</span>
+            <span class="nr-name">EPI — Equipamentos de Proteção Individual</span>
+        </div>
+        <div class="cover-nr-pill" style="animation-delay:0.54s">
+            <span class="nr-code">NR-10</span>
+            <span class="nr-name">Segurança em Instalações e Serviços de Elétrica</span>
+        </div>
+        <div class="cover-nr-pill" style="animation-delay:0.62s">
+            <span class="nr-code">NR-12</span>
+            <span class="nr-name">Segurança em Máquinas e Equipamentos</span>
+        </div>
+        <div class="cover-nr-pill" style="animation-delay:0.70s">
+            <span class="nr-code">NR-23</span>
+            <span class="nr-name">Brigada de Incêndio e Emergência</span>
+        </div>
+        <div class="cover-nr-pill" style="animation-delay:0.78s">
+            <span class="nr-code">NR-35</span>
+            <span class="nr-name">Trabalho em Altura — Atividades com Risco de Queda</span>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 02 — O QUE SÃO TREIN.   -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">01 / 10</div>
+    </div>
+
+    <div class="section-badge">Conceito</div>
+    <div class="section-title">O que são os Treinamentos em NRs?</div>
+    <div class="section-subtitle">Capacitações obrigatórias previstas pelas Normas Regulamentadoras do Ministério do Trabalho e Emprego para proteger trabalhadores e empresas</div>
+
+    <div class="two-col">
+        <div class="col-main">
+            <div class="list-item">
+                <i class="fas fa-balance-scale" style="color:var(--primary-color)"></i>
+                <p><strong>Obrigação legal:</strong> As NRs são normas criadas pelo MTE com base na CLT. Cada NR define quem deve ser treinado, o conteúdo mínimo, a carga horária e a periodicidade de reciclagem.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-user-shield" style="color:var(--secondary-color)"></i>
+                <p><strong>Proteção ao trabalhador:</strong> O treinamento capacita o colaborador a reconhecer riscos, usar EPIs corretamente, agir em emergências e executar suas tarefas com segurança.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-shield-alt" style="color:var(--accent-color)"></i>
+                <p><strong>Proteção jurídica da empresa:</strong> O registro do treinamento (lista de presença + certificado) é a principal defesa em processos trabalhistas por acidente. Sem evidência do treinamento, a empresa é considerada negligente.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-file-certificate" style="color:var(--info-color)"></i>
+                <p><strong>Certificado com validade legal:</strong> Cada treinamento gera um certificado individual com nome, CPF, carga horária, conteúdo e assinatura do instrutor habilitado — documento com validade em fiscalizações do MTE.</p>
+            </div>
+        </div>
+        <div class="vdivider"></div>
+        <div class="col-side">
+            <div style="background:linear-gradient(155deg,var(--primary-color),var(--primary-dark));border-radius:14px;padding:22px;color:white;height:100%;display:flex;flex-direction:column;gap:12px;">
+                <div style="font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--font-primary);font-weight:700;">Quem ministra?</div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:3px;"><i class="fas fa-hard-hat" style="margin-right:6px;"></i>Técnico de Segurança</div>
+                    <div style="font-size:9.5px;color:rgba(255,255,255,0.7);">Habilitado pelo CONFEA/CREA ou MTE — ministra a maioria dos treinamentos NR.</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:3px;"><i class="fas fa-user-graduate" style="margin-right:6px;"></i>Engenheiro de Segurança</div>
+                    <div style="font-size:9.5px;color:rgba(255,255,255,0.7);">Habilitado pelo CREA — assina laudos e coordena programas de SST.</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:3px;"><i class="fas fa-stethoscope" style="margin-right:6px;"></i>Médico do Trabalho</div>
+                    <div style="font-size:9.5px;color:rgba(255,255,255,0.7);">Para conteúdos de saúde ocupacional, primeiros socorros e NR-07.</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:3px;"><i class="fas fa-chalkboard-teacher" style="margin-right:6px;"></i>Instrutor Credenciado</div>
+                    <div style="font-size:9.5px;color:rgba(255,255,255,0.7);">Para NR-10, NR-35, Brigada — exige qualificação técnica específica na norma.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 03 — PANORAMA NRs        -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">02 / 10</div>
+    </div>
+
+    <div class="section-badge">Visão Geral</div>
+    <div class="section-title">Os principais treinamentos obrigatórios</div>
+    <div class="section-subtitle">Cada Norma Regulamentadora define o conteúdo mínimo, a carga horária e a periodicidade da reciclagem</div>
+
+    <div class="grid-4">
+        <div class="card border-navy">
+            <div class="card-tag tag-navy">NR-01</div>
+            <div class="card-icon icon-navy"><i class="fas fa-user-shield"></i></div>
+            <h4>Integração Admissional</h4>
+            <p>Todos os admitidos — antes de iniciar atividades. Apresenta riscos, EPIs, emergências e cultura de segurança.</p>
+        </div>
+        <div class="card border-orange">
+            <div class="card-tag tag-orange">NR-05</div>
+            <div class="card-icon icon-orange"><i class="fas fa-users"></i></div>
+            <h4>CIPA</h4>
+            <p>Membros titulares e suplentes eleitos. 20h de formação obrigatória para funcionamento legal da comissão.</p>
+        </div>
+        <div class="card border-green">
+            <div class="card-tag tag-green">NR-06</div>
+            <div class="card-icon icon-green"><i class="fas fa-hard-hat"></i></div>
+            <h4>Uso de EPIs</h4>
+            <p>Todos que utilizam EPI no trabalho. Seleção, uso correto, conservação e higienização dos equipamentos.</p>
+        </div>
+        <div class="card border-blue">
+            <div class="card-tag tag-blue">NR-10</div>
+            <div class="card-icon icon-blue"><i class="fas fa-bolt"></i></div>
+            <h4>Elétrica</h4>
+            <p>Qualquer trabalhador que opere próximo ou em contato com instalações elétricas ou SEP (sistemas energizados).</p>
+        </div>
+        <div class="card border-purple">
+            <div class="card-tag tag-purple">NR-12</div>
+            <div class="card-icon icon-purple"><i class="fas fa-cogs"></i></div>
+            <h4>Máquinas e Equipamentos</h4>
+            <p>Operadores, manutentores e supervisores de máquinas — segurança em operação, limpeza e manutenção.</p>
+        </div>
+        <div class="card border-orange">
+            <div class="card-tag tag-orange">NR-18</div>
+            <div class="card-icon icon-orange"><i class="fas fa-hard-hat"></i></div>
+            <h4>Construção Civil</h4>
+            <p>Trabalhadores de canteiros de obra — SGSST, riscos específicos da construção, EPIs e procedimentos de emergência.</p>
+        </div>
+        <div class="card border-red">
+            <div class="card-tag tag-red">NR-23</div>
+            <div class="card-icon icon-red"><i class="fas fa-fire-extinguisher"></i></div>
+            <h4>Brigada de Incêndio</h4>
+            <p>Brigadistas designados — combate a incêndio, abandono de área, primeiros socorros e comunicação de emergência.</p>
+        </div>
+        <div class="card border-navy">
+            <div class="card-tag tag-navy">NR-35</div>
+            <div class="card-icon icon-navy"><i class="fas fa-arrow-up"></i></div>
+            <h4>Trabalho em Altura</h4>
+            <p>Todo trabalhador que execute atividades acima de 2m com risco de queda — inclusive eventual ou periódico.</p>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 04 — NR-01 INTEGRAÇÃO    -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">03 / 10</div>
+    </div>
+
+    <div class="section-badge">Treinamento 1 de 8</div>
+    <div class="section-title">NR-01 — Integração de Segurança (Admissional)</div>
+
+    <div class="nr-detail-layout">
+        <div class="nr-detail-left">
+            <div class="nr-code-big">NR-01</div>
+            <div class="nr-name-full">Disposições Gerais e Gerenciamento de Riscos Ocupacionais</div>
+            <div class="nr-mandatory-badge"><i class="fas fa-check-circle"></i> Obrigatório — todos os admitidos</div>
+            <div class="nr-who-badge"><i class="fas fa-users"></i> Antes de iniciar atividades</div>
+            <ul class="nr-checklist">
+                <li><i class="fas fa-circle"></i> Sem carga horária mínima fixada — deve cobrir conteúdo obrigatório</li>
+                <li><i class="fas fa-circle"></i> Pode ser presencial ou EAD (parcialmente)</li>
+                <li><i class="fas fa-circle"></i> Deve ser registrado com assinatura e data</li>
+                <li><i class="fas fa-circle"></i> Válido enquanto a função e riscos não mudarem</li>
+                <li><i class="fas fa-circle"></i> Base do sistema SST da empresa — primeiro contato do trabalhador</li>
+            </ul>
+        </div>
+        <div class="nr-detail-right">
+            <div class="nr-section-label"><i class="fas fa-list" style="margin-right:5px;"></i>Conteúdo obrigatório da integração</div>
+            <div class="nr-info-grid">
+                <div class="nr-info-item" style="border-left-color:var(--primary-color)">
+                    <h5><i class="fas fa-map-marked-alt" style="color:var(--primary-color);margin-right:5px;"></i>Riscos do Posto de Trabalho</h5>
+                    <p>Apresentação dos riscos físicos, químicos, biológicos, ergonômicos e mecânicos identificados no PGR para a função admitida.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:var(--secondary-color)">
+                    <h5><i class="fas fa-hard-hat" style="color:var(--secondary-color);margin-right:5px;"></i>EPIs Obrigatórios</h5>
+                    <p>Quais EPIs são exigidos, como utilizar corretamente, como conservar, higienizar e quando solicitar reposição.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:var(--accent-color)">
+                    <h5><i class="fas fa-exclamation-triangle" style="color:var(--accent-color);margin-right:5px;"></i>Procedimentos de Emergência</h5>
+                    <p>Plano de evacuação, pontos de encontro, contatos de emergência, brigada e como acionar socorro em caso de acidente.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:var(--info-color)">
+                    <h5><i class="fas fa-brain" style="color:var(--info-color);margin-right:5px;"></i>Riscos Psicossociais (NR-01/2026)</h5>
+                    <p>A partir de maio/2026, a integração deve incluir informações sobre os fatores psicossociais identificados na avaliação obrigatória.</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top:8px;">
+                <i class="fas fa-lightbulb"></i>
+                <p>A integração é o <strong>primeiro e mais importante treinamento</strong>: é a oportunidade de apresentar a cultura de segurança da empresa antes do trabalhador ser exposto a qualquer risco. Empresas que pulam essa etapa concentram os acidentes nos primeiros dias de trabalho.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 05 — NR-05 e NR-06       -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">04 / 10</div>
+    </div>
+
+    <div class="section-badge">Treinamentos 2 e 3 de 8</div>
+    <div class="section-title">NR-05 — CIPA &amp; NR-06 — Equipamentos de Proteção Individual</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;margin-top:10px;">
+        <!-- NR-05 -->
+        <div style="background:var(--light-color);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;border-top:4px solid var(--secondary-color);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+                <div style="background:linear-gradient(135deg,var(--secondary-color),var(--secondary-dark));width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;color:white;flex-shrink:0;"><i class="fas fa-users"></i></div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:800;font-size:14px;color:var(--primary-color);">NR-05 — CIPA</div>
+                    <div style="font-size:10px;color:var(--gray-color);">Comissão Interna de Prevenção de Acidentes</div>
+                </div>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-users" style="color:var(--secondary-color)"></i>
+                <p><strong>Quem:</strong> Membros titulares e suplentes eleitos para a CIPA da empresa.</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-clock" style="color:var(--secondary-color)"></i>
+                <p><strong>Carga horária:</strong> 20 horas mínimas — distribuídas durante o mandato.</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-sync-alt" style="color:var(--secondary-color)"></i>
+                <p><strong>Periodicidade:</strong> A cada mandato (anual). Novos membros devem ser treinados assim que eleitos.</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-book" style="color:var(--secondary-color)"></i>
+                <p><strong>Conteúdo:</strong> Acidentes de trabalho, doenças ocupacionais, mapa de riscos, CIPA como órgão de prevenção, direitos e deveres dos membros.</p>
+            </div>
+            <div style="background:var(--warning-light);border-radius:9px;padding:10px 13px;border-left:3px solid var(--warning-color);margin-top:auto;">
+                <p style="font-size:10px;color:var(--dark-color);line-height:1.45;"><strong style="color:var(--warning-color);">Atenção:</strong> CIPA sem treinamento válido = CIPA irregular. A empresa pode ser autuada pelo MTE e a comissão perde a proteção legal de estabilidade dos membros.</p>
+            </div>
+        </div>
+
+        <!-- NR-06 -->
+        <div style="background:var(--light-color);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;border-top:4px solid var(--accent-color);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+                <div style="background:linear-gradient(135deg,#059669,var(--accent-color));width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;color:white;flex-shrink:0;"><i class="fas fa-hard-hat"></i></div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:800;font-size:14px;color:var(--primary-color);">NR-06 — EPI</div>
+                    <div style="font-size:10px;color:var(--gray-color);">Equipamentos de Proteção Individual</div>
+                </div>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-users" style="color:var(--accent-color)"></i>
+                <p><strong>Quem:</strong> Todos os trabalhadores que utilizam EPI nas atividades — obrigatório no admissional e a cada mudança de EPI ou função.</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-clock" style="color:var(--accent-color)"></i>
+                <p><strong>Carga horária:</strong> Definida conforme a complexidade dos EPIs — geralmente incorporada à integração (NR-01).</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-sync-alt" style="color:var(--accent-color)"></i>
+                <p><strong>Periodicidade:</strong> Sempre que houver novo EPI ou mudança de função. Reciclagem recomendada anualmente.</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-book" style="color:var(--accent-color)"></i>
+                <p><strong>Conteúdo:</strong> Tipos de EPI por risco, uso correto, conservação, higienização, prazo de validade e CA (Certificado de Aprovação).</p>
+            </div>
+            <div style="background:var(--accent-light);border-radius:9px;padding:10px 13px;border-left:3px solid var(--accent-color);margin-top:auto;">
+                <p style="font-size:10px;color:var(--dark-color);line-height:1.45;"><strong style="color:#059669;">Importante:</strong> Fornecer o EPI sem treinar o trabalhador não exime a empresa de responsabilidade por acidente. O treinamento + entrega comprovada (Ficha de EPI) são as duas exigências simultâneas.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 06 — NR-10 ELÉTRICA      -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">05 / 10</div>
+    </div>
+
+    <div class="section-badge">Treinamento 4 de 8</div>
+    <div class="section-title">NR-10 — Segurança em Instalações e Serviços em Eletricidade</div>
+
+    <div class="nr-detail-layout">
+        <div class="nr-detail-left" style="background:linear-gradient(155deg,#1e40af,#1d4ed8)">
+            <div class="nr-code-big">NR-10</div>
+            <div class="nr-name-full">Segurança em Instalações e Serviços em Eletricidade</div>
+            <div class="nr-mandatory-badge"><i class="fas fa-check-circle"></i> Obrigatório — trabalho c/ elétrica</div>
+            <div class="nr-who-badge"><i class="fas fa-redo"></i> Reciclagem: 2 anos</div>
+            <ul class="nr-checklist">
+                <li><i class="fas fa-circle"></i> <strong>Básico:</strong> 40h — trabalhos em proximidade</li>
+                <li><i class="fas fa-circle"></i> <strong>SEP:</strong> +40h — sistemas de alta tensão</li>
+                <li><i class="fas fa-circle"></i> Instrutor certificado em NR-10</li>
+                <li><i class="fas fa-circle"></i> Avaliação teórica e prática obrigatória</li>
+                <li><i class="fas fa-circle"></i> Certificado válido por 2 anos — renovação obrigatória</li>
+                <li><i class="fas fa-circle"></i> Trabalho sem certificado = atividade proibida</li>
+            </ul>
+        </div>
+        <div class="nr-detail-right">
+            <div class="nr-section-label"><i class="fas fa-list" style="margin-right:5px;"></i>Conteúdo mínimo — NR-10 Básico (40h)</div>
+            <div class="nr-info-grid">
+                <div class="nr-info-item" style="border-left-color:#1d4ed8">
+                    <h5><i class="fas fa-bolt" style="color:#1d4ed8;margin-right:5px;"></i>Riscos Elétricos</h5>
+                    <p>Choques elétricos, arco elétrico, queimaduras, incêndios — efeitos no corpo humano e situações de risco.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#1d4ed8">
+                    <h5><i class="fas fa-tools" style="color:#1d4ed8;margin-right:5px;"></i>Técnicas de Controle de Risco</h5>
+                    <p>Desenergização (LOTO), bloqueio e etiquetagem, aterramento temporário e procedimentos de segurança.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#1d4ed8">
+                    <h5><i class="fas fa-hard-hat" style="color:#1d4ed8;margin-right:5px;"></i>EPIs para Elétrica</h5>
+                    <p>Luvas dielétricas, calçados de segurança, face shield, roupa anti-arco, ferramentas isoladas — seleção e uso.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#1d4ed8">
+                    <h5><i class="fas fa-first-aid" style="color:#1d4ed8;margin-right:5px;"></i>Primeiros Socorros</h5>
+                    <p>Atendimento à vítima de choque elétrico, RCP básico, acionamento do SAMU/Bombeiros e comunicação de acidente.</p>
+                </div>
+            </div>
+            <div class="danger-box" style="margin-top:8px;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p><strong>Risco grave e iminente:</strong> A NR-10 é uma das normas com maior rigor punitivo. Trabalhar em instalação energizada sem certificado válido caracteriza atividade em condição de <strong>risco grave e iminente</strong> — o MTE pode interditar o estabelecimento imediatamente.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 07 — NR-12 e NR-18       -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">06 / 10</div>
+    </div>
+
+    <div class="section-badge">Treinamentos 5 e 6 de 8</div>
+    <div class="section-title">NR-12 — Máquinas e Equipamentos &amp; NR-18 — Construção Civil</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;margin-top:10px;">
+        <!-- NR-12 -->
+        <div style="background:var(--light-color);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;border-top:4px solid var(--purple-color);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+                <div style="background:linear-gradient(135deg,#7c3aed,var(--purple-color));width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;color:white;flex-shrink:0;"><i class="fas fa-cogs"></i></div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:800;font-size:14px;color:var(--primary-color);">NR-12 — Máquinas e Equipamentos</div>
+                    <div style="font-size:10px;color:var(--gray-color);">Segurança no Trabalho em Máquinas e Equipamentos</div>
+                </div>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-users" style="color:var(--purple-color)"></i>
+                <p><strong>Quem:</strong> Operadores, manutentores, supervisores e qualquer trabalhador que interaja com máquinas.</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-clock" style="color:var(--purple-color)"></i>
+                <p><strong>Carga horária:</strong> Conforme complexidade da máquina — mínimo 4h práticas na máquina específica além do teórico.</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-book" style="color:var(--purple-color)"></i>
+                <p><strong>Conteúdo:</strong> Riscos de esmagamento, corte e aprisionamento; dispositivos de segurança (guards, LOTO); procedimentos de parada de emergência e manutenção segura.</p>
+            </div>
+            <div style="background:var(--purple-light);border-radius:9px;padding:10px 13px;border-left:3px solid var(--purple-color);margin-top:auto;">
+                <p style="font-size:10px;color:var(--dark-color);line-height:1.45;"><strong style="color:var(--purple-color);">Destaque:</strong> O treinamento deve ser específico para cada máquina ou grupo de máquinas similares — um treinamento genérico não atende à NR-12.</p>
+            </div>
+        </div>
+
+        <!-- NR-18 -->
+        <div style="background:var(--light-color);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px;border-top:4px solid var(--secondary-color);">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px;">
+                <div style="background:linear-gradient(135deg,var(--secondary-color),var(--secondary-dark));width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;color:white;flex-shrink:0;"><i class="fas fa-hard-hat"></i></div>
+                <div>
+                    <div style="font-family:var(--font-primary);font-weight:800;font-size:14px;color:var(--primary-color);">NR-18 — Construção Civil</div>
+                    <div style="font-size:10px;color:var(--gray-color);">SGSST — Sistema de Gestão de Segurança e Saúde no Trabalho</div>
+                </div>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-users" style="color:var(--secondary-color)"></i>
+                <p><strong>Quem:</strong> Todos os trabalhadores em canteiros de obra, reformas e serviços de engenharia — admissional obrigatório.</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-clock" style="color:var(--secondary-color)"></i>
+                <p><strong>Carga horária:</strong> 6h mínimas no admissional + treinamentos específicos por frente de trabalho (andaime, escavação, cobertura etc.).</p>
+            </div>
+            <div class="list-item" style="margin-bottom:0;">
+                <i class="fas fa-book" style="color:var(--secondary-color)"></i>
+                <p><strong>Conteúdo:</strong> Riscos da construção civil, uso de andaimes e plataformas, trabalho em altura (complementar à NR-35), proteções coletivas e plano de emergência do canteiro.</p>
+            </div>
+            <div style="background:var(--warning-light);border-radius:9px;padding:10px 13px;border-left:3px solid var(--warning-color);margin-top:auto;">
+                <p style="font-size:10px;color:var(--dark-color);line-height:1.45;"><strong style="color:var(--warning-color);">Atenção:</strong> Obras sem evidência de treinamento dos trabalhadores são paralisadas pelo MTE e Ministério Público do Trabalho — além de multas por cada trabalhador não treinado.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 08 — NR-23 BRIGADA       -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">07 / 10</div>
+    </div>
+
+    <div class="section-badge">Treinamento 7 de 8</div>
+    <div class="section-title">NR-23 — Brigada de Incêndio e Proteção contra Incêndios</div>
+
+    <div class="nr-detail-layout">
+        <div class="nr-detail-left" style="background:linear-gradient(155deg,#dc2626,#991b1b)">
+            <div class="nr-code-big">NR-23</div>
+            <div class="nr-name-full">Proteção Contra Incêndios e Formação de Brigada</div>
+            <div class="nr-mandatory-badge" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:white;"><i class="fas fa-check-circle"></i> Obrigatório — todas as empresas</div>
+            <div class="nr-who-badge" style="background:rgba(255,165,0,0.25);border-color:rgba(255,165,0,0.5);color:#fbbf24;"><i class="fas fa-redo"></i> Reciclagem: 1 a 2 anos</div>
+            <ul class="nr-checklist">
+                <li><i class="fas fa-circle"></i> Carga horária: 16h a 40h conforme IT do Corpo de Bombeiros</li>
+                <li><i class="fas fa-circle"></i> Instrutor certificado (CBMRN ou curso reconhecido)</li>
+                <li><i class="fas fa-circle"></i> Inclui parte prática: simulado de evacuação obrigatório</li>
+                <li><i class="fas fa-circle"></i> Brigada deve ser proporcional ao número de funcionários</li>
+                <li><i class="fas fa-circle"></i> Exigida pelo Corpo de Bombeiros para AVCB (Auto de Vistoria)</li>
+            </ul>
+        </div>
+        <div class="nr-detail-right">
+            <div class="nr-section-label"><i class="fas fa-list" style="margin-right:5px;"></i>Módulos do treinamento de Brigada</div>
+            <div class="nr-info-grid">
+                <div class="nr-info-item" style="border-left-color:#dc2626">
+                    <h5><i class="fas fa-fire" style="color:#dc2626;margin-right:5px;"></i>Teoria do Fogo</h5>
+                    <p>Triângulo do fogo, classes de incêndio (A, B, C, D, K), propagação e métodos de extinção por classe.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#dc2626">
+                    <h5><i class="fas fa-fire-extinguisher" style="color:#dc2626;margin-right:5px;"></i>Uso de Extintores</h5>
+                    <p>Tipos de extintores (CO₂, pó, água, espuma), inspeção, operação correta e manobra PASS — prática obrigatória.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#dc2626">
+                    <h5><i class="fas fa-running" style="color:#dc2626;margin-right:5px;"></i>Abandono de Área</h5>
+                    <p>Plano de evacuação, rotas de fuga, pontos de encontro, coordenação do abandono e controle de pânico.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#dc2626">
+                    <h5><i class="fas fa-heartbeat" style="color:#dc2626;margin-right:5px;"></i>Primeiros Socorros</h5>
+                    <p>Atendimento a vítimas de incêndio: queimaduras, inalação de fumaça, RCP básico e acionamento do SAMU.</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="background:linear-gradient(135deg,#dc2626,#991b1b);margin-top:8px;">
+                <i class="fas fa-star"></i>
+                <p>Além de NR-23, a brigada é exigida pela <strong>Instrução Técnica do Corpo de Bombeiros</strong> de cada estado para emissão do AVCB. Sem brigada treinada e simulado realizado, o alvará de funcionamento pode ser cassado.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 09 — NR-35 ALTURA        -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">08 / 10</div>
+    </div>
+
+    <div class="section-badge">Treinamento 8 de 8</div>
+    <div class="section-title">NR-35 — Trabalho em Altura</div>
+
+    <div class="nr-detail-layout">
+        <div class="nr-detail-left" style="background:linear-gradient(155deg,#0f766e,#0d9488)">
+            <div class="nr-code-big">NR-35</div>
+            <div class="nr-name-full">Trabalho em Altura — Atividades acima de 2 metros com risco de queda</div>
+            <div class="nr-mandatory-badge" style="background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3);color:white;"><i class="fas fa-check-circle"></i> Obrigatório — todo trabalho ≥ 2m</div>
+            <div class="nr-who-badge" style="background:rgba(245,166,35,0.25);border-color:rgba(245,166,35,0.5);color:#fbbf24;"><i class="fas fa-redo"></i> Reciclagem: 2 anos</div>
+            <ul class="nr-checklist">
+                <li><i class="fas fa-circle"></i> Carga horária: 8h mínimas (teórica + prática)</li>
+                <li><i class="fas fa-circle"></i> Inclui trabalhadores eventuais e terceirizados</li>
+                <li><i class="fas fa-circle"></i> Avaliação de saúde (aptidão) obrigatória antes do treinamento</li>
+                <li><i class="fas fa-circle"></i> PT (Permissão de Trabalho) para cada atividade em altura</li>
+                <li><i class="fas fa-circle"></i> Certificado individual com validade de 2 anos</li>
+            </ul>
+        </div>
+        <div class="nr-detail-right">
+            <div class="nr-section-label"><i class="fas fa-list" style="margin-right:5px;"></i>Conteúdo mínimo — NR-35 (8h)</div>
+            <div class="nr-info-grid">
+                <div class="nr-info-item" style="border-left-color:#0d9488">
+                    <h5><i class="fas fa-exclamation-triangle" style="color:#0d9488;margin-right:5px;"></i>Riscos de Queda</h5>
+                    <p>Tipos de queda, fatores de risco, superfícies frágeis, bordas desprotegidas, escadas, telhados e plataformas.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#0d9488">
+                    <h5><i class="fas fa-shield-alt" style="color:#0d9488;margin-right:5px;"></i>EPIs Anticaída</h5>
+                    <p>Cinturão paraquedista, talabarte, trava-quedas, mosquetão, linha de vida — inspeção, uso e descarte após queda.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#0d9488">
+                    <h5><i class="fas fa-clipboard-check" style="color:#0d9488;margin-right:5px;"></i>Permissão de Trabalho (PT)</h5>
+                    <p>Como emitir, preencher e encerrar a PT — responsabilidades do emissor, do executor e do supervisor.</p>
+                </div>
+                <div class="nr-info-item" style="border-left-color:#0d9488">
+                    <h5><i class="fas fa-ambulance" style="color:#0d9488;margin-right:5px;"></i>Plano de Emergência em Altura</h5>
+                    <p>Resgate de vítima suspensa, síndrome do arnês, primeiros socorros e acionamento de socorro especializado.</p>
+                </div>
+            </div>
+            <div class="highlight-box" style="background:linear-gradient(135deg,#0f766e,#0d9488);margin-top:8px;">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>Queda em altura é a <strong>principal causa de morte por acidente de trabalho no Brasil</strong>. A NR-35 exige que nenhum trabalhador execute atividade em altura sem certificado válido, PT emitida e EPIs anticaída inspecionados na hora da atividade.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 10 — CONSEQUÊNCIAS       -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">09 / 10</div>
+    </div>
+
+    <div class="section-badge">Conformidade Legal</div>
+    <div class="section-title">O que acontece quando a empresa não treina?</div>
+    <div class="section-subtitle">A ausência de treinamentos NR expõe a empresa a riscos legais, financeiros e humanos severos</div>
+
+    <div class="two-col" style="margin-top:6px;">
+        <div class="col-main">
+            <div class="stats-row">
+                <div class="stat-pill" style="border-top-color:var(--danger-color);">
+                    <span class="stat-num" style="color:var(--danger-color);">R$ 6.730</span>
+                    <span class="stat-label">Multa mínima por trabalhador sem treinamento NR-10 / NR-35</span>
+                </div>
+                <div class="stat-pill" style="border-top-color:var(--secondary-color);">
+                    <span class="stat-num" style="color:var(--secondary-color);">R$ 85k</span>
+                    <span class="stat-label">Indenização média em ação por acidente com morte no trabalho</span>
+                </div>
+                <div class="stat-pill" style="border-top-color:var(--info-color);">
+                    <span class="stat-num" style="color:var(--info-color);">2.106</span>
+                    <span class="stat-label">Mortes por acidentes de trabalho registradas no Brasil em 2023 (AEAT)</span>
+                </div>
+            </div>
+
+            <div class="list-item">
+                <i class="fas fa-gavel" style="color:var(--danger-color)"></i>
+                <p><strong>Autuação pelo MTE:</strong> Fiscais do Ministério do Trabalho verificam listas de presença, certificados e fichas de EPI. Cada irregularidade gera multa individual por trabalhador e por norma descumprida.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-balance-scale" style="color:var(--secondary-color)"></i>
+                <p><strong>Processos trabalhistas:</strong> Em ação por acidente, a ausência de treinamento é a principal evidência de culpa da empresa — gera dano material, moral e responsabilidade civil do empregador e gestores.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-ban" style="color:var(--purple-color)"></i>
+                <p><strong>Interdição e embargo:</strong> Riscos graves e iminentes autorizam o MTE a interditar posto ou embargar a obra imediatamente — sem aviso prévio, paralisando a operação até regularização.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-hospital" style="color:var(--info-color)"></i>
+                <p><strong>CAT e custo previdenciário:</strong> Acidente sem treinamento registrado eleva o FAP (Fator Acidentário de Prevenção) da empresa — aumenta a alíquota do SAT/RAT paga ao INSS sobre toda a folha.</p>
+            </div>
+        </div>
+        <div class="vdivider"></div>
+        <div class="col-side">
+            <div style="background:linear-gradient(155deg,var(--primary-color),var(--primary-dark));border-radius:14px;padding:22px;color:white;height:100%;display:flex;flex-direction:column;gap:12px;">
+                <div style="font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--font-primary);font-weight:700;margin-bottom:2px;">Documentação exigida</div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:3px;"><i class="fas fa-file-alt" style="margin-right:6px;"></i>Certificado Individual</div>
+                    <div style="font-size:9.5px;color:rgba(255,255,255,0.7);">Nome, CPF, carga horária, conteúdo programático, data e assinatura do instrutor habilitado.</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:3px;"><i class="fas fa-users" style="margin-right:6px;"></i>Lista de Presença</div>
+                    <div style="font-size:9.5px;color:rgba(255,255,255,0.7);">Assinada por cada participante — com data, local e identificação do treinamento realizado.</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:3px;"><i class="fas fa-book" style="margin-right:6px;"></i>Conteúdo Programático</div>
+                    <div style="font-size:9.5px;color:rgba(255,255,255,0.7);">Registro dos tópicos ministrados, metodologia e material didático — deve cobrir 100% do conteúdo mínimo da norma.</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.08);border-radius:9px;padding:10px 13px;">
+                    <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:3px;"><i class="fas fa-id-card" style="margin-right:6px;"></i>Habilitação do Instrutor</div>
+                    <div style="font-size:9.5px;color:rgba(255,255,255,0.7);">Cópia do registro profissional (CREA, CFMQ) ou certificado de capacitação do instrutor para aquela norma específica.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Treinamentos em NRs</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 11 — ENCERRAMENTO        -->
+<!-- ============================== -->
+<div class="slide slide-closing">
+    <div class="closing-content">
+        <img src="assets/logoengmarq.png" alt="EngMarq" style="height:60px;filter:brightness(0) invert(1);margin-bottom:28px;">
+        <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.35);color:var(--secondary-color);padding:7px 18px;border-radius:50px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:2px;margin-bottom:18px;">
+            <i class="fas fa-graduation-cap"></i> EngMarq Solution
+        </div>
+        <div style="width:50px;height:3px;background:var(--secondary-color);border-radius:3px;margin-bottom:18px;"></div>
+        <div style="font-family:var(--font-primary);font-weight:800;font-size:36px;color:white;line-height:1.2;margin-bottom:14px;">
+            Sua empresa em <span style="color:var(--secondary-color);">conformidade</span><br>com as NRs
+        </div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.72);line-height:1.6;max-width:420px;margin-bottom:28px;">
+            Realizamos todos os treinamentos com instrutores habilitados, emissão de certificados individuais, listas de presença e conteúdo programático — tudo documentado e pronto para fiscalização.
+        </div>
+        <div style="display:flex;gap:16px;">
+            <div style="background:var(--secondary-color);border-radius:9px;padding:10px 20px;font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--dark-color);">
+                <i class="fas fa-graduation-cap" style="margin-right:6px;"></i>+1.000 treinamentos realizados
+            </div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:9px;padding:10px 20px;font-family:var(--font-primary);font-weight:700;font-size:11px;color:white;border:1px solid rgba(255,255,255,0.15);">
+                <i class="fas fa-building" style="margin-right:6px;color:var(--secondary-color);"></i>+500 empresas atendidas
+            </div>
+        </div>
+    </div>
+    <div class="closing-side">
+        <div style="font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--font-primary);font-weight:700;margin-bottom:4px;">Fale conosco</div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-text">
+                <p>WhatsApp</p>
+                <strong>+55 84 99928-5888</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-text">
+                <p>E-mail</p>
+                <strong>engmarqsolution@gmail.com</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-globe"></i></div>
+            <div class="contact-text">
+                <p>Website</p>
+                <strong>engmarqsolution.com</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-text">
+                <p>Localização</p>
+                <strong>Natal — RN, Brasil</strong>
+            </div>
+        </div>
+        <div style="margin-top:8px;padding:14px;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.3);border-radius:10px;text-align:center;">
+            <div style="font-family:var(--font-primary);font-weight:700;font-size:10px;color:var(--secondary-color);margin-bottom:4px;">Solicite uma proposta</div>
+            <div style="font-size:9.5px;color:rgba(255,255,255,0.65);line-height:1.4;">Enviamos orçamento para todos os treinamentos que sua empresa precisa em até 24h.</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
