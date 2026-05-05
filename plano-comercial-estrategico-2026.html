@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plano Comercial Estratégico 2026 | EngMarq Solution</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    /* ===========================
+       RESET & VARIABLES
+    =========================== */
+    :root {
+      --navy: #0f2744;
+      --blue: #1a365d;
+      --blue-mid: #2c5282;
+      --accent: #f5a623;
+      --accent-dark: #e09112;
+      --gold: #d4a017;
+      --green: #10b981;
+      --green-dark: #059669;
+      --purple: #7c3aed;
+      --purple-light: #a78bfa;
+      --red: #ef4444;
+      --orange: #f97316;
+      --cyan: #06b6d4;
+      --gray: #64748b;
+      --gray-light: #94a3b8;
+      --light: #f1f5f9;
+      --white: #ffffff;
+      --dark: #1e293b;
+      --card-bg: rgba(255,255,255,0.07);
+      --card-border: rgba(255,255,255,0.15);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: #0a0f1e;
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    /* ===========================
+       NAVIGATION
+    =========================== */
+    .nav-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 30px;
+      background: rgba(10,15,30,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(245,166,35,0.2);
+      transform: translateY(-100%);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+    .nav-bar.visible { transform: translateY(0); opacity: 1; }
+    .nav-logo { height: 36px; filter: brightness(0) invert(1); }
+    .nav-center { display: flex; gap: 6px; }
+    .nav-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); cursor: pointer;
+      transition: all 0.3s; border: none; outline: none;
+    }
+    .nav-dot.active { background: var(--accent); transform: scale(1.3); }
+    .nav-dot:hover { background: rgba(245,166,35,0.6); }
+    .nav-right { display: flex; gap: 10px; align-items: center; }
+    .nav-counter { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; color: var(--gray-light); }
+    .nav-btn {
+      width: 38px; height: 38px; border-radius: 50%; border: none;
+      background: rgba(255,255,255,0.1); color: var(--white);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 15px; transition: all 0.3s;
+    }
+    .nav-btn:hover { background: var(--accent); color: var(--navy); }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--orange), var(--purple-light));
+      z-index: 101; transition: width 0.4s ease, opacity 0.4s;
+      opacity: 0;
+    }
+    .progress-bar.visible { opacity: 1; }
+
+    /* ===========================
+       SLIDES
+    =========================== */
+    .slides-wrapper { width: 100vw; height: 100vh; }
+    .slide {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      display: none; flex-direction: column;
+      overflow-y: auto; overflow-x: hidden;
+      opacity: 0; transform: translateX(60px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .slide.active { display: flex; opacity: 1; transform: translateX(0); }
+    .slide.leaving { opacity: 0; transform: translateX(-60px); }
+    .slide-inner {
+      flex: 1; padding: 90px 70px 50px;
+      display: flex; flex-direction: column;
+    }
+    .slide-inner.center { justify-content: center; align-items: center; text-align: center; }
+
+    /* Backgrounds */
+    .bg-cover {
+      background: radial-gradient(ellipse at 20% 50%, #1a365d 0%, #0f2744 40%, #070b14 100%);
+    }
+    .bg-cover::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5a623' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .bg-dark { background: linear-gradient(150deg, #0f1f3d 0%, #0a0f1e 60%, #0d0d1a 100%); }
+    .bg-green { background: linear-gradient(135deg, #064e3b 0%, #0a0f1e 60%); }
+    .bg-purple { background: linear-gradient(135deg, #2d1b69 0%, #0a0f1e 60%); }
+    .bg-orange { background: linear-gradient(135deg, #431407 0%, #0a0f1e 60%); }
+    .bg-red { background: linear-gradient(135deg, #450a0a 0%, #0a0f1e 60%); }
+
+    /* Glow accents */
+    .glow-top-right::after {
+      content: ''; position: fixed; top: -200px; right: -200px;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ===========================
+       TYPOGRAPHY
+    =========================== */
+    .tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.4);
+      color: var(--accent); padding: 6px 18px; border-radius: 30px;
+      font-size: 11px; font-family: 'Montserrat', sans-serif;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .section-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.3);
+      color: var(--accent); padding: 5px 14px; border-radius: 20px;
+      font-size: 11px; font-family: 'Montserrat', sans-serif;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .cover-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(42px, 5vw, 72px);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+    }
+    .cover-title span { color: var(--accent); }
+    .cover-sub {
+      font-size: 16px; color: rgba(255,255,255,0.65);
+      max-width: 620px; line-height: 1.7; margin-bottom: 40px;
+    }
+    .slide-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 800; letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .slide-title span { color: var(--accent); }
+    .slide-subtitle {
+      font-size: 15px; color: rgba(255,255,255,0.55);
+      margin-bottom: 32px;
+    }
+    .divider {
+      width: 60px; height: 4px; border-radius: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--orange));
+      margin-bottom: 28px;
+    }
+    .highlight { color: var(--accent); font-weight: 700; }
+    .highlight-green { color: var(--green); font-weight: 700; }
+    .highlight-purple { color: var(--purple-light); font-weight: 700; }
+    .highlight-red { color: var(--red); font-weight: 700; }
+
+    /* ===========================
+       COVER DECORATIONS
+    =========================== */
+    .cover-badge-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: var(--navy);
+      padding: 10px 28px; border-radius: 40px;
+      font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 800;
+      letter-spacing: 1px; margin-bottom: 30px;
+      box-shadow: 0 0 30px rgba(245,166,35,0.5);
+    }
+    .cover-meta {
+      display: flex; gap: 30px; justify-content: center;
+      flex-wrap: wrap; margin-top: 20px;
+    }
+    .cover-meta-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: rgba(255,255,255,0.55);
+    }
+    .cover-meta-item i { color: var(--accent); }
+    .cover-logo-large {
+      height: 70px; filter: brightness(0) invert(1);
+      margin-bottom: 40px; opacity: 0.9;
+    }
+    .cover-orbit {
+      position: absolute; width: 700px; height: 700px;
+      border-radius: 50%; border: 1px solid rgba(245,166,35,0.07);
+      top: 50%; right: -200px; transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .cover-orbit-2 {
+      position: absolute; width: 500px; height: 500px;
+      border-radius: 50%; border: 1px solid rgba(245,166,35,0.1);
+      top: 50%; right: -100px; transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .cover-orbit-3 {
+      position: absolute; width: 300px; height: 300px;
+      border-radius: 50%; border: 1px solid rgba(245,166,35,0.15);
+      top: 50%; right: 0; transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .cover-number-accent {
+      position: absolute; right: 120px; top: 50%; transform: translateY(-50%);
+      font-family: 'Montserrat', sans-serif; font-size: 160px; font-weight: 900;
+      color: rgba(245,166,35,0.06); line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+
+    /* ===========================
+       METRIC CARDS
+    =========================== */
+    .metric-grid { display: grid; gap: 18px; }
+    .metric-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .metric-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .metric-grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 24px 22px;
+      position: relative; overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .metric-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+    .metric-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--orange));
+      border-radius: 16px 16px 0 0;
+    }
+    .metric-card.green::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+    .metric-card.purple::before { background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
+    .metric-card.red::before { background: linear-gradient(90deg, var(--red), var(--orange)); }
+    .metric-card.cyan::before { background: linear-gradient(90deg, var(--cyan), #67e8f9); }
+    .metric-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 14px;
+      background: rgba(245,166,35,0.15);
+      color: var(--accent);
+    }
+    .metric-icon.green { background: rgba(16,185,129,0.15); color: var(--green); }
+    .metric-icon.purple { background: rgba(124,58,237,0.15); color: var(--purple-light); }
+    .metric-icon.red { background: rgba(239,68,68,0.15); color: var(--red); }
+    .metric-icon.cyan { background: rgba(6,182,212,0.15); color: var(--cyan); }
+    .metric-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px; font-weight: 900; line-height: 1;
+      color: var(--white); margin-bottom: 6px;
+    }
+    .metric-value.accent { color: var(--accent); }
+    .metric-value.green { color: var(--green); }
+    .metric-value.purple { color: var(--purple-light); }
+    .metric-value.red { color: var(--red); }
+    .metric-label {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--gray-light);
+    }
+    .metric-sub { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
+    /* ===========================
+       TABLE
+    =========================== */
+    .table-wrap { border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead { background: linear-gradient(90deg, var(--navy), var(--blue-mid)); }
+    thead th {
+      padding: 14px 18px; text-align: left;
+      font-family: 'Montserrat', sans-serif; font-size: 11px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.75);
+    }
+    tbody tr { border-bottom: 1px solid rgba(255,255,255,0.06); transition: background 0.2s; }
+    tbody tr:hover { background: rgba(245,166,35,0.05); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr.total-row { background: rgba(245,166,35,0.1); border-top: 2px solid rgba(245,166,35,0.4); }
+    tbody td {
+      padding: 15px 18px; color: rgba(255,255,255,0.85);
+    }
+    td.td-name { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--white); }
+    td.td-value { font-family: 'Montserrat', sans-serif; font-weight: 800; color: var(--green); font-size: 15px; }
+    td.td-value.zero { color: var(--gray); }
+    td.td-value.total { color: var(--accent); font-size: 16px; }
+    .badge-tag {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; font-family: 'Montserrat', sans-serif;
+    }
+    .badge-big { background: rgba(16,185,129,0.2); color: var(--green); }
+    .badge-fast { background: rgba(6,182,212,0.2); color: var(--cyan); }
+    .badge-prospect { background: rgba(245,166,35,0.2); color: var(--accent); }
+    .badge-new { background: rgba(239,68,68,0.2); color: #f87171; }
+
+    /* ===========================
+       PIPELINE PROGRESS BARS
+    =========================== */
+    .pipeline-item { margin-bottom: 18px; }
+    .pipeline-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .pipeline-name { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; }
+    .pipeline-val { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800; color: var(--accent); }
+    .pipeline-bar { height: 10px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+    .pipeline-fill { height: 100%; border-radius: 10px; transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+
+    /* ===========================
+       PHASE CARDS
+    =========================== */
+    .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 10px; }
+    .phase-card {
+      border-radius: 18px; padding: 28px 24px; position: relative;
+      overflow: hidden; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .phase-card-1 { background: linear-gradient(140deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05)); border-color: rgba(16,185,129,0.3); }
+    .phase-card-2 { background: linear-gradient(140deg, rgba(124,58,237,0.2), rgba(124,58,237,0.05)); border-color: rgba(124,58,237,0.3); }
+    .phase-card-3 { background: linear-gradient(140deg, rgba(245,166,35,0.2), rgba(245,166,35,0.05)); border-color: rgba(245,166,35,0.3); }
+    .phase-num {
+      position: absolute; top: 16px; right: 20px;
+      font-family: 'Montserrat', sans-serif; font-size: 72px; font-weight: 900;
+      color: rgba(255,255,255,0.05); line-height: 1;
+      pointer-events: none;
+    }
+    .phase-icon { font-size: 32px; margin-bottom: 16px; }
+    .phase-title {
+      font-family: 'Montserrat', sans-serif; font-size: 17px; font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .phase-period {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 14px;
+    }
+    .phase-1-period { background: rgba(16,185,129,0.2); color: var(--green); }
+    .phase-2-period { background: rgba(124,58,237,0.2); color: var(--purple-light); }
+    .phase-3-period { background: rgba(245,166,35,0.2); color: var(--accent); }
+    .phase-meta {
+      font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 900;
+      margin-bottom: 6px;
+    }
+    .phase-1-meta { color: var(--green); }
+    .phase-2-meta { color: var(--purple-light); }
+    .phase-3-meta { color: var(--accent); }
+    .phase-text { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+
+    /* ===========================
+       FUNNEL
+    =========================== */
+    .funnel-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .funnel-step {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 28px; border-radius: 10px; color: var(--white);
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      transition: transform 0.3s; cursor: default;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .funnel-step:hover { transform: scaleX(1.015); }
+    .funnel-w1 { width: 100%; background: linear-gradient(90deg, rgba(245,166,35,0.35), rgba(245,166,35,0.2)); border-color: rgba(245,166,35,0.4); }
+    .funnel-w2 { width: 84%; background: linear-gradient(90deg, rgba(249,115,22,0.35), rgba(249,115,22,0.2)); border-color: rgba(249,115,22,0.4); }
+    .funnel-w3 { width: 70%; background: linear-gradient(90deg, rgba(124,58,237,0.35), rgba(124,58,237,0.2)); border-color: rgba(124,58,237,0.4); }
+    .funnel-w4 { width: 56%; background: linear-gradient(90deg, rgba(6,182,212,0.35), rgba(6,182,212,0.2)); border-color: rgba(6,182,212,0.4); }
+    .funnel-w5 { width: 42%; background: linear-gradient(90deg, rgba(16,185,129,0.4), rgba(16,185,129,0.25)); border-color: rgba(16,185,129,0.5); }
+    .funnel-label { font-size: 13px; display: flex; align-items: center; gap: 8px; }
+    .funnel-val { font-size: 15px; }
+    .funnel-arrow { color: rgba(255,255,255,0.3); font-size: 18px; margin: 2px auto; display: block; text-align: center; }
+
+    /* ===========================
+       PRODUCTS GRID
+    =========================== */
+    .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .product-card {
+      border-radius: 18px; padding: 28px 26px;
+      border: 1px solid rgba(255,255,255,0.12);
+      position: relative; overflow: hidden;
+    }
+    .product-opener { background: linear-gradient(140deg, rgba(124,58,237,0.25), rgba(124,58,237,0.05)); }
+    .product-scale { background: linear-gradient(140deg, rgba(6,182,212,0.25), rgba(6,182,212,0.05)); }
+    .product-card-icon {
+      width: 60px; height: 60px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 18px;
+    }
+    .product-opener .product-card-icon { background: rgba(124,58,237,0.2); color: var(--purple-light); }
+    .product-scale .product-card-icon { background: rgba(6,182,212,0.2); color: var(--cyan); }
+    .product-card-title { font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .product-card-sub { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+    .product-opener .product-card-sub { color: var(--purple-light); }
+    .product-scale .product-card-sub { color: var(--cyan); }
+    .product-card-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.7; }
+    .product-feature-list { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .product-feature-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: rgba(255,255,255,0.75);
+    }
+    .product-feature-list li i { margin-top: 2px; font-size: 12px; }
+    .product-opener li i { color: var(--purple-light); }
+    .product-scale li i { color: var(--cyan); }
+    .downsell-arrow {
+      position: absolute; bottom: 16px; right: 20px;
+      font-size: 28px; color: rgba(6,182,212,0.3);
+    }
+
+    /* ===========================
+       ROUTINE ITEMS
+    =========================== */
+    .routine-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .routine-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 18px;
+    }
+    .routine-icon {
+      width: 44px; height: 44px; min-width: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--accent);
+      background: rgba(245,166,35,0.15);
+    }
+    .routine-title { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .routine-text { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+    /* ===========================
+       MARKETING SCHEDULE
+    =========================== */
+    .marketing-table { width: 100%; border-collapse: collapse; border-radius: 14px; overflow: hidden; }
+    .marketing-table thead { background: linear-gradient(90deg, var(--navy), var(--blue-mid)); }
+    .marketing-table th {
+      padding: 14px 16px; font-family: 'Montserrat', sans-serif;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1.5px; color: rgba(255,255,255,0.7); text-align: left;
+    }
+    .marketing-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .marketing-table tbody tr:hover { background: rgba(255,255,255,0.04); }
+    .marketing-table td { padding: 15px 16px; font-size: 13px; color: rgba(255,255,255,0.8); }
+    .day-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700;
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .day-seg { background: rgba(124,58,237,0.2); color: var(--purple-light); }
+    .day-ter { background: rgba(239,68,68,0.2); color: #f87171; }
+    .day-qua { background: rgba(16,185,129,0.2); color: var(--green); }
+    .day-qui { background: rgba(6,182,212,0.2); color: var(--cyan); }
+    .day-sex { background: rgba(245,166,35,0.2); color: var(--accent); }
+    .focus-tag {
+      display: inline-block; padding: 2px 8px; border-radius: 10px;
+      font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .focus-escala { background: rgba(6,182,212,0.2); color: var(--cyan); }
+    .focus-valor { background: rgba(124,58,237,0.2); color: var(--purple-light); }
+    .focus-confianca { background: rgba(16,185,129,0.2); color: var(--green); }
+    .focus-fech { background: rgba(245,166,35,0.2); color: var(--accent); }
+
+    /* ===========================
+       EMERGENCY PROTOCOL
+    =========================== */
+    .emergency-card {
+      background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(249,115,22,0.1));
+      border: 1px solid rgba(239,68,68,0.4); border-radius: 18px; padding: 28px 30px;
+      position: relative; overflow: hidden;
+    }
+    .emergency-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--red), var(--orange));
+    }
+    .emergency-pulse {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4);
+      color: #f87171; padding: 6px 16px; border-radius: 20px;
+      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .emergency-pulse::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%;
+      background: #f87171; animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .trigger-big {
+      font-family: 'Montserrat', sans-serif; font-size: clamp(60px, 8vw, 120px);
+      font-weight: 900; color: rgba(239,68,68,0.12);
+      position: absolute; right: 30px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; line-height: 1;
+    }
+    .steps-list { display: flex; flex-direction: column; gap: 14px; }
+    .step-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .step-num {
+      min-width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 900;
+      background: rgba(239,68,68,0.2); color: #f87171;
+    }
+    .step-title { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .step-text { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+    /* ===========================
+       CLOSING SLIDE
+    =========================== */
+    .closing-meta { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+    .closing-meta-item {
+      text-align: center;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 20px 28px;
+    }
+    .closing-meta-val { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 900; color: var(--accent); }
+    .closing-meta-label { font-size: 12px; color: var(--gray-light); margin-top: 4px; }
+
+    /* ===========================
+       CHART CONTAINERS
+    =========================== */
+    .chart-container { position: relative; }
+    .chart-container canvas { max-height: 260px; }
+
+    /* ===========================
+       LAYOUT HELPERS
+    =========================== */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .two-col-6040 { display: grid; grid-template-columns: 60% 40%; gap: 24px; }
+    .two-col-4060 { display: grid; grid-template-columns: 40% 60%; gap: 24px; }
+    .flex-col { display: flex; flex-direction: column; gap: 14px; }
+    .mt-4 { margin-top: 4px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-16 { margin-top: 16px; }
+    .mb-16 { margin-bottom: 16px; }
+
+    /* ===========================
+       SCROLL MODE
+    =========================== */
+    body.scroll-mode { overflow: auto; }
+    body.scroll-mode .slide { position: relative; display: flex; opacity: 1; transform: none; min-height: 100vh; }
+    body.scroll-mode .nav-bar { display: none; }
+    body.scroll-mode .progress-bar { display: none; }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 900px) {
+      .slide-inner { padding: 80px 28px 40px; }
+      .metric-grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .phases, .two-col, .two-col-6040, .two-col-4060, .product-grid, .routine-grid { grid-template-columns: 1fr; }
+      .cover-orbit, .cover-orbit-2, .cover-orbit-3, .cover-number-accent { display: none; }
+      .funnel-w2, .funnel-w3, .funnel-w4, .funnel-w5 { width: 100%; }
+    }
+  </style>
+  <style>
+    /* ===========================
+       PASSWORD GATE
+    =========================== */
+    #pw-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: radial-gradient(ellipse at 20% 50%, #1a365d 0%, #0f2744 40%, #070b14 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    #pw-gate::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5a623' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .pw-box {
+      position: relative; z-index: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 48px 52px;
+      width: min(480px, 90vw);
+      text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .pw-logo {
+      height: 52px; filter: brightness(0) invert(1);
+      margin-bottom: 32px; opacity: 0.9;
+    }
+    .pw-lock {
+      width: 64px; height: 64px; border-radius: 20px;
+      background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; color: #f5a623;
+      margin: 0 auto 24px;
+    }
+    .pw-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px; font-weight: 800;
+      color: #fff; margin-bottom: 8px;
+    }
+    .pw-sub {
+      font-size: 13px; color: rgba(255,255,255,0.5);
+      margin-bottom: 32px; line-height: 1.6;
+    }
+    .pw-input-wrap {
+      position: relative; margin-bottom: 16px;
+    }
+    .pw-input {
+      width: 100%; padding: 16px 52px 16px 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px; font-weight: 600;
+      letter-spacing: 2px; outline: none;
+      transition: border-color 0.3s;
+    }
+    .pw-input::placeholder { color: rgba(255,255,255,0.3); letter-spacing: 1px; font-weight: 400; }
+    .pw-input:focus { border-color: rgba(245,166,35,0.6); }
+    .pw-input.error { border-color: rgba(239,68,68,0.7); animation: shake 0.4s ease; }
+    .pw-toggle {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: rgba(255,255,255,0.4);
+      cursor: pointer; font-size: 16px; padding: 4px;
+      transition: color 0.2s;
+    }
+    .pw-toggle:hover { color: rgba(255,255,255,0.8); }
+    .pw-btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(90deg, #f5a623, #e09112);
+      border: none; border-radius: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: #0f2744; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 0 30px rgba(245,166,35,0.35);
+    }
+    .pw-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .pw-btn:active { transform: translateY(0); }
+    .pw-error {
+      margin-top: 14px; font-size: 12px;
+      color: #f87171; font-family: 'Montserrat', sans-serif;
+      font-weight: 600; opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .pw-error.visible { opacity: 1; }
+    .pw-gate-hide {
+      animation: gateFade 0.6s ease forwards;
+    }
+    @keyframes gateFade {
+      to { opacity: 0; pointer-events: none; }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+  </style>
+</head>
+<body class="presentation-mode">
+
+  <!-- PASSWORD GATE -->
+  <div id="pw-gate">
+    <div class="pw-box">
+      <img src="assets/logo.png" class="pw-logo" alt="EngMarq Solution" onerror="this.style.display='none';" />
+      <div class="pw-lock"><i class="fas fa-lock"></i></div>
+      <div class="pw-title">Acesso Restrito</div>
+      <p class="pw-sub">Este conteúdo é confidencial e exclusivo para a equipe comercial EngMarq.</p>
+      <div class="pw-input-wrap">
+        <input id="pwInput" class="pw-input" type="password" placeholder="Digite a senha de acesso" autocomplete="off" />
+        <button class="pw-toggle" id="pwToggle" onclick="togglePwVisibility()" title="Mostrar/ocultar senha">
+          <i class="fas fa-eye" id="pwEyeIcon"></i>
+        </button>
+      </div>
+      <button class="pw-btn" onclick="submitPassword()"><i class="fas fa-unlock" style="margin-right:8px;"></i>Acessar Apresentação</button>
+      <div class="pw-error" id="pwError">Senha incorreta. Tente novamente.</div>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Navigation -->
+  <nav class="nav-bar" id="navBar">
+    <img src="assets/logo.png" class="nav-logo" alt="EngMarq Solution" onerror="this.style.display='none';" />
+    <div class="nav-center" id="navDots"></div>
+    <div class="nav-right">
+      <span class="nav-counter" id="slideCounter">1 / 9</span>
+      <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+      <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </nav>
+
+  <!-- ================================
+       SLIDE 1: COVER
+  ================================ -->
+  <section class="slide bg-cover glow-top-right" id="slide-1">
+    <div class="cover-orbit"></div>
+    <div class="cover-orbit-2"></div>
+    <div class="cover-orbit-3"></div>
+    <div class="cover-number-accent">500K</div>
+    <div class="slide-inner center">
+      <img src="assets/logo.png" class="cover-logo-large" alt="EngMarq Solution" onerror="this.style.display='none';" />
+      <div class="cover-badge-pill"><i class="fas fa-bolt"></i>Confidencial — Equipe Comercial</div>
+      <h1 class="cover-title">Plano Comercial<br /><span>Estratégico 2026</span></h1>
+      <p class="cover-sub">A rota exata de execução diária para transformar a EngMarq em uma máquina de vendas previsível e escalar para <strong style="color:var(--accent)">R$ 500.000,00/mês</strong> até dezembro.</p>
+      <div class="cover-meta">
+        <div class="cover-meta-item"><i class="fas fa-calendar-alt"></i> Base: Maio / 2026</div>
+        <div class="cover-meta-item"><i class="fas fa-map-marker-alt"></i> Natal — RN</div>
+        <div class="cover-meta-item"><i class="fas fa-users"></i> Diretoria + Equipe Outbound</div>
+        <div class="cover-meta-item"><i class="fas fa-layer-group"></i> 9 Slides Estratégicos</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 2: CENÁRIO ATUAL — EQUIPE
+  ================================ -->
+  <section class="slide bg-dark" id="slide-2">
+    <div class="slide-inner">
+      <div class="section-badge"><i class="fas fa-chart-bar"></i>Cenário Atual</div>
+      <h2 class="slide-title">Raio-X da Equipe <span>Outbound</span></h2>
+      <p class="slide-subtitle">Menos de 1 mês de operação (início 17–27 de abril). Os números já provam o potencial.</p>
+
+      <div class="two-col-6040">
+        <!-- Table -->
+        <div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Vendedor</th>
+                  <th>Perfil</th>
+                  <th>Reuniões</th>
+                  <th>Propostas</th>
+                  <th>Pipeline</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td-name">Julia</td>
+                  <td><span class="badge-tag badge-big">Grandes Contas</span></td>
+                  <td>2</td>
+                  <td>2</td>
+                  <td class="td-value">R$ 80.000</td>
+                </tr>
+                <tr>
+                  <td class="td-name">Marcio</td>
+                  <td><span class="badge-tag badge-big">Grandes Contas</span></td>
+                  <td>2</td>
+                  <td>1</td>
+                  <td class="td-value">R$ 70.000</td>
+                </tr>
+                <tr>
+                  <td class="td-name">Elayne</td>
+                  <td><span class="badge-tag badge-fast">Agilidade</span></td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td class="td-value">R$ 17.000</td>
+                </tr>
+                <tr>
+                  <td class="td-name">William</td>
+                  <td><span class="badge-tag badge-prospect">Prospecção</span></td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td class="td-value zero">R$ 0</td>
+                </tr>
+                <tr class="total-row">
+                  <td class="td-name" colspan="2" style="color:var(--accent)">TOTAL OUTBOUND</td>
+                  <td style="color:var(--accent);font-weight:700">6</td>
+                  <td style="color:var(--accent);font-weight:700">6</td>
+                  <td class="td-value total">R$ 167.000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Metric Cards -->
+          <div class="metric-grid metric-grid-3 mt-16">
+            <div class="metric-card">
+              <div class="metric-icon"><i class="fas fa-phone"></i></div>
+              <div class="metric-value accent">99+</div>
+              <div class="metric-label">Ligações</div>
+            </div>
+            <div class="metric-card green">
+              <div class="metric-icon green"><i class="fas fa-handshake"></i></div>
+              <div class="metric-value green">6</div>
+              <div class="metric-label">Reuniões</div>
+            </div>
+            <div class="metric-card cyan">
+              <div class="metric-icon cyan"><i class="fas fa-file-contract"></i></div>
+              <div class="metric-value cyan">6</div>
+              <div class="metric-label">Propostas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pipeline Chart -->
+        <div>
+          <p style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-light);margin-bottom:14px;">Pipeline por Vendedor</p>
+          <div class="chart-container" style="margin-bottom:24px;">
+            <canvas id="pipelineChart"></canvas>
+          </div>
+
+          <!-- Progress bars -->
+          <div class="pipeline-item">
+            <div class="pipeline-header">
+              <span class="pipeline-name">Julia</span>
+              <span class="pipeline-val">R$ 80k</span>
+            </div>
+            <div class="pipeline-bar">
+              <div class="pipeline-fill" style="width:0%;background:linear-gradient(90deg,#7c3aed,#a78bfa);" data-width="47.9"></div>
+            </div>
+          </div>
+          <div class="pipeline-item">
+            <div class="pipeline-header">
+              <span class="pipeline-name">Marcio</span>
+              <span class="pipeline-val">R$ 70k</span>
+            </div>
+            <div class="pipeline-bar">
+              <div class="pipeline-fill" style="width:0%;background:linear-gradient(90deg,#06b6d4,#67e8f9);" data-width="41.9"></div>
+            </div>
+          </div>
+          <div class="pipeline-item">
+            <div class="pipeline-header">
+              <span class="pipeline-name">Elayne</span>
+              <span class="pipeline-val">R$ 17k</span>
+            </div>
+            <div class="pipeline-bar">
+              <div class="pipeline-fill" style="width:0%;background:linear-gradient(90deg,#10b981,#6ee7b7);" data-width="10.2"></div>
+            </div>
+          </div>
+          <div class="pipeline-item">
+            <div class="pipeline-header">
+              <span class="pipeline-name">William</span>
+              <span class="pipeline-val">R$ 0</span>
+            </div>
+            <div class="pipeline-bar">
+              <div class="pipeline-fill" style="width:0%;background:var(--gray);" data-width="0"></div>
+            </div>
+          </div>
+
+          <div style="background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-radius:12px;padding:14px 16px;margin-top:16px;">
+            <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:4px;">Total na Mesa</div>
+            <div style="font-family:'Montserrat',sans-serif;font-size:28px;font-weight:900;color:var(--accent);">R$ 167.000</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">em propostas abertas — em &lt; 30 dias</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 3: DIAGNÓSTICO
+  ================================ -->
+  <section class="slide bg-dark" id="slide-3">
+    <div class="slide-inner">
+      <div class="section-badge"><i class="fas fa-stethoscope"></i>Diagnóstico</div>
+      <h2 class="slide-title">O Que os Números <span>Revelam</span></h2>
+      <p class="slide-subtitle">Cada vendedor tem um perfil diferente. A gestão precisa ser cirúrgica.</p>
+
+      <div class="metric-grid metric-grid-4" style="margin-bottom:24px;">
+        <div class="metric-card purple">
+          <div class="metric-icon purple"><i class="fas fa-crown"></i></div>
+          <div class="metric-value purple" style="font-size:20px;">Julia</div>
+          <div class="metric-label" style="margin-bottom:8px;">Alto Valor</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">Pipeline de R$ 80k com apenas 2 reuniões. Foco: <span style="color:var(--purple-light)">acelerar fechamento</span> dos contratos já enviados.</div>
+        </div>
+        <div class="metric-card cyan">
+          <div class="metric-icon cyan"><i class="fas fa-chart-line"></i></div>
+          <div class="metric-value cyan" style="font-size:20px;">Marcio</div>
+          <div class="metric-label" style="margin-bottom:8px;">Alto Valor</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">R$ 70k em jogo. Ponto crítico: <span style="color:var(--cyan)">uso rigoroso do CRM</span> e registro de todas as interações.</div>
+        </div>
+        <div class="metric-card green">
+          <div class="metric-icon green"><i class="fas fa-tachometer-alt"></i></div>
+          <div class="metric-value green" style="font-size:20px;">Elayne</div>
+          <div class="metric-label" style="margin-bottom:8px;">Agilidade</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">3 propostas enviadas em pouco tempo. Foco: <span style="color:var(--green)">aumentar ticket médio</span> e escalar volume de reuniões.</div>
+        </div>
+        <div class="metric-card red">
+          <div class="metric-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+          <div class="metric-value red" style="font-size:20px;">William</div>
+          <div class="metric-label" style="margin-bottom:8px;">Ação Urgente</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.5;">48 ligações, 0 reuniões. Revisão imediata de <span style="color:#f87171">script e abordagem</span>. Acompanhamento direto do Coordenador.</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <!-- Diretoria -->
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;margin-bottom:6px;"><i class="fas fa-star" style="color:var(--accent);margin-right:8px;"></i>Diretoria (Inbound)</div>
+          <div style="font-size:12px;color:var(--gray-light);margin-bottom:16px;">Natã, Thiago e Wagner — networking + autoridade técnica</div>
+          <div style="background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);border-radius:12px;padding:18px;text-align:center;">
+            <div style="font-family:'Montserrat',sans-serif;font-size:36px;font-weight:900;color:var(--accent);">R$ 240k+</div>
+            <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);margin-top:4px;">já gerados pelos 3 juntos</div>
+            <div style="font-size:11px;color:var(--gray-light);margin-top:6px;">Natã, Thiago e Wagner · receitas recentes via Inbound</div>
+          </div>
+        </div>
+
+        <!-- Próximos passos -->
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px;">
+          <div style="font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;margin-bottom:14px;"><i class="fas fa-forward" style="color:var(--green);margin-right:8px;"></i>Próximos Passos Imediatos</div>
+          <div class="steps-list">
+            <div class="step-item">
+              <div class="step-num" style="background:rgba(124,58,237,0.2);color:var(--purple-light);">1</div>
+              <div>
+                <div class="step-title">Pressionar fechamento (Julia & Marcio)</div>
+                <div class="step-text">Follow-up agressivo nos R$ 150k em aberto. Prazo máximo: 10 dias.</div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num" style="background:rgba(6,182,212,0.2);color:var(--cyan);">2</div>
+              <div>
+                <div class="step-title">CRM obrigatório (Marcio)</div>
+                <div class="step-text">Registro de todas as interações no CRM antes do final do dia. Sem exceções.</div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num" style="background:rgba(239,68,68,0.2);color:#f87171;">3</div>
+              <div>
+                <div class="step-title">Revisão de script (William)</div>
+                <div class="step-text">Sessão de escuta de ligações + roleplay até converter a primeira reunião esta semana.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 4: PROJEÇÃO DE ESCALA
+  ================================ -->
+  <section class="slide bg-green" id="slide-4">
+    <div class="slide-inner">
+      <div class="section-badge"><i class="fas fa-rocket"></i>Projeção de Escala</div>
+      <h2 class="slide-title">Rota para <span>R$ 500.000/mês</span></h2>
+      <p class="slide-subtitle">Três fases estruturadas para transformar a EngMarq em uma máquina de crescimento previsível.</p>
+
+      <div class="phases">
+        <div class="phase-card phase-card-1">
+          <div class="phase-num">01</div>
+          <div class="phase-icon">🎯</div>
+          <div class="phase-title">Estabilização</div>
+          <span class="phase-period phase-1-period">Próximos 60 dias</span>
+          <div class="phase-meta phase-1-meta">R$ 120k/mês</div>
+          <p class="phase-text">Os 4 vendedores batem R$ 30.000/mês cada. Processos validados, CRM funcionando, rotina de prospecção consolidada.</p>
+        </div>
+        <div class="phase-card phase-card-2">
+          <div class="phase-num">02</div>
+          <div class="phase-icon">♻️</div>
+          <div class="phase-title">Domínio da Recorrência</div>
+          <span class="phase-period phase-2-period">3 a 5 meses</span>
+          <div class="phase-meta phase-2-meta">R$ 200k/mês</div>
+          <p class="phase-text">Plataforma de treinamentos como motor automático de faturamento diário. Contratos anuais de SST/Psicossocial criam um "piso" financeiro seguro.</p>
+        </div>
+        <div class="phase-card phase-card-3">
+          <div class="phase-num">03</div>
+          <div class="phase-icon">🏆</div>
+          <div class="phase-title">A Máquina de 500K</div>
+          <span class="phase-period phase-3-period">Dezembro 2026</span>
+          <div class="phase-meta phase-3-meta">R$ 500k/mês</div>
+          <p class="phase-text">Diretoria fecha R$ 200k+ em contratos complexos. Equipe expandida (8–10 vendedores) gera os R$ 300k restantes via prospecção ativa em Natal.</p>
+        </div>
+      </div>
+
+      <!-- Growth Chart -->
+      <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px;margin-top:20px;">
+        <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-light);margin-bottom:16px;"><i class="fas fa-chart-area" style="color:var(--green);margin-right:8px;"></i>Projeção de Crescimento Mensal</div>
+        <div class="chart-container">
+          <canvas id="growthChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 5: METAS INDIVIDUAIS
+  ================================ -->
+  <section class="slide bg-dark" id="slide-5">
+    <div class="slide-inner">
+      <div class="section-badge"><i class="fas fa-bullseye"></i>Metas Individuais</div>
+      <h2 class="slide-title">Meta do Vendedor: <span>R$ 30.000/mês</span></h2>
+      <p class="slide-subtitle">Um caminho claro, passo a passo, do primeiro contato ao fechamento.</p>
+
+      <div class="two-col-4060">
+        <!-- Funil -->
+        <div>
+          <p style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-light);margin-bottom:14px;">Funil de Conversão Semanal</p>
+          <div class="funnel-wrap">
+            <div class="funnel-step funnel-w1">
+              <span class="funnel-label"><i class="fas fa-phone"></i> Ligações/Contatos</span>
+              <span class="funnel-val">250/sem</span>
+            </div>
+            <i class="fas fa-caret-down funnel-arrow"></i>
+            <div class="funnel-step funnel-w2">
+              <span class="funnel-label"><i class="fas fa-comments"></i> Conversas Qualificadas</span>
+              <span class="funnel-val">~30%</span>
+            </div>
+            <i class="fas fa-caret-down funnel-arrow"></i>
+            <div class="funnel-step funnel-w3">
+              <span class="funnel-label"><i class="fas fa-calendar-check"></i> Reuniões Agendadas</span>
+              <span class="funnel-val">4–6/sem</span>
+            </div>
+            <i class="fas fa-caret-down funnel-arrow"></i>
+            <div class="funnel-step funnel-w4">
+              <span class="funnel-label"><i class="fas fa-file-invoice-dollar"></i> Propostas Enviadas</span>
+              <span class="funnel-val">R$ 25k/sem</span>
+            </div>
+            <i class="fas fa-caret-down funnel-arrow"></i>
+            <div class="funnel-step funnel-w5">
+              <span class="funnel-label"><i class="fas fa-check-circle"></i> Contratos Fechados</span>
+              <span class="funnel-val">R$ 7.500/sem</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metas -->
+        <div>
+          <p style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-light);margin-bottom:14px;">Metas de Ritmo</p>
+          <div class="flex-col">
+            <div class="metric-card" style="padding:18px 22px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                  <div class="metric-label">Meta Diária</div>
+                  <div class="metric-value accent" style="font-size:28px;">R$ 1.500</div>
+                </div>
+                <div class="metric-icon" style="margin:0;"><i class="fas fa-sun"></i></div>
+              </div>
+            </div>
+            <div class="metric-card green" style="padding:18px 22px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                  <div class="metric-label">Meta Semanal</div>
+                  <div class="metric-value green" style="font-size:28px;">R$ 7.500</div>
+                </div>
+                <div class="metric-icon green" style="margin:0;"><i class="fas fa-calendar-week"></i></div>
+              </div>
+            </div>
+            <div class="metric-card purple" style="padding:18px 22px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                  <div class="metric-label">Pipeline Mínimo</div>
+                  <div class="metric-value purple" style="font-size:28px;">R$ 100k</div>
+                  <div class="metric-sub">em aberto mensalmente</div>
+                </div>
+                <div class="metric-icon purple" style="margin:0;"><i class="fas fa-database"></i></div>
+              </div>
+            </div>
+            <div class="metric-card cyan" style="padding:18px 22px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                  <div class="metric-label">Atividade Mínima</div>
+                  <div class="metric-value cyan" style="font-size:28px;">50 contatos/dia</div>
+                  <div class="metric-sub">4–6 reuniões por semana</div>
+                </div>
+                <div class="metric-icon cyan" style="margin:0;"><i class="fas fa-bolt"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 6: ESTRATÉGIA DE PRODUTOS
+  ================================ -->
+  <section class="slide bg-purple" id="slide-6">
+    <div class="slide-inner">
+      <div class="section-badge"><i class="fas fa-layer-group"></i>Estratégia de Produtos</div>
+      <h2 class="slide-title">O Modelo <span>Híbrido</span></h2>
+      <p class="slide-subtitle">Dois motores que se complementam: um abre portas, o outro garante o caixa diário.</p>
+
+      <div class="product-grid" style="margin-bottom:20px;">
+        <div class="product-card product-opener">
+          <div class="product-card-icon"><i class="fas fa-brain"></i></div>
+          <div class="product-card-title">Fatores Psicossociais</div>
+          <div class="product-card-sub"><i class="fas fa-key"></i> Abridor de Portas</div>
+          <p class="product-card-text">Produto consultivo de alto valor. Argumento direto ao RH e Diretoria. Conformidade com NR-01 e proteção contra passivos trabalhistas.</p>
+          <ul class="product-feature-list">
+            <li><i class="fas fa-check-circle"></i> Conformidade legal com NR-01</li>
+            <li><i class="fas fa-check-circle"></i> Redução de absenteísmo</li>
+            <li><i class="fas fa-check-circle"></i> Saúde mental e clima organizacional</li>
+            <li><i class="fas fa-check-circle"></i> Blindagem contra passivos trabalhistas</li>
+          </ul>
+        </div>
+        <div class="product-card product-scale">
+          <div class="product-card-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div class="product-card-title">Plataforma de Treinamentos</div>
+          <div class="product-card-sub"><i class="fas fa-rocket"></i> Giro Rápido + Escala</div>
+          <p class="product-card-text">Produto de entrada, venda rápida, certificados imediatos (NR-33, NR-35). Garante faturamento diário e cria relacionamento com o cliente.</p>
+          <ul class="product-feature-list">
+            <li><i class="fas fa-check-circle"></i> Certificado emitido na hora</li>
+            <li><i class="fas fa-check-circle"></i> NR-33, NR-35 e outras NRs</li>
+            <li><i class="fas fa-check-circle"></i> Gestão automática de vencimentos</li>
+            <li><i class="fas fa-check-circle"></i> Downsell imediato se necessário</li>
+          </ul>
+          <div class="downsell-arrow"><i class="fas fa-arrow-down"></i></div>
+        </div>
+      </div>
+
+      <!-- Downsell flow -->
+      <div style="background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.3);border-radius:14px;padding:18px 22px;display:flex;align-items:center;gap:16px;">
+        <div style="width:44px;height:44px;min-width:44px;border-radius:12px;background:rgba(6,182,212,0.2);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:20px;"><i class="fas fa-exchange-alt"></i></div>
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:var(--cyan);margin-bottom:3px;">Protocolo de Downsell</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.65);">Se o cliente considerar o projeto psicossocial inviável no momento → o vendedor realiza o <strong style="color:var(--cyan)">downsell imediato</strong> para pacotes da plataforma de treinamentos. Nenhuma reunião termina sem uma venda.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 7: ROTINA OPERACIONAL
+  ================================ -->
+  <section class="slide bg-dark" id="slide-7">
+    <div class="slide-inner">
+      <div class="section-badge"><i class="fas fa-cogs"></i>Rotina Operacional</div>
+      <h2 class="slide-title">A Máquina de <span>Prospecção Diária</span></h2>
+      <p class="slide-subtitle">Consistência nas ligações dita o ritmo do faturamento. Sem atalhos.</p>
+
+      <div class="routine-grid" style="margin-bottom:20px;">
+        <div class="routine-item">
+          <div class="routine-icon"><i class="fas fa-phone-volume"></i></div>
+          <div>
+            <div class="routine-title">50 Contatos por Dia</div>
+            <div class="routine-text">Meta de ligações ou interações ativas diárias. Esse ritmo é não-negociável e dita o volume do funil.</div>
+          </div>
+        </div>
+        <div class="routine-item">
+          <div class="routine-icon"><i class="fas fa-list-ol"></i></div>
+          <div>
+            <div class="routine-title">Giro da Lista de 100</div>
+            <div class="routine-text">A lista de 100 contatos é percorrida a cada 2 dias. Leads não morrem: retornam ao CRM até qualificação definitiva.</div>
+          </div>
+        </div>
+        <div class="routine-item">
+          <div class="routine-icon"><i class="fas fa-sync-alt"></i></div>
+          <div>
+            <div class="routine-title">Revisita Constante</div>
+            <div class="routine-text">Cercar o lead intercalando Ligação + WhatsApp + LinkedIn. Quem não atendeu hoje pode atender amanhã.</div>
+          </div>
+        </div>
+        <div class="routine-item">
+          <div class="routine-icon"><i class="fas fa-filter"></i></div>
+          <div>
+            <div class="routine-title">Qualificação Definitiva</div>
+            <div class="routine-text">Lead sai da lista apenas com status: <strong style="color:var(--green)">Fechado</strong>, <strong style="color:var(--red)">Perdido</strong> ou <strong style="color:var(--cyan)">Nutrição a Longo Prazo</strong>.</div>
+          </div>
+        </div>
+        <div class="routine-item">
+          <div class="routine-icon" style="background:rgba(124,58,237,0.15);color:var(--purple-light);"><i class="fas fa-walking"></i></div>
+          <div>
+            <div class="routine-title">Blitz Presencial</div>
+            <div class="routine-text">Visitas a Centros Empresariais, Polos Industriais e Condomínios Comerciais. Panfleto com QR Code para WhatsApp do vendedor.</div>
+          </div>
+        </div>
+        <div class="routine-item">
+          <div class="routine-icon" style="background:rgba(16,185,129,0.15);color:var(--green);"><i class="fas fa-clock"></i></div>
+          <div>
+            <div class="routine-title">Follow-up 48h (Blitz)</div>
+            <div class="routine-text">Todo local visitado vai pro CRM. Em 48h: <em>"Deixei um material com vocês na terça, posso ter 10 minutos para explicar como evitar multas?"</em></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRM reminder -->
+      <div style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.25);border-radius:14px;padding:16px 20px;display:flex;align-items:center;gap:14px;">
+        <i class="fas fa-database" style="font-size:24px;color:var(--accent);"></i>
+        <div style="font-size:13px;color:rgba(255,255,255,0.75);">
+          <strong style="color:var(--accent);">Regra de Ouro:</strong> Todo lead, toda visita, toda ligação vai para o CRM no mesmo dia. O que não está no CRM não existe.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 8: MARKETING
+  ================================ -->
+  <section class="slide bg-dark" id="slide-8">
+    <div class="slide-inner">
+      <div class="section-badge"><i class="fas fa-bullhorn"></i>Marketing & Divulgação</div>
+      <h2 class="slide-title">Cronograma de <span>Conteúdo Semanal</span></h2>
+      <p class="slide-subtitle">Cada vendedor é uma vitrine. WhatsApp Status e LinkedIn alimentam os leads da lista diariamente.</p>
+
+      <div class="two-col" style="margin-bottom:20px;">
+        <div>
+          <div class="table-wrap">
+            <table class="marketing-table">
+              <thead>
+                <tr>
+                  <th>Dia</th>
+                  <th>Tema</th>
+                  <th>Foco</th>
+                  <th>Conteúdo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="day-badge day-seg"><i class="fas fa-bolt"></i>Segunda</span></td>
+                  <td>Agilidade</td>
+                  <td><span class="focus-tag focus-escala">Escala</span></td>
+                  <td style="font-size:12px;">"Certificado de NR-35 emitido na hora."</td>
+                </tr>
+                <tr>
+                  <td><span class="day-badge day-ter"><i class="fas fa-gavel"></i>Terça</span></td>
+                  <td>Autoridade</td>
+                  <td><span class="focus-tag focus-valor">Alto Valor</span></td>
+                  <td style="font-size:12px;">"Sua empresa mapeia o risco psicossocial?"</td>
+                </tr>
+                <tr>
+                  <td><span class="day-badge day-qua"><i class="fas fa-users"></i>Quarta</span></td>
+                  <td>Prova Social</td>
+                  <td><span class="focus-tag focus-confianca">Confiança</span></td>
+                  <td style="font-size:12px;">Foto da equipe ou logos de parceiros.</td>
+                </tr>
+                <tr>
+                  <td><span class="day-badge day-qui"><i class="fas fa-play-circle"></i>Quinta</span></td>
+                  <td>Praticidade</td>
+                  <td><span class="focus-tag focus-escala">Escala</span></td>
+                  <td style="font-size:12px;">"Veja como gerir vencimentos de NRs."</td>
+                </tr>
+                <tr>
+                  <td><span class="day-badge day-sex"><i class="fas fa-fire"></i>Sexta</span></td>
+                  <td>Urgência</td>
+                  <td><span class="focus-tag focus-fech">Fechamento</span></td>
+                  <td style="font-size:12px;">"Última chamada: regularize antes do fds."</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Traffic channels + pie chart -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:22px;">
+            <div style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-light);margin-bottom:14px;">Canais de Tráfego Pago</div>
+            <div class="metric-grid metric-grid-2">
+              <div style="background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.2);border-radius:12px;padding:14px;text-align:center;">
+                <i class="fab fa-google" style="font-size:28px;color:var(--accent);display:block;margin-bottom:8px;"></i>
+                <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;">Google Ads</div>
+                <div style="font-size:11px;color:var(--gray-light);margin-top:3px;">Intenção de compra ativa</div>
+              </div>
+              <div style="background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.2);border-radius:12px;padding:14px;text-align:center;">
+                <i class="fab fa-meta" style="font-size:28px;color:var(--purple-light);display:block;margin-bottom:8px;"></i>
+                <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;">Meta Ads</div>
+                <div style="font-size:11px;color:var(--gray-light);margin-top:3px;">Geração de demanda</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:22px;flex:1;">
+            <div style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-light);margin-bottom:14px;">Distribuição de Ações</div>
+            <div class="chart-container">
+              <canvas id="marketingChart" style="max-height:180px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 9: PROTOCOLO DE EMERGÊNCIA
+  ================================ -->
+  <section class="slide bg-red" id="slide-9">
+    <div class="slide-inner">
+      <div class="section-badge" style="background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.4);color:#f87171;"><i class="fas fa-exclamation-circle"></i>Protocolo de Emergência</div>
+      <h2 class="slide-title">Gatilho do <span style="color:#f87171;">Dia 15</span></h2>
+      <p class="slide-subtitle">Não esperamos o dia 30 para corrigir o rumo. Existe uma trava de segurança na operação.</p>
+
+      <div class="two-col-4060">
+        <div class="emergency-card">
+          <div class="trigger-big">15</div>
+          <div class="emergency-pulse"><i class="fas fa-circle"></i>Alerta Ativo</div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:800;margin-bottom:8px;color:#f87171;">O Gatilho</div>
+          <p style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.7;margin-bottom:20px;">Se chegar ao <strong style="color:#f87171">dia 15 do mês</strong> com <strong>ZERO propostas enviadas</strong> ou sem reuniões com chance real de fechamento agendadas.</p>
+          <div style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:12px 14px;">
+            <div style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:800;color:#f87171;margin-bottom:4px;"><i class="fas fa-bell"></i> Ação Obrigatória</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.7);">Sinalizar <strong>URGENTE</strong> para o Coordenador Comercial (Natã). Imediato.</div>
+          </div>
+        </div>
+
+        <div>
+          <p style="font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--gray-light);margin-bottom:14px;">A Intervenção: Operação Resgate</p>
+          <div class="steps-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div>
+                <div class="step-title">Paramos a prospecção padrão</div>
+                <div class="step-text">A rotina normal é suspensa. Entra em modo de diagnóstico emergencial.</div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div>
+                <div class="step-title">Escuta das ligações gravadas</div>
+                <div class="step-text">O Coordenador ouve as gravações para identificar onde o contato está quebrando.</div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div>
+                <div class="step-title">Análise do CRM</div>
+                <div class="step-text">Verificamos dados: falha é no volume (falta de esforço) ou na técnica (script não converte)?</div>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div>
+                <div class="step-title">Plano de resgate: 15 dias finais</div>
+                <div class="step-text">Ação corretiva imediata e intensiva. Objetivo: salvar o mês com foco total em fechamentos rápidos.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================
+       SLIDE 10: CLOSING
+  ================================ -->
+  <section class="slide bg-cover" id="slide-10">
+    <div class="cover-orbit"></div>
+    <div class="cover-orbit-2"></div>
+    <div class="cover-number-accent" style="font-size:120px;right:80px;color:rgba(245,166,35,0.08);">2026</div>
+    <div class="slide-inner center">
+      <div class="tag"><i class="fas fa-flag-checkered"></i>Vamos à Execução</div>
+      <h1 class="cover-title" style="font-size:clamp(36px,4.5vw,60px);">A meta é <span>clara</span>.<br />O caminho está traçado.</h1>
+      <p class="cover-sub">Cada ligação, cada reunião, cada proposta enviada nos aproxima de R$ 500.000/mês. A consistência diária é o único segredo.</p>
+
+      <div class="closing-meta">
+        <div class="closing-meta-item">
+          <div class="closing-meta-val">R$ 500k</div>
+          <div class="closing-meta-label">Meta Mensal (Dez/26)</div>
+        </div>
+        <div class="closing-meta-item">
+          <div class="closing-meta-val">4 → 10</div>
+          <div class="closing-meta-label">Expansão da Equipe</div>
+        </div>
+        <div class="closing-meta-item">
+          <div class="closing-meta-val">50/dia</div>
+          <div class="closing-meta-label">Contatos por Vendedor</div>
+        </div>
+        <div class="closing-meta-item">
+          <div class="closing-meta-val">R$ 30k</div>
+          <div class="closing-meta-label">Meta Individual/Mês</div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;font-size:13px;color:rgba(255,255,255,0.35);">EngMarq Solution · Plano Comercial Estratégico 2026 · Confidencial</div>
+    </div>
+  </section>
+
+  <!-- ===========================
+       SCRIPTS
+  =========================== -->
+  <script>
+    // ========================
+    // PASSWORD GATE
+    // ========================
+    const PW_HASH = '24df824d4d614fc90daf8bce7560661d46b1bedbf8324719e3459f45b7954de3';
+
+    async function hashString(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function submitPassword() {
+      const val = document.getElementById('pwInput').value;
+      const hash = await hashString(val);
+      if (hash === PW_HASH) {
+        sessionStorage.setItem('em_plano_ok', '1');
+        const gate = document.getElementById('pw-gate');
+        gate.classList.add('pw-gate-hide');
+        setTimeout(() => gate.remove(), 650);
+      } else {
+        const input = document.getElementById('pwInput');
+        const errEl = document.getElementById('pwError');
+        input.classList.add('error');
+        errEl.classList.add('visible');
+        setTimeout(() => { input.classList.remove('error'); input.value = ''; }, 600);
+      }
+    }
+
+    function togglePwVisibility() {
+      const input = document.getElementById('pwInput');
+      const icon = document.getElementById('pwEyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fas fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fas fa-eye';
+      }
+    }
+
+    document.getElementById('pwInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') submitPassword();
+    });
+
+    // Check session
+    if (sessionStorage.getItem('em_plano_ok') === '1') {
+      document.getElementById('pw-gate').remove();
+    }
+
+    // ========================
+    // SLIDE ENGINE
+    // ========================
+    const TOTAL_SLIDES = 10;
+    let current = 1;
+    let isAnimating = false;
+
+    function getSlide(n) { return document.getElementById('slide-' + n); }
+
+    function updateNav() {
+      document.getElementById('slideCounter').textContent = current + ' / ' + TOTAL_SLIDES;
+      document.getElementById('prevBtn').disabled = (current === 1);
+      document.getElementById('nextBtn').disabled = (current === TOTAL_SLIDES);
+
+      const dots = document.querySelectorAll('.nav-dot');
+      dots.forEach((d, i) => d.classList.toggle('active', i + 1 === current));
+
+      const pct = ((current - 1) / (TOTAL_SLIDES - 1)) * 100;
+      document.getElementById('progressBar').style.width = pct + '%';
+    }
+
+    function changeSlide(dir) {
+      const next = current + dir;
+      if (next < 1 || next > TOTAL_SLIDES || isAnimating) return;
+      isAnimating = true;
+
+      const curr = getSlide(current);
+      const nxt = getSlide(next);
+
+      curr.classList.add('leaving');
+      nxt.style.transform = dir > 0 ? 'translateX(60px)' : 'translateX(-60px)';
+      nxt.style.opacity = '0';
+      nxt.classList.add('active');
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          nxt.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          nxt.style.transform = 'translateX(0)';
+          nxt.style.opacity = '1';
+        });
+      });
+
+      setTimeout(() => {
+        curr.classList.remove('active', 'leaving');
+        nxt.style.transition = '';
+        current = next;
+        updateNav();
+        onSlideEnter(current);
+        isAnimating = false;
+      }, 500);
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault(); changeSlide(1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault(); changeSlide(-1);
+      }
+    });
+
+    // Touch swipe
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+    });
+
+    // Dot navigation
+    function buildDots() {
+      const container = document.getElementById('navDots');
+      for (let i = 1; i <= TOTAL_SLIDES; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'nav-dot' + (i === 1 ? ' active' : '');
+        btn.title = 'Slide ' + i;
+        btn.onclick = () => {
+          if (i !== current) { const dir = i > current ? 1 : -1; const steps = Math.abs(i - current); let s = 0; function step() { if (s < steps) { changeSlide(dir); s++; setTimeout(step, 520); } } step(); }
+        };
+        container.appendChild(btn);
+      }
+    }
+
+    // Show / hide nav on hover
+    let navTimeout;
+    function showNav() {
+      document.getElementById('navBar').classList.add('visible');
+      document.getElementById('progressBar').classList.add('visible');
+      clearTimeout(navTimeout);
+      navTimeout = setTimeout(hideNav, 3000);
+    }
+    function hideNav() {
+      document.getElementById('navBar').classList.remove('visible');
+    }
+    document.addEventListener('mousemove', showNav);
+    document.addEventListener('touchstart', showNav);
+
+    // ========================
+    // CHARTS
+    // ========================
+    const chartDefaults = {
+      animation: { duration: 1000, easing: 'easeInOutQuart' },
+      plugins: { legend: { labels: { color: 'rgba(255,255,255,0.7)', font: { family: 'Montserrat', size: 11 }, boxWidth: 14 } } },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.6)', font: { family: 'Montserrat', size: 11 } } },
+        y: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.6)', font: { family: 'Montserrat', size: 11 } } }
+      }
+    };
+
+    let chartsBuilt = {};
+
+    function buildPipelineChart() {
+      if (chartsBuilt.pipeline) return;
+      chartsBuilt.pipeline = true;
+      const ctx = document.getElementById('pipelineChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Julia', 'Marcio', 'Elayne', 'William'],
+          datasets: [{
+            label: 'Pipeline (R$)',
+            data: [80000, 70000, 17000, 0],
+            backgroundColor: [
+              'rgba(167,139,250,0.7)',
+              'rgba(6,182,212,0.7)',
+              'rgba(16,185,129,0.7)',
+              'rgba(100,116,139,0.4)'
+            ],
+            borderColor: ['#a78bfa', '#06b6d4', '#10b981', '#64748b'],
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          ...chartDefaults,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.7)', font: { family: 'Montserrat', weight: '700', size: 12 } } },
+            y: {
+              grid: { color: 'rgba(255,255,255,0.06)' },
+              ticks: {
+                color: 'rgba(255,255,255,0.6)', font: { family: 'Montserrat', size: 10 },
+                callback: v => 'R$ ' + (v / 1000) + 'k'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function buildGrowthChart() {
+      if (chartsBuilt.growth) return;
+      chartsBuilt.growth = true;
+      const ctx = document.getElementById('growthChart').getContext('2d');
+      const labels = ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      const data = [80, 120, 150, 180, 220, 300, 380, 500];
+      const grad = ctx.createLinearGradient(0, 0, 0, 260);
+      grad.addColorStop(0, 'rgba(16,185,129,0.4)');
+      grad.addColorStop(1, 'rgba(16,185,129,0.02)');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Faturamento (R$ mil)',
+            data,
+            borderColor: '#10b981',
+            borderWidth: 3,
+            backgroundColor: grad,
+            fill: true,
+            tension: 0.45,
+            pointBackgroundColor: '#10b981',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 6,
+            pointHoverRadius: 9
+          }]
+        },
+        options: {
+          ...chartDefaults,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: ctx => ' R$ ' + ctx.raw + 'k'
+              }
+            }
+          },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.06)' }, ticks: { color: 'rgba(255,255,255,0.65)', font: { family: 'Montserrat', size: 11 } } },
+            y: {
+              grid: { color: 'rgba(255,255,255,0.06)' },
+              ticks: { color: 'rgba(255,255,255,0.65)', font: { family: 'Montserrat', size: 11 }, callback: v => 'R$ ' + v + 'k' }
+            }
+          }
+        }
+      });
+    }
+
+    function buildMarketingChart() {
+      if (chartsBuilt.marketing) return;
+      chartsBuilt.marketing = true;
+      const ctx = document.getElementById('marketingChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Ligações Ativas', 'WhatsApp', 'LinkedIn', 'Blitz Presencial', 'Conteúdo Digital'],
+          datasets: [{
+            data: [40, 25, 15, 10, 10],
+            backgroundColor: [
+              'rgba(245,166,35,0.8)',
+              'rgba(16,185,129,0.8)',
+              'rgba(6,182,212,0.8)',
+              'rgba(124,58,237,0.8)',
+              'rgba(249,115,22,0.8)'
+            ],
+            borderColor: 'transparent',
+            hoverOffset: 8
+          }]
+        },
+        options: {
+          animation: { duration: 1000 },
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                color: 'rgba(255,255,255,0.65)',
+                font: { family: 'Montserrat', size: 10 },
+                boxWidth: 12, padding: 10
+              }
+            }
+          },
+          cutout: '65%'
+        }
+      });
+    }
+
+    // Animate pipeline bars
+    function animatePipelineBars() {
+      document.querySelectorAll('.pipeline-fill').forEach(el => {
+        const target = el.getAttribute('data-width');
+        setTimeout(() => { el.style.width = target + '%'; }, 300);
+      });
+    }
+
+    // On slide enter hook
+    function onSlideEnter(n) {
+      if (n === 2) { buildPipelineChart(); setTimeout(animatePipelineBars, 200); }
+      if (n === 4) buildGrowthChart();
+      if (n === 8) buildMarketingChart();
+    }
+
+    // ========================
+    // INIT
+    // ========================
+    buildDots();
+    updateNav();
+    showNav();
+
+    // Activate first slide
+    getSlide(1).classList.add('active');
+  </script>
+</body>
+</html>
