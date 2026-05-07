@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório de Funções e Responsabilidades | EngMarq Solution</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* ===== A4 PORTRAIT PAGE RULES ===== */
+    @page {
+      size: A4 portrait;
+      margin: 14mm 16mm;
+    }
+
+    :root {
+      --navy: #0f2744;
+      --blue: #1a365d;
+      --blue-mid: #2c5282;
+      --accent: #f5a623;
+      --accent-dark: #e09112;
+      --gold: #d4a017;
+      --green: #10b981;
+      --green-dark: #059669;
+      --purple: #7c3aed;
+      --purple-light: #a78bfa;
+      --red: #ef4444;
+      --orange: #f97316;
+      --cyan: #06b6d4;
+      --gray: #64748b;
+      --gray-light: #94a3b8;
+      --white: #ffffff;
+      --dark: #1e293b;
+      --body-bg: #b0b8c8;
+      --section-bg: #ffffff;
+      --card-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--body-bg);
+      color: #1e293b;
+    }
+
+    /* ===== PRINT BUTTON ===== */
+    .print-btn {
+      position: fixed; top: 16px; right: 16px; z-index: 999;
+      display: flex; align-items: center; gap: 8px;
+      background: var(--accent); color: var(--navy);
+      border: none; border-radius: 10px; padding: 10px 20px;
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800;
+      cursor: pointer; box-shadow: 0 4px 16px rgba(245,166,35,0.4);
+      transition: all 0.2s;
+    }
+    .print-btn:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    /* ===== A4 PAGE WRAPPER ===== */
+    .page-doc {
+      width: 794px; /* A4 at 96 dpi */
+      margin: 28px auto;
+      background: #fff;
+      box-shadow: 0 6px 48px rgba(0,0,0,0.22);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #0f2744 0%, #1a365d 40%, #0a0f1e 100%);
+      padding: 52px 52px 44px;
+      position: relative;
+      overflow: hidden;
+      min-height: 1123px;
+      display: flex;
+      flex-direction: column;
+      page-break-after: always;
+      break-after: page;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5a623' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute; top: -150px; right: -150px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      flex: 1;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+    }
+    .hero-left {}
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.4);
+      color: var(--accent); padding: 5px 14px; border-radius: 30px;
+      font-size: 10px; font-family: 'Montserrat', sans-serif;
+      font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 30px;
+      font-weight: 900; color: #fff;
+      line-height: 1.1; letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-sub {
+      font-size: 13px; color: rgba(255,255,255,0.6);
+      line-height: 1.6; max-width: 100%;
+    }
+    .hero-meta {
+      display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 7px 12px;
+      font-size: 12px; color: rgba(255,255,255,0.75);
+      font-family: 'Montserrat', sans-serif; font-weight: 600;
+    }
+    .hero-meta-item i { color: var(--accent); font-size: 12px; }
+    .hero-stats {
+      display: flex; flex-direction: row; gap: 12px;
+    }
+    .stat-pill {
+      flex: 1;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px; padding: 20px 10px; text-align: center;
+    }
+    .stat-val {
+      font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 900;
+      color: var(--accent); display: block;
+    }
+    .stat-label { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* ===== HERO TEAM SECTION ===== */
+    .hero-team-label {
+      font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.4);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .hero-team-label::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+    .hero-team-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+    }
+    .hero-team-col {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 14px; padding: 18px 16px;
+    }
+    .hero-team-col-title {
+      font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .htc-gold { color: var(--accent); }
+    .htc-green { color: #10b981; }
+    .htc-orange { color: var(--orange); }
+    .hero-member {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero-member:last-child { border-bottom: none; }
+    .hero-member-dot {
+      width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; color: #fff;
+    }
+    .hmd-navy  { background: linear-gradient(135deg, #0f2744, #1e3a5f); }
+    .hmd-blue  { background: linear-gradient(135deg, #1a365d, #2c5282); }
+    .hmd-gold  { background: linear-gradient(135deg, #b7791f, #d4901a); }
+    .hmd-teal  { background: linear-gradient(135deg, #0d9488, #0f766e); }
+    .hmd-green { background: linear-gradient(135deg, #10b981, #059669); }
+    .hmd-purple{ background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+    .hmd-cyan  { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+    .hmd-orange{ background: linear-gradient(135deg, #f97316, #ea580c); }
+    .hero-member-name {
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 700;
+      color: #fff; line-height: 1.2;
+    }
+    .hero-member-role {
+      font-size: 10px; color: rgba(255,255,255,0.45); line-height: 1.3; margin-top: 1px;
+    }
+    /* Hero bottom bar */
+    .hero-bottom {
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .hero-bottom-logo {
+      font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 900;
+      color: rgba(255,255,255,0.25); letter-spacing: 1px; text-transform: uppercase;
+    }
+    .hero-bottom-logo span { color: var(--accent); }
+    .hero-bottom-info {
+      font-size: 11px; color: rgba(255,255,255,0.3);
+    }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      max-width: 100%; padding: 36px 44px;
+    }
+
+    /* ===== SECTION HEADER ===== */
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px; padding-bottom: 16px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .section-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .section-icon.gold { background: linear-gradient(135deg, #f5a623, #e09112); color: #fff; }
+    .section-icon.blue { background: linear-gradient(135deg, #2c5282, #1a365d); color: #fff; }
+    .section-icon.green { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+    .section-icon.orange { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; }
+    .section-icon.purple { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: #fff; }
+    .section-title-wrap {}
+    .section-title-label {
+      font-size: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px; color: var(--gray);
+      margin-bottom: 2px;
+    }
+    .section-title-text {
+      font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 800;
+      color: var(--dark); letter-spacing: -0.5px;
+    }
+    .section-count {
+      margin-left: auto;
+      background: var(--body-bg); border: 1px solid #e2e8f0;
+      border-radius: 20px; padding: 4px 14px;
+      font-size: 13px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+      color: var(--gray);
+    }
+
+    /* ===== PERSON CARD ===== */
+    .person-card {
+      background: var(--section-bg);
+      border-radius: 14px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      margin-bottom: 18px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .person-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .person-avatar {
+      width: 58px; height: 58px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: #fff; flex-shrink: 0;
+      position: relative;
+    }
+    .person-avatar .badge-top {
+      position: absolute; top: -5px; right: -5px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--accent); border: 2px solid #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; color: var(--navy);
+    }
+    .person-info { flex: 1; }
+    .person-name {
+      font-family: 'Montserrat', sans-serif; font-size: 16px;
+      font-weight: 800; color: var(--dark); margin-bottom: 3px;
+    }
+    .person-role {
+      font-size: 12px; font-weight: 600; margin-bottom: 5px;
+    }
+    .person-dept {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #f1f5f9; border-radius: 5px; padding: 3px 8px;
+      font-size: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--gray);
+    }
+    .person-tags {
+      display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px;
+    }
+    .tag-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      border-radius: 20px; padding: 2px 8px;
+      font-size: 10px; font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .person-body { padding: 18px 22px; }
+
+    /* Portrait: always single column */
+    .info-grid {
+      display: grid; grid-template-columns: 1fr; gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .info-block {}
+    .info-block-title {
+      font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px; color: var(--gray);
+      margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+    }
+    .info-block-title i { font-size: 11px; }
+
+    .resp-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .resp-list li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; color: #334155; line-height: 1.5;
+    }
+    .resp-list li::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      margin-top: 5px; flex-shrink: 0;
+    }
+
+    .entregavel-list { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .entregavel-list li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12px; color: #334155; line-height: 1.5;
+    }
+    .entregavel-list li i { font-size: 11px; margin-top: 2px; flex-shrink: 0; }
+
+    .person-footer {
+      padding: 12px 22px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    }
+    .footer-label {
+      font-size: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--gray);
+      margin-right: 2px;
+    }
+    .kpi-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      border-radius: 6px; padding: 4px 10px;
+      font-size: 11px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+    }
+
+    /* Color themes */
+    .theme-gold .person-avatar { background: linear-gradient(135deg, #f5a623, #e09112); }
+    .theme-gold .person-role { color: var(--accent-dark); }
+    .theme-gold .resp-list li::before { background: var(--accent); }
+    .theme-gold .entregavel-list li i { color: var(--accent); }
+
+    .theme-blue .person-avatar { background: linear-gradient(135deg, #1a365d, #2c5282); }
+    .theme-blue .person-role { color: #2c5282; }
+    .theme-blue .resp-list li::before { background: #2c5282; }
+    .theme-blue .entregavel-list li i { color: #2c5282; }
+
+    .theme-navy .person-avatar { background: linear-gradient(135deg, #0f2744, #1a365d); }
+    .theme-navy .person-role { color: #0f2744; }
+    .theme-navy .resp-list li::before { background: #0f2744; }
+    .theme-navy .entregavel-list li i { color: #0f2744; }
+
+    .theme-green .person-avatar { background: linear-gradient(135deg, #10b981, #059669); }
+    .theme-green .person-role { color: var(--green-dark); }
+    .theme-green .resp-list li::before { background: var(--green); }
+    .theme-green .entregavel-list li i { color: var(--green); }
+
+    .theme-teal .person-avatar { background: linear-gradient(135deg, #0d9488, #0f766e); }
+    .theme-teal .person-role { color: #0d9488; }
+    .theme-teal .resp-list li::before { background: #0d9488; }
+    .theme-teal .entregavel-list li i { color: #0d9488; }
+
+    .theme-orange .person-avatar { background: linear-gradient(135deg, #f97316, #ea580c); }
+    .theme-orange .person-role { color: #ea580c; }
+    .theme-orange .resp-list li::before { background: var(--orange); }
+    .theme-orange .entregavel-list li i { color: var(--orange); }
+
+    .theme-purple .person-avatar { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+    .theme-purple .person-role { color: var(--purple); }
+    .theme-purple .resp-list li::before { background: var(--purple); }
+    .theme-purple .entregavel-list li i { color: var(--purple); }
+
+    .theme-cyan .person-avatar { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+    .theme-cyan .person-role { color: #0891b2; }
+    .theme-cyan .resp-list li::before { background: var(--cyan); }
+    .theme-cyan .entregavel-list li i { color: var(--cyan); }
+
+    .theme-red .person-avatar { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .theme-red .person-role { color: var(--red); }
+    .theme-red .resp-list li::before { background: var(--red); }
+    .theme-red .entregavel-list li i { color: var(--red); }
+
+    /* Tag pills colors */
+    .tp-gold { background: rgba(245,166,35,0.12); color: #b45309; }
+    .tp-blue { background: rgba(44,82,130,0.1); color: #1a365d; }
+    .tp-green { background: rgba(16,185,129,0.1); color: #065f46; }
+    .tp-purple { background: rgba(124,58,237,0.1); color: #5b21b6; }
+    .tp-orange { background: rgba(249,115,22,0.1); color: #9a3412; }
+    .tp-cyan { background: rgba(6,182,212,0.1); color: #0e7490; }
+    .tp-red { background: rgba(239,68,68,0.1); color: #991b1b; }
+    .tp-navy { background: rgba(15,39,68,0.08); color: #0f2744; }
+    .tp-teal { background: rgba(13,148,136,0.1); color: #134e4a; }
+
+    /* KPI chips */
+    .kc-gold { background: rgba(245,166,35,0.12); color: #92400e; }
+    .kc-blue { background: rgba(44,82,130,0.1); color: #1e40af; }
+    .kc-green { background: rgba(16,185,129,0.12); color: #065f46; }
+    .kc-purple { background: rgba(124,58,237,0.1); color: #5b21b6; }
+    .kc-orange { background: rgba(249,115,22,0.1); color: #9a3412; }
+    .kc-cyan { background: rgba(6,182,212,0.1); color: #0e7490; }
+    .kc-red { background: rgba(239,68,68,0.1); color: #991b1b; }
+    .kc-teal { background: rgba(13,148,136,0.1); color: #134e4a; }
+
+    /* ===== SECTION BLOCK ===== */
+    .section-block { margin-bottom: 36px; }
+
+    /* ===== LEADERSHIP ACCENT BAR ===== */
+    .card-top-bar { height: 4px; }
+    .bar-gold { background: linear-gradient(90deg, var(--accent), var(--orange)); }
+    .bar-blue { background: linear-gradient(90deg, #1a365d, #2c5282); }
+    .bar-navy { background: linear-gradient(90deg, #0f2744, #1a365d); }
+    .bar-green { background: linear-gradient(90deg, var(--green), var(--green-dark)); }
+    .bar-teal { background: linear-gradient(90deg, #0d9488, #0f766e); }
+    .bar-orange { background: linear-gradient(90deg, var(--orange), #f59e0b); }
+    .bar-purple { background: linear-gradient(90deg, var(--purple), var(--purple-light)); }
+    .bar-cyan { background: linear-gradient(90deg, var(--cyan), #67e8f9); }
+    .bar-red { background: linear-gradient(90deg, var(--red), #f87171); }
+
+    /* ===== DESCRIPTION BLOCK ===== */
+    .desc-block {
+      background: #f8fafc; border-radius: 10px; padding: 12px 14px;
+      margin-top: 12px; border-left: 3px solid;
+      font-size: 12px; color: #475569; line-height: 1.65;
+    }
+    .desc-block.border-gold { border-color: var(--accent); }
+    .desc-block.border-blue { border-color: #2c5282; }
+    .desc-block.border-navy { border-color: #0f2744; }
+    .desc-block.border-green { border-color: var(--green); }
+    .desc-block.border-teal { border-color: #0d9488; }
+    .desc-block.border-orange { border-color: var(--orange); }
+    .desc-block.border-purple { border-color: var(--purple); }
+    .desc-block.border-cyan { border-color: var(--cyan); }
+    .desc-block.border-red { border-color: var(--red); }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      height: 1px; background: #e2e8f0;
+      margin: 0 0 32px;
+    }
+
+    /* ===== PRINT ===== */
+    @media print {
+      body { background: #fff; }
+      .page-doc {
+        margin: 0; width: 100%;
+        box-shadow: none;
+      }
+      .print-btn { display: none !important; }
+      .hero,
+      .person-avatar,
+      .section-icon,
+      .card-top-bar,
+      .tag-pill,
+      .kpi-chip,
+      .desc-block {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .person-card { break-inside: avoid; page-break-inside: avoid; }
+      .section-block { break-inside: avoid; }
+      .hero { page-break-after: always; break-after: page; min-height: 100vh; }
+      .section-header { break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PRINT BUTTON -->
+  <button class="print-btn" onclick="window.print()">
+    <i class="fas fa-print"></i> Imprimir / Salvar PDF
+  </button>
+
+  <div class="page-doc">
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <!-- TOP: título e meta -->
+      <div>
+        <div class="hero-badge"><i class="fas fa-users-cog"></i> Documento Interno · Confidencial</div>
+        <h1 class="hero-title">Relatório de <span>Funções</span><br />e Responsabilidades</h1>
+        <p class="hero-sub">Descritivo completo de cargos, atribuições, entregas esperadas e indicadores-chave de cada membro da equipe EngMarq Solution.</p>
+        <div class="hero-meta">
+          <div class="hero-meta-item"><i class="fas fa-calendar-alt"></i> Maio de 2026</div>
+          <div class="hero-meta-item"><i class="fas fa-building"></i> EngMarq Solution</div>
+          <div class="hero-meta-item"><i class="fas fa-map-marker-alt"></i> Natal – RN</div>
+        </div>
+      </div>
+      <!-- STATS -->
+      <div class="hero-stats">
+        <div class="stat-pill">
+          <span class="stat-val">8</span>
+          <span class="stat-label">Colaboradores</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-val">3</span>
+          <span class="stat-label">Áreas</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-val">R$30k</span>
+          <span class="stat-label">Meta/Consultor</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-val">2026</span>
+          <span class="stat-label">Vigência</span>
+        </div>
+      </div>
+
+      <!-- SUMÁRIO DE EQUIPE -->
+      <div>
+        <div class="hero-team-label"><i class="fas fa-sitemap"></i> Composição da equipe</div>
+        <div class="hero-team-grid">
+          <!-- Diretoria -->
+          <div class="hero-team-col">
+            <div class="hero-team-col-title htc-gold"><i class="fas fa-crown"></i> Diretoria &amp; Gestão</div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-navy"><i class="fas fa-hard-hat"></i></div>
+              <div>
+                <div class="hero-member-name">Thiago Marques</div>
+                <div class="hero-member-role">Diretor Técnico &amp; Proprietário</div>
+              </div>
+            </div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-blue"><i class="fas fa-chart-line"></i></div>
+              <div>
+                <div class="hero-member-name">Natã Nogueira</div>
+                <div class="hero-member-role">Coord. Comercial &amp; Tecnologia</div>
+              </div>
+            </div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-gold"><i class="fas fa-coins"></i></div>
+              <div>
+                <div class="hero-member-name">Wagner Zuza</div>
+                <div class="hero-member-role">Diretor Financeiro</div>
+              </div>
+            </div>
+          </div>
+          <!-- SST -->
+          <div class="hero-team-col">
+            <div class="hero-team-col-title htc-green"><i class="fas fa-hard-hat"></i> Equipe Técnica SST</div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-teal"><i class="fas fa-user-shield"></i></div>
+              <div>
+                <div class="hero-member-name">Aline</div>
+                <div class="hero-member-role">Engenheira de Seg. do Trabalho</div>
+              </div>
+            </div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-green"><i class="fas fa-hard-hat"></i></div>
+              <div>
+                <div class="hero-member-name">Serginho</div>
+                <div class="hero-member-role">Técnico de Seg. do Trabalho</div>
+              </div>
+            </div>
+          </div>
+          <!-- Consultores -->
+          <div class="hero-team-col">
+            <div class="hero-team-col-title htc-orange"><i class="fas fa-phone-alt"></i> Consultores Comerciais</div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-purple"><i class="fas fa-crown"></i></div>
+              <div>
+                <div class="hero-member-name">Julia</div>
+                <div class="hero-member-role">Grandes Contas</div>
+              </div>
+            </div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-cyan"><i class="fas fa-chart-line"></i></div>
+              <div>
+                <div class="hero-member-name">Marcio</div>
+                <div class="hero-member-role">Grandes Contas</div>
+              </div>
+            </div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-green"><i class="fas fa-tachometer-alt"></i></div>
+              <div>
+                <div class="hero-member-name">Elayne</div>
+                <div class="hero-member-role">Agilidade &amp; Volume</div>
+              </div>
+            </div>
+            <div class="hero-member">
+              <div class="hero-member-dot hmd-orange"><i class="fas fa-phone-volume"></i></div>
+              <div>
+                <div class="hero-member-name">William</div>
+                <div class="hero-member-role">Prospecção &amp; Desenvolvimento</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RODAPÉ DA CAPA -->
+      <div class="hero-bottom">
+        <div class="hero-bottom-logo">Eng<span>Marq</span> Solution</div>
+        <div class="hero-bottom-info">engmarqsolution@gmail.com · +55 84 99928-5888 · Natal – RN</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== BODY ===== -->
+  <div class="container">
+
+    <!-- ============================================
+         BLOCO 1: DIRETORIA & GESTÃO
+    ============================================ -->
+    <div class="section-block">
+      <div class="section-header">
+        <div class="section-icon gold"><i class="fas fa-crown"></i></div>
+        <div class="section-title-wrap">
+          <div class="section-title-label">Nível Estratégico</div>
+          <div class="section-title-text">Diretoria &amp; Gestão</div>
+        </div>
+        <div class="section-count">3 pessoas</div>
+      </div>
+
+      <!-- THIAGO -->
+      <div class="person-card theme-navy">
+        <div class="card-top-bar bar-navy"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-hard-hat"></i>
+            <div class="badge-top"><i class="fas fa-star"></i></div>
+          </div>
+          <div class="person-info">
+            <div class="person-name">Thiago Marques</div>
+            <div class="person-role">Diretor Técnico &amp; Proprietário</div>
+            <div class="person-dept"><i class="fas fa-building" style="font-size:10px;"></i> Diretoria</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-navy"><i class="fas fa-gavel"></i> Gestão Técnica</span>
+              <span class="tag-pill tp-blue"><i class="fas fa-hard-hat"></i> SST &amp; Conformidade</span>
+              <span class="tag-pill tp-gold"><i class="fas fa-handshake"></i> Alto Valor / Inbound</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-navy">
+            Thiago é o fundador e responsável técnico da EngMarq Solution. Sua atuação combina a visão estratégica do negócio com o domínio técnico em Segurança e Saúde do Trabalho. É o profissional que garante a qualidade e conformidade legal de todos os serviços entregues, além de fechar contratos de alto valor com grandes contas via relacionamento e autoridade técnica.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#0f2744;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Dirige e representa a empresa perante clientes, parceiros e órgãos reguladores</li>
+                <li>Supervisiona e valida todos os documentos técnicos de SST (PGR, PCMSO, LTCAT, AET)</li>
+                <li>Define o portfólio de serviços e as metodologias técnicas da empresa</li>
+                <li>Fecha contratos de alto valor via networking e autoridade técnica (canal Inbound)</li>
+                <li>Assina documentos como responsável técnico perante o MTE e eSocial</li>
+                <li>Orienta e capacita a equipe técnica de SST (Aline e Serginho)</li>
+                <li>Participa de reuniões estratégicas com grandes clientes institucionais</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#0f2744;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> Validação técnica de 100% dos documentos emitidos</li>
+                <li><i class="fas fa-check-circle"></i> Fechamento de contratos de alto valor (R$ 5k+)</li>
+                <li><i class="fas fa-check-circle"></i> Manutenção da conformidade legal da empresa junto ao CREA/MTE</li>
+                <li><i class="fas fa-check-circle"></i> Desenvolvimento e atualização das metodologias técnicas</li>
+                <li><i class="fas fa-check-circle"></i> Representação institucional e autoridade de marca no mercado SST</li>
+                <li><i class="fas fa-check-circle"></i> Liderança técnica e mentoria da equipe de campo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Indicadores-chave:</span>
+          <span class="kpi-chip kc-blue"><i class="fas fa-file-signature"></i> Documentos validados/mês</span>
+          <span class="kpi-chip kc-gold"><i class="fas fa-dollar-sign"></i> Volume de contratos Inbound</span>
+          <span class="kpi-chip kc-teal"><i class="fas fa-star"></i> Satisfação técnica dos clientes</span>
+        </div>
+      </div>
+
+      <!-- NATÃ -->
+      <div class="person-card theme-blue">
+        <div class="card-top-bar bar-blue"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-chart-line"></i>
+            <div class="badge-top"><i class="fas fa-bolt"></i></div>
+          </div>
+          <div class="person-info">
+            <div class="person-name">Natã Nogueira</div>
+            <div class="person-role">Coordenador Comercial &amp; Tecnologia</div>
+            <div class="person-dept"><i class="fas fa-cogs" style="font-size:10px;"></i> Gestão</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-blue"><i class="fas fa-users"></i> Liderança Comercial</span>
+              <span class="tag-pill tp-cyan"><i class="fas fa-laptop-code"></i> Tecnologia</span>
+              <span class="tag-pill tp-gold"><i class="fas fa-funnel-dollar"></i> Funil &amp; CRM</span>
+              <span class="tag-pill tp-green"><i class="fas fa-tools"></i> Automação</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-blue">
+            Natã ocupa o papel de coordenador do time comercial e é o braço tecnológico da operação. Ele é o elo entre a estratégia da diretoria e a execução da equipe de vendas, garantindo que processos, ferramentas, scripts e CRM estejam funcionando. Também é responsável pela plataforma digital da empresa, sistemas de proposta, automações e toda a infraestrutura tecnológica.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#2c5282;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Coordena e acompanha diariamente a equipe de consultores comerciais</li>
+                <li>Define e atualiza scripts de prospecção, abordagem e follow-up</li>
+                <li>Gerencia o CRM e garante o correto registro de leads e oportunidades</li>
+                <li>Escuta ligações gravadas para identificar gargalos e oportunidades de melhoria</li>
+                <li>Ativa o protocolo de emergência quando um consultor está em risco no mês</li>
+                <li>Desenvolve e mantém os sistemas da empresa (propostas, contratos, site, gerador)</li>
+                <li>Cria e atualiza materiais comerciais, apresentações e landing pages</li>
+                <li>Fecha contratos via relacionamento pessoal e canal Inbound</li>
+                <li>Integra ferramentas de automação, IA e produtividade à operação</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#2c5282;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> Relatórios semanais de performance comercial da equipe</li>
+                <li><i class="fas fa-check-circle"></i> CRM 100% atualizado e disciplinado por todos os consultores</li>
+                <li><i class="fas fa-check-circle"></i> Scripts e playbooks comerciais revisados mensalmente</li>
+                <li><i class="fas fa-check-circle"></i> Sistemas funcionando sem falhas (site, gerador, propostas)</li>
+                <li><i class="fas fa-check-circle"></i> Automações que reduzam trabalho manual repetitivo</li>
+                <li><i class="fas fa-check-circle"></i> Implementação e evolução do protocolo do Dia 15</li>
+                <li><i class="fas fa-check-circle"></i> Onboarding e capacitação de novos consultores</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Indicadores-chave:</span>
+          <span class="kpi-chip kc-blue"><i class="fas fa-users"></i> Taxa de conversão da equipe</span>
+          <span class="kpi-chip kc-cyan"><i class="fas fa-database"></i> CRM compliance %</span>
+          <span class="kpi-chip kc-green"><i class="fas fa-tachometer-alt"></i> Uptime dos sistemas</span>
+        </div>
+      </div>
+
+      <!-- WAGNER -->
+      <div class="person-card theme-gold">
+        <div class="card-top-bar bar-gold"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-coins"></i>
+            <div class="badge-top"><i class="fas fa-chart-bar"></i></div>
+          </div>
+          <div class="person-info">
+            <div class="person-name">Wagner Zuza</div>
+            <div class="person-role">Diretor Financeiro</div>
+            <div class="person-dept"><i class="fas fa-landmark" style="font-size:10px;"></i> Financeiro</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-gold"><i class="fas fa-wallet"></i> Gestão Financeira</span>
+              <span class="tag-pill tp-orange"><i class="fas fa-file-invoice-dollar"></i> Faturamento</span>
+              <span class="tag-pill tp-green"><i class="fas fa-handshake"></i> Alto Valor / Inbound</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-gold">
+            Wagner é o responsável pela saúde financeira da EngMarq Solution. Ele garante que o fluxo de caixa esteja saudável, as cobranças sejam realizadas, os comissionamentos pagos corretamente e as obrigações fiscais cumpridas. Também atua como canal de fechamento de contratos via inbound, complementando a atuação da diretoria nas grandes negociações.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#b45309;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Controla o fluxo de caixa, receitas e despesas da empresa</li>
+                <li>Emite cobranças, gerencia inadimplência e acompanha recebimentos</li>
+                <li>Calcula e processa os comissionamentos dos consultores comerciais</li>
+                <li>Acompanha contratos de assessoria, garantindo a regularidade dos pagamentos</li>
+                <li>Elabora relatórios financeiros mensais para a diretoria</li>
+                <li>Fecha contratos comerciais via networking e canal Inbound</li>
+                <li>Controla a rentabilidade de cada serviço e projeto da empresa</li>
+                <li>Gerencia obrigações fiscais e tributárias junto ao contador</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#b45309;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> DRE e fluxo de caixa atualizado mensalmente</li>
+                <li><i class="fas fa-check-circle"></i> Comissões processadas e pagas dentro do prazo quinzenal</li>
+                <li><i class="fas fa-check-circle"></i> Inadimplência controlada abaixo de 5% da carteira</li>
+                <li><i class="fas fa-check-circle"></i> Relatório de rentabilidade por serviço/projeto</li>
+                <li><i class="fas fa-check-circle"></i> Obrigações fiscais em dia e sem multas</li>
+                <li><i class="fas fa-check-circle"></i> Previsibilidade financeira com 30 dias de antecedência</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Indicadores-chave:</span>
+          <span class="kpi-chip kc-gold"><i class="fas fa-percent"></i> Inadimplência %</span>
+          <span class="kpi-chip kc-green"><i class="fas fa-chart-line"></i> Margem líquida</span>
+          <span class="kpi-chip kc-orange"><i class="fas fa-clock"></i> Prazo de pagamento de comissões</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================
+         BLOCO 2: EQUIPE TÉCNICA SST
+    ============================================ -->
+    <div class="section-block">
+      <div class="section-header">
+        <div class="section-icon green"><i class="fas fa-hard-hat"></i></div>
+        <div class="section-title-wrap">
+          <div class="section-title-label">Execução Técnica</div>
+          <div class="section-title-text">Equipe de Segurança do Trabalho</div>
+        </div>
+        <div class="section-count">2 pessoas</div>
+      </div>
+
+      <!-- ALINE -->
+      <div class="person-card theme-teal">
+        <div class="card-top-bar bar-teal"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-user-shield"></i>
+            <div class="badge-top"><i class="fas fa-graduation-cap"></i></div>
+          </div>
+          <div class="person-info">
+            <div class="person-name">Aline</div>
+            <div class="person-role">Engenheira de Segurança do Trabalho</div>
+            <div class="person-dept"><i class="fas fa-hard-hat" style="font-size:10px;"></i> Técnico SST</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-teal"><i class="fas fa-file-medical-alt"></i> PGR / PCMSO</span>
+              <span class="tag-pill tp-green"><i class="fas fa-microscope"></i> Engenharia SST</span>
+              <span class="tag-pill tp-blue"><i class="fas fa-clipboard-list"></i> Laudos Técnicos</span>
+              <span class="tag-pill tp-cyan"><i class="fas fa-desktop"></i> eSocial</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-teal">
+            Aline é a engenheira de segurança do trabalho da EngMarq Solution. Sua formação de nível superior a habilita a assinar documentos técnicos de maior responsabilidade, elaborar laudos complexos e conduzir avaliações ambientais de grande porte. É peça fundamental na entrega dos serviços de assessoria SST completa, garantindo a conformidade legal dos clientes com as normas regulamentadoras.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#0d9488;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Elabora e assina o PGR (Programa de Gerenciamento de Riscos) dos clientes</li>
+                <li>Executa e documenta Análises Preliminares de Risco (APR) e visitas técnicas</li>
+                <li>Redige laudos técnicos de insalubridade e periculosidade (LTCAT)</li>
+                <li>Coordena a implantação do eSocial SST (S-2210, S-2220, S-2240)</li>
+                <li>Realiza avaliações quantitativas de agentes físicos, químicos e biológicos</li>
+                <li>Planeja e executa programas de prevenção de riscos (SIPAT, CIPA)</li>
+                <li>Apoia na elaboração de Análises Ergonômicas do Trabalho (AET)</li>
+                <li>Orienta empresas clientes sobre adequações exigidas pelas NRs</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#0d9488;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> PGR elaborado e atualizado conforme NR-01</li>
+                <li><i class="fas fa-check-circle"></i> Laudos técnicos assinados dentro do prazo contratual</li>
+                <li><i class="fas fa-check-circle"></i> Transmissão correta dos eventos eSocial SST</li>
+                <li><i class="fas fa-check-circle"></i> Relatório de visita técnica por cliente assessorado</li>
+                <li><i class="fas fa-check-circle"></i> Zero pendências técnicas nos clientes de assessoria contínua</li>
+                <li><i class="fas fa-check-circle"></i> Documentação técnica arquivada e organizada por cliente</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Indicadores-chave:</span>
+          <span class="kpi-chip kc-teal"><i class="fas fa-file-contract"></i> Documentos entregues no prazo</span>
+          <span class="kpi-chip kc-green"><i class="fas fa-check-double"></i> Conformidade técnica dos clientes</span>
+          <span class="kpi-chip kc-blue"><i class="fas fa-desktop"></i> eSocial sem pendências</span>
+        </div>
+      </div>
+
+      <!-- SERGINHO -->
+      <div class="person-card theme-green">
+        <div class="card-top-bar bar-green"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-helmet-safety" style="font-size:26px;"></i>
+          </div>
+          <div class="person-info">
+            <div class="person-name">Serginho</div>
+            <div class="person-role">Técnico de Segurança do Trabalho</div>
+            <div class="person-dept"><i class="fas fa-hard-hat" style="font-size:10px;"></i> Técnico SST</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-green"><i class="fas fa-search"></i> Vistoria e Campo</span>
+              <span class="tag-pill tp-teal"><i class="fas fa-chalkboard-teacher"></i> Treinamentos NR</span>
+              <span class="tag-pill tp-blue"><i class="fas fa-clipboard-check"></i> Checklist SST</span>
+              <span class="tag-pill tp-orange"><i class="fas fa-fire-extinguisher"></i> Brigada / CIPA</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-green">
+            Serginho é o técnico de segurança do trabalho responsável pela execução de campo. Ele conduz visitas presenciais às empresas clientes, aplica treinamentos das Normas Regulamentadoras, realiza checklists de conformidade e apoia a engenheira Aline na coleta de dados para laudos técnicos. Seu trabalho garante que os clientes recebam o suporte prático e presencial necessário.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#059669;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Realiza visitas técnicas às empresas clientes de assessoria SST</li>
+                <li>Aplica treinamentos presenciais das NRs (NR-05, NR-06, NR-10, NR-33, NR-35 e outras)</li>
+                <li>Executa checklists de conformidade com as normas regulamentadoras</li>
+                <li>Coleta dados e informações de campo para subsidiar laudos técnicos</li>
+                <li>Orienta colaboradores das empresas clientes sobre uso correto de EPIs</li>
+                <li>Auxilia na implantação e acompanhamento de CIPA e Brigada de Incêndio</li>
+                <li>Registra e reporta à engenheira não conformidades identificadas em campo</li>
+                <li>Elabora relatórios fotográficos das visitas técnicas</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#059669;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> Relatório de visita técnica por cliente por mês</li>
+                <li><i class="fas fa-check-circle"></i> Listas de presença e certificados de treinamentos aplicados</li>
+                <li><i class="fas fa-check-circle"></i> Checklists preenchidos e enviados à coordenação técnica</li>
+                <li><i class="fas fa-check-circle"></i> Registro fotográfico das condições dos ambientes visitados</li>
+                <li><i class="fas fa-check-circle"></i> Cumprimento do calendário de visitas programadas</li>
+                <li><i class="fas fa-check-circle"></i> Feedback de campo sobre não conformidades identificadas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Indicadores-chave:</span>
+          <span class="kpi-chip kc-green"><i class="fas fa-map-marker-alt"></i> Visitas realizadas/mês</span>
+          <span class="kpi-chip kc-teal"><i class="fas fa-chalkboard-teacher"></i> Treinamentos aplicados</span>
+          <span class="kpi-chip kc-blue"><i class="fas fa-clipboard-check"></i> Checklists entregues no prazo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ============================================
+         BLOCO 3: CONSULTORES COMERCIAIS
+    ============================================ -->
+    <div class="section-block">
+      <div class="section-header">
+        <div class="section-icon orange"><i class="fas fa-phone-alt"></i></div>
+        <div class="section-title-wrap">
+          <div class="section-title-label">Força de Vendas</div>
+          <div class="section-title-text">Consultores Comerciais</div>
+        </div>
+        <div class="section-count">4 consultores</div>
+      </div>
+
+      <!-- Bloco de instruções da função -->
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:flex-start;gap:16px;">
+        <div style="width:44px;height:44px;min-width:44px;border-radius:12px;background:rgba(249,115,22,0.15);display:flex;align-items:center;justify-content:center;color:var(--orange);font-size:20px;flex-shrink:0;">
+          <i class="fas fa-info-circle"></i>
+        </div>
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:#9a3412;margin-bottom:6px;">Sobre o Cargo de Consultor Comercial</div>
+          <div style="font-size:13px;color:#7c2d12;line-height:1.7;">
+            Os consultores comerciais atuam 100% comissionados (8% sobre vendas), com meta mensal individual de <strong>R$ 30.000</strong>. São responsáveis pela prospecção ativa, qualificação de leads, apresentação de propostas e fechamento de contratos no segmento de SST. O ritmo mínimo exigido é de <strong>50 contatos por dia</strong> e <strong>4–6 reuniões por semana</strong>. O CRM é obrigatório e toda interação deve ser registrada no mesmo dia.
+          </div>
+        </div>
+      </div>
+
+      <!-- JULIA -->
+      <div class="person-card theme-purple">
+        <div class="card-top-bar bar-purple"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-crown"></i>
+          </div>
+          <div class="person-info">
+            <div class="person-name">Julia</div>
+            <div class="person-role">Consultora Comercial — Grandes Contas</div>
+            <div class="person-dept"><i class="fas fa-briefcase" style="font-size:10px;"></i> Comercial</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-purple"><i class="fas fa-crown"></i> Grandes Contas</span>
+              <span class="tag-pill tp-gold"><i class="fas fa-dollar-sign"></i> Alto Ticket</span>
+              <span class="tag-pill tp-blue"><i class="fas fa-handshake"></i> Negociação Estratégica</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-purple">
+            Julia é a consultora com maior potencial de ticket médio da equipe outbound. Seu perfil é voltado a grandes contas corporativas, onde um único contrato pode representar dezenas de milhares de reais. Com menos reuniões e maior precisão nas negociações, é a vendedora com o maior pipeline individual da equipe.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#5b21b6;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Prospecta empresas de médio e grande porte com alto potencial de contrato SST</li>
+                <li>Conduz reuniões de diagnóstico com decisores (RH, Diretoria, Gestão)</li>
+                <li>Apresenta propostas consultivas de alto valor (psicossocial, assessoria anual, kit SST)</li>
+                <li>Negocia condições, prazos e pacotes com foco em contratos de longo prazo</li>
+                <li>Faz follow-up estratégico e mantém relacionamento com leads qualificados</li>
+                <li>Registra todas as interações no CRM no mesmo dia</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#5b21b6;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> R$ 30.000/mês em contratos fechados e recebidos</li>
+                <li><i class="fas fa-check-circle"></i> Pipeline mínimo de R$ 100k em aberto mensalmente</li>
+                <li><i class="fas fa-check-circle"></i> 4–6 reuniões qualificadas por semana</li>
+                <li><i class="fas fa-check-circle"></i> 50 contatos ativos por dia</li>
+                <li><i class="fas fa-check-circle"></i> CRM 100% atualizado diariamente</li>
+                <li><i class="fas fa-check-circle"></i> Follow-up em 100% das propostas enviadas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Pipeline atual:</span>
+          <span class="kpi-chip kc-purple"><i class="fas fa-file-invoice-dollar"></i> R$ 80.000 em aberto</span>
+          <span class="kpi-chip kc-blue"><i class="fas fa-calendar-check"></i> 2 reuniões / 2 propostas</span>
+          <span class="kpi-chip kc-gold"><i class="fas fa-bolt"></i> Foco: acelerar fechamento</span>
+        </div>
+      </div>
+
+      <!-- MARCIO -->
+      <div class="person-card theme-cyan">
+        <div class="card-top-bar bar-cyan"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="person-info">
+            <div class="person-name">Marcio</div>
+            <div class="person-role">Consultor Comercial — Grandes Contas</div>
+            <div class="person-dept"><i class="fas fa-briefcase" style="font-size:10px;"></i> Comercial</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-cyan"><i class="fas fa-industry"></i> Grandes Contas</span>
+              <span class="tag-pill tp-gold"><i class="fas fa-dollar-sign"></i> Alto Ticket</span>
+              <span class="tag-pill tp-blue"><i class="fas fa-database"></i> CRM Rigoroso</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-cyan">
+            Marcio também atua com grandes contas e possui um robusto pipeline individual. Seu ponto de atenção é a disciplina no uso do CRM — registrar todas as interações é essencial para que o coordenador e a diretoria possam dar suporte efetivo no fechamento. Tem grande potencial de conversão quando mantém a organização e o cadenciamento correto.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#0e7490;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Prospecta e aborda empresas de médio e grande porte no mercado SST</li>
+                <li>Conduz reuniões de apresentação e diagnóstico com decisores</li>
+                <li>Apresenta propostas comerciais completas com pacotes de alto valor</li>
+                <li>Negocia condições e fecha contratos com foco em relacionamento de longo prazo</li>
+                <li>Mantém follow-up ativo e cadenciado em todos os leads em aberto</li>
+                <li>Registra todas as interações no CRM antes do final do dia</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#0e7490;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> R$ 30.000/mês em contratos fechados e recebidos</li>
+                <li><i class="fas fa-check-circle"></i> Pipeline mínimo de R$ 100k em aberto mensalmente</li>
+                <li><i class="fas fa-check-circle"></i> CRM 100% preenchido — zero interação não registrada</li>
+                <li><i class="fas fa-check-circle"></i> 4–6 reuniões qualificadas por semana</li>
+                <li><i class="fas fa-check-circle"></i> 50 contatos ativos por dia</li>
+                <li><i class="fas fa-check-circle"></i> Follow-up em 48h para toda proposta enviada</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Pipeline atual:</span>
+          <span class="kpi-chip kc-cyan"><i class="fas fa-file-invoice-dollar"></i> R$ 70.000 em aberto</span>
+          <span class="kpi-chip kc-blue"><i class="fas fa-calendar-check"></i> 2 reuniões / 1 proposta</span>
+          <span class="kpi-chip kc-orange"><i class="fas fa-exclamation-triangle"></i> Foco: disciplina no CRM</span>
+        </div>
+      </div>
+
+      <!-- ELAYNE -->
+      <div class="person-card theme-green">
+        <div class="card-top-bar bar-green"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-tachometer-alt"></i>
+          </div>
+          <div class="person-info">
+            <div class="person-name">Elayne</div>
+            <div class="person-role">Consultora Comercial — Agilidade &amp; Volume</div>
+            <div class="person-dept"><i class="fas fa-briefcase" style="font-size:10px;"></i> Comercial</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-green"><i class="fas fa-bolt"></i> Agilidade</span>
+              <span class="tag-pill tp-teal"><i class="fas fa-layer-group"></i> Treinamentos NR</span>
+              <span class="tag-pill tp-orange"><i class="fas fa-chart-bar"></i> Alto Volume</span>
+              <span class="tag-pill tp-blue"><i class="fas fa-arrow-up"></i> Upsell</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-green">
+            Elayne se destaca pela agilidade e velocidade de execução — foi quem mais enviou propostas no início da operação. Seu perfil é voltado a vendas rápidas, especialmente treinamentos de NRs e pacotes de menor ticket. A estratégia é aumentar o volume de reuniões e elevar gradualmente o ticket médio, utilizando os treinamentos como porta de entrada para serviços maiores.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#059669;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Prospecta ativamente empresas de pequeno e médio porte</li>
+                <li>Vende pacotes de treinamentos NR como produto de entrada rápida</li>
+                <li>Aplica o protocolo de downsell sempre que o cliente recusar produto maior</li>
+                <li>Realiza alto volume de contatos e reuniões para compensar ticket menor</li>
+                <li>Identifica oportunidades de upsell dentro da carteira de clientes ativos</li>
+                <li>Registra todas as interações no CRM no mesmo dia</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#059669;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> R$ 30.000/mês em contratos fechados e recebidos</li>
+                <li><i class="fas fa-check-circle"></i> Alto volume: mínimo 6 reuniões por semana</li>
+                <li><i class="fas fa-check-circle"></i> 50 contatos ativos por dia</li>
+                <li><i class="fas fa-check-circle"></i> Downsell aplicado em 100% das reuniões sem fechamento maior</li>
+                <li><i class="fas fa-check-circle"></i> CRM atualizado diariamente</li>
+                <li><i class="fas fa-check-circle"></i> Evolução progressiva do ticket médio mês a mês</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Pipeline atual:</span>
+          <span class="kpi-chip kc-green"><i class="fas fa-file-invoice-dollar"></i> R$ 17.000 em aberto</span>
+          <span class="kpi-chip kc-teal"><i class="fas fa-calendar-check"></i> 2 reuniões / 3 propostas</span>
+          <span class="kpi-chip kc-blue"><i class="fas fa-arrow-up"></i> Foco: elevar ticket médio</span>
+        </div>
+      </div>
+
+      <!-- WILLIAM -->
+      <div class="person-card theme-orange">
+        <div class="card-top-bar bar-orange"></div>
+        <div class="person-header">
+          <div class="person-avatar">
+            <i class="fas fa-phone-volume"></i>
+          </div>
+          <div class="person-info">
+            <div class="person-name">William</div>
+            <div class="person-role">Consultor Comercial — Prospecção &amp; Desenvolvimento</div>
+            <div class="person-dept"><i class="fas fa-briefcase" style="font-size:10px;"></i> Comercial</div>
+            <div class="person-tags">
+              <span class="tag-pill tp-orange"><i class="fas fa-phone"></i> Prospecção Ativa</span>
+              <span class="tag-pill tp-red"><i class="fas fa-exclamation-triangle"></i> Em Desenvolvimento</span>
+              <span class="tag-pill tp-blue"><i class="fas fa-graduation-cap"></i> Capacitação</span>
+            </div>
+          </div>
+        </div>
+        <div class="person-body">
+          <div class="desc-block border-orange">
+            William está na fase de desenvolvimento e precisa de acompanhamento próximo. Apesar de ter realizado um alto volume de ligações, ainda não converteu em reuniões — o que indica um problema de script ou abordagem, não de esforço. O plano de ação inclui revisão de script, sessões de roleplay e escuta de ligações com o coordenador comercial para virar o jogo.
+          </div>
+          <div class="info-grid" style="margin-top:20px;">
+            <div class="info-block">
+              <div class="info-block-title" style="color:#c2410c;"><i class="fas fa-tasks"></i> O que faz</div>
+              <ul class="resp-list">
+                <li>Realiza prospecção ativa por ligação telefônica e WhatsApp</li>
+                <li>Aplica o script de abordagem fria para agendamento de reuniões</li>
+                <li>Participa de sessões de roleplay e treinamento com o coordenador</li>
+                <li>Revisa e ajusta abordagem com base no feedback das gravações</li>
+                <li>Aplica o giro da lista de 100 contatos sistematicamente</li>
+                <li>Registra todas as tentativas de contato no CRM</li>
+              </ul>
+            </div>
+            <div class="info-block">
+              <div class="info-block-title" style="color:#c2410c;"><i class="fas fa-bullseye"></i> O que deve entregar</div>
+              <ul class="entregavel-list">
+                <li><i class="fas fa-check-circle"></i> Primeira reunião convertida esta semana</li>
+                <li><i class="fas fa-check-circle"></i> 50 contatos ativos por dia (não negociável)</li>
+                <li><i class="fas fa-check-circle"></i> R$ 30.000/mês em contratos fechados (meta-alvo)</li>
+                <li><i class="fas fa-check-circle"></i> Participação ativa nos roleplays de script</li>
+                <li><i class="fas fa-check-circle"></i> CRM 100% atualizado com todas as ligações do dia</li>
+                <li><i class="fas fa-check-circle"></i> 4–6 reuniões agendadas por semana até o fim do mês</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="person-footer">
+          <span class="footer-label">Status atual:</span>
+          <span class="kpi-chip kc-red"><i class="fas fa-phone"></i> 48 ligações → 0 reuniões</span>
+          <span class="kpi-chip kc-orange"><i class="fas fa-exclamation-circle"></i> Ação urgente: revisão de script</span>
+          <span class="kpi-chip kc-blue"><i class="fas fa-headset"></i> Acompanhamento: Natã</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============================================
+         RODAPÉ
+    ============================================ -->
+    <div style="margin-top:48px;padding:32px;background:#fff;border-radius:20px;border:1px solid #e2e8f0;text-align:center;">
+      <div style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gray);margin-bottom:8px;">Documento Interno — Uso Restrito</div>
+      <div style="font-size:13px;color:#64748b;line-height:1.7;">
+        Este relatório é de uso exclusivo da diretoria e coordenação da <strong>EngMarq Solution</strong>.<br>
+        Elaborado em <strong>Maio de 2026</strong> · Natal – RN · engmarqsolution@gmail.com · +55 84 99928-5888
+      </div>
+      <div style="margin-top:16px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+        <span style="background:#f1f5f9;border-radius:8px;padding:6px 14px;font-size:12px;color:#475569;font-family:'Montserrat',sans-serif;font-weight:600;">
+          <i class="fas fa-users" style="color:var(--accent);"></i> 8 Colaboradores
+        </span>
+        <span style="background:#f1f5f9;border-radius:8px;padding:6px 14px;font-size:12px;color:#475569;font-family:'Montserrat',sans-serif;font-weight:600;">
+          <i class="fas fa-building" style="color:#2c5282;"></i> 3 Áreas
+        </span>
+        <span style="background:#f1f5f9;border-radius:8px;padding:6px 14px;font-size:12px;color:#475569;font-family:'Montserrat',sans-serif;font-weight:600;">
+          <i class="fas fa-calendar-alt" style="color:var(--green);"></i> Vigência: 2026
+        </span>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+
+  </div><!-- /page-doc -->
+
+</body>
+</html>

@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta - Psicossocial + Treinamentos NR-18 e NR-35 | Imperthane Engenharia | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --accent-color: #dd6b20;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        /* Controles de PDF */
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(221, 107, 32, 0.4);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff5eb;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li {
+            margin-bottom: 4px;
+        }
+
+        .pdf-instructions strong {
+            color: var(--secondary-color);
+        }
+
+        /* Container do documento */
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Páginas */
+        .page {
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* Header de página */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .page-header-logo {
+            height: 35px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer de página */
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+            z-index: 10;
+        }
+
+        .page-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* ====== CAPA ====== */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(221, 107, 32, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            width: 180px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            background: rgba(221, 107, 32, 0.9);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge i {
+            font-size: 12px;
+        }
+
+        .cover-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(221, 107, 32, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-icon i {
+            font-size: 28px;
+            color: var(--accent-color);
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title span {
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .cover-subtitle {
+            font-size: 13px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            max-width: 420px;
+        }
+
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-align: center;
+        }
+
+        .cover-date {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+            padding: 0 18mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-footer p {
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* ====== TÍTULOS E TEXTOS ====== */
+        .section-number {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .section-title-text {
+            flex: 1;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title i {
+            color: var(--accent-color);
+        }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* Boxes */
+        .info-box {
+            background: linear-gradient(135deg, #fff5eb 0%, #fed7aa 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--accent-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        .highlight-box strong {
+            color: var(--primary-color);
+        }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .green-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--success-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .green-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+            border-left: 4px solid var(--purple-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .purple-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--purple-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .purple-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--alert-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box p {
+            margin-bottom: 0;
+            color: var(--dark-color);
+            font-size: 10px;
+            line-height: 1.4;
+        }
+
+        /* Lista de itens */
+        .feature-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+
+        .feature-list li {
+            padding: 5px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 11px;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        /* Empresa contratante */
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .company-info-item {
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .company-info-item span {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        /* Tabela de investimento */
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 10px;
+        }
+
+        .investment-table thead tr {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            color: white;
+        }
+
+        .investment-table th {
+            padding: 10px 8px;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .investment-table th:last-child {
+            text-align: right;
+        }
+
+        .investment-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--light-color);
+            vertical-align: middle;
+        }
+
+        .investment-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .investment-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .investment-table .training-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .investment-table .training-name i {
+            color: var(--accent-color);
+            margin-right: 6px;
+        }
+
+        .investment-table tfoot tr {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #c05621 100%);
+            color: white;
+        }
+
+        .investment-table tfoot td {
+            padding: 12px 8px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            border: none;
+        }
+
+        .investment-table tfoot td:last-child {
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Training cards */
+        .training-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .training-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .training-card h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .training-card h4 i {
+            color: var(--accent-color);
+        }
+
+        .training-card p {
+            font-size: 9px;
+            margin: 0;
+            line-height: 1.4;
+            color: var(--gray-color);
+        }
+
+        /* Factors grid */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .factor-card {
+            background: var(--light-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--purple-color);
+        }
+
+        .factor-card h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .factor-card h4 i {
+            color: var(--purple-color);
+            font-size: 11px;
+        }
+
+        .factor-card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        /* Metodologia */
+        .methodology-steps {
+            margin: 12px 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            margin-bottom: 2px;
+        }
+
+        .step-content p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.35;
+        }
+
+        /* Condições */
+        .conditions-list {
+            margin: 12px 0;
+        }
+
+        .condition-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .condition-item:last-child {
+            border-bottom: none;
+        }
+
+        .condition-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--light-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .condition-text strong {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .condition-text span {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.3;
+        }
+
+        /* Responsável */
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            padding: 18px;
+            border-radius: 10px;
+            color: var(--white-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .responsible-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(221, 107, 32, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 26px;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+        }
+
+        .responsible-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-role {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-company {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .responsible-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .responsible-contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 10px;
+        }
+
+        .responsible-contact-item i {
+            color: var(--accent-color);
+            width: 15px;
+            text-align: center;
+        }
+
+        /* Impressão */
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            
+            .page { 
+                page-break-after: always !important; 
+                page-break-inside: avoid !important; 
+                page-break-before: auto !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                width: 210mm !important; 
+                height: 297mm !important; 
+                min-height: 297mm !important; 
+                max-height: 297mm !important; 
+                margin: 0 !important; 
+                padding: 12mm 15mm 18mm 15mm !important; 
+                box-sizing: border-box !important; 
+                overflow: hidden !important;
+                position: relative !important;
+            }
+            
+            .page:last-child { 
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+            
+            .page-cover {
+                padding: 20mm 18mm 18mm 18mm !important;
+            }
+            
+            .page-header {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                margin-bottom: 10px !important;
+                padding-bottom: 8px !important;
+            }
+            
+            .page-footer { 
+                position: absolute !important; 
+                bottom: 8mm !important; 
+                left: 15mm !important; 
+                right: 15mm !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                font-size: 9px !important;
+            }
+            
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--accent-color); letter-spacing: 3px;">WZ0003</span>
+            
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            
+            <span class="cover-badge">
+                <i class="fas fa-hard-hat"></i>
+                Treinamentos NR-18 &amp; NR-35 + Psicossocial
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Treinamentos + Psicossocial</span>
+            </h1>
+            <p class="cover-subtitle">
+                Capacitação em NR-18 e NR-35 com certificação EAD + Avaliação de Riscos Psicossociais conforme NR-01 atualizada
+            </p>
+            
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Imperthane Engenharia Serviços LTDA</p>
+                <p style="font-size: 11px; opacity: 0.8; margin-top: 5px; text-align: center;">Imperthane Engenharia</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                07 de Maio de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | SST que traz segurança jurídica | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: DADOS DO CLIENTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Apresentação</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i> SST que traz segurança jurídica</h4>
+                <p>A <strong>EngMarq Solution</strong> é uma empresa especializada em Engenharia de Segurança e Saúde do Trabalho. Desenvolvemos soluções técnicas para garantir a <strong>conformidade legal</strong> da sua empresa com as Normas Regulamentadoras vigentes.</p>
+            </div>
+
+            <p>Prezado(a) <strong>Arthur</strong>,</p>
+
+            <p>Apresentamos nossa proposta comercial para a <strong>Imperthane Engenharia Serviços LTDA</strong>, contemplando os serviços de <strong>Avaliação de Fatores de Riscos Psicossociais</strong> (NR-01 atualizada) e <strong>Treinamentos em NR-18 e NR-35</strong> com certificação EAD, para 20 colaboradores.</p>
+
+            <ul class="feature-list">
+                <li>Avaliação de Riscos Psicossociais com relatório diagnóstico (NR-01)</li>
+                <li>Treinamento NR-18 — Segurança e Saúde no Trabalho na Indústria da Construção</li>
+                <li>Treinamento NR-35 — Trabalho em Altura</li>
+                <li>Certificação EAD individual para todos os participantes</li>
+                <li>Entrega de toda a documentação em conformidade com as NRs vigentes</li>
+            </ul>
+
+            <h2 class="section-title" style="margin-top: 18px;">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Dados do Cliente</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>
+            
+            <div class="company-info-grid">
+                <div class="company-info-item" style="grid-column: 1 / -1;">
+                    <label>Razão Social</label>
+                    <span>Imperthane Engenharia Serviços LTDA</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nome Fantasia</label>
+                    <span>Imperthane Engenharia</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>29.569.582/0001-03</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Endereço</label>
+                    <span>Av. Lima e Silva, 1496 — Lote 106</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Bairro / CEP</label>
+                    <span>Lagoa Nova — 59.075-710</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Município / UF</label>
+                    <span>Natal — RN</span>
+                </div>
+                <div class="company-info-item">
+                    <label>E-mail</label>
+                    <span>arthur@imperthane.com.br</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Telefone</label>
+                    <span>(84) 8722-0087</span>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: CONTEXTO LEGAL E SERVIÇOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Base Legal e Escopo dos Serviços</span>
+            </h2>
+
+            <div class="alert-box" style="margin-bottom: 12px;">
+                <h4><i class="fas fa-gavel"></i> Obrigações Legais</h4>
+                <p>A <strong>NR-01 atualizada</strong> exige a identificação e avaliação de <strong>fatores de riscos psicossociais</strong> em todos os ambientes de trabalho, integrando-os ao Gerenciamento de Riscos Ocupacionais (GRO). A <strong>NR-18</strong> e a <strong>NR-35</strong> estabelecem treinamentos obrigatórios com certificação para trabalhadores da construção e para trabalho em altura, respectivamente.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-brain"></i> Avaliação de Fatores Psicossociais — NR-01</h3>
+
+            <div class="purple-box">
+                <h4><i class="fas fa-brain"></i> O que é a Avaliação Psicossocial?</h4>
+                <p>A avaliação identifica e mensura os <strong>fatores de riscos psicossociais</strong> presentes no trabalho — como sobrecarga de trabalho, falta de autonomia, conflitos interpessoais e insegurança no emprego — que podem gerar sofrimento psíquico e doenças ocupacionais. A NR-01 tornou essa avaliação parte integrante do GRO e obrigatória para todas as empresas.</p>
+            </div>
+
+            <div class="factors-grid" style="margin-top: 10px;">
+                <div class="factor-card">
+                    <h4><i class="fas fa-users"></i> Demandas do Trabalho</h4>
+                    <p>Ritmo, volume, pressão por resultados e exigências emocionais das funções.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-user-shield"></i> Controle e Autonomia</h4>
+                    <p>Grau de participação dos colaboradores nas decisões do trabalho.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-heart"></i> Suporte Social</h4>
+                    <p>Apoio de gestores e colegas, clima organizacional e relações interpessoais.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-balance-scale"></i> Recompensa e Reconhecimento</h4>
+                    <p>Equilíbrio entre esforço e reconhecimento, clareza de papéis e segurança no emprego.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top: 15px;"><i class="fas fa-chalkboard-teacher"></i> Treinamentos em SST</h3>
+
+            <div class="training-cards">
+                <div class="training-card">
+                    <h4><i class="fas fa-hard-hat"></i> NR-18 — Construção Civil</h4>
+                    <p>Capacitação em Segurança e Saúde no Trabalho na Indústria da Construção. Abrange medidas preventivas, uso de EPIs/EPCs, riscos específicos da construção, prevenção de acidentes e atendimento às exigências da NR-18 para todos os trabalhadores do setor.</p>
+                </div>
+                <div class="training-card">
+                    <h4><i class="fas fa-mountain"></i> NR-35 — Trabalho em Altura</h4>
+                    <p>Habilitação para atividades executadas acima de 2 metros, com identificação e controle de riscos, sistemas de proteção individual e coletiva (trava-quedas, linhas de vida, cinturões), procedimentos de resgate e resposta a emergências.</p>
+                </div>
+            </div>
+
+            <div class="green-box" style="margin-top: 10px;">
+                <h4><i class="fas fa-certificate"></i> Certificação EAD — Validade Legal Imediata</h4>
+                <p>Os treinamentos NR-18 e NR-35 serão realizados na modalidade <strong>EAD (Ensino a Distância)</strong>, com emissão imediata de certificado individual com validade legal conforme cada Norma Regulamentadora. Os certificados são emitidos para cada participante ao término do curso.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: METODOLOGIA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Metodologia de Execução</span>
+            </h2>
+
+            <p>Nossa metodologia garante a integração dos serviços com mínimo impacto na operação da empresa:</p>
+
+            <div class="methodology-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Alinhamento Inicial</h4>
+                        <p>Reunião de kick-off para levantamento de informações sobre o quadro funcional, atividades exercidas e cronograma disponível para execução dos serviços.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Aplicação da Avaliação Psicossocial</h4>
+                        <p>Aplicação dos instrumentos de avaliação dos fatores psicossociais para os 20 colaboradores. Pode ser realizada presencialmente ou de forma online, com suporte da equipe técnica.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Análise e Relatório Psicossocial</h4>
+                        <p>Processamento dos dados coletados, elaboração de relatório diagnóstico com identificação dos fatores de risco, nível de exposição e recomendações de intervenção.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Disponibilização dos Treinamentos EAD (NR-18 e NR-35)</h4>
+                        <p>Envio dos acessos à plataforma EAD para os 20 colaboradores. Os participantes realizam os módulos NR-18 e NR-35 em horários compatíveis com a rotina da empresa.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Emissão de Certificados</h4>
+                        <p>Após a conclusão dos treinamentos, os certificados individuais com validade legal são emitidos automaticamente pela plataforma para cada participante.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Entrega Final e Suporte</h4>
+                        <p>Entrega do relatório psicossocial e dos certificados de treinamento. Orientações para registro no eSocial e suporte técnico pós-entrega.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-info-circle"></i> Flexibilidade:</strong> Os treinamentos EAD podem ser realizados individualmente por cada colaborador, sem necessidade de reunir toda a equipe ao mesmo tempo, minimizando impacto na operação.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: ENTREGÁVEIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Entregáveis</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrangência:</strong> Serviços dimensionados para <strong>20 colaboradores</strong></p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-brain"></i> Avaliação Psicossocial</h3>
+            <ul class="feature-list">
+                <li>Aplicação de instrumentos validados de avaliação psicossocial (NR-01)</li>
+                <li>Análise quantitativa e qualitativa dos resultados</li>
+                <li>Relatório diagnóstico com identificação e classificação dos fatores de risco</li>
+                <li>Recomendações técnicas para gestão e controle dos riscos identificados</li>
+                <li>Integração ao GRO/PGR conforme exigência da NR-01 atualizada</li>
+            </ul>
+
+            <h3 class="subsection-title" style="margin-top: 15px;"><i class="fas fa-chalkboard-teacher"></i> Treinamentos NR-18 e NR-35 (EAD)</h3>
+            <ul class="feature-list">
+                <li>Acesso à plataforma EAD para 20 colaboradores (NR-18 e NR-35)</li>
+                <li>Conteúdo programático completo conforme exigências das normas vigentes</li>
+                <li>Avaliação de aprendizagem ao término de cada módulo</li>
+                <li>Certificado individual com validade legal para cada participante</li>
+                <li>Lista de conclusão e controle de participantes</li>
+            </ul>
+
+            <h3 class="subsection-title" style="margin-top: 15px;"><i class="fas fa-check-circle"></i> Resumo do que está incluso</h3>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; font-size: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Avaliação psicossocial para 20 colaboradores</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Relatório diagnóstico com recomendações</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Treinamento NR-18 EAD (20 certificados)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Treinamento NR-35 EAD (20 certificados)</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Certificados individuais com validade legal</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px; padding: 6px 0;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Orientação para registro no eSocial</span>
+                </div>
+            </div>
+
+            <div class="green-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-shield-alt"></i> Garantia Técnica</h4>
+                <p>Todos os serviços são realizados por profissionais habilitados, em total conformidade com as NRs vigentes e com a legislação trabalhista e previdenciária. Suporte técnico incluso por 30 dias após a entrega.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="highlight-box" style="margin-bottom: 15px;">
+                <p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrangência:</strong> Serviços dimensionados para <strong>20 colaboradores</strong></p>
+            </div>
+
+            <!-- Tabela de Treinamentos -->
+            <h3 class="subsection-title"><i class="fas fa-chalkboard-teacher"></i> Orçamento — Treinamentos</h3>
+
+            <table class="investment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 35%;">Treinamento</th>
+                        <th style="width: 18%; text-align: center;">Qtd. Alunos</th>
+                        <th style="width: 25%; text-align: center;">Preço Unitário (EAD)</th>
+                        <th style="width: 22%;">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-hard-hat"></i> NR-18 — Construção Civil</td>
+                        <td style="text-align: center;">20</td>
+                        <td style="text-align: center;">R$ 85,00</td>
+                        <td>R$ 1.700,00</td>
+                    </tr>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-mountain"></i> NR-35 — Trabalho em Altura</td>
+                        <td style="text-align: center;">20</td>
+                        <td style="text-align: center;">R$ 110,00</td>
+                        <td>R$ 2.200,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3"><i class="fas fa-calculator"></i> SUBTOTAL TREINAMENTOS</td>
+                        <td>R$ 3.900,00</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Tabela de Programas -->
+            <h3 class="subsection-title" style="margin-top: 18px;"><i class="fas fa-brain"></i> Orçamento — Psicossocial</h3>
+
+            <table class="investment-table">
+                <thead>
+                    <tr>
+                        <th style="width: 55%;">Serviço</th>
+                        <th style="width: 20%; text-align: center;">Qtd. Pessoas</th>
+                        <th style="width: 25%;">Valor Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="training-name"><i class="fas fa-brain" style="color: var(--purple-color);"></i> Avaliação de Riscos Psicossociais</td>
+                        <td style="text-align: center;">20</td>
+                        <td>R$ 1.300,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><i class="fas fa-calculator"></i> SUBTOTAL PSICOSSOCIAL</td>
+                        <td>R$ 1.300,00</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <!-- Total Global -->
+            <div style="background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); border-radius: 10px; padding: 18px 20px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="color: rgba(255,255,255,0.8); font-size: 11px; margin: 0 0 4px 0; font-family: var(--font-primary); text-transform: uppercase; letter-spacing: 1px;">
+                        <i class="fas fa-star" style="color: var(--accent-color);"></i> Investimento Global
+                    </p>
+                    <p style="color: rgba(255,255,255,0.7); font-size: 10px; margin: 0;">NR-18 (20 alunos) + NR-35 (20 alunos) + Psicossocial (20 pessoas)</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="color: var(--accent-color); font-size: 26px; font-weight: 800; font-family: var(--font-primary); margin: 0; line-height: 1;">R$ 5.200,00</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: CONDIÇÕES COMERCIAIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Condições Comerciais</span>
+            </h2>
+
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta comercial é válida por 15 (quinze) dias corridos a partir da data de emissão.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-credit-card"></i></div>
+                    <div class="condition-text">
+                        <strong>Condições de Pagamento</strong>
+                        <span>50% no fechamento/aprovação da proposta e 50% na entrega dos documentos e certificados. Outras condições podem ser negociadas.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Execução</strong>
+                        <span>Os serviços serão concluídos em até 15 (quinze) dias úteis após a aprovação da proposta e disponibilização da relação de colaboradores.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-user-shield"></i></div>
+                    <div class="condition-text">
+                        <strong>Confidencialidade</strong>
+                        <span>Garantimos total sigilo sobre as informações da empresa e de seus colaboradores. Os dados coletados são utilizados exclusivamente para a elaboração dos serviços contratados, em conformidade com a LGPD.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-headset"></i></div>
+                    <div class="condition-text">
+                        <strong>Suporte Pós-Entrega</strong>
+                        <span>Suporte técnico por 30 dias após a entrega para esclarecimento de dúvidas sobre os documentos, certificados e orientações para o eSocial.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-file-invoice"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>Transferência bancária (TED/PIX). Dados bancários fornecidos após aprovação formal da proposta.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-certificate"></i> Garantia Técnica</h4>
+                <p>Todos os serviços são realizados por profissionais habilitados (Engenheiro de Segurança do Trabalho), em conformidade com as NRs vigentes. Os certificados emitidos possuem plena validade legal perante o Ministério do Trabalho e Emprego.</p>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top: 15px;"><i class="fas fa-handshake"></i> O que a empresa precisa fornecer</h3>
+            <ul class="feature-list">
+                <li>Lista nominal dos 20 colaboradores (nome completo, CPF e função)</li>
+                <li>E-mails ou contatos para acesso à plataforma EAD</li>
+                <li>Disponibilidade dos colaboradores para realização dos treinamentos</li>
+                <li>Cooperação para aplicação da avaliação psicossocial</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 8: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">8</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <p style="text-align: center; margin-bottom: 20px; color: var(--gray-color); font-size: 11px;">
+                Esta proposta foi elaborada pela equipe técnica da EngMarq Solution, sob responsabilidade do profissional abaixo identificado.
+            </p>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <p class="responsible-name">Wagner Zuza</p>
+                <p class="responsible-role">Diretor Financeiro</p>
+                <p class="responsible-company">EngMarq Solution Ltda.</p>
+
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-instagram"></i>
+                        <span>@engmarq_solution</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 20px; border-left-color: var(--accent-color); background: linear-gradient(135deg, #fff5eb 0%, #fed7aa 100%);">
+                <h4><i class="fas fa-headset"></i> Atendimento Personalizado</h4>
+                <p>Estamos à disposição para esclarecer dúvidas, agendar reuniões e apresentar mais detalhes sobre nossa metodologia. Entre em contato conosco!</p>
+            </div>
+
+            <div class="info-box">
+                <h4><i class="fas fa-clock"></i> Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 08h às 18h | Sábado: 08h às 12h</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 9: TERMO DE ACEITE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite e Assinaturas</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 20px;">
+                <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços especificados.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--success-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--success-color);"></i> CONTRATADA — EngMarq Solution
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">Wagner Zuza — Diretor Financeiro</p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color); text-align: center;">
+                    <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                    <p style="margin: 0; font-size: 11px; color: var(--gray-color);">Assinatura da Contratada</p>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--accent-color);"></i> CONTRATANTE — Imperthane Engenharia Serviços LTDA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Imperthane Engenharia Serviços LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">29.569.582/0001-03</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Nome</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Arthur</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Cargo / Função</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Responsável</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color); text-align: center;">
+                    <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                    <p style="margin: 0; font-size: 11px; color: var(--gray-color);">Assinatura do Contratante</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 10: FALE CONOSCO ====== -->
+        <div class="page" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div class="page-header" style="position: absolute; top: 15mm; left: 15mm; right: 15mm;">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Treinamentos + Psicossocial | Imperthane</span>
+            </div>
+
+            <div style="text-align: center; max-width: 450px;">
+                <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--accent-color) 0%, #c05621 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;">
+                    <i class="fas fa-handshake" style="font-size: 36px; color: white;"></i>
+                </div>
+                
+                <h2 style="font-family: var(--font-primary); font-size: 28px; color: var(--primary-color); margin-bottom: 15px;">Fale Conosco</h2>
+                
+                <p style="font-size: 13px; color: var(--gray-color); margin-bottom: 30px; text-align: center;">
+                    Estamos à disposição para dar continuidade ao processo de contratação e esclarecer eventuais dúvidas sobre os serviços propostos.
+                </p>
+
+                <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; background: var(--light-color); border-radius: 8px;">
+                        <i class="fab fa-whatsapp" style="font-size: 20px; color: var(--success-color);"></i>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--dark-color);">+55 84 99928-5888</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; background: var(--light-color); border-radius: 8px;">
+                        <i class="fas fa-envelope" style="font-size: 20px; color: var(--accent-color);"></i>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--dark-color);">engmarqsolution@gmail.com</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; background: var(--light-color); border-radius: 8px;">
+                        <i class="fab fa-instagram" style="font-size: 20px; color: #e1306c;"></i>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--dark-color);">@engmarq_solution</span>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 20px; background: var(--light-color); border-radius: 8px;">
+                        <i class="fas fa-globe" style="font-size: 20px; color: var(--primary-color);"></i>
+                        <span style="font-size: 14px; font-weight: 600; color: var(--dark-color);">www.engmarqsolution.com</span>
+                    </div>
+                </div>
+
+                <div style="padding-top: 25px; border-top: 2px solid var(--light-color);">
+                    <img src="../assets/logoengmarq.png" alt="EngMarq Solution" style="height: 45px; margin-bottom: 15px;">
+                    <p style="font-size: 11px; color: var(--gray-color); margin: 0; text-align: center;">
+                        <strong style="color: var(--primary-color);">EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        <em style="color: var(--accent-color);">"SST que traz segurança jurídica"</em><br>
+                        Natal — Rio Grande do Norte
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+    </script>
+</body>
+</html>
