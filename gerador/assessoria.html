@@ -1551,7 +1551,7 @@ function updateCounters() {
 }
 
 // ===== HELPERS =====
-function val(id) { return document.getElementById(id).value.trim(); }
+function val(id) { return document.getElementById(id)?.value?.trim() || ''; }
 function isActive(id) { return document.querySelector(`.toggle-btn[data-id="${id}"]`)?.classList.contains('active'); }
 
 function formatarData(dateStr) {
@@ -2009,7 +2009,7 @@ function pageFooter(num) {
 
 function esc(str) {
     const div = document.createElement('div');
-    div.textContent = str;
+    div.textContent = str ?? '';
     return div.innerHTML;
 }
 </script>
