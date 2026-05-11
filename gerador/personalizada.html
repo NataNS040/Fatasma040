@@ -665,7 +665,18 @@
                             </select>
                         </div>
                     </div>
-                    <h3 style="margin-top: 15px;"><i class="fas fa-user-tie"></i> Responsável</h3>
+                    <h3 style="margin-top: 15px;"><i class="fas fa-building"></i> Responsável EngMarq (Proponente)</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome</label>
+                            <input type="text" id="engmarq_resp_nome" placeholder="Nome" value="Thiago Marques">
+                        </div>
+                        <div class="form-group">
+                            <label>Cargo</label>
+                            <input type="text" id="engmarq_resp_cargo" placeholder="Cargo" value="Diretor">
+                        </div>
+                    </div>
+                    <h3 style="margin-top: 15px;"><i class="fas fa-user-tie"></i> Responsável do Cliente (Aprovador)</h3>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Nome</label>
@@ -1156,6 +1167,8 @@ function gerarProposta() {
         uf: val('uf') || 'RN',
         responsavel: val('responsavel_nome') || 'A definir',
         cargo: val('responsavel_cargo') || 'A definir',
+        engmarqResp: val('engmarq_resp_nome') || 'Thiago Marques',
+        engmarqCargo: val('engmarq_resp_cargo') || 'Diretor',
         capaTitulo: val('capa_titulo') || 'Proposta Comercial',
         capaSubtitulo: val('capa_subtitulo') || '',
         capaApoio: val('capa_apoio') || 'Soluções especializadas em Segurança e Saúde do Trabalho conforme as Normas Regulamentadoras vigentes.',
@@ -1503,8 +1516,8 @@ function gerarProposta() {
         <div style="flex:1; display:flex; flex-direction:column;">
             <div class="responsible-card">
                 <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
-                <p class="responsible-name">${esc(d.responsavel) || 'Thiago Marques'}</p>
-                <p class="responsible-role">${esc(d.cargo) || 'Diretor'}</p>
+                <p class="responsible-name">${esc(d.engmarqResp)}</p>
+                <p class="responsible-role">${esc(d.engmarqCargo)}</p>
                 <p class="responsible-company">EngMarq Solution</p>
                 <div class="responsible-contacts">
                     <div class="responsible-contact-item"><i class="fab fa-whatsapp"></i><span>+55 84 99928-5888</span></div>
@@ -1537,7 +1550,7 @@ function gerarProposta() {
                 <div><p style="margin:0 0 3px 0; font-size:11px; color:var(--gray); text-transform:uppercase; text-align:center;">Razão Social</p><p style="margin:0; font-size:13px; font-weight:600; text-align:center;">Engmarq Solution LTDA</p></div>
                 <div><p style="margin:0 0 3px 0; font-size:11px; color:var(--gray); text-transform:uppercase; text-align:center;">CNPJ</p><p style="margin:0; font-size:13px; font-weight:600; text-align:center;">60.545.359/0001-76</p></div>
             </div>
-            <p style="margin:0; font-size:13px; font-weight:600; text-align:center;">${esc(d.responsavel) || 'Thiago Marques'} - ${esc(d.cargo) || 'Diretor'}</p>
+            <p style="margin:0; font-size:13px; font-weight:600; text-align:center;">${esc(d.engmarqResp)} - ${esc(d.engmarqCargo)}</p>
             <div style="margin-top:25px; padding-top:15px; border-top:1px dashed var(--gray); text-align:center;">
                 <div style="display:inline-block; border-bottom:2px solid var(--dark); width:300px; height:40px; margin-bottom:8px;"></div>
                 <p style="margin:0; font-size:11px; color:var(--gray); text-align:center;">Assinatura do Proponente</p>
