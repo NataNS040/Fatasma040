@@ -826,10 +826,11 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 16px;
             font-weight: 700;
-            margin-bottom: 3px;
+            margin: 0 0 3px 0;
+            text-align: center;
         }
-        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; }
-        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin: 0 0 3px 0; text-align: center; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin: 0 0 12px 0; text-align: center; }
         .responsible-contacts {
             display: flex;
             flex-direction: column;
@@ -837,10 +838,11 @@
             align-items: center;
         }
         .responsible-contact-item {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
             font-size: 10px;
+            width: auto;
         }
         .responsible-contact-item i { color: var(--secondary); width: 15px; }
 
@@ -1937,11 +1939,11 @@ function gerarProposta() {
             <h3 style="font-family: 'Montserrat', sans-serif; color: var(--primary); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple); padding-bottom: 10px;">
                 <i class="fas fa-building" style="color: var(--purple);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
             </h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; text-align: center;">
                 <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">Razão Social</p><p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p></div>
                 <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">CNPJ</p><p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p></div>
             </div>
-            <p style="margin: 0; font-size: 13px; font-weight: 600;">Thiago Marques - Diretor</p>
+            <p style="margin: 0; font-size: 13px; font-weight: 600; text-align: center;">Thiago Marques - Diretor</p>
             <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray);">
                 <div style="text-align: center;"><div style="border-bottom: 1px solid var(--dark); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div><p style="margin: 0; font-size: 11px; color: var(--gray);">Assinatura do Proponente</p></div>
             </div>
@@ -1950,11 +1952,11 @@ function gerarProposta() {
             <h3 style="font-family: 'Montserrat', sans-serif; color: var(--primary); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary); padding-bottom: 10px;">
                 <i class="fas fa-user-tie" style="color: var(--secondary);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
             </h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px; text-align: center;">
                 <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">Razão Social</p><p style="margin: 0; font-size: 13px; font-weight: 600;">${esc(d.razao)}</p></div>
                 <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">CNPJ</p><p style="margin: 0; font-size: 13px; font-weight: 600;">${esc(d.cnpj)}</p></div>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px; text-align: center;">
                 <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">Nome Completo</p><p style="margin: 0; font-size: 13px; font-weight: 600;">${esc(d.responsavel)}</p></div>
                 <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase;">Cargo / Função</p><p style="margin: 0; font-size: 13px; font-weight: 600;">${esc(d.cargo)}</p></div>
             </div>
