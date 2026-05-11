@@ -1908,8 +1908,8 @@ function gerarProposta() {
         <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-start; margin-top: 15px;">
             <div class="responsible-card">
                 <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
-                <p class="responsible-name">Thiago Marques</p>
-                <p class="responsible-role">Diretor</p>
+                <p class="responsible-name">${esc(d.responsavel) || 'Thiago Marques'}</p>
+                <p class="responsible-role">${esc(d.cargo) || 'Diretor'}</p>
                 <p class="responsible-company">EngMarq Solution</p>
                 <div class="responsible-contacts">
                     <div class="responsible-contact-item"><i class="fab fa-whatsapp"></i><span>+55 84 99928-5888</span></div>
@@ -1947,7 +1947,7 @@ function gerarProposta() {
                 <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase; text-align: center;">Razão Social</p><p style="margin: 0; font-size: 13px; font-weight: 600; text-align: center;">Engmarq Solution LTDA</p></div>
                 <div><p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray); text-transform: uppercase; text-align: center;">CNPJ</p><p style="margin: 0; font-size: 13px; font-weight: 600; text-align: center;">60.545.359/0001-76</p></div>
             </div>
-            <p style="margin: 0; font-size: 13px; font-weight: 600; text-align: center;">Thiago Marques - Diretor</p>
+            <p style="margin: 0; font-size: 13px; font-weight: 600; text-align: center;">${esc(d.responsavel) || 'Thiago Marques'} - ${esc(d.cargo) || 'Diretor'}</p>
             <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray); text-align: center;">
                 <div style="display: inline-block; border-bottom: 2px solid var(--dark); width: 300px; height: 40px; margin-bottom: 8px;"></div>
                 <p style="margin: 0; font-size: 11px; color: var(--gray); text-align: center;">Assinatura do Proponente</p>
