@@ -1538,8 +1538,9 @@ function gerarProposta() {
                 <div><p style="margin:0 0 3px 0; font-size:11px; color:var(--gray); text-transform:uppercase; text-align:center;">CNPJ</p><p style="margin:0; font-size:13px; font-weight:600; text-align:center;">60.545.359/0001-76</p></div>
             </div>
             <p style="margin:0; font-size:13px; font-weight:600; text-align:center;">Thiago Marques - Diretor</p>
-            <div style="margin-top:25px; padding-top:15px; border-top:1px dashed var(--gray);">
-                <div style="text-align:center;"><div style="border-bottom:1px solid var(--dark); margin:0 auto 5px; height:35px; max-width:450px;"></div><p style="margin:0; font-size:11px; color:var(--gray);">Assinatura do Proponente</p></div>
+            <div style="margin-top:25px; padding-top:15px; border-top:1px dashed var(--gray); text-align:center;">
+                <div style="display:inline-block; border-bottom:2px solid var(--dark); width:300px; height:40px; margin-bottom:8px;"></div>
+                <p style="margin:0; font-size:11px; color:var(--gray); text-align:center;">Assinatura do Proponente</p>
             </div>
         </div>
         <div style="background:var(--light); border-radius:12px; padding:20px;">
@@ -1554,8 +1555,9 @@ function gerarProposta() {
                 <div><p style="margin:0 0 3px 0; font-size:11px; color:var(--gray); text-transform:uppercase; text-align:center;">Nome Completo</p><p style="margin:0; font-size:13px; font-weight:600; text-align:center;">${esc(d.responsavel)}</p></div>
                 <div><p style="margin:0 0 3px 0; font-size:11px; color:var(--gray); text-transform:uppercase; text-align:center;">Cargo / Função</p><p style="margin:0; font-size:13px; font-weight:600; text-align:center;">${esc(d.cargo)}</p></div>
             </div>
-            <div style="margin-top:25px; padding-top:15px; border-top:1px dashed var(--gray);">
-                <div style="text-align:center;"><div style="border-bottom:1px solid var(--dark); margin:0 auto 5px; height:35px; max-width:450px;"></div><p style="margin:0; font-size:11px; color:var(--gray);">Assinatura do Aprovador</p></div>
+            <div style="margin-top:25px; padding-top:15px; border-top:1px dashed var(--gray); text-align:center;">
+                <div style="display:inline-block; border-bottom:2px solid var(--dark); width:300px; height:40px; margin-bottom:8px;"></div>
+                <p style="margin:0; font-size:11px; color:var(--gray); text-align:center;">Assinatura do Aprovador</p>
             </div>
         </div>
         ${pageFooter(pageNum++)}
