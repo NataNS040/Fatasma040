@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel | EngMarq Solution</title>
+    <link rel="icon" type="image/png" href="./assets/logoengmarq.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-dark: #0f2744;
+            --secondary: #f5a623;
+            --accent: #10b981;
+            --purple: #805ad5;
+            --pink: #ec4899;
+            --blue: #3b82f6;
+            --teal: #14b8a6;
+            --rose: #f43f5e;
+            --indigo: #6366f1;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --light: #f8fafc;
+            --white: #ffffff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1a365d 50%, #0f2744 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at top left, rgba(245,166,35,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(16,185,129,0.12) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* HEADER */
+        .header {
+            background: rgba(15,39,68,0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            z-index: 5;
+        }
+        .header-logo { display: flex; align-items: center; gap: 15px; }
+        .header-logo img { height: 42px; filter: brightness(0) invert(1); }
+        .header-logo h1 { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 700; }
+        .header-logo span { font-size: 11px; opacity: 0.8; display: block; }
+        .header-user {
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 16px; border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        .header-user .avatar {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg, var(--secondary), #d69518);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 13px;
+        }
+        .header-user-info {
+            display: flex; flex-direction: column; line-height: 1.2;
+        }
+        .header-user-info strong { font-size: 13px; font-weight: 600; }
+        .header-user-info small { font-size: 10px; opacity: 0.7; }
+        .btn-logout {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #fca5a5;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.2s;
+            font-size: 13px;
+        }
+        .btn-logout:hover { background: rgba(239,68,68,0.3); color: white; }
+
+        /* MAIN */
+        .painel-main {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 60px 30px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        .welcome-greeting {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .welcome h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+        .welcome h2 span { color: var(--secondary); }
+        .welcome p {
+            font-size: 15px;
+            opacity: 0.85;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* SECTION TITLE */
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i { color: var(--secondary); }
+        .section-title .count {
+            margin-left: auto;
+            background: rgba(245,166,35,0.2);
+            color: var(--secondary);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        /* GRID DE CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 22px;
+            margin-bottom: 50px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px 22px;
+            text-decoration: none;
+            color: var(--dark);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+        }
+        .tool-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+        }
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: var(--card-color, var(--primary));
+        }
+        .tool-card::after {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 140px; height: 140px;
+            background: var(--card-color, var(--primary));
+            opacity: 0.06;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        .tool-card:hover::after {
+            transform: scale(1.4);
+            opacity: 0.12;
+        }
+
+        .tool-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            background: var(--card-color, var(--primary));
+            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 1;
+        }
+        .tool-card.featured .tool-icon {
+            background: linear-gradient(135deg, var(--card-color, var(--primary)), var(--card-color-2, var(--primary-dark)));
+        }
+
+        .tool-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .tool-card p {
+            font-size: 13px;
+            color: var(--gray);
+            line-height: 1.5;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+        .tool-card .tool-action {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--card-color, var(--primary));
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1;
+        }
+        .tool-card .tool-action i {
+            transition: transform 0.3s;
+        }
+        .tool-card:hover .tool-action i {
+            transform: translateX(5px);
+        }
+
+        .tool-card .tool-badge {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: var(--card-color, var(--primary));
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+        .tool-card .tool-badge.novo {
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            box-shadow: 0 4px 12px rgba(245,158,11,0.4);
+        }
+        .tool-card .tool-badge.destaque {
+            background: linear-gradient(135deg, var(--accent), #059669);
+            box-shadow: 0 4px 12px rgba(16,185,129,0.4);
+        }
+
+        /* CORES POR CATEGORIA */
+        .card-prop      { --card-color: #1a365d; --card-color-2: #0f2744; }
+        .card-assess    { --card-color: #10b981; --card-color-2: #059669; }
+        .card-universal { --card-color: #f59e0b; --card-color-2: #d97706; }
+        .card-contrato  { --card-color: #805ad5; --card-color-2: #6b46c1; }
+        .card-recibo    { --card-color: #14b8a6; --card-color-2: #0d9488; }
+        .card-orcamento { --card-color: #3b82f6; --card-color-2: #2563eb; }
+        .card-calc      { --card-color: #ec4899; --card-color-2: #db2777; }
+        .card-tool      { --card-color: #6366f1; --card-color-2: #4f46e5; }
+
+        /* FOOTER */
+        .painel-footer {
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* RESPONSIVO */
+        @media (max-width: 768px) {
+            .header { padding: 15px 18px; }
+            .header-logo h1 { font-size: 15px; }
+            .header-user .header-user-info { display: none; }
+            .painel-main { padding: 35px 18px 50px; }
+            .welcome h2 { font-size: 26px; }
+            .welcome p { font-size: 13px; }
+            .cards-grid { grid-template-columns: 1fr; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-logo">
+            <img src="./assets/logoengmarq.png" alt="EngMarq">
+            <div>
+                <h1>EngMarq Solution</h1>
+                <span>Plataforma de Geração e Ferramentas</span>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="avatar" id="userAvatar">U</div>
+            <div class="header-user-info">
+                <strong id="userNameText">Usuário</strong>
+                <small id="userRoleText">Equipe EngMarq</small>
+            </div>
+            <button class="btn-logout" onclick="fazerLogout()" title="Sair">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="painel-main">
+        <div class="welcome">
+            <div class="welcome-greeting"><i class="fas fa-bolt"></i>&nbsp; Bem-vindo de volta</div>
+            <h2>Olá, <span id="welcomeName">EngMarq</span>!</h2>
+            <p>Escolha abaixo qual gerador ou ferramenta você quer utilizar agora.</p>
+        </div>
+
+        <!-- GERADORES DE PROPOSTA -->
+        <h3 class="section-title">
+            <i class="fas fa-file-invoice"></i> Geradores de Proposta
+            <span class="count">3 ferramentas</span>
+        </h3>
+        <div class="cards-grid">
+
+            <a href="./personalizada.html" class="tool-card featured card-universal">
+                <span class="tool-badge novo">Novo</span>
+                <div class="tool-icon"><i class="fas fa-magic"></i></div>
+                <h3>Gerador Universal</h3>
+                <p>Monte qualquer proposta clicando nos itens disponíveis. Suporta assessoria ou serviço pontual, com capa personalizável.</p>
+                <div class="tool-action">Abrir gerador <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="./assessoria.html" class="tool-card card-assess">
+                <span class="tool-badge destaque">Recomendado</span>
+                <div class="tool-icon"><i class="fas fa-hard-hat"></i></div>
+                <h3>Gerador de Assessoria SST</h3>
+                <p>Proposta especializada de assessoria mensal em SST com equipe técnica, programas e treinamentos.</p>
+                <div class="tool-action">Abrir gerador <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="./index.html" class="tool-card card-prop">
+                <div class="tool-icon"><i class="fas fa-file-alt"></i></div>
+                <h3>Modelos Prontos</h3>
+                <p>Propostas pré-formatadas: Brigada IT-17, Plataforma NR-18, Psicossocial NR-01, Kit SST, Treinamentos e mais.</p>
+                <div class="tool-action">Abrir modelos <i class="fas fa-arrow-right"></i></div>
+            </a>
+        </div>
+
+        <!-- DOCUMENTOS COMERCIAIS -->
+        <h3 class="section-title">
+            <i class="fas fa-folder-open"></i> Documentos Comerciais
+            <span class="count">3 ferramentas</span>
+        </h3>
+        <div class="cards-grid">
+
+            <a href="./contrato.html" class="tool-card card-contrato">
+                <div class="tool-icon"><i class="fas fa-file-contract"></i></div>
+                <h3>Gerador de Contratos</h3>
+                <p>Gere contratos formais a partir das propostas aprovadas, com cláusulas padronizadas.</p>
+                <div class="tool-action">Abrir contratos <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="./recibo.html" class="tool-card card-recibo">
+                <div class="tool-icon"><i class="fas fa-receipt"></i></div>
+                <h3>Gerador de Recibos</h3>
+                <p>Emita recibos timbrados rapidamente com os dados do cliente e do serviço prestado.</p>
+                <div class="tool-action">Abrir recibos <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="./orcamento.html" class="tool-card card-orcamento">
+                <div class="tool-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                <h3>Gerador de Orçamentos</h3>
+                <p>Crie orçamentos detalhados com itens, valores, prazos e condições de pagamento.</p>
+                <div class="tool-action">Abrir orçamentos <i class="fas fa-arrow-right"></i></div>
+            </a>
+        </div>
+
+        <!-- FERRAMENTAS DE APOIO -->
+        <h3 class="section-title">
+            <i class="fas fa-tools"></i> Ferramentas de Apoio
+            <span class="count">1 ferramenta</span>
+        </h3>
+        <div class="cards-grid">
+
+            <a href="./calculadora.html" class="tool-card card-calc">
+                <div class="tool-icon"><i class="fas fa-calculator"></i></div>
+                <h3>Calculadora de Precificação</h3>
+                <p>Calcule rapidamente o valor de venda baseado em custo, margem, impostos e despesas.</p>
+                <div class="tool-action">Abrir calculadora <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer class="painel-footer">
+        <p>© EngMarq Solution &middot; engmarqsolution@gmail.com &middot; +55 84 99928-5888</p>
+    </footer>
+
+    <script>
+        // ===== VERIFICAÇÃO DE SESSÃO =====
+        const SESSION_KEY = 'engmarq_session';
+
+        function obterSessao() {
+            const token = localStorage.getItem(SESSION_KEY);
+            if (!token) return null;
+            try {
+                const payload = JSON.parse(atob(token));
+                if (payload?.exp && payload.exp < Date.now()) {
+                    localStorage.removeItem(SESSION_KEY);
+                    return null;
+                }
+                return payload?.usuario || payload || null;
+            } catch (e) {
+                localStorage.removeItem(SESSION_KEY);
+                return null;
+            }
+        }
+
+        const usuario = obterSessao();
+        if (!usuario) {
+            window.location.href = './login.html';
+        } else {
+            const nome = usuario.nome || usuario.email || 'Usuário';
+            const primeiroNome = nome.split(' ')[0];
+            const inicial = (nome[0] || 'U').toUpperCase();
+            document.getElementById('userNameText').textContent = nome;
+            document.getElementById('welcomeName').textContent = primeiroNome;
+            document.getElementById('userAvatar').textContent = inicial;
+            if (usuario.cargo || usuario.role) {
+                document.getElementById('userRoleText').textContent = usuario.cargo || usuario.role;
+            }
+        }
+
+        function fazerLogout() {
+            localStorage.removeItem(SESSION_KEY);
+            window.location.href = './login.html';
+        }
+    </script>
+</body>
+</html>

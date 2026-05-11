@@ -18,7 +18,7 @@ async function inicializarLogin(): Promise<void> {
     await sincronizarSessaoSupabase();
     const sessao = obterSessao();
     if (sessao.logado) {
-        window.location.href = './index.html';
+        window.location.href = './painel.html';
     }
 }
 
@@ -84,8 +84,8 @@ loginForm?.addEventListener('submit', async (e) => {
             localStorage.removeItem('engmarq_email_salvo');
         }
 
-        // Redirecionar para o gerador
-        window.location.href = './index.html';
+        // Redirecionar para o painel
+        window.location.href = './painel.html';
     } else {
         btnLogin.classList.remove('loading');
         btnLogin.disabled = false;
