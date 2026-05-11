@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0050 - Assessoria em SST | IEADERN | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body { font-family: var(--font-secondary); color: var(--dark-color); line-height: 1.6; background: #e2e8f0; }
+
+        .pdf-controls {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: var(--white-color); padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15); max-width: 280px;
+        }
+        .btn-generate {
+            background: var(--primary-color); color: var(--white-color); padding: 15px 30px;
+            border: none; border-radius: 8px; font-family: var(--font-primary); font-weight: 600;
+            font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            transition: all 0.3s ease; width: 100%; justify-content: center;
+        }
+        .btn-generate:hover { background: var(--secondary-color); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245,166,35,0.4); }
+        .pdf-instructions { margin-top: 15px; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .pdf-instructions h4 { font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); margin-bottom: 8px; }
+        .pdf-instructions ol { font-size: 12px; line-height: 1.6; color: var(--dark-color); padding-left: 18px; margin: 0; }
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        #pdf-content { width: 210mm; margin: 0 auto; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
+
+        .page {
+            width: 210mm; height: 297mm; min-height: 297mm; max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm; page-break-after: always; position: relative;
+            background: var(--white-color); box-sizing: border-box; overflow: hidden;
+        }
+        .page:last-child { page-break-after: auto; }
+
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 10px; margin-bottom: 12px; border-bottom: 2px solid var(--light-color);
+        }
+        .page-header-logo { height: 35px; }
+        .page-header-title { font-family: var(--font-primary); font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; }
+
+        .page-footer {
+            position: absolute; bottom: 15mm; left: 18mm; right: 18mm;
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 8px; border-top: 1px solid var(--light-color);
+            font-size: 10px; color: var(--gray-color); background: var(--white-color); z-index: 10;
+        }
+        .page-number { font-weight: 600; color: var(--primary-color); }
+
+        /* CAPA */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 25mm 20mm; position: relative; overflow: hidden;
+        }
+        .page-cover::before {
+            content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%;
+            background: radial-gradient(ellipse, rgba(56,161,105,0.1) 0%, transparent 60%); pointer-events: none;
+        }
+        .cover-logo { width: 180px; margin-bottom: 30px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
+        .cover-badge {
+            background: rgba(56,161,105,0.9); color: var(--white-color); padding: 10px 25px;
+            border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 20px; display: inline-flex; align-items: center;
+            justify-content: center; gap: 8px; position: relative; z-index: 1;
+        }
+        .cover-icon {
+            width: 60px; height: 60px; background: rgba(245,166,35,0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            position: relative; z-index: 1;
+        }
+        .cover-icon i { font-size: 28px; color: var(--secondary-color); }
+        .cover-title { font-family: var(--font-primary); font-size: 26px; font-weight: 800; margin-bottom: 15px; line-height: 1.25; position: relative; z-index: 1; }
+        .cover-title span { color: var(--secondary-color); display: block; }
+        .cover-subtitle { font-size: 14px; font-weight: 300; margin-bottom: 30px; opacity: 0.95; max-width: 450px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; line-height: 1.5; }
+        .cover-client {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 18px 35px;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); position: relative;
+            z-index: 1; margin: 0 auto; max-width: 460px;
+        }
+        .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 6px; text-align: center; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 17px; font-weight: 700; color: var(--secondary-color); text-align: center; }
+        .cover-date { margin-top: 25px; font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
+        .cover-footer {
+            position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center;
+            font-size: 10px; opacity: 0.7; padding: 0 18mm;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .cover-footer p { margin: 0; text-align: center; width: 100%; }
+
+        /* Títulos */
+        .section-number {
+            display: inline-block; background: var(--secondary-color); color: var(--white-color);
+            width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 12px; margin-right: 10px;
+        }
+        .section-title {
+            font-family: var(--font-primary); font-size: 18px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px; display: flex; align-items: center;
+            padding-bottom: 10px; border-bottom: 3px solid var(--secondary-color);
+        }
+        .section-title-text { flex: 1; }
+        .subsection-title {
+            font-family: var(--font-primary); font-size: 13px; font-weight: 700;
+            color: var(--primary-color); margin: 12px 0 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .subsection-title i { color: var(--secondary-color); }
+        p { margin-bottom: 8px; text-align: justify; font-size: 11px; line-height: 1.5; }
+
+        /* Boxes */
+        .highlight-box { background: linear-gradient(135deg,#fef5e7 0%,#fdebd0 100%); border-left: 4px solid var(--secondary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .highlight-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; }
+        .highlight-box strong { color: var(--primary-color); }
+        .info-box { background: linear-gradient(135deg,#ebf8ff 0%,#bee3f8 100%); border-left: 4px solid var(--primary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .info-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .info-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .green-box { background: linear-gradient(135deg,#f0fff4 0%,#c6f6d5 100%); border-left: 4px solid var(--success-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .green-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .purple-box { background: linear-gradient(135deg,#faf5ff 0%,#e9d8fd 100%); border-left: 4px solid var(--purple-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .purple-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--purple-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .purple-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .feature-list { list-style: none; margin: 10px 0; }
+        .feature-list li { padding: 5px 0; padding-left: 22px; position: relative; font-size: 11px; border-bottom: 1px solid var(--light-color); }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--success-color); font-size: 10px; }
+
+        .factors-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin: 12px 0; }
+        .factor-card { background: var(--light-color); padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--success-color); }
+        .factor-card h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+        .factor-card h4 i { color: var(--success-color); font-size: 11px; }
+        .factor-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
+
+        .conditions-list { margin: 12px 0; }
+        .condition-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--light-color); }
+        .condition-item:last-child { border-bottom: none; }
+        .condition-icon { width: 26px; height: 26px; background: var(--light-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 11px; flex-shrink: 0; }
+        .condition-text strong { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); display: block; margin-bottom: 2px; }
+        .condition-text span { font-size: 10px; color: var(--gray-color); line-height: 1.3; }
+
+        .company-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+        .company-info-item { padding: 8px 10px; background: var(--light-color); border-radius: 6px; border-left: 3px solid var(--secondary-color); }
+        .company-info-item label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-color); font-weight: 600; display: block; margin-bottom: 3px; }
+        .company-info-item span { font-size: 11px; color: var(--dark-color); font-weight: 500; }
+
+        .responsible-card { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); padding: 18px; border-radius: 10px; color: var(--white-color); text-align: center; margin: 15px 0; }
+        .responsible-avatar { width: 60px; height: 60px; background: rgba(245,166,35,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; color: var(--secondary-color); border: 2px solid var(--secondary-color); }
+        .responsible-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; margin-bottom: 3px; text-align: center; }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; text-align: center; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; text-align: center; }
+        .responsible-contacts { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+        .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
+        .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
+
+        .page-contact { display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        .contact-content { margin: auto 0; }
+
+        .estab-card { background: var(--light-color); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; border-left: 3px solid var(--primary-color); }
+        .estab-card .estab-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .estab-card .estab-title { font-family: var(--font-primary); font-size: 11px; font-weight: 700; color: var(--primary-color); }
+        .estab-card .estab-badge { background: var(--primary-color); color: white; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; }
+        .estab-card .estab-detail { font-size: 10px; color: var(--gray-color); line-height: 1.5; }
+        .estab-card .estab-cnpj { font-size: 10px; font-weight: 600; color: var(--dark-color); }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                width: 210mm !important; height: 297mm !important; min-height: 297mm !important;
+                max-height: 297mm !important; margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important; box-sizing: border-box !important;
+                overflow: hidden !important; position: relative !important;
+            }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover { padding: 20mm 18mm 18mm 18mm !important; }
+            .page-footer { position: absolute !important; bottom: 8mm !important; left: 15mm !important; right: 15mm !important; font-size: 9px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i> Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;">TM0050</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-shield-alt"></i>
+                Assessoria Técnica Especializada
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-hard-hat"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Assessoria em Segurança do Trabalho</span>
+            </h1>
+            <p class="cover-subtitle">
+                Gestão técnica completa de SST com programas obrigatórios, medições ambientais, treinamentos de capacitação e avaliação de riscos psicossociais
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">IEADERN</p>
+                <p style="font-size:10px;opacity:0.75;margin-top:5px;text-align:center;">Igreja Evangélica Assembleia de Deus no Rio Grande do Norte · Natal - RN</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;08 de Maio de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <div class="company-info-grid" style="margin-top:6px;">
+                <div class="company-info-item">
+                    <label>Nome Empresarial</label>
+                    <span>Igreja Evangélica Assembleia de Deus no Rio Grande do Norte</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nome Fantasia / Sigla</label>
+                    <span>IEADERN</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ (Matriz)</label>
+                    <span>08.332.785/0001-01</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Atividade Principal (CNAE)</label>
+                    <span>94.91-0-00 — Atividades de organizações religiosas ou filosóficas</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Natureza Jurídica</label>
+                    <span>322-0 — Organização Religiosa</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Data de Abertura</label>
+                    <span>30/04/1971</span>
+                </div>
+                <div class="company-info-item" style="grid-column:1/-1;">
+                    <label>Endereço da Matriz</label>
+                    <span>R. Manoel Miranda, 251 — Bairro Alecrim — CEP: 59.037-250 — Natal - RN</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top:16px;"><i class="fas fa-building"></i> Estabelecimentos Contemplados nesta Proposta</h3>
+
+            <div class="estab-card">
+                <div class="estab-header">
+                    <span class="estab-title"><i class="fas fa-map-marker-alt" style="color:var(--secondary-color);margin-right:5px;"></i>Matriz — Natal / RN</span>
+                    <span class="estab-badge">Matriz</span>
+                </div>
+                <div class="estab-cnpj">CNPJ: 08.332.785/0001-01</div>
+                <div class="estab-detail">R. Manoel Miranda, 251 — Alecrim — CEP: 59.037-250 — Natal/RN</div>
+            </div>
+
+            <div class="estab-card" style="border-left-color:var(--success-color);">
+                <div class="estab-header">
+                    <span class="estab-title"><i class="fas fa-map-marker-alt" style="color:var(--success-color);margin-right:5px;"></i>Filial — Mossoró / RN</span>
+                    <span class="estab-badge" style="background:var(--success-color);">Filial</span>
+                </div>
+                <div class="estab-cnpj">CNPJ: 08.332.785/0030-46</div>
+                <div class="estab-detail">Av. Dix Sept Rosado, S/N — Térreo — Centro — CEP: 59.600-050 — Mossoró/RN</div>
+            </div>
+
+            <div class="estab-card" style="border-left-color:var(--purple-color);">
+                <div class="estab-header">
+                    <span class="estab-title"><i class="fas fa-map-marker-alt" style="color:var(--purple-color);margin-right:5px;"></i>Filial — Parnamirim / RN</span>
+                    <span class="estab-badge" style="background:var(--purple-color);">Filial</span>
+                </div>
+                <div class="estab-cnpj">CNPJ: 08.332.785/0018-50</div>
+                <div class="estab-detail">R. Otávio Gomes de Castro, 45 — Térreo — Centro — CEP: 59.140-140 — Parnamirim/RN</div>
+            </div>
+
+            <h2 class="section-title" style="margin-top:18px;">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Sobre a Proposta</span>
+            </h2>
+
+            <p>Esta proposta tem por objeto a prestação de serviços de <strong>Assessoria em Segurança e Saúde do Trabalho (SST)</strong> para a <strong>Igreja Evangélica Assembleia de Deus no Rio Grande do Norte — IEADERN</strong>, contemplando os três estabelecimentos acima identificados, com gestão técnica dos programas obrigatórios, medições ambientais, treinamentos de capacitação, avaliação de riscos psicossociais e acompanhamento contínuo da conformidade legal.</p>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-calendar-alt"></i> Vigência:</strong> 12 meses contados da assinatura do contrato, com renovação automática salvo aviso prévio de 30 dias.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: EQUIPE TÉCNICA + VISITA TÉCNICA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Fornecimento de Equipe Técnica</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:12px;">
+                <h4><i class="fas fa-users-cog"></i> Assessoria Personalizada em SST</h4>
+                <p>Serviço especializado de acompanhamento e gestão dos processos de segurança do trabalho, com profissional habilitado dedicado ao atendimento da IEADERN nos três estabelecimentos contemplados.</p>
+            </div>
+
+            <div class="factor-card" style="margin:10px 0;">
+                <h4><i class="fas fa-id-badge"></i> 1 Técnico de Segurança do Trabalho</h4>
+                <p>Profissional habilitado e registrado conforme exigências do MTE, com visitas técnicas periódicas aos estabelecimentos e suporte online sob demanda.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-tasks"></i> Atividades do Profissional de Segurança do Trabalho</h3>
+            <ul class="feature-list">
+                <li>Acompanhamento de OS — Ordem de Serviço conforme NR-01, descrevendo deveres e obrigações perante à segurança do trabalho</li>
+                <li>Inspeção técnica de Equipamentos de Proteção Individual (NR-06) e Equipamentos de Proteção Coletiva</li>
+                <li>Investigação e análise de acidente de trabalho (NR-04), emissão da CAT e evento S-2210 do eSocial</li>
+                <li>Fiscalização das condições de trabalho nos postos de trabalho de todos os estabelecimentos</li>
+                <li>Gestão dos programas de SST (PGR, PCMSO e LTCAT), acompanhamento de cronogramas, funções e EPIs/EPCs</li>
+                <li>Suporte técnico online via WhatsApp e e-mail, sob demanda, para orientações e dúvidas de SST</li>
+                <li>Elaboração e atualização de documentos de segurança sempre que necessário</li>
+                <li>Envio e gestão dos eventos de SST no eSocial conforme obrigações legais</li>
+            </ul>
+
+            <h3 class="subsection-title" style="margin-top:14px;"><i class="fas fa-map-marked-alt"></i> Visitas Técnicas aos Estabelecimentos</h3>
+
+            <div class="info-box" style="margin-bottom:8px;">
+                <h4><i class="fas fa-calendar-check"></i> Visita Técnica Mensal Inclusa</h4>
+                <p>Estão inclusas <strong>visitas técnicas periódicas</strong> aos estabelecimentos da IEADERN (Natal, Mossoró e Parnamirim), realizadas pelo Técnico de Segurança do Trabalho responsável, com o objetivo de inspecionar condições de trabalho, verificar a implementação das medidas de controle e manter a conformidade com as Normas Regulamentadoras.</p>
+            </div>
+
+            <ul class="feature-list">
+                <li>Inspeção das instalações físicas, equipamentos e postos de trabalho</li>
+                <li>Verificação do uso correto de EPIs e EPCs pelos trabalhadores</li>
+                <li>Atualização do inventário de riscos do PGR conforme identificação em campo</li>
+                <li>Registro fotográfico e emissão de relatório técnico pós-visita</li>
+                <li>Orientação direta às lideranças e equipes operacionais</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: PROGRAMAS / DOCUMENTOS SST ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Programas e Documentos de SST</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:12px;">
+                <h4><i class="fas fa-folder-open"></i> Documentação Técnica Inclusa</h4>
+                <p>Os programas e documentos abaixo fazem parte do escopo da assessoria, sendo elaborados, mantidos e atualizados pela equipe técnica da EngMarq Solution durante toda a vigência do contrato.</p>
+            </div>
+
+            <!-- PGR -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
+                <h4 style="margin:0 0 6px 0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
+                    <i class="fas fa-file-alt" style="color:var(--secondary-color);margin-right:6px;"></i>PGR — Programa de Gerenciamento de Riscos
+                </h4>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Documento que identifica e avalia os riscos ocupacionais presentes nas atividades da IEADERN, estabelecendo medidas de prevenção e controle conforme exigência da NR-01 (atualização 2024). Inclui inventário de riscos e plano de ação para os três estabelecimentos.</p>
+            </div>
+
+            <!-- PCMSO -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
+                <h4 style="margin:0 0 6px 0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
+                    <i class="fas fa-heartbeat" style="color:var(--secondary-color);margin-right:6px;"></i>PCMSO — Programa de Controle Médico de Saúde Ocupacional
+                </h4>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Planejamento e controle dos exames médicos ocupacionais obrigatórios (admissional, periódico, demissional, mudança de função e retorno ao trabalho), conforme NR-07, visando a saúde e integridade de todos os trabalhadores.</p>
+            </div>
+
+            <!-- LTCAT -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
+                <h4 style="margin:0 0 6px 0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
+                    <i class="fas fa-microscope" style="color:var(--secondary-color);margin-right:6px;"></i>LTCAT — Laudo Técnico das Condições Ambientais do Trabalho
+                </h4>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Laudo elaborado por engenheiro de segurança, avaliando a existência de agentes nocivos no ambiente de trabalho para fins de aposentadoria especial, conforme legislação previdenciária.</p>
+            </div>
+
+            <!-- LIP -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
+                <h4 style="margin:0 0 6px 0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
+                    <i class="fas fa-clipboard-check" style="color:var(--secondary-color);margin-right:6px;"></i>LIP — Laudo de Insalubridade e Periculosidade
+                </h4>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Laudo técnico que avalia e determina a existência de condições insalubres ou perigosas nos postos de trabalho, fundamentando o pagamento ou não do adicional correspondente, conforme NR-15 e NR-16.</p>
+            </div>
+
+            <!-- ART -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
+                <h4 style="margin:0 0 6px 0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
+                    <i class="fas fa-stamp" style="color:var(--secondary-color);margin-right:6px;"></i>ART — Anotação de Responsabilidade Técnica
+                </h4>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Registro da responsabilidade técnica do profissional habilitado junto ao CREA/RN, referente à elaboração e assinatura dos laudos e programas de SST, conferindo validade legal e técnica a toda a documentação emitida.</p>
+            </div>
+
+            <!-- eSocial SST -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
+                <h4 style="margin:0 0 6px 0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
+                    <i class="fas fa-cloud-upload-alt" style="color:var(--secondary-color);margin-right:6px;"></i>Envio de Eventos de SST no eSocial
+                </h4>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Gestão e transmissão dos eventos de SST no eSocial: S-2220 (Monitoramento da Saúde do Trabalhador) e S-2240 (Condições Ambientais do Trabalho — Agentes Nocivos), assegurando conformidade com as obrigações digitais para todos os estabelecimentos.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: MEDIÇÕES AMBIENTAIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Medições e Avaliações Ambientais</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:12px;">
+                <h4><i class="fas fa-ruler-combined"></i> Medições Ambientais Inclusas na Assessoria</h4>
+                <p>As medições quantitativas de agentes físicos descritas abaixo estão <strong>totalmente inclusas</strong> no escopo desta proposta, sem qualquer custo adicional. Serão realizadas por profissional habilitado utilizando equipamentos calibrados e certificados, com emissão de laudos técnicos individuais para cada ponto avaliado.</p>
+            </div>
+
+            <!-- Dosimetria de Ruído -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                    <h4 style="margin:0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:700;">
+                        <i class="fas fa-volume-up" style="color:var(--secondary-color);margin-right:6px;"></i>Dosimetria de Ruído — NR-15 / NHO-01
+                    </h4>
+                    <span style="background:var(--primary-color);color:white;font-family:var(--font-primary);font-weight:700;font-size:11px;padding:4px 12px;border-radius:20px;">17 dosimetrias inclusas</span>
+                </div>
+                <p style="margin:0 0 8px 0;font-size:10px;line-height:1.6;color:var(--gray-color);">Avaliação quantitativa da exposição dos trabalhadores ao agente físico ruído, por meio de dosímetro individual, conforme metodologia da NHO-01 (FUNDACENTRO) e limites de tolerância da NR-15. Abrange os postos de trabalho dos três estabelecimentos identificados como potencialmente expostos.</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;">
+                    <div style="background:var(--light-color);padding:6px 8px;border-radius:5px;text-align:center;">
+                        <div style="font-family:var(--font-primary);font-weight:700;font-size:14px;color:var(--primary-color);">17</div>
+                        <div style="font-size:9px;color:var(--gray-color);">Dosimetrias</div>
+                    </div>
+                    <div style="background:var(--light-color);padding:6px 8px;border-radius:5px;text-align:center;">
+                        <div style="font-family:var(--font-primary);font-weight:700;font-size:14px;color:var(--primary-color);">3</div>
+                        <div style="font-size:9px;color:var(--gray-color);">Estabelecimentos</div>
+                    </div>
+                    <div style="background:var(--light-color);padding:6px 8px;border-radius:5px;text-align:center;">
+                        <div style="font-family:var(--font-primary);font-weight:700;font-size:14px;color:var(--success-color);">Incluso</div>
+                        <div style="font-size:9px;color:var(--gray-color);">Sem custo adicional</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avaliação de Calor -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                    <h4 style="margin:0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:700;">
+                        <i class="fas fa-thermometer-three-quarters" style="color:var(--alert-color);margin-right:6px;"></i>Avaliação de Estresse Térmico (Calor) — NR-15 Anexo 3
+                    </h4>
+                    <span style="background:var(--alert-color);color:white;font-family:var(--font-primary);font-weight:700;font-size:11px;padding:4px 12px;border-radius:20px;">3 pontos inclusas</span>
+                </div>
+                <p style="margin:0 0 8px 0;font-size:10px;line-height:1.6;color:var(--gray-color);">Avaliação quantitativa do estresse térmico por meio do Índice de Bulbo Úmido e Termômetro de Globo (IBUTG), conforme NR-15 Anexo 3. Determina se os trabalhadores estão expostos ao calor acima dos limites de tolerância e orienta sobre pausas, EPIs e medidas de controle necessárias.</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;">
+                    <div style="background:var(--light-color);padding:6px 8px;border-radius:5px;text-align:center;">
+                        <div style="font-family:var(--font-primary);font-weight:700;font-size:14px;color:var(--primary-color);">3</div>
+                        <div style="font-size:9px;color:var(--gray-color);">Pontos de Calor</div>
+                    </div>
+                    <div style="background:var(--light-color);padding:6px 8px;border-radius:5px;text-align:center;">
+                        <div style="font-family:var(--font-primary);font-weight:700;font-size:14px;color:var(--primary-color);">IBUTG</div>
+                        <div style="font-size:9px;color:var(--gray-color);">Metodologia NR-15</div>
+                    </div>
+                    <div style="background:var(--light-color);padding:6px 8px;border-radius:5px;text-align:center;">
+                        <div style="font-family:var(--font-primary);font-weight:700;font-size:14px;color:var(--success-color);">Incluso</div>
+                        <div style="font-size:9px;color:var(--gray-color);">Sem custo adicional</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="green-box">
+                <h4><i class="fas fa-check-double"></i> Emissão de Laudos Técnicos</h4>
+                <p>Todas as medições resultarão na emissão de <strong>laudos técnicos individuais</strong>, assinados pelo profissional habilitado, com ART recolhida, integrando o PGR, LTCAT e LIP da IEADERN. Os laudos serão entregues em formato digital (PDF) e ficam disponíveis para fiscalização sempre que exigido.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: TREINAMENTOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Treinamentos de Capacitação Técnica</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:10px;">
+                <h4><i class="fas fa-graduation-cap"></i> Capacitação Técnica Inclusa</h4>
+                <p>Os treinamentos abaixo estão integrados ao serviço de assessoria e serão executados nas instalações da IEADERN ou local definido pelas partes, conforme cronograma acordado, para turmas de até <strong>10 alunos</strong> por capacitação.</p>
+            </div>
+
+            <!-- Grid de treinamentos 2 colunas -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;">
+
+                <!-- NR-01 -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;"><i class="fas fa-clipboard-list" style="color:var(--secondary-color);margin-right:5px;"></i>NR-01</h4>
+                        <span style="background:#f7fafc;color:var(--primary-color);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:600;">Sob demanda</span>
+                    </div>
+                    <p style="margin:0;font-size:9px;line-height:1.5;color:var(--gray-color);">Integração Admissional e Gerenciamento de Riscos — obrigatório para novos colaboradores conforme NR-01.</p>
+                </div>
+
+                <!-- NR-05 -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;"><i class="fas fa-users" style="color:var(--secondary-color);margin-right:5px;"></i>NR-05</h4>
+                        <span style="background:#f7fafc;color:var(--primary-color);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:600;">8h · 1x/ano</span>
+                    </div>
+                    <p style="margin:0;font-size:9px;line-height:1.5;color:var(--gray-color);">Formação de CIPA — Comissão Interna de Prevenção de Acidentes e Doenças do Trabalho.</p>
+                </div>
+
+                <!-- NR-06 -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;"><i class="fas fa-vest" style="color:var(--secondary-color);margin-right:5px;"></i>NR-06</h4>
+                        <span style="background:#f7fafc;color:var(--primary-color);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:600;">4h · 1x/ano</span>
+                    </div>
+                    <p style="margin:0;font-size:9px;line-height:1.5;color:var(--gray-color);">Equipamentos de Proteção Individual — seleção, uso correto, conservação e higienização dos EPIs.</p>
+                </div>
+
+                <!-- NR-10 -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;"><i class="fas fa-bolt" style="color:var(--secondary-color);margin-right:5px;"></i>NR-10</h4>
+                        <span style="background:#f7fafc;color:var(--primary-color);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:600;">40h · 1x/biênio</span>
+                    </div>
+                    <p style="margin:0;font-size:9px;line-height:1.5;color:var(--gray-color);">Segurança em Instalações e Serviços em Eletricidade — habilitação para trabalho com energia elétrica.</p>
+                </div>
+
+                <!-- NR-12 -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;"><i class="fas fa-cogs" style="color:var(--secondary-color);margin-right:5px;"></i>NR-12</h4>
+                        <span style="background:#f7fafc;color:var(--primary-color);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:600;">8h · 1x/ano</span>
+                    </div>
+                    <p style="margin:0;font-size:9px;line-height:1.5;color:var(--gray-color);">Segurança no Trabalho em Máquinas e Equipamentos — operação segura e prevenção de acidentes.</p>
+                </div>
+
+                <!-- NR-18 -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;"><i class="fas fa-hard-hat" style="color:var(--secondary-color);margin-right:5px;"></i>NR-18</h4>
+                        <span style="background:#f7fafc;color:var(--primary-color);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:600;">6h · 1x/ano</span>
+                    </div>
+                    <p style="margin:0;font-size:9px;line-height:1.5;color:var(--gray-color);">Segurança e Saúde no Trabalho na Indústria da Construção — obras e serviços de manutenção predial.</p>
+                </div>
+
+                <!-- NR-23 -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;"><i class="fas fa-fire-extinguisher" style="color:var(--secondary-color);margin-right:5px;"></i>NR-23</h4>
+                        <span style="background:#f7fafc;color:var(--primary-color);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:600;">4h · 1x/ano</span>
+                    </div>
+                    <p style="margin:0;font-size:9px;line-height:1.5;color:var(--gray-color);">Proteção Contra Incêndios e Brigada de Emergência — prevenção, combate a princípios de incêndio e evacuação.</p>
+                </div>
+
+                <!-- NR-35 -->
+                <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                        <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;"><i class="fas fa-arrow-up" style="color:var(--secondary-color);margin-right:5px;"></i>NR-35</h4>
+                        <span style="background:#f7fafc;color:var(--primary-color);padding:1px 7px;border-radius:4px;font-size:9px;font-weight:600;">8h · 1x/biênio</span>
+                    </div>
+                    <p style="margin:0;font-size:9px;line-height:1.5;color:var(--gray-color);">Trabalho em Altura — capacitação obrigatória para atividades realizadas acima de 2 metros do piso.</p>
+                </div>
+
+            </div>
+
+            <div class="highlight-box" style="margin-top:12px;">
+                <p style="font-size:10px;margin:0;"><strong><i class="fas fa-users"></i> Turmas:</strong> Cada treinamento contempla até <strong>10 alunos por turma</strong>. Turmas adicionais, reciclagens ou outras capacitações fora deste escopo podem ser contratadas separadamente. Todos os treinamentos serão ministrados mediante agendamento prévio e coordenação de agenda entre as partes.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: PSICOSSOCIAL + BENEFÍCIOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Avaliação de Riscos Psicossociais</span>
+            </h2>
+
+            <div class="purple-box" style="margin-bottom:12px;">
+                <h4><i class="fas fa-brain"></i> Avaliação Psicossocial Inclusa na Assessoria</h4>
+                <p>A avaliação de riscos psicossociais conforme NR-01 está <strong>inclusa</strong> nesta proposta para os trabalhadores da IEADERN nos três estabelecimentos. Abrange aplicação de questionário validado, análise dos dados coletados, identificação de fatores de risco e elaboração de relatório técnico com recomendações de intervenção, integrado ao PGR.</p>
+            </div>
+
+            <ul class="feature-list" style="margin-bottom:14px;">
+                <li>Aplicação de questionário de fatores psicossociais conforme exigência da NR-01 (atualização 2024)</li>
+                <li>Identificação de fatores de risco: sobrecarga de trabalho, relações interpessoais, autonomia, violência e assédio</li>
+                <li>Análise e consolidação dos dados por função/setor e por estabelecimento</li>
+                <li>Relatório técnico com diagnóstico e plano de ação recomendado</li>
+                <li>Integração dos resultados ao PGR da IEADERN</li>
+            </ul>
+
+            <h2 class="section-title">
+                <span class="section-number">8</span>
+                <span class="section-title-text">Benefícios da Assessoria</span>
+            </h2>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-gavel"></i> Conformidade Legal</h4>
+                    <p>Atendimento às NRs e legislação trabalhista vigente, evitando autuações, passivos trabalhistas e sanções ao CNPJ.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-shield-alt"></i> Prevenção de Acidentes</h4>
+                    <p>Identificação e controle proativo de riscos ocupacionais nas atividades de manutenção, construção e apoio da IEADERN.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-alt"></i> Documentação Completa</h4>
+                    <p>Manutenção de toda a documentação de SST organizada, atualizada e disponível para fiscalização do MTE e Previdência Social.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-headset"></i> Suporte Contínuo</h4>
+                    <p>Assessoria online sob demanda para resolução ágil de dúvidas e situações de SST em todos os estabelecimentos.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-users"></i> Equipe Capacitada</h4>
+                    <p>Treinamentos obrigatórios ministrados conforme legislação, reduzindo riscos de acidentes e passivos legais.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-brain"></i> Saúde Mental</h4>
+                    <p>Avaliação psicossocial integrada ao PGR conforme NR-01 atualizada, promovendo bem-estar e prevenção de assédio.</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 8: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">9</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="highlight-box" style="margin-bottom:15px;">
+                <p style="margin:0;"><strong><i class="fas fa-calendar-alt"></i> Contrato:</strong> 12 meses de Assessoria Técnica em Segurança do Trabalho — Igreja Evangélica Assembleia de Deus no Rio Grande do Norte (IEADERN) · 3 estabelecimentos</p>
+            </div>
+
+            <p>O valor abaixo corresponde ao investimento mensal para a prestação de todos os serviços de <strong>Assessoria em Segurança do Trabalho</strong> conforme descritos nesta proposta:</p>
+
+            <table style="width:100%;border-collapse:collapse;margin:15px 0;border:1px solid #cbd5e0;">
+                <thead>
+                    <tr style="background:#1a365d;color:white;">
+                        <th style="padding:12px 15px;text-align:left;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;border:1px solid #1a365d;">Descrição do Serviço</th>
+                        <th style="padding:12px 15px;text-align:center;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;border:1px solid #1a365d;white-space:nowrap;">Valor Mensal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:white;">
+                        <td style="padding:12px 15px;font-size:11px;color:#2d3748;border:1px solid #cbd5e0;">
+                            Assessoria completa em SST — IEADERN (3 estabelecimentos: Natal, Mossoró e Parnamirim)<br>
+                            <span style="font-size:9px;color:var(--gray-color);">Inclui: PGR · PCMSO · LTCAT · LIP · ART · visita técnica · eSocial SST · avaliação psicossocial · 17 dosimetrias de ruído · 3 pontos de calor · treinamentos NR-01, NR-05, NR-06, NR-10, NR-12, NR-18, NR-23 e NR-35 (turmas de até 10 alunos)</span>
+                        </td>
+                        <td style="padding:12px 15px;text-align:center;font-size:22px;color:#1a365d;font-weight:800;border:1px solid #cbd5e0;white-space:nowrap;">R$ 11.606,34</td>
+                    </tr>
+                    <tr style="background:#ebf8ff;">
+                        <td style="padding:12px 15px;font-size:12px;color:#1a365d;font-weight:700;border:1px solid #cbd5e0;">TOTAL DO CONTRATO (12 MESES)</td>
+                        <td style="padding:12px 15px;text-align:center;font-size:16px;color:#1a365d;font-weight:800;border:1px solid #cbd5e0;white-space:nowrap;">R$ 139.276,08</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px;font-size:10px;">
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>Técnico de Segurança do Trabalho dedicado</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>Visitas técnicas periódicas aos 3 estabelecimentos</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>Suporte online sob demanda (WhatsApp e e-mail)</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>Gestão de PGR, PCMSO, LTCAT e LIP</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>ART do profissional responsável</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>Envio de eventos de SST no eSocial (S-2220 e S-2240)</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>17 dosimetrias de ruído (NR-15 / NHO-01)</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>3 pontos de avaliação de calor (NR-15 / IBUTG)</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>Treinamentos: NR-01, NR-05, NR-06, NR-10, NR-12, NR-18, NR-23 e NR-35</span></div>
+                <div style="display:flex;align-items:flex-start;gap:8px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:10px;flex-shrink:0;"></i><span>Avaliação de riscos psicossociais — NR-01</span></div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-invoice-dollar"></i> Condições de Pagamento</h3>
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>Pagamento mensal via boleto bancário, PIX ou transferência até o dia 10 de cada mês.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-file-contract"></i></div>
+                    <div class="condition-text">
+                        <strong>Vigência do Contrato</strong>
+                        <span>12 meses, com renovação automática, mediante aviso prévio de 30 dias para cancelamento.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-percent"></i></div>
+                    <div class="condition-text">
+                        <strong>Reajuste Anual</strong>
+                        <span>Reajuste pelo INPC/IBGE ou índice que o substitua, aplicado no aniversário do contrato.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top:10px;">
+                <p style="margin:0;font-size:10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Esta proposta é válida por 15 (quinze) dias a partir da data de emissão. Serviços adicionais não contemplados podem ser negociados separadamente.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 9: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <div class="page page-contact">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">10</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <div class="contact-content" style="margin-top:15px;">
+                <div class="responsible-card">
+                    <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
+                    <p class="responsible-name">Thiago Marques</p>
+                    <p class="responsible-role">Diretor</p>
+                    <p class="responsible-company">EngMarq Solution</p>
+                    <div class="responsible-contacts">
+                        <div class="responsible-contact-item"><i class="fab fa-whatsapp"></i><span>+55 84 99928-5888</span></div>
+                        <div class="responsible-contact-item"><i class="fas fa-envelope"></i><span>engmarqsolution@gmail.com</span></div>
+                        <div class="responsible-contact-item"><i class="fas fa-map-marker-alt"></i><span>Natal - RN</span></div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top:15px;">
+                    <h4><i class="fas fa-building"></i> Sobre a EngMarq Solution</h4>
+                    <p>Somos uma empresa especializada em <strong>Engenharia de Segurança e Saúde do Trabalho</strong>, oferecendo soluções completas para adequação às Normas Regulamentadoras, gestão de riscos ocupacionais e promoção de ambientes de trabalho seguros e saudáveis.</p>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;">
+                    <div style="text-align:center;padding:12px;background:var(--light-color);border-radius:8px;">
+                        <i class="fas fa-award" style="font-size:22px;color:var(--secondary-color);margin-bottom:6px;"></i>
+                        <p style="font-size:10px;margin:0;font-weight:600;color:var(--primary-color);">Profissionais Qualificados</p>
+                    </div>
+                    <div style="text-align:center;padding:12px;background:var(--light-color);border-radius:8px;">
+                        <i class="fas fa-handshake" style="font-size:22px;color:var(--secondary-color);margin-bottom:6px;"></i>
+                        <p style="font-size:10px;margin:0;font-weight:600;color:var(--primary-color);">Compromisso com Resultados</p>
+                    </div>
+                    <div style="text-align:center;padding:12px;background:var(--light-color);border-radius:8px;">
+                        <i class="fas fa-shield-alt" style="font-size:22px;color:var(--secondary-color);margin-bottom:6px;"></i>
+                        <p style="font-size:10px;margin:0;font-weight:600;color:var(--primary-color);">Segurança em Primeiro Lugar</p>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px;padding-top:18px;border-top:2px solid var(--light-color);">
+                    <p style="font-size:10px;color:var(--gray-color);line-height:1.5;text-align:center;">
+                        <strong>EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        CNPJ: 60.545.359/0001-76 | Natal - RN<br>
+                        <em>Transformando ambientes de trabalho em espaços seguros e produtivos.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 10: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial — Assessoria em SST | IEADERN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite e Assinaturas</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:15px;">
+                <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços de Assessoria em Segurança do Trabalho para a <strong>Igreja Evangélica Assembleia de Deus no Rio Grande do Norte — IEADERN</strong>.</p>
+            </div>
+
+            <div style="background:var(--light-color);border-radius:12px;padding:20px;margin-bottom:15px;">
+                <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:16px;margin-bottom:15px;text-align:center;border-bottom:2px solid var(--purple-color);padding-bottom:10px;">
+                    <i class="fas fa-building" style="color:var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">Razão Social</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <p style="margin:0;font-size:13px;font-weight:600;">Thiago Marques — Diretor</p>
+                </div>
+                <div style="margin-top:25px;padding-top:15px;border-top:1px dashed var(--gray-color);">
+                    <div style="text-align:center;">
+                        <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 5px;height:35px;max-width:450px;"></div>
+                        <p style="margin:0;font-size:11px;color:var(--gray-color);text-align:center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:var(--light-color);border-radius:12px;padding:20px;">
+                <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:16px;margin-bottom:15px;text-align:center;border-bottom:2px solid var(--secondary-color);padding-bottom:10px;">
+                    <i class="fas fa-user-tie" style="color:var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:10px;">
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">Nome Empresarial</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">Igreja Evangélica Assembleia de Deus no Rio Grande do Norte</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">CNPJ (Matriz)</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">08.332.785/0001-01</p>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:10px;">
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">Nome Completo</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">___________________________________</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">Cargo / Função</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">___________________________________</p>
+                    </div>
+                </div>
+                <div style="margin-top:25px;padding-top:15px;border-top:1px dashed var(--gray-color);">
+                    <div style="text-align:center;">
+                        <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 5px;height:35px;max-width:450px;"></div>
+                        <p style="margin:0;font-size:11px;color:var(--gray-color);text-align:center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() { window.print(); }
+    </script>
+</body>
+</html>
