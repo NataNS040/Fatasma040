@@ -1064,72 +1064,85 @@ function toggleGrupo() {
 function adicionarEmpresa() {
     empresaCount++;
     const idx = empresaCount;
+    const uid = `emp-extra-${idx}`;
     const div = document.createElement('div');
     div.className = 'empresa-item-univ';
     div.dataset.index = idx;
     div.innerHTML = `
         <div class="empresa-item-header">
             <span class="empresa-numero-label"><i class="fas fa-building"></i> Empresa ${idx}</span>
-            <button type="button" class="btn-remover-empresa-univ" onclick="removerEmpresa(this)" title="Remover empresa"><i class="fas fa-times-circle"></i></button>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <label class="toggle-label" style="font-size:11px; gap:6px;" title="Preencher todos os campos">
+                    <input type="checkbox" class="emp-completo-toggle" onchange="toggleEmpresaCompleto(this, '${uid}')">
+                    <span class="toggle-switch" style="width:32px; height:18px;"></span>
+                    <span style="white-space:nowrap;">Dados completos</span>
+                </label>
+                <button type="button" class="btn-remover-empresa-univ" onclick="removerEmpresa(this)" title="Remover empresa"><i class="fas fa-times-circle"></i></button>
+            </div>
         </div>
         <div class="form-group">
             <label>Razão Social *</label>
             <input type="text" class="emp-razao" placeholder="Nome da empresa">
         </div>
         <div class="form-group">
-            <label>Nome Fantasia</label>
-            <input type="text" class="emp-fantasia" placeholder="Nome fantasia (usado na capa)">
+            <label>CNPJ</label>
+            <input type="text" class="emp-cnpj" placeholder="00.000.000/0000-00">
         </div>
-        <div class="form-row">
+        <div id="${uid}-extra" style="display:none;">
             <div class="form-group">
-                <label>CNPJ</label>
-                <input type="text" class="emp-cnpj" placeholder="00.000.000/0000-00">
+                <label>Nome Fantasia</label>
+                <input type="text" class="emp-fantasia" placeholder="Nome fantasia">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nº Colaboradores</label>
+                    <input type="number" class="emp-colaboradores" value="20" min="1">
+                </div>
             </div>
             <div class="form-group">
-                <label>Nº Colaboradores</label>
-                <input type="number" class="emp-colaboradores" value="20" min="1">
+                <label>Endereço</label>
+                <input type="text" class="emp-endereco" placeholder="Rua, número">
             </div>
-        </div>
-        <div class="form-group">
-            <label>Endereço</label>
-            <input type="text" class="emp-endereco" placeholder="Rua, número">
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Bairro</label>
-                <input type="text" class="emp-bairro">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Bairro</label>
+                    <input type="text" class="emp-bairro">
+                </div>
+                <div class="form-group">
+                    <label>CEP</label>
+                    <input type="text" class="emp-cep" placeholder="00000-000">
+                </div>
             </div>
-            <div class="form-group">
-                <label>CEP</label>
-                <input type="text" class="emp-cep" placeholder="00000-000">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Cidade</label>
-                <input type="text" class="emp-cidade" value="Natal">
-            </div>
-            <div class="form-group">
-                <label>UF</label>
-                <select class="emp-uf">
-                    <option value="RN" selected>RN</option>
-                    <option value="PB">PB</option>
-                    <option value="CE">CE</option>
-                    <option value="PE">PE</option>
-                    <option value="AL">AL</option>
-                    <option value="BA">BA</option>
-                    <option value="SE">SE</option>
-                    <option value="PI">PI</option>
-                    <option value="MA">MA</option>
-                    <option value="SP">SP</option>
-                    <option value="RJ">RJ</option>
-                    <option value="MG">MG</option>
-                </select>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Cidade</label>
+                    <input type="text" class="emp-cidade" value="Natal">
+                </div>
+                <div class="form-group">
+                    <label>UF</label>
+                    <select class="emp-uf">
+                        <option value="RN" selected>RN</option>
+                        <option value="PB">PB</option>
+                        <option value="CE">CE</option>
+                        <option value="PE">PE</option>
+                        <option value="AL">AL</option>
+                        <option value="BA">BA</option>
+                        <option value="SE">SE</option>
+                        <option value="PI">PI</option>
+                        <option value="MA">MA</option>
+                        <option value="SP">SP</option>
+                        <option value="RJ">RJ</option>
+                        <option value="MG">MG</option>
+                    </select>
+                </div>
             </div>
         </div>`;
     document.getElementById('empresas-container-univ').appendChild(div);
-    // Show remove button on all items when grupo is active
     document.querySelectorAll('.empresa-item-univ .btn-remover-empresa-univ').forEach(btn => btn.style.display = '');
+}
+
+function toggleEmpresaCompleto(checkbox, uid) {
+    document.getElementById(`${uid}-extra`).style.display = checkbox.checked ? '' : 'none';
 }
 
 function removerEmpresa(btn) {
@@ -1147,16 +1160,19 @@ function removerEmpresa(btn) {
 function getEmpresas() {
     const result = [];
     document.querySelectorAll('#empresas-container-univ .empresa-item-univ').forEach(item => {
+        const toggle = item.querySelector('.emp-completo-toggle');
+        const completo = toggle ? toggle.checked : true; // primeira empresa sempre completa
         result.push({
+            completo,
             razao:         item.querySelector('.emp-razao')?.value?.trim() || '',
-            fantasia:      item.querySelector('.emp-fantasia')?.value?.trim() || '',
+            fantasia:      completo ? (item.querySelector('.emp-fantasia')?.value?.trim() || '') : '',
             cnpj:          item.querySelector('.emp-cnpj')?.value?.trim() || '',
-            colaboradores: item.querySelector('.emp-colaboradores')?.value?.trim() || '20',
-            endereco:      item.querySelector('.emp-endereco')?.value?.trim() || '',
-            bairro:        item.querySelector('.emp-bairro')?.value?.trim() || '',
-            cep:           item.querySelector('.emp-cep')?.value?.trim() || '',
-            cidade:        item.querySelector('.emp-cidade')?.value?.trim() || 'Natal',
-            uf:            item.querySelector('.emp-uf')?.value?.trim() || 'RN',
+            colaboradores: completo ? (item.querySelector('.emp-colaboradores')?.value?.trim() || '') : '',
+            endereco:      completo ? (item.querySelector('.emp-endereco')?.value?.trim() || '') : '',
+            bairro:        completo ? (item.querySelector('.emp-bairro')?.value?.trim() || '') : '',
+            cep:           completo ? (item.querySelector('.emp-cep')?.value?.trim() || '') : '',
+            cidade:        completo ? (item.querySelector('.emp-cidade')?.value?.trim() || '') : '',
+            uf:            completo ? (item.querySelector('.emp-uf')?.value?.trim() || '') : '',
         });
     });
     return result;
@@ -1443,25 +1459,30 @@ function gerarProposta() {
             <p>Proposta elaborada para o grupo empresarial composto por ${empresas.length} empresa(s) contratante(s), conforme detalhado abaixo.</p>
         </div>` : ''}
         ${empresas.map((emp, i) => {
-            const razao         = emp.razao         || 'Empresa Cliente';
-            const fantasia      = emp.fantasia      || razao;
-            const cnpj          = emp.cnpj          || 'A definir';
-            const colaboradores = emp.colaboradores || '20';
-            const endereco      = emp.endereco      || 'A definir';
-            const bairro        = emp.bairro        || '';
-            const cep           = emp.cep           || '';
-            const cidade        = emp.cidade        || 'Natal';
-            const uf            = emp.uf            || 'RN';
+            const razao         = emp.razao    || 'Empresa Cliente';
+            const cnpj          = emp.cnpj     || 'A definir';
+            const fantasia      = emp.fantasia || razao;
+            const colaboradores = emp.colaboradores;
+            const endereco      = emp.endereco;
+            const bairro        = emp.bairro;
+            const cep           = emp.cep;
+            const cidade        = emp.cidade;
+            const uf            = emp.uf;
+            const titulo        = empresas.length > 1
+                ? `<h3 class="subsection-title"><i class="fas fa-building"></i> ${esc(razao)}</h3>`
+                : `<h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>`;
+            const gridCompleto = emp.completo ? `
+                <div class="company-info-item"><label>Nome Fantasia</label><span>${esc(fantasia)}</span></div>
+                <div class="company-info-item"><label>Quantidade de Colaboradores</label><span>${esc(colaboradores) || '—'} colaboradores</span></div>
+                <div class="company-info-item"><label>Endereço</label><span>${esc(endereco) || 'A definir'}${bairro ? ' - ' + esc(bairro) : ''}</span></div>
+                <div class="company-info-item"><label>CEP</label><span>${esc(cep) || 'A definir'}</span></div>
+                <div class="company-info-item"><label>Município / UF</label><span>${esc(cidade) || 'Natal'} - ${esc(uf) || 'RN'}</span></div>` : '';
             return `
-            ${empresas.length > 1 ? `<h3 class="subsection-title"><i class="fas fa-building"></i> ${esc(razao)}</h3>` : `<h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>`}
+            ${titulo}
             <div class="company-info-grid">
                 <div class="company-info-item"><label>Razão Social</label><span>${esc(razao)}</span></div>
                 <div class="company-info-item"><label>CNPJ</label><span>${esc(cnpj)}</span></div>
-                <div class="company-info-item"><label>Nome Fantasia</label><span>${esc(fantasia)}</span></div>
-                <div class="company-info-item"><label>Quantidade de Colaboradores</label><span>${esc(colaboradores)} colaboradores</span></div>
-                <div class="company-info-item"><label>Endereço</label><span>${esc(endereco)}${bairro ? ' - ' + esc(bairro) : ''}</span></div>
-                <div class="company-info-item"><label>CEP</label><span>${esc(cep) || 'A definir'}</span></div>
-                <div class="company-info-item"><label>Município / UF</label><span>${esc(cidade)} - ${esc(uf)}</span></div>
+                ${gridCompleto}
             </div>
             ${i < empresas.length - 1 ? '<hr style="border:none; border-top:1px solid #e2e8f0; margin:14px 0;">' : ''}`;
         }).join('')}
