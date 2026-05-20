@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treinamento Admissional SMS — EngMarq Solution</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{
+  --primary:#1a365d;--primary-dark:#0f2744;--primary-light:#2d4a6f;
+  --gold:#f5a623;--gold-dark:#e09112;
+  --accent:#10b981;--danger:#ef4444;--warning:#f59e0b;--info:#3b82f6;--purple:#8b5cf6;
+  --dark:#0f172a;--gray:#64748b;--light:#f1f5f9;--white:#fff;
+  --f1:'Montserrat',sans-serif;--f2:'Open Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:#000;font-family:var(--f2);color:#fff}
+
+.presentation{position:fixed;inset:0;background:linear-gradient(135deg,#0a0e1a 0%,#0f172a 50%,#1a1f2e 100%)}
+
+.slide{
+  position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .7s cubic-bezier(.4,0,.2,1), transform .9s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;overflow:hidden;transform:scale(.96);
+}
+.slide.active{opacity:1;visibility:visible;pointer-events:auto;transform:scale(1);z-index:5}
+.slide.prev{transform:translateX(-5%) scale(.96)}
+.slide.next{transform:translateX(5%) scale(.96)}
+
+.slide[data-transition="zoom"].active{animation:zoomIn .8s ease both}
+.slide[data-transition="slide-up"].active{animation:slideUp .8s ease both}
+.slide[data-transition="fade"].active{animation:fadeIn .9s ease both}
+@keyframes zoomIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.anim{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+.slide.active .anim{opacity:1;transform:translateY(0)}
+.slide.active .d1{transition-delay:.15s}
+.slide.active .d2{transition-delay:.30s}
+.slide.active .d3{transition-delay:.45s}
+.slide.active .d4{transition-delay:.60s}
+.slide.active .d5{transition-delay:.75s}
+.slide.active .d6{transition-delay:.90s}
+.slide.active .d7{transition-delay:1.05s}
+.slide.active .d8{transition-delay:1.20s}
+.anim-zoom{opacity:0;transform:scale(.9);transition:opacity .8s ease,transform .8s ease}
+.slide.active .anim-zoom{opacity:1;transform:scale(1)}
+.anim-left{opacity:0;transform:translateX(-30px);transition:opacity .8s ease,transform .8s ease}
+.slide.active .anim-left{opacity:1;transform:translateX(0)}
+.anim-right{opacity:0;transform:translateX(30px);transition:opacity .8s ease,transform .8s ease}
+.slide.active .anim-right{opacity:1;transform:translateX(0)}
+
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),#fbbf24);z-index:1000;transition:width .4s ease;box-shadow:0 0 10px rgba(245,166,35,.6)}
+
+.controls{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:1000;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(15,23,42,.85);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.1);padding:10px 18px;border-radius:50px;
+  box-shadow:0 10px 40px rgba(0,0,0,.4);opacity:.4;transition:opacity .3s;
+}
+.controls:hover{opacity:1}
+.ctrl-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .25s;
+}
+.ctrl-btn:hover{background:var(--gold);border-color:var(--gold);color:#000;transform:scale(1.1)}
+.ctrl-counter{font-family:var(--f1);font-weight:700;font-size:13px;color:#fff;letter-spacing:1px;padding:0 12px;min-width:80px;text-align:center}
+.ctrl-counter span{color:var(--gold)}
+
+.help-hint{
+  position:fixed;bottom:24px;right:24px;z-index:999;pointer-events:none;
+  background:rgba(15,23,42,.85);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);
+  padding:10px 16px;border-radius:12px;font-size:11px;color:rgba(255,255,255,.6);
+  display:flex;gap:14px;align-items:center;opacity:.5;transition:opacity .3s;
+}
+.help-hint:hover{opacity:1}
+.help-hint kbd{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);padding:2px 7px;border-radius:4px;font-family:var(--f1);font-weight:600;font-size:10px;color:#fff}
+
+.brand-corner{position:fixed;top:20px;left:24px;z-index:1000;display:flex;align-items:center;gap:10px;opacity:.7;transition:opacity .3s}
+.brand-corner:hover{opacity:1}
+.brand-corner img{height:28px;filter:brightness(0) invert(1)}
+.brand-corner .brand-pipe{width:1px;height:18px;background:rgba(255,255,255,.2)}
+.brand-corner .brand-text{font-family:var(--f1);font-weight:600;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:.5px}
+
+/* COVER */
+.cover{
+  background:radial-gradient(ellipse at top right,rgba(245,166,35,.15),transparent 50%),
+             radial-gradient(ellipse at bottom left,rgba(59,130,246,.1),transparent 50%),
+             linear-gradient(135deg,#0a0e1a 0%,#0f2744 50%,#1a365d 100%);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.cover::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:30px 30px;opacity:.5}
+.cover-orbs{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;animation:float 20s ease-in-out infinite}
+.orb.o1{width:500px;height:500px;background:var(--gold);top:-150px;right:-150px}
+.orb.o2{width:400px;height:400px;background:var(--primary-light);bottom:-100px;left:-100px;animation-delay:-7s}
+.orb.o3{width:300px;height:300px;background:var(--accent);top:50%;left:30%;animation-delay:-14s;opacity:.2}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(50px,-30px) scale(1.05)}66%{transform:translate(-30px,40px) scale(.95)}}
+
+.cover-content{position:relative;z-index:2;display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:center;width:100%;max-width:1400px;padding:0 60px}
+.cover-tag{display:inline-flex;align-items:center;gap:10px;background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.3);padding:8px 20px;border-radius:50px;font-family:var(--f1);font-weight:700;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:30px;width:fit-content}
+.cover-tag i{font-size:9px;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.cover-logo{height:80px;filter:brightness(0) invert(1);margin-bottom:36px}
+.cover-title{font-family:var(--f1);font-weight:900;font-size:clamp(48px,5.5vw,84px);line-height:1.05;color:#fff;margin-bottom:28px;letter-spacing:-2px}
+.cover-title .acc{background:linear-gradient(135deg,var(--gold) 0%,#fbbf24 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;display:inline-block}
+.cover-divider{width:80px;height:5px;background:var(--gold);border-radius:5px;margin-bottom:24px}
+.cover-subtitle{font-size:18px;line-height:1.6;color:rgba(255,255,255,.75);max-width:560px;margin-bottom:40px}
+.cover-meta{display:flex;gap:30px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:24px}
+.cover-meta-item{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.65);font-size:13px}
+.cover-meta-item i{color:var(--gold);font-size:14px}
+
+.instructor-side{background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px 28px;text-align:center}
+.instructor-avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#fbbf24);display:flex;align-items:center;justify-content:center;font-family:var(--f1);font-weight:900;font-size:42px;color:#0f172a;margin:0 auto 20px;box-shadow:0 20px 50px rgba(245,166,35,.4);position:relative}
+.instructor-avatar::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(245,166,35,.4);animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.instructor-name{font-family:var(--f1);font-weight:800;font-size:22px;color:#fff;margin-bottom:6px}
+.instructor-title{font-size:12px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:18px}
+.instructor-bio{font-size:12px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:20px}
+.instructor-divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);margin:18px 0}
+.instructor-contact{font-size:11px;color:rgba(255,255,255,.7);line-height:2}
+.instructor-contact i{color:var(--gold);width:14px;margin-right:8px}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0e1a 0%,var(--primary-dark) 60%,var(--primary) 100%);overflow:hidden}
+.divider::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 40%,rgba(245,166,35,.15),transparent 50%)}
+.divider::after{content:'';position:absolute;width:120%;height:120%;left:-10%;top:-10%;background-image:linear-gradient(45deg,transparent 49%,rgba(255,255,255,.02) 50%,transparent 51%);background-size:40px 40px}
+.divider-inner{position:relative;z-index:1;text-align:center;max-width:900px;padding:0 40px}
+.divider-num{font-family:var(--f1);font-weight:900;font-size:200px;line-height:1;background:linear-gradient(180deg,rgba(245,166,35,.3) 0%,rgba(245,166,35,.05) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-8px;margin-bottom:-30px}
+.divider-tag{display:inline-block;background:rgba(245,166,35,.15);color:var(--gold);padding:6px 18px;border-radius:30px;font-family:var(--f1);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:3px;margin-bottom:20px}
+.divider-title{font-family:var(--f1);font-weight:900;font-size:72px;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px}
+.divider-subtitle{font-size:20px;color:rgba(255,255,255,.65);line-height:1.6;max-width:700px;margin:0 auto}
+.divider-line{width:80px;height:5px;background:var(--gold);border-radius:5px;margin:30px auto 0}
+
+/* CONTENT */
+.content-slide{background:linear-gradient(135deg,#fafbfc 0%,#f1f5f9 100%);color:var(--dark);padding:60px 80px;display:flex;flex-direction:column}
+.content-slide::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--primary) 0%,var(--gold) 100%)}
+.slide-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:30px}
+.slide-tag{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;padding:6px 16px;border-radius:30px;font-family:var(--f1);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;width:fit-content}
+.slide-title{font-family:var(--f1);font-weight:800;font-size:48px;color:var(--primary);line-height:1.1;letter-spacing:-1px;margin-bottom:10px}
+.slide-subtitle{font-size:18px;color:var(--gray);line-height:1.5;max-width:900px}
+.slide-num-large{font-family:var(--f1);font-weight:900;font-size:80px;line-height:1;color:rgba(26,54,93,.06);letter-spacing:-4px}
+.slide-body{flex:1;min-height:0;display:flex;flex-direction:column}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+
+.card{background:#fff;border-radius:18px;padding:24px;box-shadow:0 4px 20px rgba(0,0,0,.04),0 1px 3px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.04);transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.08)}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c,var(--primary))}
+.card.b-gold{--c:var(--gold)}.card.b-green{--c:var(--accent)}.card.b-red{--c:var(--danger)}.card.b-blue{--c:var(--info)}.card.b-purple{--c:var(--purple)}.card.b-warning{--c:var(--warning)}.card.b-brown{--c:#92400e}
+.card-icon{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;background:rgba(26,54,93,.08);color:var(--primary)}
+.card.b-gold .card-icon{background:rgba(245,166,35,.12);color:var(--gold)}
+.card.b-green .card-icon{background:rgba(16,185,129,.12);color:var(--accent)}
+.card.b-red .card-icon{background:rgba(239,68,68,.12);color:var(--danger)}
+.card.b-blue .card-icon{background:rgba(59,130,246,.12);color:var(--info)}
+.card.b-purple .card-icon{background:rgba(139,92,246,.12);color:var(--purple)}
+.card.b-warning .card-icon{background:rgba(245,158,11,.12);color:var(--warning)}
+.card h4{font-family:var(--f1);font-weight:800;font-size:17px;color:var(--dark);margin-bottom:8px}
+.card p{font-size:13px;color:var(--gray);line-height:1.6}
+
+.info-box{background:linear-gradient(135deg,rgba(26,54,93,.04),rgba(26,54,93,.08));border-left:5px solid var(--primary);border-radius:0 16px 16px 0;padding:22px 26px}
+.info-box.gold{background:linear-gradient(135deg,rgba(245,166,35,.06),rgba(245,166,35,.12));border-left-color:var(--gold)}
+.info-box.green{background:linear-gradient(135deg,rgba(16,185,129,.06),rgba(16,185,129,.12));border-left-color:var(--accent)}
+.info-box.red{background:linear-gradient(135deg,rgba(239,68,68,.06),rgba(239,68,68,.12));border-left-color:var(--danger)}
+.info-box h4{font-family:var(--f1);font-weight:800;font-size:18px;color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.info-box.gold h4{color:var(--gold-dark)}.info-box.green h4{color:#047857}.info-box.red h4{color:#b91c1c}
+.info-box p{font-size:14px;color:var(--dark);line-height:1.65}
+.info-box p+p{margin-top:8px}
+
+.checks{list-style:none;display:flex;flex-direction:column;gap:10px}
+.checks li{display:flex;gap:14px;align-items:flex-start;background:#fff;padding:12px 18px;border-radius:12px;border:1px solid rgba(0,0,0,.04);font-size:14px;color:var(--dark);line-height:1.5;transition:transform .25s,box-shadow .25s}
+.checks li:hover{transform:translateX(4px);box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.checks li i{color:var(--accent);font-size:14px;margin-top:3px;flex-shrink:0;background:rgba(16,185,129,.12);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.checks.warning li i{color:var(--gold);background:rgba(245,166,35,.12)}
+
+.timeline{position:relative;padding-left:50px;flex:1;display:flex;flex-direction:column;gap:16px;justify-content:center}
+.timeline::before{content:'';position:absolute;left:18px;top:20px;bottom:20px;width:3px;background:linear-gradient(180deg,var(--primary),var(--gold));border-radius:3px}
+.tl-item{position:relative;background:#fff;padding:16px 22px;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.04);display:flex;gap:18px;align-items:flex-start}
+.tl-item::before{content:'';position:absolute;left:-39px;top:20px;width:18px;height:18px;border-radius:50%;background:var(--gold);border:4px solid #fff;box-shadow:0 0 0 2px var(--gold)}
+.tl-year{font-family:var(--f1);font-weight:900;font-size:22px;color:var(--primary);min-width:140px;flex-shrink:0;letter-spacing:-1px}
+.tl-text{font-size:14px;color:var(--dark);line-height:1.6}
+.tl-text strong{color:var(--primary)}
+
+.bird-pyramid{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px}
+.bird-row{color:#fff;padding:14px 24px;border-radius:8px;text-align:center;font-family:var(--f1);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;gap:14px;box-shadow:0 6px 18px rgba(0,0,0,.15);transform:scale(0)}
+.slide.active .bird-row{animation:popIn .6s cubic-bezier(.4,0,.2,1) both}
+.bird-row .num{font-size:30px;font-weight:900}
+.slide.active .bird-row.r1{animation-delay:.2s;background:linear-gradient(135deg,#dc2626,#b91c1c);width:25%}
+.slide.active .bird-row.r2{animation-delay:.4s;background:linear-gradient(135deg,#f97316,#ea580c);width:45%}
+.slide.active .bird-row.r3{animation-delay:.6s;background:linear-gradient(135deg,#f59e0b,#d97706);width:65%}
+.slide.active .bird-row.r4{animation-delay:.8s;background:linear-gradient(135deg,#10b981,#059669);width:85%}
+.slide.active .bird-row.r5{animation-delay:1.0s;background:linear-gradient(135deg,#3b82f6,#2563eb);width:100%}
+.bird-row.r1{background:linear-gradient(135deg,#dc2626,#b91c1c);width:25%}
+.bird-row.r2{background:linear-gradient(135deg,#f97316,#ea580c);width:45%}
+.bird-row.r3{background:linear-gradient(135deg,#f59e0b,#d97706);width:65%}
+.bird-row.r4{background:linear-gradient(135deg,#10b981,#059669);width:85%}
+.bird-row.r5{background:linear-gradient(135deg,#3b82f6,#2563eb);width:100%}
+@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+
+.risks-board{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;flex:1}
+.risk-card{border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.06);display:flex;flex-direction:column;transition:transform .3s}
+.risk-card:hover{transform:translateY(-6px) scale(1.02)}
+.risk-head{color:#fff;padding:20px 16px;text-align:center;font-family:var(--f1);font-weight:800;font-size:13px;position:relative}
+.risk-head .rh-num{font-size:30px;line-height:1;margin-bottom:4px}
+.risk-head small{font-size:10px;display:block;opacity:.9;margin-top:4px;letter-spacing:1px}
+.risk-head.green{background:linear-gradient(135deg,#16a34a,#15803d)}
+.risk-head.red{background:linear-gradient(135deg,#dc2626,#b91c1c)}
+.risk-head.brown{background:linear-gradient(135deg,#92400e,#78350f)}
+.risk-head.yellow{background:linear-gradient(135deg,#d97706,#b45309)}
+.risk-head.blue{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+.risk-icon-big{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 10px}
+.risk-body{padding:18px 16px;font-size:12px;color:var(--dark);line-height:1.6;flex:1}
+.risk-body ul{list-style:none}
+.risk-body li{padding:5px 0;border-bottom:1px dashed rgba(0,0,0,.06);display:flex;align-items:flex-start;gap:8px}
+.risk-body li:last-child{border-bottom:none}
+.risk-body li::before{content:'•';font-weight:bold;flex-shrink:0}
+.risk-body.green li::before{color:#16a34a}
+.risk-body.red li::before{color:#dc2626}
+.risk-body.brown li::before{color:#92400e}
+.risk-body.yellow li::before{color:#d97706}
+.risk-body.blue li::before{color:#2563eb}
+
+.epi-board{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;flex:1}
+.epi-card{background:#fff;border-radius:20px;padding:22px;box-shadow:0 6px 20px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.04);text-align:center;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:all .3s}
+.epi-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.1)}
+.epi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--c1,var(--primary)),var(--c2,var(--gold)))}
+.epi-icon{width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,var(--c1,var(--primary)),var(--c2,var(--gold)));display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;margin:0 auto 14px;box-shadow:0 8px 20px rgba(26,54,93,.2)}
+.epi-card h4{font-family:var(--f1);font-weight:800;font-size:15px;color:var(--dark);margin-bottom:8px}
+.epi-card ul{list-style:none;text-align:left;margin-top:6px;flex:1}
+.epi-card ul li{font-size:12px;color:var(--gray);padding:3px 0;line-height:1.5}
+.epi-card ul li::before{content:'•';color:var(--c1);margin-right:8px;font-weight:bold}
+
+.hero-split{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;flex:1;align-items:center}
+.hero-img{border-radius:24px;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,.18);position:relative;height:100%;min-height:380px}
+.hero-img img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease}
+.slide.active .hero-img img{transform:scale(1.08)}
+.hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 50%,rgba(15,23,42,.4))}
+
+.quote-bg{background:radial-gradient(ellipse at top,rgba(245,166,35,.1),transparent 50%),linear-gradient(135deg,#0f172a,#1e293b);display:flex;align-items:center;justify-content:center;position:relative}
+.quote-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:30px 30px;opacity:.4}
+.quote-content{text-align:center;max-width:900px;padding:0 60px;position:relative;z-index:1}
+.quote-mark-big{font-family:Georgia,serif;font-size:200px;line-height:.5;color:var(--gold);opacity:.4;margin-bottom:20px}
+.quote-text{font-family:var(--f1);font-weight:600;font-size:42px;color:#fff;line-height:1.4;margin-bottom:30px;letter-spacing:-1px}
+.quote-text em{color:var(--gold);font-style:normal;font-weight:800}
+.quote-author{font-size:16px;color:rgba(255,255,255,.6);font-weight:600}
+.quote-author strong{color:#fff;font-family:var(--f1)}
+
+.vs-board{display:grid;grid-template-columns:1fr auto 1fr;gap:30px;flex:1;align-items:center}
+.vs-side{background:#fff;border-radius:24px;padding:32px;box-shadow:0 12px 30px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04);display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;overflow:hidden;height:100%}
+.vs-side::before{content:'';position:absolute;inset:0;background:var(--bg);opacity:.05}
+.vs-side.left{--bg:radial-gradient(circle at top right,var(--danger),transparent 50%)}
+.vs-side.right{--bg:radial-gradient(circle at top left,var(--gold),transparent 50%)}
+.vs-icon-mega{width:90px;height:90px;border-radius:24px;background:linear-gradient(135deg,var(--c1),var(--c2));display:flex;align-items:center;justify-content:center;font-size:38px;color:#fff;margin-bottom:18px;box-shadow:0 12px 30px rgba(0,0,0,.15);position:relative;z-index:1}
+.vs-side.left .vs-icon-mega{--c1:#dc2626;--c2:#b91c1c}
+.vs-side.right .vs-icon-mega{--c1:#d97706;--c2:#b45309}
+.vs-side h3{font-family:var(--f1);font-weight:800;font-size:26px;color:var(--dark);margin-bottom:10px;position:relative;z-index:1}
+.vs-side > p{font-size:14px;color:var(--gray);line-height:1.6;margin-bottom:18px;position:relative;z-index:1}
+.vs-side ul{list-style:none;width:100%;position:relative;z-index:1;text-align:left}
+.vs-side ul li{padding:8px 0;font-size:13px;color:var(--dark);display:flex;align-items:flex-start;gap:10px;line-height:1.5;border-bottom:1px dashed rgba(0,0,0,.06)}
+.vs-side ul li:last-child{border-bottom:none}
+.vs-side ul li i{color:var(--c1);margin-top:3px;font-size:12px;flex-shrink:0}
+.vs-divider{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;font-family:var(--f1);font-weight:900;font-size:24px;color:#fff;box-shadow:0 12px 30px rgba(26,54,93,.3)}
+
+.thanks-bg{background:radial-gradient(ellipse at top right,rgba(245,166,35,.2),transparent 50%),radial-gradient(ellipse at bottom left,rgba(16,185,129,.15),transparent 50%),linear-gradient(135deg,#0a0e1a,#0f2744);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.thanks-content{text-align:center;max-width:900px;padding:0 40px;position:relative;z-index:1}
+.thanks-icon{width:140px;height:140px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#059669);display:flex;align-items:center;justify-content:center;font-size:60px;color:#fff;margin:0 auto 30px;box-shadow:0 20px 60px rgba(16,185,129,.4);animation:bounce 2s ease infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.thanks-title{font-family:var(--f1);font-weight:900;font-size:80px;color:#fff;margin-bottom:18px;letter-spacing:-2px}
+.thanks-title .acc{background:linear-gradient(135deg,var(--gold),#fbbf24);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.thanks-sub{font-size:18px;color:rgba(255,255,255,.7);margin-bottom:36px;line-height:1.6}
+.thanks-contacts{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:22px 30px;backdrop-filter:blur(20px)}
+.thanks-c{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.85);font-size:14px}
+.thanks-c i{width:36px;height:36px;border-radius:50%;background:rgba(245,166,35,.15);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:14px}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:30px;flex:1}
+.law-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(26,54,93,.08);color:var(--primary);padding:5px 12px;border-radius:20px;font-family:var(--f1);font-weight:700;font-size:11px;margin-top:10px}
+.law-pill i{color:var(--gold)}
+
+.process{display:flex;align-items:center;gap:14px;flex:1;justify-content:center}
+.proc-step{flex:1;background:#fff;border-radius:18px;padding:26px 22px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.04);position:relative}
+.proc-step::after{content:'\f061';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:-22px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:18px;z-index:2}
+.proc-step:last-child::after{display:none}
+.proc-num{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--gold);font-family:var(--f1);font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.proc-step h4{font-family:var(--f1);font-weight:800;font-size:15px;color:var(--dark);margin-bottom:6px}
+.proc-step p{font-size:12px;color:var(--gray);line-height:1.5}
+
+@media print{
+  html,body{overflow:auto;height:auto}
+  .controls,.help-hint,.brand-corner,.progress-bar{display:none!important}
+  .slide{position:relative;opacity:1!important;visibility:visible!important;transform:none!important;page-break-after:always;height:100vh}
+}
+</style>
+<style>
+.gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0a0e1a 0%,#0f172a 50%,#1a1f2e 100%);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif}
+.gate.hidden{display:none}
+.gate::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(245,166,35,.15),transparent 50%),radial-gradient(ellipse at bottom left,rgba(59,130,246,.1),transparent 50%);pointer-events:none}
+.gate-card{position:relative;z-index:1;background:rgba(255,255,255,.04);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:48px 44px;width:min(420px,90vw);text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.gate-logo{height:54px;filter:brightness(0) invert(1);margin-bottom:24px;opacity:.95}
+.gate-tag{display:inline-block;background:rgba(245,166,35,.15);color:#f5a623;padding:6px 16px;border-radius:30px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:2px;margin-bottom:18px}
+.gate-title{font-weight:800;font-size:22px;color:#fff;margin-bottom:8px;letter-spacing:-.5px}
+.gate-sub{font-family:'Open Sans',sans-serif;font-size:13px;color:rgba(255,255,255,.6);margin-bottom:28px;line-height:1.5}
+.gate-input{width:100%;padding:14px 18px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:15px;font-family:inherit;letter-spacing:2px;text-align:center;outline:none;transition:border-color .25s,background .25s}
+.gate-input:focus{border-color:#f5a623;background:rgba(255,255,255,.08)}
+.gate-input.err{border-color:#ef4444;animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.gate-btn{margin-top:14px;width:100%;padding:14px;border-radius:12px;border:0;background:linear-gradient(135deg,#f5a623,#fbbf24);color:#0f172a;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:2px;cursor:pointer;transition:transform .2s,box-shadow .2s;font-family:inherit}
+.gate-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(245,166,35,.35)}
+.gate-msg{margin-top:14px;font-size:12px;color:#ef4444;min-height:18px;font-family:'Open Sans',sans-serif}
+.gate-foot{margin-top:22px;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1px;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <img src="assets/logoengmarq.png" alt="EngMarq" class="gate-logo">
+    <div class="gate-tag"><i class="fas fa-lock"></i> Conteúdo Restrito</div>
+    <div class="gate-title">Treinamento Admissional SMS</div>
+    <div class="gate-sub">Esta apresentação é de acesso restrito. Informe a senha para continuar.</div>
+    <input type="password" id="gateInput" class="gate-input" placeholder="••••••••" autofocus>
+    <button type="submit" class="gate-btn">Acessar Apresentação</button>
+    <div class="gate-msg" id="gateMsg"></div>
+    <div class="gate-foot">EngMarq Solution</div>
+  </form>
+</div>
+
+<div class="brand-corner">
+  <img src="assets/logoengmarq.png" alt="EngMarq">
+  <div class="brand-pipe"></div>
+  <div class="brand-text">Treinamento Admissional SMS</div>
+</div>
+
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+<div class="presentation" id="presentation">
+
+  <!-- 1. CAPA -->
+  <section class="slide cover active" data-transition="zoom">
+    <div class="cover-orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+    <div class="cover-content">
+      <div>
+        <div class="cover-tag anim d1"><i class="fas fa-circle"></i> Treinamento Admissional</div>
+        <img src="assets/logoengmarq.png" alt="EngMarq" class="cover-logo anim d2">
+        <h1 class="cover-title anim d3">Segurança,<br>Meio Ambiente<br>e <span class="acc">Saúde</span></h1>
+        <div class="cover-divider anim d4"></div>
+        <p class="cover-subtitle anim d5">Capacitação obrigatória para o trabalhador. Integramos prevenção, conformidade legal e cultura de segurança em uma jornada de aprendizado prática.</p>
+        <div class="cover-meta anim d6">
+          <div class="cover-meta-item"><i class="fas fa-clock"></i> Duração: 4 horas</div>
+          <div class="cover-meta-item"><i class="fas fa-user-graduate"></i> Modalidade: Admissional</div>
+          <div class="cover-meta-item"><i class="fas fa-award"></i> Com certificado</div>
+        </div>
+      </div>
+      <div class="instructor-side anim-zoom d4">
+        <div class="instructor-avatar">TM</div>
+        <div class="instructor-name">Thiago Marques</div>
+        <div class="instructor-title">Coordenador de Treinamentos</div>
+        <div class="instructor-bio">Técnico de Segurança do Trabalho<br>Bombeiro Profissional Civil / Socorrista<br>Operador de Acesso e Resgate por Cordas<br>Discente em Engenharia Civil</div>
+        <div class="instructor-divider"></div>
+        <div class="instructor-contact">
+          <div><i class="fas fa-phone"></i> +55 84 99928-5888</div>
+          <div><i class="fas fa-envelope"></i> engmarqsolution@gmail.com</div>
+          <div><i class="fab fa-instagram"></i> @engmarq_solution</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. DIVISOR 1 -->
+  <section class="slide divider" data-transition="fade">
+    <div class="divider-inner">
+      <div class="divider-num anim d1">01</div>
+      <div class="divider-tag anim d2">Capítulo 1</div>
+      <h1 class="divider-title anim d3">Cronograma e<br>Objetivos</h1>
+      <p class="divider-subtitle anim d4">Visão geral dos tópicos que vamos abordar e o que você vai levar deste treinamento.</p>
+      <div class="divider-line anim d5"></div>
+    </div>
+  </section>
+
+  <!-- 3. CRONOGRAMA -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-list-check"></i> Roteiro</div>
+        <h2 class="slide-title anim d2">Cronograma do Treinamento</h2>
+        <p class="slide-subtitle anim d3">9 capítulos para uma formação sólida em SMS — Segurança, Meio Ambiente e Saúde.</p>
+      </div>
+      <div class="slide-num-large">01</div>
+    </div>
+    <div class="slide-body">
+      <div class="g3" style="flex:1;align-content:center">
+        <div class="card anim d2"><div class="card-icon"><i class="fas fa-bullseye"></i></div><h4>1. Objetivos</h4><p>O que esperamos alcançar com esta capacitação.</p></div>
+        <div class="card b-gold anim d3"><div class="card-icon"><i class="fas fa-history"></i></div><h4>2. História da SST</h4><p>Da Antiguidade às Normas Regulamentadoras.</p></div>
+        <div class="card b-blue anim d4"><div class="card-icon"><i class="fas fa-shield-alt"></i></div><h4>3. Segurança do Trabalho</h4><p>Conceito legal e prevencionista.</p></div>
+        <div class="card b-red anim d3"><div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div><h4>4. Acidente de Trabalho</h4><p>Definição, CAT, equiparações e causas.</p></div>
+        <div class="card b-green anim d4"><div class="card-icon"><i class="fas fa-users-cog"></i></div><h4>5. SESMT &amp; CIPA</h4><p>Estrutura interna de prevenção.</p></div>
+        <div class="card b-purple anim d5"><div class="card-icon"><i class="fas fa-helmet-safety"></i></div><h4>6. EPI &amp; EPC</h4><p>Equipamentos de proteção.</p></div>
+        <div class="card b-warning anim d4"><div class="card-icon"><i class="fas fa-biohazard"></i></div><h4>7. Riscos Ambientais</h4><p>Os 5 grupos de riscos.</p></div>
+        <div class="card b-blue anim d5"><div class="card-icon"><i class="fas fa-clipboard-list"></i></div><h4>8. PGR &amp; PCMSO</h4><p>Programas obrigatórios.</p></div>
+        <div class="card anim d6"><div class="card-icon"><i class="fas fa-file-signature"></i></div><h4>9. OS, TR e TA</h4><p>Documentos formais e admissão.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. OBJETIVOS -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-bullseye"></i> Capítulo 1</div>
+        <h2 class="slide-title anim d2">Objetivos do Treinamento</h2>
+        <p class="slide-subtitle anim d3">Por que esta capacitação é essencial para sua atuação profissional.</p>
+      </div>
+      <div class="slide-num-large">02</div>
+    </div>
+    <div class="slide-body">
+      <div class="hero-split">
+        <div class="anim-left d2">
+          <div class="info-box gold" style="margin-bottom:20px">
+            <h4><i class="fas fa-star"></i> Objetivo Principal</h4>
+            <p>Capacitar o trabalhador para a execução segura de suas atividades, controlando ou eliminando os perigos e riscos existentes — garantindo a integridade física e mental, e contribuindo para a preservação do meio ambiente.</p>
+          </div>
+          <h4 style="font-family:var(--f1);font-weight:800;font-size:16px;color:var(--primary);margin-bottom:14px">Objetivos Específicos</h4>
+          <ul class="checks">
+            <li><i class="fas fa-check"></i><span>Desenvolver o <strong>senso crítico</strong> em relação a SMS.</span></li>
+            <li><i class="fas fa-check"></i><span>Promover a <strong>conscientização</strong> sobre o controle dos riscos ambientais.</span></li>
+            <li><i class="fas fa-check"></i><span>Estabelecer uma <strong>cultura de segurança</strong> alinhada à legislação.</span></li>
+          </ul>
+        </div>
+        <div class="hero-img anim-right d3">
+          <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=900&q=80" alt="Workers safety">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DIVISOR 2 -->
+  <section class="slide divider" data-transition="fade">
+    <div class="divider-inner">
+      <div class="divider-num anim d1">02</div>
+      <div class="divider-tag anim d2">Capítulo 2</div>
+      <h1 class="divider-title anim d3">História da<br>Segurança</h1>
+      <p class="divider-subtitle anim d4">Uma jornada da Antiguidade até a regulamentação moderna brasileira.</p>
+      <div class="divider-line anim d5"></div>
+    </div>
+  </section>
+
+  <!-- 6. HISTÓRIA MUNDO -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-globe"></i> Mundo</div>
+        <h2 class="slide-title anim d2">Da Antiguidade à Revolução Industrial</h2>
+        <p class="slide-subtitle anim d3">As origens da preocupação com a segurança no trabalho.</p>
+      </div>
+      <div class="slide-num-large">03</div>
+    </div>
+    <div class="slide-body">
+      <div class="timeline">
+        <div class="tl-item anim d2"><div class="tl-year">A.C.</div><div class="tl-text">A preocupação já existia com grandes obras como as <strong>Pirâmides do Egito</strong>. Na Bíblia (Deut. 22:8): <em>"Quando construíres uma nova casa, farás uma balaustrada em volta do teto…"</em></div></div>
+        <div class="tl-item anim d3"><div class="tl-year">~1700</div><div class="tl-text">Na Itália, o médico <strong>Bernardino Ramazzini</strong> publica <em>"As doenças dos trabalhadores"</em> — primeira obra a relacionar profissões a doenças.</div></div>
+        <div class="tl-item anim d4"><div class="tl-year">1760-1830</div><div class="tl-text"><strong>Revolução Industrial</strong> na Inglaterra. Homens, mulheres e crianças trabalhavam até a exaustão — em média <strong>18 horas por dia</strong>.</div></div>
+        <div class="tl-item anim d5"><div class="tl-year">1802</div><div class="tl-text">Inglaterra cria a <strong>Lei de Amparo aos Operários</strong>, limitando a 12 horas a jornada diária dos menores.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. HISTÓRIA BRASIL -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-flag"></i> Brasil</div>
+        <h2 class="slide-title anim d2">A Segurança do Trabalho no Brasil</h2>
+        <p class="slide-subtitle anim d3">Do primeiro marco legal de 1919 às Normas Regulamentadoras.</p>
+      </div>
+      <div class="slide-num-large">04</div>
+    </div>
+    <div class="slide-body">
+      <div class="timeline">
+        <div class="tl-item anim d2"><div class="tl-year">1919</div><div class="tl-text"><strong>Lei nº 3.725</strong> — primeira lei brasileira sobre o tema, com 30 artigos sobre acidente de trabalho.</div></div>
+        <div class="tl-item anim d3"><div class="tl-year">1930</div><div class="tl-text"><strong>Era Vargas</strong> — proteção da mulher e do menor, jornada de 8h, salário mínimo, sindicatos reconhecidos.</div></div>
+        <div class="tl-item anim d4"><div class="tl-year">1943</div><div class="tl-text">Surge a <strong>CLT</strong> — Consolidação das Leis do Trabalho (Decreto-Lei nº 5.452).</div></div>
+        <div class="tl-item anim d5"><div class="tl-year">1953</div><div class="tl-text">Regulamentação da <strong>CIPA</strong> — Comissão Interna de Prevenção de Acidentes.</div></div>
+        <div class="tl-item anim d6"><div class="tl-year">1972 / 1978</div><div class="tl-text">Obrigatoriedade do <strong>SESMT</strong>. <strong>Portaria 3.214/78</strong> aprova as primeiras NRs.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. DIVISOR 3 -->
+  <section class="slide divider" data-transition="fade">
+    <div class="divider-inner">
+      <div class="divider-num anim d1">03</div>
+      <div class="divider-tag anim d2">Capítulos 3 e 4</div>
+      <h1 class="divider-title anim d3">Segurança e<br>Acidentes</h1>
+      <p class="divider-subtitle anim d4">Conceitos fundamentais e a anatomia de um acidente de trabalho.</p>
+      <div class="divider-line anim d5"></div>
+    </div>
+  </section>
+
+  <!-- 9. SEGURANÇA -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-shield-alt"></i> Capítulo 3</div>
+        <h2 class="slide-title anim d2">O que é Segurança do Trabalho?</h2>
+        <p class="slide-subtitle anim d3">Dois conceitos complementares — o legal e o prevencionista.</p>
+      </div>
+      <div class="slide-num-large">05</div>
+    </div>
+    <div class="slide-body">
+      <div class="two" style="margin-bottom:20px;flex:0">
+        <div class="info-box anim-left d2">
+          <h4><i class="fas fa-gavel"></i> Conceito Legal</h4>
+          <p>Definida por <strong>normas e leis</strong>. No Brasil, a <strong>Portaria 3.214/78</strong> compõe-se das Normas Regulamentadoras (NRs), leis complementares, portarias, decretos e convenções da OIT ratificadas pelo Brasil.</p>
+        </div>
+        <div class="info-box green anim-right d2">
+          <h4><i class="fas fa-hands-helping"></i> Conceito Prevencionista</h4>
+          <p><strong>Conjunto de medidas</strong> adotadas dentro ou fora da empresa para minimizar acidentes e doenças ocupacionais, protegendo a integridade do trabalhador e o meio ambiente.</p>
+        </div>
+      </div>
+      <div class="g4" style="flex:1;align-content:center">
+        <div class="card b-gold anim d3"><div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div><h4>Treinamentos</h4><p>Capacitação periódica e reciclagem da equipe.</p></div>
+        <div class="card b-blue anim d4"><div class="card-icon"><i class="fas fa-graduation-cap"></i></div><h4>Capacitação Técnica</h4><p>Qualificação para atividades específicas.</p></div>
+        <div class="card b-green anim d5"><div class="card-icon"><i class="fas fa-chart-line"></i></div><h4>Avaliações</h4><p>Mensuração dos agentes ambientais.</p></div>
+        <div class="card anim d6"><div class="card-icon"><i class="fas fa-clipboard-check"></i></div><h4>Inspeções</h4><p>Verificação contínua das condições.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. ACIDENTE -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-exclamation-triangle"></i> Capítulo 4</div>
+        <h2 class="slide-title anim d2">Acidente de Trabalho</h2>
+        <p class="slide-subtitle anim d3">Definição segundo a Lei nº 8.213/91 — Previdência Social.</p>
+      </div>
+      <div class="slide-num-large">06</div>
+    </div>
+    <div class="slide-body">
+      <div class="hero-split">
+        <div class="hero-img anim-left d2">
+          <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=900&q=80" alt="Safety inspection">
+        </div>
+        <div class="anim-right d3">
+          <div class="info-box red" style="margin-bottom:18px">
+            <h4><i class="fas fa-balance-scale"></i> Definição Legal</h4>
+            <p>"Acidente do Trabalho é o que ocorre pelo <strong>exercício do trabalho a serviço da empresa</strong>, provocando lesão corporal ou perturbação funcional que cause <strong>morte, perda ou redução — permanente ou temporária — da capacidade para o trabalho.</strong>"</p>
+            <p style="text-align:right;font-style:italic;margin-top:10px;color:var(--gray);font-size:13px">— Lei nº 8.213/91, Art. 19</p>
+          </div>
+          <div class="info-box gold">
+            <h4><i class="fas fa-bullhorn"></i> Comunicação Imediata</h4>
+            <p><strong>1º</strong> Trabalhador comunica o superior imediatamente.<br><strong>2º</strong> Superior aciona o profissional de Segurança.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. PIRÂMIDE BIRD -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-layer-group"></i> Frank Bird, 1969</div>
+        <h2 class="slide-title anim d2">A Pirâmide dos Acidentes</h2>
+        <p class="slide-subtitle anim d3">Para cada fatalidade, há centenas de quase-acidentes e milhares de comportamentos de risco.</p>
+      </div>
+      <div class="slide-num-large">07</div>
+    </div>
+    <div class="slide-body">
+      <div class="two" style="align-items:center">
+        <div class="anim-left d2">
+          <div class="bird-pyramid">
+            <div class="bird-row r1"><span class="num">1</span> Acidente Grave / Fatal</div>
+            <div class="bird-row r2"><span class="num">10</span> Acidentes com Lesões</div>
+            <div class="bird-row r3"><span class="num">30</span> Danos Materiais</div>
+            <div class="bird-row r4"><span class="num">600</span> Quase-Acidentes</div>
+            <div class="bird-row r5"><span class="num">∞</span> Atos / Condições Inseguras</div>
+          </div>
+        </div>
+        <div class="anim-right d3">
+          <div class="info-box">
+            <h4><i class="fas fa-lightbulb"></i> O que isso ensina?</h4>
+            <p>A prevenção eficaz <strong>começa pela base da pirâmide</strong>. Eliminar atos e condições inseguras impede que o evento escale para um quase-acidente, dano material e, no topo, uma fatalidade.</p>
+          </div>
+          <div class="info-box gold" style="margin-top:14px">
+            <h4><i class="fas fa-search"></i> Investigação de Acidentes</h4>
+            <p>Após o evento, <strong>SESMT + CIPA</strong> investigam causas para implementar medidas <strong>corretivas e preventivas</strong>, evitando a reincidência.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. CAT -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-file-alt"></i> CAT</div>
+        <h2 class="slide-title anim d2">CAT e Equiparações Legais</h2>
+        <p class="slide-subtitle anim d3">Comunicado obrigatório e situações que se equiparam a acidente de trabalho.</p>
+      </div>
+      <div class="slide-num-large">08</div>
+    </div>
+    <div class="slide-body">
+      <div class="two">
+        <div class="anim-left d2">
+          <div class="info-box red">
+            <h4><i class="fas fa-file-medical"></i> CAT — Lei nº 8.213/91, Art. 22</h4>
+            <p>A empresa deve comunicar à <strong>Previdência Social até o 1º dia útil seguinte</strong>. Em caso de morte: <strong>comunicação imediata</strong> à autoridade competente.</p>
+            <p>O descumprimento gera <strong>multa</strong>, sucessivamente aumentada nas reincidências.</p>
+          </div>
+        </div>
+        <div class="anim-right d3">
+          <h4 style="font-family:var(--f1);font-weight:800;font-size:16px;color:var(--primary);margin-bottom:12px">Equiparam-se a Acidente de Trabalho</h4>
+          <ul class="checks">
+            <li><i class="fas fa-check"></i><span><strong>Trajeto</strong> — entre casa e trabalho (e vice-versa).</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Doença profissional</strong> — ex.: tendinite em digitadores.</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Doença do trabalho</strong> — ex.: surdez em ambiente ruidoso.</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Ato de terceiro</strong> — culposo ou doloso.</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Força maior</strong> — natureza, descargas elétricas.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. ATO vs CONDIÇÃO -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-question-circle"></i> Causas</div>
+        <h2 class="slide-title anim d2">As Duas Causas dos Acidentes</h2>
+        <p class="slide-subtitle anim d3">Toda ocorrência tem origem em uma destas duas categorias — ou na combinação delas.</p>
+      </div>
+      <div class="slide-num-large">09</div>
+    </div>
+    <div class="slide-body">
+      <div class="vs-board">
+        <div class="vs-side left anim-left d2">
+          <div class="vs-icon-mega"><i class="fas fa-user-times"></i></div>
+          <h3>Ato Inseguro</h3>
+          <p><strong>Ação do trabalhador</strong> que contraria os procedimentos.</p>
+          <ul>
+            <li><i class="fas fa-times"></i><span>Operar máquinas sem treinamento</span></li>
+            <li><i class="fas fa-times"></i><span>Não usar EPI obrigatório</span></li>
+            <li><i class="fas fa-times"></i><span>Brincadeiras durante o trabalho</span></li>
+            <li><i class="fas fa-times"></i><span>Desrespeito a procedimentos</span></li>
+          </ul>
+        </div>
+        <div class="vs-divider anim-zoom d3">VS</div>
+        <div class="vs-side right anim-right d2">
+          <div class="vs-icon-mega"><i class="fas fa-exclamation-circle"></i></div>
+          <h3>Condição Insegura</h3>
+          <p><strong>Falha existente no ambiente</strong> de trabalho.</p>
+          <ul>
+            <li><i class="fas fa-times"></i><span>Máquinas sem proteção</span></li>
+            <li><i class="fas fa-times"></i><span>Iluminação ou ventilação inadequadas</span></li>
+            <li><i class="fas fa-times"></i><span>Pisos escorregadios</span></li>
+            <li><i class="fas fa-times"></i><span>Instalações elétricas precárias</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14. DIVISOR 4 -->
+  <section class="slide divider" data-transition="fade">
+    <div class="divider-inner">
+      <div class="divider-num anim d1">04</div>
+      <div class="divider-tag anim d2">Capítulos 5 e 6</div>
+      <h1 class="divider-title anim d3">SESMT &amp; CIPA</h1>
+      <p class="divider-subtitle anim d4">Os pilares da gestão interna de segurança e saúde do trabalhador.</p>
+      <div class="divider-line anim d5"></div>
+    </div>
+  </section>
+
+  <!-- 15. SESMT vs CIPA -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-users-cog"></i> Estrutura interna</div>
+        <h2 class="slide-title anim d2">SESMT &amp; CIPA</h2>
+        <p class="slide-subtitle anim d3">Dois órgãos complementares na proteção da saúde e segurança do trabalhador.</p>
+      </div>
+      <div class="slide-num-large">10</div>
+    </div>
+    <div class="slide-body">
+      <div class="two" style="align-items:stretch">
+        <div class="card b-blue anim-left d2" style="padding:32px">
+          <div class="card-icon" style="width:64px;height:64px;font-size:26px"><i class="fas fa-user-md"></i></div>
+          <h4 style="font-size:24px">SESMT</h4>
+          <p style="font-size:13px;color:var(--gray);margin-bottom:14px"><strong>Serviço Especializado em Engenharia de Segurança e Medicina do Trabalho</strong></p>
+          <p style="font-size:14px;line-height:1.7;color:var(--dark)">Garante que <strong>todas as medidas de segurança e saúde sejam aplicadas</strong>, promovendo a saúde e protegendo a integridade física e mental do trabalhador.</p>
+          <div class="law-pill"><i class="fas fa-balance-scale"></i> NR 4 — Serviços Especializados</div>
+        </div>
+        <div class="card b-gold anim-right d3" style="padding:32px">
+          <div class="card-icon" style="width:64px;height:64px;font-size:26px"><i class="fas fa-handshake"></i></div>
+          <h4 style="font-size:24px">CIPA</h4>
+          <p style="font-size:13px;color:var(--gray);margin-bottom:14px"><strong>Comissão Interna de Prevenção de Acidentes</strong></p>
+          <p style="font-size:14px;line-height:1.7;color:var(--dark)">Atua junto ao SESMT para <strong>prevenir acidentes e doenças do trabalho</strong>. Composta por representantes <strong>eleitos dos empregados</strong> e designados do empregador. Renovada anualmente por processo eleitoral.</p>
+          <div class="law-pill"><i class="fas fa-balance-scale"></i> NR 5 — CIPA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16. DIVISOR 5 EPI -->
+  <section class="slide divider" data-transition="fade">
+    <div class="divider-inner">
+      <div class="divider-num anim d1">05</div>
+      <div class="divider-tag anim d2">Capítulos 7, 8 e 9</div>
+      <h1 class="divider-title anim d3">EPI &amp; EPC</h1>
+      <p class="divider-subtitle anim d4">Equipamentos de Proteção Individual e Coletiva — sua principal barreira contra o risco.</p>
+      <div class="divider-line anim d5"></div>
+    </div>
+  </section>
+
+  <!-- 17. EPI CONCEITO + RESPONSABILIDADES -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-helmet-safety"></i> NR 6</div>
+        <h2 class="slide-title anim d2">EPI — Equipamento de Proteção Individual</h2>
+        <p class="slide-subtitle anim d3">Conceito e responsabilidades — quem faz o quê?</p>
+      </div>
+      <div class="slide-num-large">11</div>
+    </div>
+    <div class="slide-body">
+      <div class="info-box anim d2" style="margin-bottom:20px">
+        <h4><i class="fas fa-book"></i> Conceito Legal</h4>
+        <p>Todo <strong>dispositivo ou produto de uso individual</strong> utilizado pelo trabalhador, destinado à <strong>proteção de riscos</strong> suscetíveis de ameaçar a segurança e a saúde no trabalho.</p>
+      </div>
+      <div class="two" style="flex:1">
+        <div class="card b-blue anim-left d3" style="padding:24px">
+          <h4 style="display:flex;align-items:center;gap:10px;font-size:17px;margin-bottom:14px"><i class="fas fa-building" style="color:var(--info)"></i> Empregador</h4>
+          <ul class="checks">
+            <li><i class="fas fa-check"></i><span>Adquirir EPI <strong>adequado ao risco</strong>.</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Exigir o uso</strong>.</span></li>
+            <li><i class="fas fa-check"></i><span>Fornecer somente com <strong>CA</strong>.</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Treinar</strong> sobre uso e conservação.</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Registrar</strong> a entrega.</span></li>
+          </ul>
+        </div>
+        <div class="card b-gold anim-right d3" style="padding:24px">
+          <h4 style="display:flex;align-items:center;gap:10px;font-size:17px;margin-bottom:14px"><i class="fas fa-user-hard-hat" style="color:var(--gold)"></i> Trabalhador</h4>
+          <ul class="checks warning">
+            <li><i class="fas fa-check"></i><span><strong>Usar</strong> apenas para a finalidade.</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Conservar</strong> e guardar.</span></li>
+            <li><i class="fas fa-check"></i><span><strong>Comunicar</strong> alterações no equipamento.</span></li>
+            <li><i class="fas fa-check"></i><span>Cumprir determinações sobre uso adequado.</span></li>
+          </ul>
+          <div style="margin-top:14px;padding:12px 14px;background:rgba(239,68,68,.08);border-radius:10px;border-left:3px solid var(--danger)">
+            <p style="font-size:12px;color:#b91c1c"><strong><i class="fas fa-exclamation-triangle"></i> NR 1, item 1.8.1:</strong> A recusa em usar o EPI constitui <strong>ato faltoso</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18. TIPOS DE EPI -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-th"></i> Capítulo 8</div>
+        <h2 class="slide-title anim d2">Tipos de EPI por Região do Corpo</h2>
+        <p class="slide-subtitle anim d3">Cada parte do corpo tem equipamentos específicos para os riscos da atividade.</p>
+      </div>
+      <div class="slide-num-large">12</div>
+    </div>
+    <div class="slide-body">
+      <div class="epi-board">
+        <div class="epi-card anim d2" style="--c1:#1a365d;--c2:#3b82f6"><div class="epi-icon"><i class="fas fa-hard-hat"></i></div><h4>Cabeça</h4><ul><li>Capacete (impactos, choques)</li><li>Capuz (térmicos, químicos)</li></ul></div>
+        <div class="epi-card anim d3" style="--c1:#f5a623;--c2:#fbbf24"><div class="epi-icon"><i class="fas fa-glasses"></i></div><h4>Olhos e Face</h4><ul><li>Óculos de proteção</li><li>Protetor facial</li></ul></div>
+        <div class="epi-card anim d4" style="--c1:#10b981;--c2:#34d399"><div class="epi-icon"><i class="fas fa-headphones"></i></div><h4>Audição</h4><ul><li>Protetor tipo concha</li><li>Protetor tipo plug</li></ul></div>
+        <div class="epi-card anim d3" style="--c1:#ef4444;--c2:#f87171"><div class="epi-icon"><i class="fas fa-mask"></i></div><h4>Respiratória</h4><ul><li>Contra poeiras</li><li>Contra vapores químicos</li></ul></div>
+        <div class="epi-card anim d4" style="--c1:#8b5cf6;--c2:#a78bfa"><div class="epi-icon"><i class="fas fa-hand-paper"></i></div><h4>Mãos e Braços</h4><ul><li>Luvas (raspa, látex, malha)</li><li>Mangas isolantes</li></ul></div>
+        <div class="epi-card anim d5" style="--c1:#92400e;--c2:#d97706"><div class="epi-icon"><i class="fas fa-shoe-prints"></i></div><h4>Pés e Pernas</h4><ul><li>Bota com biqueira / PVC</li><li>Perneiras</li></ul></div>
+        <div class="epi-card anim d4" style="--c1:#0891b2;--c2:#06b6d4"><div class="epi-icon"><i class="fas fa-tshirt"></i></div><h4>Corpo</h4><ul><li>Vestimentas com proteção UV</li><li>Aventais retardantes</li></ul></div>
+        <div class="epi-card anim d5" style="--c1:#db2777;--c2:#ec4899"><div class="epi-icon"><i class="fas fa-pump-soap"></i></div><h4>Pele</h4><ul><li>Cremes água-resistentes</li><li>Cremes óleo-resistentes</li></ul></div>
+        <div class="epi-card anim d6" style="--c1:#dc2626;--c2:#f97316"><div class="epi-icon"><i class="fas fa-link"></i></div><h4>Quedas (acima de 2m)</h4><ul><li>Cinto paraquedista</li><li>Talabarte tipo Y com ABS</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19. EPC + FICHA -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-shield-alt"></i> Capítulo 9</div>
+        <h2 class="slide-title anim d2">Proteção Coletiva &amp; Ficha de Controle</h2>
+        <p class="slide-subtitle anim d3">EPC, formalização da entrega e responsabilidade compartilhada.</p>
+      </div>
+      <div class="slide-num-large">13</div>
+    </div>
+    <div class="slide-body">
+      <div class="two">
+        <div class="anim-left d2">
+          <div class="info-box green" style="margin-bottom:14px">
+            <h4><i class="fas fa-users"></i> EPC — Proteção Coletiva</h4>
+            <p>Ações, equipamentos ou elementos que servem de <strong>barreiras entre o perigo, os funcionários e terceiros</strong>.</p>
+          </div>
+          <ul class="checks">
+            <li><i class="fas fa-check"></i><span>Barreiras físicas e linha de vida</span></li>
+            <li><i class="fas fa-check"></i><span>Sinalização de segurança</span></li>
+            <li><i class="fas fa-check"></i><span>Alertas sonoros e luminosos</span></li>
+            <li><i class="fas fa-check"></i><span>Equipamentos de combate a incêndio</span></li>
+            <li><i class="fas fa-check"></i><span>Sistemas de exaustão e ventilação</span></li>
+          </ul>
+        </div>
+        <div class="anim-right d3">
+          <div class="info-box gold" style="margin-bottom:14px">
+            <h4><i class="fas fa-clipboard-list"></i> Ficha de Controle de EPI</h4>
+            <p>O fornecimento exige <strong>registro formal</strong> com os dados abaixo:</p>
+          </div>
+          <ul class="checks">
+            <li><i class="fas fa-check"></i><span>Nome do funcionário e setor</span></li>
+            <li><i class="fas fa-check"></i><span>Data de entrega e data de devolução</span></li>
+            <li><i class="fas fa-check"></i><span>Tipo de EPI e número do <strong>CA</strong></span></li>
+            <li><i class="fas fa-check"></i><span>Assinatura do empregado</span></li>
+            <li><i class="fas fa-check"></i><span>Assinatura do responsável pela entrega</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20. DIVISOR 6 RISCOS -->
+  <section class="slide divider" data-transition="fade">
+    <div class="divider-inner">
+      <div class="divider-num anim d1">06</div>
+      <div class="divider-tag anim d2">Capítulo 10</div>
+      <h1 class="divider-title anim d3">Riscos<br>Ambientais</h1>
+      <p class="divider-subtitle anim d4">Os 5 grupos de agentes capazes de causar danos à saúde do trabalhador.</p>
+      <div class="divider-line anim d5"></div>
+    </div>
+  </section>
+
+  <!-- 21. RISCOS -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-biohazard"></i> NR 9 — PGR</div>
+        <h2 class="slide-title anim d2">Os 5 Grupos de Riscos Ambientais</h2>
+        <p class="slide-subtitle anim d3">Classificação por cores, conforme a Norma Regulamentadora.</p>
+      </div>
+      <div class="slide-num-large">14</div>
+    </div>
+    <div class="slide-body">
+      <div class="risks-board">
+        <div class="risk-card anim d2">
+          <div class="risk-head green"><div class="risk-icon-big"><i class="fas fa-volume-up"></i></div><div class="rh-num">I</div><small>FÍSICOS</small></div>
+          <div class="risk-body green"><ul><li>Ruído</li><li>Vibração</li><li>Radiação</li><li>Pressões anormais</li><li>Temperaturas extremas</li><li>Umidade</li></ul></div>
+        </div>
+        <div class="risk-card anim d3">
+          <div class="risk-head red"><div class="risk-icon-big"><i class="fas fa-flask"></i></div><div class="rh-num">II</div><small>QUÍMICOS</small></div>
+          <div class="risk-body red"><ul><li>Poeira</li><li>Fumos metálicos</li><li>Névoas</li><li>Vapores</li><li>Gases</li><li>Produtos químicos</li></ul></div>
+        </div>
+        <div class="risk-card anim d4">
+          <div class="risk-head brown"><div class="risk-icon-big"><i class="fas fa-virus"></i></div><div class="rh-num">III</div><small>BIOLÓGICOS</small></div>
+          <div class="risk-body brown"><ul><li>Vírus</li><li>Bactérias</li><li>Protozoários</li><li>Fungos</li><li>Parasitas</li><li>Insetos, animais</li></ul></div>
+        </div>
+        <div class="risk-card anim d5">
+          <div class="risk-head yellow"><div class="risk-icon-big"><i class="fas fa-user-injured"></i></div><div class="rh-num">IV</div><small>ERGONÔMICOS</small></div>
+          <div class="risk-body yellow"><ul><li>Trabalho físico pesado</li><li>Posturas inadequadas</li><li>Excesso de jornada</li><li>Trabalho noturno</li><li>Tensões emocionais</li><li>Monotonia</li></ul></div>
+        </div>
+        <div class="risk-card anim d6">
+          <div class="risk-head blue"><div class="risk-icon-big"><i class="fas fa-tools"></i></div><div class="rh-num">V</div><small>MECÂNICOS</small></div>
+          <div class="risk-body blue"><ul><li>Arranjo físico deficiente</li><li>Máquinas sem proteção</li><li>Iluminação deficiente</li><li>Eletricidade</li><li>Incêndio</li><li>Ferramentas defeituosas</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22. PGR -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-clipboard-list"></i> Capítulo 11</div>
+        <h2 class="slide-title anim d2">PGR — Programa de Gerenciamento de Riscos</h2>
+        <p class="slide-subtitle anim d3">Documento obrigatório para todos os empregadores — 4 etapas essenciais.</p>
+      </div>
+      <div class="slide-num-large">15</div>
+    </div>
+    <div class="slide-body">
+      <div class="info-box anim d2" style="margin-bottom:24px">
+        <h4><i class="fas fa-gavel"></i> Base Legal — NR 1</h4>
+        <p>Estabelece a obrigatoriedade da elaboração e implementação do PGR para <strong>todos os empregadores</strong>, visando à preservação da saúde e da integridade dos trabalhadores.</p>
+      </div>
+      <div class="process">
+        <div class="proc-step anim-zoom d3"><div class="proc-num">1</div><h4>Antecipação</h4><p>Identificação de riscos antes do início das atividades — durante o projeto.</p></div>
+        <div class="proc-step anim-zoom d4"><div class="proc-num">2</div><h4>Reconhecimento</h4><p>Identificação dos riscos já existentes no ambiente.</p></div>
+        <div class="proc-step anim-zoom d5"><div class="proc-num">3</div><h4>Avaliação</h4><p>Mensuração quantitativa e qualitativa da exposição.</p></div>
+        <div class="proc-step anim-zoom d6"><div class="proc-num">4</div><h4>Controle</h4><p>Eliminar, neutralizar ou minimizar os riscos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23. PCMSO + ASO -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-stethoscope"></i> Capítulo 12 — NR 7</div>
+        <h2 class="slide-title anim d2">PCMSO &amp; ASO</h2>
+        <p class="slide-subtitle anim d3">Programa de Controle Médico de Saúde Ocupacional e o Atestado correspondente.</p>
+      </div>
+      <div class="slide-num-large">16</div>
+    </div>
+    <div class="slide-body">
+      <div class="info-box green anim d2" style="margin-bottom:24px">
+        <h4><i class="fas fa-heartbeat"></i> PCMSO — NR 7, item 7.1.1</h4>
+        <p>Obrigatório a todos os empregadores. <strong>Objetivo:</strong> promoção e preservação da saúde do conjunto dos trabalhadores, articulado com o PGR e elaborado por <strong>médico do trabalho</strong>.</p>
+      </div>
+      <div class="g5">
+        <div class="card b-blue anim d3"><div class="card-icon"><i class="fas fa-user-plus"></i></div><h4>Admissional</h4><p>Antes do início das atividades.</p></div>
+        <div class="card b-green anim d4"><div class="card-icon"><i class="fas fa-calendar-alt"></i></div><h4>Periódico</h4><p>Em intervalos definidos pelo PCMSO.</p></div>
+        <div class="card b-purple anim d5"><div class="card-icon"><i class="fas fa-exchange-alt"></i></div><h4>Mudança de Função</h4><p>Quando há novos riscos.</p></div>
+        <div class="card b-gold anim d6"><div class="card-icon"><i class="fas fa-undo"></i></div><h4>Retorno</h4><p>Após afastamento de 30+ dias.</p></div>
+        <div class="card b-red anim d7"><div class="card-icon"><i class="fas fa-sign-out-alt"></i></div><h4>Demissional</h4><p>No desligamento do trabalhador.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 24. OS / TR / TA -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-file-signature"></i> Capítulo 13</div>
+        <h2 class="slide-title anim d2">OS, TR e TA — Documentos Formais</h2>
+        <p class="slide-subtitle anim d3">A formalização das responsabilidades e do treinamento admissional.</p>
+      </div>
+      <div class="slide-num-large">17</div>
+    </div>
+    <div class="slide-body">
+      <div class="g3" style="flex:1;align-content:center">
+        <div class="card anim-zoom d2" style="padding:30px">
+          <div class="card-icon" style="width:64px;height:64px;font-size:24px"><i class="fas fa-clipboard"></i></div>
+          <h4 style="font-size:20px;margin-bottom:10px">Ordem de Serviço</h4>
+          <p style="font-size:13px;line-height:1.65">Estabelece as <strong>atribuições e responsabilidades</strong> do trabalhador na função, instruindo sobre os riscos e medidas preventivas.</p>
+          <div class="law-pill"><i class="fas fa-balance-scale"></i> NR 1 — item 1.7</div>
+        </div>
+        <div class="card b-gold anim-zoom d3" style="padding:30px">
+          <div class="card-icon" style="width:64px;height:64px;font-size:24px"><i class="fas fa-handshake"></i></div>
+          <h4 style="font-size:20px;margin-bottom:10px">Termo de Responsabilidade</h4>
+          <p style="font-size:13px;line-height:1.65">O trabalhador <strong>declara estar ciente</strong> dos riscos da função, dos EPIs fornecidos e da obrigatoriedade do uso.</p>
+          <div class="law-pill"><i class="fas fa-pen"></i> Formaliza compromisso</div>
+        </div>
+        <div class="card b-green anim-zoom d4" style="padding:30px">
+          <div class="card-icon" style="width:64px;height:64px;font-size:24px"><i class="fas fa-graduation-cap"></i></div>
+          <h4 style="font-size:20px;margin-bottom:10px">Treinamento Admissional</h4>
+          <p style="font-size:13px;line-height:1.65">Capacitação <strong>obrigatória</strong> antes do início das atividades — apresenta riscos, EPIs e procedimentos.</p>
+          <div class="law-pill"><i class="fas fa-check-circle"></i> É exatamente este!</div>
+        </div>
+      </div>
+      <div class="info-box gold anim d5" style="margin-top:20px">
+        <h4><i class="fas fa-pen-nib"></i> Ao final desta capacitação</h4>
+        <p>Os documentos serão <strong>debatidos, assinados e arquivados</strong> — formalizando sua ciência sobre todos os riscos, EPIs, procedimentos e responsabilidades.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 25. CONSIDERAÇÕES FINAIS -->
+  <section class="slide content-slide" data-transition="slide-up">
+    <div class="slide-header">
+      <div>
+        <div class="slide-tag anim d1"><i class="fas fa-flag-checkered"></i> Capítulo 14</div>
+        <h2 class="slide-title anim d2">O que você leva deste treinamento</h2>
+        <p class="slide-subtitle anim d3">Os principais aprendizados e capacidades desenvolvidas.</p>
+      </div>
+      <div class="slide-num-large">18</div>
+    </div>
+    <div class="slide-body">
+      <div class="g3" style="flex:1;align-content:center">
+        <div class="card anim d2"><div class="card-icon"><i class="fas fa-brain"></i></div><h4>Senso Crítico</h4><p>Identificar atos e condições inseguras no ambiente.</p></div>
+        <div class="card b-gold anim d3"><div class="card-icon"><i class="fas fa-helmet-safety"></i></div><h4>Uso Correto de EPI</h4><p>Conhecer, usar, conservar e trocar quando necessário.</p></div>
+        <div class="card b-green anim d4"><div class="card-icon"><i class="fas fa-bullhorn"></i></div><h4>Comunicação</h4><p>Saber o fluxo correto de comunicação de incidentes.</p></div>
+        <div class="card b-blue anim d3"><div class="card-icon"><i class="fas fa-biohazard"></i></div><h4>Riscos Ambientais</h4><p>Identificar os 5 grupos e como se proteger.</p></div>
+        <div class="card b-purple anim d4"><div class="card-icon"><i class="fas fa-balance-scale"></i></div><h4>Direitos &amp; Deveres</h4><p>Entender as responsabilidades das partes.</p></div>
+        <div class="card b-red anim d5"><div class="card-icon"><i class="fas fa-heart"></i></div><h4>Cultura de Segurança</h4><p>Ser agente ativo da prevenção — sua e da equipe.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26. QUOTE -->
+  <section class="slide quote-bg" data-transition="fade">
+    <div class="quote-content">
+      <div class="quote-mark-big anim d1">"</div>
+      <p class="quote-text anim d2">A prevenção não está somente escrita em uma norma —<br>ela está na <em>minha consciência.</em></p>
+      <p class="quote-author anim d3"><strong>Elton Renan Fagundes</strong> — Alpinista Industrial<br><span style="font-size:13px;opacity:.6">Revista Proteção, Edição Maio/2014</span></p>
+    </div>
+  </section>
+
+  <!-- 27. AGRADECIMENTO -->
+  <section class="slide thanks-bg" data-transition="zoom">
+    <div class="cover-orbs"><div class="orb o1" style="background:var(--accent)"></div><div class="orb o2"></div></div>
+    <div class="thanks-content">
+      <div class="thanks-icon anim-zoom d1"><i class="fas fa-check"></i></div>
+      <h1 class="thanks-title anim d2">Obrigado pela<br><span class="acc">atenção e compromisso</span></h1>
+      <p class="thanks-sub anim d3">A EngMarq Solution agradece sua participação. Em caso de dúvidas, sugestões ou solicitações de novas capacitações, conte sempre com nossa equipe.</p>
+      <div class="thanks-contacts anim d4">
+        <div class="thanks-c"><i class="fas fa-phone"></i> +55 84 99928-5888</div>
+        <div class="thanks-c"><i class="fas fa-envelope"></i> engmarqsolution@gmail.com</div>
+        <div class="thanks-c"><i class="fab fa-instagram"></i> @engmarq_solution</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn" id="btnFirst" title="Primeiro slide (Home)"><i class="fas fa-step-backward"></i></button>
+  <button class="ctrl-btn" id="btnPrev" title="Anterior (←)"><i class="fas fa-chevron-left"></i></button>
+  <div class="ctrl-counter"><span id="curSlide">1</span> / <span id="totalSlides">27</span></div>
+  <button class="ctrl-btn" id="btnNext" title="Próximo (→)"><i class="fas fa-chevron-right"></i></button>
+  <button class="ctrl-btn" id="btnLast" title="Último (End)"><i class="fas fa-step-forward"></i></button>
+  <div style="width:1px;height:24px;background:rgba(255,255,255,.15);margin:0 4px"></div>
+  <button class="ctrl-btn" id="btnFull" title="Tela cheia (F)"><i class="fas fa-expand"></i></button>
+  <button class="ctrl-btn" id="btnPrint" title="Imprimir / PDF (P)"><i class="fas fa-print"></i></button>
+</div>
+
+<div class="help-hint">
+  <span><kbd>←</kbd> <kbd>→</kbd> Navegar</span>
+  <span><kbd>F</kbd> Tela cheia</span>
+  <span><kbd>Esc</kbd> Sair</span>
+</div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+  document.getElementById('totalSlides').textContent = total;
+
+  function show(idx){
+    if(idx < 0) idx = 0;
+    if(idx >= total) idx = total - 1;
+    slides.forEach((s,i)=>{
+      s.classList.remove('active','prev','next');
+      if(i === idx) s.classList.add('active');
+      else if(i < idx) s.classList.add('prev');
+      else s.classList.add('next');
+    });
+    current = idx;
+    document.getElementById('curSlide').textContent = idx + 1;
+    document.getElementById('progressBar').style.width = ((idx+1)/total*100) + '%';
+  }
+  function next(){ show(current + 1); }
+  function prev(){ show(current - 1); }
+
+  document.addEventListener('keydown', e => {
+    if(e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); next(); }
+    else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); prev(); }
+    else if(e.key === 'Home'){ e.preventDefault(); show(0); }
+    else if(e.key === 'End'){ e.preventDefault(); show(total - 1); }
+    else if(e.key === 'f' || e.key === 'F'){ toggleFull(); }
+    else if(e.key === 'p' || e.key === 'P'){ window.print(); }
+    else if(e.key === 'Escape'){ if(document.fullscreenElement) document.exitFullscreen(); }
+  });
+
+  document.addEventListener('click', e => {
+    if(e.target.closest('.controls') || e.target.closest('.help-hint') || e.target.closest('.brand-corner')) return;
+    next();
+  });
+
+  let wheelLock = false;
+  document.addEventListener('wheel', e => {
+    if(wheelLock) return;
+    wheelLock = true;
+    setTimeout(()=>wheelLock=false, 700);
+    if(e.deltaY > 30) next();
+    else if(e.deltaY < -30) prev();
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    if(dx < -60) next();
+    else if(dx > 60) prev();
+  });
+
+  document.getElementById('btnNext').addEventListener('click', e => { e.stopPropagation(); next(); });
+  document.getElementById('btnPrev').addEventListener('click', e => { e.stopPropagation(); prev(); });
+  document.getElementById('btnFirst').addEventListener('click', e => { e.stopPropagation(); show(0); });
+  document.getElementById('btnLast').addEventListener('click', e => { e.stopPropagation(); show(total-1); });
+  document.getElementById('btnPrint').addEventListener('click', e => { e.stopPropagation(); window.print(); });
+
+  function toggleFull(){
+    if(!document.fullscreenElement){ document.documentElement.requestFullscreen(); }
+    else{ document.exitFullscreen(); }
+  }
+  document.getElementById('btnFull').addEventListener('click', e => { e.stopPropagation(); toggleFull(); });
+
+  show(0);
+})();
+
+(function(){
+  const PASS = 'seguranca';
+  const gate = document.getElementById('gate');
+  const form = document.getElementById('gateForm');
+  const input = document.getElementById('gateInput');
+  const msg = document.getElementById('gateMsg');
+  if(sessionStorage.getItem('sms_unlocked') === '1'){ gate.classList.add('hidden'); return; }
+  function norm(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if(norm(input.value) === PASS){
+      sessionStorage.setItem('sms_unlocked','1');
+      gate.style.transition = 'opacity .4s ease';
+      gate.style.opacity = '0';
+      setTimeout(()=>gate.classList.add('hidden'), 400);
+      msg.textContent = '';
+    } else {
+      input.classList.add('err');
+      msg.textContent = 'Senha incorreta. Tente novamente.';
+      setTimeout(()=>input.classList.remove('err'), 500);
+      input.select();
+    }
+  });
+  input.addEventListener('input', ()=>{ msg.textContent=''; });
+})();
+</script>
+</body>
+</html>

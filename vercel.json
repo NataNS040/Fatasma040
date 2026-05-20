@@ -50,6 +50,14 @@
       "dest": "/landing-nr01.html"
     },
     {
+      "src": "/treinamento-sms",
+      "dest": "/apresentacao-treinamento-admissional-sms.html"
+    },
+    {
+      "src": "/treinamento-admissional-sms",
+      "dest": "/apresentacao-treinamento-admissional-sms.html"
+    },
+    {
       "src": "/kit-programas",
       "dest": "/landing-kit-programas.html"
     },
