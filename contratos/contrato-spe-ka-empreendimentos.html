@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrato - SPE KA Empreendimentos Imobiliários LTDA | EngMarq Solution</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.7;
+            background: #e2e8f0;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            padding: 20mm 25mm 25mm 25mm;
+        }
+
+        .contrato-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .contrato-logo { height: 45px; }
+
+        .contrato-titulo {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 20px 0 25px;
+            line-height: 1.5;
+        }
+
+        h3 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 20px 0 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        p {
+            font-size: 11px;
+            line-height: 1.7;
+            text-align: justify;
+            margin-bottom: 8px;
+            orphans: 3;
+            widows: 3;
+        }
+
+        .item-lista {
+            padding-left: 20px;
+            margin-bottom: 4px;
+        }
+
+        .dados-bancarios {
+            background: var(--light-color);
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 12px 0;
+        }
+
+        .dados-bancarios p {
+            margin-bottom: 2px;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        .contrato-assinaturas { margin-top: 40px; }
+
+        .contrato-local-data {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        .assinatura-bloco {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .assinatura-label {
+            font-weight: 700;
+            font-size: 11px;
+            margin-bottom: 30px;
+        }
+
+        .assinatura-linha {
+            border-bottom: 1px solid var(--dark-color);
+            max-width: 350px;
+            margin: 0 auto 5px;
+            height: 1px;
+        }
+
+        .assinatura-nome {
+            font-weight: 600;
+            font-size: 11px;
+            margin-bottom: 2px;
+        }
+
+        .assinatura-cargo {
+            font-size: 10px;
+            color: var(--gray-color);
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body { background: white; margin: 0; padding: 0; }
+            .pdf-controls { display: none !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; padding: 0 !important; }
+            h3, .dados-bancarios, .assinatura-bloco {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+            .contrato-assinaturas { margin-top: 20px !important; }
+            .assinatura-bloco { margin-bottom: 24px !important; }
+            .assinatura-label { margin-bottom: 18px !important; }
+        }
+
+        @page {
+            size: A4;
+            margin: 20mm 25mm 25mm 25mm;
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+
+        <div class="contrato-header">
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="contrato-logo">
+        </div>
+
+        <h2 class="contrato-titulo">
+            CONTRATO DE PRESTAÇÃO DE SERVIÇOS DE ASSESSORIA EM<br>SEGURANÇA E SAÚDE DO TRABALHO<br>
+            <span style="font-size: 13px; font-weight: 600;">TM0051 — SPE KA Empreendimentos Imobiliários LTDA</span>
+        </h2>
+
+        <p>Pelo presente instrumento particular, as partes abaixo identificadas:</p>
+
+        <p><strong>CONTRATANTE:</strong><br>
+        SPE KA EMPREENDIMENTOS IMOBILIARIOS LTDA, pessoa jurídica de direito privado, inscrita no CNPJ nº 53.530.434/0001-60, com endereço na Avenida Ásia, 230, Lote J 214 - Parque das Nações, Parnamirim/RN, CEP 59.158-757, doravante denominada simplesmente CONTRATANTE.</p>
+
+        <p><strong>CONTRATADA:</strong><br>
+        ENGMARQ SOLUTION LTDA, pessoa jurídica de direito privado, inscrita no CNPJ nº 60.545.359/0001-76, com sede em Natal/RN, neste ato representada por seu Diretor Thiago Marques, doravante denominada CONTRATADA.</p>
+
+        <p>As partes resolvem celebrar o presente contrato, que se regerá pelas cláusulas e condições seguintes.</p>
+
+        <h3>CLÁUSULA 1 – DO OBJETO</h3>
+        <p>1.1. O presente contrato tem por objeto a prestação de serviços continuados de <strong>Assessoria Técnica em Segurança e Saúde do Trabalho (SST)</strong> para a CONTRATANTE, abrangendo:</p>
+        <p class="item-lista">a) Elaboração, manutenção e atualização dos programas obrigatórios de SST: PGR, PCMSO, LTCAT e LIP;</p>
+        <p class="item-lista">b) Gerenciamento de Riscos Psicossociais conforme NR-01 (atualização 2024), com inventário de riscos e plano de ação integrado ao PGR;</p>
+        <p class="item-lista">c) Emissão e registro de Anotação de Responsabilidade Técnica (ART) junto ao CREA/CFT;</p>
+        <p class="item-lista">d) Medições ambientais quantitativas: 3 (três) dosimetrias de ruído e 1 (uma) medição de vibração mão-braço;</p>
+        <p class="item-lista">e) Gestão e envio dos eventos de SST no eSocial: S-2210, S-2220 e S-2240;</p>
+        <p class="item-lista">f) Treinamentos de capacitação técnica inclusos: NR-01 (Integração Admissional), NR-06 (EPI), NR-18 (Segurança e Saúde na Indústria), NR-35 (Trabalho em Altura) e Brigada de Incêndio e Emergência.</p>
+        <p>1.2. Os serviços são dimensionados para até 40 (quarenta) colaboradores da CONTRATANTE, conforme escopo descrito neste contrato.</p>
+        <p>1.3. Os serviços serão executados em conformidade com as Normas Regulamentadoras aplicáveis, obrigações do eSocial e demais normas legais vigentes.</p>
+
+        <h3>CLÁUSULA 2 – DO ESCOPO DOS SERVIÇOS</h3>
+        <p>2.1. Constituem atividades compreendidas neste contrato, de forma continuada durante toda a vigência:</p>
+        <p class="item-lista">2.1.1. Elaboração, gestão e atualização do <strong>Programa de Gerenciamento de Riscos (PGR)</strong>, do <strong>Programa de Controle Médico de Saúde Ocupacional (PCMSO)</strong>, do <strong>Laudo Técnico das Condições Ambientais do Trabalho (LTCAT)</strong> e do <strong>Laudo de Insalubridade e Periculosidade (LIP)</strong>, mantidos sempre em conformidade com as NRs vigentes;</p>
+        <p class="item-lista">2.1.2. Identificação, avaliação e controle dos <strong>riscos psicossociais</strong> no ambiente de trabalho conforme a NR-01 (2024), com elaboração do inventário de riscos psicossociais, ações preventivas documentadas e relatório técnico;</p>
+        <p class="item-lista">2.1.3. Emissão das <strong>Anotações de Responsabilidade Técnica (ART)</strong> junto ao CREA/CFT, referentes aos serviços de engenharia de segurança prestados;</p>
+        <p class="item-lista">2.1.4. Realização de <strong>medições ambientais quantitativas</strong>: 3 (três) dosimetrias de ruído conforme NHO-01/FUNDACENTRO e 1 (uma) medição de vibração transmitida ao sistema mão-braço conforme NHO-09/FUNDACENTRO e NR-09, subsidiando o LTCAT, PGR e LIP;</p>
+        <p class="item-lista">2.1.5. Gestão e envio dos <strong>eventos de SST ao eSocial</strong>: S-2210 (Comunicação de Acidente de Trabalho), S-2220 (Monitoramento da Saúde do Trabalhador) e S-2240 (Condições Ambientais do Trabalho);</p>
+        <p class="item-lista">2.1.6. <strong>Treinamento NR-01 — Integração de Segurança do Trabalho</strong> (4h) — por demanda a cada novo colaborador admitido, abordando riscos do ambiente, uso de EPIs, procedimentos de emergência e direitos e deveres em SST;</p>
+        <p class="item-lista">2.1.7. <strong>Treinamento NR-06 — Equipamentos de Proteção Individual (EPI)</strong> (4h) — turma anual, com até 15 alunos por turma, cobrindo uso, conservação, higienização, descarte e responsabilidades do empregador e do trabalhador;</p>
+        <p class="item-lista">2.1.8. <strong>Treinamento NR-18 — Segurança e Saúde no Trabalho na Indústria</strong> (8h) — turma anual, com até 15 alunos por turma, abordando medidas de prevenção, controle de riscos e organização do trabalho;</p>
+        <p class="item-lista">2.1.9. <strong>Treinamento NR-35 — Trabalho em Altura</strong> (8h) — turma anual, com até 15 alunos por turma, habilitando colaboradores para atividades acima de 2 metros de altura, com avaliação de riscos e uso de sistemas de proteção contra queda;</p>
+        <p class="item-lista">2.1.10. <strong>Brigada de Incêndio e Emergência</strong> (8h) — turma anual, com até 15 alunos por turma, formando brigadistas voluntários para prevenção e combate a incêndio, primeiros socorros e evacuação de áreas;</p>
+        <p class="item-lista">2.1.11. Suporte técnico online via WhatsApp e e-mail, sob demanda, para orientações e dúvidas de SST, em dias úteis no prazo de até 24 horas para demandas urgentes;</p>
+        <p class="item-lista">2.1.12. Investigação e análise de acidente de trabalho, emissão da CAT e evento S-2210 do eSocial, quando aplicável.</p>
+
+        <h3>CLÁUSULA 3 – DOS ENTREGÁVEIS</h3>
+        <p>3.1. A CONTRATADA disponibilizará à CONTRATANTE, ao longo da vigência do contrato, os seguintes documentos e serviços:</p>
+        <p class="item-lista">3.1.1. Programa de Gerenciamento de Riscos (PGR) — elaborado, mantido e atualizado;</p>
+        <p class="item-lista">3.1.2. Programa de Controle Médico de Saúde Ocupacional (PCMSO);</p>
+        <p class="item-lista">3.1.3. Laudo Técnico das Condições Ambientais do Trabalho (LTCAT);</p>
+        <p class="item-lista">3.1.4. Laudo de Insalubridade e Periculosidade (LIP);</p>
+        <p class="item-lista">3.1.5. Relatório técnico da avaliação de riscos psicossociais com diagnóstico e plano de ação;</p>
+        <p class="item-lista">3.1.6. Laudos de medições ambientais (dosimetrias de ruído e vibração mão-braço);</p>
+        <p class="item-lista">3.1.7. ART — Anotações de Responsabilidade Técnica dos serviços de engenharia prestados;</p>
+        <p class="item-lista">3.1.8. Comprovantes de envio dos eventos S-2210, S-2220 e S-2240 ao eSocial;</p>
+        <p class="item-lista">3.1.9. Certificados e listas de presença dos treinamentos ministrados.</p>
+        <p>3.2. A entrega será realizada em formato digital (PDF), podendo haver entrega física mediante ajuste prévio entre as partes.</p>
+
+        <h3>CLÁUSULA 4 – DA VIGÊNCIA</h3>
+        <p>4.1. O presente contrato terá vigência de 12 (doze) meses, contados da data de sua assinatura.</p>
+        <p>4.2. Ao término da vigência, o contrato será renovado automaticamente por igual período, salvo manifestação contrária de qualquer das partes com antecedência mínima de 30 (trinta) dias.</p>
+
+        <h3>CLÁUSULA 5 – DAS OBRIGAÇÕES DAS PARTES</h3>
+        <p>5.1. Obriga-se a CONTRATADA a:</p>
+        <p class="item-lista">a) Executar os serviços com rigor técnico e observância da legislação de SST aplicável;</p>
+        <p class="item-lista">b) Disponibilizar profissional habilitado e registrado conforme exigências do MTE;</p>
+        <p class="item-lista">c) Prestar suporte online em dias úteis, no prazo de até 24 horas para demandas urgentes;</p>
+        <p class="item-lista">d) Manter sigilo sobre informações, documentos e dados da CONTRATANTE;</p>
+        <p class="item-lista">e) Emitir Nota Fiscal de Serviços mensalmente.</p>
+        <p>5.2. Obriga-se a CONTRATANTE a:</p>
+        <p class="item-lista">a) Fornecer documentos, informações e acesso aos ambientes necessários à execução dos serviços;</p>
+        <p class="item-lista">b) Disponibilizar colaboradores para treinamentos, avaliações e visitas técnicas agendadas;</p>
+        <p class="item-lista">c) Informar tempestivamente qualquer acidente de trabalho ou alteração relevante no quadro de colaboradores, funções ou atividades;</p>
+        <p class="item-lista">d) Disponibilizar acesso aos sistemas do eSocial (certificado digital ou procuração eletrônica), quando necessário;</p>
+        <p class="item-lista">e) Efetuar os pagamentos mensais nas condições pactuadas.</p>
+
+        <h3>CLÁUSULA 6 – DO PREÇO E DAS CONDIÇÕES DE PAGAMENTO</h3>
+        <p>6.1. O valor mensal dos serviços é de <strong>R$ 2.589,00 (dois mil, quinhentos e oitenta e nove reais)</strong>, totalizando <strong>R$ 31.068,00 (trinta e um mil e sessenta e oito reais)</strong> para os 12 (doze) meses de vigência.</p>
+        <p>6.2. O pagamento mensal deverá ser efetuado até o dia 10 (dez) de cada mês de competência, a partir do mês de início dos serviços.</p>
+        <p>6.3. O pagamento poderá ser efetuado via boleto bancário, PIX ou transferência bancária.</p>
+
+        <div class="dados-bancarios">
+            <p><strong>Dados bancários da CONTRATADA:</strong></p>
+            <p>Banco: 748 – Banco Cooperativo Sicredi S.A.</p>
+            <p>Agência: 2207</p>
+            <p>Conta Corrente: 65447-7</p>
+            <p>Razão Social: ENGMARQ SOLUTION LTDA</p>
+            <p>CNPJ: 60.545.359/0001-76</p>
+            <p>Chave PIX: CNPJ da CONTRATADA</p>
+        </div>
+
+        <p>6.4. Havendo aumento do quadro de colaboradores acima de 40 (quarenta), inclusão de novas unidades operacionais ou necessidade de serviços adicionais não previstos neste contrato, será elaborado aditivo comercial específico.</p>
+
+        <h3>CLÁUSULA 7 – DO REAJUSTE</h3>
+        <p>7.1. O valor mensal será reajustado anualmente, no aniversário do contrato, com base na variação do INPC/IBGE acumulada nos últimos 12 (doze) meses, ou pelo índice oficial que o substituir.</p>
+
+        <h3>CLÁUSULA 8 – DO INADIMPLEMENTO</h3>
+        <p>8.1. O inadimplemento financeiro por prazo superior a 15 (quinze) dias autoriza a suspensão imediata dos serviços até a integral regularização do débito.</p>
+        <p>8.2. Sobre valores em atraso incidirão multa de 2% (dois por cento) sobre o montante devido, acrescida de juros moratórios de 1% (um por cento) ao mês, calculados pro rata die.</p>
+        <p>8.3. A CONTRATADA não será responsabilizada por eventuais irregularidades ou autuações fiscais decorrentes da suspensão dos serviços por inadimplemento da CONTRATANTE.</p>
+
+        <h3>CLÁUSULA 9 – DOS SERVIÇOS NÃO INCLUSOS</h3>
+        <p>9.1. Não estão inclusos no valor mensal deste contrato:</p>
+        <p class="item-lista">a) Medições ambientais quantitativas que excedam as previstas na Cláusula 2.1.4, as quais serão negociadas em proposta específica complementar;</p>
+        <p class="item-lista">b) Treinamentos adicionais além dos previstos no escopo, reciclagens extraordinárias ou capacitação de turmas que excedam 15 (quinze) alunos por turma;</p>
+        <p class="item-lista">c) Elaboração de laudos ou documentos não contemplados no escopo deste contrato;</p>
+        <p class="item-lista">d) Representação da CONTRATANTE perante órgãos fiscalizadores ou em processos administrativos e judiciais;</p>
+        <p class="item-lista">e) Honorários médicos relativos aos exames ocupacionais previstos no PCMSO.</p>
+
+        <h3>CLÁUSULA 10 – DA RESPONSABILIDADE TÉCNICA</h3>
+        <p>10.1. A responsabilidade da CONTRATADA limita-se à prestação técnica dos serviços contratados, elaboração de documentos, orientações e recomendações de SST, não abrangendo a implementação operacional das medidas sugeridas, a qual é de responsabilidade exclusiva da CONTRATANTE.</p>
+        <p>10.2. A CONTRATANTE é responsável por adotar as medidas corretivas e preventivas recomendadas nos documentos e relatórios elaborados pela CONTRATADA.</p>
+
+        <h3>CLÁUSULA 11 – DA CONFIDENCIALIDADE E LGPD</h3>
+        <p>11.1. As informações obtidas no âmbito deste contrato são estritamente confidenciais e serão utilizadas exclusivamente para a execução do seu objeto.</p>
+        <p>11.2. O tratamento de dados pessoais dos colaboradores da CONTRATANTE observará as disposições da Lei nº 13.709/2018 (LGPD), adotando-se medidas técnicas e administrativas adequadas à proteção dos dados.</p>
+        <p>11.3. Os documentos técnicos produzidos pela CONTRATADA são de sua propriedade intelectual, sendo vedada a reprodução, cessão ou uso para fins diversos do objeto deste contrato sem autorização expressa e por escrito.</p>
+
+        <h3>CLÁUSULA 12 – DA RESCISÃO</h3>
+        <p>12.1. O presente contrato poderá ser rescindido por qualquer das partes mediante aviso prévio de 30 (trinta) dias, por escrito.</p>
+        <p>12.2. Em caso de rescisão imotivada pela CONTRATANTE antes do término da vigência anual, serão devidos os valores proporcionais aos meses restantes do período contratado vigente, a título de cláusula penal, limitados a 3 (três) mensalidades.</p>
+        <p>12.3. A rescisão por descumprimento de obrigações contratuais poderá ser imediata, após notificação formal com prazo de 10 (dez) dias para regularização.</p>
+
+        <h3>CLÁUSULA 13 – DO FORO</h3>
+        <p>13.1. Fica eleito o foro da Comarca de Natal/RN para dirimir quaisquer controvérsias oriundas do presente contrato, com renúncia expressa a qualquer outro, por mais privilegiado que seja.</p>
+
+        <p>E, por estarem as partes assim justas e contratadas, firmam o presente instrumento em 2 (duas) vias de igual teor e forma.</p>
+
+        <div class="contrato-assinaturas" style="page-break-before: always;">
+            <p class="contrato-local-data">Parnamirim/RN, 18 de maio de 2026.</p>
+
+            <div class="assinatura-bloco">
+                <p class="assinatura-label">CONTRATADA:</p>
+                <div class="assinatura-linha"></div>
+                <p class="assinatura-nome">ENGMARQ SOLUTION LTDA</p>
+                <p class="assinatura-cargo">Thiago Marques – Diretor | CNPJ: 60.545.359/0001-76</p>
+            </div>
+
+            <div class="assinatura-bloco">
+                <p class="assinatura-label">CONTRATANTE:</p>
+                <div class="assinatura-linha"></div>
+                <p class="assinatura-nome">SPE KA EMPREENDIMENTOS IMOBILIARIOS LTDA</p>
+                <p class="assinatura-cargo">Representante Legal | CNPJ: 53.530.434/0001-60</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+        console.log('📄 Contrato - SPE KA Empreendimentos Imobiliários LTDA (TM0051)');
+        console.log('💡 Pressione Ctrl+P ou clique em "Gerar PDF"');
+    </script>
+</body>
+</html>

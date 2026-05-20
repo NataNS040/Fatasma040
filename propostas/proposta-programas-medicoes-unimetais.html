@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta - Programas de SST com Medições - Grupo Unimetais | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child { page-break-after: auto; }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .page-header-logo { height: 35px; }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+            z-index: 10;
+        }
+
+        .page-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        /* ====== CAPA ====== */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(245, 166, 35, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            width: 180px;
+            margin-bottom: 28px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            background: rgba(56, 161, 105, 0.9);
+            color: var(--white-color);
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-icon i { font-size: 28px; color: var(--secondary-color); }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title span { color: var(--secondary-color); display: block; }
+
+        .cover-subtitle {
+            font-size: 13px;
+            font-weight: 300;
+            margin-bottom: 28px;
+            opacity: 0.95;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 18px 35px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            max-width: 420px;
+        }
+
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .cover-date {
+            margin-top: 22px;
+            font-size: 12px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+            padding: 0 18mm;
+        }
+
+        /* ====== TÍTULOS ====== */
+        .section-number {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .section-title-text { flex: 1; }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 7px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title i { color: var(--secondary-color); }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        /* Boxes */
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+            padding: 10px 12px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--alert-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px 12px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; }
+        .highlight-box strong { color: var(--primary-color); }
+
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 10px 12px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 10px 12px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .green-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--success-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+            border-left: 4px solid var(--purple-color);
+            padding: 10px 12px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .purple-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--purple-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .purple-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        /* Feature list */
+        .feature-list { list-style: none; margin: 8px 0; }
+
+        .feature-list li {
+            padding: 4px 0;
+            padding-left: 22px;
+            position: relative;
+            font-size: 10.5px;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .feature-list li:last-child { border-bottom: none; }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        /* Grid */
+        .factors-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .factor-card {
+            background: var(--light-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .factor-card h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .factor-card h4 i { color: var(--secondary-color); font-size: 11px; }
+        .factor-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
+
+        /* Medições table style list */
+        .medicao-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 6px 8px;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            background: var(--light-color);
+        }
+
+        .medicao-icon {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .medicao-text h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 1px;
+        }
+
+        .medicao-text p { font-size: 9.5px; margin-bottom: 0; line-height: 1.35; }
+
+        /* Conditions */
+        .conditions-list { margin: 6px 0; }
+
+        .condition-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .condition-item:last-child { border-bottom: none; }
+
+        .condition-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--light-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .condition-text strong {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .condition-text span { font-size: 10px; color: var(--gray-color); line-height: 1.3; }
+
+        /* Responsible card */
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            padding: 18px;
+            border-radius: 10px;
+            color: var(--white-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .responsible-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 28px;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .responsible-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; }
+
+        .responsible-contacts { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+
+        .responsible-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+        }
+
+        .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
+
+        /* Contact page */
+        .page-contact { display: flex; flex-direction: column; justify-content: center; }
+        .contact-content { margin: auto 0; }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 28px;
+            color: var(--secondary-color);
+        }
+
+        .contact-title { font-family: var(--font-primary); font-size: 20px; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; }
+        .contact-subtitle { font-size: 12px; color: var(--gray-color); margin-bottom: 20px; max-width: 420px; margin-left: auto; margin-right: auto; }
+
+        .contact-info { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+
+        .contact-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--dark-color); }
+        .contact-item i { color: var(--secondary-color); font-size: 16px; width: 22px; }
+
+        .contact-signature { margin-top: 25px; padding-top: 18px; border-top: 2px solid var(--light-color); }
+        .signature-text { font-size: 10px; color: var(--gray-color); line-height: 1.5; text-align: center; }
+
+        /* Company info grid */
+        .company-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+
+        .company-info-item {
+            padding: 7px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .company-info-item span { font-size: 11px; color: var(--dark-color); font-weight: 500; }
+
+        /* Badge tag */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-family: var(--font-primary);
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-green { background: #c6f6d5; color: #276749; }
+        .badge-blue { background: #bee3f8; color: #1a365d; }
+        .badge-orange { background: #fdebd0; color: #c05621; }
+
+        /* Nota destacada */
+        .nota-box {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 6px 6px 0;
+            padding: 6px 10px;
+            margin: 5px 0;
+            font-size: 10px;
+        }
+
+        .nota-box strong { color: var(--primary-color); }
+
+        /* Impressão */
+        @media print {
+            .pdf-controls { display: none !important; }
+
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+
+            .page {
+                page-break-after: always !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+                position: relative !important;
+            }
+
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover { padding: 20mm 18mm !important; }
+            .page-footer { position: absolute !important; bottom: 8mm !important; left: 15mm !important; right: 15mm !important; font-size: 9px !important; }
+
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position: absolute; top: 22mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 13px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0058</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-hard-hat"></i>
+                Engenharia de Segurança do Trabalho
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Programas de SST com Medições Ambientais</span>
+            </h1>
+            <p class="cover-subtitle">
+                PGR · PCMSO · LTCAT · LIP · Envio eSocial S-2240<br>
+                Elaboração de programas obrigatórios e avaliação quantitativa de agentes ocupacionais com ART
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Grupo Unimetais</p>
+                <p style="font-size: 11px; margin-top: 8px; opacity: 0.9; text-align: center;">8 Empresas | 273 Colaboradores</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                18 de Maio de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: EMPRESAS CONTRATANTES ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre as Empresas Contratantes</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 14px;">
+                <h4><i class="fas fa-building"></i> Proposta Unificada – Grupo Unimetais</h4>
+                <p>Esta proposta foi elaborada para atender às <strong>8 (oito) empresas do Grupo Unimetais</strong>, contemplando a elaboração dos programas obrigatórios de SST (PGR, PCMSO, LTCAT e LIP) com medições ambientais qualificadas e o envio do evento S-2240 ao eSocial, em conformidade com a legislação trabalhista e previdenciária vigente.</p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.5px;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white;">
+                        <th style="padding: 8px; text-align: left; border: 1px solid #e2e8f0; font-size: 9px;">CNPJ</th>
+                        <th style="padding: 8px; text-align: left; border: 1px solid #e2e8f0; font-size: 9px;">Empresa</th>
+                        <th style="padding: 8px; text-align: left; border: 1px solid #e2e8f0; font-size: 9px;">Município/UF</th>
+                        <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 9px;">Colab.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0; font-size: 8.5px;">52.191.745/0001-89</td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Unimetais Caldeiraria Industrial LTDA</strong></td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;">Macaíba - RN</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">32</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0; font-size: 8.5px;">40.778.342/0001-51</td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Unimetais Comércio LTDA</strong></td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;">Cidade Nova – Natal - RN</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">69</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0; font-size: 8.5px;">20.388.082/0001-09</td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Unimetais Indústria e Transformação de Aço LTDA</strong></td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;">Macaíba - RN</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">38</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0; font-size: 8.5px;">05.685.339/0001-92</td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Unimetais Locação de Equipamentos e Serviços LTDA</strong></td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;">Macaíba - RN</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">02</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0; font-size: 8.5px;">35.434.905/0001-54</td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Unimetais Rental Equipamentos LTDA</strong></td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;">Macaíba - RN</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">66</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0; font-size: 8.5px;">35.272.919/0001-19</td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Unimetais Equipamentos Pesados LTDA</strong></td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;">Macaíba - RN</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">44</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0; font-size: 8.5px;">28.169.305/0001-40</td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Unimetais Transporte e Logística LTDA</strong></td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;">Macaíba - RN</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">08</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0; font-size: 8.5px;">11.037.013/0001-51</td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Universo Refrigeração Comércio e Serviços LTDA</strong></td>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;">Alecrim – Natal - RN</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">14</td>
+                    </tr>
+                    <tr style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white; font-weight: 700;">
+                        <td style="padding: 8px; border: 1px solid #e2e8f0;" colspan="3" align="right">TOTAL GERAL</td>
+                        <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 12px;"><strong>273</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="nota-box">
+                <strong><i class="fas fa-info-circle"></i> Nota:</strong> Os riscos psicossociais <strong>não integram o escopo desta proposta</strong>, pois a avaliação já foi realizada pela EngMarq Solution em momento anterior, atendendo à NR-01 atualizada.
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: DADOS DA ENGMARQ ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-building"></i></span>
+                <span class="section-title-text">Dados da Empresa Contratada</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 20px;">
+                <h4><i class="fas fa-info-circle"></i> Informações para Faturamento e Contrato</h4>
+                <p>Abaixo estão os dados cadastrais da EngMarq Solution para formalização contratual e emissão de documentos fiscais.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 22px; padding-bottom: 18px; border-bottom: 2px solid var(--secondary-color);">
+                    <img src="../assets/logoengmarq.png" alt="EngMarq Solution" style="height: 55px;">
+                    <div>
+                        <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 20px; margin-bottom: 4px;">EngMarq Solution LTDA</h3>
+                        <p style="margin: 0; color: var(--gray-color); font-size: 12px;">Engenharia de Segurança e Saúde do Trabalho</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
+                        <p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--dark-color);">60.545.359/0001-76</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
+                        <p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--dark-color);">Engmarq Solution LTDA</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Especialidade</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">Engenharia de Segurança e Medicina do Trabalho</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Localidade</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">Natal – Rio Grande do Norte</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-certificate"></i> Anotação de Responsabilidade Técnica – ART:</strong> Todos os programas de engenharia de segurança elaborados nesta proposta (PGR, LTCAT e LIP) serão acompanhados de ART emitida no CREA-RN, conferindo validade e responsabilidade técnica ao conjunto documental entregue.</p>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 10px;">
+                <p><strong><i class="fas fa-file-contract"></i> Documentação:</strong> Certidões, comprovações de regularidade fiscal e documentos societários estão disponíveis mediante solicitação para processo de homologação de fornecedores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: ESCOPO GERAL DOS SERVIÇOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Escopo Geral dos Serviços</span>
+            </h2>
+
+            <p>Esta proposta contempla a elaboração completa dos programas obrigatórios de Saúde e Segurança do Trabalho para as <strong>8 empresas do Grupo Unimetais</strong>, com realização de medições ambientais quantitativas por instrumentos calibrados e certificados, e o consequente envio das informações ao eSocial.</p>
+
+            <div class="factors-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 12px;">
+                <div class="factor-card" style="border-left-color: #1a365d;">
+                    <h4><i class="fas fa-clipboard-list"></i> PGR – Programa de Gerenciamento de Riscos</h4>
+                    <p>Inventário de riscos físicos, químicos, biológicos, ergonômicos e mecânicos, com medições ambientais qualificadas e plano de ação preventivo.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--success-color);">
+                    <h4><i class="fas fa-heartbeat"></i> PCMSO – Programa de Controle Médico</h4>
+                    <p>Programa de saúde ocupacional com elaboração dos exames médicos obrigatórios conforme os riscos identificados no PGR.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--alert-color);">
+                    <h4><i class="fas fa-file-medical-alt"></i> LTCAT – Laudo Técnico das Condições Ambientais</h4>
+                    <p>Laudo para fins previdenciários, identificando agentes nocivos e embasando eventual aposentadoria especial. Acompanhado de ART.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--purple-color);">
+                    <h4><i class="fas fa-exclamation-triangle"></i> LIP – Laudo de Insalubridade e Periculosidade</h4>
+                    <p>Laudo técnico para caracterização ou descaracterização dos adicionais de insalubridade e periculosidade. Acompanhado de ART.</p>
+                </div>
+            </div>
+
+            <div class="factor-card" style="border-left-color: var(--secondary-color); margin-bottom: 12px; padding: 10px 12px;">
+                <h4 style="font-size: 11px;"><i class="fas fa-cloud-upload-alt"></i> Envio eSocial – Evento S-2240: Condições Ambientais do Trabalho</h4>
+                <p>Responsabilidade pelo envio da carga inicial das condições ambientais ao portal do eSocial, com base nos inventários de riscos e medições realizados, para todas as 8 empresas.</p>
+            </div>
+
+            <div class="alert-box">
+                <h4><i class="fas fa-ban"></i> Fora do Escopo desta Proposta</h4>
+                <p>A avaliação de <strong>Riscos Psicossociais</strong> não integra este escopo, pois já foi realizada pela EngMarq Solution em momento anterior ao desta proposta, atendendo às exigências da NR-01 atualizada para todas as empresas do grupo.</p>
+            </div>
+
+            <div class="green-box">
+                <h4><i class="fas fa-certificate"></i> Garantia de Conformidade Legal</h4>
+                <p>Todos os programas e laudos elaborados guardam conformidade com a <strong>NR-01, NR-09, NR-15, NR-16, NR-07</strong> e demais normas regulamentadoras aplicáveis, bem como com a legislação previdenciária (Decreto nº 3.048/1999) e as exigências do eSocial (Manual de Orientação do eSocial – MOC).</p>
+            </div>
+
+            <div class="nota-box" style="margin-top: 8px;">
+                <strong><i class="fas fa-info-circle"></i> Nota 1:</strong> Serão entregues todos os programas e laudos para os <strong>8 CNPJs</strong> relacionados nesta proposta, individualmente por empresa.
+            </div>
+            <div class="nota-box">
+                <strong><i class="fas fa-stamp"></i> Nota 2:</strong> Todos os programas relacionados à engenharia de segurança (PGR, LTCAT e LIP) serão acompanhados de <strong>Anotação de Responsabilidade Técnica – ART</strong>, emitida no CREA-RN.
+            </div>
+            <div class="nota-box">
+                <strong><i class="fas fa-cloud-upload-alt"></i> Nota 3:</strong> A EngMarq Solution será responsável pelo envio dos <strong>eventos S-2240 – Condições Ambientais do Trabalho</strong> ao eSocial para todas as empresas contempladas.
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: PGR – PROGRAMA DE GERENCIAMENTO DE RISCOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Entregáveis – Programas em SST</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-clipboard-list"></i> 3.1 PGR – Programa de Gerenciamento de Riscos</h3>
+
+            <p>O Programa de Gerenciamento de Riscos é um conjunto de ações coordenadas que visam identificar, avaliar e controlar os riscos presentes nos ambientes de trabalho. Tem como objetivo principal a prevenção de acidentes e doenças ocupacionais, promovendo um ambiente de trabalho mais seguro e saudável para os trabalhadores.</p>
+
+            <p><strong>Irá compor:</strong></p>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-list-ul"></i></div>
+                <div class="medicao-text">
+                    <h4>Inventário Completo de Riscos Ocupacionais</h4>
+                    <p>Levantamento e classificação de riscos físicos, químicos, biológicos, ergonômicos e de acidentes/mecânicos em todos os postos de trabalho.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-volume-up"></i></div>
+                <div class="medicao-text">
+                    <h4>Avaliação do Risco Físico – Ruído (Medição Pontual com Decibelímetro)</h4>
+                    <p>Medição dos níveis de pressão sonora nos ambientes de trabalho para identificação e quantificação do agente físico ruído.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-microphone"></i></div>
+                <div class="medicao-text">
+                    <h4>Avaliação do Risco Físico – Ruído (Dosimetria) — até 60 pontos</h4>
+                    <p>Medição individual por dosímetro para determinação da dose de exposição ao ruído ao longo da jornada de trabalho, sendo considerados <strong>até 60 pontos de medição</strong>.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-sun"></i></div>
+                <div class="medicao-text">
+                    <h4>Avaliação do Risco Ergonômico – Iluminância (Luxímetro)</h4>
+                    <p>Medição dos níveis de iluminação nos ambientes laborais, verificando adequação às exigências da NR-17 e normas técnicas de iluminação.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-thermometer-half"></i></div>
+                <div class="medicao-text">
+                    <h4>Avaliação do Risco Físico – Calor (Termômetro de Globo) — até 10 pontos</h4>
+                    <p>Medição do IBUTG (Índice de Bulbo Úmido e Termômetro de Globo) para avaliação da exposição ao calor conforme NR-15, considerando <strong>até 10 pontos de medição</strong>.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-wave-square"></i></div>
+                <div class="medicao-text">
+                    <h4>Avaliação do Risco Físico – Vibração (Acelerômetro) — até 15 pontos</h4>
+                    <p>Medição da exposição a vibrações de corpo inteiro e/ou mãos-braços por acelerômetro homologado, contemplando <strong>até 15 pontos de medição</strong>.</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: PGR – MEDIÇÕES QUÍMICAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top: 5px;"><i class="fas fa-flask"></i> 3.1.1 Medições de Agentes Químicos – Bomba de Amostragem</h3>
+
+            <p>As avaliações quantitativas dos agentes químicos serão realizadas por meio de <strong>Bomba de Amostragem</strong>, com coleta e análise laboratorial, conforme metodologia NIOSH/OSHA e limites de tolerância da NR-15 e ACGIH. Os agentes a serem avaliados são:</p>
+
+            <div class="medicao-item" style="background: #fff5f5; border: 1px solid #fed7d7;">
+                <div class="medicao-icon" style="background: #c53030;"><i class="fas fa-atom"></i></div>
+                <div class="medicao-text">
+                    <h4 style="color: #c53030;">Determinação de Metais — 4 pontos de medição</h4>
+                    <p>Avaliação da concentração de metais no ar (ex.: ferro, manganês, cromo, etc.) nos ambientes de trabalho industrial, com <strong>4 (quatro) pontos de coleta</strong> por amostragem gravimétrica e análise por ICP-MS.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item" style="background: #fff5f5; border: 1px solid #fed7d7;">
+                <div class="medicao-icon" style="background: #c53030;"><i class="fas fa-wind"></i></div>
+                <div class="medicao-text">
+                    <h4 style="color: #c53030;">Cloreto de Hidrogênio (HCl) — 1 ponto de medição</h4>
+                    <p>Avaliação da exposição ao Cloreto de Hidrogênio (gás ácido) no ambiente de trabalho, com <strong>1 (um) ponto de coleta</strong> por amostragem em tubo de carvão ativado.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item" style="background: #fff5f5; border: 1px solid #fed7d7;">
+                <div class="medicao-icon" style="background: #c53030;"><i class="fas fa-wind"></i></div>
+                <div class="medicao-text">
+                    <h4 style="color: #c53030;">Floureto (com F) — 1 ponto de medição</h4>
+                    <p>Avaliação da concentração de compostos fluorados (F) no ar ambiente, com <strong>1 (um) ponto de coleta</strong> por amostragem específica para fluoretos.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item" style="background: #fff5f5; border: 1px solid #fed7d7;">
+                <div class="medicao-icon" style="background: #c53030;"><i class="fas fa-wind"></i></div>
+                <div class="medicao-text">
+                    <h4 style="color: #c53030;">Floureto de Hidrogênio (HF) — 1 ponto de medição</h4>
+                    <p>Avaliação da exposição ao Fluoreto de Hidrogênio (ácido fluorídrico) no ar dos ambientes laborais, com <strong>1 (um) ponto de coleta</strong> por amostragem dedicada.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 14px;">
+                <p><strong><i class="fas fa-info-circle"></i> Sobre as medições químicas:</strong> As coletas serão realizadas por profissional habilitado, com equipamentos calibrados e certificados. As amostras serão encaminhadas a laboratório acreditado pela CGCRE/INMETRO, garantindo validade técnica e legal dos resultados.</p>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top: 14px;"><i class="fas fa-tasks"></i> 3.1.2 Plano de Ação do PGR</h3>
+
+            <p>Com base nos resultados do inventário de riscos e das medições, será elaborado um <strong>Plano de Ação</strong> estruturado com as medidas de prevenção e controle identificadas, priorizadas conforme a hierarquia de controles da NR-01 (eliminação, substituição, controles de engenharia, controles administrativos e EPIs/EPCs).</p>
+
+            <div class="nota-box">
+                <strong><i class="fas fa-brain"></i> Nota:</strong> O acompanhamento especializado de riscos psicossociais <strong>não faz parte do valor global desta proposta</strong>, uma vez que essa avaliação já foi conduzida pela EngMarq Solution anteriormente para o Grupo Unimetais.
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: PCMSO, LTCAT E LIP ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top: 5px;"><i class="fas fa-heartbeat"></i> 3.2 PCMSO – Programa de Controle Médico de Saúde Ocupacional</h3>
+
+            <p>O PCMSO é um programa obrigatório estabelecido pela <strong>NR-07</strong>, destinado a promover e preservar a saúde dos trabalhadores, articulado com o PGR. Irá compor:</p>
+
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Elaboração do Programa de Controle Médico de Saúde Ocupacional para todas as 8 empresas</li>
+                <li>Definição dos exames médicos ocupacionais obrigatórios (admissional, periódico, retorno ao trabalho, mudança de função e demissional) por função e risco</li>
+                <li>Definição dos exames complementares com base nos agentes de risco identificados no PGR</li>
+                <li>Definição da periodicidade dos exames médicos conforme quadro de riscos e NR-07</li>
+                <li>Orientações ao médico coordenador para emissão do ASO (Atestado de Saúde Ocupacional)</li>
+            </ul>
+
+            <div class="info-box" style="margin-bottom: 14px;">
+                <h4><i class="fas fa-stethoscope"></i> Observação sobre o PCMSO</h4>
+                <p>A realização dos exames médicos em si (clínicos e complementares) e a emissão dos ASOs são de competência do <strong>Médico Coordenador do PCMSO</strong>, contratado separadamente pela empresa. O presente escopo contempla a <strong>elaboração do programa</strong>.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-medical-alt"></i> 3.3 LTCAT – Laudo Técnico das Condições Ambientais do Trabalho</h3>
+
+            <p>O LTCAT é o documento técnico exigido pela <strong>Previdência Social (Decreto nº 3.048/1999)</strong> e pela <strong>NR-09</strong>, que registra as condições ambientais de trabalho, servindo de base para a comprovação de exposição a agentes nocivos para fins de aposentadoria especial e emissão do PPP (Perfil Profissiográfico Previdenciário).</p>
+
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Elaboração do LTCAT individualizado para cada uma das 8 empresas</li>
+                <li>Caracterização dos agentes físicos, químicos e biológicos presentes nos ambientes de trabalho</li>
+                <li>Indicação das funções com ou sem exposição a agentes nocivos para fins de aposentadoria especial</li>
+                <li>Emissão de ART pelo Engenheiro de Segurança do Trabalho no CREA-RN</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> 3.4 LIP – Laudo de Insalubridade e Periculosidade</h3>
+
+            <p>O LIP é o laudo técnico que caracteriza ou descaracteriza o direito ao <strong>adicional de insalubridade ou periculosidade</strong>, conforme os Anexos da <strong>NR-15</strong> e da <strong>NR-16</strong>, respectivamente.</p>
+
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Elaboração do Laudo de Insalubridade e Periculosidade para cada uma das 8 empresas</li>
+                <li>Avaliação qualitativa e quantitativa dos agentes insalubres e situações de periculosidade</li>
+                <li>Definição do grau de insalubridade (mínimo, médio ou máximo) por função e por setor</li>
+                <li>Indicação das medidas de neutralização/eliminação dos agentes, quando aplicável</li>
+                <li>Emissão de ART pelo Engenheiro de Segurança do Trabalho no CREA-RN</li>
+            </ul>
+
+            <div class="green-box">
+                <h4><i class="fas fa-check-double"></i> Documentação Integrada</h4>
+                <p>PGR, LTCAT e LIP serão elaborados de forma integrada e coesa, aproveitando as mesmas medições ambientais e o inventário de riscos, garantindo consistência técnica e jurídica entre os documentos entregues.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 8: eSocial S-2240 ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Evento S-2240 – Condições Ambientais do Trabalho</span>
+            </h2>
+
+            <p>O evento <strong>S-2240</strong> tem como objetivo principal registrar informações detalhadas sobre as condições ambientais de trabalho e os fatores de risco aos quais os trabalhadores estão expostos em seus ambientes laborais. Essas informações são cruciais para garantir a segurança e a saúde dos trabalhadores e cumprir as obrigações legais relacionadas à segurança ocupacional.</p>
+
+            <div class="info-box" style="margin-bottom: 14px;">
+                <h4><i class="fas fa-cloud-upload-alt"></i> Responsabilidade pelo Envio</h4>
+                <p>A EngMarq Solution assumirá a <strong>responsabilidade integral pelo envio dos eventos S-2240</strong> ao portal do eSocial para todas as 8 empresas contempladas nesta proposta, incluindo a carga inicial das condições ambientais com base nos inventários de riscos e medições realizados.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i> O que o S-2240 irá compor nesta proposta</h3>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-database"></i></div>
+                <div class="medicao-text">
+                    <h4>Carga Inicial das Condições Ambientais</h4>
+                    <p>Envio da carga inicial de cada empresa contabilizada na composição de custo desta proposta, contemplando as condições ambientais às quais os funcionários estão expostos, por meio de sistema informatizado de comunicação ao portal do eSocial, a partir dos inventários de riscos ocupacionais realizados para elaboração dos programas e laudos.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-users"></i></div>
+                <div class="medicao-text">
+                    <h4>Vinculação de Trabalhadores por Função e Risco</h4>
+                    <p>Associação de cada trabalhador às condições ambientais identificadas em seu posto de trabalho, conforme as funções mapeadas no PGR.</p>
+                </div>
+            </div>
+
+            <div class="medicao-item">
+                <div class="medicao-icon"><i class="fas fa-building"></i></div>
+                <div class="medicao-text">
+                    <h4>Envio para 8 CNPJs Distintos</h4>
+                    <p>Realização do envio do S-2240 individualmente para cada empresa do grupo, respeitando a individualidade de cada CNPJ e suas respectivas condições ambientais.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 14px;">
+                <p><strong><i class="fas fa-info-circle"></i> Prazo:</strong> O envio do S-2240 será realizado após a conclusão e aprovação dos documentos técnicos (PGR, LTCAT), garantindo que as informações transmitidas ao governo estejam devidamente fundamentadas em laudos e medições.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-gavel"></i> Obrigatoriedade Legal</h3>
+
+            <p>O envio do evento S-2240 é <strong>obrigatório para todas as empresas</strong> que integram o eSocial, independentemente do porte. O não envio ou o envio com informações inconsistentes pode gerar:</p>
+
+            <ul class="feature-list">
+                <li>Autuações fiscais e previdenciárias por inconsistência de dados no eSocial</li>
+                <li>Dificuldades na emissão do PPP (Perfil Profissiográfico Previdenciário) para aposentadoria especial</li>
+                <li>Multas por descumprimento das obrigações acessórias do eSocial</li>
+                <li>Responsabilização em processos trabalhistas por falta de registro das condições de exposição</li>
+            </ul>
+
+            <div class="nota-box">
+                <strong><i class="fas fa-stamp"></i> Nota:</strong> Todos os dados enviados ao eSocial serão respaldados pelas medições ambientais e pelos programas elaborados com ART, garantindo a rastreabilidade e a responsabilidade técnica das informações transmitidas.
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 9: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 14px;">
+                <h4><i class="fas fa-info-circle"></i> Estrutura do Investimento</h4>
+                <p>O valor global apresentado contempla a elaboração de <strong>PGR com medições ambientais, PCMSO, LTCAT, LIP e o envio do S-2240</strong> para as <strong>8 empresas do Grupo Unimetais</strong> (273 colaboradores), incluindo todas as ARTs necessárias.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-calculator"></i> Detalhamento por Empresa</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9px;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white;">
+                        <th style="padding: 8px; text-align: left; border: 1px solid #e2e8f0; font-size: 8.5px;">Empresa</th>
+                        <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 8.5px;">Colab.</th>
+                        <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 8.5px;">PGR+Med.</th>
+                        <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 8.5px;">PCMSO</th>
+                        <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 8.5px;">LTCAT+LIP</th>
+                        <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 8.5px;">S-2240</th>
+                        <th style="padding: 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 8.5px;">Valor Global</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Caldeiraria</strong></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;">32</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; color: var(--gray-color);">—</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Comércio</strong></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;">69</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; color: var(--gray-color);">—</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Indústria e Transformação</strong></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;">38</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; color: var(--gray-color);">—</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Locação de Equipamentos</strong></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;">02</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; color: var(--gray-color);">—</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Rental Equipamentos</strong></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;">66</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; color: var(--gray-color);">—</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Equipamentos Pesados</strong></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;">44</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; color: var(--gray-color);">—</td>
+                    </tr>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Transporte e Logística</strong></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;">08</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; color: var(--gray-color);">—</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 7px 8px; border: 1px solid #e2e8f0;"><strong>Universo Refrigeração</strong></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;">14</td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0;"><span class="badge badge-green">✓</span></td>
+                        <td style="padding: 7px 8px; text-align: center; border: 1px solid #e2e8f0; color: var(--gray-color);">—</td>
+                    </tr>
+                    <tr style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white; font-weight: 700;">
+                        <td style="padding: 9px 8px; border: 1px solid #e2e8f0; font-size: 10px;">TOTAL GERAL</td>
+                        <td style="padding: 9px 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 11px;"><strong>273</strong></td>
+                        <td colspan="4" style="padding: 9px 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 10px;">8 CNPJs contemplados</td>
+                        <td style="padding: 9px 8px; text-align: center; border: 1px solid #e2e8f0; font-size: 12px; background: rgba(56,161,105,0.85);"><strong>R$ 46.200,80</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="nota-box" style="margin-top: 10px;">
+                <strong><i class="fas fa-info-circle"></i> Valor global negociado:</strong> R$ 46.200,80 — inclui PGR com Medições, PCMSO, LTCAT, LIP, Envio S-2240 e ARTs para os 8 CNPJs do Grupo Unimetais.
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 10: CONDIÇÕES COMERCIAIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Condições Comerciais</span>
+            </h2>
+
+            <div class="conditions-list">
+                <div class="condition-item" style="padding: 3px 0;">
+                    <div class="condition-icon"><i class="fas fa-credit-card"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>Sinal de <strong>50% na aprovação</strong> da proposta e os outros <strong>50% para 30 dias</strong> após a assinatura da proposta.</span>
+                    </div>
+                </div>
+                <div class="condition-item" style="padding: 3px 0;">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta comercial é válida por <strong>15 (quinze) dias</strong> a partir da data de emissão.</span>
+                    </div>
+                </div>
+                <div class="condition-item" style="padding: 3px 0;">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Execução</strong>
+                        <span>A elaboração dos programas, laudos, medições e envio do S-2240 será concluída em até <strong>45 (quarenta e cinco) dias úteis</strong> após o pagamento do sinal, condicionado à disponibilidade de acesso às unidades para realização das medições ambientais.</span>
+                    </div>
+                </div>
+                <div class="condition-item" style="padding: 3px 0;">
+                    <div class="condition-icon"><i class="fas fa-stamp"></i></div>
+                    <div class="condition-text">
+                        <strong>Anotação de Responsabilidade Técnica (ART)</strong>
+                        <span>As taxas de ART para os programas de engenharia de segurança (PGR, LTCAT e LIP) estão <strong>inclusas no valor global</strong> desta proposta.</span>
+                    </div>
+                </div>
+                <div class="condition-item" style="padding: 3px 0;">
+                    <div class="condition-icon"><i class="fas fa-flask"></i></div>
+                    <div class="condition-text">
+                        <strong>Análises Laboratoriais</strong>
+                        <span>As análises laboratoriais para os agentes químicos (Determinação de Metais, Cloreto de Hidrogênio, Floureto e Floureto de Hidrogênio) serão enviadas a laboratório acreditado pelo INMETRO e <strong>estão inclusas no valor global</strong>.</span>
+                    </div>
+                </div>
+                <div class="condition-item" style="padding: 3px 0;">
+                    <div class="condition-icon"><i class="fas fa-building"></i></div>
+                    <div class="condition-text">
+                        <strong>Acesso às Unidades</strong>
+                        <span>O Grupo Unimetais deverá providenciar o acesso das equipes técnicas da EngMarq Solution às unidades para a realização das visitas técnicas e medições ambientais em datas a serem agendadas.</span>
+                    </div>
+                </div>
+                <div class="condition-item" style="padding: 3px 0;">
+                    <div class="condition-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <div class="condition-text">
+                        <strong>eSocial – Acesso para Envio do S-2240</strong>
+                        <span>Para o envio do evento S-2240, o Grupo Unimetais deverá fornecer o acesso ao portal do eSocial de cada empresa ou procuração eletrônica para que a EngMarq Solution realize o envio em nome das empresas.</span>
+                    </div>
+                </div>
+                <div class="condition-item" style="padding: 3px 0;">
+                    <div class="condition-icon"><i class="fas fa-headset"></i></div>
+                    <div class="condition-text">
+                        <strong>Suporte Pós-Entrega</strong>
+                        <span>Suporte técnico por <strong>60 dias</strong> após a entrega de todos os documentos para esclarecimento de dúvidas sobre os programas e laudos elaborados.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 5px; padding: 7px 10px;">
+                <h4><i class="fas fa-certificate"></i> Garantia Técnica</h4>
+                <p>Todos os trabalhos são realizados por <strong>Engenheiro de Segurança do Trabalho</strong> e equipe multidisciplinar habilitada, utilizando equipamentos calibrados e certificados pelo INMETRO, em conformidade com as Normas Regulamentadoras e legislação previdenciária vigente.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 11: RESPONSÁVEL ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <p style="text-align: center; margin-bottom: 25px; color: var(--gray-color);">
+                Esta proposta foi elaborada por profissional habilitado, com equipe técnica dedicada à excelência na gestão de Saúde e Segurança do Trabalho para o Grupo Unimetais.
+            </p>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="responsible-name">Thiago Marques</h3>
+                <p class="responsible-role" style="text-align: center;">Diretor</p>
+                <p class="responsible-company" style="text-align: center;">EngMarq Solution</p>
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="green-box" style="margin-top: 20px;">
+                <h4><i class="fas fa-headset"></i> Atendimento Especializado</h4>
+                <p>Estamos à disposição para esclarecer qualquer dúvida sobre o escopo dos serviços, ajustar a proposta conforme necessidade e acompanhar todo o processo de elaboração dos programas, medições e envio ao eSocial para o Grupo Unimetais.</p>
+            </div>
+
+            <div class="info-box" style="margin-top: 12px;">
+                <h4><i class="fas fa-clock"></i> Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 08h às 18h | Sábado: 08h às 12h</p>
+                <p style="margin-top: 6px;"><strong>Atendimento via WhatsApp:</strong> Resposta em até 2 horas durante o horário comercial</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 12: ENCERRAMENTO ====== -->
+        <div class="page page-contact">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="contact-title" style="text-align: center;">Garanta a Conformidade Legal do Grupo Unimetais</h2>
+                <p class="contact-subtitle" style="text-align: center;">
+                    A elaboração do PGR, PCMSO, LTCAT e LIP com medições ambientais, aliada ao envio do S-2240 ao eSocial, é a base para a proteção jurídica, trabalhista e previdenciária de todas as empresas do grupo.
+                </p>
+
+                <div class="green-box" style="text-align: left; max-width: 460px; margin: 0 auto 25px;">
+                    <h4><i class="fas fa-check-circle"></i> Tudo em um único fornecedor</h4>
+                    <p>PGR com medições qualificadas · PCMSO · LTCAT com ART · LIP com ART · Envio do S-2240 para 8 CNPJs — tudo entregue pela EngMarq Solution com responsabilidade técnica e rastreabilidade.</p>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+
+                <div class="contact-signature">
+                    <p class="signature-text">
+                        <strong>EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        <em>Garantindo segurança jurídica para sua empresa.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 13: TERMO DE ACEITE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial – Programas de SST com Medições</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite da Proposta</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 20px;">
+                <h4><i class="fas fa-check-circle"></i> Declaração de Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços de elaboração de PGR com Medições, PCMSO, LTCAT, LIP e Envio do S-2240 para as 8 empresas do Grupo Unimetais.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 18px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 15px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--secondary-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+                <div style="margin-bottom: 12px;">
+                    <p style="margin: 0; font-size: 12px; font-weight: 600;">Thiago Marques – Diretor</p>
+                </div>
+                <div style="margin-top: 22px; padding-top: 12px; border-top: 1px dashed var(--gray-color);">
+                    <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 32px; max-width: 450px;"></div>
+                    <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura do Proponente &nbsp;|&nbsp; Data: ____/____/2026</p>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 15px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--primary-color); padding-bottom: 10px;">
+                    <i class="fas fa-user-tie" style="color: var(--primary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Grupo / Empresa</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Grupo Unimetais</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Empresas Contempladas</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">8 Empresas do Grupo</p>
+                    </div>
+                </div>
+                <div style="margin-top: 22px; padding-top: 12px; border-top: 1px dashed var(--gray-color);">
+                    <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 32px; max-width: 450px;"></div>
+                    <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura do Aprovador</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        console.log('📄 EngMarq Solution – Proposta: Programas de SST com Medições – Grupo Unimetais');
+        console.log('💡 Clique em "Gerar PDF" ou pressione Ctrl+P');
+        console.log('✅ Selecione "Salvar como PDF" na janela de impressão');
+    </script>
+</body>
+</html>

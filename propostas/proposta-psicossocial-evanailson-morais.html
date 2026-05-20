@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0062 — Plataforma Psicossocial | Evanailson de Souza Morais | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #6b46c1;
+            --purple-light: #e9d8fd;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; }
+
+        /* Controles de PDF */
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 260px;
+        }
+
+        .btn-generate {
+            background: var(--purple-color);
+            color: var(--white-color);
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: #553c9a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(107,70,193,0.4);
+        }
+
+        .pdf-instructions {
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--purple-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--purple-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--purple-color);
+            margin-bottom: 6px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 11px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 16px;
+            margin: 0;
+        }
+
+        /* Container A4 */
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child { page-break-after: auto; }
+
+        /* Header de página */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 14px;
+            border-bottom: 2px solid var(--light-color);
+        }
+
+        .page-header-logo { height: 32px; }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer de página */
+        .page-footer {
+            position: absolute;
+            bottom: 12mm;
+            left: 15mm;
+            right: 15mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+            z-index: 10;
+        }
+
+        .page-number { font-weight: 600; color: var(--purple-color); }
+
+        /* ====== CAPA ====== */
+        .page-cover {
+            background: linear-gradient(160deg, #1a1a4e 0%, #2d1b69 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(107, 70, 193, 0.25) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            width: 160px;
+            margin-bottom: 28px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            background: rgba(107, 70, 193, 0.85);
+            color: var(--white-color);
+            padding: 9px 22px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(107, 70, 193, 0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+            border: 2px solid rgba(107,70,193,0.5);
+        }
+
+        .cover-icon i { font-size: 30px; color: #b794f4; }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            line-height: 1.25;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title span { color: #b794f4; display: block; }
+
+        .cover-subtitle {
+            font-size: 13px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.92;
+            max-width: 430px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+            line-height: 1.55;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 16px 32px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+            max-width: 400px;
+        }
+
+        .cover-date { text-align: center; }
+
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.75;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            font-weight: 700;
+            color: #b794f4;
+            text-align: center;
+        }
+
+        .cover-date {
+            margin-top: 22px;
+            font-size: 11px;
+            opacity: 0.75;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 16mm;
+            left: 0; right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.65;
+            padding: 0 18mm;
+        }
+
+        /* Seções */
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 9px;
+            border-bottom: 3px solid var(--purple-color);
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--purple-color);
+            color: var(--white-color);
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        p {
+            margin-bottom: 8px;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .text-justify { text-align: justify; }
+        .text-center  { text-align: center; }
+
+        /* Caixas */
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, var(--purple-light) 100%);
+            border-left: 4px solid var(--purple-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .purple-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--purple-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .purple-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; text-align: justify; }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .green-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--success-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; text-align: justify; }
+
+        /* Tabela de empresas */
+        .companies-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 10px;
+        }
+
+        .companies-table thead tr {
+            background: linear-gradient(135deg, var(--purple-color) 0%, #553c9a 100%);
+            color: white;
+        }
+
+        .companies-table th {
+            padding: 9px 8px;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .companies-table td {
+            padding: 9px 8px;
+            border-bottom: 1px solid var(--light-color);
+            vertical-align: middle;
+            font-size: 10px;
+        }
+
+        .companies-table tbody tr:nth-child(even) { background: var(--light-color); }
+
+        .companies-table tfoot tr {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            color: white;
+        }
+
+        .companies-table tfoot td {
+            padding: 10px 8px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 11px;
+            border: none;
+        }
+
+        /* Tabela de investimento */
+        .payment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 10px;
+        }
+
+        .payment-table thead tr {
+            background: linear-gradient(135deg, var(--purple-color) 0%, #553c9a 100%);
+            color: white;
+        }
+
+        .payment-table th {
+            padding: 9px 8px;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .payment-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--light-color);
+            vertical-align: middle;
+            font-size: 10px;
+        }
+
+        .payment-table tbody tr:nth-child(even) { background: var(--light-color); }
+
+        .payment-table tfoot tr {
+            background: linear-gradient(135deg, var(--purple-color) 0%, #553c9a 100%);
+            color: white;
+        }
+
+        .payment-table tfoot td {
+            padding: 12px 8px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+        }
+
+        /* Company info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .info-item {
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--purple-color);
+        }
+
+        .info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .info-item span {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        /* Feature list */
+        .feature-list { list-style: none; margin: 8px 0; }
+
+        .feature-list li {
+            padding: 4px 0 4px 20px;
+            position: relative;
+            font-size: 11px;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .feature-list li:last-child { border-bottom: none; }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--purple-color);
+            font-size: 9px;
+            top: 6px;
+        }
+
+        /* Print */
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                page-break-after: always !important;
+                break-after: page !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 13mm 15mm 20mm 15mm !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+                position: relative !important;
+            }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover { padding: 22mm 18mm !important; }
+            .page-footer {
+                position: absolute !important;
+                bottom: 8mm !important;
+                left: 15mm !important;
+                right: 15mm !important;
+                font-size: 9px !important;
+            }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position: absolute; top: 22mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 13px; font-weight: 700; color: #b794f4; letter-spacing: 3px; z-index: 2;">TM0062</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-brain"></i>
+                Avaliação Psicossocial
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-brain"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Plataforma de Avaliação Psicossocial</span>
+            </h1>
+            <p class="cover-subtitle" style="text-align: center;">
+                Gestão digital dos riscos psicossociais conforme a nova <strong style="color: #b794f4;">NR-01</strong> em vigor a partir de maio de 2026 — questionários online, relatórios técnicos e integração ao PGR
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Evanailson de Souza Morais</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;20 de Maio de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p style="text-align: center;">EngMarq Solution | SST que traz segurança jurídica | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: DADOS DA EMPRESA CONTRATADA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0062 — Plataforma de Avaliação Psicossocial</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-building"></i></span>
+                <span>Dados da Empresa Contratada</span>
+            </h2>
+
+            <div class="green-box" style="margin-bottom: 25px;">
+                <h4><i class="fas fa-info-circle"></i> Informações para Faturamento e Contrato</h4>
+                <p>Abaixo estão os dados cadastrais da EngMarq Solution para formalização contratual e emissão de documentos fiscais.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 30px; margin-bottom: 25px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid var(--purple-color);">
+                    <img src="../assets/logoengmarq.png" alt="EngMarq Solution" style="height: 60px;">
+                    <div>
+                        <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 20px; margin-bottom: 5px;">EngMarq Solution LTDA</h3>
+                        <p style="margin: 0; color: var(--gray-color); font-size: 13px;">Engenharia de Segurança e Saúde do Trabalho</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">60.545.359/0001-76</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">Engmarq Solution LTDA</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-left: 4px solid #d97706; padding: 10px 12px; border-radius: 0 8px 8px 0;">
+                <h4 style="font-family: var(--font-primary); font-size: 12px; color: #b45309; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-file-contract"></i> Documentação
+                </h4>
+                <p style="margin: 0; font-size: 11px; line-height: 1.4; text-align: justify; color: var(--dark-color);">Todos os documentos societários, certidões e comprovações de regularidade fiscal estão disponíveis mediante solicitação para processo de homologação de fornecedores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: DADOS + OBJETO + EMPRESAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0062 — Plataforma de Avaliação Psicossocial</span>
+            </div>
+
+            <!-- CONTRATANTE -->
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span>Dados do Contratante</span>
+            </h2>
+
+            <div class="info-grid" style="margin-bottom: 14px;">
+                <div class="info-item" style="grid-column: span 2;">
+                    <label>Nome Completo</label>
+                    <span>Evanailson de Souza Morais</span>
+                </div>
+                <div class="info-item">
+                    <label>CPF</label>
+                    <span>075.945.394-27</span>
+                </div>
+                <div class="info-item">
+                    <label>Data da Proposta</label>
+                    <span>20 de Maio de 2026</span>
+                </div>
+            </div>
+
+            <!-- OBJETO -->
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span>Objeto da Proposta</span>
+            </h2>
+
+            <div class="purple-box" style="margin-bottom: 10px;">
+                <h4><i class="fas fa-brain"></i> Plataforma de Avaliação Psicossocial — EngMarq</h4>
+                <p>Disponibilização e operação da plataforma digital EngMarq para condução da avaliação dos fatores de riscos psicossociais nas empresas listadas abaixo, em conformidade com a <strong>nova NR-01 (em vigor: maio de 2026)</strong>. A plataforma realiza a aplicação online dos questionários, consolida as respostas dos colaboradores e gera os relatórios técnicos para integração ao PGR de cada empresa.</p>
+            </div>
+
+            <ul class="feature-list" style="margin-bottom: 14px;">
+                <li>Aplicação digital dos questionários psicossociais aos colaboradores</li>
+                <li>Consolidação e análise automatizada dos dados coletados</li>
+                <li>Geração de Relatório Técnico de Avaliação Psicossocial por empresa</li>
+                <li>Classificação dos riscos por nível (baixo, moderado, alto)</li>
+                <li>Integração dos resultados ao PGR de cada empresa</li>
+                <li>Suporte técnico 100% EAD (online)</li>
+            </ul>
+
+            <!-- EMPRESAS -->
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span>Empresas Contempladas</span>
+            </h2>
+
+            <table class="companies-table">
+                <thead>
+                    <tr>
+                        <th style="width: 45%;">Razão Social</th>
+                        <th style="width: 30%;">CNPJ</th>
+                        <th style="width: 25%; text-align: center;">Colaboradores</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Restaurante e Pizzaria Estacao</strong></td>
+                        <td>32.962.072/0001-06</td>
+                        <td style="text-align: center;">37</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JC Metais e Construcoes Ltda</strong></td>
+                        <td>59.669.380/0001-02</td>
+                        <td style="text-align: center;">7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CJ Metais e Construções Ltda</strong></td>
+                        <td>18.282.214/0001-63</td>
+                        <td style="text-align: center;">10</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><i class="fas fa-users"></i>&nbsp; Total de colaboradores</td>
+                        <td style="text-align: center; font-size: 13px;">54</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0062 — Plataforma de Avaliação Psicossocial</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span>Investimento e Condições de Pagamento</span>
+            </h2>
+
+            <div class="purple-box" style="margin-bottom: 14px;">
+                <h4><i class="fas fa-file-contract"></i> Modalidade</h4>
+                <p>Contratação pontual da plataforma de avaliação psicossocial para as 3 empresas listadas nesta proposta, com acesso liberado mediante pagamento da entrada.</p>
+            </div>
+
+            <table class="payment-table" style="margin-bottom: 12px;">
+                <thead>
+                    <tr>
+                        <th style="width: 55%;">Parcela</th>
+                        <th style="width: 25%; text-align: center;">Vencimento</th>
+                        <th style="width: 20%; text-align: center;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><i class="fas fa-key" style="color: var(--purple-color); margin-right: 6px;"></i><strong>Entrada</strong> — liberação do acesso à plataforma</td>
+                        <td style="text-align: center;">Na assinatura</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--purple-color);">R$ 1.000,00</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-calendar-check" style="color: var(--purple-color); margin-right: 6px;"></i><strong>2ª Parcela</strong></td>
+                        <td style="text-align: center;">30 dias</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--purple-color);">R$ 500,00</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fas fa-calendar-check" style="color: var(--purple-color); margin-right: 6px;"></i><strong>3ª Parcela</strong></td>
+                        <td style="text-align: center;">60 dias</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--purple-color);">R$ 500,00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><i class="fas fa-calculator"></i>&nbsp; TOTAL — 3 empresas / 54 colaboradores</td>
+                        <td style="text-align: center; color: white; font-size: 15px;">R$ 2.000,00</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="green-box">
+                <h4><i class="fas fa-info-circle"></i> Condições</h4>
+                <p>Pagamento via PIX ou transferência bancária. Esta proposta é válida por <strong>10 dias corridos</strong> a partir da data de emissão. Cronograma de aplicação da avaliação será definido após assinatura.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0062 — Plataforma de Avaliação Psicossocial</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span>Termo de Aceite e Assinaturas</span>
+            </h2>
+
+            <div class="purple-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação da plataforma de avaliação psicossocial para as 3 empresas especificadas.</p>
+            </div>
+
+            <!-- CONTRATADA -->
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> CONTRATADA — EngMarq Solution
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; text-align: left;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; text-align: left;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; text-align: left;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; text-align: left;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600; text-align: left;">Thiago Marques — Diretor Técnico</p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura da Contratada</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTRATANTE -->
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-user" style="color: var(--purple-color);"></i> CONTRATANTE
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; text-align: left;">Nome Completo</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; text-align: left;">Evanailson de Souza Morais</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; text-align: left;">CPF</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; text-align: left;">075.945.394-27</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; text-align: left;">Empresas Contratantes</p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; line-height: 1.7; text-align: left;">
+                        Restaurante e Pizzaria Estacao — CNPJ 32.962.072/0001-06<br>
+                        JC Metais e Construcoes Ltda — CNPJ 59.669.380/0001-02<br>
+                        CJ Metais e Construções Ltda — CNPJ 18.282.214/0001-63
+                    </p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Contratante</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+    </div><!-- /pdf-content -->
+</body>
+</html>
