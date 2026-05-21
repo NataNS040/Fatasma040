@@ -312,21 +312,75 @@ html,body{height:100%;overflow:hidden;background:#000;font-family:var(--f2);colo
 .proc-step p{font-size:12px;color:var(--gray);line-height:1.5}
 
 @media print{
-  @page{size:landscape;margin:0}
-  html,body{overflow:auto;height:auto;width:100%;margin:0;padding:0}
+  /* Página com proporção 16:9 fixa (1600x900 px → ~16.93in x 9.52in) */
+  @page{size:1600px 900px;margin:0}
+
+  /* Forçar impressão de cores, gradientes, sombras e backgrounds em TODOS elementos */
+  *,*::before,*::after{
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+    color-adjust:exact!important;
+    animation:none!important;
+    transition:none!important;
+  }
+
+  html,body{
+    margin:0!important;padding:0!important;
+    width:1600px!important;height:auto!important;
+    overflow:visible!important;
+    background:#0a0e1a!important;
+  }
+
   .gate,.controls,.help-hint,.brand-corner,.progress-bar{display:none!important}
-  .presentation{position:static!important;width:100%;height:auto;overflow:visible;background:none}
+
+  .presentation{
+    position:static!important;
+    width:1600px!important;height:auto!important;
+    overflow:visible!important;
+    background:none!important;
+    inset:auto!important;
+  }
+
   .slide{
     position:relative!important;inset:auto!important;
+    left:0!important;top:0!important;
     opacity:1!important;visibility:visible!important;
     transform:none!important;
-    width:100%;height:100vh;
-    page-break-after:always;break-after:page;
-    overflow:hidden;
+    width:1600px!important;height:900px!important;
+    page-break-after:always!important;break-after:page!important;
+    page-break-inside:avoid!important;break-inside:avoid!important;
+    overflow:hidden!important;
+    display:flex!important;
   }
+  .slide:last-child{page-break-after:auto!important;break-after:auto!important}
+
   .slide.active,.slide.prev,.slide.next{transform:none!important}
-  .quote-card,.thanks-card{position:absolute!important;inset:0!important}
-  .anim,.anim-zoom,.anim-left,.anim-right{opacity:1!important;transform:none!important}
+
+  /* Reposiciona overlays absolutos dentro do slide com tamanho fixo */
+  .quote-card,.thanks-card{
+    position:absolute!important;inset:0!important;
+    width:1600px!important;height:900px!important;
+  }
+
+  /* Garante que elementos animados apareçam no estado final */
+  .anim,.anim-zoom,.anim-left,.anim-right{
+    opacity:1!important;transform:none!important;
+  }
+  .bird-row{transform:scale(1)!important;opacity:1!important}
+  .thanks-icon{transform:none!important}
+
+  /* Texto com gradiente (-webkit-background-clip:text) precisa de cor de fallback
+     porque alguns motores de impressão ignoram o clip e mostram transparente */
+  .cover-title .acc,.thanks-title .acc{
+    -webkit-text-fill-color:#f5a623!important;
+    color:#f5a623!important;
+    background:none!important;
+  }
+  .divider-num{
+    -webkit-text-fill-color:rgba(245,166,35,.25)!important;
+    color:rgba(245,166,35,.25)!important;
+    background:none!important;
+  }
 }
 
 /* Estado sem animações para exportação PDF */
