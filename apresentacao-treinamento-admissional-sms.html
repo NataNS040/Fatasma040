@@ -328,6 +328,16 @@ html,body{height:100%;overflow:hidden;background:#000;font-family:var(--f2);colo
   .quote-card,.thanks-card{position:absolute!important;inset:0!important}
   .anim,.anim-zoom,.anim-left,.anim-right{opacity:1!important;transform:none!important}
 }
+
+/* Estado sem animações para exportação PDF */
+body.pdf-export *{animation:none!important;transition:none!important}
+body.pdf-export .anim,
+body.pdf-export .anim-zoom,
+body.pdf-export .anim-left,
+body.pdf-export .anim-right{opacity:1!important;transform:none!important}
+body.pdf-export .bird-row{transform:scale(1)!important}
+body.pdf-export .slide.active .bird-row{animation:none!important;transform:scale(1)!important}
+body.pdf-export .thanks-icon{animation:none!important;transform:none!important}
 </style>
 <style>
 .gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#0a0e1a 0%,#0f172a 50%,#1a1f2e 100%);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif}
@@ -1260,7 +1270,6 @@ html,body{height:100%;overflow:hidden;background:#000;font-family:var(--f2);colo
 async function exportPDF(slides, total, savedIdx, showFn) {
   const btn = document.getElementById('btnPrint');
 
-  // Load libraries on demand
   function loadScript(src) {
     return new Promise((res, rej) => {
       if (document.querySelector('script[src="'+src+'"]')) { res(); return; }
@@ -1273,37 +1282,56 @@ async function exportPDF(slides, total, savedIdx, showFn) {
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
+  // Esconder UI temporariamente
+  const uiHide = ['controls','brand-corner','help-hint','progress-bar'];
+  const hidden = uiHide.map(c => {
+    const el = document.querySelector('.'+c);
+    if(el){ const prev = el.style.display; el.style.display='none'; return {el, prev}; }
+    return null;
+  }).filter(Boolean);
+
+  // Desativar animações
+  document.body.classList.add('pdf-export');
+
   try {
     await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
     await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
 
     const { jsPDF } = window.jspdf;
-    const pres = document.querySelector('.presentation');
-    const W = pres.offsetWidth;
-    const H = pres.offsetHeight;
+    const W = window.innerWidth;
+    const H = window.innerHeight;
 
     const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [W, H], compress: true });
 
     for (let i = 0; i < total; i++) {
-      // Activate slide
       slides.forEach((s, idx) => {
         s.classList.remove('active', 'prev', 'next');
         if (idx === i) s.classList.add('active');
       });
       btn.title = 'Exportando... ' + (i + 1) + '/' + total;
 
-      // Wait for animations to settle
-      await new Promise(r => setTimeout(r, 350));
+      // Aguardar repaint
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+      await new Promise(r => setTimeout(r, 80));
 
-      const canvas = await html2canvas(pres, {
+      const canvas = await html2canvas(document.documentElement, {
         useCORS: true,
         allowTaint: true,
         scale: 1.5,
+        x: 0,
+        y: 0,
         width: W,
         height: H,
+        scrollX: 0,
+        scrollY: 0,
         windowWidth: W,
         windowHeight: H,
-        logging: false
+        logging: false,
+        onclone: (doc) => {
+          doc.body.classList.add('pdf-export');
+          doc.querySelectorAll('.controls,.brand-corner,.help-hint,.progress-bar,.gate')
+            .forEach(el => el.style.display = 'none');
+        }
       });
 
       const imgData = canvas.toDataURL('image/jpeg', 0.92);
@@ -1316,8 +1344,11 @@ async function exportPDF(slides, total, savedIdx, showFn) {
 
     pdf.save('treinamento-admissional-sms.pdf');
   } catch(err) {
-    alert('Erro ao gerar PDF: ' + err.message);
+    alert('Erro ao gerar PDF: ' + err.message + '\n\nVerifique o console (F12) para detalhes.');
+    console.error('[exportPDF]', err);
   } finally {
+    hidden.forEach(({el, prev}) => el.style.display = prev);
+    document.body.classList.remove('pdf-export');
     showFn(savedIdx);
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-print"></i>';
