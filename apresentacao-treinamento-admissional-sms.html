@@ -1282,6 +1282,20 @@ async function exportPDF(slides, total, savedIdx, showFn) {
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
+  // Dimensões fixas do "palco" (16:9) — independem do tamanho da janela
+  const STAGE_W = 1600;
+  const STAGE_H = 900;
+
+  // Cria um stage isolado fora da tela onde renderizamos cada slide com tamanho fixo
+  const stage = document.createElement('div');
+  stage.id = 'pdf-stage';
+  stage.style.cssText =
+    'position:fixed;left:0;top:0;width:'+STAGE_W+'px;height:'+STAGE_H+'px;'+
+    'z-index:-1;pointer-events:none;overflow:hidden;'+
+    'background:linear-gradient(135deg,#0a0e1a 0%,#0f172a 50%,#1a1f2e 100%);'+
+    'transform:translate(-200vw,-200vh);'; // fora da viewport, mas com layout ativo
+  document.body.appendChild(stage);
+
   // Esconder UI temporariamente
   const uiHide = ['controls','brand-corner','help-hint','progress-bar'];
   const hidden = uiHide.map(c => {
@@ -1290,56 +1304,95 @@ async function exportPDF(slides, total, savedIdx, showFn) {
     return null;
   }).filter(Boolean);
 
-  // Desativar animações
   document.body.classList.add('pdf-export');
+
+  // Salvar posições originais dos slides para restaurar
+  const placeholders = slides.map(s => {
+    const ph = document.createComment('slide-placeholder');
+    s.parentNode.insertBefore(ph, s);
+    return ph;
+  });
+  // Salvar inline style original
+  const originalStyles = slides.map(s => s.getAttribute('style') || '');
 
   try {
     await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
     await loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
 
     const { jsPDF } = window.jspdf;
-    const W = window.innerWidth;
-    const H = window.innerHeight;
-
-    const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [W, H], compress: true });
+    const pdf = new jsPDF({
+      orientation: 'landscape',
+      unit: 'px',
+      format: [STAGE_W, STAGE_H],
+      compress: true,
+      hotfixes: ['px_scaling']
+    });
 
     for (let i = 0; i < total; i++) {
-      slides.forEach((s, idx) => {
-        s.classList.remove('active', 'prev', 'next');
-        if (idx === i) s.classList.add('active');
-      });
+      const slide = slides[i];
+
+      // Mover slide para o stage com dimensões fixas
+      slide.classList.remove('prev','next');
+      slide.classList.add('active');
+      slide.setAttribute('style',
+        'position:absolute!important;left:0!important;top:0!important;'+
+        'width:'+STAGE_W+'px!important;height:'+STAGE_H+'px!important;'+
+        'inset:auto!important;opacity:1!important;visibility:visible!important;'+
+        'transform:none!important;animation:none!important;transition:none!important;'+
+        'display:flex!important;'
+      );
+      stage.appendChild(slide);
+
       btn.title = 'Exportando... ' + (i + 1) + '/' + total;
 
-      // Aguardar repaint
+      // Aguardar layout/fontes/imagens
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-      await new Promise(r => setTimeout(r, 80));
+      if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch(_){} }
+      const imgs = slide.querySelectorAll('img');
+      await Promise.all(Array.from(imgs).map(img =>
+        img.complete ? Promise.resolve() :
+        new Promise(r => { img.onload = img.onerror = r; })
+      ));
+      await new Promise(r => setTimeout(r, 120));
 
-      const canvas = await html2canvas(document.documentElement, {
+      const canvas = await html2canvas(slide, {
         useCORS: true,
         allowTaint: true,
-        scale: 1.5,
-        x: 0,
-        y: 0,
-        width: W,
-        height: H,
+        backgroundColor: null,
+        scale: 2,
+        width: STAGE_W,
+        height: STAGE_H,
+        windowWidth: STAGE_W,
+        windowHeight: STAGE_H,
         scrollX: 0,
         scrollY: 0,
-        windowWidth: W,
-        windowHeight: H,
         logging: false,
         onclone: (doc) => {
           doc.body.classList.add('pdf-export');
           doc.querySelectorAll('.controls,.brand-corner,.help-hint,.progress-bar,.gate')
             .forEach(el => el.style.display = 'none');
+          // Garantir o slide visível e posicionado dentro do clone
+          const cloneSlide = doc.querySelectorAll('.slide')[i];
+          if (cloneSlide) {
+            cloneSlide.classList.add('active');
+            cloneSlide.style.cssText =
+              'position:absolute!important;left:0!important;top:0!important;'+
+              'width:'+STAGE_W+'px!important;height:'+STAGE_H+'px!important;'+
+              'inset:auto!important;opacity:1!important;visibility:visible!important;'+
+              'transform:none!important;animation:none!important;transition:none!important;'+
+              'display:flex!important;';
+          }
         }
       });
 
-      const imgData = canvas.toDataURL('image/jpeg', 0.92);
-      const pdfW = pdf.internal.pageSize.getWidth();
-      const pdfH = pdf.internal.pageSize.getHeight();
+      // Restaurar slide para a posição original
+      slide.setAttribute('style', originalStyles[i]);
+      slide.classList.remove('active');
+      placeholders[i].parentNode.insertBefore(slide, placeholders[i]);
 
-      if (i > 0) pdf.addPage();
-      pdf.addImage(imgData, 'JPEG', 0, 0, pdfW, pdfH);
+      const imgData = canvas.toDataURL('image/jpeg', 0.92);
+      if (i > 0) pdf.addPage([STAGE_W, STAGE_H], 'landscape');
+      pdf.addImage(imgData, 'JPEG', 0, 0, STAGE_W, STAGE_H, undefined, 'FAST');
     }
 
     pdf.save('treinamento-admissional-sms.pdf');
@@ -1347,6 +1400,18 @@ async function exportPDF(slides, total, savedIdx, showFn) {
     alert('Erro ao gerar PDF: ' + err.message + '\n\nVerifique o console (F12) para detalhes.');
     console.error('[exportPDF]', err);
   } finally {
+    // Restaurar slides ainda no stage (se interrompido)
+    slides.forEach((s, i) => {
+      if (s.parentNode === stage) {
+        s.setAttribute('style', originalStyles[i] || '');
+        s.classList.remove('active');
+        if (placeholders[i] && placeholders[i].parentNode) {
+          placeholders[i].parentNode.insertBefore(s, placeholders[i]);
+        }
+      }
+    });
+    placeholders.forEach(ph => ph.parentNode && ph.parentNode.removeChild(ph));
+    if (stage.parentNode) stage.parentNode.removeChild(stage);
     hidden.forEach(({el, prev}) => el.style.display = prev);
     document.body.classList.remove('pdf-export');
     showFn(savedIdx);
