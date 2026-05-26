@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EngMarq Solution — Sua SST pode ser um centro de economia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --primary-light: #2d4a6f;
+            --secondary-color: #f5a623;
+            --secondary-dark: #e09112;
+            --accent-color: #10b981;
+            --accent-dark: #059669;
+            --danger-color: #ef4444;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --gray-light: #e5e7eb;
+            --light-color: #f8fafc;
+            --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-secondary);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex; flex-direction: column; align-items: center;
+            gap: 30px; padding: 30px 0; min-height: 100vh;
+        }
+
+        /* ===== SLIDE BASE ===== */
+        .slide {
+            width: 297mm; height: 210mm;
+            background: var(--white-color);
+            position: relative; overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            padding: 35px 45px 50px;
+            display: flex; flex-direction: column;
+        }
+        .slide-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 18px; flex-shrink: 0;
+        }
+        .slide-logo { height: 32px; object-fit: contain; }
+        .slide-number {
+            font-family: var(--font-primary); font-weight: 800;
+            font-size: 12px; color: var(--primary-color);
+            background: linear-gradient(135deg, #e8eef5, #f0f4f8);
+            padding: 5px 14px; border-radius: 20px;
+        }
+        .slide-footer {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white; padding: 9px 45px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 10px;
+        }
+        .slide-footer a { color: var(--secondary-color); text-decoration: none; font-weight: 600; }
+
+        /* ============================================ */
+        /* SLIDE 01 — CAPA HOOK                         */
+        /* ============================================ */
+        .slide-cover {
+            padding: 0; flex-direction: row;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            position: relative; overflow: hidden;
+        }
+        .slide-cover::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(245,166,35,0.18) 0%, transparent 55%),
+                radial-gradient(circle at 80% 70%, rgba(16,185,129,0.12) 0%, transparent 55%);
+        }
+        .cover-left {
+            flex: 1.15; padding: 55px 55px 70px;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; z-index: 2;
+        }
+        .cover-right {
+            flex: 1; position: relative; z-index: 2;
+            background-image: linear-gradient(120deg, rgba(15,39,68,0.65), rgba(26,54,93,0.2)),
+                              url('assets/fotos de treinamentos e palestras em jpeg/IMG_3973.jpg');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 35px;
+        }
+        .cover-logo {
+            height: 80px; margin-bottom: 32px;
+            align-self: flex-start;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        .cover-eyebrow {
+            display: inline-block; background: rgba(245,166,35,0.15);
+            border: 1px solid rgba(245,166,35,0.4);
+            color: var(--secondary-color); padding: 6px 16px; border-radius: 30px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 10px;
+            letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 22px;
+            width: fit-content;
+        }
+        .cover-title {
+            font-family: var(--font-primary); font-weight: 900;
+            font-size: 50px; line-height: 1.05; color: white;
+            margin-bottom: 18px;
+        }
+        .cover-title .accent {
+            background: linear-gradient(135deg, var(--secondary-color), #fbbf24);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .cover-subtitle {
+            font-family: var(--font-secondary); font-size: 16px;
+            color: rgba(255,255,255,0.85); line-height: 1.55;
+            margin-bottom: 32px; max-width: 480px;
+        }
+        .cover-cta-row {
+            display: flex; gap: 14px; align-items: center; margin-bottom: 28px;
+        }
+        .cover-cta {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            color: white; padding: 14px 26px; border-radius: 12px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 13px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 12px 30px rgba(16,185,129,0.35);
+        }
+        .cover-cta i { font-size: 16px; }
+        .cover-cta-note { color: rgba(255,255,255,0.6); font-size: 11px; max-width: 180px; line-height: 1.4; }
+        .cover-pills {
+            display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px;
+        }
+        .cover-pill {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: white; padding: 7px 14px; border-radius: 20px;
+            font-size: 11px; font-family: var(--font-primary); font-weight: 600;
+            display: flex; align-items: center; gap: 7px;
+        }
+        .cover-pill i { color: var(--secondary-color); font-size: 11px; }
+        .cover-tagline {
+            background: rgba(0,0,0,0.45); backdrop-filter: blur(8px);
+            border-left: 3px solid var(--secondary-color);
+            padding: 14px 16px; border-radius: 6px;
+        }
+        .cover-tagline-title {
+            font-family: var(--font-primary); font-weight: 800; font-size: 13px;
+            color: white; margin-bottom: 4px;
+        }
+        .cover-tagline-text {
+            color: rgba(255,255,255,0.85); font-size: 11px; line-height: 1.5;
+        }
+
+        /* ============================================ */
+        /* SHARED SECTION ELEMENTS                      */
+        /* ============================================ */
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            color: white; padding: 5px 16px; border-radius: 20px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 10px;
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px;
+            width: fit-content;
+        }
+        .section-badge.gold {
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+        }
+        .section-title {
+            font-family: var(--font-primary); font-weight: 800; font-size: 30px;
+            color: var(--primary-color); margin-bottom: 6px; line-height: 1.15;
+        }
+        .section-title .highlight { color: var(--secondary-color); }
+        .section-title .highlight-green { color: var(--accent-color); }
+        .section-subtitle {
+            font-family: var(--font-secondary); font-size: 13px;
+            color: var(--gray-color); margin-bottom: 22px; line-height: 1.55;
+            max-width: 750px;
+        }
+
+        /* ============================================ */
+        /* SLIDE 02 — DIFERENCIAL (ECONOMIA)            */
+        /* ============================================ */
+        .economy-grid {
+            display: grid; grid-template-columns: 1fr 1.05fr;
+            gap: 22px; flex: 1;
+        }
+        .economy-case {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            border-radius: 18px; padding: 28px; color: white;
+            position: relative; overflow: hidden;
+            display: flex; flex-direction: column; gap: 18px;
+        }
+        .economy-case::after {
+            content: ''; position: absolute; top: -60px; right: -60px;
+            width: 200px; height: 200px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(245,166,35,0.18), transparent 70%);
+        }
+        .economy-case-label {
+            font-family: var(--font-primary); font-weight: 700; font-size: 10px;
+            color: var(--secondary-color); letter-spacing: 1.5px;
+            text-transform: uppercase; position: relative; z-index: 1;
+        }
+        .economy-case-title {
+            font-family: var(--font-primary); font-weight: 800; font-size: 18px;
+            color: white; line-height: 1.25; position: relative; z-index: 1;
+        }
+        .economy-numbers {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 16px;
+            display: flex; flex-direction: column; gap: 12px;
+            position: relative; z-index: 1;
+        }
+        .economy-row {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .economy-row-label {
+            font-size: 11.5px; color: rgba(255,255,255,0.75);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .economy-row-value {
+            font-family: var(--font-primary); font-weight: 800; font-size: 15px;
+        }
+        .economy-row.before .economy-row-value { color: #fca5a5; text-decoration: line-through; }
+        .economy-row.after .economy-row-value { color: #bbf7d0; }
+        .economy-row.savings {
+            border-top: 1px dashed rgba(255,255,255,0.18);
+            padding-top: 12px; margin-top: 4px;
+        }
+        .economy-row.savings .economy-row-label {
+            font-family: var(--font-primary); font-weight: 700; color: white; font-size: 13px;
+        }
+        .economy-row.savings .economy-row-value {
+            font-size: 26px; color: var(--secondary-color);
+            font-weight: 900;
+        }
+        .economy-disclaimer {
+            font-size: 9.5px; color: rgba(255,255,255,0.45);
+            line-height: 1.45; position: relative; z-index: 1;
+        }
+        .economy-pillars {
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .pillar {
+            background: white; border: 1px solid var(--gray-light);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 10px; padding: 14px 16px;
+            display: flex; gap: 14px; align-items: flex-start;
+            box-shadow: 0 4px 14px rgba(15,23,42,0.04);
+        }
+        .pillar-icon {
+            width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 18px;
+        }
+        .pillar h4 {
+            font-family: var(--font-primary); font-weight: 800; font-size: 14px;
+            color: var(--primary-color); margin-bottom: 4px;
+        }
+        .pillar p { font-size: 11.5px; color: var(--gray-color); line-height: 1.45; }
+        .pillar.legal { border-left-color: var(--primary-color); }
+        .pillar.legal .pillar-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        }
+
+        /* ============================================ */
+        /* SLIDE 03 — PSICOSSOCIAL (ESPECIALISTAS)      */
+        /* ============================================ */
+        .psico-warning {
+            background: linear-gradient(135deg, #fef2f2, #fff5f5);
+            border: 1px solid #fecaca; border-left: 4px solid var(--danger-color);
+            border-radius: 12px; padding: 14px 18px;
+            display: flex; gap: 14px; align-items: center;
+            margin-bottom: 18px;
+        }
+        .psico-warning-icon {
+            width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 20px;
+        }
+        .psico-warning-text {
+            font-size: 12px; color: var(--dark-color); line-height: 1.5;
+        }
+        .psico-warning-text strong { color: var(--danger-color); }
+
+        .psico-grid {
+            display: grid; grid-template-columns: 1.05fr 1fr;
+            gap: 22px; flex: 1;
+        }
+        .psico-left {
+            display: flex; flex-direction: column; gap: 14px;
+        }
+        .psico-stage {
+            font-family: var(--font-primary); font-weight: 800; font-size: 13px;
+            color: var(--primary-color); margin-bottom: -4px;
+        }
+        .psico-step {
+            display: flex; gap: 14px; align-items: flex-start;
+            background: white; border: 1px solid var(--gray-light);
+            border-radius: 10px; padding: 12px 14px;
+        }
+        .psico-step-num {
+            width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white; display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-primary); font-weight: 800; font-size: 13px;
+        }
+        .psico-step h5 {
+            font-family: var(--font-primary); font-weight: 700; font-size: 12.5px;
+            color: var(--primary-color); margin-bottom: 2px;
+        }
+        .psico-step p { font-size: 11px; color: var(--gray-color); line-height: 1.45; }
+
+        .psico-right {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            border-radius: 16px; padding: 24px; color: white;
+            display: flex; flex-direction: column; gap: 14px;
+            position: relative; overflow: hidden;
+        }
+        .psico-right::before {
+            content: ''; position: absolute; top: -50px; right: -50px;
+            width: 180px; height: 180px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 70%);
+        }
+        .psico-badge-purple {
+            background: rgba(139,92,246,0.2);
+            border: 1px solid rgba(139,92,246,0.45);
+            color: #c4b5fd; padding: 5px 14px; border-radius: 20px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 9px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            width: fit-content; position: relative; z-index: 1;
+        }
+        .psico-right-title {
+            font-family: var(--font-primary); font-weight: 800; font-size: 18px;
+            color: white; line-height: 1.25; position: relative; z-index: 1;
+        }
+        .psico-right-title .accent { color: var(--secondary-color); }
+        .psico-deliverables {
+            display: flex; flex-direction: column; gap: 9px;
+            position: relative; z-index: 1;
+        }
+        .psico-deliv {
+            display: flex; align-items: flex-start; gap: 10px;
+            color: rgba(255,255,255,0.9); font-size: 11.5px; line-height: 1.4;
+        }
+        .psico-deliv i {
+            color: #6ee7b7; font-size: 11px; margin-top: 3px;
+        }
+        .psico-deliv strong { color: white; }
+        .psico-photo {
+            border-radius: 10px; height: 100px;
+            background-size: cover; background-position: center;
+            margin-top: 4px; position: relative; overflow: hidden;
+        }
+        .psico-photo::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(15,39,68,0.75), transparent 60%);
+        }
+        .psico-photo-cap {
+            position: absolute; bottom: 8px; left: 12px; right: 12px;
+            color: white; font-size: 10.5px; font-family: var(--font-primary);
+            font-weight: 600; z-index: 1;
+        }
+        .psico-photo-cap i { color: var(--secondary-color); margin-right: 5px; }
+
+        /* ============================================ */
+        /* SLIDE 04 — PROVA SOCIAL                      */
+        /* ============================================ */
+        .proof-stats {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 14px; margin-bottom: 20px;
+        }
+        .proof-stat {
+            background: linear-gradient(135deg, #f8fafc, white);
+            border: 1px solid var(--gray-light); border-radius: 12px;
+            padding: 16px 14px; text-align: center;
+            border-top: 3px solid var(--secondary-color);
+        }
+        .proof-stat-num {
+            font-family: var(--font-primary); font-weight: 900; font-size: 32px;
+            color: var(--primary-color); line-height: 1; margin-bottom: 4px;
+        }
+        .proof-stat-num .plus { color: var(--secondary-color); }
+        .proof-stat-label {
+            font-family: var(--font-primary); font-weight: 700; font-size: 10px;
+            color: var(--gray-color); text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .proof-stat:nth-child(2) { border-top-color: var(--accent-color); }
+        .proof-stat:nth-child(3) { border-top-color: var(--primary-color); }
+        .proof-stat:nth-child(4) { border-top-color: #8b5cf6; }
+
+        .proof-content {
+            display: grid; grid-template-columns: 1.3fr 1fr;
+            gap: 18px; flex: 1;
+        }
+        .proof-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+        }
+        .proof-photo {
+            border-radius: 12px; background-size: cover; background-position: center;
+            position: relative; overflow: hidden;
+            box-shadow: 0 6px 16px rgba(15,23,42,0.12);
+            min-height: 0;
+        }
+        .proof-photo::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(15,39,68,0.85) 0%, transparent 55%);
+        }
+        .proof-photo-tag {
+            position: absolute; bottom: 10px; left: 12px; right: 12px;
+            color: white; font-family: var(--font-primary); font-weight: 700;
+            font-size: 11px; z-index: 2; line-height: 1.3;
+        }
+        .proof-photo-tag i { color: var(--secondary-color); margin-right: 6px; }
+
+        .proof-right {
+            display: flex; flex-direction: column; gap: 14px;
+        }
+        .proof-clients-title {
+            font-family: var(--font-primary); font-weight: 800; font-size: 13px;
+            color: var(--primary-color); margin-bottom: 2px;
+        }
+        .proof-clients-subtitle {
+            font-size: 11px; color: var(--gray-color); margin-bottom: 4px;
+        }
+        .proof-logos {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        .proof-logo-tile {
+            background: white; border: 1px solid var(--gray-light);
+            border-radius: 8px; padding: 8px; height: 52px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .proof-logo-tile img {
+            max-width: 100%; max-height: 100%; object-fit: contain;
+            filter: grayscale(20%);
+        }
+        .proof-logo-tile.more {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white; flex-direction: column; gap: 0;
+        }
+        .proof-logo-tile.more .num {
+            font-family: var(--font-primary); font-weight: 900; font-size: 16px;
+            color: var(--secondary-color); line-height: 1;
+        }
+        .proof-logo-tile.more .lbl {
+            font-size: 8px; text-transform: uppercase; letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .testimonial {
+            background: linear-gradient(135deg, #fef9f3, white);
+            border: 1px solid #fde6c4; border-left: 4px solid var(--secondary-color);
+            border-radius: 10px; padding: 14px 16px;
+            position: relative;
+        }
+        .testimonial-quote {
+            position: absolute; top: 8px; right: 12px;
+            font-size: 32px; color: var(--secondary-color); opacity: 0.3;
+            font-family: serif; line-height: 1;
+        }
+        .testimonial p {
+            font-style: italic; font-size: 11.5px; color: var(--dark-color);
+            line-height: 1.45; margin-bottom: 8px;
+        }
+        .testimonial-author {
+            font-family: var(--font-primary); font-weight: 700; font-size: 10.5px;
+            color: var(--primary-color);
+        }
+        .testimonial-author span {
+            color: var(--gray-color); font-weight: 500;
+        }
+
+        /* ============================================ */
+        /* SLIDE 04 — CTA / FECHAMENTO                  */
+        /* ============================================ */
+        .slide-closing {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: white; padding: 0; flex-direction: row;
+            position: relative; overflow: hidden;
+        }
+        .slide-closing::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(circle at 80% 20%, rgba(245,166,35,0.18) 0%, transparent 50%),
+                radial-gradient(circle at 20% 80%, rgba(16,185,129,0.15) 0%, transparent 50%);
+        }
+        .closing-main {
+            flex: 1.3; padding: 50px 50px 70px;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; z-index: 2;
+        }
+        .closing-side {
+            flex: 1; position: relative; z-index: 2;
+            background-image: linear-gradient(135deg, rgba(15,39,68,0.55), rgba(15,39,68,0.2)),
+                              url('assets/fotos de treinamentos e palestras em jpeg/IMG_4039.jpg');
+            background-size: cover; background-position: center;
+        }
+        .closing-logo {
+            height: 72px; margin-bottom: 28px;
+            align-self: flex-start;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        .closing-eyebrow {
+            display: inline-block; background: rgba(16,185,129,0.18);
+            border: 1px solid rgba(16,185,129,0.45);
+            color: #6ee7b7; padding: 6px 16px; border-radius: 30px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 10px;
+            letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 18px;
+            width: fit-content;
+        }
+        .closing-title {
+            font-family: var(--font-primary); font-weight: 900; font-size: 42px;
+            color: white; line-height: 1.1; margin-bottom: 14px;
+        }
+        .closing-title .accent { color: var(--secondary-color); }
+        .closing-subtitle {
+            font-size: 14px; color: rgba(255,255,255,0.8);
+            line-height: 1.55; margin-bottom: 28px; max-width: 500px;
+        }
+        .closing-promises {
+            display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px;
+        }
+        .closing-promise {
+            display: flex; align-items: center; gap: 12px;
+            color: rgba(255,255,255,0.92); font-size: 12.5px;
+        }
+        .closing-promise-icon {
+            width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+            background: rgba(16,185,129,0.25);
+            display: flex; align-items: center; justify-content: center;
+            color: #6ee7b7; font-size: 11px;
+        }
+        .closing-cta-row { display: flex; gap: 12px; align-items: stretch; margin-bottom: 20px; flex-wrap: wrap; }
+        .closing-cta {
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 22px; border-radius: 12px;
+            font-family: var(--font-primary); font-weight: 700;
+            text-decoration: none; transition: transform 0.2s;
+        }
+        .closing-cta.primary {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: white; font-size: 14px;
+            box-shadow: 0 12px 30px rgba(37,211,102,0.35);
+        }
+        .closing-cta.primary i { font-size: 20px; }
+        .closing-cta.secondary {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            color: white; font-size: 13px;
+        }
+        .closing-cta-sub {
+            font-size: 10px; font-weight: 500; opacity: 0.85;
+            display: block; margin-top: 2px;
+        }
+        .closing-contact {
+            display: flex; gap: 22px; flex-wrap: wrap;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+        }
+        .closing-contact-item {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 11.5px; color: rgba(255,255,255,0.78);
+        }
+        .closing-contact-item i { color: var(--secondary-color); font-size: 12px; }
+
+        /* ===== PRINT ===== */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            html, body {
+                width: 297mm; margin: 0; padding: 0;
+                background: white !important;
+                gap: 0 !important;
+            }
+            body { display: block !important; }
+            .slide {
+                display: flex !important;
+                width: 297mm !important; height: 210mm !important;
+                min-height: 210mm !important; max-height: 210mm !important;
+                margin: 0 !important; padding: 35px 45px 50px !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                box-shadow: none !important;
+                overflow: hidden !important;
+                position: relative !important;
+                flex-direction: column !important;
+            }
+            .slide-cover {
+                padding: 0 !important;
+                flex-direction: row !important;
+            }
+            .slide-closing {
+                padding: 0 !important;
+                flex-direction: row !important;
+            }
+            .cover-left, .cover-right,
+            .closing-main, .closing-side {
+                position: relative !important;
+            }
+            .cover-right, .closing-side {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+        @page { size: A4 landscape; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================== -->
+    <!-- SLIDE 01 — CAPA HOOK                           -->
+    <!-- ============================================== -->
+    <div class="slide slide-cover">
+        <div class="cover-left">
+            <img src="assets/logoengmarq.png" alt="EngMarq" class="cover-logo">
+            <div class="cover-eyebrow">A SST que economiza por você</div>
+            <h1 class="cover-title">
+                Sua SST está custando<br>
+                <span class="accent">muito mais</span> do que devia.
+            </h1>
+            <p class="cover-subtitle">
+                Empresas pagam adicionais de periculosidade, insalubridade e reflexos trabalhistas que poderiam ser <strong>tecnicamente eliminados</strong>. A EngMarq Solution mostra exatamente quanto sua empresa pode economizar — e como.
+            </p>
+
+            <div class="cover-cta-row">
+                <div class="cover-cta">
+                    <i class="fas fa-calendar-check"></i>
+                    Agende um diagnóstico gratuito
+                </div>
+                <div class="cover-cta-note">30 minutos. Sem compromisso. Resultados claros.</div>
+            </div>
+
+            <div class="cover-pills">
+                <div class="cover-pill"><i class="fas fa-shield-halved"></i> CREA-RN + ART</div>
+                <div class="cover-pill"><i class="fas fa-users"></i> +500 empresas atendidas</div>
+                <div class="cover-pill"><i class="fas fa-bolt"></i> Conformidade NR-01/2026</div>
+            </div>
+        </div>
+
+        <div class="cover-right">
+            <div class="cover-tagline">
+                <div class="cover-tagline-title">Segurança jurídica que se paga</div>
+                <div class="cover-tagline-text">
+                    Documentação técnica auditável + cálculos que reduzem o custo da sua folha.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SLIDE 02 — O DIFERENCIAL: ECONOMIA             -->
+    <!-- ============================================== -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+            <div class="slide-number">02 / 05</div>
+        </div>
+
+        <div class="section-badge">Nosso Maior Diferencial</div>
+        <div class="section-title">SST que <span class="highlight-green">paga a própria conta</span></div>
+        <div class="section-subtitle">
+            Mais do que entregar laudos e treinamentos, a EngMarq <strong>identifica e elimina custos invisíveis</strong> que sua empresa paga todos os meses. Resultado: economia real, mensurável e comprovada em relatório.
+        </div>
+
+        <div class="economy-grid">
+            <!-- CASE PRÁTICO -->
+            <div class="economy-case">
+                <div>
+                    <div class="economy-case-label"><i class="fas fa-chart-line"></i> &nbsp; Exemplo Real</div>
+                    <div class="economy-case-title">Empresa com 30 colaboradores expostos a periculosidade</div>
+                </div>
+
+                <div class="economy-numbers">
+                    <div class="economy-row before">
+                        <div class="economy-row-label"><i class="fas fa-circle-xmark"></i> Adicional pago (30%)</div>
+                        <div class="economy-row-value">R$ 12.600/mês</div>
+                    </div>
+                    <div class="economy-row after">
+                        <div class="economy-row-label"><i class="fas fa-circle-check"></i> Após adequações EngMarq</div>
+                        <div class="economy-row-value">R$ 0/mês</div>
+                    </div>
+                    <div class="economy-row savings">
+                        <div class="economy-row-label"><i class="fas fa-piggy-bank"></i> Economia anual</div>
+                        <div class="economy-row-value">R$ 151.200</div>
+                    </div>
+                </div>
+
+                <div class="economy-disclaimer">
+                    * Inclui valor-base + reflexos em FGTS, INSS, férias e 13º. Exemplo ilustrativo — economia real é projetada após diagnóstico técnico.
+                </div>
+            </div>
+
+            <!-- PILARES -->
+            <div class="economy-pillars">
+                <div class="pillar">
+                    <div class="pillar-icon"><i class="fas fa-calculator"></i></div>
+                    <div>
+                        <h4>Cálculo técnico de adicionais</h4>
+                        <p>Avaliação por função e ambiente confirma se cada adicional é devido — eliminando pagamentos indevidos e ajustando faixas (10/20/40%).</p>
+                    </div>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-icon"><i class="fas fa-arrow-trend-down"></i></div>
+                    <div>
+                        <h4>Redução do nível de periculosidade</h4>
+                        <p>Medidas de controle e EPIs adequados que <strong>descaracterizam a exposição</strong> — sua empresa deixa de pagar 30% sobre a folha do setor.</p>
+                    </div>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-icon"><i class="fas fa-chart-pie"></i></div>
+                    <div>
+                        <h4>Relatórios analíticos com ROI</h4>
+                        <p>Você recebe o impacto financeiro mês a mês: quanto economizou em adicionais e em processos trabalhistas evitados.</p>
+                    </div>
+                </div>
+                <div class="pillar legal">
+                    <div class="pillar-icon"><i class="fas fa-shield-halved"></i></div>
+                    <div>
+                        <h4>+ Segurança jurídica de brinde</h4>
+                        <p>Documentação assinada por Engenheiro CREA-RN com ART — proteção total contra autuações do MTE, MPT e ações trabalhistas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>EngMarq Solution — Diferencial Comercial</span>
+            <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SLIDE 03 — PSICOSSOCIAL (ESPECIALISTAS)        -->
+    <!-- ============================================== -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+            <div class="slide-number">03 / 05</div>
+        </div>
+
+        <div class="section-badge" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">Especialistas em NR-01 Psicossocial</div>
+        <div class="section-title">Sua empresa já está <span class="highlight">em conformidade com a NR-01/2026?</span></div>
+        <div class="section-subtitle">
+            Desde maio de 2026, toda empresa com CNPJ ativo é obrigada a realizar a <strong>avaliação de riscos psicossociais</strong>. A EngMarq Solution é referência no Rio Grande do Norte — já entregamos a metodologia completa para dezenas de clientes.
+        </div>
+
+        <div class="psico-warning">
+            <div class="psico-warning-icon"><i class="fas fa-triangle-exclamation"></i></div>
+            <div class="psico-warning-text">
+                <strong>ATENÇÃO:</strong> A fiscalização já está autuando empresas sem a avaliação psicossocial. Multas variam de <strong>R$ 4.025,33 a R$ 402.533,00</strong> conforme o porte e a gravidade. E o pior — pode gerar afastamentos por doença ocupacional com responsabilização da empresa.
+            </div>
+        </div>
+
+        <div class="psico-grid">
+            <div class="psico-left">
+                <div class="psico-stage">Nossa metodologia em 4 etapas</div>
+
+                <div class="psico-step">
+                    <div class="psico-step-num">1</div>
+                    <div>
+                        <h5>Diagnóstico inicial</h5>
+                        <p>Mapeamento de funções, ambientes e exposição a fatores psicossociais (assédio, sobrecarga, conflitos, ritmo, autonomia).</p>
+                    </div>
+                </div>
+                <div class="psico-step">
+                    <div class="psico-step-num">2</div>
+                    <div>
+                        <h5>Aplicação de instrumento validado</h5>
+                        <p>Questionário cientificamente validado (modelo COPSOQ-III adaptado) aplicado a todos os colaboradores — sigiloso e anônimo.</p>
+                    </div>
+                </div>
+                <div class="psico-step">
+                    <div class="psico-step-num">3</div>
+                    <div>
+                        <h5>Análise técnica e relatório</h5>
+                        <p>Inventário de riscos psicossociais integrado ao PGR, com classificação por nível e priorização de ações.</p>
+                    </div>
+                </div>
+                <div class="psico-step">
+                    <div class="psico-step-num">4</div>
+                    <div>
+                        <h5>Plano de ação + palestra de sensibilização</h5>
+                        <p>Treinamento aos colaboradores e gestores sobre saúde mental no trabalho — com material auditável.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="psico-right">
+                <div class="psico-badge-purple">O que você recebe</div>
+                <div class="psico-right-title">
+                    Pacote completo de <span class="accent">conformidade psicossocial</span> em até 30 dias
+                </div>
+
+                <div class="psico-deliverables">
+                    <div class="psico-deliv"><i class="fas fa-check-circle"></i><div><strong>Relatório técnico</strong> com inventário de riscos psicossociais assinado por engenheiro CREA-RN + ART</div></div>
+                    <div class="psico-deliv"><i class="fas fa-check-circle"></i><div><strong>PGR atualizado</strong> integrando os riscos psicossociais conforme nova NR-01</div></div>
+                    <div class="psico-deliv"><i class="fas fa-check-circle"></i><div><strong>Palestra de sensibilização</strong> presencial ou EAD para colaboradores e gestores</div></div>
+                    <div class="psico-deliv"><i class="fas fa-check-circle"></i><div><strong>Plano de ação</strong> personalizado com medidas corretivas e prazo de implementação</div></div>
+                    <div class="psico-deliv"><i class="fas fa-check-circle"></i><div><strong>Suporte em fiscalizações</strong> e auditorias — atendimento direto do engenheiro</div></div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>EngMarq Solution — Especialistas em NR-01 Psicossocial</span>
+            <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SLIDE 04 — PROVA SOCIAL                        -->
+    <!-- ============================================== -->
+    <div class="slide">
+        <div class="slide-header">
+            <img src="assets/logoengmarq.png" alt="EngMarq" class="slide-logo">
+            <div class="slide-number">04 / 05</div>
+        </div>
+
+        <div class="section-badge gold">Quem já confia na EngMarq</div>
+        <div class="section-title">Resultados <span class="highlight">comprovados</span> em campo</div>
+        <div class="section-subtitle">
+            Mais de 500 empresas atendidas no Rio Grande do Norte e Nordeste. Indústria, construção civil, comércio, hospitalar, educação e instituições religiosas.
+        </div>
+
+        <div class="proof-stats">
+            <div class="proof-stat">
+                <div class="proof-stat-num"><span class="plus">+</span>500</div>
+                <div class="proof-stat-label">Empresas atendidas</div>
+            </div>
+            <div class="proof-stat">
+                <div class="proof-stat-num"><span class="plus">+</span>30</div>
+                <div class="proof-stat-label">Cursos NR disponíveis</div>
+            </div>
+            <div class="proof-stat">
+                <div class="proof-stat-num">100<span class="plus">%</span></div>
+                <div class="proof-stat-label">Conformidade NR-01</div>
+            </div>
+            <div class="proof-stat">
+                <div class="proof-stat-num">7<span class="plus"> dias</span></div>
+                <div class="proof-stat-label">Entrega de certificados</div>
+            </div>
+        </div>
+
+        <div class="proof-content">
+            <div class="proof-gallery">
+                <div class="proof-photo" style="background-image:url('assets/fotos de treinamentos e palestras em jpeg/IMG_3185.jpg');">
+                    <div class="proof-photo-tag"><i class="fas fa-microphone"></i>Palestra de riscos psicossociais</div>
+                </div>
+                <div class="proof-photo" style="background-image:url('assets/BENIWOOD FOTO REINAMENTO ADIMISSIONAL.jpeg');">
+                    <div class="proof-photo-tag"><i class="fas fa-people-group"></i>Integração de novos colaboradores</div>
+                </div>
+                <div class="proof-photo" style="background-image:url('assets/fotos de treinamentos e palestras em jpeg/IMG_4092.jpg');">
+                    <div class="proof-photo-tag"><i class="fas fa-helmet-safety"></i>Treinamento em obra</div>
+                </div>
+                <div class="proof-photo" style="background-image:url('assets/fotos de treinamentos e palestras em jpeg/IMG_3232.jpg');">
+                    <div class="proof-photo-tag"><i class="fas fa-chalkboard-user"></i>Treinamento in company</div>
+                </div>
+            </div>
+
+            <div class="proof-right">
+                <div>
+                    <div class="proof-clients-title">Clientes & Parceiros</div>
+                    <div class="proof-clients-subtitle">Empresas que confiam na nossa entrega técnica.</div>
+                </div>
+                <div class="proof-logos">
+                    <div class="proof-logo-tile"><img src="assets/Prceiros/beniwood.jpg" alt="Beniwood"></div>
+                    <div class="proof-logo-tile"><img src="assets/Prceiros/Lustosa.png" alt="Lustosa"></div>
+                    <div class="proof-logo-tile"><img src="assets/Prceiros/Lumen.jpg" alt="Lumen"></div>
+                    <div class="proof-logo-tile"><img src="assets/Prceiros/Mirantes.png" alt="Mirantes"></div>
+                    <div class="proof-logo-tile"><img src="assets/Prceiros/Premium Services.png" alt="Premium Services"></div>
+                    <div class="proof-logo-tile"><img src="assets/Prceiros/Unimetais.png" alt="Unimetais"></div>
+                    <div class="proof-logo-tile"><img src="assets/Prceiros/Alfabeto Berçario Escola.jpg" alt="Alfabeto"></div>
+                    <div class="proof-logo-tile more">
+                        <div class="num">+500</div>
+                        <div class="lbl">Empresas</div>
+                    </div>
+                    <div class="proof-logo-tile more" style="background:linear-gradient(135deg,var(--accent-color),var(--accent-dark));">
+                        <div class="num" style="color:white;">IEADERN</div>
+                        <div class="lbl">+ Igrejas</div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-quote">"</div>
+                    <p>A EngMarq fez um diagnóstico que reduziu nosso custo mensal com adicionais. Em menos de um ano, o serviço se pagou — e ainda ficamos 100% em conformidade.</p>
+                    <div class="testimonial-author">Cliente do setor industrial — <span>Natal/RN</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-footer">
+            <span>EngMarq Solution — Prova Social</span>
+            <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+        </div>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- SLIDE 04 — CTA / REUNIÃO                       -->
+    <!-- ============================================== -->
+    <div class="slide slide-closing">
+        <div class="closing-main">
+            <img src="assets/logoengmarq.png" alt="EngMarq" class="closing-logo">
+            <div class="closing-eyebrow">Próximo passo</div>
+            <h2 class="closing-title">
+                Vamos descobrir <span class="accent">quanto sua empresa pode economizar?</span>
+            </h2>
+            <p class="closing-subtitle">
+                Agende uma <strong>reunião de 30 minutos</strong> com nosso engenheiro de segurança. Você sai com um diagnóstico preliminar de oportunidades de economia em adicionais e conformidade.
+            </p>
+
+            <div class="closing-promises">
+                <div class="closing-promise">
+                    <div class="closing-promise-icon"><i class="fas fa-check"></i></div>
+                    <div><strong>30 minutos</strong> — online ou presencial em Natal/RN</div>
+                </div>
+                <div class="closing-promise">
+                    <div class="closing-promise-icon"><i class="fas fa-check"></i></div>
+                    <div><strong>Sem compromisso</strong> — você decide se faz sentido seguir</div>
+                </div>
+                <div class="closing-promise">
+                    <div class="closing-promise-icon"><i class="fas fa-check"></i></div>
+                    <div><strong>Diagnóstico real</strong> — projeção de economia com base nos seus dados</div>
+                </div>
+            </div>
+
+            <div class="closing-cta-row">
+                <a href="https://wa.me/5584994049143?text=Olá!%20Quero%20agendar%20um%20diagnóstico%20de%20SST%20com%20a%20EngMarq." class="closing-cta primary">
+                    <i class="fab fa-whatsapp"></i>
+                    <div>
+                        Chamar no WhatsApp agora
+                        <span class="closing-cta-sub">(84) 99404-9143 — resposta em até 2h</span>
+                    </div>
+                </a>
+                <a href="mailto:contato@engmarqsolution.com?subject=Quero%20agendar%20um%20diagnóstico%20EngMarq" class="closing-cta secondary">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        Enviar e-mail
+                        <span class="closing-cta-sub">contato@engmarqsolution.com</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="closing-contact">
+                <div class="closing-contact-item"><i class="fas fa-globe"></i> engmarqsolution.com</div>
+                <div class="closing-contact-item"><i class="fas fa-location-dot"></i> Natal — Rio Grande do Norte</div>
+                <div class="closing-contact-item"><i class="fab fa-instagram"></i> @engmarqsolution</div>
+            </div>
+        </div>
+
+        <div class="closing-side"></div>
+    </div>
+
+</body>
+</html>

@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EngMarq Solution - Apresentação Comercial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>EngMarq Solution — Apresentação Comercial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @page { size: 297mm 210mm landscape; margin: 0; }
         :root {
             --primary-color: #1a365d;
             --primary-dark: #0f2744;
@@ -15,702 +14,1413 @@
             --secondary-color: #f5a623;
             --secondary-dark: #e09112;
             --accent-color: #10b981;
+            --accent-light: #d1fae5;
+            --danger-color: #ef4444;
+            --danger-light: #fee2e2;
+            --warning-color: #f59e0b;
+            --warning-light: #fef3c7;
+            --info-color: #3b82f6;
+            --info-light: #dbeafe;
+            --purple-color: #8b5cf6;
+            --purple-light: #ede9fe;
             --dark-color: #1f2937;
             --gray-color: #6b7280;
+            --gray-light: #e5e7eb;
             --light-color: #f8fafc;
             --white-color: #ffffff;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { width: 100%; height: 100%; font-family: 'Open Sans', sans-serif; color: var(--dark-color); }
-        body { background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%); display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
-        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; }
 
-        /* ANIMAÇÕES */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        body {
+            font-family: var(--font-secondary);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex; flex-direction: column; align-items: center;
+            gap: 30px; padding: 30px 0; min-height: 100vh;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        
+
+        /* ===== SLIDE BASE ===== */
         .slide {
-            width: 297mm; height: 210mm; min-height: 210mm; max-height: 210mm;
-            background: white; position: relative; display: flex; flex-direction: column;
-            overflow: hidden; margin: 15px auto; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            border-radius: 4px; flex-shrink: 0;
+            width: 297mm; height: 210mm;
+            background: var(--white-color);
+            position: relative; overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            padding: 35px 45px 50px;
+            display: flex; flex-direction: column;
         }
 
-        /* CAPA */
-        .slide-capa {
-            background: linear-gradient(135deg, #0f2744 0%, #1a365d 50%, #2d4a6f 100%);
-            color: white; position: relative; overflow: hidden;
-        }
-        .slide-capa::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-        .capa-content {
-            position: relative; z-index: 2; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; height: 100%; text-align: center; padding: 40px;
-        }
-        .capa-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2); padding: 10px 24px;
-            border-radius: 50px; font-size: 13px; font-weight: 500;
-            margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;
-            animation: fadeInUp 0.8s ease-out;
-        }
-        .capa-logo { width: 160px; margin-bottom: 25px; filter: brightness(0) invert(1); animation: scaleIn 1s ease-out 0.2s both; }
-        .capa-title { font-size: 52px; font-weight: 800; margin-bottom: 15px; line-height: 1.1; animation: fadeInUp 1s ease-out 0.4s both; }
-        .capa-title .highlight { color: var(--secondary-color); }
-        .capa-subtitle { font-size: 20px; font-weight: 300; opacity: 0.9; margin-bottom: 30px; max-width: 700px; animation: fadeInUp 1s ease-out 0.6s both; }
-        .capa-stats { display: flex; gap: 35px; margin-top: 20px; }
-        .capa-stat {
-            text-align: center; padding: 15px 25px;
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-            border-radius: 12px; border: 1px solid rgba(255,255,255,0.15);
-            transition: all 0.3s ease; animation: fadeInUp 1s ease-out 0.8s both;
-        }
-        .capa-stat:hover { transform: translateY(-5px); background: rgba(255,255,255,0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .capa-stat:nth-child(2) { animation-delay: 0.9s; }
-        .capa-stat:nth-child(3) { animation-delay: 1s; }
-        .capa-stat-icon { font-size: 26px; color: var(--secondary-color); margin-bottom: 10px; }
-        .capa-stat-number { font-family: 'Montserrat', sans-serif; font-size: 34px; font-weight: 800; }
-        .capa-stat-label { font-size: 12px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
-        .capa-wave { position: absolute; bottom: 0; left: 0; right: 0; }
-        .capa-wave svg { display: block; width: 100%; height: 60px; }
-
-        /* SLIDE PADRÃO */
-        .slide-content { padding: 30px 50px 45px 50px; flex: 1; display: flex; flex-direction: column; }
         .slide-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid var(--light-color);
+            margin-bottom: 18px; flex-shrink: 0;
         }
-        .slide-header-logo { height: 35px; }
-        .slide-header-title {
-            font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600;
-            color: var(--gray-color); text-transform: uppercase; letter-spacing: 2px;
+        .slide-logo { height: 44px; object-fit: contain; }
+        .slide-number {
+            font-family: var(--font-primary); font-weight: 800;
+            font-size: 12px; color: var(--primary-color);
+            background: linear-gradient(135deg, #e8eef5, #f0f4f8);
+            padding: 5px 14px; border-radius: 20px;
         }
-        .section-badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-            color: white; padding: 8px 20px; border-radius: 50px;
-            font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;
-            animation: slideInLeft 0.6s ease-out;
-        }
-        .section-title { font-size: 38px; font-weight: 800; color: var(--dark-color); margin-bottom: 10px; animation: fadeInUp 0.7s ease-out 0.1s both; }
-        .section-title .highlight { color: var(--secondary-color); }
-        .section-subtitle { font-size: 16px; color: var(--gray-color); line-height: 1.6; max-width: 800px; animation: fadeInUp 0.7s ease-out 0.2s both; }
         .slide-footer {
-            position: absolute; bottom: 0; left: 0; right: 0; background: var(--primary-color);
-            color: white; padding: 12px 50px; display: flex; justify-content: space-between;
-            align-items: center; font-size: 12px;
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white; padding: 9px 45px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 10px; font-family: var(--font-secondary);
+        }
+        .slide-footer a { color: var(--secondary-color); text-decoration: none; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+
+        /* ===== SECTION LABELS ===== */
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+            color: white; padding: 4px 14px; border-radius: 20px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 9px;
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: var(--font-primary); font-weight: 800; font-size: 26px;
+            color: var(--primary-color); margin-bottom: 4px; line-height: 1.2;
+        }
+        .section-title .highlight { color: var(--secondary-color); }
+        .section-subtitle {
+            font-family: var(--font-secondary); font-size: 12px;
+            color: var(--gray-color); margin-bottom: 18px; line-height: 1.5;
         }
 
-        /* SOBRE */
-        .sobre-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; margin-top: 18px; align-items: center; }
-        .sobre-text { animation: slideInLeft 0.8s ease-out 0.3s both; }
-        .sobre-text p { font-size: 16px; color: var(--gray-color); line-height: 1.8; margin-bottom: 18px; }
-        .sobre-text strong { color: var(--dark-color); font-weight: 600; }
-        .sobre-features { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 22px; }
-        .sobre-feature { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--dark-color); font-weight: 500; transition: transform 0.3s ease; }
-        .sobre-feature:hover { transform: translateX(5px); }
-        .sobre-feature i { color: var(--accent-color); font-size: 16px; }
-        .sobre-image-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; animation: slideInRight 0.8s ease-out 0.3s both; }
-        .sobre-img-card { background: var(--light-color); border-radius: 15px; padding: 20px; text-align: center; transition: all 0.3s ease; }
-        .sobre-img-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .sobre-img-card img { width: 100%; max-width: 80px; margin: 0 auto 12px; border-radius: 50%; transition: transform 0.3s ease; }
-        .sobre-img-card:hover img { transform: scale(1.1); }
-        .sobre-img-card h4 { font-size: 14px; color: var(--dark-color); font-weight: 600; margin-bottom: 4px; }
-        .sobre-img-card p { font-size: 12px; color: var(--gray-color); }
+        /* ===== COVER ===== */
+        .slide-cover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 55%, var(--primary-light) 100%);
+            padding: 0; display: flex; flex-direction: row;
+            position: relative; overflow: hidden;
+        }
+        .slide-cover::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(circle at 15% 25%, rgba(245,166,35,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(16,185,129,0.08) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .cover-left {
+            flex: 1; display: flex; flex-direction: column; justify-content: center;
+            padding: 55px 50px; position: relative; z-index: 1;
+        }
+        .cover-right {
+            width: 320px; position: relative; z-index: 1;
+            background-image: linear-gradient(135deg, rgba(15,39,68,0.55), rgba(26,54,93,0.35)), url('assets/fotos de treinamentos e palestras em jpeg/IMG_3973.jpg');
+            background-size: cover; background-position: center;
+            border-left: 1px solid rgba(255,255,255,0.08);
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 30px 28px;
+        }
+        .cover-right-tag {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: rgba(15,39,68,0.75); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white; padding: 8px 14px; border-radius: 8px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 10px;
+            margin-bottom: 8px; width: fit-content;
+        }
+        .cover-right-tag i { color: var(--secondary-color); }
+        .cover-right-caption {
+            font-size: 11px; color: rgba(255,255,255,0.92); line-height: 1.45;
+            background: rgba(15,39,68,0.72); backdrop-filter: blur(10px);
+            padding: 10px 14px; border-radius: 8px;
+            border-left: 3px solid var(--secondary-color);
+        }
+        .cover-badge {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.35);
+            color: var(--secondary-color); padding: 7px 18px; border-radius: 50px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 9px;
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 18px;
+            animation: fadeInUp 0.8s ease both; width: fit-content;
+        }
+        .cover-logo {
+            height: 170px; filter: brightness(0) invert(1); margin-bottom: 22px;
+            width: fit-content; animation: scaleIn 0.9s ease 0.1s both;
+        }
+        .cover-title {
+            font-family: var(--font-primary); font-weight: 800; font-size: 44px;
+            color: white; line-height: 1.1; margin-bottom: 14px;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+        .cover-title .highlight { color: var(--secondary-color); }
+        .cover-subtitle {
+            font-family: var(--font-secondary); font-size: 14px;
+            color: rgba(255,255,255,0.78); line-height: 1.6;
+            margin-bottom: 26px; max-width: 480px;
+            animation: fadeInUp 0.8s ease 0.45s both;
+        }
+        .cover-line {
+            width: 50px; height: 3px; background: var(--secondary-color);
+            border-radius: 3px; margin-bottom: 18px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        .cover-stats-row {
+            display: flex; gap: 14px; margin-top: 8px;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        .cover-stat {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px; padding: 14px 18px; flex: 1;
+        }
+        .cover-stat-num {
+            font-family: var(--font-primary); font-weight: 800; font-size: 24px;
+            color: var(--secondary-color); display: block; line-height: 1;
+        }
+        .cover-stat-label {
+            font-size: 10px; color: rgba(255,255,255,0.7); margin-top: 4px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .cover-meta {
+            display: flex; gap: 22px; margin-top: 20px;
+            animation: fadeInUp 0.8s ease 0.75s both;
+        }
+        .cover-meta-item { color: rgba(255,255,255,0.5); font-size: 11px; }
+        .cover-meta-item i { color: var(--secondary-color); margin-right: 5px; }
 
-        /* NR-01 */
-        .nr01-content { display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; flex: 1; margin-top: 15px; }
-        .nr01-alert {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-left: 4px solid var(--secondary-color); border-radius: 10px;
-            padding: 15px 18px; display: flex; gap: 15px; align-items: flex-start; margin-bottom: 15px;
-            animation: scaleIn 0.6s ease-out 0.3s both;
-        }
-        .nr01-alert-icon {
-            width: 40px; height: 40px; background: var(--secondary-color); border-radius: 10px;
-            display: flex; align-items: center; justify-content: center; font-size: 18px; color: white; flex-shrink: 0;
-            animation: pulse 2s ease-in-out infinite;
-        }
-        .nr01-alert h4 { font-size: 15px; color: var(--dark-color); margin-bottom: 6px; font-weight: 700; }
-        .nr01-alert p { font-size: 13px; color: var(--gray-color); line-height: 1.6; }
-        .nr01-list { list-style: none; }
-        .nr01-list li {
-            display: flex; align-items: flex-start; gap: 12px; padding: 10px 0;
-            font-size: 14px; color: var(--dark-color); border-bottom: 1px solid var(--light-color);
-        }
-        .nr01-list li i { color: var(--accent-color); font-size: 14px; margin-top: 2px; }
-        .nr01-services { display: flex; flex-direction: column; gap: 12px; animation: slideInRight 0.8s ease-out 0.4s both; }
-        .nr01-service-card {
-            background: var(--light-color); border-radius: 10px; padding: 15px;
-            display: flex; gap: 12px; align-items: flex-start; transition: all 0.3s ease;
-        }
-        .nr01-service-card:hover { transform: translateX(8px); box-shadow: 0 5px 20px rgba(0,0,0,0.1); background: white; }
-        .nr01-service-icon {
-            width: 38px; height: 38px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-            border-radius: 8px; display: flex; align-items: center; justify-content: center;
-            font-size: 16px; color: white; flex-shrink: 0; transition: transform 0.3s ease;
-        }
-        .nr01-service-card:hover .nr01-service-icon { transform: scale(1.1); }
-        .nr01-service-card h4 { font-size: 14px; color: var(--dark-color); margin-bottom: 6px; font-weight: 700; }
-        .nr01-service-card p { font-size: 12px; color: var(--gray-color); line-height: 1.5; }
+        /* ===== GRIDS ===== */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; flex: 1; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; flex: 1; }
 
-        /* SERVIÇOS */
-        .servicos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; flex: 1; margin-top: 15px; }
-        .servico-card {
-            background: var(--light-color); border-radius: 12px; padding: 18px 15px;
-            text-align: center; position: relative; overflow: hidden; border: 2px solid transparent;
-            transition: all 0.3s ease; animation: fadeInUp 0.6s ease-out both;
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--light-color); border-radius: 12px; padding: 18px;
+            border-left: 4px solid var(--primary-color);
+            display: flex; flex-direction: column;
         }
-        .servico-card:nth-child(1) { animation-delay: 0.1s; }
-        .servico-card:nth-child(2) { animation-delay: 0.15s; }
-        .servico-card:nth-child(3) { animation-delay: 0.2s; }
-        .servico-card:nth-child(4) { animation-delay: 0.25s; }
-        .servico-card:nth-child(5) { animation-delay: 0.3s; }
-        .servico-card:nth-child(6) { animation-delay: 0.35s; }
-        .servico-card:nth-child(7) { animation-delay: 0.4s; }
-        .servico-card:nth-child(8) { animation-delay: 0.45s; }
-        .servico-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); border-color: var(--secondary-color); background: white; }
-        .servico-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            transition: height 0.3s ease;
-        }
-        .servico-card:hover::before { height: 5px; }
-        .servico-icon {
-            width: 45px; height: 45px;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-            border-radius: 10px; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 10px; font-size: 20px; color: white; transition: all 0.3s ease;
-        }
-        .servico-card:hover .servico-icon { transform: scale(1.15) rotate(5deg); box-shadow: 0 8px 20px rgba(26,54,93,0.3); }
-        .servico-card h3 { font-size: 15px; font-weight: 700; color: var(--dark-color); margin-bottom: 8px; transition: color 0.3s ease; }
-        .servico-card:hover h3 { color: var(--primary-color); }
-        .servico-card p { font-size: 12px; color: var(--gray-color); line-height: 1.5; }
-
-        /* TREINAMENTOS */
-        .treinamentos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; flex: 1; margin-top: 15px; }
-        .treinamento-card {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-            border-radius: 12px; padding: 16px 14px; text-align: center; color: white; position: relative; overflow: hidden;
-            transition: all 0.3s ease; animation: scaleIn 0.5s ease-out both;
-        }
-        .treinamento-card:nth-child(1) { animation-delay: 0.1s; }
-        .treinamento-card:nth-child(2) { animation-delay: 0.15s; }
-        .treinamento-card:nth-child(3) { animation-delay: 0.2s; }
-        .treinamento-card:nth-child(4) { animation-delay: 0.25s; }
-        .treinamento-card:nth-child(5) { animation-delay: 0.3s; }
-        .treinamento-card:nth-child(6) { animation-delay: 0.35s; }
-        .treinamento-card:nth-child(7) { animation-delay: 0.4s; }
-        .treinamento-card:nth-child(8) { animation-delay: 0.45s; }
-        .treinamento-card:nth-child(9) { animation-delay: 0.5s; }
-        .treinamento-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(15,39,68,0.4); }
-        .treinamento-card::before {
-            content: ''; position: absolute; top: -50%; right: -50%; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%); transition: all 0.3s ease;
-        }
-        .treinamento-card:hover::before { top: -30%; right: -30%; }
-        .treinamento-icon {
-            width: 40px; height: 40px; background: rgba(255,255,255,0.15); border-radius: 10px;
+        .card .card-icon {
+            width: 38px; height: 38px; border-radius: 9px;
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 10px; font-size: 18px; color: var(--secondary-color); transition: all 0.3s ease;
+            font-size: 16px; margin-bottom: 10px; flex-shrink: 0;
         }
-        .treinamento-card:hover .treinamento-icon { transform: scale(1.2); background: rgba(255,255,255,0.25); }
-        .treinamento-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
-        .treinamento-card p { font-size: 11px; opacity: 0.85; line-height: 1.5; }
+        .card h4 {
+            font-family: var(--font-primary); font-weight: 700; font-size: 12px;
+            color: var(--dark-color); margin-bottom: 5px;
+        }
+        .card p { font-size: 10.5px; color: var(--gray-color); line-height: 1.55; }
+        .card-tag {
+            display: inline-block; font-family: var(--font-primary); font-weight: 700;
+            font-size: 8px; text-transform: uppercase; letter-spacing: 1px;
+            padding: 3px 9px; border-radius: 12px; margin-bottom: 7px;
+            width: fit-content;
+        }
 
-        /* DIFERENCIAIS */
-        .diferenciais-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; flex: 1; margin-top: 15px; }
-        .diferencial-card {
-            background: white; border: 2px solid var(--light-color); border-radius: 15px;
-            padding: 22px; display: flex; gap: 15px; align-items: flex-start;
-            transition: all 0.3s ease; animation: fadeInUp 0.6s ease-out both;
-        }
-        .diferencial-card:nth-child(1) { animation-delay: 0.1s; }
-        .diferencial-card:nth-child(2) { animation-delay: 0.2s; }
-        .diferencial-card:nth-child(3) { animation-delay: 0.3s; }
-        .diferencial-card:nth-child(4) { animation-delay: 0.4s; }
-        .diferencial-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); border-color: var(--secondary-color); }
-        .diferencial-icon {
-            width: 55px; height: 55px;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
-            border-radius: 15px; display: flex; align-items: center; justify-content: center;
-            font-size: 24px; color: white; flex-shrink: 0; transition: all 0.3s ease;
-        }
-        .diferencial-card:hover .diferencial-icon { transform: scale(1.1) rotate(-5deg); box-shadow: 0 10px 25px rgba(245,166,35,0.3); }
-        .diferencial-content h3 { font-size: 18px; color: var(--dark-color); margin-bottom: 8px; font-weight: 700; transition: color 0.3s ease; }
-        .diferencial-card:hover .diferencial-content h3 { color: var(--primary-color); }
-        .diferencial-content p { font-size: 13px; color: var(--gray-color); line-height: 1.6; }
+        .icon-blue { background: var(--info-light); color: var(--info-color); }
+        .icon-green { background: var(--accent-light); color: var(--accent-color); }
+        .icon-orange { background: var(--warning-light); color: var(--warning-color); }
+        .icon-red { background: var(--danger-light); color: var(--danger-color); }
+        .icon-navy { background: #e8eef5; color: var(--primary-color); }
+        .icon-purple { background: var(--purple-light); color: var(--purple-color); }
 
-        /* CONTATO */
-        .slide-contato { background: linear-gradient(135deg, #0f2744 0%, #1a365d 50%, #2d4a6f 100%); color: white; }
-        .slide-contato::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .contato-content { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; flex: 1; margin-top: 20px; align-items: center; }
-        .contato-info { display: flex; flex-direction: column; gap: 20px; animation: slideInLeft 0.8s ease-out 0.3s both; }
-        .contato-item { display: flex; align-items: center; gap: 15px; transition: transform 0.3s ease; }
-        .contato-item:hover { transform: translateX(10px); }
-        .contato-item-icon {
-            width: 45px; height: 45px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-            border-radius: 12px; display: flex; align-items: center; justify-content: center;
-            font-size: 20px; color: var(--secondary-color); flex-shrink: 0; transition: all 0.3s ease;
-        }
-        .contato-item:hover .contato-item-icon { background: rgba(255,255,255,0.2); transform: scale(1.1); }
-        .contato-item-text strong { display: block; font-size: 12px; opacity: 0.7; margin-bottom: 3px; font-weight: 500; }
-        .contato-item-text span { font-size: 16px; font-weight: 600; }
-        .contato-cta { background: var(--secondary-color); border-radius: 15px; padding: 30px; text-align: center; animation: scaleIn 0.8s ease-out 0.4s both; transition: all 0.3s ease; }
-        .contato-cta:hover { transform: scale(1.02); box-shadow: 0 20px 50px rgba(245,166,35,0.4); }
-        .contato-cta h3 { font-size: 28px; font-weight: 700; margin-bottom: 14px; color: var(--dark-color); }
-        .contato-cta p { font-size: 15px; color: var(--dark-color); opacity: 0.8; margin-bottom: 22px; line-height: 1.6; }
-        .contato-cta .btn {
-            display: inline-flex; align-items: center; gap: 8px; background: var(--dark-color);
-            color: white; padding: 14px 30px; border-radius: 50px; font-size: 14px;
-            font-weight: 700; text-decoration: none; transition: all 0.3s ease;
-        }
-        .contato-cta .btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3); background: var(--primary-color); }
-        .slide-contato .slide-header { border-bottom-color: rgba(255,255,255,0.1); }
-        .slide-contato .slide-header-title { color: rgba(255,255,255,0.7); }
-        .slide-contato .section-title { color: white; }
-        .slide-contato .section-subtitle { color: rgba(255,255,255,0.8); }
+        .border-orange { border-left-color: var(--secondary-color); }
+        .border-green { border-left-color: var(--accent-color); }
+        .border-red { border-left-color: var(--danger-color); }
+        .border-blue { border-left-color: var(--info-color); }
+        .border-purple { border-left-color: var(--purple-color); }
+        .border-navy { border-left-color: var(--primary-color); }
 
+        .tag-blue { background: var(--info-light); color: var(--info-color); }
+        .tag-green { background: var(--accent-light); color: var(--accent-color); }
+        .tag-orange { background: var(--warning-light); color: var(--warning-color); }
+        .tag-red { background: var(--danger-light); color: var(--danger-color); }
+        .tag-navy { background: #e8eef5; color: var(--primary-color); }
+        .tag-purple { background: var(--purple-light); color: var(--purple-color); }
+
+        /* ===== TWO COL ===== */
+        .two-col { display: flex; gap: 24px; flex: 1; }
+        .col-main { flex: 1; min-width: 0; }
+        .col-side { width: 270px; flex-shrink: 0; }
+        .vdivider { width: 1px; background: var(--gray-light); flex-shrink: 0; }
+
+        /* ===== LIST ITEMS ===== */
+        .list-item {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 9px 12px; background: var(--light-color);
+            border-radius: 9px; margin-bottom: 7px;
+        }
+        .list-item i { font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+        .list-item p { font-size: 11px; color: var(--gray-color); line-height: 1.45; }
+        .list-item p strong { color: var(--dark-color); font-weight: 600; }
+
+        /* ===== HIGHLIGHT BOXES ===== */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white; border-radius: 12px; padding: 16px 20px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .highlight-box i { font-size: 22px; color: var(--secondary-color); flex-shrink: 0; }
+        .highlight-box p { font-size: 11.5px; line-height: 1.5; color: rgba(255,255,255,0.88); }
+        .highlight-box p strong { color: var(--secondary-color); }
+
+        .warning-box {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: white; border-radius: 12px; padding: 14px 18px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .warning-box i { font-size: 20px; color: #fde68a; flex-shrink: 0; }
+        .warning-box p { font-size: 11px; line-height: 1.5; color: rgba(255,255,255,0.95); }
+        .warning-box p strong { color: #fde68a; }
+
+        /* ===== STATS ===== */
+        .stats-row { display: flex; gap: 12px; margin-bottom: 16px; }
+        .stat-pill {
+            flex: 1; text-align: center; background: var(--light-color);
+            border-radius: 10px; padding: 12px 12px;
+            border-top: 3px solid var(--primary-color);
+        }
+        .stat-pill .stat-num {
+            font-family: var(--font-primary); font-weight: 800;
+            font-size: 22px; color: var(--primary-color); display: block;
+        }
+        .stat-pill .stat-label { font-size: 9.5px; color: var(--gray-color); line-height: 1.3; }
+
+        /* ===== PHOTO CARDS ===== */
+        .photo-card {
+            position: relative; border-radius: 12px; overflow: hidden;
+            min-height: 100%; background: var(--primary-dark);
+        }
+        .photo-card img {
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; inset: 0;
+        }
+        .photo-card .photo-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 30%, rgba(15,39,68,0.95) 100%);
+        }
+        .photo-card .photo-caption {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            padding: 14px 14px 12px; color: white; z-index: 2;
+        }
+        .photo-card .photo-tag {
+            display: inline-block; background: var(--secondary-color);
+            color: var(--primary-dark); font-family: var(--font-primary);
+            font-weight: 800; font-size: 8px; padding: 3px 8px;
+            border-radius: 4px; text-transform: uppercase; letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .photo-card .photo-title {
+            font-family: var(--font-primary); font-weight: 700;
+            font-size: 12px; line-height: 1.25;
+        }
+        .photo-card.tall { height: 100%; }
+
+        /* ===== TEAM CARDS ===== */
+        .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .team-card {
+            background: white; border-radius: 14px; padding: 18px;
+            text-align: center; box-shadow: 0 4px 14px rgba(15,39,68,0.06);
+            border: 1px solid var(--gray-light);
+        }
+        .team-photo {
+            width: 100px; height: 100px; border-radius: 50%;
+            object-fit: cover; margin: 0 auto 12px; display: block;
+            border: 4px solid var(--light-color);
+            box-shadow: 0 4px 16px rgba(15,39,68,0.15);
+        }
+        .team-icon-wrap {
+            width: 100px; height: 100px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px;
+            box-shadow: 0 6px 20px rgba(15,39,68,0.18);
+            font-size: 38px; color: white;
+        }
+        .team-name {
+            font-family: var(--font-primary); font-weight: 800; font-size: 14px;
+            color: var(--primary-color); margin-bottom: 3px;
+        }
+        .team-role {
+            font-size: 10px; color: var(--secondary-color);
+            font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1.2px; margin-bottom: 10px;
+        }
+        .team-desc { font-size: 10.5px; color: var(--gray-color); line-height: 1.5; }
+        .team-creds {
+            display: flex; justify-content: center; gap: 6px;
+            margin-top: 10px; flex-wrap: wrap;
+        }
+        .team-cred {
+            background: var(--light-color); color: var(--primary-color);
+            font-family: var(--font-primary); font-weight: 700; font-size: 8px;
+            padding: 3px 7px; border-radius: 8px;
+        }
+
+        /* ===== GALERIA TREINAMENTOS ===== */
+        .gallery-grid {
+            display: grid; grid-template-columns: 1.4fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px; flex: 1;
+        }
+        .gallery-grid > div:nth-child(1) { grid-row: span 2; }
+
+        /* ===== CHART (BARS) ===== */
+        .chart-wrap {
+            background: var(--light-color); border-radius: 12px; padding: 18px;
+            display: flex; flex-direction: column; gap: 10px; height: 100%;
+        }
+        .chart-title {
+            font-family: var(--font-primary); font-weight: 700;
+            font-size: 11px; color: var(--primary-color);
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .bar-chart {
+            display: flex; align-items: flex-end; justify-content: space-around;
+            gap: 8px; flex: 1; padding: 18px 0 0; min-height: 130px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .bar-col { display: flex; flex-direction: column; align-items: center; flex: 1; gap: 4px; height: 100%; justify-content: flex-end; }
+        .bar {
+            width: 100%; max-width: 38px;
+            background: linear-gradient(180deg, var(--secondary-color), var(--secondary-dark));
+            border-radius: 6px 6px 0 0; position: relative;
+            box-shadow: 0 -2px 8px rgba(245,166,35,0.25);
+        }
+        .bar.alt { background: linear-gradient(180deg, var(--primary-light), var(--primary-color)); box-shadow: 0 -2px 8px rgba(26,54,93,0.25); }
+        .bar-value {
+            position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+            font-family: var(--font-primary); font-weight: 800; font-size: 10px;
+            color: var(--primary-color); white-space: nowrap;
+        }
+        .bar-label {
+            font-size: 9px; color: var(--gray-color); text-align: center;
+            font-weight: 600;
+        }
+        .chart-legend { display: flex; justify-content: center; gap: 14px; font-size: 9px; color: var(--gray-color); flex-wrap: wrap; }
+        .legend-dot { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 4px; vertical-align: middle; }
+
+        /* ===== DONUT ===== */
+        .donut-wrap { display: flex; align-items: center; gap: 18px; }
+        .donut { width: 130px; height: 130px; position: relative; flex-shrink: 0; }
+        .donut svg { transform: rotate(-90deg); }
+        .donut-center {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center;
+        }
+        .donut-num {
+            font-family: var(--font-primary); font-weight: 800; font-size: 22px;
+            color: var(--primary-color); line-height: 1;
+        }
+        .donut-lbl { font-size: 8px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        /* ===== PROCESS TIMELINE ===== */
+        .process-timeline {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 0; position: relative; margin-top: 12px;
+        }
+        .process-step {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            position: relative; padding: 0 8px;
+        }
+        .process-step:not(:last-child)::after {
+            content: ''; position: absolute; top: 24px; left: 60%; right: -40%;
+            height: 2px; background: repeating-linear-gradient(90deg, var(--gray-light) 0 6px, transparent 6px 12px);
+            z-index: 0;
+        }
+        .process-circle {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white; display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-primary); font-weight: 800; font-size: 16px;
+            box-shadow: 0 6px 16px rgba(15,39,68,0.25);
+            position: relative; z-index: 1; margin-bottom: 10px;
+            border: 3px solid white;
+        }
+        .process-step h5 {
+            font-family: var(--font-primary); font-weight: 700; font-size: 11px;
+            color: var(--primary-color); margin-bottom: 4px;
+        }
+        .process-step p { font-size: 9.5px; color: var(--gray-color); line-height: 1.4; }
+
+        /* ===== CLIENTS BAR ===== */
+        .clients-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+        }
+        .client-chip {
+            background: var(--light-color); border: 1px solid var(--gray-light);
+            border-radius: 8px; padding: 10px 12px; text-align: center;
+            font-family: var(--font-primary); font-weight: 700; font-size: 10px;
+            color: var(--primary-color); display: flex; align-items: center; justify-content: center;
+            min-height: 44px;
+        }
+        .logo-tile {
+            background: white; border: 1px solid var(--gray-light);
+            border-radius: 10px; padding: 14px; height: 95px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 3px 10px rgba(15,39,68,0.06);
+            transition: transform 0.2s;
+        }
+        .logo-tile img {
+            max-width: 100%; max-height: 100%; object-fit: contain;
+        }
+        .logo-tile-text {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none; color: var(--secondary-color);
+            font-family: var(--font-primary); font-weight: 800; font-size: 22px;
+            text-align: center; line-height: 1.1;
+            flex-direction: column;
+        }
+        .logo-tile-text span { color: rgba(255,255,255,0.85); }
+
+        /* ===== TESTIMONIAL ===== */
+        .testimonial {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white; border-radius: 14px; padding: 22px 26px;
+            position: relative;
+        }
+        .testimonial::before {
+            content: '\201C'; font-family: Georgia, serif; font-size: 80px;
+            line-height: 0.7; color: var(--secondary-color);
+            position: absolute; top: 18px; left: 16px; opacity: 0.6;
+        }
+        .testimonial p {
+            font-size: 13px; line-height: 1.55; color: rgba(255,255,255,0.92);
+            font-style: italic; padding-left: 36px; margin-bottom: 12px;
+        }
+        .testimonial-author {
+            padding-left: 36px; font-family: var(--font-primary);
+            font-weight: 700; font-size: 11px; color: var(--secondary-color);
+        }
+        .testimonial-author span {
+            display: block; color: rgba(255,255,255,0.6);
+            font-weight: 400; font-size: 9.5px; margin-top: 2px;
+        }
+
+        /* ===== CLOSING ===== */
+        .slide-closing {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 60%, var(--primary-light) 100%);
+            padding: 0; display: flex; flex-direction: row;
+            position: relative; overflow: hidden;
+        }
+        .slide-closing::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(245,166,35,0.10) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(16,185,129,0.08) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .closing-content {
+            flex: 1; display: flex; flex-direction: column; justify-content: center;
+            padding: 55px; position: relative; z-index: 1;
+        }
+        .closing-side {
+            width: 290px; border-left: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            display: flex; flex-direction: column; justify-content: center; gap: 14px;
+            padding: 40px 28px; position: relative; z-index: 1;
+        }
+        .contact-item { display: flex; align-items: center; gap: 12px; }
+        .contact-icon {
+            width: 38px; height: 38px;
+            background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.3);
+            border-radius: 9px; display: flex; align-items: center; justify-content: center;
+            color: var(--secondary-color); font-size: 14px; flex-shrink: 0;
+        }
+        .contact-text p { font-size: 10px; color: rgba(255,255,255,0.5); }
+        .contact-text strong { font-size: 12px; color: rgba(255,255,255,0.92); font-family: var(--font-primary); font-weight: 600; }
+
+        /* ===== PRINT ===== */
+        @page { size: 297mm 210mm landscape; margin: 0; }
         @media print {
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
-            body { background: white; padding: 0; margin: 0; }
-            .slide { 
-                page-break-after: always; page-break-inside: avoid; 
-                margin: 0; box-shadow: none; border-radius: 0;
-                width: 297mm; height: 210mm; min-height: 210mm; max-height: 210mm;
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                animation: none !important; transition: none !important;
             }
-            .slide:last-child { page-break-after: auto; }
-            
-            /* Garantir que backgrounds e gradientes sejam impressos */
-            .slide-capa, .slide-contato { background: linear-gradient(135deg, #0f2744 0%, #1a365d 50%, #2d4a6f 100%) !important; }
-            .capa-content, .contato-content { position: relative; z-index: 2; }
-            .capa-badge, .capa-stat, .contato-item-icon { 
-                background: rgba(255,255,255,0.1) !important; 
-                backdrop-filter: none !important;
-                border: 1px solid rgba(255,255,255,0.2) !important;
+            html { width: 297mm; }
+            body { width: 297mm !important; background: white !important; display: block !important; padding: 0 !important; margin: 0 !important; gap: 0 !important; }
+            .slide {
+                width: 297mm !important; height: 210mm !important;
+                min-height: 210mm !important; max-height: 210mm !important;
+                box-shadow: none !important; border-radius: 0 !important;
+                page-break-after: always !important; break-after: page !important;
+                page-break-inside: avoid !important; break-inside: avoid !important;
+                margin: 0 !important; overflow: hidden !important;
             }
-            .section-badge { background: linear-gradient(135deg, #1a365d 0%, #2d4a6f 100%) !important; }
-            .servico-icon, .nr01-service-icon { background: linear-gradient(135deg, #1a365d 0%, #2d4a6f 100%) !important; }
-            .treinamento-card { background: linear-gradient(135deg, #1a365d 0%, #2d4a6f 100%) !important; }
-            .diferencial-icon { background: linear-gradient(135deg, #f5a623 0%, #e09112 100%) !important; }
-            .contato-cta { background: #f5a623 !important; }
+            .slide:last-of-type { page-break-after: auto !important; break-after: auto !important; }
+            .slide-cover, .slide-closing {
+                display: flex !important; flex-direction: row !important; padding: 0 !important;
+                background: linear-gradient(135deg, #0f2744 0%, #1a365d 55%, #2d4a6f 100%) !important;
+            }
+            .cover-left  { flex: 1 !important; min-width: 0 !important; }
+            .cover-right { width: 320px !important; min-width: 320px !important; flex-shrink: 0 !important; }
+            .closing-content { flex: 1 !important; min-width: 0 !important; }
+            .closing-side { width: 290px !important; min-width: 290px !important; flex-shrink: 0 !important; }
+            .slide:not(.slide-cover):not(.slide-closing) {
+                display: flex !important; flex-direction: column !important;
+                padding: 35px 45px 50px !important;
+            }
             .slide-footer { background: #1a365d !important; }
-            
-            /* Remover animações na impressão */
-            * { animation: none !important; transition: none !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- SLIDE 1: CAPA -->
-    <div class="slide slide-capa">
-        <div class="capa-content">
-            <span class="capa-badge"><i class="fas fa-hard-hat"></i> Engenharia de Segurança e Saúde do Trabalho</span>
-            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="capa-logo">
-            <h1 class="capa-title">SST que garante <span class="highlight">Segurança Jurídica</span></h1>
-            <p class="capa-subtitle">Somos especialistas em Engenharia de Segurança e Saúde do Trabalho. Com programas de SST atualizados e em conformidade com as NRs, sua empresa fica protegida.</p>
-            <div class="capa-stats">
-                <div class="capa-stat">
-                    <div class="capa-stat-icon"><i class="fas fa-building"></i></div>
-                    <div class="capa-stat-number">+500</div>
-                    <div class="capa-stat-label">Empresas Atendidas</div>
-                </div>
-                <div class="capa-stat">
-                    <div class="capa-stat-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-                    <div class="capa-stat-number">+1000</div>
-                    <div class="capa-stat-label">Treinamentos Realizados</div>
-                </div>
-                <div class="capa-stat">
-                    <div class="capa-stat-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div class="capa-stat-number">100%</div>
-                    <div class="capa-stat-label">Segurança Jurídica</div>
-                </div>
+<!-- ============================== -->
+<!-- SLIDE 01 — CAPA                -->
+<!-- ============================== -->
+<div class="slide slide-cover">
+    <div class="cover-left">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="cover-logo">
+        <div class="cover-badge">
+            <i class="fas fa-hard-hat"></i> Engenharia de Segurança e Saúde do Trabalho
+        </div>
+        <div class="cover-line"></div>
+        <div class="cover-title">
+            SST que garante<br><span class="highlight">Segurança Jurídica</span>
+        </div>
+        <div class="cover-subtitle">
+            Programas de SST atualizados às novas exigências da NR-01, treinamentos com instrutores habilitados e documentação técnica completa — para sua empresa operar com tranquilidade e conformidade legal.
+        </div>
+        <div class="cover-stats-row">
+            <div class="cover-stat">
+                <span class="cover-stat-num">+1.000</span>
+                <div class="cover-stat-label">Treinamentos</div>
+            </div>
+            <div class="cover-stat">
+                <span class="cover-stat-num">+500</span>
+                <div class="cover-stat-label">Empresas</div>
+            </div>
+            <div class="cover-stat">
+                <span class="cover-stat-num">100%</span>
+                <div class="cover-stat-label">Conformidade</div>
             </div>
         </div>
-        <div class="capa-wave">
-            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#ffffff"/>
-            </svg>
+        <div class="cover-meta">
+            <div class="cover-meta-item"><i class="fas fa-calendar-alt"></i> Apresentação Comercial — 2026</div>
+            <div class="cover-meta-item"><i class="fas fa-map-marker-alt"></i> Natal/RN — Atuação Nacional</div>
+        </div>
+    </div>
+    <div class="cover-right">
+        <div class="cover-right-tag"><i class="fas fa-camera"></i> Primeiros Socorros &amp; Brigada de Incêndio — Cliente Mirantes</div>
+        <div class="cover-right-caption">
+            Mais de 1.000 treinamentos ministrados em obras, indústrias, hospitais, escolas e instituições religiosas em todo o Rio Grande do Norte.
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 02 — QUEM SOMOS          -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">01 / 11</div>
+    </div>
+
+    <div class="section-badge">Quem Somos</div>
+    <div class="section-title">A <span class="highlight">EngMarq Solution</span> em poucas palavras</div>
+    <div class="section-subtitle">Empresa de engenharia de segurança e saúde do trabalho sediada em Natal/RN — atendimento técnico, presencial e documentado.</div>
+
+    <div class="two-col">
+        <div class="col-main">
+            <div class="list-item">
+                <i class="fas fa-bullseye" style="color:var(--primary-color)"></i>
+                <p><strong>Missão:</strong> oferecer soluções completas em SST que protejam vidas e garantam <strong>segurança jurídica</strong> aos nossos clientes — antes, durante e depois da fiscalização.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-eye" style="color:var(--secondary-color)"></i>
+                <p><strong>Visão:</strong> ser referência em engenharia de segurança no Nordeste, reconhecida pela qualidade técnica, pelo cumprimento de prazos e pelo atendimento humanizado.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-handshake" style="color:var(--accent-color)"></i>
+                <p><strong>Valores:</strong> ética profissional, responsabilidade técnica, transparência nos processos, parceria de longo prazo e melhoria contínua dos serviços prestados.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-map-marked-alt" style="color:var(--info-color)"></i>
+                <p><strong>Atuação:</strong> sede em Natal/RN, atendendo todo o estado e demandas em todo o território nacional — equipe técnica registrada no CREA-RN e habilitada pelo MTE.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-chart-line" style="color:var(--purple-color)"></i>
+                <p><strong>Resultado:</strong> mais de 500 empresas atendidas, 1.000+ treinamentos realizados e 100% das fiscalizações trabalhistas concluídas sem autuação aos nossos clientes.</p>
+            </div>
+        </div>
+        <div class="vdivider"></div>
+        <div class="col-side">
+            <div style="background:linear-gradient(155deg,var(--primary-color),var(--primary-dark));border-radius:14px;padding:22px;color:white;height:100%;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;">
+                <div style="position:absolute;bottom:-30px;right:-30px;width:130px;height:130px;border-radius:50%;background:rgba(245,166,35,0.08);"></div>
+                <div style="font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--font-primary);font-weight:700;">Nossos números</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative;z-index:1;">
+                    <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;">
+                        <div style="font-family:var(--font-primary);font-weight:800;font-size:24px;color:var(--secondary-color);">+8</div>
+                        <div style="font-size:9.5px;color:rgba(255,255,255,0.7);line-height:1.3;">Anos atuando em SST no RN</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;">
+                        <div style="font-family:var(--font-primary);font-weight:800;font-size:24px;color:var(--secondary-color);">+500</div>
+                        <div style="font-size:9.5px;color:rgba(255,255,255,0.7);line-height:1.3;">Empresas atendidas</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;">
+                        <div style="font-family:var(--font-primary);font-weight:800;font-size:24px;color:var(--secondary-color);">+1k</div>
+                        <div style="font-size:9.5px;color:rgba(255,255,255,0.7);line-height:1.3;">Treinamentos realizados</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;">
+                        <div style="font-family:var(--font-primary);font-weight:800;font-size:24px;color:var(--secondary-color);">100%</div>
+                        <div style="font-size:9.5px;color:rgba(255,255,255,0.7);line-height:1.3;">Aprovação em fiscalizações</div>
+                    </div>
+                </div>
+                <div style="background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.3);border-radius:9px;padding:10px;font-size:10px;color:rgba(255,255,255,0.85);line-height:1.45;margin-top:auto;position:relative;z-index:1;">
+                    <strong style="color:var(--secondary-color);"><i class="fas fa-medal" style="margin-right:5px;"></i>Responsabilidade Técnica:</strong> todos os documentos são assinados por Engenheiro de Segurança do Trabalho registrado no CREA-RN.
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- SLIDE 2: SOBRE NÓS -->
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="slide-header-logo">
-                <span class="slide-header-title">Apresentação Comercial</span>
-            </div>
-            <span class="section-badge"><i class="fas fa-building"></i> Quem Somos</span>
-            <h2 class="section-title">Sobre a <span class="highlight">EngMarq Solution</span></h2>
-            <p class="section-subtitle">Especialistas em Engenharia de Segurança e Saúde do Trabalho em Natal/RN.</p>
-            <div class="sobre-content">
-                <div class="sobre-text">
-                    <p>A <strong>EngMarq Solution</strong> é uma empresa especializada em <strong>Engenharia de Segurança e Saúde do Trabalho</strong>, com foco em garantir a <strong>Segurança Jurídica</strong> das empresas através de uma gestão de SST completa e atualizada.</p>
-                    <p>Com mais de <strong>500 empresas atendidas</strong> e <strong>1.000 treinamentos realizados</strong>, nossa equipe técnica está preparada para proteger sua empresa e seus colaboradores.</p>
-                    <div class="sobre-features">
-                        <div class="sobre-feature"><i class="fas fa-check-circle"></i><span>Conformidade com NRs</span></div>
-                        <div class="sobre-feature"><i class="fas fa-check-circle"></i><span>Documentação em Dia</span></div>
-                        <div class="sobre-feature"><i class="fas fa-check-circle"></i><span>Proteção Jurídica</span></div>
-                        <div class="sobre-feature"><i class="fas fa-check-circle"></i><span>Atendimento Ágil</span></div>
-                    </div>
-                </div>
-                <div class="sobre-image">
-                    <div class="sobre-image-grid">
-                        <div class="sobre-img-card">
-                            <img src="assets/pessoa 1.png" alt="Equipe">
-                            <h4>Engenheiros</h4>
-                            <p>Especialistas em SST</p>
-                        </div>
-                        <div class="sobre-img-card">
-                            <img src="assets/pessoa 2.png" alt="Equipe">
-                            <h4>Técnicos</h4>
-                            <p>Experientes e Capacitados</p>
-                        </div>
-                        <div class="sobre-img-card">
-                            <img src="assets/pessoa 3.png" alt="Equipe">
-                            <h4>Consultores</h4>
-                            <p>Atendimento Personalizado</p>
-                        </div>
-                        <div class="sobre-img-card" style="background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%); color: white;">
-                            <div style="font-size: 32px; margin-bottom: 8px;"><i class="fas fa-trophy"></i></div>
-                            <h4 style="color: var(--secondary-color);">+500</h4>
-                            <p style="color: rgba(255,255,255,0.8);">Empresas Atendidas</p>
-                        </div>
-                    </div>
-                </div>
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 03 — EQUIPE              -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">02 / 11</div>
+    </div>
+
+    <div class="section-badge">Nossa Equipe</div>
+    <div class="section-title">Profissionais <span class="highlight">habilitados</span> e dedicados</div>
+    <div class="section-subtitle">Equipe técnica multidisciplinar — engenharia de segurança, operações e comercial — para atender sua empresa do primeiro contato à entrega final.</div>
+
+    <div class="team-grid" style="margin-bottom:14px;">
+        <div class="team-card">
+            <div class="team-icon-wrap" style="background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));"><i class="fas fa-hard-hat"></i></div>
+            <div class="team-name">Engenheiro de Segurança</div>
+            <div class="team-role">Responsável Técnico</div>
+            <div class="team-desc">Responsável técnico pelos programas de SST, laudos, perícias e elaboração de PGR/PCMSO. Atua na coordenação técnica dos projetos.</div>
+            <div class="team-creds">
+                <span class="team-cred">CREA-RN</span>
+                <span class="team-cred">Eng. Segurança</span>
+                <span class="team-cred">Perito</span>
             </div>
         </div>
-        <div class="slide-footer">
-            <span><i class="fab fa-whatsapp"></i> +55 84 99928-5888</span>
-            <span>engmarqsolution@gmail.com</span>
-            <span>www.engmarqsolution.com</span>
+        <div class="team-card">
+            <div class="team-icon-wrap" style="background:linear-gradient(135deg,var(--accent-color),#059669);"><i class="fas fa-clipboard-check"></i></div>
+            <div class="team-name">Diretoria Operacional</div>
+            <div class="team-role">Coordenação &amp; Entregas</div>
+            <div class="team-desc">Coordena a operação dos contratos, acompanha cronogramas de treinamentos, garante a entrega dos documentos e o relacionamento com clientes.</div>
+            <div class="team-creds">
+                <span class="team-cred">Gestão SST</span>
+                <span class="team-cred">Operações</span>
+                <span class="team-cred">Contratos</span>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-icon-wrap" style="background:linear-gradient(135deg,var(--secondary-color),var(--secondary-dark));"><i class="fas fa-handshake"></i></div>
+            <div class="team-name">Diretoria Comercial</div>
+            <div class="team-role">Atendimento &amp; Propostas</div>
+            <div class="team-desc">Lidera a área comercial, atendimento consultivo aos clientes, estruturação de propostas comerciais e expansão da carteira de empresas atendidas.</div>
+            <div class="team-creds">
+                <span class="team-cred">Comercial</span>
+                <span class="team-cred">Consultoria</span>
+                <span class="team-cred">B2B</span>
+            </div>
         </div>
     </div>
 
-    <!-- SLIDE 3: NR-01 -->
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="slide-header-logo">
-                <span class="slide-header-title">Apresentação Comercial</span>
+    <div class="highlight-box">
+        <i class="fas fa-users-cog"></i>
+        <p>Além da equipe fixa, contamos com uma <strong>rede de instrutores credenciados</strong> em todo o Rio Grande do Norte — técnicos de segurança, médicos do trabalho, brigadistas e instrutores certificados em NR-10 e NR-35, garantindo atendimento técnico em qualquer demanda.</p>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 04 — NR-01 PSICOSSOCIAL  -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">03 / 11</div>
+    </div>
+
+    <div class="section-badge" style="background:linear-gradient(135deg,var(--danger-color),#b91c1c);">Atualização Legal — Vigente desde Maio/2026</div>
+    <div class="section-title">NR-01 — Riscos <span class="highlight">Psicossociais</span></div>
+    <div class="section-subtitle">A nova exigência do Ministério do Trabalho obriga TODAS as empresas a avaliar fatores psicossociais e atualizar o PGR — independentemente de porte ou setor.</div>
+
+    <div class="two-col">
+        <div class="col-main">
+            <div class="warning-box" style="margin-bottom:12px;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p><strong>Atenção:</strong> a partir de <strong>26 de maio de 2026</strong> a fiscalização do MTE passa a autuar empresas que não tenham incluído os riscos psicossociais no PGR — multa por trabalhador exposto.</p>
             </div>
-            <span class="section-badge" style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);"><i class="fas fa-exclamation-circle"></i> Atualização Importante</span>
-            <h2 class="section-title">Avaliação dos <span class="highlight">Riscos Psicossociais</span></h2>
-            <p class="section-subtitle">Nova exigência da NR-01 do Ministério do Trabalho para garantir conformidade legal.</p>
-            <div class="nr01-content">
+            <div class="list-item">
+                <i class="fas fa-brain" style="color:var(--purple-color)"></i>
+                <p><strong>O que são riscos psicossociais:</strong> fatores do ambiente de trabalho que afetam a saúde mental — estresse, sobrecarga, assédio, jornadas excessivas, falta de autonomia e conflitos interpessoais.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-clipboard-check" style="color:var(--primary-color)"></i>
+                <p><strong>O que mudou na NR-01:</strong> a empresa deve identificar, avaliar e implementar medidas de controle — registrando tudo no PGR e na integração admissional.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-file-medical-alt" style="color:var(--accent-color)"></i>
+                <p><strong>O que muda no PCMSO:</strong> o médico do trabalho deve considerar os fatores psicossociais nos exames ocupacionais e na vigilância da saúde dos trabalhadores.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-shield-alt" style="color:var(--info-color)"></i>
+                <p><strong>Como atuamos:</strong> aplicamos questionário validado, geramos diagnóstico individual e coletivo, elaboramos plano de ação e atualizamos o PGR com todos os controles necessários.</p>
+            </div>
+        </div>
+        <div class="vdivider"></div>
+        <div class="col-side">
+            <div class="chart-wrap">
+                <div class="chart-title"><i class="fas fa-chart-bar" style="margin-right:5px;color:var(--secondary-color);"></i>Sintomas mais relatados (2025)</div>
+                <div class="bar-chart">
+                    <div class="bar-col">
+                        <div class="bar" style="height:85%;"><span class="bar-value">85%</span></div>
+                        <div class="bar-label">Estresse</div>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar alt" style="height:72%;"><span class="bar-value">72%</span></div>
+                        <div class="bar-label">Ansiedade</div>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar" style="height:58%;"><span class="bar-value">58%</span></div>
+                        <div class="bar-label">Burnout</div>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar alt" style="height:46%;"><span class="bar-value">46%</span></div>
+                        <div class="bar-label">Depressão</div>
+                    </div>
+                    <div class="bar-col">
+                        <div class="bar" style="height:38%;"><span class="bar-value">38%</span></div>
+                        <div class="bar-label">Insônia</div>
+                    </div>
+                </div>
+                <div class="chart-legend">
+                    <span><span class="legend-dot" style="background:var(--secondary-color);"></span>% trabalhadores afetados</span>
+                </div>
+                <div style="background:white;border-radius:8px;padding:10px 12px;border-left:3px solid var(--danger-color);font-size:10px;color:var(--gray-color);line-height:1.5;">
+                    <strong style="color:var(--danger-color);">Brasil é o 2º país com mais casos</strong> de burnout no mundo — 30% dos afastamentos do INSS já têm causa psicossocial.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 05 — SERVIÇOS            -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">04 / 11</div>
+    </div>
+
+    <div class="section-badge">Soluções Completas em SST</div>
+    <div class="section-title">Nossos <span class="highlight">Serviços</span></div>
+    <div class="section-subtitle">Tudo o que sua empresa precisa para estar 100% em conformidade com as Normas Regulamentadoras — em um único fornecedor.</div>
+
+    <div class="grid-4">
+        <div class="card border-navy">
+            <div class="card-tag tag-navy">Programa</div>
+            <div class="card-icon icon-navy"><i class="fas fa-file-shield"></i></div>
+            <h4>PGR — Programa de Gerenciamento de Riscos</h4>
+            <p>Inventário de riscos, plano de ação e atualização anual. Inclui riscos psicossociais conforme NR-01/2026.</p>
+        </div>
+        <div class="card border-orange">
+            <div class="card-tag tag-orange">Programa</div>
+            <div class="card-icon icon-orange"><i class="fas fa-stethoscope"></i></div>
+            <h4>PCMSO — Saúde Ocupacional</h4>
+            <p>Coordenação por médico do trabalho, exames admissionais, periódicos, demissionais e relatório anual.</p>
+        </div>
+        <div class="card border-green">
+            <div class="card-tag tag-green">Avaliação</div>
+            <div class="card-icon icon-green"><i class="fas fa-brain"></i></div>
+            <h4>Riscos Psicossociais</h4>
+            <p>Questionário validado, diagnóstico individual e coletivo, plano de ação e integração ao PGR.</p>
+        </div>
+        <div class="card border-blue">
+            <div class="card-tag tag-blue">Laudo</div>
+            <div class="card-icon icon-blue"><i class="fas fa-clipboard-list"></i></div>
+            <h4>LTCAT — Condições Ambientais</h4>
+            <p>Laudo técnico para INSS, eSocial e aposentadoria especial. Atualização obrigatória a cada mudança.</p>
+        </div>
+        <div class="card border-purple">
+            <div class="card-tag tag-purple">Laudo</div>
+            <div class="card-icon icon-purple"><i class="fas fa-money-bill-wave"></i></div>
+            <h4>Insalubridade e Periculosidade</h4>
+            <p>Laudos para defesa em processos trabalhistas, pagamento de adicionais e regularização de adicionais já pagos.</p>
+        </div>
+        <div class="card border-red">
+            <div class="card-tag tag-red">Treinamento</div>
+            <div class="card-icon icon-red"><i class="fas fa-graduation-cap"></i></div>
+            <h4>Treinamentos NR</h4>
+            <p>NR-05, NR-06, NR-10, NR-12, NR-18, NR-23, NR-35 e demais — presencial, EAD ou híbrido.</p>
+        </div>
+        <div class="card border-navy">
+            <div class="card-tag tag-navy">eSocial</div>
+            <div class="card-icon icon-navy"><i class="fas fa-laptop-code"></i></div>
+            <h4>Envios eSocial — S-2210/2220/2240</h4>
+            <p>CAT, ASO e Condições Ambientais — geração de XML, envio e acompanhamento dos eventos.</p>
+        </div>
+        <div class="card border-orange">
+            <div class="card-tag tag-orange">Consultoria</div>
+            <div class="card-icon icon-orange"><i class="fas fa-user-tie"></i></div>
+            <h4>Assessoria SST Mensal</h4>
+            <p>Acompanhamento técnico contínuo, suporte em fiscalizações e atualização documental em todas as NRs.</p>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 06 — TREINAMENTOS GALERIA -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">05 / 11</div>
+    </div>
+
+    <div class="section-badge">Treinamentos em Campo</div>
+    <div class="section-title">Capacitação <span class="highlight">prática e presencial</span></div>
+    <div class="section-subtitle">Treinamentos com aulas teóricas e práticas, ministrados por instrutores habilitados — no canteiro de obras, na fábrica ou em sala de aula.</div>
+
+    <div class="gallery-grid">
+        <div class="photo-card tall">
+            <img src="assets/fotos de treinamentos e palestras em jpeg/IMG_3185.jpg" alt="Treinamento NR-35">
+            <div class="photo-overlay"></div>
+            <div class="photo-caption">
+                <span class="photo-tag">Palestra</span>
+                <div class="photo-title">Palestra sobre fatores de riscos psicossociais</div>
+            </div>
+        </div>
+        <div class="photo-card">
+            <img src="assets/fotos de treinamentos e palestras em jpeg/IMG_4039.jpg" alt="NR-18 Construção Civil">
+            <div class="photo-overlay"></div>
+            <div class="photo-caption">
+                <span class="photo-tag">Treinamento Prático</span>
+                <div class="photo-title">Capacitação em campo com instrutores habilitados</div>
+            </div>
+        </div>
+        <div class="photo-card">
+            <img src="assets/fotos de treinamentos e palestras em jpeg/IMG_4092.jpg" alt="NR-10 Elétrica">
+            <div class="photo-overlay"></div>
+            <div class="photo-caption">
+                <span class="photo-tag">Treinamento em Obra</span>
+                <div class="photo-title">Capacitação no canteiro com equipe completa</div>
+            </div>
+        </div>
+        <div class="photo-card">
+            <img src="assets/fotos de treinamentos e palestras em jpeg/IMG_3232.jpg" alt="Brigada de Incêndio">
+            <div class="photo-overlay"></div>
+            <div class="photo-caption">
+                <span class="photo-tag">Treinamento In Company</span>
+                <div class="photo-title">Capacitação realizada na sede do cliente</div>
+            </div>
+        </div>
+        <div class="photo-card">
+            <img src="assets/BENIWOOD FOTO REINAMENTO ADIMISSIONAL.jpeg" alt="Treinamento Admissional Beniwood">
+            <div class="photo-overlay"></div>
+            <div class="photo-caption">
+                <span class="photo-tag">Admissional</span>
+                <div class="photo-title">Integração de novos colaboradores</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 07 — PLATAFORMA EAD      -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">06 / 11</div>
+    </div>
+
+    <div class="section-badge" style="background:linear-gradient(135deg,var(--info-color),#1e40af);">Plataforma EAD Própria</div>
+    <div class="section-title">Nossa <span class="highlight">Plataforma de Treinamentos</span></div>
+    <div class="section-subtitle">Ambiente exclusivo de ensino à distância para sua empresa — capacitação de colaboradores em qualquer horário, com certificados válidos e relatórios de progresso.</div>
+
+    <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:22px;flex:1;">
+        <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="list-item">
+                <i class="fas fa-laptop" style="color:var(--info-color)"></i>
+                <p><strong>Acesso 24/7:</strong> colaboradores estudam de qualquer lugar e em qualquer horário — computador, tablet ou celular.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-play-circle" style="color:var(--secondary-color)"></i>
+                <p><strong>Conteúdo em vídeo:</strong> aulas gravadas por instrutores credenciados, com materiais de apoio em PDF e exercícios práticos.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-certificate" style="color:var(--accent-color)"></i>
+                <p><strong>Certificados automáticos:</strong> emissão imediata após aprovação na avaliação final — válidos para fiscalização e eSocial.</p>
+            </div>
+            <div class="list-item">
+                <i class="fas fa-chart-line" style="color:var(--purple-color)"></i>
+                <p><strong>Relatórios gerenciais:</strong> RH e gestão acompanham progresso, conclusões e vencimentos de cada colaborador em tempo real.</p>
+            </div>
+            <div class="highlight-box" style="margin-top:6px;">
+                <i class="fas fa-bolt"></i>
+                <p>Ideal para <strong>integração admissional, recicláveis e treinamentos teóricos</strong> — reduz custo logístico e libera o RH para focar no que importa.</p>
+            </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:14px;padding:14px;box-shadow:0 12px 28px rgba(0,0,0,0.15);position:relative;">
+                <div style="display:flex;gap:5px;margin-bottom:8px;">
+                    <span style="width:9px;height:9px;border-radius:50%;background:#ef4444;"></span>
+                    <span style="width:9px;height:9px;border-radius:50%;background:#f59e0b;"></span>
+                    <span style="width:9px;height:9px;border-radius:50%;background:#10b981;"></span>
+                </div>
+                <img src="assets/Plataforma de Treinamentos.png" alt="Plataforma de Treinamentos EngMarq" style="width:100%;border-radius:8px;display:block;">
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div class="stat-pill" style="border-top-color:var(--info-color);">
+                    <span class="stat-num" style="color:var(--info-color);">+30</span>
+                    <span class="stat-label">Cursos disponíveis em todas as NRs</span>
+                </div>
+                <div class="stat-pill" style="border-top-color:var(--accent-color);">
+                    <span class="stat-num" style="color:var(--accent-color);">24/7</span>
+                    <span class="stat-label">Acesso multiplataforma sem restrição</span>
+                </div>
+                <div class="stat-pill" style="border-top-color:var(--secondary-color);grid-column:span 2;">
+                    <span class="stat-num" style="color:var(--secondary-color);">100%</span>
+                    <span class="stat-label">Conformidade com a NR-01 — conteúdo atualizado às exigências de maio/2026</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 07 — NÚMEROS / GRÁFICOS  -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">07 / 11</div>
+    </div>
+
+    <div class="section-badge">Resultados em Números</div>
+    <div class="section-title">A EngMarq em <span class="highlight">dados</span></div>
+    <div class="section-subtitle">Crescimento consistente, base de clientes consolidada e indicadores de qualidade auditáveis.</div>
+
+    <div class="stats-row">
+        <div class="stat-pill" style="border-top-color:var(--primary-color);">
+            <span class="stat-num">+500</span>
+            <span class="stat-label">Empresas atendidas no RN</span>
+        </div>
+        <div class="stat-pill" style="border-top-color:var(--secondary-color);">
+            <span class="stat-num" style="color:var(--secondary-color);">+1.000</span>
+            <span class="stat-label">Treinamentos NR realizados</span>
+        </div>
+        <div class="stat-pill" style="border-top-color:var(--accent-color);">
+            <span class="stat-num" style="color:var(--accent-color);">100%</span>
+            <span class="stat-label">Fiscalizações sem autuação</span>
+        </div>
+        <div class="stat-pill" style="border-top-color:var(--info-color);">
+            <span class="stat-num" style="color:var(--info-color);">98%</span>
+            <span class="stat-label">Renovação de contratos</span>
+        </div>
+        <div class="stat-pill" style="border-top-color:var(--purple-color);">
+            <span class="stat-num" style="color:var(--purple-color);">+8</span>
+            <span class="stat-label">Anos de atuação técnica</span>
+        </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:18px;flex:1;">
+        <div class="chart-wrap">
+            <div class="chart-title"><i class="fas fa-chart-bar" style="margin-right:5px;color:var(--secondary-color);"></i>Treinamentos realizados por NR — últimos 12 meses</div>
+            <div class="bar-chart" style="min-height:160px;">
+                <div class="bar-col"><div class="bar" style="height:92%;"><span class="bar-value">312</span></div><div class="bar-label">NR-01</div></div>
+                <div class="bar-col"><div class="bar alt" style="height:78%;"><span class="bar-value">264</span></div><div class="bar-label">NR-06</div></div>
+                <div class="bar-col"><div class="bar" style="height:55%;"><span class="bar-value">186</span></div><div class="bar-label">NR-35</div></div>
+                <div class="bar-col"><div class="bar alt" style="height:48%;"><span class="bar-value">162</span></div><div class="bar-label">NR-23</div></div>
+                <div class="bar-col"><div class="bar" style="height:35%;"><span class="bar-value">118</span></div><div class="bar-label">NR-10</div></div>
+                <div class="bar-col"><div class="bar alt" style="height:28%;"><span class="bar-value">94</span></div><div class="bar-label">NR-18</div></div>
+                <div class="bar-col"><div class="bar" style="height:22%;"><span class="bar-value">74</span></div><div class="bar-label">NR-12</div></div>
+                <div class="bar-col"><div class="bar alt" style="height:18%;"><span class="bar-value">61</span></div><div class="bar-label">NR-05</div></div>
+            </div>
+            <div class="chart-legend">
+                <span><span class="legend-dot" style="background:var(--secondary-color);"></span>Trabalhadores capacitados — 12 meses</span>
+            </div>
+        </div>
+
+        <div class="chart-wrap">
+            <div class="chart-title"><i class="fas fa-chart-pie" style="margin-right:5px;color:var(--secondary-color);"></i>Setores atendidos</div>
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:14px;margin-top:4px;">
+                <div class="donut" style="width:190px;height:190px;">
+                    <svg width="190" height="190" viewBox="0 0 42 42">
+                        <circle cx="21" cy="21" r="15.915" fill="white" stroke="#e5e7eb" stroke-width="5"/>
+                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#1a365d" stroke-width="5" stroke-dasharray="35 65" stroke-dashoffset="0"/>
+                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#f5a623" stroke-width="5" stroke-dasharray="25 75" stroke-dashoffset="-35"/>
+                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#10b981" stroke-width="5" stroke-dasharray="18 82" stroke-dashoffset="-60"/>
+                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#3b82f6" stroke-width="5" stroke-dasharray="12 88" stroke-dashoffset="-78"/>
+                        <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#8b5cf6" stroke-width="5" stroke-dasharray="10 90" stroke-dashoffset="-90"/>
+                    </svg>
+                    <div class="donut-center">
+                        <div class="donut-num" style="font-size:28px;">+500</div>
+                        <div class="donut-lbl">Clientes</div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 16px;font-size:10px;color:var(--gray-color);width:100%;">
+                    <div><span class="legend-dot" style="background:#1a365d;"></span><strong style="color:var(--primary-color);">35%</strong> Construção Civil</div>
+                    <div><span class="legend-dot" style="background:#f5a623;"></span><strong style="color:var(--primary-color);">25%</strong> Indústria &amp; Comércio</div>
+                    <div><span class="legend-dot" style="background:#10b981;"></span><strong style="color:var(--primary-color);">18%</strong> Saúde / Hospitalar</div>
+                    <div><span class="legend-dot" style="background:#3b82f6;"></span><strong style="color:var(--primary-color);">12%</strong> Educação / Religioso</div>
+                    <div><span class="legend-dot" style="background:#8b5cf6;"></span><strong style="color:var(--primary-color);">10%</strong> Serviços / Outros</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 08 — CLIENTES / CASES    -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">08 / 11</div>
+    </div>
+
+    <div class="section-badge">Clientes &amp; Cases</div>
+    <div class="section-title">Empresas que <span class="highlight">confiam</span> na EngMarq</div>
+    <div class="section-subtitle">Atendemos empresas de diferentes portes e segmentos — da micro à grande empresa, com a mesma qualidade técnica e responsabilidade.</div>
+
+    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:18px;flex:1;">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+            <div>
+                <div class="chart-title" style="margin-bottom:10px;"><i class="fas fa-handshake" style="margin-right:5px;color:var(--secondary-color);"></i>Empresas que confiam na EngMarq</div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                    <div class="logo-tile"><img src="assets/Prceiros/beniwood.jpg" alt="Beniwood"></div>
+                    <div class="logo-tile"><img src="assets/Prceiros/Lustosa.png" alt="Lustosa"></div>
+                    <div class="logo-tile"><img src="assets/Prceiros/Alfabeto Berçario Escola.jpg" alt="Alfabeto Berçario Escola"></div>
+                    <div class="logo-tile"><img src="assets/Prceiros/Lumen.jpg" alt="Lumen"></div>
+                    <div class="logo-tile"><img src="assets/Prceiros/Mirantes.png" alt="Mirantes"></div>
+                    <div class="logo-tile"><img src="assets/Prceiros/Premium Services.png" alt="Premium Services"></div>
+                    <div class="logo-tile logo-tile-wide"><img src="assets/Prceiros/Unimetais.png" alt="Unimetais"></div>
+                    <div class="logo-tile"><img src="assets/Prceiros/Ieadern.jpg" alt="Ieadern"></div>
+                    <div class="logo-tile logo-tile-text">+ 500<br><span style="font-size:8px;font-weight:600;opacity:0.8;letter-spacing:1px;">EMPRESAS</span></div>
+                </div>
+            </div>
+
+            <div class="testimonial">
+                <p>A EngMarq estruturou todo o nosso programa de SST, conduziu os treinamentos NR-01 e NR-35 e nos preparou para a fiscalização do MTE. Saímos da auditoria <strong>sem nenhuma autuação</strong> — entregaram tudo no prazo e com qualidade técnica impecável.</p>
+                <div class="testimonial-author">
+                    Setor de Recursos Humanos
+                    <span>Empresa cliente — Setor de Construção Civil — Natal/RN</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="photo-card" style="height:200px;">
+                <img src="assets/fotos de treinamentos e palestras em jpeg/IMG_3197.jpg" alt="Atendimento em campo">
+                <div class="photo-overlay"></div>
+                <div class="photo-caption">
+                    <span class="photo-tag">Case</span>
+                    <div class="photo-title">Treinamentos in company — atendimento na sede do cliente</div>
+                </div>
+            </div>
+            <div class="photo-card" style="height:200px;">
+                <img src="assets/fotos de treinamentos e palestras em jpeg/IMG_4021.jpg" alt="Treinamentos práticos">
+                <div class="photo-overlay"></div>
+                <div class="photo-caption">
+                    <span class="photo-tag">Case</span>
+                    <div class="photo-title">Capacitação prática com simulação real</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 09 — DIFERENCIAIS        -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">09 / 11</div>
+    </div>
+
+    <div class="section-badge" style="background:linear-gradient(135deg,var(--accent-color),#059669);">Nosso Maior Diferencial</div>
+    <div class="section-title">SST que <span class="highlight">paga a própria conta</span></div>
+    <div class="section-subtitle">Mais do que segurança jurídica contra autuações do MTE — entregamos <strong>economia mensurável</strong> através de relatórios analíticos, cálculos técnicos e regularização de adicionais. Sua folha de pagamento mais leve. Sua empresa mais protegida.</div>
+
+    <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:18px;flex:1;">
+        <!-- BLOCO ECONOMIA -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:linear-gradient(135deg,var(--accent-color),#059669);border-radius:14px;padding:18px 20px;color:white;display:flex;align-items:center;gap:14px;box-shadow:0 8px 22px rgba(16,185,129,0.25);">
+                <div style="width:54px;height:54px;border-radius:12px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-piggy-bank" style="font-size:24px;color:white;"></i>
+                </div>
                 <div>
-                    <div class="nr01-alert">
-                        <div class="nr01-alert-icon"><i class="fas fa-gavel"></i></div>
-                        <div>
-                            <h4>Atenção: Nova Obrigação Legal</h4>
-                            <p>A atualização da NR-01 exige que <strong>todas as empresas</strong> realizem a avaliação dos Fatores de Riscos Psicossociais.</p>
-                        </div>
-                    </div>
-                    <h4 style="font-size: 13px; margin-bottom: 12px; color: var(--dark-color);"><i class="fas fa-brain" style="color: var(--secondary-color);"></i> O que é avaliado?</h4>
-                    <ul class="nr01-list">
-                        <li><i class="fas fa-check-circle"></i> Ambiente organizacional e clima de trabalho</li>
-                        <li><i class="fas fa-check-circle"></i> Carga e ritmo de trabalho</li>
-                        <li><i class="fas fa-check-circle"></i> Relações interpessoais e assédio</li>
-                        <li><i class="fas fa-check-circle"></i> Autonomia e participação nas decisões</li>
-                        <li><i class="fas fa-check-circle"></i> Saúde mental ocupacional</li>
-                    </ul>
-                </div>
-                <div class="nr01-services">
-                    <div class="nr01-service-card">
-                        <div class="nr01-service-icon"><i class="fas fa-clipboard-list"></i></div>
-                        <div>
-                            <h4>Avaliação Técnica Completa</h4>
-                            <p>Avaliação dos fatores de riscos psicossociais conforme metodologia reconhecida e alinhada à NR-01.</p>
-                        </div>
-                    </div>
-                    <div class="nr01-service-card">
-                        <div class="nr01-service-icon"><i class="fas fa-file-contract"></i></div>
-                        <div>
-                            <h4>Adequação Legal</h4>
-                            <p>Auxiliamos sua empresa na adequação às novas exigências legais, evitando autuações.</p>
-                        </div>
-                    </div>
-                    <div class="nr01-service-card">
-                        <div class="nr01-service-icon"><i class="fas fa-shield-alt"></i></div>
-                        <div>
-                            <h4>Proteção Jurídica</h4>
-                            <p>Atuamos para reduzir riscos trabalhistas e passivos jurídicos relacionados ao ambiente de trabalho.</p>
-                        </div>
-                    </div>
+                    <div style="font-family:var(--font-primary);font-weight:800;font-size:18px;line-height:1.15;margin-bottom:3px;">Economia real para o seu negócio</div>
+                    <div style="font-size:11px;opacity:0.95;line-height:1.45;">Identificamos o que sua empresa paga indevidamente — e mostramos como reduzir.</div>
                 </div>
             </div>
+
+            <div class="card border-green">
+                <div class="card-icon icon-green"><i class="fas fa-calculator"></i></div>
+                <h4>Cálculo técnico de adicionais</h4>
+                <p>Avaliamos cada função e ambiente para confirmar se o adicional pago é devido — eliminando pagamentos indevidos e ajustando faixas (10/20/40%).</p>
+            </div>
+
+            <div class="card border-green">
+                <div class="card-icon icon-green"><i class="fas fa-arrow-trend-down"></i></div>
+                <h4>Redução do nível de periculosidade</h4>
+                <p>Propomos medidas de controle e EPIs adequados que <strong>descaracterizam a periculosidade</strong> — sua empresa deixa de pagar 30% sobre a folha do setor.</p>
+            </div>
+
+            <div class="card border-green">
+                <div class="card-icon icon-green"><i class="fas fa-chart-pie"></i></div>
+                <h4>Relatórios analíticos com ROI</h4>
+                <p>Apresentamos o impacto financeiro mês a mês — quanto você economiza em adicionais, INSS, FGTS reflexos e processos trabalhistas evitados.</p>
+            </div>
         </div>
-        <div class="slide-footer">
-            <span><i class="fab fa-whatsapp"></i> +55 84 99928-5888</span>
-            <span>engmarqsolution@gmail.com</span>
-            <span>www.engmarqsolution.com</span>
+
+        <!-- BLOCO SEGURANÇA JURÍDICA + EXEMPLO -->
+        <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:linear-gradient(135deg,var(--primary-color),var(--primary-dark));border-radius:14px;padding:18px;color:white;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(245,166,35,0.08);"></div>
+                <div style="font-size:9.5px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--font-primary);font-weight:700;position:relative;z-index:1;">Exemplo prático</div>
+                <div style="font-family:var(--font-primary);font-weight:700;font-size:13px;color:white;line-height:1.3;position:relative;z-index:1;">Empresa com 30 colaboradores expostos</div>
+
+                <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px;position:relative;z-index:1;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <span style="font-size:10px;color:rgba(255,255,255,0.7);">Adicional pago (40% periculosidade)</span>
+                        <span style="font-family:var(--font-primary);font-weight:800;font-size:13px;color:#fca5a5;">R$ 16.800/mês</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <span style="font-size:10px;color:rgba(255,255,255,0.7);">Após adequações EngMarq</span>
+                        <span style="font-family:var(--font-primary);font-weight:800;font-size:13px;color:#bbf7d0;">R$ 0/mês</span>
+                    </div>
+                    <div style="border-top:1px dashed rgba(255,255,255,0.2);padding-top:8px;margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:11px;color:white;font-family:var(--font-primary);font-weight:700;"><i class="fas fa-piggy-bank" style="color:var(--secondary-color);margin-right:5px;"></i>Economia/ano</span>
+                        <span style="font-family:var(--font-primary);font-weight:800;font-size:18px;color:var(--secondary-color);">R$ 201.600</span>
+                    </div>
+                </div>
+                <div style="font-size:9.5px;color:rgba(255,255,255,0.55);position:relative;z-index:1;line-height:1.4;">* Valor base + reflexos em FGTS, INSS, férias e 13º. Exemplo ilustrativo — economia real depende do diagnóstico.</div>
+            </div>
+
+            <div class="card border-navy">
+                <div class="card-icon icon-navy"><i class="fas fa-shield-halved"></i></div>
+                <h4>Segurança jurídica contra autuações</h4>
+                <p>Documentação assinada por Engenheiro de Segurança (CREA-RN) com ART — protege sua empresa de multas do MTE, MPT e ações trabalhistas.</p>
+            </div>
+
+            <div class="card border-orange">
+                <div class="card-icon icon-orange"><i class="fas fa-headset"></i></div>
+                <h4>Suporte em fiscalizações e perícias</h4>
+                <p>Em caso de visita do MTE/MPT ou perícia judicial, atuamos como assistente técnico imediato — telefone, presencial e judicial.</p>
+            </div>
         </div>
     </div>
 
-    <!-- SLIDE 4: SERVIÇOS -->
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="slide-header-logo">
-                <span class="slide-header-title">Apresentação Comercial</span>
-            </div>
-            <span class="section-badge"><i class="fas fa-briefcase"></i> Soluções Completas em SST</span>
-            <h2 class="section-title">Nossos <span class="highlight">Serviços</span></h2>
-            <p class="section-subtitle">Programas de SST atualizados e documentação técnica completa para garantir <strong>Segurança Jurídica</strong>.</p>
-            <div class="servicos-grid">
-                <div class="servico-card">
-                    <div class="servico-icon"><i class="fas fa-file-alt"></i></div>
-                    <h3>PGR</h3>
-                    <p>Programa de Gerenciamento de Riscos conforme NR-01.</p>
-                </div>
-                <div class="servico-card">
-                    <div class="servico-icon"><i class="fas fa-heartbeat"></i></div>
-                    <h3>PCMSO</h3>
-                    <p>Programa de Controle Médico de Saúde Ocupacional.</p>
-                </div>
-                <div class="servico-card">
-                    <div class="servico-icon"><i class="fas fa-clipboard-check"></i></div>
-                    <h3>LTCAT</h3>
-                    <p>Laudo Técnico das Condições Ambientais de Trabalho.</p>
-                </div>
-                <div class="servico-card">
-                    <div class="servico-icon"><i class="fas fa-fire-extinguisher"></i></div>
-                    <h3>PPCI</h3>
-                    <p>Projeto de Prevenção e Combate a Incêndio.</p>
-                </div>
-                <div class="servico-card">
-                    <div class="servico-icon"><i class="fas fa-volume-up"></i></div>
-                    <h3>Laudos Técnicos</h3>
-                    <p>Insalubridade, periculosidade e ergonomia.</p>
-                </div>
-                <div class="servico-card">
-                    <div class="servico-icon"><i class="fas fa-bolt"></i></div>
-                    <h3>Laudos Elétricos</h3>
-                    <p>Análise de instalações elétricas conforme NR-10.</p>
-                </div>
-                <div class="servico-card">
-                    <div class="servico-icon"><i class="fas fa-users-cog"></i></div>
-                    <h3>Gestão de SST</h3>
-                    <p>Gestão completa de Saúde e Segurança do Trabalho.</p>
-                </div>
-                <div class="servico-card">
-                    <div class="servico-icon"><i class="fas fa-brain"></i></div>
-                    <h3>Avaliação Psicossocial</h3>
-                    <p>Avaliação dos Riscos Psicossociais conforme NR-01.</p>
-                </div>
-            </div>
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
+    </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- SLIDE 10 — PROCESSO            -->
+<!-- ============================== -->
+<div class="slide">
+    <div class="slide-header">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" class="slide-logo">
+        <div class="slide-number">10 / 11</div>
+    </div>
+
+    <div class="section-badge">Como Trabalhamos</div>
+    <div class="section-title">Nosso <span class="highlight">processo</span> em 5 etapas</div>
+    <div class="section-subtitle">Atendimento estruturado, transparente e auditável — do primeiro contato à renovação anual dos documentos.</div>
+
+    <div class="process-timeline">
+        <div class="process-step">
+            <div class="process-circle">1</div>
+            <h5>Diagnóstico Inicial</h5>
+            <p>Visita técnica, análise documental e identificação das pendências em SST.</p>
         </div>
-        <div class="slide-footer">
-            <span><i class="fab fa-whatsapp"></i> +55 84 99928-5888</span>
-            <span>engmarqsolution@gmail.com</span>
-            <span>www.engmarqsolution.com</span>
+        <div class="process-step">
+            <div class="process-circle">2</div>
+            <h5>Proposta Sob Medida</h5>
+            <p>Orçamento detalhado por item, sem pacote engessado — você paga só pelo que precisa.</p>
+        </div>
+        <div class="process-step">
+            <div class="process-circle">3</div>
+            <h5>Execução Técnica</h5>
+            <p>Elaboração dos programas, laudos e realização dos treinamentos — cronograma compartilhado.</p>
+        </div>
+        <div class="process-step">
+            <div class="process-circle">4</div>
+            <h5>Entrega Documental</h5>
+            <p>PDFs assinados, ART, certificados individuais, listas de presença e relatórios técnicos.</p>
+        </div>
+        <div class="process-step">
+            <div class="process-circle">5</div>
+            <h5>Acompanhamento</h5>
+            <p>Atualização anual, alertas de vencimento e suporte direto em fiscalizações.</p>
         </div>
     </div>
 
-    <!-- SLIDE 5: TREINAMENTOS -->
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="slide-header-logo">
-                <span class="slide-header-title">Apresentação Comercial</span>
-            </div>
-            <span class="section-badge"><i class="fas fa-graduation-cap"></i> Capacitação Profissional</span>
-            <h2 class="section-title">Treinamentos <span class="highlight">Especializados</span></h2>
-            <p class="section-subtitle">Mais de 1.000 treinamentos realizados. Colaboradores capacitados garantem <strong>Segurança Jurídica</strong>.</p>
-            <div class="treinamentos-grid">
-                <div class="treinamento-card">
-                    <div class="treinamento-icon"><i class="fas fa-user-shield"></i></div>
-                    <h3>Integração de Segurança</h3>
-                    <p>Capacitação inicial para novos colaboradores</p>
-                </div>
-                <div class="treinamento-card">
-                    <div class="treinamento-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                    <h3>Prevenção de Acidentes</h3>
-                    <p>Técnicas para prevenção de acidentes</p>
-                </div>
-                <div class="treinamento-card">
-                    <div class="treinamento-icon"><i class="fas fa-hard-hat"></i></div>
-                    <h3>Trabalho em Altura</h3>
-                    <p>NR-35 - Trabalhos acima de 2 metros</p>
-                </div>
-                <div class="treinamento-card">
-                    <div class="treinamento-icon"><i class="fas fa-door-closed"></i></div>
-                    <h3>Espaço Confinado</h3>
-                    <p>NR-33 - Segurança em espaços confinados</p>
-                </div>
-                <div class="treinamento-card">
-                    <div class="treinamento-icon"><i class="fas fa-vest"></i></div>
-                    <h3>Uso de EPIs</h3>
-                    <p>NR-06 - Equipamentos de Proteção</p>
-                </div>
-                <div class="treinamento-card">
-                    <div class="treinamento-icon"><i class="fas fa-users"></i></div>
-                    <h3>CIPA</h3>
-                    <p>NR-05 - Formação de membros</p>
-                </div>
-                <div class="treinamento-card">
-                    <div class="treinamento-icon"><i class="fas fa-first-aid"></i></div>
-                    <h3>Primeiros Socorros</h3>
-                    <p>Técnicas de atendimento emergencial</p>
-                </div>
-                <div class="treinamento-card">
-                    <div class="treinamento-icon"><i class="fas fa-fire"></i></div>
-                    <h3>Brigada de Incêndio</h3>
-                    <p>Formação de brigadistas</p>
-                </div>
-                <div class="treinamento-card" style="background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);">
-                    <div class="treinamento-icon" style="background: rgba(255,255,255,0.2); color: white;"><i class="fas fa-cogs"></i></div>
-                    <h3>Personalizados</h3>
-                    <p>Capacitações sob medida</p>
-                </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;margin-top:16px;">
+        <div class="photo-card" style="min-height:180px;">
+            <img src="assets/fotos de treinamentos e palestras em jpeg/IMG_3979.jpg" alt="Diagnóstico inicial">
+            <div class="photo-overlay"></div>
+            <div class="photo-caption">
+                <span class="photo-tag">Etapas 1 e 3</span>
+                <div class="photo-title">Visita técnica e execução em campo — nossa equipe na sua empresa</div>
             </div>
         </div>
-        <div class="slide-footer">
-            <span><i class="fab fa-whatsapp"></i> +55 84 99928-5888</span>
-            <span>engmarqsolution@gmail.com</span>
-            <span>www.engmarqsolution.com</span>
+
+        <div style="background:linear-gradient(155deg,var(--primary-color),var(--primary-dark));border-radius:14px;padding:22px;color:white;display:flex;flex-direction:column;justify-content:center;gap:12px;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:rgba(245,166,35,0.08);"></div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--font-primary);font-weight:700;position:relative;z-index:1;">O que você recebe</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:11.5px;color:rgba(255,255,255,0.9);position:relative;z-index:1;"><i class="fas fa-check-circle" style="color:var(--secondary-color);"></i>Programa de SST atualizado (PGR + PCMSO)</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:11.5px;color:rgba(255,255,255,0.9);position:relative;z-index:1;"><i class="fas fa-check-circle" style="color:var(--secondary-color);"></i>Laudo LTCAT + Insalubridade/Periculosidade</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:11.5px;color:rgba(255,255,255,0.9);position:relative;z-index:1;"><i class="fas fa-check-circle" style="color:var(--secondary-color);"></i>Certificados individuais de todos os treinamentos</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:11.5px;color:rgba(255,255,255,0.9);position:relative;z-index:1;"><i class="fas fa-check-circle" style="color:var(--secondary-color);"></i>Listas de presença + conteúdo programático</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:11.5px;color:rgba(255,255,255,0.9);position:relative;z-index:1;"><i class="fas fa-check-circle" style="color:var(--secondary-color);"></i>ART (Anotação de Responsabilidade Técnica)</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:11.5px;color:rgba(255,255,255,0.9);position:relative;z-index:1;"><i class="fas fa-check-circle" style="color:var(--secondary-color);"></i>Eventos do eSocial (S-2210/2220/2240)</div>
         </div>
     </div>
 
-    <!-- SLIDE 6: DIFERENCIAIS -->
-    <div class="slide">
-        <div class="slide-content">
-            <div class="slide-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="slide-header-logo">
-                <span class="slide-header-title">Apresentação Comercial</span>
-            </div>
-            <span class="section-badge"><i class="fas fa-star"></i> Por que nos escolher</span>
-            <h2 class="section-title">Nossos <span class="highlight">Diferenciais</span></h2>
-            <p class="section-subtitle">Uma gestão de SST bem estruturada protege seus colaboradores e blinda sua empresa.</p>
-            <div class="diferenciais-grid">
-                <div class="diferencial-card">
-                    <div class="diferencial-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div class="diferencial-content">
-                        <h3>Segurança Jurídica</h3>
-                        <p>PGR, PCMSO, treinamentos e laudos em dia significam conformidade com as NRs e proteção contra multas e passivos trabalhistas.</p>
-                    </div>
-                </div>
-                <div class="diferencial-card">
-                    <div class="diferencial-icon"><i class="fas fa-award"></i></div>
-                    <div class="diferencial-content">
-                        <h3>Expertise Técnica</h3>
-                        <p>Equipe qualificada com profissionais especializados em engenharia de segurança, garantindo laudos precisos.</p>
-                    </div>
-                </div>
-                <div class="diferencial-card">
-                    <div class="diferencial-icon"><i class="fas fa-sync-alt"></i></div>
-                    <div class="diferencial-content">
-                        <h3>Atualização Constante</h3>
-                        <p>Acompanhamos todas as mudanças nas Normas Regulamentadoras para manter sua empresa em conformidade.</p>
-                    </div>
-                </div>
-                <div class="diferencial-card">
-                    <div class="diferencial-icon"><i class="fas fa-handshake"></i></div>
-                    <div class="diferencial-content">
-                        <h3>Atendimento Personalizado</h3>
-                        <p>Entendemos as necessidades de cada cliente para oferecer soluções sob medida que funcionam.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="slide-footer">
-            <span><i class="fab fa-whatsapp"></i> +55 84 99928-5888</span>
-            <span>engmarqsolution@gmail.com</span>
-            <span>www.engmarqsolution.com</span>
-        </div>
+    <div class="slide-footer">
+        <span>EngMarq Solution — Apresentação Comercial 2026</span>
+        <a href="https://engmarqsolution.com">engmarqsolution.com</a>
     </div>
+</div>
 
-    <!-- SLIDE 7: CONTATO -->
-    <div class="slide slide-contato">
-        <div class="slide-content">
-            <div class="slide-header">
-                <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="slide-header-logo" style="filter: brightness(0) invert(1);">
-                <span class="slide-header-title">Apresentação Comercial</span>
+
+<!-- ============================== -->
+<!-- SLIDE 11 — CONTATO / CTA       -->
+<!-- ============================== -->
+<div class="slide slide-closing">
+    <div class="closing-content">
+        <img src="assets/logo engmarq solution melhor.png" alt="EngMarq" style="height:170px;filter:brightness(0) invert(1);margin-bottom:28px;width:fit-content;">
+        <div style="display:inline-flex;align-items:center;gap:7px;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.35);color:var(--secondary-color);padding:7px 18px;border-radius:50px;font-family:var(--font-primary);font-weight:700;font-size:9px;text-transform:uppercase;letter-spacing:2px;margin-bottom:18px;width:fit-content;">
+            <i class="fas fa-handshake"></i> Vamos conversar
+        </div>
+        <div style="width:50px;height:3px;background:var(--secondary-color);border-radius:3px;margin-bottom:18px;"></div>
+        <div style="font-family:var(--font-primary);font-weight:800;font-size:40px;color:white;line-height:1.15;margin-bottom:14px;">
+            Sua empresa segura,<br>com <span style="color:var(--secondary-color);">segurança jurídica</span>
+        </div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.78);line-height:1.6;max-width:480px;margin-bottom:28px;">
+            Solicite agora um diagnóstico gratuito e descubra como podemos colocar sua empresa em conformidade com as NRs em até 30 dias — incluindo a nova exigência de avaliação psicossocial.
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+            <a href="https://wa.me/5584999285888" style="background:var(--secondary-color);border-radius:9px;padding:14px 24px;font-family:var(--font-primary);font-weight:800;font-size:12px;color:var(--dark-color);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+                <i class="fab fa-whatsapp" style="font-size:16px;"></i>Falar no WhatsApp agora
+            </a>
+            <a href="mailto:engmarqsolution@gmail.com" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:9px;padding:14px 24px;font-family:var(--font-primary);font-weight:700;font-size:12px;color:white;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+                <i class="fas fa-envelope" style="color:var(--secondary-color);"></i>Solicitar proposta por e-mail
+            </a>
+        </div>
+        <div style="display:flex;gap:14px;margin-top:24px;flex-wrap:wrap;">
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:9px 16px;font-family:var(--font-primary);font-weight:700;font-size:10px;color:rgba(255,255,255,0.85);">
+                <i class="fas fa-bolt" style="color:var(--secondary-color);margin-right:5px;"></i>Resposta em até 24h
             </div>
-            <span class="section-badge"><i class="fas fa-phone-alt"></i> Fale Conosco</span>
-            <h2 class="section-title">Entre em <span class="highlight">Contato</span></h2>
-            <p class="section-subtitle">Estamos prontos para ajudar sua empresa a alcançar a conformidade legal.</p>
-            <div class="contato-content">
-                <div class="contato-info">
-                    <div class="contato-item">
-                        <div class="contato-item-icon"><i class="fab fa-whatsapp"></i></div>
-                        <div class="contato-item-text">
-                            <strong>WhatsApp</strong>
-                            <span>+55 84 99928-5888</span>
-                        </div>
-                    </div>
-                    <div class="contato-item">
-                        <div class="contato-item-icon"><i class="fas fa-envelope"></i></div>
-                        <div class="contato-item-text">
-                            <strong>E-mail</strong>
-                            <span>engmarqsolution@gmail.com</span>
-                        </div>
-                    </div>
-                    <div class="contato-item">
-                        <div class="contato-item-icon"><i class="fas fa-globe"></i></div>
-                        <div class="contato-item-text">
-                            <strong>Website</strong>
-                            <span>www.engmarqsolution.com</span>
-                        </div>
-                    </div>
-                    <div class="contato-item">
-                        <div class="contato-item-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <div class="contato-item-text">
-                            <strong>Localização</strong>
-                            <span>Natal - RN, Brasil</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="contato-cta">
-                    <h3>Solicite uma Proposta</h3>
-                    <p>Descubra como podemos proteger sua empresa e seus colaboradores com soluções personalizadas em SST.</p>
-                    <a href="https://wa.me/5584999285888" class="btn">
-                        <i class="fab fa-whatsapp"></i> Fale com Especialista
-                    </a>
-                </div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:9px 16px;font-family:var(--font-primary);font-weight:700;font-size:10px;color:rgba(255,255,255,0.85);">
+                <i class="fas fa-gift" style="color:var(--secondary-color);margin-right:5px;"></i>Diagnóstico gratuito
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:9px 16px;font-family:var(--font-primary);font-weight:700;font-size:10px;color:rgba(255,255,255,0.85);">
+                <i class="fas fa-file-signature" style="color:var(--secondary-color);margin-right:5px;"></i>Proposta sob medida
             </div>
         </div>
     </div>
+    <div class="closing-side">
+        <div style="font-size:10px;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1.5px;font-family:var(--font-primary);font-weight:700;margin-bottom:4px;">Fale conosco</div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="contact-text">
+                <p>WhatsApp</p>
+                <strong>+55 84 99928-5888</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div class="contact-text">
+                <p>E-mail</p>
+                <strong>engmarqsolution@gmail.com</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-globe"></i></div>
+            <div class="contact-text">
+                <p>Website</p>
+                <strong>engmarqsolution.com</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fab fa-instagram"></i></div>
+            <div class="contact-text">
+                <p>Instagram</p>
+                <strong>@engmarqsolution</strong>
+            </div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="contact-text">
+                <p>Localização</p>
+                <strong>Natal — RN, Brasil</strong>
+            </div>
+        </div>
+        <div style="margin-top:8px;padding:14px;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.3);border-radius:10px;text-align:center;">
+            <div style="font-family:var(--font-primary);font-weight:700;font-size:11px;color:var(--secondary-color);margin-bottom:4px;"><i class="fas fa-medal" style="margin-right:5px;"></i>Responsabilidade Técnica</div>
+            <div style="font-size:9.5px;color:rgba(255,255,255,0.7);line-height:1.4;">Engenheiro de Segurança do Trabalho — CREA-RN</div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
