@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0071 - Kit de Programas (PGR, PCMSO, LTCAT) - ML4 Empreendimentos Imobiliarios SPE LTDA | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body { font-family: var(--font-secondary); color: var(--dark-color); line-height: 1.6; background: #e2e8f0; }
+
+        .pdf-controls { position: fixed; top: 20px; right: 20px; z-index: 1000; background: var(--white-color); padding: 20px; border-radius: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.15); max-width: 280px; }
+        .btn-generate { background: var(--primary-color); color: var(--white-color); padding: 15px 30px; border: none; border-radius: 8px; font-family: var(--font-primary); font-weight: 600; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; width: 100%; justify-content: center; }
+        .btn-generate:hover { background: var(--secondary-color); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4); }
+        .pdf-instructions { margin-top: 15px; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .pdf-instructions h4 { font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); margin-bottom: 8px; }
+        .pdf-instructions ol { font-size: 12px; line-height: 1.6; color: var(--dark-color); padding-left: 18px; margin: 0; }
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        #pdf-content { width: 210mm; margin: 0 auto; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
+
+        .page { width: 210mm; height: 297mm; min-height: 297mm; max-height: 297mm; padding: 15mm 15mm 22mm 15mm; page-break-after: always; position: relative; background: var(--white-color); box-sizing: border-box; overflow: hidden; }
+        .page:last-child { page-break-after: auto; }
+
+        .page-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; margin-bottom: 12px; border-bottom: 2px solid var(--light-color); position: relative; }
+        .page-header-logo { height: 35px; }
+        .page-header-title { font-family: var(--font-primary); font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; }
+
+        .page-footer { position: absolute; bottom: 15mm; left: 15mm; right: 15mm; display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--light-color); font-size: 10px; color: var(--gray-color); background: var(--white-color); z-index: 10; }
+        .page-number { font-weight: 600; color: var(--primary-color); }
+
+        .page-cover { background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%); color: var(--white-color); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 25mm 20mm; position: relative; overflow: hidden; }
+        .page-cover::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(245, 166, 35, 0.12) 0%, transparent 60%); pointer-events: none; }
+        .cover-logo { width: 180px; margin-bottom: 30px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
+        .cover-badge { background: rgba(245, 166, 35, 0.9); color: var(--white-color); padding: 10px 25px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; position: relative; z-index: 1; }
+        .cover-icon { width: 60px; height: 60px; background: rgba(245, 166, 35, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; z-index: 1; }
+        .cover-icon i { font-size: 28px; color: var(--secondary-color); }
+        .cover-title { font-family: var(--font-primary); font-size: 26px; font-weight: 800; margin-bottom: 15px; line-height: 1.25; position: relative; z-index: 1; }
+        .cover-title span { color: var(--secondary-color); display: block; }
+        .cover-subtitle { font-size: 14px; font-weight: 300; margin-bottom: 30px; opacity: 0.95; max-width: 450px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; line-height: 1.5; }
+        .cover-client { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 18px 35px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); position: relative; z-index: 1; margin: 0 auto; max-width: 420px; }
+        .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 6px; text-align: center; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; color: var(--secondary-color); text-align: center; }
+        .cover-date { margin-top: 25px; font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
+        .cover-footer { position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center; font-size: 10px; opacity: 0.7; padding: 0 18mm; display: flex; justify-content: center; align-items: center; }
+        .cover-footer p { margin: 0; text-align: center; width: 100%; }
+
+        .section-number { display: inline-block; background: var(--secondary-color); color: var(--white-color); width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-family: var(--font-primary); font-weight: 700; font-size: 12px; margin-right: 10px; }
+        .section-title { font-family: var(--font-primary); font-size: 18px; font-weight: 700; color: var(--primary-color); margin-bottom: 14px; display: flex; align-items: center; padding-bottom: 10px; border-bottom: 3px solid var(--secondary-color); }
+        .section-title-text { flex: 1; }
+        .subsection-title { font-family: var(--font-primary); font-size: 13px; font-weight: 700; color: var(--primary-color); margin: 12px 0 8px; display: flex; align-items: center; gap: 8px; }
+        .subsection-title i { color: var(--secondary-color); }
+
+        p { margin-bottom: 8px; text-align: justify; font-size: 11px; line-height: 1.5; }
+
+        .alert-box { background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-left: 4px solid var(--alert-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .alert-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--alert-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .alert-box p { margin-bottom: 0; color: var(--dark-color); font-size: 10px; line-height: 1.4; }
+
+        .highlight-box { background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%); border-left: 4px solid var(--secondary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .highlight-box p { margin-bottom: 0; color: var(--dark-color); font-size: 10px; line-height: 1.4; }
+        .highlight-box strong { color: var(--primary-color); }
+
+        .info-box { background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%); border-left: 4px solid var(--primary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .info-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .info-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .green-box { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-left: 4px solid var(--success-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .green-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .purple-box { background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%); border-left: 4px solid var(--purple-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .purple-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--purple-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .purple-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .feature-list { list-style: none; margin: 10px 0; }
+        .feature-list li { padding: 5px 0; padding-left: 22px; position: relative; font-size: 11px; border-bottom: 1px solid var(--light-color); }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--success-color); font-size: 10px; }
+
+        .factors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+        .factor-card { background: var(--light-color); padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--success-color); }
+        .factor-card h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+        .factor-card h4 i { color: var(--success-color); font-size: 11px; }
+        .factor-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
+
+        .methodology-steps { margin: 12px 0; }
+        .step { display: flex; gap: 10px; margin-bottom: 8px; padding: 8px 10px; background: var(--light-color); border-radius: 6px; position: relative; }
+        .step-number { background: var(--primary-color); color: var(--white-color); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-primary); font-weight: 700; font-size: 11px; flex-shrink: 0; }
+        .step-content h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 2px; }
+        .step-content p { font-size: 10px; margin-bottom: 0; line-height: 1.35; }
+
+        .deliverables-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; }
+        .deliverable-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px; background: var(--light-color); border-radius: 6px; }
+        .deliverable-icon { width: 26px; height: 26px; background: var(--secondary-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--white-color); font-size: 11px; flex-shrink: 0; }
+        .deliverable-text h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 2px; }
+        .deliverable-text p { font-size: 9px; margin-bottom: 0; line-height: 1.35; }
+
+        .conditions-list { margin: 12px 0; }
+        .condition-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--light-color); }
+        .condition-item:last-child { border-bottom: none; }
+        .condition-icon { width: 26px; height: 26px; background: var(--light-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 11px; flex-shrink: 0; }
+        .condition-text strong { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); display: block; margin-bottom: 2px; }
+        .condition-text span { font-size: 10px; color: var(--gray-color); line-height: 1.3; }
+
+        .page-contact { display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        .contact-content { margin: auto 0; }
+        .contact-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 28px; color: var(--secondary-color); }
+        .contact-title { font-family: var(--font-primary); font-size: 20px; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; }
+        .contact-subtitle { font-size: 12px; color: var(--gray-color); margin-bottom: 20px; max-width: 400px; margin-left: auto; margin-right: auto; }
+        .contact-info { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .contact-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--dark-color); }
+        .contact-item i { color: var(--secondary-color); font-size: 16px; width: 22px; }
+        .contact-signature { margin-top: 25px; padding-top: 18px; border-top: 2px solid var(--light-color); }
+        .signature-text { font-size: 10px; color: var(--gray-color); line-height: 1.5; }
+
+        .responsible-card { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); padding: 18px; border-radius: 10px; color: var(--white-color); text-align: center; margin: 15px 0; }
+        .responsible-avatar { width: 60px; height: 60px; background: rgba(245, 166, 35, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; color: var(--secondary-color); border: 2px solid var(--secondary-color); }
+        .responsible-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; margin-bottom: 3px; text-align: center; }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; text-align: center; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; text-align: center; }
+        .responsible-contacts { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+        .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
+        .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
+
+        /* Tabela de funções */
+        .functions-table { width: 100%; border-collapse: collapse; font-size: 9px; margin: 8px 0; }
+        .functions-table thead tr { background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white; }
+        .functions-table th { padding: 6px 8px; text-align: left; border: 1px solid #e2e8f0; font-family: var(--font-primary); font-weight: 600; font-size: 9px; }
+        .functions-table td { padding: 4px 8px; border: 1px solid #e2e8f0; font-size: 8.5px; line-height: 1.3; }
+        .functions-table tbody tr:nth-child(even) { background: #f8fafc; }
+        .functions-table td.center { text-align: center; }
+        .functions-grid-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page { page-break-after: always !important; page-break-inside: avoid !important; page-break-before: auto !important; break-after: page !important; break-inside: avoid !important; width: 210mm !important; height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important; margin: 0 !important; padding: 12mm 15mm 18mm 15mm !important; box-sizing: border-box !important; overflow: hidden !important; position: relative !important; }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover { padding: 20mm 18mm 18mm 18mm !important; }
+            .page-header { page-break-after: avoid !important; break-after: avoid !important; margin-bottom: 10px !important; padding-bottom: 8px !important; }
+            .page-footer { position: absolute !important; bottom: 8mm !important; left: 15mm !important; right: 15mm !important; page-break-after: avoid !important; break-after: avoid !important; font-size: 9px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0071</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-folder-open"></i>
+                Kit de Programas de SST
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>PGR · PCMSO · LTCAT</span>
+            </h1>
+            <p class="cover-subtitle">
+                Elaboração do Kit de Programas obrigatórios de Segurança e Saúde do Trabalho, em conformidade com a NR-01, NR-07 e Decreto 3.048/99.
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">ML4 Empreendimentos Imobiliarios SPE LTDA</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                26 de Maio de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 18px;">
+                <h4><i class="fas fa-building"></i> Dados da Empresa</h4>
+                <p>Esta proposta foi desenvolvida exclusivamente para atender às necessidades de elaboração do Kit de Programas de Segurança e Saúde do Trabalho da empresa abaixo identificada, em conformidade com a NR-01, NR-07 e legislação previdenciária vigente.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">ML4 Empreendimentos Imobiliarios SPE LTDA</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
+                        <p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--dark-color);">30.206.782/0001-80</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Logradouro</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Avenida Afonso Pena, 1206 — Tirol</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Município / CEP</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Natal — RN | CEP 59020-265</p>
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--purple-color); grid-column: 1 / -1;">
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Atividade Principal (CNAE)</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">4110-7/00 — Incorporação de empreendimentos imobiliários</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-info-circle"></i> Sobre a Proposta:</strong> A elaboração será conduzida de forma exclusiva para a ML4 Empreendimentos Imobiliarios SPE LTDA, contemplando o levantamento de riscos ocupacionais por função, elaboração técnica de PGR, PCMSO e LTCAT, com responsabilidade técnica de Engenheiro de Segurança do Trabalho e Médico do Trabalho.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: DADOS DA EMPRESA CONTRATADA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-building"></i></span>
+                <span class="section-title-text">Dados da Empresa Contratada</span>
+            </h2>
+
+            <div class="purple-box" style="margin-bottom: 25px;">
+                <h4><i class="fas fa-info-circle"></i> Informações para Faturamento e Contrato</h4>
+                <p>Abaixo estão os dados cadastrais da EngMarq Solution para formalização contratual e emissão de documentos fiscais.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 30px; margin-bottom: 25px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid var(--purple-color);">
+                    <img src="../assets/logoengmarq.png" alt="EngMarq Solution" style="height: 60px;">
+                    <div>
+                        <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 20px; margin-bottom: 5px;">EngMarq Solution LTDA</h3>
+                        <p style="margin: 0; color: var(--gray-color); font-size: 13px;">Engenharia de Segurança e Saúde do Trabalho</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">60.545.359/0001-76</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">Engmarq Solution LTDA</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">E-mail</p>
+                        <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--dark-color);">engmarqsolution@gmail.com</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">WhatsApp</p>
+                        <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--dark-color);">+55 84 99928-5888</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-file-contract"></i> Documentação:</strong> Todos os documentos societários, certidões e comprovações de regularidade fiscal estão disponíveis mediante solicitação para processo de homologação de fornecedores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: CONTEXTO E OBRIGAÇÃO LEGAL ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Contexto e Obrigação Legal</span>
+            </h2>
+
+            <div class="alert-box">
+                <h4><i class="fas fa-gavel"></i> Obrigatoriedade Legal</h4>
+                <p>O <strong>PGR</strong> (NR-01), o <strong>PCMSO</strong> (NR-07) e o <strong>LTCAT</strong> (Decreto 3.048/99 e IN INSS 128/2022) são documentos <strong>obrigatórios</strong> para toda empresa que admite trabalhadores como empregados, independentemente do grau de risco da atividade.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-contract"></i> Fundamentação Legal de Cada Programa</h3>
+            <ul class="feature-list">
+                <li><strong>PGR — Programa de Gerenciamento de Riscos (NR-01):</strong> obrigatório para identificação, avaliação, controle e monitoramento dos riscos ocupacionais (físicos, químicos, biológicos, ergonômicos, de acidentes e psicossociais).</li>
+                <li><strong>PCMSO — Programa de Controle Médico de Saúde Ocupacional (NR-07):</strong> obrigatório para promoção e preservação da saúde dos trabalhadores, com definição de exames médicos ocupacionais.</li>
+                <li><strong>LTCAT — Laudo Técnico das Condições Ambientais de Trabalho (Decreto 3.048/99):</strong> obrigatório para fins previdenciários, comprovando exposição a agentes nocivos para aposentadoria especial.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Setor da Construção Civil:</strong> A NR-18 reforça a necessidade do PGR/PCMAT específico para canteiros de obras, com identificação detalhada dos riscos por função, exigindo programas robustos e adequados à realidade da incorporação imobiliária.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> Riscos do Não Cumprimento</h3>
+            <ul class="feature-list">
+                <li><strong>Multas e autuações</strong> em fiscalizações do Ministério do Trabalho e Emprego (NR-28)</li>
+                <li><strong>Embargo e interdição</strong> de obras e frentes de trabalho</li>
+                <li><strong>Processos trabalhistas</strong> por doenças e acidentes ocupacionais</li>
+                <li><strong>Ações regressivas</strong> do INSS por benefícios concedidos a trabalhadores</li>
+                <li><strong>Responsabilização civil e criminal</strong> dos sócios e gestores</li>
+                <li><strong>Aumento do FAP</strong> (Fator Acidentário de Prevenção) e custos previdenciários</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: O QUE COMPÕE O KIT DE PROGRAMAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">O que compõe o Kit de Programas</span>
+            </h2>
+
+            <p>O <strong>Kit de Programas de SST</strong> contempla os três documentos técnicos exigidos por lei para o gerenciamento integrado da segurança e saúde ocupacional na empresa:</p>
+
+            <div class="purple-box">
+                <h4><i class="fas fa-folder-open"></i> Visão Integrada de SST</h4>
+                <p>Os três programas trabalham em conjunto: o <strong>PGR</strong> identifica e gerencia os riscos; o <strong>PCMSO</strong> protege a saúde dos trabalhadores expostos; e o <strong>LTCAT</strong> caracteriza tecnicamente as condições ambientais para fins previdenciários.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i> Documentos Inclusos</h3>
+
+            <div class="factors-grid" style="grid-template-columns: 1fr 1fr 1fr;">
+                <div class="factor-card" style="border-left-color: var(--primary-color);">
+                    <h4><i class="fas fa-shield-alt" style="color: var(--primary-color);"></i> PGR</h4>
+                    <p><strong>Programa de Gerenciamento de Riscos</strong> — Inventário de riscos ocupacionais por função, plano de ação, controle e monitoramento, conforme NR-01.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--secondary-color);">
+                    <h4><i class="fas fa-user-md" style="color: var(--secondary-color);"></i> PCMSO</h4>
+                    <p><strong>Programa de Controle Médico de Saúde Ocupacional</strong> — Diretrizes médicas, exames ocupacionais e procedimentos de saúde, conforme NR-07.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--purple-color);">
+                    <h4><i class="fas fa-file-medical" style="color: var(--purple-color);"></i> LTCAT</h4>
+                    <p><strong>Laudo Técnico das Condições Ambientais</strong> — Caracterização técnica da exposição a agentes nocivos para fins previdenciários (Decreto 3.048/99).</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-clipboard-list"></i> Estrutura Técnica de Cada Programa</h3>
+            <ul class="feature-list">
+                <li><strong>PGR:</strong> Identificação dos perigos, avaliação dos riscos ocupacionais, classificação por matriz de criticidade, plano de ação, indicadores e cronograma de monitoramento.</li>
+                <li><strong>PCMSO:</strong> Diretrizes médicas por função, definição de exames admissionais, periódicos, demissionais, retorno ao trabalho e mudança de função.</li>
+                <li><strong>LTCAT:</strong> Avaliação técnica dos agentes físicos, químicos e biológicos com base em metodologias quantitativas e qualitativas, com responsabilidade técnica de Engenheiro de Segurança.</li>
+                <li><strong>ART:</strong> Anotação de Responsabilidade Técnica registrada no CREA, garantindo validade legal dos programas.</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: FUNÇÕES CONTEMPLADAS - PARTE 1 ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Funções Contempladas (Parte 1)</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 10px;">
+                <h4><i class="fas fa-users-cog"></i> Mapeamento de Funções da ML4 Empreendimentos</h4>
+                <p>Abaixo estão relacionadas as funções identificadas para elaboração dos programas, com seus respectivos códigos CBO (Classificação Brasileira de Ocupações). Cada função será avaliada quanto à exposição a agentes ambientais e riscos ocupacionais específicos.</p>
+            </div>
+
+            <table class="functions-table">
+                <thead>
+                    <tr>
+                        <th style="width: 6%;">Nº</th>
+                        <th style="width: 64%;">Função / Cargo</th>
+                        <th style="width: 18%;">CBO</th>
+                        <th style="width: 12%;" class="center">Ref.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="center">01</td><td>Almoxarife</td><td>4141</td><td class="center">05</td></tr>
+                    <tr><td class="center">02</td><td>Auxiliar de Almoxarifado</td><td>4141</td><td class="center">05</td></tr>
+                    <tr><td class="center">03</td><td>Armador</td><td>7153</td><td class="center">15</td></tr>
+                    <tr><td class="center">04</td><td>Auxiliar de Armador</td><td>7153</td><td class="center">15</td></tr>
+                    <tr><td class="center">05</td><td>Operador de Betoneira</td><td>7154</td><td class="center">05</td></tr>
+                    <tr><td class="center">06</td><td>Auxiliar de Betoneira</td><td>7154</td><td class="center">05</td></tr>
+                    <tr><td class="center">07</td><td>Carpinteiro</td><td>7155</td><td class="center">25</td></tr>
+                    <tr><td class="center">08</td><td>Auxiliar de Carpintaria</td><td>7155</td><td class="center">25</td></tr>
+                    <tr><td class="center">09</td><td>Eletricista</td><td>7156</td><td class="center">15</td></tr>
+                    <tr><td class="center">10</td><td>Auxiliar de Eletricista</td><td>9511</td><td class="center">05</td></tr>
+                    <tr><td class="center">11</td><td>Assistente Administrativo</td><td>4110</td><td class="center">10</td></tr>
+                    <tr><td class="center">12</td><td>Porteiro</td><td>5174</td><td class="center">10</td></tr>
+                    <tr><td class="center">13</td><td>Engenheiro Civil</td><td>2142</td><td class="center">05</td></tr>
+                    <tr><td class="center">14</td><td>Assistente de Engenharia</td><td>3121</td><td class="center">05</td></tr>
+                    <tr><td class="center">15</td><td>Gestor da Qualidade</td><td>3912</td><td class="center">05</td></tr>
+                    <tr><td class="center">16</td><td>Auxiliar de Qualidade</td><td>—</td><td class="center">—</td></tr>
+                    <tr><td class="center">17</td><td>Mestre de Obras</td><td>7102</td><td class="center">05</td></tr>
+                    <tr><td class="center">18</td><td>Encarregado</td><td>7102</td><td class="center">05</td></tr>
+                    <tr><td class="center">19</td><td>Serralheiro</td><td>7244</td><td class="center">40</td></tr>
+                    <tr><td class="center">20</td><td>Soldador</td><td>7243</td><td class="center">15</td></tr>
+                    <tr><td class="center">21</td><td>Auxiliar de Serralheria</td><td>7244</td><td class="center">40</td></tr>
+                    <tr><td class="center">22</td><td>Auxiliar de Serviços Gerais</td><td>7170</td><td class="center">20</td></tr>
+                    <tr><td class="center">23</td><td>Encanador</td><td>7241</td><td class="center">10</td></tr>
+                    <tr><td class="center">24</td><td>Auxiliar de Encanador</td><td>7241</td><td class="center">10</td></tr>
+                    <tr><td class="center">25</td><td>Pedreiro</td><td>7152</td><td class="center">10</td></tr>
+                    <tr><td class="center">26</td><td>Auxiliar de Pedreiro</td><td>7152</td><td class="center">10</td></tr>
+                    <tr><td class="center">27</td><td>Gesseiro</td><td>7164</td><td class="center">05</td></tr>
+                </tbody>
+            </table>
+
+            <p style="font-size: 9px; color: var(--gray-color); margin-top: 4px; text-align: right;"><em>Continua na próxima página...</em></p>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: FUNÇÕES CONTEMPLADAS - PARTE 2 ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Funções Contempladas (Parte 2)</span>
+            </h2>
+
+            <table class="functions-table">
+                <thead>
+                    <tr>
+                        <th style="width: 6%;">Nº</th>
+                        <th style="width: 64%;">Função / Cargo</th>
+                        <th style="width: 18%;">CBO</th>
+                        <th style="width: 12%;" class="center">Ref.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="center">28</td><td>Auxiliar de Gesseiro</td><td>7164</td><td class="center">05</td></tr>
+                    <tr><td class="center">29</td><td>Montador de Andaime</td><td>7155</td><td class="center">45</td></tr>
+                    <tr><td class="center">30</td><td>Técnico em Segurança do Trabalho</td><td>3516</td><td class="center">05</td></tr>
+                    <tr><td class="center">31</td><td>Técnico em Edificações</td><td>—</td><td class="center">—</td></tr>
+                    <tr><td class="center">32</td><td>Operador de Máquina (Transportes/Canteiro de Obras — abastecimento)</td><td>7151</td><td class="center">25</td></tr>
+                    <tr><td class="center">33</td><td>Pintor — Interno</td><td>7166</td><td class="center">10</td></tr>
+                    <tr><td class="center">34</td><td>Auxiliar de Pintor — Interno</td><td>7166</td><td class="center">10</td></tr>
+                    <tr><td class="center">35</td><td>Pintor — Trabalho em Altura (Fachadeiro)</td><td>7166</td><td class="center">10</td></tr>
+                    <tr><td class="center">36</td><td>Auxiliar de Pintor — Trabalho em Altura (Fachadeiro)</td><td>7166</td><td class="center">10</td></tr>
+                    <tr><td class="center">37</td><td>Calceteiro</td><td>7152</td><td class="center">05</td></tr>
+                    <tr><td class="center">38</td><td>Auxiliar/Servente — Calceteiro</td><td>7170</td><td class="center">20</td></tr>
+                    <tr><td class="center">39</td><td>Jardineiro</td><td>7152</td><td class="center">05</td></tr>
+                    <tr><td class="center">40</td><td>Auxiliar de Jardineiro</td><td>7152</td><td class="center">05</td></tr>
+                    <tr><td class="center">41</td><td>Analista de Industrialização</td><td>2149</td><td class="center">05</td></tr>
+                    <tr><td class="center">42</td><td>Jovem Aprendiz</td><td>—</td><td class="center">—</td></tr>
+                    <tr><td class="center">43</td><td>Assistente de Logística e Produção</td><td>4141</td><td class="center">40</td></tr>
+                    <tr><td class="center">44</td><td>Auxiliar de Logística</td><td>4141</td><td class="center">40</td></tr>
+                    <tr><td class="center">45</td><td>Servente</td><td>7170</td><td class="center">20</td></tr>
+                    <tr><td class="center">46</td><td>Diretor</td><td>—</td><td class="center">—</td></tr>
+                    <tr><td class="center">47</td><td>Comprador</td><td>3542</td><td class="center">05</td></tr>
+                    <tr><td class="center">48</td><td>Operador de Empilhadeira</td><td>7822</td><td class="center">20</td></tr>
+                    <tr><td class="center">49</td><td>Engenheiro de Produção</td><td>2149</td><td class="center">05</td></tr>
+                    <tr><td class="center">50</td><td>Encarregado (Fábrica de Blocos)</td><td>—</td><td class="center">—</td></tr>
+                    <tr><td class="center">51</td><td>Operador de Máquina (Fábrica de Blocos)</td><td>7151</td><td class="center">25</td></tr>
+                    <tr><td class="center">52</td><td>Auxiliar (Fábrica de Blocos)</td><td>7170</td><td class="center">20</td></tr>
+                    <tr><td class="center">53</td><td>Operador de Máquina (Usina de Concreto)</td><td>7151</td><td class="center">25</td></tr>
+                    <tr><td class="center">54</td><td>Operador de Máquina (Transportes/Canteiro — abastecimento)</td><td>7151</td><td class="center">25</td></tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box" style="margin-top: 8px;">
+                <p><strong><i class="fas fa-info-circle"></i> Total de funções contempladas: 54.</strong> Cada função será objeto de avaliação técnica individual com identificação dos riscos ocupacionais, definição de medidas de controle e exames médicos pertinentes.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 8: METODOLOGIA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Metodologia de Elaboração</span>
+            </h2>
+
+            <p>Nossa metodologia segue um fluxo técnico estruturado, em conformidade com a NR-01, NR-07 e legislação previdenciária, garantindo a aderência dos programas à realidade operacional da ML4 Empreendimentos:</p>
+
+            <div class="methodology-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Reunião de Alinhamento e Coleta de Dados Cadastrais</h4>
+                        <p>Levantamento das informações da empresa, organograma, listagem de funções, locais de trabalho, processos produtivos e documentação SST existente.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Visita Técnica aos Canteiros de Obras e Unidades Operacionais</h4>
+                        <p>Inspeção técnica para reconhecimento dos processos, identificação dos agentes ambientais, observação das condições de trabalho e mapeamento de riscos por função.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Identificação e Avaliação dos Riscos Ocupacionais</h4>
+                        <p>Análise qualitativa e quantitativa dos riscos físicos, químicos, biológicos, ergonômicos e de acidentes, com classificação por matriz de criticidade e probabilidade.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Elaboração do PGR (NR-01)</h4>
+                        <p>Inventário de riscos por função, plano de ação com medidas de controle, indicadores e cronograma de monitoramento, sob responsabilidade técnica de Engenheiro de Segurança.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Elaboração do PCMSO (NR-07)</h4>
+                        <p>Definição das diretrizes médicas, exames ocupacionais por função (admissional, periódico, demissional, retorno ao trabalho e mudança de função), com coordenação de Médico do Trabalho.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Elaboração do LTCAT (Decreto 3.048/99)</h4>
+                        <p>Caracterização técnica das condições ambientais, avaliação da exposição a agentes nocivos e enquadramento previdenciário, com fundamentação técnica para fins de aposentadoria especial.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <h4>Emissão de ART e Entrega Final</h4>
+                        <p>Registro da Anotação de Responsabilidade Técnica no CREA, entrega dos documentos finais em PDF e apresentação dos programas à liderança da empresa.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 9: ENTREGÁVEIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Entregáveis e Escopo dos Serviços</span>
+            </h2>
+
+            <p>Ao final dos trabalhos, a <strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong> receberá os seguintes documentos técnicos, em conformidade com a legislação vigente:</p>
+
+            <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos (PDF)</h3>
+
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PGR — Programa de Gerenciamento de Riscos</h4>
+                        <p>Inventário de riscos ocupacionais por função, plano de ação, classificação por matriz de criticidade e cronograma de monitoramento (NR-01).</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-user-md"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PCMSO — Programa de Controle Médico</h4>
+                        <p>Diretrizes médicas, exames ocupacionais por função e procedimentos de saúde, com coordenação de Médico do Trabalho (NR-07).</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-file-medical"></i></div>
+                    <div class="deliverable-text">
+                        <h4>LTCAT — Laudo Técnico das Condições Ambientais</h4>
+                        <p>Caracterização técnica da exposição a agentes nocivos para fins previdenciários (Decreto 3.048/99 e IN INSS 128/2022).</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-stamp"></i></div>
+                    <div class="deliverable-text">
+                        <h4>ART — Anotação de Responsabilidade Técnica</h4>
+                        <p>Registro no CREA com responsabilidade técnica do Engenheiro de Segurança do Trabalho, garantindo validade legal.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Inventário de Riscos por Função</h4>
+                        <p>Mapa detalhado de riscos para cada uma das 54 funções identificadas, com classificação e medidas de controle.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Plano de Ação Preventivo</h4>
+                        <p>Recomendações técnicas estruturadas com medidas de controle, prazos sugeridos e priorização conforme criticidade.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-user-tie"></i> Atuação Técnica Especializada</h3>
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Engenheiro de Segurança do Trabalho com registro no CREA (responsável técnico)</li>
+                <li>Médico do Trabalho registrado no CRM (coordenação do PCMSO)</li>
+                <li>Técnico de Segurança do Trabalho registrado no MTE</li>
+                <li>Equipe com experiência em construção civil e canteiros de obras</li>
+            </ul>
+
+            <div class="alert-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> O que NÃO está incluso no escopo</h4>
+                <p>• Realização dos exames médicos ocupacionais (clínica/ASO) • Medições ambientais quantitativas (ruído, calor, agentes químicos) • Avaliação de Riscos Psicossociais (NR-01 atualizada) • Treinamentos NR · CIPA · Brigada · NR-18 · NR-35 • Envio de eventos ao eSocial • Implementação direta das ações recomendadas • Acompanhamento mensal e assessoria contínua (disponíveis como serviço adicional)</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 10: SERVIÇOS COMPLEMENTARES ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Serviços Complementares Disponíveis</span>
+            </h2>
+
+            <p>Além do Kit de Programas, a EngMarq Solution oferece um portfólio completo de serviços para <strong>gestão contínua de SST</strong> na construção civil:</p>
+
+            <h3 class="subsection-title"><i class="fas fa-tachometer-alt"></i> Medições Ambientais e Laudos</h3>
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Medição de ruído ocupacional (NHO-01) e dosimetria</li>
+                <li>Avaliação de calor (IBUTG — NHO-06)</li>
+                <li>Avaliação de agentes químicos (poeiras, gases, vapores)</li>
+                <li>Laudo de Insalubridade (NR-15) e Periculosidade (NR-16)</li>
+                <li>AET — Análise Ergonômica do Trabalho (NR-17)</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-brain"></i> Avaliação de Riscos Psicossociais</h3>
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Avaliação dos 6 fatores psicossociais (HSE Management Standards)</li>
+                <li>Relatório técnico de Riscos Psicossociais conforme NR-01 atualizada</li>
+                <li>Plano de ação preventivo para saúde mental no trabalho</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-chalkboard-teacher"></i> Treinamentos de Segurança</h3>
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Treinamento Admissional + Ordem de Serviço (NR-01)</li>
+                <li>NR-06 (EPI), NR-18 (Construção Civil), NR-35 (Trabalho em Altura)</li>
+                <li>NR-10 (Eletricidade), NR-11 (Empilhadeira), NR-12 (Máquinas)</li>
+                <li>CIPA (NR-05), Brigada de Incêndio, Primeiros Socorros</li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-cogs"></i> Assessoria SST Mensal</h3>
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Equipe técnica dedicada (Engenheiro + Técnico de Segurança)</li>
+                <li>Visitas mensais aos canteiros de obras</li>
+                <li>Envio de eventos SST ao eSocial (S-2210, S-2220, S-2240)</li>
+                <li>Gestão contínua de PGR, PCMSO e LTCAT</li>
+            </ul>
+
+            <div class="info-box">
+                <h4><i class="fas fa-info-circle"></i> Contratação Sob Demanda</h4>
+                <p>Os serviços complementares acima não estão incluídos no valor desta proposta e podem ser contratados separadamente conforme necessidade e interesse da empresa.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 11: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">8</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-info-circle"></i> Estrutura de Investimento</h4>
+                <p>O Kit de Programas será elaborado para a <strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong>, contemplando PGR, PCMSO e LTCAT com responsabilidade técnica e ART, abrangendo todas as 54 funções identificadas e os respectivos riscos ocupacionais.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-calculator"></i> Composição da Proposta</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10px;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white;">
+                        <th style="padding: 12px 10px; text-align: left; border: 1px solid #e2e8f0;">Serviço</th>
+                        <th style="padding: 12px 10px; text-align: left; border: 1px solid #e2e8f0;">Empresa</th>
+                        <th style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">CNPJ</th>
+                        <th style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;">Kit de Programas — PGR + PCMSO + LTCAT (com ART)</td>
+                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;"><strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong></td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">30.206.782/0001-80</td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700; font-size: 13px; color: var(--success-color);">R$ 2.700,00</td>
+                    </tr>
+                    <tr style="background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); color: white; font-weight: 700;">
+                        <td style="padding: 14px 10px; border: 1px solid #e2e8f0; text-align: right; font-size: 12px;" colspan="3">VALOR TOTAL DA PROPOSTA</td>
+                        <td style="padding: 14px 10px; text-align: center; border: 1px solid #e2e8f0; font-size: 16px;"><strong>R$ 2.700,00</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title"><i class="fas fa-check-double"></i> O que está incluso no investimento</h3>
+            <ul class="feature-list">
+                <li>Elaboração técnica do <strong>PGR</strong> com inventário de riscos das 54 funções</li>
+                <li>Elaboração técnica do <strong>PCMSO</strong> com diretrizes médicas e exames por função</li>
+                <li>Elaboração técnica do <strong>LTCAT</strong> com caracterização das condições ambientais</li>
+                <li>Emissão da <strong>ART</strong> no CREA com responsabilidade técnica</li>
+                <li>Visita técnica para reconhecimento dos canteiros e unidades operacionais</li>
+                <li>Suporte técnico para esclarecimento de dúvidas após a entrega</li>
+            </ul>
+
+            <div class="info-box" style="background: #f0f9ff; border-left: 4px solid #1a365d; padding: 10px 15px;">
+                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Serviços complementares (medições ambientais, psicossocial, treinamentos, assessoria mensal), caso solicitados, serão objeto de negociação em separado e não alteram o valor desta proposta.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 12: CONDIÇÕES COMERCIAIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">9</span>
+                <span class="section-title-text">Condições Comerciais</span>
+            </h2>
+
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta comercial é válida por 15 (quinze) dias a partir da data de emissão.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-credit-card"></i></div>
+                    <div class="condition-text">
+                        <strong>Condições de Pagamento</strong>
+                        <span>50% na aprovação da proposta e 50% na entrega dos documentos finais. Outras condições podem ser negociadas conforme necessidade.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Execução</strong>
+                        <span>O Kit de Programas será entregue em até 30 (trinta) dias úteis após a aprovação da proposta e fornecimento dos dados necessários.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-stamp"></i></div>
+                    <div class="condition-text">
+                        <strong>Responsabilidade Técnica</strong>
+                        <span>Programas elaborados sob responsabilidade técnica de Engenheiro de Segurança do Trabalho (CREA) e Médico do Trabalho (CRM), com emissão de ART.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-sync"></i></div>
+                    <div class="condition-text">
+                        <strong>Vigência dos Programas</strong>
+                        <span>O PGR tem vigência de até 2 anos (com revisão anual), PCMSO vigência anual e LTCAT deve ser revisto sempre que houver alteração nas condições ambientais.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-headset"></i></div>
+                    <div class="condition-text">
+                        <strong>Suporte Pós-Entrega</strong>
+                        <span>Suporte técnico por 60 dias após a entrega para esclarecimento de dúvidas sobre os documentos e orientações sobre a implementação das ações.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 8px;">
+                <h4><i class="fas fa-certificate"></i> Garantia Técnica</h4>
+                <p>Todos os documentos são elaborados por profissionais qualificados e registrados nos respectivos conselhos, em conformidade com as Normas Regulamentadoras e legislação previdenciária vigente.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-handshake"></i> O que a empresa precisa fornecer</h3>
+            <ul class="feature-list">
+                <li>Listagem atualizada de colaboradores por função e setor</li>
+                <li>Acesso aos canteiros de obras e unidades operacionais para visita técnica</li>
+                <li>Documentação SST existente (programas anteriores, ASOs, ART, etc.) <em style="color: var(--gray-color);">se houver</em></li>
+                <li>Disponibilidade da liderança para reuniões de alinhamento e apresentação dos programas</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 13: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">10</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <p style="text-align: center; margin-bottom: 25px; color: var(--gray-color);">
+                Esta proposta comercial foi elaborada para atender às exigências da NR-01, NR-07 e legislação previdenciária, garantindo segurança jurídica e conformidade legal para a ML4 Empreendimentos Imobiliarios SPE LTDA.
+            </p>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="responsible-name">Thiago Marques</h3>
+                <p class="responsible-role">Diretor</p>
+                <p class="responsible-company">EngMarq Solution</p>
+
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="purple-box" style="margin-top: 25px;">
+                <h4><i class="fas fa-headset"></i> Atendimento Especializado</h4>
+                <p>Estamos à disposição para esclarecer qualquer dúvida sobre o escopo dos serviços, ajustar a proposta conforme necessidade e acompanhar todo o processo de elaboração dos programas de SST.</p>
+            </div>
+
+            <div class="info-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-clock"></i> Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 08h às 18h | Sábado: 08h às 12h</p>
+                <p style="margin-top: 8px;"><strong>Atendimento via WhatsApp:</strong> Resposta em até 2 horas durante o horário comercial</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 14: ENCERRAMENTO E CONTATO ====== -->
+        <div class="page page-contact">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="contact-title">Conformidade Legal de SST para sua Empresa</h2>
+                <p class="contact-subtitle">
+                    O Kit de Programas (PGR, PCMSO e LTCAT) é a base da gestão de SST e uma <strong>exigência legal</strong>. Conte com o apoio técnico especializado da EngMarq Solution para adequar a ML4 Empreendimentos e protegê-la de passivos trabalhistas e previdenciários.
+                </p>
+
+                <div class="alert-box" style="text-align: left; max-width: 450px; margin: 0 auto 25px;">
+                    <h4><i class="fas fa-gavel"></i> Não deixe para depois</h4>
+                    <p>Empresas sem PGR, PCMSO e LTCAT atualizados estão sujeitas a multas, embargos, processos trabalhistas e ações regressivas do INSS por acidentes e doenças ocupacionais.</p>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+
+                <div class="contact-signature">
+                    <p class="signature-text">
+                        <strong>EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        <em>Garantindo segurança jurídica para sua empresa.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">14</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 15: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite da Proposta</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-check-circle"></i> Declaração de Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços de elaboração do Kit de Programas (PGR, PCMSO e LTCAT).</p>
+            </div>
+
+            <!-- EngMarq -->
+            <div style="background: var(--light-color); border-radius: 10px; padding: 15px; margin-bottom: 12px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 13px; margin-bottom: 10px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 8px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> PRESTADORA DE SERVIÇOS — EngMarq Solution
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; font-size: 10px;">
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Razão Social</span><br><strong>Engmarq Solution LTDA</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">CNPJ</span><br><strong>60.545.359/0001-76</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Representante</span><br><strong>Thiago Marques</strong></div>
+                </div>
+                <div style="border-bottom: 1px solid var(--dark-color); margin: 8px auto 4px; height: 30px; max-width: 500px;"></div>
+                <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+            </div>
+
+            <!-- Empresa contratante -->
+            <div style="background: var(--light-color); border-radius: 10px; padding: 15px; margin-bottom: 12px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 13px; margin-bottom: 10px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 8px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> CONTRATANTE — ML4 Empreendimentos Imobiliarios SPE LTDA
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; font-size: 10px;">
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Razão Social</span><br><strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">CNPJ</span><br><strong>30.206.782/0001-80</strong></div>
+                </div>
+                <div style="border-bottom: 1px solid var(--dark-color); margin: 12px auto 4px; height: 30px; max-width: 500px;"></div>
+                <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura do Representante Legal</p>
+            </div>
+
+            <div style="margin-top: 10px; text-align: center; font-size: 9px; color: var(--gray-color);">
+                Natal - RN, 26 de Maio de 2026
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">15</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                // permitir comportamento padrão de impressão
+            }
+        });
+
+        console.log('📄 EngMarq Solution - Proposta TM0071: Kit de Programas (PGR, PCMSO, LTCAT) - ML4 Empreendimentos Imobiliarios SPE LTDA');
+        console.log('💡 Clique em "Gerar PDF" ou pressione Ctrl+P');
+        console.log('✅ Selecione "Salvar como PDF" na janela de impressão');
+    </script>
+</body>
+</html>
