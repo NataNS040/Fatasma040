@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proposta TM0071 - Kit de Programas (PGR, PCMSO, LTCAT) - ML4 Empreendimentos Imobiliarios SPE LTDA | EngMarq Solution</title>
+    <title>Proposta TM0079 - Kit de Programas (PGR, PCMSO, LIP) - ML2 Grupo ML Empreendimentos | EngMarq Solution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -101,11 +101,11 @@
         .factors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
         .factor-card { background: var(--light-color); padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--success-color); }
         .factor-card h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
-        .factor-card h4 i { color: var(--success-color); font-size: 11px; }
+        .factor-card h4 i { font-size: 11px; }
         .factor-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
 
         .methodology-steps { margin: 12px 0; }
-        .step { display: flex; gap: 10px; margin-bottom: 8px; padding: 8px 10px; background: var(--light-color); border-radius: 6px; position: relative; }
+        .step { display: flex; gap: 10px; margin-bottom: 8px; padding: 8px 10px; background: var(--light-color); border-radius: 6px; }
         .step-number { background: var(--primary-color); color: var(--white-color); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-primary); font-weight: 700; font-size: 11px; flex-shrink: 0; }
         .step-content h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 2px; }
         .step-content p { font-size: 10px; margin-bottom: 0; line-height: 1.35; }
@@ -143,14 +143,12 @@
         .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
         .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
 
-        /* Tabela de funções */
         .functions-table { width: 100%; border-collapse: collapse; font-size: 9px; margin: 8px 0; }
         .functions-table thead tr { background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white; }
         .functions-table th { padding: 6px 8px; text-align: left; border: 1px solid #e2e8f0; font-family: var(--font-primary); font-weight: 600; font-size: 9px; }
         .functions-table td { padding: 4px 8px; border: 1px solid #e2e8f0; font-size: 8.5px; line-height: 1.3; }
         .functions-table tbody tr:nth-child(even) { background: #f8fafc; }
         .functions-table td.center { text-align: center; }
-        .functions-grid-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 
         @media print {
             .pdf-controls { display: none !important; }
@@ -169,7 +167,7 @@
 </head>
 <body>
     <div class="pdf-controls">
-        <button class="btn-generate" onclick="generatePDF()">
+        <button class="btn-generate" onclick="window.print()">
             <i class="fas fa-file-pdf"></i>
             Gerar PDF
         </button>
@@ -187,7 +185,7 @@
 
         <!-- ====== PÁGINA 1: CAPA ====== -->
         <div class="page page-cover">
-            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0071</span>
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0079</span>
 
             <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
 
@@ -202,15 +200,15 @@
 
             <h1 class="cover-title">
                 Proposta Comercial<br>
-                <span>PGR · PCMSO · LTCAT</span>
+                <span>PGR · PCMSO · LIP</span>
             </h1>
             <p class="cover-subtitle">
-                Elaboração do Kit de Programas obrigatórios de Segurança e Saúde do Trabalho, em conformidade com a NR-01, NR-07 e Decreto 3.048/99.
+                Elaboração do Kit de Programas obrigatórios de Segurança e Saúde do Trabalho, em conformidade com a NR-01, NR-07, NR-15 e NR-16.
             </p>
 
             <div class="cover-client">
                 <p class="cover-client-label">Proposta elaborada para</p>
-                <p class="cover-client-name">ML4 Empreendimentos Imobiliarios SPE LTDA</p>
+                <p class="cover-client-name">ML2 — Grupo ML Empreendimentos</p>
             </div>
 
             <p class="cover-date">
@@ -227,7 +225,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -237,36 +235,36 @@
 
             <div class="info-box" style="margin-bottom: 18px;">
                 <h4><i class="fas fa-building"></i> Dados da Empresa</h4>
-                <p>Esta proposta foi desenvolvida exclusivamente para atender às necessidades de elaboração do Kit de Programas de Segurança e Saúde do Trabalho da empresa abaixo identificada, em conformidade com a NR-01, NR-07 e legislação previdenciária vigente.</p>
+                <p>Esta proposta foi desenvolvida exclusivamente para atender às necessidades de elaboração do Kit de Programas de Segurança e Saúde do Trabalho da empresa abaixo identificada, em conformidade com a NR-01, NR-07, NR-15 e NR-16.</p>
             </div>
 
             <div style="background: var(--light-color); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
                         <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
-                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">ML4 Empreendimentos Imobiliarios SPE LTDA</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">ML2 — Grupo ML Empreendimentos</p>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
                         <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
-                        <p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--dark-color);">30.206.782/0001-80</p>
+                        <p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--dark-color);">28.090.722/0001-01</p>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
                         <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Logradouro</p>
-                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Avenida Afonso Pena, 1206 — Tirol</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">Rua Manoel Patrício de Medeiros, 2100 — Jardim</p>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
-                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Município / CEP</p>
-                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Natal — RN | CEP 59020-265</p>
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Município / UF</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">São Gonçalo do Amarante — RN</p>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--purple-color); grid-column: 1 / -1;">
-                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Atividade Principal (CNAE)</p>
-                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">4110-7/00 — Incorporação de empreendimentos imobiliários</p>
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Grupo Empresarial</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">Grupo ML Empreendimentos — Construção Civil, Incorporação e Serviços</p>
                     </div>
                 </div>
             </div>
 
             <div class="highlight-box">
-                <p><strong><i class="fas fa-info-circle"></i> Sobre a Proposta:</strong> A elaboração será conduzida de forma exclusiva para a ML4 Empreendimentos Imobiliarios SPE LTDA, contemplando o levantamento de riscos ocupacionais por função, elaboração técnica de PGR, PCMSO e LTCAT, com responsabilidade técnica de Engenheiro de Segurança do Trabalho e Médico do Trabalho.</p>
+                <p><strong><i class="fas fa-info-circle"></i> Sobre a Proposta:</strong> A elaboração será conduzida de forma exclusiva para a ML2 — Grupo ML Empreendimentos, contemplando o levantamento de riscos ocupacionais por função, elaboração técnica de PGR, PCMSO e LIP (Laudo de Insalubridade e Periculosidade), com responsabilidade técnica de Engenheiro de Segurança do Trabalho e Médico do Trabalho.</p>
             </div>
 
             <div class="page-footer">
@@ -279,7 +277,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -335,7 +333,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -345,26 +343,26 @@
 
             <div class="alert-box">
                 <h4><i class="fas fa-gavel"></i> Obrigatoriedade Legal</h4>
-                <p>O <strong>PGR</strong> (NR-01), o <strong>PCMSO</strong> (NR-07) e o <strong>LTCAT</strong> (Decreto 3.048/99 e IN INSS 128/2022) são documentos <strong>obrigatórios</strong> para toda empresa que admite trabalhadores como empregados, independentemente do grau de risco da atividade.</p>
+                <p>O <strong>PGR</strong> (NR-01), o <strong>PCMSO</strong> (NR-07) e o <strong>LIP — Laudo de Insalubridade e Periculosidade</strong> (NR-15 e NR-16) são documentos <strong>obrigatórios</strong> para toda empresa que admite trabalhadores como empregados, especialmente quando há exposição a agentes físicos, químicos ou condições de periculosidade.</p>
             </div>
 
             <h3 class="subsection-title"><i class="fas fa-file-contract"></i> Fundamentação Legal de Cada Programa</h3>
             <ul class="feature-list">
-                <li><strong>PGR — Programa de Gerenciamento de Riscos (NR-01):</strong> obrigatório para identificação, avaliação, controle e monitoramento dos riscos ocupacionais (físicos, químicos, biológicos, ergonômicos, de acidentes e psicossociais).</li>
-                <li><strong>PCMSO — Programa de Controle Médico de Saúde Ocupacional (NR-07):</strong> obrigatório para promoção e preservação da saúde dos trabalhadores, com definição de exames médicos ocupacionais.</li>
-                <li><strong>LTCAT — Laudo Técnico das Condições Ambientais de Trabalho (Decreto 3.048/99):</strong> obrigatório para fins previdenciários, comprovando exposição a agentes nocivos para aposentadoria especial.</li>
+                <li><strong>PGR — Programa de Gerenciamento de Riscos (NR-01):</strong> obrigatório para identificação, avaliação, controle e monitoramento dos riscos ocupacionais (físicos, químicos, biológicos, ergonômicos, de acidentes e psicossociais) em todas as empresas com empregados CLT.</li>
+                <li><strong>PCMSO — Programa de Controle Médico de Saúde Ocupacional (NR-07):</strong> obrigatório para promoção e preservação da saúde dos trabalhadores, com definição de exames médicos ocupacionais por função e agente de risco.</li>
+                <li><strong>LIP — Laudo de Insalubridade e Periculosidade (NR-15 / NR-16):</strong> documento técnico que caracteriza a exposição a agentes insalubres (ruído, calor, agentes químicos, etc.) e condições de periculosidade, fundamentando o pagamento ou não dos adicionais legais.</li>
             </ul>
 
             <div class="highlight-box">
-                <p><strong>Setor da Construção Civil:</strong> A NR-18 reforça a necessidade do PGR/PCMAT específico para canteiros de obras, com identificação detalhada dos riscos por função, exigindo programas robustos e adequados à realidade da incorporação imobiliária.</p>
+                <p><strong>Setor de Construção Civil e Operações Industriais:</strong> A combinação de atividades operacionais com máquinas, ferramentas, exposição a ruído, poeiras e agentes químicos torna o LIP especialmente relevante para o Grupo ML, garantindo embasamento técnico legal para o enquadramento correto dos adicionais.</p>
             </div>
 
             <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> Riscos do Não Cumprimento</h3>
             <ul class="feature-list">
                 <li><strong>Multas e autuações</strong> em fiscalizações do Ministério do Trabalho e Emprego (NR-28)</li>
                 <li><strong>Embargo e interdição</strong> de obras e frentes de trabalho</li>
-                <li><strong>Processos trabalhistas</strong> por doenças e acidentes ocupacionais</li>
-                <li><strong>Ações regressivas</strong> do INSS por benefícios concedidos a trabalhadores</li>
+                <li><strong>Processos trabalhistas</strong> por doenças e acidentes ocupacionais com pedidos de adicional de insalubridade/periculosidade indevidos</li>
+                <li><strong>Condenações em reclamatórias trabalhistas</strong> por ausência de documentação técnica de insalubridade</li>
                 <li><strong>Responsabilização civil e criminal</strong> dos sócios e gestores</li>
                 <li><strong>Aumento do FAP</strong> (Fator Acidentário de Prevenção) e custos previdenciários</li>
             </ul>
@@ -379,7 +377,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -387,11 +385,11 @@
                 <span class="section-title-text">O que compõe o Kit de Programas</span>
             </h2>
 
-            <p>O <strong>Kit de Programas de SST</strong> contempla os três documentos técnicos exigidos por lei para o gerenciamento integrado da segurança e saúde ocupacional na empresa:</p>
+            <p>O <strong>Kit de Programas de SST</strong> contempla três documentos técnicos integrados para o gerenciamento completo da segurança, saúde e conformidade legal trabalhista da empresa:</p>
 
             <div class="purple-box">
                 <h4><i class="fas fa-folder-open"></i> Visão Integrada de SST</h4>
-                <p>Os três programas trabalham em conjunto: o <strong>PGR</strong> identifica e gerencia os riscos; o <strong>PCMSO</strong> protege a saúde dos trabalhadores expostos; e o <strong>LTCAT</strong> caracteriza tecnicamente as condições ambientais para fins previdenciários.</p>
+                <p>Os três programas trabalham em conjunto: o <strong>PGR</strong> identifica e gerencia os riscos; o <strong>PCMSO</strong> protege a saúde dos trabalhadores expostos; e o <strong>LIP</strong> caracteriza tecnicamente a insalubridade e periculosidade, garantindo a correta aplicação dos adicionais previstos em lei e a defesa da empresa em ações trabalhistas.</p>
             </div>
 
             <h3 class="subsection-title"><i class="fas fa-list-check"></i> Documentos Inclusos</h3>
@@ -405,19 +403,23 @@
                     <h4><i class="fas fa-user-md" style="color: var(--secondary-color);"></i> PCMSO</h4>
                     <p><strong>Programa de Controle Médico de Saúde Ocupacional</strong> — Diretrizes médicas, exames ocupacionais e procedimentos de saúde, conforme NR-07.</p>
                 </div>
-                <div class="factor-card" style="border-left-color: var(--purple-color);">
-                    <h4><i class="fas fa-file-medical" style="color: var(--purple-color);"></i> LTCAT</h4>
-                    <p><strong>Laudo Técnico das Condições Ambientais</strong> — Caracterização técnica da exposição a agentes nocivos para fins previdenciários (Decreto 3.048/99).</p>
+                <div class="factor-card" style="border-left-color: var(--success-color);">
+                    <h4><i class="fas fa-file-medical-alt" style="color: var(--success-color);"></i> LIP</h4>
+                    <p><strong>Laudo de Insalubridade e Periculosidade</strong> — Caracterização técnica da exposição a agentes insalubres e condições perigosas (NR-15 / NR-16).</p>
                 </div>
             </div>
 
             <h3 class="subsection-title"><i class="fas fa-clipboard-list"></i> Estrutura Técnica de Cada Programa</h3>
             <ul class="feature-list">
                 <li><strong>PGR:</strong> Identificação dos perigos, avaliação dos riscos ocupacionais, classificação por matriz de criticidade, plano de ação, indicadores e cronograma de monitoramento.</li>
-                <li><strong>PCMSO:</strong> Diretrizes médicas por função, definição de exames admissionais, periódicos, demissionais, retorno ao trabalho e mudança de função.</li>
-                <li><strong>LTCAT:</strong> Avaliação técnica dos agentes físicos, químicos e biológicos com base em metodologias quantitativas e qualitativas, com responsabilidade técnica de Engenheiro de Segurança.</li>
-                <li><strong>ART:</strong> Anotação de Responsabilidade Técnica registrada no CREA, garantindo validade legal dos programas.</li>
+                <li><strong>PCMSO:</strong> Diretrizes médicas por função, definição de exames admissionais, periódicos, demissionais, retorno ao trabalho e mudança de função, correlacionados com os riscos identificados no PGR.</li>
+                <li><strong>LIP:</strong> Avaliação qualitativa e quantitativa dos agentes físicos, químicos e condições perigosas por função, com conclusão técnica sobre enquadramento ou não como insalubre/perigoso, e emissão de laudo com ART.</li>
             </ul>
+
+            <div class="info-box">
+                <h4><i class="fas fa-balance-scale"></i> Segurança Jurídica para a ML2</h4>
+                <p>O LIP é o principal instrumento de defesa da empresa em ações trabalhistas que envolvem adicional de insalubridade ou periculosidade. Sem um laudo técnico assinado por Engenheiro de Segurança, a empresa fica exposta a condenações baseadas em perícias judiciais desfavoráveis.</p>
+            </div>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
@@ -425,11 +427,11 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 6: FUNÇÕES CONTEMPLADAS - PARTE 1 ====== -->
+        <!-- ====== PÁGINA 6: FUNÇÕES CONTEMPLADAS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -438,8 +440,8 @@
             </h2>
 
             <div class="info-box" style="margin-bottom: 10px;">
-                <h4><i class="fas fa-users-cog"></i> Mapeamento de Funções da ML4 Empreendimentos</h4>
-                <p>Abaixo estão relacionadas as funções identificadas para elaboração dos programas, com seus respectivos códigos CBO (Classificação Brasileira de Ocupações). Cada função será avaliada quanto à exposição a agentes ambientais e riscos ocupacionais específicos.</p>
+                <h4><i class="fas fa-users-cog"></i> Mapeamento de Funções da ML2 — Grupo ML Empreendimentos</h4>
+                <p>Abaixo estão relacionadas as funções identificadas para elaboração dos programas, com seus respectivos códigos CBO. Cada função será avaliada quanto à exposição a agentes ambientais, riscos ocupacionais e enquadramento de insalubridade/periculosidade.</p>
             </div>
 
             <table class="functions-table">
@@ -457,28 +459,28 @@
                     <tr><td class="center">03</td><td>Armador</td><td>7153</td><td class="center">15</td></tr>
                     <tr><td class="center">04</td><td>Auxiliar de Armador</td><td>7153</td><td class="center">15</td></tr>
                     <tr><td class="center">05</td><td>Operador de Betoneira</td><td>7154</td><td class="center">05</td></tr>
-                    <tr><td class="center">06</td><td>Auxiliar de Betoneira</td><td>7154</td><td class="center">05</td></tr>
-                    <tr><td class="center">07</td><td>Carpinteiro</td><td>7155</td><td class="center">25</td></tr>
-                    <tr><td class="center">08</td><td>Auxiliar de Carpintaria</td><td>7155</td><td class="center">25</td></tr>
-                    <tr><td class="center">09</td><td>Eletricista</td><td>7156</td><td class="center">15</td></tr>
-                    <tr><td class="center">10</td><td>Auxiliar de Eletricista</td><td>9511</td><td class="center">05</td></tr>
-                    <tr><td class="center">11</td><td>Assistente Administrativo</td><td>4110</td><td class="center">10</td></tr>
-                    <tr><td class="center">12</td><td>Porteiro</td><td>5174</td><td class="center">10</td></tr>
-                    <tr><td class="center">13</td><td>Engenheiro Civil</td><td>2142</td><td class="center">05</td></tr>
-                    <tr><td class="center">14</td><td>Assistente de Engenharia</td><td>3121</td><td class="center">05</td></tr>
-                    <tr><td class="center">15</td><td>Gestor da Qualidade</td><td>3912</td><td class="center">05</td></tr>
-                    <tr><td class="center">16</td><td>Auxiliar de Qualidade</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">17</td><td>Mestre de Obras</td><td>7102</td><td class="center">05</td></tr>
-                    <tr><td class="center">18</td><td>Encarregado</td><td>7102</td><td class="center">05</td></tr>
-                    <tr><td class="center">19</td><td>Serralheiro</td><td>7244</td><td class="center">40</td></tr>
-                    <tr><td class="center">20</td><td>Soldador</td><td>7243</td><td class="center">15</td></tr>
-                    <tr><td class="center">21</td><td>Auxiliar de Serralheria</td><td>7244</td><td class="center">40</td></tr>
-                    <tr><td class="center">22</td><td>Auxiliar de Serviços Gerais</td><td>7170</td><td class="center">20</td></tr>
-                    <tr><td class="center">23</td><td>Encanador</td><td>7241</td><td class="center">10</td></tr>
-                    <tr><td class="center">24</td><td>Auxiliar de Encanador</td><td>7241</td><td class="center">10</td></tr>
-                    <tr><td class="center">25</td><td>Pedreiro</td><td>7152</td><td class="center">10</td></tr>
-                    <tr><td class="center">26</td><td>Auxiliar de Pedreiro</td><td>7152</td><td class="center">10</td></tr>
-                    <tr><td class="center">27</td><td>Gesseiro</td><td>7164</td><td class="center">05</td></tr>
+                    <tr><td class="center">06</td><td>Carpinteiro</td><td>7155</td><td class="center">25</td></tr>
+                    <tr><td class="center">07</td><td>Auxiliar de Carpintaria</td><td>7155</td><td class="center">25</td></tr>
+                    <tr><td class="center">08</td><td>Eletricista</td><td>7156</td><td class="center">15</td></tr>
+                    <tr><td class="center">09</td><td>Auxiliar de Eletricista</td><td>9511</td><td class="center">05</td></tr>
+                    <tr><td class="center">10</td><td>Assistente Administrativo</td><td>4110</td><td class="center">10</td></tr>
+                    <tr><td class="center">11</td><td>Porteiro / Vigia</td><td>5174</td><td class="center">10</td></tr>
+                    <tr><td class="center">12</td><td>Engenheiro Civil</td><td>2142</td><td class="center">05</td></tr>
+                    <tr><td class="center">13</td><td>Mestre de Obras</td><td>7102</td><td class="center">05</td></tr>
+                    <tr><td class="center">14</td><td>Encarregado</td><td>7102</td><td class="center">05</td></tr>
+                    <tr><td class="center">15</td><td>Serralheiro</td><td>7244</td><td class="center">40</td></tr>
+                    <tr><td class="center">16</td><td>Soldador</td><td>7243</td><td class="center">15</td></tr>
+                    <tr><td class="center">17</td><td>Auxiliar de Serralheria</td><td>7244</td><td class="center">40</td></tr>
+                    <tr><td class="center">18</td><td>Auxiliar de Serviços Gerais</td><td>7170</td><td class="center">20</td></tr>
+                    <tr><td class="center">19</td><td>Encanador</td><td>7241</td><td class="center">10</td></tr>
+                    <tr><td class="center">20</td><td>Pedreiro</td><td>7152</td><td class="center">10</td></tr>
+                    <tr><td class="center">21</td><td>Auxiliar de Pedreiro</td><td>7152</td><td class="center">10</td></tr>
+                    <tr><td class="center">22</td><td>Montador de Andaime</td><td>7155</td><td class="center">45</td></tr>
+                    <tr><td class="center">23</td><td>Operador de Máquina (Canteiro de Obras)</td><td>7151</td><td class="center">25</td></tr>
+                    <tr><td class="center">24</td><td>Operador de Empilhadeira</td><td>7822</td><td class="center">20</td></tr>
+                    <tr><td class="center">25</td><td>Técnico em Segurança do Trabalho</td><td>3516</td><td class="center">05</td></tr>
+                    <tr><td class="center">26</td><td>Pintor</td><td>7166</td><td class="center">10</td></tr>
+                    <tr><td class="center">27</td><td>Pintor — Trabalho em Altura (Fachadeiro)</td><td>7166</td><td class="center">10</td></tr>
                 </tbody>
             </table>
 
@@ -494,7 +496,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -512,38 +514,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td class="center">28</td><td>Auxiliar de Gesseiro</td><td>7164</td><td class="center">05</td></tr>
-                    <tr><td class="center">29</td><td>Montador de Andaime</td><td>7155</td><td class="center">45</td></tr>
-                    <tr><td class="center">30</td><td>Técnico em Segurança do Trabalho</td><td>3516</td><td class="center">05</td></tr>
-                    <tr><td class="center">31</td><td>Técnico em Edificações</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">32</td><td>Operador de Máquina (Transportes/Canteiro de Obras — abastecimento)</td><td>7151</td><td class="center">25</td></tr>
-                    <tr><td class="center">33</td><td>Pintor — Interno</td><td>7166</td><td class="center">10</td></tr>
-                    <tr><td class="center">34</td><td>Auxiliar de Pintor — Interno</td><td>7166</td><td class="center">10</td></tr>
-                    <tr><td class="center">35</td><td>Pintor — Trabalho em Altura (Fachadeiro)</td><td>7166</td><td class="center">10</td></tr>
-                    <tr><td class="center">36</td><td>Auxiliar de Pintor — Trabalho em Altura (Fachadeiro)</td><td>7166</td><td class="center">10</td></tr>
-                    <tr><td class="center">37</td><td>Calceteiro</td><td>7152</td><td class="center">05</td></tr>
-                    <tr><td class="center">38</td><td>Auxiliar/Servente — Calceteiro</td><td>7170</td><td class="center">20</td></tr>
-                    <tr><td class="center">39</td><td>Jardineiro</td><td>7152</td><td class="center">05</td></tr>
-                    <tr><td class="center">40</td><td>Auxiliar de Jardineiro</td><td>7152</td><td class="center">05</td></tr>
-                    <tr><td class="center">41</td><td>Analista de Industrialização</td><td>2149</td><td class="center">05</td></tr>
-                    <tr><td class="center">42</td><td>Jovem Aprendiz</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">43</td><td>Assistente de Logística e Produção</td><td>4141</td><td class="center">40</td></tr>
-                    <tr><td class="center">44</td><td>Auxiliar de Logística</td><td>4141</td><td class="center">40</td></tr>
-                    <tr><td class="center">45</td><td>Servente</td><td>7170</td><td class="center">20</td></tr>
-                    <tr><td class="center">46</td><td>Diretor</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">47</td><td>Comprador</td><td>3542</td><td class="center">05</td></tr>
-                    <tr><td class="center">48</td><td>Operador de Empilhadeira</td><td>7822</td><td class="center">20</td></tr>
-                    <tr><td class="center">49</td><td>Engenheiro de Produção</td><td>2149</td><td class="center">05</td></tr>
-                    <tr><td class="center">50</td><td>Encarregado (Fábrica de Blocos)</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">51</td><td>Operador de Máquina (Fábrica de Blocos)</td><td>7151</td><td class="center">25</td></tr>
-                    <tr><td class="center">52</td><td>Auxiliar (Fábrica de Blocos)</td><td>7170</td><td class="center">20</td></tr>
-                    <tr><td class="center">53</td><td>Operador de Máquina (Usina de Concreto)</td><td>7151</td><td class="center">25</td></tr>
-                    <tr><td class="center">54</td><td>Operador de Máquina (Transportes/Canteiro — abastecimento)</td><td>7151</td><td class="center">25</td></tr>
+                    <tr><td class="center">28</td><td>Servente</td><td>7170</td><td class="center">20</td></tr>
+                    <tr><td class="center">29</td><td>Calceteiro</td><td>7152</td><td class="center">05</td></tr>
+                    <tr><td class="center">30</td><td>Jardineiro</td><td>7152</td><td class="center">05</td></tr>
+                    <tr><td class="center">31</td><td>Comprador</td><td>3542</td><td class="center">05</td></tr>
+                    <tr><td class="center">32</td><td>Assistente de Logística</td><td>4141</td><td class="center">40</td></tr>
+                    <tr><td class="center">33</td><td>Operador de Máquina (Fábrica de Blocos)</td><td>7151</td><td class="center">25</td></tr>
+                    <tr><td class="center">34</td><td>Auxiliar (Fábrica de Blocos)</td><td>7170</td><td class="center">20</td></tr>
+                    <tr><td class="center">35</td><td>Operador de Máquina (Usina de Concreto)</td><td>7151</td><td class="center">25</td></tr>
+                    <tr><td class="center">36</td><td>Diretor</td><td>—</td><td class="center">—</td></tr>
+                    <tr><td class="center">37</td><td>Jovem Aprendiz</td><td>—</td><td class="center">—</td></tr>
+                    <tr><td class="center">38</td><td>Técnico em Edificações</td><td>—</td><td class="center">—</td></tr>
+                    <tr><td class="center">39</td><td>Engenheiro de Produção</td><td>2149</td><td class="center">05</td></tr>
+                    <tr><td class="center">40</td><td>Analista de Industrialização</td><td>2149</td><td class="center">05</td></tr>
                 </tbody>
             </table>
 
             <div class="highlight-box" style="margin-top: 8px;">
-                <p><strong><i class="fas fa-info-circle"></i> Total de funções contempladas: 54.</strong> Cada função será objeto de avaliação técnica individual com identificação dos riscos ocupacionais, definição de medidas de controle e exames médicos pertinentes.</p>
+                <p><strong><i class="fas fa-info-circle"></i> Total de funções contempladas: 40.</strong> Cada função será objeto de avaliação técnica individual com identificação dos riscos ocupacionais, definição de medidas de controle, exames médicos pertinentes e enquadramento de insalubridade/periculosidade.</p>
+            </div>
+
+            <div class="alert-box" style="margin-top: 10px;">
+                <h4><i class="fas fa-info-circle"></i> Ajuste de Funções</h4>
+                <p>A relação de funções acima é baseada nas informações disponíveis e poderá ser ajustada durante a fase de coleta de dados, mediante fornecimento da listagem atualizada de colaboradores pela ML2.</p>
             </div>
 
             <div class="page-footer">
@@ -556,7 +549,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -564,7 +557,7 @@
                 <span class="section-title-text">Metodologia de Elaboração</span>
             </h2>
 
-            <p>Nossa metodologia segue um fluxo técnico estruturado, em conformidade com a NR-01, NR-07 e legislação previdenciária, garantindo a aderência dos programas à realidade operacional da ML4 Empreendimentos:</p>
+            <p>Nossa metodologia segue um fluxo técnico estruturado, em conformidade com a NR-01, NR-07, NR-15 e NR-16, garantindo a aderência dos programas à realidade operacional da ML2:</p>
 
             <div class="methodology-steps">
                 <div class="step">
@@ -577,8 +570,8 @@
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h4>Visita Técnica aos Canteiros de Obras e Unidades Operacionais</h4>
-                        <p>Inspeção técnica para reconhecimento dos processos, identificação dos agentes ambientais, observação das condições de trabalho e mapeamento de riscos por função.</p>
+                        <h4>Visita Técnica às Instalações e Canteiros de Obras</h4>
+                        <p>Inspeção técnica para reconhecimento dos processos, identificação dos agentes ambientais (ruído, vibração, poeiras, fumos metálicos, calor), observação das condições de trabalho e mapeamento de riscos por função.</p>
                     </div>
                 </div>
                 <div class="step">
@@ -605,8 +598,8 @@
                 <div class="step">
                     <div class="step-number">6</div>
                     <div class="step-content">
-                        <h4>Elaboração do LTCAT (Decreto 3.048/99)</h4>
-                        <p>Caracterização técnica das condições ambientais, avaliação da exposição a agentes nocivos e enquadramento previdenciário, com fundamentação técnica para fins de aposentadoria especial.</p>
+                        <h4>Elaboração do LIP (NR-15 / NR-16)</h4>
+                        <p>Avaliação técnica dos agentes insalubres e condições de periculosidade por função, com aplicação dos limites de tolerância legais, conclusão técnica de enquadramento e emissão de laudo com ART do Engenheiro de Segurança do Trabalho.</p>
                     </div>
                 </div>
                 <div class="step">
@@ -628,7 +621,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -636,7 +629,7 @@
                 <span class="section-title-text">Entregáveis e Escopo dos Serviços</span>
             </h2>
 
-            <p>Ao final dos trabalhos, a <strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong> receberá os seguintes documentos técnicos, em conformidade com a legislação vigente:</p>
+            <p>Ao final dos trabalhos, a <strong>ML2 — Grupo ML Empreendimentos</strong> receberá os seguintes documentos técnicos, em conformidade com a legislação vigente:</p>
 
             <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos (PDF)</h3>
 
@@ -656,24 +649,24 @@
                     </div>
                 </div>
                 <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-file-medical"></i></div>
+                    <div class="deliverable-icon" style="background: var(--success-color);"><i class="fas fa-file-medical-alt"></i></div>
                     <div class="deliverable-text">
-                        <h4>LTCAT — Laudo Técnico das Condições Ambientais</h4>
-                        <p>Caracterização técnica da exposição a agentes nocivos para fins previdenciários (Decreto 3.048/99 e IN INSS 128/2022).</p>
+                        <h4>LIP — Laudo de Insalubridade e Periculosidade</h4>
+                        <p>Caracterização técnica da exposição a agentes insalubres e condições perigosas por função, com conclusão de enquadramento (NR-15 / NR-16).</p>
                     </div>
                 </div>
                 <div class="deliverable-item">
                     <div class="deliverable-icon"><i class="fas fa-stamp"></i></div>
                     <div class="deliverable-text">
                         <h4>ART — Anotação de Responsabilidade Técnica</h4>
-                        <p>Registro no CREA com responsabilidade técnica do Engenheiro de Segurança do Trabalho, garantindo validade legal.</p>
+                        <p>Registro no CREA com responsabilidade técnica do Engenheiro de Segurança do Trabalho, garantindo validade legal dos documentos.</p>
                     </div>
                 </div>
                 <div class="deliverable-item">
                     <div class="deliverable-icon"><i class="fas fa-clipboard-list"></i></div>
                     <div class="deliverable-text">
                         <h4>Inventário de Riscos por Função</h4>
-                        <p>Mapa detalhado de riscos para cada uma das 54 funções identificadas, com classificação e medidas de controle.</p>
+                        <p>Mapa detalhado de riscos para cada função identificada, com classificação e medidas de controle recomendadas.</p>
                     </div>
                 </div>
                 <div class="deliverable-item">
@@ -687,10 +680,10 @@
 
             <h3 class="subsection-title"><i class="fas fa-user-tie"></i> Atuação Técnica Especializada</h3>
             <ul class="feature-list" style="margin-bottom: 12px;">
-                <li>Engenheiro de Segurança do Trabalho com registro no CREA (responsável técnico)</li>
+                <li>Engenheiro de Segurança do Trabalho com registro no CREA (responsável técnico e signatário do LIP)</li>
                 <li>Médico do Trabalho registrado no CRM (coordenação do PCMSO)</li>
                 <li>Técnico de Segurança do Trabalho registrado no MTE</li>
-                <li>Equipe com experiência em construção civil e canteiros de obras</li>
+                <li>Equipe com experiência em construção civil, operações industriais e fábricas de blocos/concreto</li>
             </ul>
 
             <div class="alert-box">
@@ -708,7 +701,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -716,15 +709,16 @@
                 <span class="section-title-text">Serviços Complementares Disponíveis</span>
             </h2>
 
-            <p>Além do Kit de Programas, a EngMarq Solution oferece um portfólio completo de serviços para <strong>gestão contínua de SST</strong> na construção civil:</p>
+            <p>Além do Kit de Programas, a EngMarq Solution oferece um portfólio completo de serviços para <strong>gestão contínua de SST</strong> na construção civil e operações industriais:</p>
 
             <h3 class="subsection-title"><i class="fas fa-tachometer-alt"></i> Medições Ambientais e Laudos</h3>
             <ul class="feature-list" style="margin-bottom: 12px;">
-                <li>Medição de ruído ocupacional (NHO-01) e dosimetria</li>
+                <li>Medição de ruído ocupacional (NHO-01) e dosimetria — 7 postos de trabalho identificados</li>
+                <li>Avaliação de vibração VMB/VCI (NHO-09/NHO-10) — 5 avaliações identificadas</li>
+                <li>Avaliação de poeira respirável / sílica (NHO-08) — Fábrica de Blocos e Usina de Concreto</li>
+                <li>Avaliação de fumos metálicos e Manganês — Serralheria e Soldagem</li>
                 <li>Avaliação de calor (IBUTG — NHO-06)</li>
-                <li>Avaliação de agentes químicos (poeiras, gases, vapores)</li>
-                <li>Laudo de Insalubridade (NR-15) e Periculosidade (NR-16)</li>
-                <li>AET — Análise Ergonômica do Trabalho (NR-17)</li>
+                <li>LTCAT — Laudo Técnico das Condições Ambientais (fins previdenciários / Decreto 3.048/99)</li>
             </ul>
 
             <h3 class="subsection-title"><i class="fas fa-brain"></i> Avaliação de Riscos Psicossociais</h3>
@@ -738,16 +732,17 @@
             <ul class="feature-list" style="margin-bottom: 12px;">
                 <li>Treinamento Admissional + Ordem de Serviço (NR-01)</li>
                 <li>NR-06 (EPI), NR-18 (Construção Civil), NR-35 (Trabalho em Altura)</li>
-                <li>NR-10 (Eletricidade), NR-11 (Empilhadeira), NR-12 (Máquinas)</li>
+                <li>NR-11 (Movimentação e Transporte), NR-12 (Máquinas e Equipamentos)</li>
                 <li>CIPA (NR-05), Brigada de Incêndio, Primeiros Socorros</li>
+                <li>Projeto de Rede de Segurança de Fachada (NBR 16325)</li>
             </ul>
 
             <h3 class="subsection-title"><i class="fas fa-cogs"></i> Assessoria SST Mensal</h3>
             <ul class="feature-list" style="margin-bottom: 12px;">
                 <li>Equipe técnica dedicada (Engenheiro + Técnico de Segurança)</li>
-                <li>Visitas mensais aos canteiros de obras</li>
+                <li>Visitas mensais aos canteiros de obras e unidades industriais</li>
                 <li>Envio de eventos SST ao eSocial (S-2210, S-2220, S-2240)</li>
-                <li>Gestão contínua de PGR, PCMSO e LTCAT</li>
+                <li>Gestão contínua de PGR, PCMSO e LIP</li>
             </ul>
 
             <div class="info-box">
@@ -765,7 +760,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -775,7 +770,7 @@
 
             <div class="info-box" style="margin-bottom: 15px;">
                 <h4><i class="fas fa-info-circle"></i> Estrutura de Investimento</h4>
-                <p>O Kit de Programas será elaborado para a <strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong>, contemplando PGR, PCMSO e LTCAT com responsabilidade técnica e ART, abrangendo todas as 54 funções identificadas e os respectivos riscos ocupacionais.</p>
+                <p>O Kit de Programas será elaborado para a <strong>ML2 — Grupo ML Empreendimentos</strong>, contemplando PGR, PCMSO e LIP com responsabilidade técnica e ART, abrangendo todas as funções identificadas e os respectivos riscos ocupacionais.</p>
             </div>
 
             <h3 class="subsection-title"><i class="fas fa-calculator"></i> Composição da Proposta</h3>
@@ -791,9 +786,9 @@
                 </thead>
                 <tbody>
                     <tr style="background: #f8f9fa;">
-                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;">Kit de Programas — PGR + PCMSO + LTCAT (com ART)</td>
-                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;"><strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong></td>
-                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">30.206.782/0001-80</td>
+                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;">Kit de Programas — PGR + PCMSO + LIP (com ART)</td>
+                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;"><strong>ML2 — Grupo ML Empreendimentos</strong></td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">28.090.722/0001-01</td>
                         <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700; font-size: 13px; color: var(--success-color);">R$ 2.700,00</td>
                     </tr>
                     <tr style="background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); color: white; font-weight: 700;">
@@ -805,16 +800,16 @@
 
             <h3 class="subsection-title"><i class="fas fa-check-double"></i> O que está incluso no investimento</h3>
             <ul class="feature-list">
-                <li>Elaboração técnica do <strong>PGR</strong> com inventário de riscos das 54 funções</li>
+                <li>Elaboração técnica do <strong>PGR</strong> com inventário de riscos por função</li>
                 <li>Elaboração técnica do <strong>PCMSO</strong> com diretrizes médicas e exames por função</li>
-                <li>Elaboração técnica do <strong>LTCAT</strong> com caracterização das condições ambientais</li>
+                <li>Elaboração técnica do <strong>LIP</strong> — Laudo de Insalubridade e Periculosidade por função</li>
                 <li>Emissão da <strong>ART</strong> no CREA com responsabilidade técnica</li>
-                <li>Visita técnica para reconhecimento dos canteiros e unidades operacionais</li>
+                <li>Visita técnica para reconhecimento das instalações e operações</li>
                 <li>Suporte técnico para esclarecimento de dúvidas após a entrega</li>
             </ul>
 
             <div class="info-box" style="background: #f0f9ff; border-left: 4px solid #1a365d; padding: 10px 15px;">
-                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Serviços complementares (medições ambientais, psicossocial, treinamentos, assessoria mensal), caso solicitados, serão objeto de negociação em separado e não alteram o valor desta proposta.</p>
+                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Serviços complementares (medições ambientais, psicossocial, treinamentos, LTCAT, assessoria mensal), caso solicitados, serão objeto de negociação em separado e não alteram o valor desta proposta.</p>
             </div>
 
             <div class="page-footer">
@@ -827,7 +822,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -868,7 +863,7 @@
                     <div class="condition-icon"><i class="fas fa-sync"></i></div>
                     <div class="condition-text">
                         <strong>Vigência dos Programas</strong>
-                        <span>O PGR tem vigência de até 2 anos (com revisão anual), PCMSO vigência anual e LTCAT deve ser revisto sempre que houver alteração nas condições ambientais.</span>
+                        <span>O PGR tem vigência de até 2 anos (com revisão anual); o PCMSO vigência anual; o LIP deve ser revisto sempre que houver alteração nos processos produtivos, funções ou agentes identificados.</span>
                     </div>
                 </div>
                 <div class="condition-item">
@@ -882,13 +877,13 @@
 
             <div class="info-box" style="margin-top: 8px;">
                 <h4><i class="fas fa-certificate"></i> Garantia Técnica</h4>
-                <p>Todos os documentos são elaborados por profissionais qualificados e registrados nos respectivos conselhos, em conformidade com as Normas Regulamentadoras e legislação previdenciária vigente.</p>
+                <p>Todos os documentos são elaborados por profissionais qualificados e registrados nos respectivos conselhos, em conformidade com as Normas Regulamentadoras vigentes.</p>
             </div>
 
             <h3 class="subsection-title"><i class="fas fa-handshake"></i> O que a empresa precisa fornecer</h3>
             <ul class="feature-list">
                 <li>Listagem atualizada de colaboradores por função e setor</li>
-                <li>Acesso aos canteiros de obras e unidades operacionais para visita técnica</li>
+                <li>Acesso às instalações, canteiros de obras e unidades operacionais para visita técnica</li>
                 <li>Documentação SST existente (programas anteriores, ASOs, ART, etc.) <em style="color: var(--gray-color);">se houver</em></li>
                 <li>Disponibilidade da liderança para reuniões de alinhamento e apresentação dos programas</li>
             </ul>
@@ -903,7 +898,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -912,7 +907,7 @@
             </h2>
 
             <p style="text-align: center; margin-bottom: 25px; color: var(--gray-color);">
-                Esta proposta comercial foi elaborada para atender às exigências da NR-01, NR-07 e legislação previdenciária, garantindo segurança jurídica e conformidade legal para a ML4 Empreendimentos Imobiliarios SPE LTDA.
+                Esta proposta comercial foi elaborada para atender às exigências da NR-01, NR-07, NR-15 e NR-16, garantindo segurança jurídica e conformidade legal para a ML2 — Grupo ML Empreendimentos.
             </p>
 
             <div class="responsible-card">
@@ -960,7 +955,7 @@
         <div class="page page-contact">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <div class="contact-content">
@@ -969,12 +964,12 @@
                 </div>
                 <h2 class="contact-title">Conformidade Legal de SST para sua Empresa</h2>
                 <p class="contact-subtitle">
-                    O Kit de Programas (PGR, PCMSO e LTCAT) é a base da gestão de SST e uma <strong>exigência legal</strong>. Conte com o apoio técnico especializado da EngMarq Solution para adequar a ML4 Empreendimentos e protegê-la de passivos trabalhistas e previdenciários.
+                    O Kit de Programas (PGR, PCMSO e LIP) é a base da gestão de SST e uma <strong>exigência legal</strong>. Conte com o apoio técnico especializado da EngMarq Solution para adequar a ML2 — Grupo ML Empreendimentos e protegê-la de passivos trabalhistas.
                 </p>
 
                 <div class="alert-box" style="text-align: left; max-width: 450px; margin: 0 auto 25px;">
                     <h4><i class="fas fa-gavel"></i> Não deixe para depois</h4>
-                    <p>Empresas sem PGR, PCMSO e LTCAT atualizados estão sujeitas a multas, embargos, processos trabalhistas e ações regressivas do INSS por acidentes e doenças ocupacionais.</p>
+                    <p>Empresas sem PGR, PCMSO e LIP atualizados estão sujeitas a multas, embargos, processos trabalhistas com pedidos de adicional de insalubridade/periculosidade e condenações em ações trabalhistas.</p>
                 </div>
 
                 <div class="contact-info">
@@ -1011,7 +1006,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0079</span>
             </div>
 
             <h2 class="section-title">
@@ -1021,7 +1016,7 @@
 
             <div class="info-box" style="margin-bottom: 15px;">
                 <h4><i class="fas fa-check-circle"></i> Declaração de Aceite</h4>
-                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços de elaboração do Kit de Programas (PGR, PCMSO e LTCAT).</p>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços de elaboração do Kit de Programas (PGR, PCMSO e LIP).</p>
             </div>
 
             <!-- EngMarq -->
@@ -1041,18 +1036,19 @@
             <!-- Empresa contratante -->
             <div style="background: var(--light-color); border-radius: 10px; padding: 15px; margin-bottom: 12px;">
                 <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 13px; margin-bottom: 10px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 8px;">
-                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> CONTRATANTE — ML4 Empreendimentos Imobiliarios SPE LTDA
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> CONTRATANTE — ML2 — Grupo ML Empreendimentos
                 </h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; font-size: 10px;">
-                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Razão Social</span><br><strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong></div>
-                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">CNPJ</span><br><strong>30.206.782/0001-80</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Razão Social</span><br><strong>ML2 — Grupo ML Empreendimentos</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">CNPJ</span><br><strong>28.090.722/0001-01</strong></div>
                 </div>
                 <div style="border-bottom: 1px solid var(--dark-color); margin: 12px auto 4px; height: 30px; max-width: 500px;"></div>
-                <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura do Representante Legal</p>
+                <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura e Carimbo do Representante Legal</p>
             </div>
 
-            <div style="margin-top: 10px; text-align: center; font-size: 9px; color: var(--gray-color);">
-                Natal - RN, 29 de Maio de 2026
+            <div class="green-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-lock"></i> Confidencialidade</h4>
+                <p>As informações contidas nesta proposta são de caráter confidencial e destinam-se exclusivamente ao uso da ML2 — Grupo ML Empreendimentos para fins de avaliação e contratação dos serviços aqui descritos.</p>
             </div>
 
             <div class="page-footer">
@@ -1061,22 +1057,7 @@
             </div>
         </div>
 
-    </div>
+    </div><!-- /pdf-content -->
 
-    <script>
-        function generatePDF() {
-            window.print();
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-                // permitir comportamento padrão de impressão
-            }
-        });
-
-        console.log('📄 EngMarq Solution - Proposta TM0071: Kit de Programas (PGR, PCMSO, LTCAT) - ML4 Empreendimentos Imobiliarios SPE LTDA');
-        console.log('💡 Clique em "Gerar PDF" ou pressione Ctrl+P');
-        console.log('✅ Selecione "Salvar como PDF" na janela de impressão');
-    </script>
 </body>
 </html>

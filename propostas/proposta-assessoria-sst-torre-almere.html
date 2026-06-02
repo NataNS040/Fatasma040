@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0076 - Serviços Avulsos em SST | Torre Almere | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body { font-family: var(--font-secondary); color: var(--dark-color); line-height: 1.6; background: #e2e8f0; }
+
+        .pdf-controls {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: var(--white-color); padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15); max-width: 280px;
+        }
+        .btn-generate {
+            background: var(--primary-color); color: var(--white-color); padding: 15px 30px;
+            border: none; border-radius: 8px; font-family: var(--font-primary); font-weight: 600;
+            font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            transition: all 0.3s ease; width: 100%; justify-content: center;
+        }
+        .btn-generate:hover { background: var(--secondary-color); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245,166,35,0.4); }
+        .pdf-instructions { margin-top: 15px; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .pdf-instructions h4 { font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); margin-bottom: 8px; }
+        .pdf-instructions ol { font-size: 12px; line-height: 1.6; color: var(--dark-color); padding-left: 18px; margin: 0; }
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        #pdf-content { width: 210mm; margin: 0 auto; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
+
+        .page {
+            width: 210mm; height: 297mm; min-height: 297mm; max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm; page-break-after: always; position: relative;
+            background: var(--white-color); box-sizing: border-box; overflow: hidden;
+        }
+        .page:last-child { page-break-after: auto; }
+
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 10px; margin-bottom: 12px; border-bottom: 2px solid var(--light-color);
+        }
+        .page-header-logo { height: 35px; }
+        .page-header-title { font-family: var(--font-primary); font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; }
+
+        .page-footer {
+            position: absolute; bottom: 15mm; left: 18mm; right: 18mm;
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 8px; border-top: 1px solid var(--light-color);
+            font-size: 10px; color: var(--gray-color); background: var(--white-color); z-index: 10;
+        }
+        .page-number { font-weight: 600; color: var(--primary-color); }
+
+        /* CAPA */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 25mm 20mm; position: relative; overflow: hidden;
+        }
+        .page-cover::before {
+            content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%;
+            background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 60%);
+            transform: rotate(35deg);
+        }
+        .cover-logo { width: 170px; margin-bottom: 22px; z-index: 1; filter: brightness(0) invert(1); }
+        .cover-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.4); color: var(--secondary-color); padding: 6px 16px; border-radius: 30px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 25px; z-index: 1; }
+        .cover-icon { font-size: 50px; color: var(--secondary-color); margin-bottom: 18px; opacity: 0.9; z-index: 1; }
+        .cover-title { font-family: var(--font-primary); font-size: 36px; font-weight: 800; line-height: 1.15; margin-bottom: 15px; z-index: 1; }
+        .cover-title span { display: block; color: var(--secondary-color); font-size: 24px; margin-top: 8px; font-weight: 600; }
+        .cover-subtitle { font-size: 13px; opacity: 0.9; max-width: 480px; margin: 0 auto 30px; line-height: 1.5; z-index: 1; }
+        .cover-client { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 16px 28px; margin-top: 8px; z-index: 1; backdrop-filter: blur(4px); }
+        .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2.5px; opacity: 0.7; margin-bottom: 5px; text-align: center; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 22px; font-weight: 700; color: var(--secondary-color); text-align: center; margin: 0; }
+        .cover-date { margin-top: 28px; font-size: 12px; opacity: 0.85; z-index: 1; }
+        .cover-footer { position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center; font-size: 10px; opacity: 0.7; z-index: 1; display: flex; justify-content: center; align-items: center; }
+        .cover-footer p { margin: 0; text-align: center; width: 100%; }
+
+        .section-title {
+            font-family: var(--font-primary); font-size: 18px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px; display: flex; align-items: center;
+            padding-bottom: 10px; border-bottom: 3px solid var(--secondary-color);
+        }
+        .section-number { background: var(--secondary-color); color: var(--white-color); width: 30px; height: 30px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; margin-right: 10px; flex-shrink: 0; }
+        .section-title-text { flex: 1; }
+        .subsection-title {
+            font-family: var(--font-primary); font-size: 13px; font-weight: 700;
+            color: var(--primary-color); margin: 12px 0 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .subsection-title i { color: var(--secondary-color); }
+        p { margin-bottom: 8px; text-align: justify; font-size: 11px; line-height: 1.5; }
+
+        .highlight-box { background: linear-gradient(135deg,#fef5e7 0%,#fdebd0 100%); border-left: 4px solid var(--secondary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .highlight-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; }
+        .highlight-box strong { color: var(--primary-color); }
+        .info-box { background: linear-gradient(135deg,#ebf8ff 0%,#bee3f8 100%); border-left: 4px solid var(--primary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .info-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .info-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .green-box { background: linear-gradient(135deg,#f0fff4 0%,#c6f6d5 100%); border-left: 4px solid var(--success-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .green-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .purple-box { background: linear-gradient(135deg,#faf5ff 0%,#e9d8fd 100%); border-left: 4px solid var(--purple-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .purple-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--purple-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .purple-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .feature-list { list-style: none; margin: 10px 0; }
+        .feature-list li { padding: 5px 0; padding-left: 22px; position: relative; font-size: 11px; border-bottom: 1px solid var(--light-color); }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--success-color); font-size: 10px; }
+
+        .factors-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin: 12px 0; }
+        .factor-card { background: var(--light-color); padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--success-color); }
+        .factor-card h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+        .factor-card h4 i { color: var(--success-color); font-size: 11px; }
+        .factor-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
+
+        .conditions-list { margin: 12px 0; }
+        .condition-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--light-color); }
+        .condition-item:last-child { border-bottom: none; }
+        .condition-icon { width: 26px; height: 26px; background: var(--light-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 11px; flex-shrink: 0; }
+        .condition-text strong { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); display: block; margin-bottom: 2px; }
+        .condition-text span { font-size: 10px; color: var(--gray-color); line-height: 1.3; }
+
+        .company-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+        .company-info-item { padding: 8px 10px; background: var(--light-color); border-radius: 6px; border-left: 3px solid var(--secondary-color); }
+        .company-info-item label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-color); font-weight: 600; display: block; margin-bottom: 3px; }
+        .company-info-item span { font-size: 11px; color: var(--dark-color); font-weight: 500; }
+
+        .responsible-card { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); padding: 18px; border-radius: 10px; color: var(--white-color); text-align: center; margin: 15px 0; }
+        .responsible-avatar { width: 60px; height: 60px; background: rgba(245,166,35,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; color: var(--secondary-color); border: 2px solid var(--secondary-color); }
+        .responsible-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; margin-bottom: 3px; text-align: center; }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; text-align: center; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; text-align: center; }
+        .responsible-contacts { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+        .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
+        .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
+
+        .page-contact { display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        .contact-content { margin: auto 0; }
+
+        .function-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--light-color); border-left: 3px solid var(--secondary-color); padding: 6px 10px; border-radius: 4px; font-size: 10.5px; color: var(--dark-color); font-weight: 500; }
+        .function-pill i { color: var(--primary-color); font-size: 10px; }
+        .functions-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; margin: 10px 0 14px; }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                width: 210mm !important; height: 297mm !important; min-height: 297mm !important;
+                max-height: 297mm !important; margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important; box-sizing: border-box !important;
+                overflow: hidden !important; position: relative !important;
+            }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover { padding: 20mm 18mm 18mm 18mm !important; }
+            .page-footer { position: absolute !important; bottom: 8mm !important; left: 15mm !important; right: 15mm !important; font-size: 9px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i> Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;">TM0076</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-shield-alt"></i>
+                Serviços Técnicos Especializados
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-hard-hat"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Serviços Avulsos em Segurança do Trabalho</span>
+            </h1>
+            <p class="cover-subtitle">
+                Kit Programas (PGR · PCMSO · LTCAT) com 4 Dosimetrias e 4 Medições de Vibração + Avaliação de Riscos Psicossociais NR-01 — para obra do Empreendimento Imobiliário Torre Almere
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Torre Almere</p>
+                <p style="font-size:10px;opacity:0.75;margin-top:5px;text-align:center;">Associação de Adquirentes e Permutantes Pró Construção do Empreendimento Imobiliário Torre Almere · Natal - RN</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;27 de Maio de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Serviços Avulsos em SST | Torre Almere</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <div class="company-info-grid" style="margin-top:6px;">
+                <div class="company-info-item">
+                    <label>Razão Social</label>
+                    <span>Associação de Adquirentes e Permutantes Pró Construção do Empreendimento Imobiliário Torre Almere</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>55.915.956/0001-05</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Porte / Natureza Jurídica</label>
+                    <span>Demais · Associação Privada</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Ramo de Atividade</label>
+                    <span>94.99-5-00 — Atividades associativas / Construção civil (empreendimento imobiliário)</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Data de Abertura</label>
+                    <span>18/04/2024</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nº de Colaboradores</label>
+                    <span>25 colaboradores</span>
+                </div>
+                <div class="company-info-item" style="grid-column:1/-1;">
+                    <label>Endereço</label>
+                    <span>R. João Paulo I, 2163 — Bairro Candelária — CEP: 59.064-470 — Natal - RN</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top:18px;"><i class="fas fa-user-tie"></i> Responsável pelo Recebimento da Proposta</h3>
+            <div class="company-info-grid" style="margin-top:6px;">
+                <div class="company-info-item">
+                    <label>Nome do Responsável</label>
+                    <span>Rita</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Cargo / Função</label>
+                    <span>A definir</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Telefone</label>
+                    <span>(84) 9418-5478</span>
+                </div>
+                <div class="company-info-item">
+                    <label>E-mail</label>
+                    <span>rita@interproj.com.br</span>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top:22px;">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Sobre a Proposta</span>
+            </h2>
+
+            <p>Esta proposta tem por objeto a prestação de <strong>Serviços Avulsos em Segurança e Saúde do Trabalho (SST)</strong> para a obra do <strong>Empreendimento Imobiliário Torre Almere</strong>, contemplando a elaboração do Kit de Programas Obrigatórios (PGR · PCMSO · LTCAT) com medições ambientais quantitativas (4 dosimetrias de ruído e 4 medições de vibração) e a Avaliação de Riscos Psicossociais conforme NR-01.</p>
+
+            <div class="info-box" style="margin-top:10px;">
+                <h4><i class="fas fa-hard-hat"></i> Setor: Construção Civil — Obra de Empreendimento Imobiliário</h4>
+                <p>Canteiro de obras com 25 colaboradores envolvendo funções operacionais (carpinteiro, pedreiro, servente, armador, operador de máquinas), funções de apoio (almoxarife, ASG, encarregado de obras, aprendizes) e funções técnicas (engenheiro) — exigindo gestão técnica de SST com foco em riscos físicos (ruído e vibração), químicos, ergonômicos, mecânicos e psicossociais, conforme NR-01, NR-07, NR-09 e NR-18.</p>
+            </div>
+
+            <div class="highlight-box" style="margin-top:10px;">
+                <p><strong><i class="fas fa-calendar-alt"></i> Execução:</strong> Serviços avulsos, sem vínculo de continuidade. A execução de cada serviço será agendada conforme disponibilidade e conveniência das partes.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: EQUIPE TÉCNICA + ESCOPO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Serviços Avulsos em SST | Torre Almere</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Equipe Técnica Responsável</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:12px;">
+                <h4><i class="fas fa-users-cog"></i> Execução por Profissionais Habilitados</h4>
+                <p>Os serviços avulsos contratados serão executados por equipe técnica habilitada, composta por Engenheiro de Segurança do Trabalho, Médico do Trabalho, Técnico de Segurança do Trabalho e Psicólogo, responsáveis pela execução, documentação, medições e assinatura técnica (AEP / ART) de todos os serviços desta proposta.</p>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;">
+                <div class="factor-card">
+                    <h4><i class="fas fa-hard-hat"></i> Engenheiro de Segurança do Trabalho</h4>
+                    <p>Responsável técnico pelo Kit Programas (PGR · LTCAT), análise das medições ambientais e emissão de AEP/ART junto ao CREA.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-user-md"></i> Médico do Trabalho</h4>
+                    <p>Responsável técnico pelo PCMSO, definindo exames ocupacionais, riscos à saúde e plano médico vinculado ao PGR.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-id-badge"></i> Técnico de Segurança do Trabalho</h4>
+                    <p>Executa o levantamento de campo, dosimetrias de ruído, medições de vibração e suporte na elaboração dos programas.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-brain"></i> Psicólogo</h4>
+                    <p>Aplica e analisa a Avaliação de Riscos Psicossociais NR-01, elaborando relatório técnico com diagnóstico e plano de ação.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-tasks"></i> O Que a Equipe Executa Nesta Proposta</h3>
+            <ul class="feature-list">
+                <li>Elaboração do <strong>Kit Programas: PGR, PCMSO e LTCAT</strong> com levantamento de riscos, funções, agentes e medidas de controle</li>
+                <li>Realização de <strong>4 dosimetrias de ruído</strong> conforme NHO-01 (FUNDACENTRO)</li>
+                <li>Realização de <strong>4 medições de vibração</strong> (corpo inteiro / mãos e braços) conforme NHO-09 e NHO-10</li>
+                <li>Emissão de <strong>AEP/ART</strong> pelo Engenheiro de Segurança do Trabalho junto ao CREA</li>
+                <li>Aplicação da <strong>Avaliação de Riscos Psicossociais (NR-01)</strong> com questionário validado, análise por setor e relatório técnico</li>
+                <li>Integração dos resultados das medições e da avaliação psicossocial ao PGR da obra</li>
+                <li>Suporte técnico via WhatsApp e e-mail durante a execução dos serviços contratados</li>
+            </ul>
+
+            <div class="highlight-box" style="margin-top:10px;">
+                <p style="margin:0;"><strong><i class="fas fa-ruler"></i> Medições ambientais inclusas:</strong> 4 dosimetrias de ruído e 4 medições de vibração já estão contempladas no valor do Kit Programas. Caso a demanda técnica identificada em campo exceda esse quantitativo, eventuais medições adicionais serão negociadas em proposta complementar.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: FUNÇÕES AVALIADAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Serviços Avulsos em SST | Torre Almere</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Funções Avaliadas no Canteiro de Obras</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:12px;">
+                <h4><i class="fas fa-users"></i> Quadro Funcional — 25 colaboradores</h4>
+                <p>O Kit Programas (PGR · PCMSO · LTCAT) será elaborado considerando todas as funções declaradas pela contratante, com identificação dos agentes de risco (físicos, químicos, biológicos, ergonômicos e mecânicos) e definição das medidas de controle aplicáveis a cada função.</p>
+            </div>
+
+            <div class="functions-grid">
+                <div class="function-pill"><i class="fas fa-screwdriver-wrench"></i><span>Carpinteiro</span></div>
+                <div class="function-pill"><i class="fas fa-people-carry"></i><span>Servente de Obras</span></div>
+                <div class="function-pill"><i class="fas fa-person-digging"></i><span>Mestre de Obras</span></div>
+                <div class="function-pill"><i class="fas fa-trowel"></i><span>Pedreiro</span></div>
+                <div class="function-pill"><i class="fas fa-helmet-safety"></i><span>Auxiliar Técnico em Pedreiro</span></div>
+                <div class="function-pill"><i class="fas fa-broom"></i><span>ASG — Aux. Serviços Gerais</span></div>
+                <div class="function-pill"><i class="fas fa-truck-monster"></i><span>Operador de Máquinas</span></div>
+                <div class="function-pill"><i class="fas fa-boxes"></i><span>Almoxarife</span></div>
+                <div class="function-pill"><i class="fas fa-clipboard-list"></i><span>Encarregado de Obras</span></div>
+                <div class="function-pill"><i class="fas fa-child"></i><span>Aprendiz — Op. de Produção</span></div>
+                <div class="function-pill"><i class="fas fa-user-graduate"></i><span>Aprendiz — Assistente</span></div>
+                <div class="function-pill"><i class="fas fa-screwdriver"></i><span>Aux. de Carpinteiro</span></div>
+                <div class="function-pill"><i class="fas fa-link"></i><span>Auxiliar de Armador</span></div>
+                <div class="function-pill"><i class="fas fa-ring"></i><span>Armador</span></div>
+                <div class="function-pill"><i class="fas fa-compass-drafting"></i><span>Engenheiro</span></div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> Principais Riscos Identificados na Obra</h3>
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-volume-up"></i> Físicos — Ruído</h4>
+                    <p>Operação de máquinas, ferramentas pneumáticas e equipamentos motorizados — avaliado via 4 dosimetrias conforme NHO-01.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-wave-square"></i> Físicos — Vibração</h4>
+                    <p>Vibração de mãos e braços e de corpo inteiro em operadores de máquinas e ferramentas — avaliado via 4 medições conforme NHO-09 / NHO-10.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-flask"></i> Químicos</h4>
+                    <p>Poeiras de cimento, sílica, tintas, solventes e materiais de construção em geral.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-cogs"></i> Mecânicos / Acidentes</h4>
+                    <p>Trabalho em altura, movimentação de cargas, queda de materiais, ferramentas cortantes e perfurantes.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-walking"></i> Ergonômicos</h4>
+                    <p>Posturas inadequadas, levantamento e transporte manual de cargas, esforço repetitivo.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-brain"></i> Psicossociais</h4>
+                    <p>Avaliação NR-01 — pressão por prazos, jornadas, relações interpessoais, organização do trabalho.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top:10px;">
+                <p style="font-size:10px;margin:0;"><strong><i class="fas fa-info-circle"></i> Observação:</strong> A definição da quantidade de avaliações ambientais (4 dosimetrias + 4 vibrações) foi dimensionada considerando a representatividade dos GHE (Grupos Homogêneos de Exposição) presentes no canteiro de obras desta contratante.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: AVALIAÇÃO PSICOSSOCIAL + BENEFÍCIOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Serviços Avulsos em SST | Torre Almere</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Avaliação de Riscos Psicossociais (NR-01)</span>
+            </h2>
+
+            <div class="purple-box" style="margin-bottom:12px;">
+                <h4><i class="fas fa-brain"></i> Serviço Contratado em Separado</h4>
+                <p>A avaliação de riscos psicossociais conforme NR-01 (atualização 2024) é contratada de forma <strong>avulsa, separadamente do Kit Programas</strong>, e abrange aplicação de questionário validado, análise dos dados coletados, identificação de fatores de risco e elaboração de relatório técnico com recomendações de intervenção, integrável ao PGR.</p>
+            </div>
+
+            <ul class="feature-list" style="margin-bottom:12px;">
+                <li>Aplicação de questionário de fatores psicossociais conforme exigência da NR-01 (atualização 2024)</li>
+                <li>Identificação de fatores de risco: sobrecarga de trabalho, relações interpessoais, autonomia, violência e assédio</li>
+                <li>Análise e consolidação dos dados por função/setor (operacional, almoxarifado, técnico, serviços gerais)</li>
+                <li>Relatório técnico com diagnóstico e plano de ação recomendado</li>
+                <li>Integração dos resultados ao PGR da obra</li>
+            </ul>
+
+            <h2 class="section-title" style="margin-top:18px;">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Benefícios dos Serviços</span>
+            </h2>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-gavel"></i> Conformidade Legal</h4>
+                    <p>Atendimento às NR-01, NR-07, NR-09 e NR-18, evitando autuações em fiscalizações do MTE e passivos trabalhistas.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-shield-alt"></i> Prevenção de Acidentes</h4>
+                    <p>Identificação e controle proativo dos riscos típicos de canteiro de obras: ruído, vibração, queda, cortes e impactos.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-alt"></i> Documentação Técnica</h4>
+                    <p>Programas obrigatórios com AEP/ART, laudos técnicos das medições e relatório psicossocial — prontos para fiscalização e auditorias.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-headset"></i> Suporte Técnico</h4>
+                    <p>Suporte técnico online para resolução de dúvidas relacionadas aos serviços contratados durante a vigência dos documentos.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-clipboard-check"></i> Insumo para eSocial</h4>
+                    <p>Informações de exposição a ruído e vibração compatíveis com os eventos S-2240 do eSocial.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-brain"></i> Saúde Mental</h4>
+                    <p>Avaliação psicossocial conforme NR-01 atualizada, contribuindo para um ambiente de trabalho mais saudável e produtivo.</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Serviços Avulsos em SST | Torre Almere</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="highlight-box" style="margin-bottom:15px;">
+                <p style="margin:0;"><strong><i class="fas fa-file-invoice"></i> Serviços Avulsos:</strong> Kit Programas (PGR · PCMSO · LTCAT) com 4 Dosimetrias + 4 Medições de Vibração · Avaliação Psicossocial NR-01 — Obra Torre Almere (25 colaboradores)</p>
+            </div>
+
+            <p>Os valores abaixo correspondem ao investimento para a contratação dos <strong>Serviços Avulsos em Segurança do Trabalho</strong> conforme descrito nesta proposta:</p>
+
+            <table style="width:100%;border-collapse:collapse;margin:15px 0;border:1px solid #cbd5e0;">
+                <thead>
+                    <tr style="background:#2c5282;color:white;">
+                        <th style="padding:12px 15px;text-align:left;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;border:1px solid #2c5282;">Descrição do Serviço</th>
+                        <th style="padding:12px 15px;text-align:center;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;border:1px solid #2c5282;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:white;">
+                        <td style="padding:10px 15px;font-size:11px;color:#2d3748;border:1px solid #cbd5e0;">
+                            <i class="fas fa-file-alt" style="color:#2b6cb0;margin-right:6px;"></i>Kit Programas (PGR · PCMSO · LTCAT)<br>
+                            <span style="font-size:9px;color:var(--gray-color);">Inclui 4 dosimetrias de ruído + 4 medições de vibração + emissão de AEP/ART (anual)</span>
+                        </td>
+                        <td style="padding:10px 15px;text-align:center;font-size:20px;color:#1a365d;font-weight:800;border:1px solid #cbd5e0;">R$ 5.000,00</td>
+                    </tr>
+                    <tr style="background:#f7fafc;">
+                        <td style="padding:10px 15px;font-size:11px;color:#2d3748;border:1px solid #cbd5e0;">
+                            <i class="fas fa-brain" style="color:#805ad5;margin-right:6px;"></i>Avaliação de Riscos Psicossociais (NR-01)<br>
+                            <span style="font-size:9px;color:var(--gray-color);">Aplicação de questionário, análise e relatório técnico para os 25 colaboradores</span>
+                        </td>
+                        <td style="padding:10px 15px;text-align:center;font-size:20px;color:#1a365d;font-weight:800;border:1px solid #cbd5e0;">R$ 1.500,00</td>
+                    </tr>
+                    <tr style="background:#2c5282;">
+                        <td style="padding:12px 15px;font-size:12px;color:white;font-weight:700;border:1px solid #2c5282;">TOTAL GERAL</td>
+                        <td style="padding:12px 15px;text-align:center;font-size:16px;color:white;font-weight:800;border:1px solid #2c5282;">R$ 6.500,00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Está Incluso</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;font-size:10px;">
+                <div style="background:linear-gradient(135deg,#ebf8ff,#bee3f8);border-radius:8px;padding:10px;border-top:3px solid #2b6cb0;">
+                    <p style="font-family:var(--font-primary);font-weight:700;color:#1a365d;font-size:11px;margin-bottom:6px;"><i class="fas fa-file-alt" style="margin-right:4px;"></i>Kit Programas + Medições</p>
+                    <div style="display:flex;flex-direction:column;gap:3px;">
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>PGR — Programa de Gerenciamento de Riscos</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>PCMSO — Programa de Controle Médico</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>LTCAT — Laudo Técnico de Condições Ambientais</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>4 dosimetrias de ruído (NHO-01)</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>4 medições de vibração (NHO-09 / NHO-10)</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>AEP / ART do Eng. de Segurança</span></div>
+                    </div>
+                </div>
+                <div style="background:linear-gradient(135deg,#faf5ff,#e9d8fd);border-radius:8px;padding:10px;border-top:3px solid #805ad5;">
+                    <p style="font-family:var(--font-primary);font-weight:700;color:#553c9a;font-size:11px;margin-bottom:6px;"><i class="fas fa-brain" style="margin-right:4px;"></i>Avaliação Psicossocial</p>
+                    <div style="display:flex;flex-direction:column;gap:3px;">
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>Questionário validado (NR-01)</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>Análise por função / setor</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>Relatório técnico com plano de ação</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>Integração ao PGR</span></div>
+                        <div style="display:flex;gap:6px;"><i class="fas fa-check" style="color:#38a169;margin-top:2px;font-size:9px;flex-shrink:0;"></i><span>Aplicação para os 25 colaboradores</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-invoice-dollar"></i> Condições de Pagamento</h3>
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-pix"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>Pagamento à vista via PIX, transferência bancária ou boleto, conforme combinado entre as partes.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Agendamento dos Serviços</strong>
+                        <span>A execução de cada serviço será agendada após confirmação do pagamento ou entrada de 50%.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta é válida por 15 (quinze) dias a partir da data de emissão.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top:10px;">
+                <p style="margin:0;font-size:10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Cada serviço pode ser contratado individualmente ou em conjunto. Serviços adicionais (medições extras, treinamentos NR-18 / NR-35, brigada de incêndio etc.) não contemplados nesta proposta podem ser negociados separadamente mediante nova proposta.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <div class="page page-contact">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Serviços Avulsos em SST | Torre Almere</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">8</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <div class="contact-content" style="margin-top:15px;">
+                <div class="responsible-card">
+                    <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
+                    <p class="responsible-name">Thiago Marques</p>
+                    <p class="responsible-role">Diretor</p>
+                    <p class="responsible-company">EngMarq Solution</p>
+                    <div class="responsible-contacts">
+                        <div class="responsible-contact-item"><i class="fab fa-whatsapp"></i><span>+55 84 99928-5888</span></div>
+                        <div class="responsible-contact-item"><i class="fas fa-envelope"></i><span>engmarqsolution@gmail.com</span></div>
+                        <div class="responsible-contact-item"><i class="fas fa-map-marker-alt"></i><span>Natal - RN</span></div>
+                    </div>
+                </div>
+
+                <div class="info-box" style="margin-top:15px;">
+                    <h4><i class="fas fa-building"></i> Sobre a EngMarq Solution</h4>
+                    <p>Somos uma empresa especializada em <strong>Engenharia de Segurança e Saúde do Trabalho</strong>, oferecendo soluções completas para adequação às Normas Regulamentadoras, gestão de riscos ocupacionais e promoção de ambientes de trabalho seguros e saudáveis.</p>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px;">
+                    <div style="text-align:center;padding:12px;background:var(--light-color);border-radius:8px;">
+                        <i class="fas fa-award" style="font-size:22px;color:var(--secondary-color);margin-bottom:6px;"></i>
+                        <p style="font-size:10px;margin:0;font-weight:600;color:var(--primary-color);">Profissionais Qualificados</p>
+                    </div>
+                    <div style="text-align:center;padding:12px;background:var(--light-color);border-radius:8px;">
+                        <i class="fas fa-handshake" style="font-size:22px;color:var(--secondary-color);margin-bottom:6px;"></i>
+                        <p style="font-size:10px;margin:0;font-weight:600;color:var(--primary-color);">Compromisso com Resultados</p>
+                    </div>
+                    <div style="text-align:center;padding:12px;background:var(--light-color);border-radius:8px;">
+                        <i class="fas fa-shield-alt" style="font-size:22px;color:var(--secondary-color);margin-bottom:6px;"></i>
+                        <p style="font-size:10px;margin:0;font-weight:600;color:var(--primary-color);">Segurança em Primeiro Lugar</p>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px;padding-top:18px;border-top:2px solid var(--light-color);">
+                    <p style="font-size:10px;color:var(--gray-color);line-height:1.5;text-align:center;">
+                        <strong>EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        CNPJ: 60.545.359/0001-76 | Natal - RN<br>
+                        <em>Transformando ambientes de trabalho em espaços seguros e produtivos.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 8: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Serviços Avulsos em SST | Torre Almere</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite e Assinaturas</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:15px;">
+                <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços avulsos em Segurança do Trabalho para a <strong>Associação de Adquirentes e Permutantes Pró Construção do Empreendimento Imobiliário Torre Almere</strong>.</p>
+            </div>
+
+            <div style="background:var(--light-color);border-radius:12px;padding:20px;margin-bottom:15px;">
+                <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:16px;margin-bottom:15px;text-align:center;border-bottom:2px solid var(--purple-color);padding-bottom:10px;">
+                    <i class="fas fa-building" style="color:var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">Razão Social</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+                <div style="margin-bottom:15px;">
+                    <p style="margin:0;font-size:13px;font-weight:600;">Thiago Marques — Diretor</p>
+                </div>
+                <div style="margin-top:25px;padding-top:15px;border-top:1px dashed var(--gray-color);">
+                    <div style="text-align:center;">
+                        <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 5px;height:35px;max-width:450px;"></div>
+                        <p style="margin:0;font-size:11px;color:var(--gray-color);text-align:center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:var(--light-color);border-radius:12px;padding:20px;">
+                <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:16px;margin-bottom:15px;text-align:center;border-bottom:2px solid var(--secondary-color);padding-bottom:10px;">
+                    <i class="fas fa-user-tie" style="color:var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:10px;">
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">Razão Social</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">Associação Pró Construção Torre Almere</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">55.915.956/0001-05</p>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:10px;">
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">Nome Completo</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">A definir</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 3px 0;font-size:11px;color:var(--gray-color);text-transform:uppercase;">Cargo / Função</p>
+                        <p style="margin:0;font-size:13px;font-weight:600;">A definir</p>
+                    </div>
+                </div>
+                <div style="margin-top:25px;padding-top:15px;border-top:1px dashed var(--gray-color);">
+                    <div style="text-align:center;">
+                        <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 5px;height:35px;max-width:450px;"></div>
+                        <p style="margin:0;font-size:11px;color:var(--gray-color);text-align:center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() { window.print(); }
+    </script>
+</body>
+</html>

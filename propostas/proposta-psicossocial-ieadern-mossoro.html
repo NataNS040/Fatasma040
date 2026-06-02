@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proposta TM0071 - Kit de Programas (PGR, PCMSO, LTCAT) - ML4 Empreendimentos Imobiliarios SPE LTDA | EngMarq Solution</title>
+    <title>Proposta TM0080 - Avaliação de Fatores de Riscos Psicossociais - IEADERN Mossoró | EngMarq Solution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -50,9 +50,9 @@
         .page-number { font-weight: 600; color: var(--primary-color); }
 
         .page-cover { background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%); color: var(--white-color); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 25mm 20mm; position: relative; overflow: hidden; }
-        .page-cover::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(245, 166, 35, 0.12) 0%, transparent 60%); pointer-events: none; }
+        .page-cover::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(128, 90, 213, 0.12) 0%, transparent 60%); pointer-events: none; }
         .cover-logo { width: 180px; margin-bottom: 30px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
-        .cover-badge { background: rgba(245, 166, 35, 0.9); color: var(--white-color); padding: 10px 25px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; position: relative; z-index: 1; }
+        .cover-badge { background: rgba(128, 90, 213, 0.9); color: var(--white-color); padding: 10px 25px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; position: relative; z-index: 1; }
         .cover-icon { width: 60px; height: 60px; background: rgba(245, 166, 35, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; z-index: 1; }
         .cover-icon i { font-size: 28px; color: var(--secondary-color); }
         .cover-title { font-family: var(--font-primary); font-size: 26px; font-weight: 800; margin-bottom: 15px; line-height: 1.25; position: relative; z-index: 1; }
@@ -98,7 +98,7 @@
         .feature-list li:last-child { border-bottom: none; }
         .feature-list li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--success-color); font-size: 10px; }
 
-        .factors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+        .factors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; }
         .factor-card { background: var(--light-color); padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--success-color); }
         .factor-card h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
         .factor-card h4 i { color: var(--success-color); font-size: 11px; }
@@ -143,15 +143,6 @@
         .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
         .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
 
-        /* Tabela de funções */
-        .functions-table { width: 100%; border-collapse: collapse; font-size: 9px; margin: 8px 0; }
-        .functions-table thead tr { background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white; }
-        .functions-table th { padding: 6px 8px; text-align: left; border: 1px solid #e2e8f0; font-family: var(--font-primary); font-weight: 600; font-size: 9px; }
-        .functions-table td { padding: 4px 8px; border: 1px solid #e2e8f0; font-size: 8.5px; line-height: 1.3; }
-        .functions-table tbody tr:nth-child(even) { background: #f8fafc; }
-        .functions-table td.center { text-align: center; }
-        .functions-grid-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-
         @media print {
             .pdf-controls { display: none !important; }
             body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -187,30 +178,30 @@
 
         <!-- ====== PÁGINA 1: CAPA ====== -->
         <div class="page page-cover">
-            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0071</span>
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0080</span>
 
             <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
 
             <span class="cover-badge">
-                <i class="fas fa-folder-open"></i>
-                Kit de Programas de SST
+                <i class="fas fa-exclamation-circle"></i>
+                Nova Obrigação Legal - NR-01
             </span>
 
             <div class="cover-icon">
-                <i class="fas fa-shield-alt"></i>
+                <i class="fas fa-brain"></i>
             </div>
 
             <h1 class="cover-title">
                 Proposta Comercial<br>
-                <span>PGR · PCMSO · LTCAT</span>
+                <span>Avaliação de Fatores de Riscos Psicossociais</span>
             </h1>
             <p class="cover-subtitle">
-                Elaboração do Kit de Programas obrigatórios de Segurança e Saúde do Trabalho, em conformidade com a NR-01, NR-07 e Decreto 3.048/99.
+                Proposta técnica para adequação à atualização da NR-01 do Ministério do Trabalho
             </p>
 
             <div class="cover-client">
                 <p class="cover-client-label">Proposta elaborada para</p>
-                <p class="cover-client-name">ML4 Empreendimentos Imobiliarios SPE LTDA</p>
+                <p class="cover-client-name">IEADERN — Filial Mossoró / RN</p>
             </div>
 
             <p class="cover-date">
@@ -227,7 +218,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
@@ -237,36 +228,36 @@
 
             <div class="info-box" style="margin-bottom: 18px;">
                 <h4><i class="fas fa-building"></i> Dados da Empresa</h4>
-                <p>Esta proposta foi desenvolvida exclusivamente para atender às necessidades de elaboração do Kit de Programas de Segurança e Saúde do Trabalho da empresa abaixo identificada, em conformidade com a NR-01, NR-07 e legislação previdenciária vigente.</p>
+                <p>Esta proposta foi desenvolvida exclusivamente para atender às necessidades de avaliação dos fatores de riscos psicossociais da empresa abaixo identificada, em total conformidade com a NR-01 atualizada.</p>
             </div>
 
             <div style="background: var(--light-color); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
                         <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
-                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">ML4 Empreendimentos Imobiliarios SPE LTDA</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Igreja Evangélica Assembleia de Deus no RN — IEADERN</p>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
-                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
-                        <p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--dark-color);">30.206.782/0001-80</p>
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ (Filial Mossoró)</p>
+                        <p style="margin: 0; font-size: 15px; font-weight: 600; color: var(--dark-color);">08.332.785/0030-46</p>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
                         <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Logradouro</p>
-                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Avenida Afonso Pena, 1206 — Tirol</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Av. Dix Sept Rosado, S/N — Térreo — Centro</p>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
                         <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Município / CEP</p>
-                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Natal — RN | CEP 59020-265</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Mossoró — RN | CEP 59.600-050</p>
                     </div>
                     <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--purple-color); grid-column: 1 / -1;">
-                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Atividade Principal (CNAE)</p>
-                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">4110-7/00 — Incorporação de empreendimentos imobiliários</p>
+                        <p style="margin: 0 0 5px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Número de Colaboradores Avaliados</p>
+                        <p style="margin: 0; font-size: 15px; font-weight: 700; color: var(--purple-color);">20 colaboradores</p>
                     </div>
                 </div>
             </div>
 
             <div class="highlight-box">
-                <p><strong><i class="fas fa-info-circle"></i> Sobre a Proposta:</strong> A elaboração será conduzida de forma exclusiva para a ML4 Empreendimentos Imobiliarios SPE LTDA, contemplando o levantamento de riscos ocupacionais por função, elaboração técnica de PGR, PCMSO e LTCAT, com responsabilidade técnica de Engenheiro de Segurança do Trabalho e Médico do Trabalho.</p>
+                <p><strong><i class="fas fa-info-circle"></i> Sobre a Proposta:</strong> A avaliação será conduzida de forma exclusiva para a IEADERN — Filial Mossoró/RN, com relatório técnico individualizado, plano de ação específico e toda a documentação necessária para conformidade com a NR-01.</p>
             </div>
 
             <div class="page-footer">
@@ -279,7 +270,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
@@ -335,7 +326,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
@@ -344,28 +335,29 @@
             </h2>
 
             <div class="alert-box">
-                <h4><i class="fas fa-gavel"></i> Obrigatoriedade Legal</h4>
-                <p>O <strong>PGR</strong> (NR-01), o <strong>PCMSO</strong> (NR-07) e o <strong>LTCAT</strong> (Decreto 3.048/99 e IN INSS 128/2022) são documentos <strong>obrigatórios</strong> para toda empresa que admite trabalhadores como empregados, independentemente do grau de risco da atividade.</p>
+                <h4><i class="fas fa-gavel"></i> Atenção: Nova Obrigação Legal</h4>
+                <p>A atualização da <strong>NR-01</strong> pelo Ministério do Trabalho estabelece que <strong>todas as empresas e organizações</strong> devem realizar a avaliação e gestão dos <strong>Fatores de Riscos Psicossociais</strong> no ambiente de trabalho, integrando-os ao Programa de Gerenciamento de Riscos (PGR). Essa obrigação aplica-se também a organizações religiosas com empregados registrados.</p>
             </div>
 
-            <h3 class="subsection-title"><i class="fas fa-file-contract"></i> Fundamentação Legal de Cada Programa</h3>
-            <ul class="feature-list">
-                <li><strong>PGR — Programa de Gerenciamento de Riscos (NR-01):</strong> obrigatório para identificação, avaliação, controle e monitoramento dos riscos ocupacionais (físicos, químicos, biológicos, ergonômicos, de acidentes e psicossociais).</li>
-                <li><strong>PCMSO — Programa de Controle Médico de Saúde Ocupacional (NR-07):</strong> obrigatório para promoção e preservação da saúde dos trabalhadores, com definição de exames médicos ocupacionais.</li>
-                <li><strong>LTCAT — Laudo Técnico das Condições Ambientais de Trabalho (Decreto 3.048/99):</strong> obrigatório para fins previdenciários, comprovando exposição a agentes nocivos para aposentadoria especial.</li>
-            </ul>
+            <h3 class="subsection-title"><i class="fas fa-file-contract"></i> O que mudou na NR-01?</h3>
+            <p>
+                A Norma Regulamentadora nº 01 foi atualizada para incluir explicitamente a obrigatoriedade de identificação, avaliação e gestão dos <strong>riscos psicossociais</strong> no Programa de Gerenciamento de Riscos (PGR).
+            </p>
+            <p>
+                Essa mudança reconhece que fatores relacionados à organização do trabalho, às relações interpessoais e ao ambiente organizacional podem impactar significativamente a saúde mental e o bem-estar dos trabalhadores, gerando riscos reais para as organizações empregadoras.
+            </p>
 
             <div class="highlight-box">
-                <p><strong>Setor da Construção Civil:</strong> A NR-18 reforça a necessidade do PGR/PCMAT específico para canteiros de obras, com identificação detalhada dos riscos por função, exigindo programas robustos e adequados à realidade da incorporação imobiliária.</p>
+                <p><strong>Prazo de adequação:</strong> As organizações devem se adequar às novas exigências imediatamente, incluindo a avaliação dos fatores de riscos psicossociais em seus programas de SST. O descumprimento pode resultar em autuações, multas e passivos trabalhistas significativos.</p>
             </div>
 
-            <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> Riscos do Não Cumprimento</h3>
+            <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> Riscos Jurídicos do Não Cumprimento</h3>
             <ul class="feature-list">
-                <li><strong>Multas e autuações</strong> em fiscalizações do Ministério do Trabalho e Emprego (NR-28)</li>
-                <li><strong>Embargo e interdição</strong> de obras e frentes de trabalho</li>
-                <li><strong>Processos trabalhistas</strong> por doenças e acidentes ocupacionais</li>
-                <li><strong>Ações regressivas</strong> do INSS por benefícios concedidos a trabalhadores</li>
-                <li><strong>Responsabilização civil e criminal</strong> dos sócios e gestores</li>
+                <li><strong>Multas e autuações</strong> em fiscalizações do Ministério do Trabalho e Emprego</li>
+                <li><strong>Processos trabalhistas</strong> relacionados a doenças ocupacionais de origem psíquica</li>
+                <li><strong>Ações regressivas</strong> do INSS por afastamentos decorrentes de transtornos mentais</li>
+                <li><strong>Responsabilização civil e criminal</strong> em casos de omissão comprovada</li>
+                <li><strong>Danos à imagem</strong> institucional e reputação da organização</li>
                 <li><strong>Aumento do FAP</strong> (Fator Acidentário de Prevenção) e custos previdenciários</li>
             </ul>
 
@@ -375,49 +367,56 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 5: O QUE COMPÕE O KIT DE PROGRAMAS ====== -->
+        <!-- ====== PÁGINA 5: O QUE SÃO FATORES DE RISCOS PSICOSSOCIAIS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">3</span>
-                <span class="section-title-text">O que compõe o Kit de Programas</span>
+                <span class="section-title-text">O que são Fatores de Riscos Psicossociais?</span>
             </h2>
 
-            <p>O <strong>Kit de Programas de SST</strong> contempla os três documentos técnicos exigidos por lei para o gerenciamento integrado da segurança e saúde ocupacional na empresa:</p>
+            <p>
+                Os <strong>Fatores de Riscos Psicossociais</strong> são aspectos da organização e gestão do trabalho, bem como do contexto social e ambiental, que têm potencial de causar danos psicológicos, sociais ou físicos aos trabalhadores.
+            </p>
 
             <div class="purple-box">
-                <h4><i class="fas fa-folder-open"></i> Visão Integrada de SST</h4>
-                <p>Os três programas trabalham em conjunto: o <strong>PGR</strong> identifica e gerencia os riscos; o <strong>PCMSO</strong> protege a saúde dos trabalhadores expostos; e o <strong>LTCAT</strong> caracteriza tecnicamente as condições ambientais para fins previdenciários.</p>
+                <h4><i class="fas fa-brain"></i> Definição Técnica</h4>
+                <p>São elementos presentes no <strong>ambiente de trabalho</strong> que podem afetar a saúde mental, o bem-estar psicológico e a qualidade de vida dos trabalhadores, incluindo aspectos organizacionais, relacionais e contextuais.</p>
             </div>
 
-            <h3 class="subsection-title"><i class="fas fa-list-check"></i> Documentos Inclusos</h3>
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i> Os 6 Fatores Essenciais Avaliados</h3>
+            <p style="margin-bottom: 8px;">Nossa avaliação contempla os <strong>6 fatores essenciais</strong> recomendados pelas boas práticas internacionais (HSE Management Standards) e alinhados às exigências da NR-01:</p>
 
-            <div class="factors-grid" style="grid-template-columns: 1fr 1fr 1fr;">
-                <div class="factor-card" style="border-left-color: var(--primary-color);">
-                    <h4><i class="fas fa-shield-alt" style="color: var(--primary-color);"></i> PGR</h4>
-                    <p><strong>Programa de Gerenciamento de Riscos</strong> — Inventário de riscos ocupacionais por função, plano de ação, controle e monitoramento, conforme NR-01.</p>
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-clock"></i> Demandas: Carga de Trabalho</h4>
+                    <p>A carga de trabalho excessiva pode levar a estresse e exaustão, afetando o bem-estar dos colaboradores.</p>
                 </div>
-                <div class="factor-card" style="border-left-color: var(--secondary-color);">
-                    <h4><i class="fas fa-user-md" style="color: var(--secondary-color);"></i> PCMSO</h4>
-                    <p><strong>Programa de Controle Médico de Saúde Ocupacional</strong> — Diretrizes médicas, exames ocupacionais e procedimentos de saúde, conforme NR-07.</p>
+                <div class="factor-card">
+                    <h4><i class="fas fa-user-check"></i> Papel: Clareza das Funções</h4>
+                    <p>A clareza nas funções ajuda os colaboradores a entenderem suas responsabilidades, reduzindo incertezas.</p>
                 </div>
-                <div class="factor-card" style="border-left-color: var(--purple-color);">
-                    <h4><i class="fas fa-file-medical" style="color: var(--purple-color);"></i> LTCAT</h4>
-                    <p><strong>Laudo Técnico das Condições Ambientais</strong> — Caracterização técnica da exposição a agentes nocivos para fins previdenciários (Decreto 3.048/99).</p>
+                <div class="factor-card">
+                    <h4><i class="fas fa-handshake"></i> Relacionamentos: Prevenção de Conflitos</h4>
+                    <p>A prevenção de conflitos e o combate ao assédio são essenciais para um ambiente de trabalho positivo.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-hands-helping"></i> Suporte: Apoio da Gestão</h4>
+                    <p>O apoio da gestão e dos colegas é fundamental para criar um ambiente de trabalho saudável.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-balance-scale"></i> Controle: Autonomia no Trabalho</h4>
+                    <p>Ter autonomia sobre a execução do trabalho é crucial para o engajamento e satisfação.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-sync-alt"></i> Mudanças: Gestão de Mudanças</h4>
+                    <p>Uma boa gestão de mudanças organizacionais minimiza resistência e estresse durante transições.</p>
                 </div>
             </div>
-
-            <h3 class="subsection-title"><i class="fas fa-clipboard-list"></i> Estrutura Técnica de Cada Programa</h3>
-            <ul class="feature-list">
-                <li><strong>PGR:</strong> Identificação dos perigos, avaliação dos riscos ocupacionais, classificação por matriz de criticidade, plano de ação, indicadores e cronograma de monitoramento.</li>
-                <li><strong>PCMSO:</strong> Diretrizes médicas por função, definição de exames admissionais, periódicos, demissionais, retorno ao trabalho e mudança de função.</li>
-                <li><strong>LTCAT:</strong> Avaliação técnica dos agentes físicos, químicos e biológicos com base em metodologias quantitativas e qualitativas, com responsabilidade técnica de Engenheiro de Segurança.</li>
-                <li><strong>ART:</strong> Anotação de Responsabilidade Técnica registrada no CREA, garantindo validade legal dos programas.</li>
-            </ul>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
@@ -425,64 +424,43 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 6: FUNÇÕES CONTEMPLADAS - PARTE 1 ====== -->
+        <!-- ====== PÁGINA 6: IMPORTÂNCIA E BENEFÍCIOS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">4</span>
-                <span class="section-title-text">Funções Contempladas (Parte 1)</span>
+                <span class="section-title-text">Importância e Benefícios da Avaliação</span>
             </h2>
 
-            <div class="info-box" style="margin-bottom: 10px;">
-                <h4><i class="fas fa-users-cog"></i> Mapeamento de Funções da ML4 Empreendimentos</h4>
-                <p>Abaixo estão relacionadas as funções identificadas para elaboração dos programas, com seus respectivos códigos CBO (Classificação Brasileira de Ocupações). Cada função será avaliada quanto à exposição a agentes ambientais e riscos ocupacionais específicos.</p>
+            <h3 class="subsection-title"><i class="fas fa-chart-line"></i> Cenário Atual</h3>
+            <p>
+                Os <strong>transtornos mentais e comportamentais</strong> figuram entre as principais causas de afastamento do trabalho no Brasil. Ansiedade, depressão, burnout e estresse ocupacional têm apresentado crescimento expressivo, impactando diretamente a produtividade das organizações e gerando passivos trabalhistas e previdenciários.
+            </p>
+
+            <div class="info-box">
+                <h4><i class="fas fa-shield-alt"></i> Segurança Jurídica para a IEADERN</h4>
+                <p>A avaliação preventiva dos fatores de riscos psicossociais é a principal ferramenta para demonstrar a diligência da organização no cumprimento das obrigações legais, protegendo a IEADERN de autuações, processos e responsabilizações.</p>
             </div>
 
-            <table class="functions-table">
-                <thead>
-                    <tr>
-                        <th style="width: 6%;">Nº</th>
-                        <th style="width: 64%;">Função / Cargo</th>
-                        <th style="width: 18%;">CBO</th>
-                        <th style="width: 12%;" class="center">Ref.</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td class="center">01</td><td>Almoxarife</td><td>4141</td><td class="center">05</td></tr>
-                    <tr><td class="center">02</td><td>Auxiliar de Almoxarifado</td><td>4141</td><td class="center">05</td></tr>
-                    <tr><td class="center">03</td><td>Armador</td><td>7153</td><td class="center">15</td></tr>
-                    <tr><td class="center">04</td><td>Auxiliar de Armador</td><td>7153</td><td class="center">15</td></tr>
-                    <tr><td class="center">05</td><td>Operador de Betoneira</td><td>7154</td><td class="center">05</td></tr>
-                    <tr><td class="center">06</td><td>Auxiliar de Betoneira</td><td>7154</td><td class="center">05</td></tr>
-                    <tr><td class="center">07</td><td>Carpinteiro</td><td>7155</td><td class="center">25</td></tr>
-                    <tr><td class="center">08</td><td>Auxiliar de Carpintaria</td><td>7155</td><td class="center">25</td></tr>
-                    <tr><td class="center">09</td><td>Eletricista</td><td>7156</td><td class="center">15</td></tr>
-                    <tr><td class="center">10</td><td>Auxiliar de Eletricista</td><td>9511</td><td class="center">05</td></tr>
-                    <tr><td class="center">11</td><td>Assistente Administrativo</td><td>4110</td><td class="center">10</td></tr>
-                    <tr><td class="center">12</td><td>Porteiro</td><td>5174</td><td class="center">10</td></tr>
-                    <tr><td class="center">13</td><td>Engenheiro Civil</td><td>2142</td><td class="center">05</td></tr>
-                    <tr><td class="center">14</td><td>Assistente de Engenharia</td><td>3121</td><td class="center">05</td></tr>
-                    <tr><td class="center">15</td><td>Gestor da Qualidade</td><td>3912</td><td class="center">05</td></tr>
-                    <tr><td class="center">16</td><td>Auxiliar de Qualidade</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">17</td><td>Mestre de Obras</td><td>7102</td><td class="center">05</td></tr>
-                    <tr><td class="center">18</td><td>Encarregado</td><td>7102</td><td class="center">05</td></tr>
-                    <tr><td class="center">19</td><td>Serralheiro</td><td>7244</td><td class="center">40</td></tr>
-                    <tr><td class="center">20</td><td>Soldador</td><td>7243</td><td class="center">15</td></tr>
-                    <tr><td class="center">21</td><td>Auxiliar de Serralheria</td><td>7244</td><td class="center">40</td></tr>
-                    <tr><td class="center">22</td><td>Auxiliar de Serviços Gerais</td><td>7170</td><td class="center">20</td></tr>
-                    <tr><td class="center">23</td><td>Encanador</td><td>7241</td><td class="center">10</td></tr>
-                    <tr><td class="center">24</td><td>Auxiliar de Encanador</td><td>7241</td><td class="center">10</td></tr>
-                    <tr><td class="center">25</td><td>Pedreiro</td><td>7152</td><td class="center">10</td></tr>
-                    <tr><td class="center">26</td><td>Auxiliar de Pedreiro</td><td>7152</td><td class="center">10</td></tr>
-                    <tr><td class="center">27</td><td>Gesseiro</td><td>7164</td><td class="center">05</td></tr>
-                </tbody>
-            </table>
+            <h3 class="subsection-title"><i class="fas fa-star"></i> Benefícios para a IEADERN — Mossoró</h3>
+            <ul class="feature-list">
+                <li><strong>Conformidade legal</strong> com a atualização da NR-01 e proteção contra autuações</li>
+                <li><strong>Prevenção de passivos trabalhistas</strong> relacionados a doenças ocupacionais psíquicas</li>
+                <li><strong>Redução do absenteísmo</strong> por problemas de saúde mental</li>
+                <li><strong>Diminuição da rotatividade</strong> e custos com desligamentos e novas contratações</li>
+                <li><strong>Melhoria da produtividade</strong> e engajamento dos colaboradores</li>
+                <li><strong>Ambiente de trabalho saudável</strong> e melhoria do clima organizacional</li>
+                <li><strong>Fortalecimento da imagem institucional</strong> e reputação da organização</li>
+                <li><strong>Redução de custos</strong> com planos de saúde e afastamentos previdenciários</li>
+            </ul>
 
-            <p style="font-size: 9px; color: var(--gray-color); margin-top: 4px; text-align: right;"><em>Continua na próxima página...</em></p>
+            <div class="highlight-box">
+                <p><strong>Investimento preventivo:</strong> A avaliação e gestão adequada dos riscos psicossociais representa um investimento na saúde organizacional, com impactos positivos na redução de custos operacionais, melhoria do clima de trabalho e proteção jurídica da organização.</p>
+            </div>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
@@ -490,60 +468,70 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 7: FUNÇÕES CONTEMPLADAS - PARTE 2 ====== -->
+        <!-- ====== PÁGINA 7: METODOLOGIA ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
-                <span class="section-number">4</span>
-                <span class="section-title-text">Funções Contempladas (Parte 2)</span>
+                <span class="section-number">5</span>
+                <span class="section-title-text">Metodologia de Avaliação</span>
             </h2>
 
-            <table class="functions-table">
-                <thead>
-                    <tr>
-                        <th style="width: 6%;">Nº</th>
-                        <th style="width: 64%;">Função / Cargo</th>
-                        <th style="width: 18%;">CBO</th>
-                        <th style="width: 12%;" class="center">Ref.</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td class="center">28</td><td>Auxiliar de Gesseiro</td><td>7164</td><td class="center">05</td></tr>
-                    <tr><td class="center">29</td><td>Montador de Andaime</td><td>7155</td><td class="center">45</td></tr>
-                    <tr><td class="center">30</td><td>Técnico em Segurança do Trabalho</td><td>3516</td><td class="center">05</td></tr>
-                    <tr><td class="center">31</td><td>Técnico em Edificações</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">32</td><td>Operador de Máquina (Transportes/Canteiro de Obras — abastecimento)</td><td>7151</td><td class="center">25</td></tr>
-                    <tr><td class="center">33</td><td>Pintor — Interno</td><td>7166</td><td class="center">10</td></tr>
-                    <tr><td class="center">34</td><td>Auxiliar de Pintor — Interno</td><td>7166</td><td class="center">10</td></tr>
-                    <tr><td class="center">35</td><td>Pintor — Trabalho em Altura (Fachadeiro)</td><td>7166</td><td class="center">10</td></tr>
-                    <tr><td class="center">36</td><td>Auxiliar de Pintor — Trabalho em Altura (Fachadeiro)</td><td>7166</td><td class="center">10</td></tr>
-                    <tr><td class="center">37</td><td>Calceteiro</td><td>7152</td><td class="center">05</td></tr>
-                    <tr><td class="center">38</td><td>Auxiliar/Servente — Calceteiro</td><td>7170</td><td class="center">20</td></tr>
-                    <tr><td class="center">39</td><td>Jardineiro</td><td>7152</td><td class="center">05</td></tr>
-                    <tr><td class="center">40</td><td>Auxiliar de Jardineiro</td><td>7152</td><td class="center">05</td></tr>
-                    <tr><td class="center">41</td><td>Analista de Industrialização</td><td>2149</td><td class="center">05</td></tr>
-                    <tr><td class="center">42</td><td>Jovem Aprendiz</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">43</td><td>Assistente de Logística e Produção</td><td>4141</td><td class="center">40</td></tr>
-                    <tr><td class="center">44</td><td>Auxiliar de Logística</td><td>4141</td><td class="center">40</td></tr>
-                    <tr><td class="center">45</td><td>Servente</td><td>7170</td><td class="center">20</td></tr>
-                    <tr><td class="center">46</td><td>Diretor</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">47</td><td>Comprador</td><td>3542</td><td class="center">05</td></tr>
-                    <tr><td class="center">48</td><td>Operador de Empilhadeira</td><td>7822</td><td class="center">20</td></tr>
-                    <tr><td class="center">49</td><td>Engenheiro de Produção</td><td>2149</td><td class="center">05</td></tr>
-                    <tr><td class="center">50</td><td>Encarregado (Fábrica de Blocos)</td><td>—</td><td class="center">—</td></tr>
-                    <tr><td class="center">51</td><td>Operador de Máquina (Fábrica de Blocos)</td><td>7151</td><td class="center">25</td></tr>
-                    <tr><td class="center">52</td><td>Auxiliar (Fábrica de Blocos)</td><td>7170</td><td class="center">20</td></tr>
-                    <tr><td class="center">53</td><td>Operador de Máquina (Usina de Concreto)</td><td>7151</td><td class="center">25</td></tr>
-                    <tr><td class="center">54</td><td>Operador de Máquina (Transportes/Canteiro — abastecimento)</td><td>7151</td><td class="center">25</td></tr>
-                </tbody>
-            </table>
+            <p>Nossa metodologia segue um fluxo técnico estruturado, com coleta de dados quantitativos e qualitativos, utilizando instrumentos validados cientificamente e em conformidade com a NR-01:</p>
 
-            <div class="highlight-box" style="margin-top: 8px;">
-                <p><strong><i class="fas fa-info-circle"></i> Total de funções contempladas: 54.</strong> Cada função será objeto de avaliação técnica individual com identificação dos riscos ocupacionais, definição de medidas de controle e exames médicos pertinentes.</p>
+            <div class="methodology-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Planejamento e Sensibilização da Liderança</h4>
+                        <p>Reunião estratégica com a gestão da IEADERN para apresentação do projeto, alinhamento de expectativas, definição de cronograma e engajamento organizacional para adesão dos colaboradores.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Visita Técnica Presencial <em style="font-weight: 400; color: var(--gray-color);">(a combinar conforme necessidade)</em></h4>
+                        <p>Visita às instalações da filial em Mossoró para reconhecimento do ambiente de trabalho, observação das condições organizacionais e contextualização dos achados quantitativos.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Aplicação de Instrumentos Psicossociais Validados</h4>
+                        <p>Coleta de dados por meio de questionários padronizados e validados cientificamente, garantindo confidencialidade, anonimato e adesão ética às diretrizes de pesquisa em saúde ocupacional.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Análise Documental e Indicadores de RH <em style="font-weight: 400; color: var(--gray-color);">(caso dados disponíveis)</em></h4>
+                        <p>Revisão de indicadores organizacionais (absenteísmo, turnover, afastamentos por CID-F, atestados médicos), políticas internas e histórico de ocorrências relacionadas à saúde mental.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Análise por Setor e Grupo de Exposição</h4>
+                        <p>Segmentação dos dados coletados por áreas e grupos homogêneos de exposição, permitindo identificação de fatores de risco específicos de cada contexto organizacional.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Classificação dos Riscos: Criticidade e Probabilidade</h4>
+                        <p>Aplicação de matriz de risco para classificação por índice de criticidade e probabilidade de ocorrência, priorizando ações conforme impacto potencial na saúde dos trabalhadores.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">7</div>
+                    <div class="step-content">
+                        <h4>Elaboração do Relatório Técnico</h4>
+                        <p>Relatório técnico completo com diagnóstico, classificação dos riscos, recomendações preventivas e corretivas, conforme metodologia validada e exigências da NR-01.</p>
+                    </div>
+                </div>
             </div>
 
             <div class="page-footer">
@@ -552,70 +540,67 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 8: METODOLOGIA ====== -->
+        <!-- ====== PÁGINA 8: ENTREGÁVEIS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
-                <span class="section-number">5</span>
-                <span class="section-title-text">Metodologia de Elaboração</span>
+                <span class="section-number">6</span>
+                <span class="section-title-text">Entregáveis e Escopo dos Serviços</span>
             </h2>
 
-            <p>Nossa metodologia segue um fluxo técnico estruturado, em conformidade com a NR-01, NR-07 e legislação previdenciária, garantindo a aderência dos programas à realidade operacional da ML4 Empreendimentos:</p>
+            <p>Ao final dos trabalhos, a <strong>IEADERN — Filial Mossoró/RN</strong> receberá os seguintes documentos técnicos, em conformidade com a NR-01 e metodologias reconhecidas:</p>
 
-            <div class="methodology-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>Reunião de Alinhamento e Coleta de Dados Cadastrais</h4>
-                        <p>Levantamento das informações da empresa, organograma, listagem de funções, locais de trabalho, processos produtivos e documentação SST existente.</p>
+            <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos (PDF)</h3>
+
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-file-alt"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Relatório Técnico de Avaliação de Riscos Psicossociais</h4>
+                        <p>Documento completo com diagnóstico organizacional, análise quantitativa e qualitativa, classificação por criticidade e probabilidade, mapeamento por setor/função e indicadores de risco.</p>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h4>Visita Técnica aos Canteiros de Obras e Unidades Operacionais</h4>
-                        <p>Inspeção técnica para reconhecimento dos processos, identificação dos agentes ambientais, observação das condições de trabalho e mapeamento de riscos por função.</p>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Plano de Ação Preventivo e Corretivo</h4>
+                        <p>Recomendações técnicas estruturadas com medidas de controle, prazos sugeridos, responsáveis indicados e priorização conforme matriz de risco. <strong>Execução a combinar.</strong></p>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>Identificação e Avaliação dos Riscos Ocupacionais</h4>
-                        <p>Análise qualitativa e quantitativa dos riscos físicos, químicos, biológicos, ergonômicos e de acidentes, com classificação por matriz de criticidade e probabilidade.</p>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <div class="deliverable-text">
+                        <h4>AEP – Avaliação Ergonômica Preliminar</h4>
+                        <p>Análise das condições ergonômicas correlacionadas aos fatores psicossociais identificados (quando aplicável ao contexto da organização).</p>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h4>Elaboração do PGR (NR-01)</h4>
-                        <p>Inventário de riscos por função, plano de ação com medidas de controle, indicadores e cronograma de monitoramento, sob responsabilidade técnica de Engenheiro de Segurança.</p>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Palestra Prévia de Conscientização</h4>
+                        <p>Palestra anterior à aplicação da ferramenta para entendimento dos colaboradores sobre Fatores de Riscos Psicossociais e importância da avaliação.</p>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h4>Elaboração do PCMSO (NR-07)</h4>
-                        <p>Definição das diretrizes médicas, exames ocupacionais por função (admissional, periódico, demissional, retorno ao trabalho e mudança de função), com coordenação de Médico do Trabalho.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">6</div>
-                    <div class="step-content">
-                        <h4>Elaboração do LTCAT (Decreto 3.048/99)</h4>
-                        <p>Caracterização técnica das condições ambientais, avaliação da exposição a agentes nocivos e enquadramento previdenciário, com fundamentação técnica para fins de aposentadoria especial.</p>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step-number">7</div>
-                    <div class="step-content">
-                        <h4>Emissão de ART e Entrega Final</h4>
-                        <p>Registro da Anotação de Responsabilidade Técnica no CREA, entrega dos documentos finais em PDF e apresentação dos programas à liderança da empresa.</p>
-                    </div>
-                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-user-md"></i> Atuação Técnica Especializada</h3>
+            <p style="margin-bottom: 10px;">Os serviços contam com a atuação integrada de <strong>Engenharia de SST</strong> e <strong>Psicologia do Trabalho</strong>, garantindo:</p>
+            <ul class="feature-list" style="margin-bottom: 12px;">
+                <li>Diagnóstico e interpretação técnica dos dados psicossociais coletados</li>
+                <li>Análise organizacional e comportamental do ambiente de trabalho</li>
+                <li>Orientação técnica para prevenção de adoecimento mental ocupacional</li>
+                <li>Recomendações alinhadas às boas práticas de gestão de saúde mental no trabalho</li>
+            </ul>
+
+            <div class="alert-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Importante: O que NÃO está incluso no escopo</h4>
+                <p>• Acompanhamento psicológico individual ou psicoterapia • Tratamento clínico de transtornos mentais<br>
+                • Serviços médicos ou de medicina ocupacional • Implementação direta das ações recomendadas<br>
+                • Reavaliações periódicas (disponíveis como serviço adicional mediante negociação)</p>
             </div>
 
             <div class="page-footer">
@@ -624,78 +609,52 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 9: ENTREGÁVEIS ====== -->
+        <!-- ====== PÁGINA 9: SERVIÇOS COMPLEMENTARES ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
-                <span class="section-number">6</span>
-                <span class="section-title-text">Entregáveis e Escopo dos Serviços</span>
+                <span class="section-number">7</span>
+                <span class="section-title-text">Serviços Complementares Disponíveis</span>
             </h2>
 
-            <p>Ao final dos trabalhos, a <strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong> receberá os seguintes documentos técnicos, em conformidade com a legislação vigente:</p>
+            <p>Além da avaliação obrigatória, a EngMarq Solution oferece um portfólio completo de serviços para <strong>gestão contínua dos riscos psicossociais</strong> e <strong>promoção da saúde mental no trabalho</strong>:</p>
 
-            <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos (PDF)</h3>
-
-            <div class="deliverables-grid">
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div class="deliverable-text">
-                        <h4>PGR — Programa de Gerenciamento de Riscos</h4>
-                        <p>Inventário de riscos ocupacionais por função, plano de ação, classificação por matriz de criticidade e cronograma de monitoramento (NR-01).</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-user-md"></i></div>
-                    <div class="deliverable-text">
-                        <h4>PCMSO — Programa de Controle Médico</h4>
-                        <p>Diretrizes médicas, exames ocupacionais por função e procedimentos de saúde, com coordenação de Médico do Trabalho (NR-07).</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-file-medical"></i></div>
-                    <div class="deliverable-text">
-                        <h4>LTCAT — Laudo Técnico das Condições Ambientais</h4>
-                        <p>Caracterização técnica da exposição a agentes nocivos para fins previdenciários (Decreto 3.048/99 e IN INSS 128/2022).</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-stamp"></i></div>
-                    <div class="deliverable-text">
-                        <h4>ART — Anotação de Responsabilidade Técnica</h4>
-                        <p>Registro no CREA com responsabilidade técnica do Engenheiro de Segurança do Trabalho, garantindo validade legal.</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-clipboard-list"></i></div>
-                    <div class="deliverable-text">
-                        <h4>Inventário de Riscos por Função</h4>
-                        <p>Mapa detalhado de riscos para cada uma das 54 funções identificadas, com classificação e medidas de controle.</p>
-                    </div>
-                </div>
-                <div class="deliverable-item">
-                    <div class="deliverable-icon"><i class="fas fa-tasks"></i></div>
-                    <div class="deliverable-text">
-                        <h4>Plano de Ação Preventivo</h4>
-                        <p>Recomendações técnicas estruturadas com medidas de controle, prazos sugeridos e priorização conforme criticidade.</p>
-                    </div>
-                </div>
-            </div>
-
-            <h3 class="subsection-title"><i class="fas fa-user-tie"></i> Atuação Técnica Especializada</h3>
-            <ul class="feature-list" style="margin-bottom: 12px;">
-                <li>Engenheiro de Segurança do Trabalho com registro no CREA (responsável técnico)</li>
-                <li>Médico do Trabalho registrado no CRM (coordenação do PCMSO)</li>
-                <li>Técnico de Segurança do Trabalho registrado no MTE</li>
-                <li>Equipe com experiência em construção civil e canteiros de obras</li>
+            <h3 class="subsection-title"><i class="fas fa-chart-line"></i> Gestão e Monitoramento de Riscos Psicossociais</h3>
+            <ul class="feature-list" style="margin-bottom: 15px;">
+                <li>Monitoramento contínuo dos riscos identificados com indicadores de acompanhamento</li>
+                <li>Apoio técnico à organização na gestão dos fatores psicossociais</li>
+                <li>Recomendações preventivas e corretivas periódicas</li>
+                <li>Integração com RH, CIPA, SIPAT e programas de SST</li>
+                <li>Reavaliações anuais com comparativo evolutivo</li>
             </ul>
 
-            <div class="alert-box">
-                <h4><i class="fas fa-exclamation-triangle"></i> O que NÃO está incluso no escopo</h4>
-                <p>• Realização dos exames médicos ocupacionais (clínica/ASO) • Medições ambientais quantitativas (ruído, calor, agentes químicos) • Avaliação de Riscos Psicossociais (NR-01 atualizada) • Treinamentos NR · CIPA · Brigada · NR-18 · NR-35 • Envio de eventos ao eSocial • Implementação direta das ações recomendadas • Acompanhamento mensal e assessoria contínua (disponíveis como serviço adicional)</p>
+            <h3 class="subsection-title"><i class="fas fa-heart"></i> Programas de Saúde Mental no Trabalho</h3>
+            <ul class="feature-list" style="margin-bottom: 15px;">
+                <li>Programas contínuos de promoção da saúde mental organizacional</li>
+                <li>Grupos de escuta e rodas de conversa com colaboradores</li>
+                <li>Dinâmicas de clima organizacional e bem-estar</li>
+                <li>Práticas de mindfulness e atenção plena no ambiente corporativo</li>
+                <li>Campanhas institucionais: Janeiro Branco, Setembro Amarelo</li>
+                <li>Apoio técnico a ações de prevenção ao assédio moral e sexual</li>
+                <li><strong style="background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%); color: white; padding: 3px 8px; border-radius: 4px;">Suporte à criação e gestão de Canal de Denúncia</strong></li>
+            </ul>
+
+            <h3 class="subsection-title"><i class="fas fa-chalkboard-teacher"></i> Treinamentos e Capacitações Psicossociais</h3>
+            <ul class="feature-list" style="margin-bottom: 15px;">
+                <li><strong>Sensibilização sobre Saúde Mental no Trabalho</strong> – para todos os colaboradores</li>
+                <li><strong>Capacitação de Lideranças em Riscos Psicossociais</strong> – gestão de equipes saudáveis</li>
+                <li><strong>Primeiros Socorros Psicológicos</strong> – apoio inicial em crises emocionais</li>
+                <li><strong>Comunicação Saudável e Prevenção de Conflitos</strong> – relacionamento interpessoal</li>
+                <li><strong>Ambientes Psicologicamente Seguros</strong> – preparação de equipes</li>
+            </ul>
+
+            <div class="info-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-info-circle"></i> Contratação Sob Demanda</h4>
+                <p>Os serviços complementares acima não estão incluídos no valor desta proposta e podem ser contratados separadamente conforme necessidade e interesse da organização.</p>
             </div>
 
             <div class="page-footer">
@@ -704,68 +663,11 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 10: SERVIÇOS COMPLEMENTARES ====== -->
+        <!-- ====== PÁGINA 10: INVESTIMENTO ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
-            </div>
-
-            <h2 class="section-title">
-                <span class="section-number">7</span>
-                <span class="section-title-text">Serviços Complementares Disponíveis</span>
-            </h2>
-
-            <p>Além do Kit de Programas, a EngMarq Solution oferece um portfólio completo de serviços para <strong>gestão contínua de SST</strong> na construção civil:</p>
-
-            <h3 class="subsection-title"><i class="fas fa-tachometer-alt"></i> Medições Ambientais e Laudos</h3>
-            <ul class="feature-list" style="margin-bottom: 12px;">
-                <li>Medição de ruído ocupacional (NHO-01) e dosimetria</li>
-                <li>Avaliação de calor (IBUTG — NHO-06)</li>
-                <li>Avaliação de agentes químicos (poeiras, gases, vapores)</li>
-                <li>Laudo de Insalubridade (NR-15) e Periculosidade (NR-16)</li>
-                <li>AET — Análise Ergonômica do Trabalho (NR-17)</li>
-            </ul>
-
-            <h3 class="subsection-title"><i class="fas fa-brain"></i> Avaliação de Riscos Psicossociais</h3>
-            <ul class="feature-list" style="margin-bottom: 12px;">
-                <li>Avaliação dos 6 fatores psicossociais (HSE Management Standards)</li>
-                <li>Relatório técnico de Riscos Psicossociais conforme NR-01 atualizada</li>
-                <li>Plano de ação preventivo para saúde mental no trabalho</li>
-            </ul>
-
-            <h3 class="subsection-title"><i class="fas fa-chalkboard-teacher"></i> Treinamentos de Segurança</h3>
-            <ul class="feature-list" style="margin-bottom: 12px;">
-                <li>Treinamento Admissional + Ordem de Serviço (NR-01)</li>
-                <li>NR-06 (EPI), NR-18 (Construção Civil), NR-35 (Trabalho em Altura)</li>
-                <li>NR-10 (Eletricidade), NR-11 (Empilhadeira), NR-12 (Máquinas)</li>
-                <li>CIPA (NR-05), Brigada de Incêndio, Primeiros Socorros</li>
-            </ul>
-
-            <h3 class="subsection-title"><i class="fas fa-cogs"></i> Assessoria SST Mensal</h3>
-            <ul class="feature-list" style="margin-bottom: 12px;">
-                <li>Equipe técnica dedicada (Engenheiro + Técnico de Segurança)</li>
-                <li>Visitas mensais aos canteiros de obras</li>
-                <li>Envio de eventos SST ao eSocial (S-2210, S-2220, S-2240)</li>
-                <li>Gestão contínua de PGR, PCMSO e LTCAT</li>
-            </ul>
-
-            <div class="info-box">
-                <h4><i class="fas fa-info-circle"></i> Contratação Sob Demanda</h4>
-                <p>Os serviços complementares acima não estão incluídos no valor desta proposta e podem ser contratados separadamente conforme necessidade e interesse da empresa.</p>
-            </div>
-
-            <div class="page-footer">
-                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">10</span>
-            </div>
-        </div>
-
-        <!-- ====== PÁGINA 11: INVESTIMENTO ====== -->
-        <div class="page">
-            <div class="page-header">
-                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
@@ -775,7 +677,7 @@
 
             <div class="info-box" style="margin-bottom: 15px;">
                 <h4><i class="fas fa-info-circle"></i> Estrutura de Investimento</h4>
-                <p>O Kit de Programas será elaborado para a <strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong>, contemplando PGR, PCMSO e LTCAT com responsabilidade técnica e ART, abrangendo todas as 54 funções identificadas e os respectivos riscos ocupacionais.</p>
+                <p>O serviço de Avaliação de Fatores de Riscos Psicossociais será executado para os <strong>20 colaboradores</strong> da <strong>IEADERN — Filial Mossoró/RN</strong>, contemplando diagnóstico organizacional completo, relatório técnico e plano de ação individualizados, em conformidade com a NR-01 atualizada.</p>
             </div>
 
             <h3 class="subsection-title"><i class="fas fa-calculator"></i> Composição da Proposta</h3>
@@ -784,50 +686,40 @@
                 <thead>
                     <tr style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white;">
                         <th style="padding: 12px 10px; text-align: left; border: 1px solid #e2e8f0;">Serviço</th>
-                        <th style="padding: 12px 10px; text-align: left; border: 1px solid #e2e8f0;">Empresa</th>
+                        <th style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">Colaboradores</th>
                         <th style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">CNPJ</th>
                         <th style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">Valor</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="background: #f8f9fa;">
-                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;">Kit de Programas — PGR + PCMSO + LTCAT (com ART)</td>
-                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;"><strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong></td>
-                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">30.206.782/0001-80</td>
-                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700; font-size: 13px; color: var(--success-color);">R$ 2.700,00</td>
+                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;">Avaliação de Fatores de Riscos Psicossociais (NR-01)<br><span style="font-size: 9px; color: var(--gray-color);">IEADERN — Filial Mossoró/RN</span></td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700;">20</td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">08.332.785/0030-46</td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700; font-size: 13px; color: var(--success-color);">R$ 1.000,00</td>
                     </tr>
                     <tr style="background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); color: white; font-weight: 700;">
                         <td style="padding: 14px 10px; border: 1px solid #e2e8f0; text-align: right; font-size: 12px;" colspan="3">VALOR TOTAL DA PROPOSTA</td>
-                        <td style="padding: 14px 10px; text-align: center; border: 1px solid #e2e8f0; font-size: 16px;"><strong>R$ 2.700,00</strong></td>
+                        <td style="padding: 14px 10px; text-align: center; border: 1px solid #e2e8f0; font-size: 16px;"><strong>R$ 1.000,00</strong></td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3 class="subsection-title"><i class="fas fa-check-double"></i> O que está incluso no investimento</h3>
-            <ul class="feature-list">
-                <li>Elaboração técnica do <strong>PGR</strong> com inventário de riscos das 54 funções</li>
-                <li>Elaboração técnica do <strong>PCMSO</strong> com diretrizes médicas e exames por função</li>
-                <li>Elaboração técnica do <strong>LTCAT</strong> com caracterização das condições ambientais</li>
-                <li>Emissão da <strong>ART</strong> no CREA com responsabilidade técnica</li>
-                <li>Visita técnica para reconhecimento dos canteiros e unidades operacionais</li>
-                <li>Suporte técnico para esclarecimento de dúvidas após a entrega</li>
-            </ul>
-
             <div class="info-box" style="background: #f0f9ff; border-left: 4px solid #1a365d; padding: 10px 15px;">
-                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Serviços complementares (medições ambientais, psicossocial, treinamentos, assessoria mensal), caso solicitados, serão objeto de negociação em separado e não alteram o valor desta proposta.</p>
+                <p style="margin: 0; font-size: 10px;"><strong><i class="fas fa-info-circle"></i> Nota:</strong> Serviços complementares, caso solicitados, serão objeto de negociação em separado e não alteram o valor desta proposta.</p>
             </div>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">11</span>
+                <span class="page-number">10</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 12: CONDIÇÕES COMERCIAIS ====== -->
+        <!-- ====== PÁGINA 11: CONDIÇÕES COMERCIAIS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
@@ -847,63 +739,63 @@
                     <div class="condition-icon"><i class="fas fa-credit-card"></i></div>
                     <div class="condition-text">
                         <strong>Condições de Pagamento</strong>
-                        <span>50% na aprovação da proposta e 50% na entrega dos documentos finais. Outras condições podem ser negociadas conforme necessidade.</span>
+                        <span>50% na aprovação da proposta e 50% na entrega dos relatórios finais. Outras condições podem ser negociadas conforme necessidade.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-clock"></i></div>
                     <div class="condition-text">
                         <strong>Prazo de Execução</strong>
-                        <span>O Kit de Programas será entregue em até 30 (trinta) dias úteis após a aprovação da proposta e fornecimento dos dados necessários.</span>
+                        <span>A avaliação será concluída em até 30 (trinta) dias úteis, condicionado à disponibilidade para aplicação dos questionários, realização das visitas e fornecimento dos dados necessários.</span>
                     </div>
                 </div>
                 <div class="condition-item">
-                    <div class="condition-icon"><i class="fas fa-stamp"></i></div>
+                    <div class="condition-icon"><i class="fas fa-user-shield"></i></div>
                     <div class="condition-text">
-                        <strong>Responsabilidade Técnica</strong>
-                        <span>Programas elaborados sob responsabilidade técnica de Engenheiro de Segurança do Trabalho (CREA) e Médico do Trabalho (CRM), com emissão de ART.</span>
+                        <strong>Confidencialidade</strong>
+                        <span>Garantimos total sigilo sobre as informações coletadas. Os dados individuais são anonimizados e apenas resultados agregados são apresentados nos relatórios.</span>
                     </div>
                 </div>
                 <div class="condition-item">
-                    <div class="condition-icon"><i class="fas fa-sync"></i></div>
+                    <div class="condition-icon"><i class="fas fa-tasks"></i></div>
                     <div class="condition-text">
-                        <strong>Vigência dos Programas</strong>
-                        <span>O PGR tem vigência de até 2 anos (com revisão anual), PCMSO vigência anual e LTCAT deve ser revisto sempre que houver alteração nas condições ambientais.</span>
+                        <strong>Execução do Plano de Ação</strong>
+                        <span>A execução do plano de ação poderá ser contratada separadamente, com valores a combinar conforme escopo das ações necessárias.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-headset"></i></div>
                     <div class="condition-text">
                         <strong>Suporte Pós-Entrega</strong>
-                        <span>Suporte técnico por 60 dias após a entrega para esclarecimento de dúvidas sobre os documentos e orientações sobre a implementação das ações.</span>
+                        <span>Suporte técnico por 60 dias após a entrega para esclarecimento de dúvidas sobre o relatório e orientações sobre o plano de ação.</span>
                     </div>
                 </div>
             </div>
 
             <div class="info-box" style="margin-top: 8px;">
                 <h4><i class="fas fa-certificate"></i> Garantia Técnica</h4>
-                <p>Todos os documentos são elaborados por profissionais qualificados e registrados nos respectivos conselhos, em conformidade com as Normas Regulamentadoras e legislação previdenciária vigente.</p>
+                <p>Todos os trabalhos são realizados por profissionais qualificados, utilizando metodologias validadas cientificamente e em conformidade com as exigências da NR-01 atualizada.</p>
             </div>
 
-            <h3 class="subsection-title"><i class="fas fa-handshake"></i> O que a empresa precisa fornecer</h3>
+            <h3 class="subsection-title"><i class="fas fa-handshake"></i> O que a organização precisa fornecer</h3>
             <ul class="feature-list">
-                <li>Listagem atualizada de colaboradores por função e setor</li>
-                <li>Acesso aos canteiros de obras e unidades operacionais para visita técnica</li>
-                <li>Documentação SST existente (programas anteriores, ASOs, ART, etc.) <em style="color: var(--gray-color);">se houver</em></li>
-                <li>Disponibilidade da liderança para reuniões de alinhamento e apresentação dos programas</li>
+                <li>Lista de colaboradores por setor/área para dimensionamento</li>
+                <li>Acesso aos colaboradores para aplicação dos questionários</li>
+                <li>Indicadores de RH dos últimos 12 meses <em style="color: var(--gray-color);">(caso disponíveis)</em></li>
+                <li>Disponibilidade da liderança para reuniões de alinhamento e apresentação dos resultados</li>
             </ul>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">12</span>
+                <span class="page-number">11</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 13: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <!-- ====== PÁGINA 12: RESPONSÁVEL PELA PROPOSTA ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
@@ -912,7 +804,7 @@
             </h2>
 
             <p style="text-align: center; margin-bottom: 25px; color: var(--gray-color);">
-                Esta proposta comercial foi elaborada para atender às exigências da NR-01, NR-07 e legislação previdenciária, garantindo segurança jurídica e conformidade legal para a ML4 Empreendimentos Imobiliarios SPE LTDA.
+                Esta proposta comercial foi elaborada para atender às exigências da NR-01 atualizada, garantindo segurança jurídica e promovendo um ambiente de trabalho saudável para a IEADERN — Filial Mossoró/RN.
             </p>
 
             <div class="responsible-card">
@@ -941,7 +833,7 @@
 
             <div class="purple-box" style="margin-top: 25px;">
                 <h4><i class="fas fa-headset"></i> Atendimento Especializado</h4>
-                <p>Estamos à disposição para esclarecer qualquer dúvida sobre o escopo dos serviços, ajustar a proposta conforme necessidade e acompanhar todo o processo de elaboração dos programas de SST.</p>
+                <p>Estamos à disposição para esclarecer qualquer dúvida sobre o escopo dos serviços, ajustar a proposta conforme necessidade e acompanhar todo o processo de avaliação dos riscos psicossociais.</p>
             </div>
 
             <div class="info-box" style="margin-top: 15px;">
@@ -952,29 +844,29 @@
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">13</span>
+                <span class="page-number">12</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 14: ENCERRAMENTO E CONTATO ====== -->
+        <!-- ====== PÁGINA 13: ENCERRAMENTO E CONTATO ====== -->
         <div class="page page-contact">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <div class="contact-content">
                 <div class="contact-icon">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-brain"></i>
                 </div>
-                <h2 class="contact-title">Conformidade Legal de SST para sua Empresa</h2>
+                <h2 class="contact-title">Proteja a IEADERN com a Avaliação Psicossocial</h2>
                 <p class="contact-subtitle">
-                    O Kit de Programas (PGR, PCMSO e LTCAT) é a base da gestão de SST e uma <strong>exigência legal</strong>. Conte com o apoio técnico especializado da EngMarq Solution para adequar a ML4 Empreendimentos e protegê-la de passivos trabalhistas e previdenciários.
+                    A avaliação dos Fatores de Riscos Psicossociais é uma <strong>obrigação legal</strong> prevista na NR-01 atualizada. Conte com o apoio técnico especializado da EngMarq Solution para adequar a IEADERN — Mossoró e protegê-la de passivos trabalhistas.
                 </p>
 
                 <div class="alert-box" style="text-align: left; max-width: 450px; margin: 0 auto 25px;">
                     <h4><i class="fas fa-gavel"></i> Não deixe para depois</h4>
-                    <p>Empresas sem PGR, PCMSO e LTCAT atualizados estão sujeitas a multas, embargos, processos trabalhistas e ações regressivas do INSS por acidentes e doenças ocupacionais.</p>
+                    <p>Organizações que não realizarem a avaliação estão sujeitas a multas, autuações e responsabilização em processos trabalhistas relacionados à saúde mental dos colaboradores.</p>
                 </div>
 
                 <div class="contact-info">
@@ -996,22 +888,22 @@
                     <p class="signature-text">
                         <strong>EngMarq Solution</strong><br>
                         Engenharia de Segurança e Saúde do Trabalho<br>
-                        <em>Garantindo segurança jurídica para sua empresa.</em>
+                        <em>Garantindo segurança jurídica para sua organização.</em>
                     </p>
                 </div>
             </div>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">14</span>
+                <span class="page-number">13</span>
             </div>
         </div>
 
-        <!-- ====== PÁGINA 15: TERMO DE ACEITE E ASSINATURAS ====== -->
+        <!-- ====== PÁGINA 14: TERMO DE ACEITE E ASSINATURAS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta Comercial - Kit de Programas | TM0071</span>
+                <span class="page-header-title">Proposta Comercial - Riscos Psicossociais | TM0080</span>
             </div>
 
             <h2 class="section-title">
@@ -1021,7 +913,7 @@
 
             <div class="info-box" style="margin-bottom: 15px;">
                 <h4><i class="fas fa-check-circle"></i> Declaração de Aceite</h4>
-                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços de elaboração do Kit de Programas (PGR, PCMSO e LTCAT).</p>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços de Avaliação de Fatores de Riscos Psicossociais.</p>
             </div>
 
             <!-- EngMarq -->
@@ -1041,23 +933,23 @@
             <!-- Empresa contratante -->
             <div style="background: var(--light-color); border-radius: 10px; padding: 15px; margin-bottom: 12px;">
                 <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 13px; margin-bottom: 10px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 8px;">
-                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> CONTRATANTE — ML4 Empreendimentos Imobiliarios SPE LTDA
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> CONTRATANTE — IEADERN — Filial Mossoró/RN
                 </h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; font-size: 10px;">
-                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Razão Social</span><br><strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong></div>
-                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">CNPJ</span><br><strong>30.206.782/0001-80</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Razão Social</span><br><strong>Igreja Evangélica Assembleia de Deus no RN — IEADERN</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">CNPJ</span><br><strong>08.332.785/0030-46</strong></div>
                 </div>
                 <div style="border-bottom: 1px solid var(--dark-color); margin: 12px auto 4px; height: 30px; max-width: 500px;"></div>
                 <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura do Representante Legal</p>
             </div>
 
             <div style="margin-top: 10px; text-align: center; font-size: 9px; color: var(--gray-color);">
-                Natal - RN, 29 de Maio de 2026
+                Mossoró - RN, 29 de Maio de 2026
             </div>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
-                <span class="page-number">15</span>
+                <span class="page-number">14</span>
             </div>
         </div>
 
@@ -1069,14 +961,11 @@
         }
 
         document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-                // permitir comportamento padrão de impressão
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                generatePDF();
             }
         });
-
-        console.log('📄 EngMarq Solution - Proposta TM0071: Kit de Programas (PGR, PCMSO, LTCAT) - ML4 Empreendimentos Imobiliarios SPE LTDA');
-        console.log('💡 Clique em "Gerar PDF" ou pressione Ctrl+P');
-        console.log('✅ Selecione "Salvar como PDF" na janela de impressão');
     </script>
 </body>
 </html>

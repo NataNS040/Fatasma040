@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Entregáveis — Casa das Festas · ML4 · ML2 | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body { font-family: var(--font-secondary); color: var(--dark-color); line-height: 1.6; background: #e2e8f0; }
+
+        /* ── PDF CONTROLS ── */
+        .pdf-controls {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: var(--white-color); padding: 18px; border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15); max-width: 260px;
+        }
+        .btn-generate {
+            background: var(--primary-color); color: var(--white-color);
+            padding: 13px 20px; border: none; border-radius: 8px;
+            font-family: var(--font-primary); font-weight: 600; font-size: 14px;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            transition: all 0.3s ease; width: 100%; justify-content: center;
+        }
+        .btn-generate:hover { background: var(--secondary-color); transform: translateY(-2px); }
+        .pdf-instructions { margin-top: 12px; padding: 12px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .pdf-instructions h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 6px; }
+        .pdf-instructions ol { font-size: 11px; line-height: 1.6; color: var(--dark-color); padding-left: 16px; margin: 0; }
+        .pdf-instructions li { margin-bottom: 3px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        /* ── LAYOUT ── */
+        #pdf-content { width: 210mm; margin: 0 auto; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
+
+        .page {
+            width: 210mm; height: 297mm; min-height: 297mm; max-height: 297mm;
+            padding: 14mm 15mm 22mm 15mm;
+            page-break-after: always; position: relative;
+            background: var(--white-color); box-sizing: border-box; overflow: hidden;
+        }
+        .page:last-child { page-break-after: auto; }
+
+        /* ── CAPA ── */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 22mm 20mm; position: relative; overflow: hidden;
+        }
+        .page-cover::before {
+            content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%;
+            background: radial-gradient(ellipse, rgba(245, 166, 35, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .cover-logo { width: 170px; margin-bottom: 25px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
+        .cover-badge {
+            background: rgba(245, 166, 35, 0.9); color: var(--white-color);
+            padding: 9px 22px; border-radius: 20px; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;
+            display: inline-flex; align-items: center; gap: 8px; position: relative; z-index: 1;
+        }
+        .cover-icon {
+            width: 58px; height: 58px; background: rgba(245, 166, 35, 0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; position: relative; z-index: 1;
+        }
+        .cover-icon i { font-size: 26px; color: var(--secondary-color); }
+        .cover-title {
+            font-family: var(--font-primary); font-size: 24px; font-weight: 800;
+            margin-bottom: 12px; line-height: 1.25; position: relative; z-index: 1;
+        }
+        .cover-title span { color: var(--secondary-color); display: block; }
+        .cover-subtitle {
+            font-size: 13px; font-weight: 300; margin-bottom: 28px; opacity: 0.9;
+            max-width: 420px; margin-left: auto; margin-right: auto;
+            position: relative; z-index: 1; line-height: 1.5;
+        }
+        .cover-clients-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+            position: relative; z-index: 1; margin-bottom: 22px; width: 100%;
+        }
+        .cover-client-card {
+            background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+            padding: 12px 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18);
+            text-align: center;
+        }
+        .cover-client-icon { font-size: 18px; color: var(--secondary-color); margin-bottom: 6px; }
+        .cover-client-ref { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.75; margin-bottom: 4px; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 11px; font-weight: 700; color: var(--secondary-color); line-height: 1.3; }
+        .cover-client-sub { font-size: 9px; opacity: 0.8; margin-top: 3px; }
+        .cover-date { font-size: 11px; opacity: 0.75; position: relative; z-index: 1; }
+        .cover-footer {
+            position: absolute; bottom: 14mm; left: 0; right: 0; text-align: center;
+            font-size: 10px; opacity: 0.65; padding: 0 15mm;
+        }
+
+        /* ── HEADER / FOOTER ── */
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 8px; margin-bottom: 12px; border-bottom: 2px solid var(--light-color);
+        }
+        .page-header-logo { height: 30px; }
+        .page-header-title { font-family: var(--font-primary); font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; }
+        .page-footer {
+            position: absolute; bottom: 12mm; left: 15mm; right: 15mm;
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 7px; border-top: 1px solid var(--light-color);
+            font-size: 9.5px; color: var(--gray-color); background: var(--white-color); z-index: 10;
+        }
+        .page-number { font-weight: 600; color: var(--primary-color); }
+
+        /* ── TIPOGRAFIA ── */
+        .section-number {
+            display: inline-block; background: var(--secondary-color); color: var(--white-color);
+            width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 11px; margin-right: 9px;
+        }
+        .section-title {
+            font-family: var(--font-primary); font-size: 17px; font-weight: 700; color: var(--primary-color);
+            margin-bottom: 12px; display: flex; align-items: center; padding-bottom: 9px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+        .section-title-text { flex: 1; }
+        .subsection-title {
+            font-family: var(--font-primary); font-size: 12px; font-weight: 700; color: var(--primary-color);
+            margin: 12px 0 7px; display: flex; align-items: center; gap: 7px;
+        }
+        .subsection-title i { color: var(--secondary-color); }
+
+        p { margin-bottom: 7px; text-align: justify; font-size: 11px; line-height: 1.5; }
+
+        /* ── CAIXAS ── */
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color); padding: 10px 12px;
+            margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .info-box h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .info-box p { margin-bottom: 0; font-size: 10.5px; line-height: 1.4; }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color); padding: 9px 12px;
+            margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .alert-box h4 { font-family: var(--font-primary); font-size: 11px; color: var(--alert-color); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .alert-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color); padding: 10px 12px;
+            margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .green-box h4 { font-family: var(--font-primary); font-size: 11px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .green-box p { margin-bottom: 0; font-size: 10.5px; line-height: 1.4; }
+
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+            border-left: 4px solid var(--purple-color); padding: 10px 12px;
+            margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .purple-box h4 { font-family: var(--font-primary); font-size: 11px; color: var(--purple-color); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .purple-box p { margin-bottom: 0; font-size: 10.5px; line-height: 1.4; }
+
+        /* ── BANNER DO CLIENTE ── */
+        .client-banner {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #234876 100%);
+            color: var(--white-color); padding: 12px 16px; border-radius: 8px;
+            display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+        }
+        .client-banner-icon {
+            width: 42px; height: 42px; background: rgba(245,166,35,0.2);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: var(--secondary-color); flex-shrink: 0;
+        }
+        .client-banner-info { flex: 1; }
+        .client-banner-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8; margin-bottom: 2px; }
+        .client-banner-name { font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); }
+        .client-banner-sub { font-size: 10px; opacity: 0.85; margin-top: 2px; }
+        .client-banner-badge {
+            background: var(--secondary-color); color: var(--white-color);
+            padding: 5px 12px; border-radius: 12px; font-family: var(--font-primary);
+            font-size: 10px; font-weight: 700; text-align: center; flex-shrink: 0;
+        }
+        .client-banner-badge small { display: block; font-size: 8px; font-weight: 400; opacity: 0.9; }
+
+        /* ── ENTREGÁVEIS ── */
+        .deliverables-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0; }
+        .deliverable-item {
+            display: flex; align-items: flex-start; gap: 9px;
+            padding: 9px 10px; background: var(--light-color); border-radius: 7px;
+        }
+        .deliverable-icon {
+            width: 28px; height: 28px; background: var(--secondary-color);
+            border-radius: 5px; display: flex; align-items: center; justify-content: center;
+            color: var(--white-color); font-size: 12px; flex-shrink: 0;
+        }
+        .deliverable-icon.green { background: var(--success-color); }
+        .deliverable-icon.purple { background: var(--purple-color); }
+        .deliverable-icon.blue { background: var(--primary-color); }
+        .deliverable-text h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 2px; }
+        .deliverable-text p { font-size: 9px; margin-bottom: 0; line-height: 1.35; color: var(--gray-color); }
+
+        /* ── CHECKLIST ── */
+        .checklist { list-style: none; margin: 8px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+        .checklist li {
+            padding: 4px 0 4px 20px; position: relative;
+            font-size: 10.5px; border-bottom: 1px solid var(--light-color);
+        }
+        .checklist li:last-child, .checklist li:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+        .checklist li::before {
+            content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            position: absolute; left: 0; color: var(--success-color); font-size: 9px; top: 5px;
+        }
+        .checklist li.purple::before { color: var(--purple-color); }
+        .checklist li.blue::before { color: var(--primary-color); }
+
+        /* ── TABELA DE RESUMO ── */
+        .summary-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 10.5px; }
+        .summary-table thead tr { background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white; }
+        .summary-table th { padding: 9px 10px; text-align: left; border: 1px solid #e2e8f0; font-family: var(--font-primary); font-weight: 600; font-size: 10px; }
+        .summary-table td { padding: 8px 10px; border: 1px solid #e2e8f0; line-height: 1.4; }
+        .summary-table tbody tr:nth-child(even) { background: #f8fafc; }
+        .summary-table td.center { text-align: center; }
+        .summary-table td.value { text-align: center; font-weight: 700; color: var(--success-color); font-family: var(--font-primary); font-size: 12px; }
+        .summary-table tr.total td { background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white; font-weight: 700; font-family: var(--font-primary); }
+        .summary-table tr.total td.value { color: var(--secondary-color); font-size: 14px; }
+
+        /* ── TAG ── */
+        .tag {
+            display: inline-block; padding: 2px 8px; border-radius: 10px;
+            font-family: var(--font-primary); font-size: 9px; font-weight: 600;
+        }
+        .tag-blue { background: #ebf8ff; color: var(--primary-color); border: 1px solid #bee3f8; }
+        .tag-green { background: #f0fff4; color: var(--success-color); border: 1px solid #c6f6d5; }
+        .tag-orange { background: #fef5e7; color: #c05621; border: 1px solid #fbd38d; }
+        .tag-purple { background: #faf5ff; color: var(--purple-color); border: 1px solid #e9d8fd; }
+
+        /* ── DIVIDER ── */
+        .divider { border: none; border-top: 1px solid var(--light-color); margin: 11px 0; }
+
+        /* ── PÁGINA FINAL ── */
+        .final-page {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 50%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20mm;
+        }
+        .final-page::before {
+            content: ''; position: absolute; top: -50%; left: -30%; width: 80%; height: 200%;
+            background: radial-gradient(ellipse, rgba(245, 166, 35, 0.10) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .final-logo { width: 140px; margin-bottom: 22px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
+        .final-title { font-family: var(--font-primary); font-size: 18px; font-weight: 700; margin-bottom: 8px; position: relative; z-index: 1; }
+        .final-subtitle { font-size: 11px; opacity: 0.85; margin-bottom: 24px; position: relative; z-index: 1; max-width: 340px; }
+        .final-contacts { display: flex; flex-direction: column; gap: 9px; position: relative; z-index: 1; margin-bottom: 22px; }
+        .final-contact-item { display: flex; align-items: center; gap: 10px; font-size: 12px; justify-content: center; }
+        .final-contact-item i { color: var(--secondary-color); width: 18px; }
+        .final-divider { width: 60px; height: 3px; background: var(--secondary-color); border-radius: 2px; margin: 18px auto; position: relative; z-index: 1; }
+        .final-slogan { font-family: var(--font-primary); font-size: 13px; font-style: italic; opacity: 0.9; position: relative; z-index: 1; }
+
+        /* ── PRINT ── */
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                width: 210mm !important; height: 297mm !important;
+                min-height: 297mm !important; max-height: 297mm !important;
+                margin: 0 !important; padding: 14mm 15mm 20mm 15mm !important;
+                box-sizing: border-box !important; overflow: hidden !important; position: relative !important;
+            }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover, .final-page { padding: 18mm !important; }
+            .page-footer { position: absolute !important; bottom: 8mm !important; left: 15mm !important; right: 15mm !important; font-size: 9px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+
+<div class="pdf-controls">
+    <button class="btn-generate" onclick="window.print()">
+        <i class="fas fa-file-pdf"></i>
+        Gerar PDF
+    </button>
+    <div class="pdf-instructions">
+        <h4><i class="fas fa-info-circle"></i> Como salvar em PDF:</h4>
+        <ol>
+            <li>Clique no botão acima</li>
+            <li>Selecione <strong>"Salvar como PDF"</strong></li>
+            <li>Clique em <strong>"Salvar"</strong></li>
+        </ol>
+    </div>
+</div>
+
+<div id="pdf-content">
+
+    <!-- ══════════════════════════════════════════
+         PÁGINA 1 — CAPA
+    ══════════════════════════════════════════ -->
+    <div class="page page-cover">
+        <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+        <span class="cover-badge">
+            <i class="fas fa-clipboard-check"></i>
+            Relatório de Entregáveis
+        </span>
+
+        <div class="cover-icon">
+            <i class="fas fa-folder-open"></i>
+        </div>
+
+        <h1 class="cover-title">
+            Entregáveis dos Serviços
+            <span>Contratados</span>
+        </h1>
+
+        <p class="cover-subtitle">
+            Relação técnica dos documentos e entregáveis previstos para cada cliente,
+            conforme proposta aprovada.
+        </p>
+
+        <div class="cover-clients-grid">
+            <div class="cover-client-card">
+                <div class="cover-client-icon"><i class="fas fa-store"></i></div>
+                <div class="cover-client-ref">Cliente</div>
+                <div class="cover-client-name">Casa das Festas</div>
+                <div class="cover-client-sub">E A Medeiros - ME</div>
+            </div>
+            <div class="cover-client-card">
+                <div class="cover-client-icon"><i class="fas fa-building"></i></div>
+                <div class="cover-client-ref">TM0071</div>
+                <div class="cover-client-name">ML4 Empreendimentos</div>
+                <div class="cover-client-sub">Kit de Programas</div>
+            </div>
+            <div class="cover-client-card">
+                <div class="cover-client-icon"><i class="fas fa-hard-hat"></i></div>
+                <div class="cover-client-ref">TM0079</div>
+                <div class="cover-client-name">ML2 — Grupo ML</div>
+                <div class="cover-client-sub">Kit de Programas</div>
+            </div>
+        </div>
+
+        <p class="cover-date"><i class="fas fa-calendar-alt" style="color: var(--secondary-color); margin-right: 6px;"></i>Junho / 2026</p>
+
+        <div class="cover-footer">
+            <p>EngMarq Solution · engmarqsolution@gmail.com · +55 84 99928-5888 · @engmarq_solution</p>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         PÁGINA 2 — RESUMO GERAL
+    ══════════════════════════════════════════ -->
+    <div class="page">
+        <div class="page-header">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+            <span class="page-header-title">Relatório de Entregáveis — Junho/2026</span>
+        </div>
+
+        <h2 class="section-title">
+            <span class="section-number">1</span>
+            <span class="section-title-text">Visão Geral dos Contratos</span>
+        </h2>
+
+        <p>Este relatório apresenta os documentos e entregáveis técnicos previstos para cada cliente, conforme escopo acordado em proposta. Os serviços abrangem elaboração de programas obrigatórios de SST em conformidade com as NRs e legislação previdenciária vigente.</p>
+
+        <table class="summary-table" style="margin-top: 14px;">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Ref.</th>
+                    <th>Serviço</th>
+                    <th class="center">Colabs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <strong>Casa das Festas</strong><br>
+                        <span style="font-size: 9px; color: var(--gray-color);">E A Medeiros - ME (CNPJ 25.145.514/0001-66)</span>
+                    </td>
+                    <td><span class="tag tag-purple">—</span></td>
+                    <td>Kit SST + Psicossocial<br><span style="font-size: 9px; color: var(--gray-color);">PGR · LTCAT · PCMSO · Psicossocial</span></td>
+                    <td class="center">Até 7</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>ML4 Empreendimentos</strong><br>
+                        <span style="font-size: 9px; color: var(--gray-color);">ML4 Empreendimentos Imobiliarios SPE LTDA (30.206.782/0001-80)</span>
+                    </td>
+                    <td><span class="tag tag-blue">TM0071</span></td>
+                    <td>Kit de Programas SST<br><span style="font-size: 9px; color: var(--gray-color);">PGR · PCMSO · LTCAT · ART</span></td>
+                    <td class="center">54 funções</td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>ML2 — Grupo ML</strong><br>
+                        <span style="font-size: 9px; color: var(--gray-color);">ML2 Grupo ML Empreendimentos (28.090.722/0001-01)</span>
+                    </td>
+                    <td><span class="tag tag-green">TM0079</span></td>
+                    <td>Kit de Programas SST<br><span style="font-size: 9px; color: var(--gray-color);">PGR · PCMSO · LIP · ART</span></td>
+                    <td class="center">—</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-box" style="margin-top: 14px;">
+            <h4><i class="fas fa-info-circle"></i> Observação sobre o pacote conjunto</h4>
+            <p>A Casa das Festas (E A Medeiros - ME) integra um <strong>pacote conjunto</strong> que inclui também a <strong>Distribuidora Medeiros de Produtos LTDA</strong> (até 5 colaboradores), abrangendo PGR + LTCAT + PCMSO + Avaliação de Fatores Psicossociais para ambas as empresas.</p>
+        </div>
+
+        <hr class="divider">
+
+        <h3 class="subsection-title"><i class="fas fa-clock"></i> Prazo de Execução</h3>
+        <p>Todos os serviços serão entregues em até <strong>30 dias úteis</strong> após a aprovação da proposta e fornecimento das informações necessárias pelo cliente. Os pagamentos seguem o modelo <strong>50% na aprovação + 50% na entrega</strong>.</p>
+
+        <h3 class="subsection-title"><i class="fas fa-shield-alt"></i> Responsabilidade Técnica</h3>
+        <p>Todos os documentos são elaborados com <strong>responsabilidade técnica de Engenheiro de Segurança do Trabalho (CREA)</strong> e <strong>Médico do Trabalho (CRM)</strong>, com emissão de ART onde aplicável. Suporte técnico garantido por <strong>60 dias</strong> após a entrega.</p>
+
+        <div class="page-footer">
+            <span>EngMarq Solution · engmarqsolution@gmail.com · +55 84 99928-5888</span>
+            <span class="page-number">02</span>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         PÁGINA 3 — CASA DAS FESTAS
+    ══════════════════════════════════════════ -->
+    <div class="page">
+        <div class="page-header">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+            <span class="page-header-title">Relatório de Entregáveis — Junho/2026</span>
+        </div>
+
+        <h2 class="section-title">
+            <span class="section-number">2</span>
+            <span class="section-title-text">Entregáveis — Casa das Festas</span>
+        </h2>
+
+        <div class="client-banner">
+            <div class="client-banner-icon"><i class="fas fa-store"></i></div>
+            <div class="client-banner-info">
+                <div class="client-banner-label">Cliente</div>
+                <div class="client-banner-name">E A Medeiros - ME (Casa das Festas)</div>
+                <div class="client-banner-sub">CNPJ 25.145.514/0001-66 · Natal/RN · Até 7 colaboradores</div>
+            </div>
+            <div class="client-banner-badge">
+                Kit SST<br>
+                <small>+ Psicossocial</small>
+            </div>
+        </div>
+
+        <p>Ao final dos trabalhos, a <strong>Casa das Festas (E A Medeiros - ME)</strong> receberá os seguintes documentos técnicos, integrados ao escopo do Kit SST + Avaliação de Fatores de Riscos Psicossociais, em conformidade com a NR-01, NR-07 e IN 128/INSS.</p>
+
+        <h3 class="subsection-title"><i class="fas fa-hard-hat"></i> Kit Programas SST</h3>
+
+        <div class="deliverables-grid">
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-clipboard-list"></i></div>
+                <div class="deliverable-text">
+                    <h4>PGR — Programa de Gerenciamento de Riscos</h4>
+                    <p>Inventário de riscos completo com classificação, plano de ação, medidas de controle, cronograma e responsáveis (NR-01).</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-file-medical-alt"></i></div>
+                <div class="deliverable-text">
+                    <h4>LTCAT — Laudo Técnico das Condições Ambientais</h4>
+                    <p>Caracterização de exposição a agentes nocivos, enquadramento para aposentadoria especial e recomendações para o PPP.</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-heartbeat"></i></div>
+                <div class="deliverable-text">
+                    <h4>PCMSO — Programa de Controle Médico</h4>
+                    <p>Programa completo com matriz de exames ocupacionais por função e diretrizes de vigilância à saúde (NR-07).</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-table"></i></div>
+                <div class="deliverable-text">
+                    <h4>Matriz de Riscos por Função</h4>
+                    <p>Tabela consolidada com riscos, medidas de controle e exames por cada função da empresa.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="subsection-title"><i class="fas fa-brain"></i> Avaliação de Fatores de Riscos Psicossociais</h3>
+
+        <div class="deliverables-grid">
+            <div class="deliverable-item">
+                <div class="deliverable-icon purple"><i class="fas fa-file-alt"></i></div>
+                <div class="deliverable-text">
+                    <h4>Relatório Técnico de Fatores de Riscos Psicossociais</h4>
+                    <p>Diagnóstico organizacional, análise qualitativa, classificação por criticidade e mapeamento por setor/função.</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon purple"><i class="fas fa-tasks"></i></div>
+                <div class="deliverable-text">
+                    <h4>Plano de Ação Preventivo e Corretivo</h4>
+                    <p>Recomendações técnicas com medidas de controle, prazos sugeridos e priorização conforme matriz de risco.</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon purple"><i class="fas fa-clipboard-check"></i></div>
+                <div class="deliverable-text">
+                    <h4>AEP — Avaliação Ergonômica Preliminar</h4>
+                    <p>Análise das condições ergonômicas correlacionadas aos fatores psicossociais identificados.</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon purple"><i class="fas fa-chalkboard-teacher"></i></div>
+                <div class="deliverable-text">
+                    <h4>Palestra de Conscientização</h4>
+                    <p>Palestra sobre fatores de riscos psicossociais no ambiente de trabalho para sensibilização dos colaboradores.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert-box" style="margin-top: 10px;">
+            <h4><i class="fas fa-exclamation-triangle"></i> O que NÃO está incluso no escopo</h4>
+            <p>• Exames médicos ocupacionais (ASO) • Treinamentos de SST • Fornecimento de EPIs • Avaliações quantitativas (medições instrumentais) • Acompanhamento psicológico individual • Assessoria mensal • Revisões anuais dos programas (disponíveis como serviço adicional)</p>
+        </div>
+
+        <div class="page-footer">
+            <span>EngMarq Solution · engmarqsolution@gmail.com · +55 84 99928-5888</span>
+            <span class="page-number">03</span>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         PÁGINA 4 — ML4 EMPREENDIMENTOS
+    ══════════════════════════════════════════ -->
+    <div class="page">
+        <div class="page-header">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+            <span class="page-header-title">Relatório de Entregáveis — Junho/2026</span>
+        </div>
+
+        <h2 class="section-title">
+            <span class="section-number">3</span>
+            <span class="section-title-text">Entregáveis — ML4 Empreendimentos</span>
+        </h2>
+
+        <div class="client-banner">
+            <div class="client-banner-icon"><i class="fas fa-building"></i></div>
+            <div class="client-banner-info">
+                <div class="client-banner-label">Proposta TM0071</div>
+                <div class="client-banner-name">ML4 Empreendimentos Imobiliarios SPE LTDA</div>
+                <div class="client-banner-sub">CNPJ 30.206.782/0001-80 · 54 funções identificadas · Construção Civil</div>
+            </div>
+            <div class="client-banner-badge">
+                Kit SST<br>
+                <small>PGR · PCMSO · LTCAT</small>
+            </div>
+        </div>
+
+        <p>Ao final dos trabalhos, a <strong>ML4 Empreendimentos Imobiliarios SPE LTDA</strong> receberá os seguintes documentos técnicos em conformidade com a NR-01, NR-07 e legislação previdenciária vigente (IN 128/INSS e Decreto 3.048/99).</p>
+
+        <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos</h3>
+
+        <div class="deliverables-grid">
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="deliverable-text">
+                    <h4>PGR — Programa de Gerenciamento de Riscos</h4>
+                    <p>Inventário de riscos das 54 funções identificadas, plano de ação, classificação por matriz de criticidade e cronograma de monitoramento (NR-01).</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-user-md"></i></div>
+                <div class="deliverable-text">
+                    <h4>PCMSO — Programa de Controle Médico</h4>
+                    <p>Diretrizes médicas, exames ocupacionais por função e procedimentos de saúde, com coordenação de Médico do Trabalho (NR-07).</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-file-medical"></i></div>
+                <div class="deliverable-text">
+                    <h4>LTCAT — Laudo Técnico das Condições Ambientais</h4>
+                    <p>Caracterização técnica da exposição a agentes nocivos para fins previdenciários (Decreto 3.048/99 e IN INSS 128/2022).</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon blue"><i class="fas fa-stamp"></i></div>
+                <div class="deliverable-text">
+                    <h4>ART — Anotação de Responsabilidade Técnica</h4>
+                    <p>Registro no CREA com responsabilidade técnica do Engenheiro de Segurança do Trabalho, garantindo validade legal dos documentos.</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-clipboard-list"></i></div>
+                <div class="deliverable-text">
+                    <h4>Inventário de Riscos por Função</h4>
+                    <p>Mapa detalhado de riscos para cada uma das 54 funções identificadas, com classificação e medidas de controle.</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-tasks"></i></div>
+                <div class="deliverable-text">
+                    <h4>Plano de Ação Preventivo</h4>
+                    <p>Recomendações técnicas com medidas de controle, prazos sugeridos e priorização conforme criticidade identificada.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="subsection-title"><i class="fas fa-user-tie"></i> Equipe Técnica Responsável</h3>
+        <ul class="checklist" style="grid-template-columns: 1fr;">
+            <li>Engenheiro de Segurança do Trabalho com registro no CREA (responsável técnico)</li>
+            <li>Médico do Trabalho registrado no CRM (coordenação do PCMSO)</li>
+            <li>Técnico de Segurança do Trabalho registrado no MTE</li>
+            <li class="blue">Equipe com experiência em construção civil e canteiros de obras</li>
+        </ul>
+
+        <div class="alert-box" style="margin-top: 10px;">
+            <h4><i class="fas fa-exclamation-triangle"></i> O que NÃO está incluso no escopo</h4>
+            <p>• Exames médicos ocupacionais (ASO) • Medições ambientais quantitativas (ruído, calor, agentes químicos) • Avaliação de Riscos Psicossociais • Treinamentos NR · CIPA · Brigada · NR-18 · NR-35 • Envio de eventos ao eSocial • Acompanhamento mensal (disponível como serviço adicional)</p>
+        </div>
+
+        <div class="page-footer">
+            <span>EngMarq Solution · engmarqsolution@gmail.com · +55 84 99928-5888</span>
+            <span class="page-number">04</span>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         PÁGINA 5 — ML2 GRUPO ML
+    ══════════════════════════════════════════ -->
+    <div class="page">
+        <div class="page-header">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+            <span class="page-header-title">Relatório de Entregáveis — Junho/2026</span>
+        </div>
+
+        <h2 class="section-title">
+            <span class="section-number">4</span>
+            <span class="section-title-text">Entregáveis — ML2 Grupo ML Empreendimentos</span>
+        </h2>
+
+        <div class="client-banner">
+            <div class="client-banner-icon"><i class="fas fa-hard-hat"></i></div>
+            <div class="client-banner-info">
+                <div class="client-banner-label">Proposta TM0079</div>
+                <div class="client-banner-name">ML2 — Grupo ML Empreendimentos</div>
+                <div class="client-banner-sub">CNPJ 28.090.722/0001-01 · Construção Civil, Incorporação e Serviços</div>
+            </div>
+            <div class="client-banner-badge">
+                Kit SST<br>
+                <small>PGR · PCMSO · LIP</small>
+            </div>
+        </div>
+
+        <p>Ao final dos trabalhos, a <strong>ML2 — Grupo ML Empreendimentos</strong> receberá os seguintes documentos técnicos em conformidade com a NR-01, NR-07, NR-15 e NR-16.</p>
+
+        <div class="green-box" style="margin-bottom: 12px;">
+            <h4><i class="fas fa-info-circle"></i> Diferencial em relação ao ML4</h4>
+            <p>O ML2 recebe <strong>LIP (Laudo de Insalubridade e Periculosidade)</strong> no lugar do LTCAT. O LIP caracteriza enquadramento trabalhista (NR-15/NR-16), enquanto o LTCAT tem finalidade previdenciária. Caso necessário, o LTCAT pode ser contratado separadamente.</p>
+        </div>
+
+        <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos</h3>
+
+        <div class="deliverables-grid">
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="deliverable-text">
+                    <h4>PGR — Programa de Gerenciamento de Riscos</h4>
+                    <p>Inventário de riscos ocupacionais por função, plano de ação, classificação por matriz de criticidade e cronograma de monitoramento (NR-01).</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-user-md"></i></div>
+                <div class="deliverable-text">
+                    <h4>PCMSO — Programa de Controle Médico</h4>
+                    <p>Diretrizes médicas, exames ocupacionais por função e procedimentos de saúde, com coordenação de Médico do Trabalho (NR-07).</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon green"><i class="fas fa-file-medical-alt"></i></div>
+                <div class="deliverable-text">
+                    <h4>LIP — Laudo de Insalubridade e Periculosidade</h4>
+                    <p>Caracterização técnica da exposição a agentes insalubres e condições perigosas por função, com conclusão de enquadramento (NR-15/NR-16).</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon blue"><i class="fas fa-stamp"></i></div>
+                <div class="deliverable-text">
+                    <h4>ART — Anotação de Responsabilidade Técnica</h4>
+                    <p>Registro no CREA com responsabilidade técnica do Engenheiro de Segurança do Trabalho, garantindo validade legal dos documentos.</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-clipboard-list"></i></div>
+                <div class="deliverable-text">
+                    <h4>Inventário de Riscos por Função</h4>
+                    <p>Mapa detalhado de riscos para cada função identificada, com classificação e medidas de controle recomendadas.</p>
+                </div>
+            </div>
+            <div class="deliverable-item">
+                <div class="deliverable-icon"><i class="fas fa-tasks"></i></div>
+                <div class="deliverable-text">
+                    <h4>Plano de Ação Preventivo</h4>
+                    <p>Recomendações técnicas com medidas de controle, prazos sugeridos e priorização conforme criticidade identificada.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="subsection-title"><i class="fas fa-user-tie"></i> Equipe Técnica Responsável</h3>
+        <ul class="checklist" style="grid-template-columns: 1fr;">
+            <li>Engenheiro de Segurança do Trabalho com registro no CREA (responsável técnico e signatário do LIP)</li>
+            <li>Médico do Trabalho registrado no CRM (coordenação do PCMSO)</li>
+            <li>Técnico de Segurança do Trabalho registrado no MTE</li>
+            <li class="blue">Equipe com experiência em construção civil, operações industriais e fábricas de blocos/concreto</li>
+        </ul>
+
+        <div class="alert-box" style="margin-top: 10px;">
+            <h4><i class="fas fa-exclamation-triangle"></i> O que NÃO está incluso no escopo</h4>
+            <p>• Exames médicos ocupacionais (ASO) • Medições ambientais quantitativas (ruído, calor, agentes químicos) • LTCAT para fins previdenciários • Avaliação de Riscos Psicossociais • Treinamentos NR · CIPA · Brigada · NR-18 · NR-35 • Envio de eventos ao eSocial • Acompanhamento mensal (disponível como serviço adicional)</p>
+        </div>
+
+        <div class="page-footer">
+            <span>EngMarq Solution · engmarqsolution@gmail.com · +55 84 99928-5888</span>
+            <span class="page-number">05</span>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         PÁGINA 6 — COMPARATIVO E CONDIÇÕES
+    ══════════════════════════════════════════ -->
+    <div class="page">
+        <div class="page-header">
+            <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+            <span class="page-header-title">Relatório de Entregáveis — Junho/2026</span>
+        </div>
+
+        <h2 class="section-title">
+            <span class="section-number">5</span>
+            <span class="section-title-text">Comparativo de Entregáveis</span>
+        </h2>
+
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>Entregável</th>
+                    <th class="center">Casa das Festas</th>
+                    <th class="center">ML4 — TM0071</th>
+                    <th class="center">ML2 — TM0079</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>PGR</strong> — Programa de Gerenciamento de Riscos</td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>PCMSO</strong> — Programa de Controle Médico</td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>LTCAT</strong> — Laudo Técnico das Condições Ambientais</td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>LIP</strong> — Laudo de Insalubridade e Periculosidade</td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Matriz de Riscos por Função</strong></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Plano de Ação Preventivo</strong></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>ART</strong> — Anotação de Responsabilidade Técnica (CREA)</td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Relatório Técnico Psicossocial</strong></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--purple-color);"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Plano de Ação Psicossocial</strong></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--purple-color);"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>AEP</strong> — Avaliação Ergonômica Preliminar</td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--purple-color);"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Palestra de Conscientização Psicossocial</strong></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--purple-color);"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                    <td class="center"><i class="fas fa-times-circle" style="color: #cbd5e0;"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Visita Técnica Presencial</strong></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                </tr>
+                <tr>
+                    <td><strong>Suporte Técnico Pós-Entrega (60 dias)</strong></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                    <td class="center"><i class="fas fa-check-circle" style="color: var(--success-color);"></i></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="display: flex; gap: 12px; margin-top: 10px; font-size: 9.5px; color: var(--gray-color);">
+            <span><i class="fas fa-check-circle" style="color: var(--success-color);"></i> Incluso no escopo</span>
+            <span><i class="fas fa-check-circle" style="color: var(--purple-color);"></i> Incluso (Psicossocial)</span>
+            <span><i class="fas fa-times-circle" style="color: #cbd5e0;"></i> Não incluso</span>
+            <span style="margin-left: 6px;">* Pacote conjunto com Distribuidora Medeiros</span>
+        </div>
+
+        <hr class="divider">
+
+        <h3 class="subsection-title"><i class="fas fa-sync-alt"></i> Vigência dos Documentos</h3>
+        <ul class="checklist" style="grid-template-columns: 1fr;">
+            <li><strong>PGR:</strong> vigência de até 2 anos, com revisão anual obrigatória</li>
+            <li><strong>PCMSO:</strong> vigência anual</li>
+            <li><strong>LTCAT / LIP:</strong> deve ser revisto sempre que houver alteração nas condições ambientais ou nos processos produtivos</li>
+        </ul>
+
+        <div class="page-footer">
+            <span>EngMarq Solution · engmarqsolution@gmail.com · +55 84 99928-5888</span>
+            <span class="page-number">06</span>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════
+         PÁGINA 7 — ENCERRAMENTO
+    ══════════════════════════════════════════ -->
+    <div class="page final-page">
+        <img src="assets/logoengmarq.png" alt="EngMarq Solution" class="final-logo">
+
+        <h2 class="final-title">EngMarq Solution</h2>
+        <p class="final-subtitle">Engenharia de Segurança e Saúde do Trabalho</p>
+
+        <div class="final-divider"></div>
+
+        <div class="final-contacts">
+            <div class="final-contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>engmarqsolution@gmail.com</span>
+            </div>
+            <div class="final-contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>+55 84 99928-5888</span>
+            </div>
+            <div class="final-contact-item">
+                <i class="fab fa-instagram"></i>
+                <span>@engmarq_solution</span>
+            </div>
+        </div>
+
+        <div class="final-divider"></div>
+
+        <p class="final-slogan">"SST que garante Segurança Jurídica."</p>
+
+        <div class="cover-footer" style="opacity: 0.6;">
+            <p>Relatório gerado em Junho/2026 · Uso interno</p>
+        </div>
+    </div>
+
+</div><!-- /#pdf-content -->
+
+</body>
+</html>
