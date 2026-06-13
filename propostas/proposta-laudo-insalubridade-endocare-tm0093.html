@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0093 - Laudo de Insalubridade | Endocare Serviços em Saúde | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --orange-color: #dd6b20;
+            --teal-color: #2c7a7b;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body { font-family: var(--font-secondary); color: var(--dark-color); line-height: 1.6; background: #e2e8f0; }
+
+        .pdf-controls {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: var(--white-color); padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15); max-width: 280px;
+        }
+        .btn-generate {
+            background: var(--primary-color); color: var(--white-color); padding: 15px 30px;
+            border: none; border-radius: 8px; font-family: var(--font-primary); font-weight: 600;
+            font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            transition: all 0.3s ease; width: 100%; justify-content: center;
+        }
+        .btn-generate:hover { background: var(--secondary-color); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245,166,35,0.4); }
+        .pdf-instructions { margin-top: 15px; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .pdf-instructions h4 { font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); margin-bottom: 8px; }
+        .pdf-instructions ol { font-size: 12px; line-height: 1.6; color: var(--dark-color); padding-left: 18px; margin: 0; }
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        #pdf-content { width: 210mm; margin: 0 auto; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
+
+        .page {
+            width: 210mm; height: 297mm; min-height: 297mm; max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm; page-break-after: always; position: relative;
+            background: var(--white-color); box-sizing: border-box; overflow: hidden;
+        }
+        .page:last-child { page-break-after: auto; }
+
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 10px; margin-bottom: 12px; border-bottom: 2px solid var(--light-color);
+        }
+        .page-header-logo { height: 35px; }
+        .page-header-title { font-family: var(--font-primary); font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; }
+
+        .page-footer {
+            position: absolute; bottom: 15mm; left: 15mm; right: 15mm;
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 8px; border-top: 1px solid var(--light-color);
+            font-size: 10px; color: var(--gray-color); background: var(--white-color); z-index: 10;
+        }
+        .page-number { font-weight: 600; color: var(--primary-color); }
+
+        /* CAPA */
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 25mm 20mm; position: relative; overflow: hidden;
+        }
+        .page-cover::before {
+            content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%;
+            background: radial-gradient(ellipse, rgba(245,166,35,0.08) 0%, transparent 60%); pointer-events: none;
+        }
+        .cover-logo { width: 180px; margin-bottom: 30px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
+        .cover-badge {
+            background: rgba(245,166,35,0.85); color: var(--white-color); padding: 10px 25px;
+            border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 20px; display: inline-flex; align-items: center;
+            justify-content: center; gap: 8px; position: relative; z-index: 1;
+        }
+        .cover-icon {
+            width: 60px; height: 60px; background: rgba(245,166,35,0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            position: relative; z-index: 1;
+        }
+        .cover-icon i { font-size: 28px; color: var(--secondary-color); }
+        .cover-title { font-family: var(--font-primary); font-size: 26px; font-weight: 800; margin-bottom: 15px; line-height: 1.25; position: relative; z-index: 1; }
+        .cover-title span { color: var(--secondary-color); display: block; }
+        .cover-subtitle { font-size: 13px; font-weight: 300; margin-bottom: 25px; opacity: 0.95; max-width: 450px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; line-height: 1.5; }
+        .cover-client {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 18px 35px;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); position: relative;
+            z-index: 1; margin: 0 auto; max-width: 480px; width: 100%;
+        }
+        .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 8px; text-align: center; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; color: var(--secondary-color); text-align: center; margin-bottom: 4px; }
+        .cover-client-sub { font-family: var(--font-primary); font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.75); text-align: center; margin-bottom: 0; }
+        .cover-date { margin-top: 20px; font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
+        .cover-footer {
+            position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center;
+            font-size: 10px; opacity: 0.7; padding: 0 18mm;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .cover-footer p { margin: 0; text-align: center; width: 100%; }
+
+        /* Títulos */
+        .section-number {
+            display: inline-block; background: var(--secondary-color); color: var(--white-color);
+            width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 12px; margin-right: 10px;
+        }
+        .section-title {
+            font-family: var(--font-primary); font-size: 17px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 12px; display: flex; align-items: center;
+            padding-bottom: 8px; border-bottom: 3px solid var(--secondary-color);
+        }
+        .section-title-text { flex: 1; }
+        .subsection-title {
+            font-family: var(--font-primary); font-size: 12px; font-weight: 700;
+            color: var(--primary-color); margin: 10px 0 7px; display: flex; align-items: center; gap: 8px;
+        }
+        .subsection-title i { color: var(--secondary-color); }
+        p { margin-bottom: 8px; text-align: justify; font-size: 11px; line-height: 1.5; }
+
+        /* Boxes */
+        .highlight-box { background: linear-gradient(135deg,#fef5e7 0%,#fdebd0 100%); border-left: 4px solid var(--secondary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .highlight-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; }
+        .highlight-box strong { color: var(--primary-color); }
+        .info-box { background: linear-gradient(135deg,#ebf8ff 0%,#bee3f8 100%); border-left: 4px solid var(--primary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .info-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .info-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .green-box { background: linear-gradient(135deg,#f0fff4 0%,#c6f6d5 100%); border-left: 4px solid var(--success-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .green-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .teal-box { background: linear-gradient(135deg,#e6fffa 0%,#b2f5ea 100%); border-left: 4px solid var(--teal-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .teal-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--teal-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .teal-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .alert-box { background: linear-gradient(135deg,#fff5f5 0%,#fed7d7 100%); border-left: 4px solid var(--alert-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .alert-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--alert-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .alert-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .feature-list { list-style: none; margin: 10px 0; }
+        .feature-list li { padding: 5px 0; padding-left: 22px; position: relative; font-size: 11px; border-bottom: 1px solid var(--light-color); }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--success-color); font-size: 10px; }
+
+        .factors-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin: 10px 0; }
+        .factor-card { background: var(--light-color); padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--secondary-color); }
+        .factor-card h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+        .factor-card h4 i { color: var(--secondary-color); font-size: 11px; }
+        .factor-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
+
+        .conditions-list { margin: 10px 0; }
+        .condition-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--light-color); }
+        .condition-item:last-child { border-bottom: none; }
+        .condition-icon { width: 26px; height: 26px; background: var(--light-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 11px; flex-shrink: 0; }
+        .condition-text strong { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); display: block; margin-bottom: 2px; }
+        .condition-text span { font-size: 10px; color: var(--gray-color); line-height: 1.3; }
+
+        .company-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .company-info-item { padding: 7px 10px; background: var(--light-color); border-radius: 6px; border-left: 3px solid var(--secondary-color); }
+        .company-info-item label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-color); font-weight: 600; display: block; margin-bottom: 3px; }
+        .company-info-item span { font-size: 11px; color: var(--dark-color); font-weight: 500; }
+
+        .responsible-card { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); padding: 18px; border-radius: 10px; color: var(--white-color); text-align: center; margin: 15px 0; }
+        .responsible-avatar { width: 60px; height: 60px; background: rgba(245,166,35,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; color: var(--secondary-color); border: 2px solid var(--secondary-color); }
+        .responsible-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; margin-bottom: 3px; text-align: center; }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; text-align: center; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; text-align: center; }
+        .responsible-contacts { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+        .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
+        .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
+
+        /* Tabela investimento */
+        .inv-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+        .inv-table thead tr { background: #2c5282; color: white; }
+        .inv-table thead th { padding: 8px 12px; font-family: var(--font-primary); font-size: 10px; font-weight: 600; text-align: left; border: 1px solid #2c5282; }
+        .inv-table thead th.right { text-align: right; }
+        .inv-table tbody tr:nth-child(even) { background: var(--light-color); }
+        .inv-table tbody tr:nth-child(odd) { background: white; }
+        .inv-table tbody td { padding: 7px 12px; border: 1px solid #e2e8f0; font-size: 10px; color: var(--dark-color); }
+        .inv-table tbody td.right { text-align: right; font-weight: 600; color: var(--primary-color); }
+        .inv-table tbody td.center { text-align: center; }
+        .inv-table tbody td.sub { font-size: 8.5px; color: var(--gray-color); padding-top: 2px; }
+        .inv-table tbody tr.total-row { background: var(--primary-color); }
+        .inv-table tbody tr.total-row td { color: white; font-weight: 700; font-family: var(--font-primary); font-size: 11px; border-color: var(--primary-color); }
+        .inv-table tbody tr.total-row td.right { color: var(--secondary-color); font-size: 15px; }
+        .inv-table tbody tr.incluso-row td { font-size: 10px; color: var(--success-color); font-weight: 600; }
+
+        /* Funções grid */
+        .funcoes-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 10px 0; }
+        .funcao-card { background: var(--light-color); border-radius: 8px; padding: 10px; text-align: center; border-top: 3px solid var(--primary-color); }
+        .funcao-card .num { font-family: var(--font-primary); font-size: 22px; font-weight: 800; color: var(--secondary-color); line-height: 1; }
+        .funcao-card .label { font-size: 10px; color: var(--gray-color); margin-top: 2px; }
+        .funcao-card .role { font-family: var(--font-primary); font-size: 11px; font-weight: 700; color: var(--primary-color); margin-top: 4px; }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                width: 210mm !important; height: 297mm !important; min-height: 297mm !important;
+                max-height: 297mm !important; margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important; box-sizing: border-box !important;
+                overflow: hidden !important; position: relative !important;
+            }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover { padding: 20mm 18mm 18mm 18mm !important; }
+            .page-footer { position: absolute !important; bottom: 8mm !important; left: 15mm !important; right: 15mm !important; font-size: 9px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i> Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;">TM0093</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-microscope"></i>
+                Laudo de Insalubridade — LIP
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-flask"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Laudo de Insalubridade</span>
+            </h1>
+            <p class="cover-subtitle">
+                Avaliação técnica das condições ambientais de trabalho e elaboração do Laudo de Insalubridade e Periculosidade (LIP) conforme NR-15 e Portaria MTb nº 3.214/78
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Endocare Serviços em Saúde Ltda</p>
+                <p class="cover-client-sub">CNPJ: 40.593.069/0001-90</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;10 de Junho de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0093 — Laudo de Insalubridade | Endocare Serviços em Saúde</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <div class="company-info-grid" style="margin-top:6px;">
+                <div class="company-info-item">
+                    <label>Razão Social</label>
+                    <span>Endocare Serviços em Saúde Ltda</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>40.593.069/0001-90</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Ramo de Atividade</label>
+                    <span>Serviços em Saúde / Clínica Médica</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Total de Colaboradores</label>
+                    <span>20 (entre sócias e colaboradores)</span>
+                </div>
+                <div class="company-info-item" style="grid-column:1/-1;">
+                    <label>Endereço</label>
+                    <span>A definir</span>
+                </div>
+            </div>
+
+            <!-- Quadro de funções -->
+            <h3 class="subsection-title" style="margin-top:14px;"><i class="fas fa-users"></i> Composição do Quadro Funcional</h3>
+
+            <div class="funcoes-grid">
+                <div class="funcao-card">
+                    <div class="num">13</div>
+                    <div class="role">Médicos</div>
+                    <div class="label">Corpo clínico</div>
+                </div>
+                <div class="funcao-card">
+                    <div class="num">3</div>
+                    <div class="role">Nutricionistas</div>
+                    <div class="label">Saúde nutricional</div>
+                </div>
+                <div class="funcao-card">
+                    <div class="num">3</div>
+                    <div class="role">Atendentes</div>
+                    <div class="label">Recepção / Adm.</div>
+                </div>
+                <div class="funcao-card">
+                    <div class="num">1</div>
+                    <div class="role">ASG</div>
+                    <div class="label">Auxiliar de serv. gerais</div>
+                </div>
+                <div class="funcao-card" style="grid-column:2/4;border-top-color:var(--secondary-color);">
+                    <div class="num" style="color:var(--primary-color);">20</div>
+                    <div class="role" style="color:var(--dark-color);">Total de Colaboradores</div>
+                    <div class="label">Incluindo sócias</div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top:14px;"><i class="fas fa-user-tie"></i> Responsável pelo Recebimento da Proposta</h3>
+            <div class="company-info-grid" style="margin-top:6px;">
+                <div class="company-info-item">
+                    <label>Nome do Responsável</label>
+                    <span>A definir</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Cargo / Função</label>
+                    <span>A definir</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Telefone / WhatsApp</label>
+                    <span>A definir</span>
+                </div>
+                <div class="company-info-item">
+                    <label>E-mail</label>
+                    <span>A definir</span>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top:16px;">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Sobre a Proposta</span>
+            </h2>
+
+            <p>Esta proposta tem por objeto a elaboração do <strong>Laudo de Insalubridade e Periculosidade (LIP)</strong> para a empresa <strong>Endocare Serviços em Saúde Ltda</strong>, abrangendo a avaliação técnica de todos os postos de trabalho e funções existentes no ambiente de saúde, com identificação, mensuração e classificação dos agentes insalubres conforme determina a <strong>NR-15</strong> e a Portaria MTb nº 3.214/78.</p>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-file-alt"></i> Serviço:</strong> Elaboração do Laudo de Insalubridade e Periculosidade (LIP) — entrega única, com emissão de ART pelo Engenheiro de Segurança do Trabalho junto ao CREA.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: DESCRIÇÃO DO SERVIÇO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0093 — Laudo de Insalubridade | Endocare Serviços em Saúde</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Laudo de Insalubridade — O que é e por que é obrigatório</span>
+            </h2>
+
+            <p>O <strong>Laudo de Insalubridade e Periculosidade (LIP)</strong> é um documento técnico obrigatório por lei, elaborado por <strong>Engenheiro de Segurança do Trabalho ou Médico do Trabalho</strong>, que atesta a existência ou não de agentes insalubres nos ambientes de trabalho e define quais funções fazem jus ao recebimento do <strong>adicional de insalubridade</strong>.</p>
+
+            <div class="alert-box" style="margin-bottom:10px;">
+                <h4><i class="fas fa-exclamation-triangle"></i> Obrigatoriedade Legal</h4>
+                <p>A CLT (art. 190 e 192) e a NR-15 determinam que toda empresa que possua atividades ou operações insalubres deve ter o laudo elaborado por profissional habilitado. A ausência do documento expõe a empresa a passivos trabalhistas e autuações do MTE.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-search"></i> Agentes Avaliados no Ambiente de Saúde</h3>
+
+            <div class="factors-grid">
+                <div class="factor-card" style="border-left-color:var(--alert-color);">
+                    <h4><i class="fas fa-biohazard" style="color:var(--alert-color);"></i> Agentes Biológicos</h4>
+                    <p>Contato com sangue, fluidos corporais, materiais perfurocortantes e micro-organismos patogênicos — risco inerente a médicos, nutricionistas e ASG (NR-15, Anexo 14).</p>
+                </div>
+                <div class="factor-card" style="border-left-color:var(--orange-color);">
+                    <h4><i class="fas fa-flask" style="color:var(--orange-color);"></i> Agentes Químicos</h4>
+                    <p>Exposição a produtos de limpeza, desinfetantes, antissépticos e substâncias químicas utilizadas em procedimentos clínicos e higienização de superfícies.</p>
+                </div>
+                <div class="factor-card" style="border-left-color:var(--primary-color);">
+                    <h4><i class="fas fa-volume-up" style="color:var(--primary-color);"></i> Agentes Físicos</h4>
+                    <p>Verificação de ruído, calor e outros agentes físicos presentes nas áreas de atendimento, procedimentos e utilidades da clínica.</p>
+                </div>
+                <div class="factor-card" style="border-left-color:var(--teal-color);">
+                    <h4><i class="fas fa-radiation" style="color:var(--teal-color);"></i> Outros Fatores</h4>
+                    <p>Avaliação de demais condições ambientais pertinentes às atividades de saúde, incluindo ergonomia relevante para determinação de insalubridade.</p>
+                </div>
+            </div>
+
+            <h3 class="subsection-title" style="margin-top:12px;"><i class="fas fa-list-ol"></i> Metodologia de Execução</h3>
+            <ul class="feature-list">
+                <li>Vistoria técnica presencial nas dependências da Endocare Serviços em Saúde Ltda</li>
+                <li>Levantamento e análise dos postos de trabalho e funções de todos os 20 colaboradores</li>
+                <li>Identificação e avaliação qualitativa/quantitativa dos agentes insalubres presentes (físicos, químicos e biológicos)</li>
+                <li>Comparação dos resultados com os limites de tolerância estabelecidos pela NR-15 e seus Anexos</li>
+                <li>Classificação das funções por grau de insalubridade: Mínimo (10%), Médio (20%) ou Máximo (40%)</li>
+                <li>Emissão do Laudo Técnico assinado por Engenheiro de Segurança do Trabalho com ART</li>
+                <li>Entrega do documento em formato digital (PDF) e físico, conforme solicitação</li>
+            </ul>
+
+            <h3 class="subsection-title" style="margin-top:10px;"><i class="fas fa-stamp"></i> ART — Anotação de Responsabilidade Técnica</h3>
+            <div class="teal-box">
+                <h4><i class="fas fa-certificate"></i> Validade Jurídica Garantida</h4>
+                <p>O Laudo de Insalubridade é acompanhado da <strong>ART emitida pelo Engenheiro de Segurança do Trabalho junto ao CREA</strong>, conferindo plena validade jurídica ao documento, em conformidade com a Súmula 448 do TST e a NR-15.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: ENTREGÁVEIS E BENEFÍCIOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0093 — Laudo de Insalubridade | Endocare Serviços em Saúde</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Entregáveis do Serviço</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:10px;">
+                <h4><i class="fas fa-box-open"></i> O que será entregue ao final do serviço</h4>
+                <p>Ao término da avaliação técnica, a Endocare Serviços em Saúde Ltda receberá um laudo completo e juridicamente válido, pronto para apresentação em fiscalizações do MTE, processos trabalhistas e auditorias internas.</p>
+            </div>
+
+            <ul class="feature-list">
+                <li><strong>Laudo de Insalubridade e Periculosidade (LIP)</strong> — documento técnico completo com análise de todos os postos de trabalho e funções</li>
+                <li><strong>Mapeamento de funções insalubres</strong> — listagem clara de quais cargos fazem jus ao adicional e em qual grau (mínimo, médio ou máximo)</li>
+                <li><strong>Descrição dos agentes nocivos identificados</strong> — fundamentação técnica e normativa de cada agente avaliado</li>
+                <li><strong>ART do Engenheiro de Segurança do Trabalho</strong> — emitida junto ao CREA/RN, incluída no custo do serviço</li>
+                <li><strong>Arquivo digital em PDF</strong> — assinado eletronicamente e com ART anexa, para guarda e apresentação imediata</li>
+                <li><strong>Recomendações técnicas</strong> — medidas de controle para redução ou eliminação dos agentes insalubres identificados</li>
+            </ul>
+
+            <h2 class="section-title" style="margin-top:16px;">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Benefícios para a Endocare</span>
+            </h2>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-gavel"></i> Conformidade Legal</h4>
+                    <p>Atendimento à CLT (art. 190/192) e à NR-15, evitando autuações, multas e embargos do MTE.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-balance-scale"></i> Segurança Jurídica</h4>
+                    <p>Defesa sólida em reclamações trabalhistas por adicional de insalubridade indevido ou mal calculado.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-money-bill-wave"></i> Controle de Passivos</h4>
+                    <p>Definição precisa de quem tem direito ao adicional, evitando pagamentos excessivos ou retroativos.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-shield-alt"></i> Proteção ao Trabalhador</h4>
+                    <p>Identificação de riscos e recomendações para melhoria das condições de trabalho de toda a equipe.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-file-contract"></i> Documento Atualizado</h4>
+                    <p>Laudo atualizado conforme as funções e o ambiente atual da clínica, refletindo a realidade do quadro funcional.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-clock"></i> Entrega Ágil</h4>
+                    <p>Processo desburocratizado com prazo de entrega acordado após a vistoria técnica presencial.</p>
+                </div>
+            </div>
+
+            <div class="green-box" style="margin-top:10px;">
+                <h4><i class="fas fa-lightbulb"></i> Atenção — Setor de Saúde</h4>
+                <p>Clínicas médicas e serviços de saúde possuem exposição a agentes biológicos enquadrados no <strong>grau máximo (40%)</strong> da NR-15 para diversas funções. O laudo garante que a empresa pague apenas o que é legalmente devido, com respaldo técnico e documental.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0093 — Laudo de Insalubridade | Endocare Serviços em Saúde</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="highlight-box" style="margin-bottom:12px;">
+                <p style="margin:0;"><strong><i class="fas fa-file-alt"></i> Serviço:</strong> Elaboração do Laudo de Insalubridade e Periculosidade (LIP) — Endocare Serviços em Saúde Ltda — 20 colaboradores</p>
+            </div>
+
+            <table class="inv-table">
+                <thead>
+                    <tr>
+                        <th style="width:55%;">Descrição do Serviço</th>
+                        <th class="right center" style="width:15%;">Colaboradores</th>
+                        <th class="right" style="width:30%;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>Laudo de Insalubridade e Periculosidade (LIP)</strong><br>
+                            <span class="sub">Vistoria técnica presencial · avaliação de todos os postos de trabalho · elaboração do laudo técnico completo</span>
+                        </td>
+                        <td class="center">20</td>
+                        <td class="right">R$ 1.500,00</td>
+                    </tr>
+                    <tr class="incluso-row">
+                        <td><i class="fas fa-check" style="margin-right:6px;"></i> ART — Anotação de Responsabilidade Técnica (CREA)</td>
+                        <td class="center">—</td>
+                        <td class="right">Inclusa</td>
+                    </tr>
+                    <tr class="incluso-row">
+                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Arquivo digital em PDF assinado</td>
+                        <td class="center">—</td>
+                        <td class="right">Incluso</td>
+                    </tr>
+                    <tr class="incluso-row">
+                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Recomendações técnicas de controle dos agentes</td>
+                        <td class="center">—</td>
+                        <td class="right">Incluso</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="2"><strong>VALOR TOTAL DO SERVIÇO</strong></td>
+                        <td class="right">R$ 1.500,00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="background:#ebf8ff;border:1px solid #bee3f8;border-radius:10px;padding:14px 18px;margin-top:14px;text-align:center;">
+                <p style="font-family:var(--font-primary);font-size:11px;font-weight:700;color:var(--primary-color);margin:0 0 4px;">VALOR TOTAL</p>
+                <p style="font-size:28px;font-weight:800;color:var(--primary-color);margin:0;">R$ 1.500,00</p>
+                <p style="font-size:10px;color:var(--gray-color);margin:4px 0 0;">Pagamento único — entrega após realização da vistoria técnica</p>
+            </div>
+
+            <h2 class="section-title" style="margin-top:18px;">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Condições de Contratação</span>
+            </h2>
+
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>Pagamento em 2 etapas (50/50): 50% na confirmação da proposta e 50% na entrega do laudo.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="condition-text">
+                        <strong>Início dos Serviços</strong>
+                        <span>Os serviços têm início com o agendamento da vistoria técnica presencial, após a confirmação da proposta.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Entrega</strong>
+                        <span>O laudo será entregue em até 10 (dez) dias úteis contados da data da vistoria técnica.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta é válida por 15 (quinze) dias a partir da data de emissão.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: RESPONSÁVEL + ASSINATURAS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0093 — Laudo de Insalubridade | Endocare Serviços em Saúde</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">8</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
+                <p class="responsible-name">Thiago Marques</p>
+                <p class="responsible-role">Diretor</p>
+                <p class="responsible-company">EngMarq Solution</p>
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item"><i class="fab fa-whatsapp"></i><span>+55 84 99928-5888</span></div>
+                    <div class="responsible-contact-item"><i class="fas fa-envelope"></i><span>engmarqsolution@gmail.com</span></div>
+                    <div class="responsible-contact-item"><i class="fas fa-map-marker-alt"></i><span>Natal - RN</span></div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top:16px;">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite e Assinaturas</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom:14px;">
+                <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação do serviço de elaboração do Laudo de Insalubridade e Periculosidade.</p>
+            </div>
+
+            <!-- Proponente -->
+            <div style="background:var(--light-color);border-radius:10px;padding:16px;margin-bottom:12px;">
+                <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:13px;margin-bottom:10px;text-align:center;border-bottom:2px solid var(--purple-color);padding-bottom:8px;">
+                    <i class="fas fa-building" style="color:var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+                    <div>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Razão Social</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+                <p style="margin:0 0 12px 0;font-size:12px;font-weight:600;">Thiago Marques — Diretor</p>
+                <div style="padding-top:10px;border-top:1px dashed var(--gray-color);text-align:center;">
+                    <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 4px;height:28px;max-width:400px;"></div>
+                    <p style="margin:0;font-size:10px;color:var(--gray-color);text-align:center;">Assinatura do Proponente</p>
+                </div>
+            </div>
+
+            <!-- Aprovador -->
+            <div style="background:var(--light-color);border-radius:10px;padding:16px;">
+                <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:13px;margin-bottom:10px;text-align:center;border-bottom:2px solid var(--secondary-color);padding-bottom:8px;">
+                    <i class="fas fa-user-tie" style="color:var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
+                </h3>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                    <div>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Razão Social</p>
+                        <p style="margin:0;font-size:11px;font-weight:600;">Endocare Serviços em Saúde Ltda</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
+                        <p style="margin:0;font-size:11px;font-weight:600;">40.593.069/0001-90</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Nome do Responsável</p>
+                        <p style="margin:0;font-size:11px;font-weight:600;">A definir</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Cargo / Função</p>
+                        <p style="margin:0;font-size:11px;font-weight:600;">A definir</p>
+                    </div>
+                </div>
+                <div style="padding-top:10px;border-top:1px dashed var(--gray-color);text-align:center;">
+                    <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 4px;height:28px;max-width:400px;"></div>
+                    <p style="margin:0;font-size:10px;color:var(--gray-color);text-align:center;">Assinatura do Aprovador</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() { window.print(); }
+    </script>
+</body>
+</html>

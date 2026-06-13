@@ -625,6 +625,29 @@ section {
     font-weight: 600;
 }
 
+/* Variante: SST que gera Economia */
+.juridica-highlight-economia {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.18) 0%, rgba(46, 204, 113, 0.05) 100%);
+    border-color: #2ecc71;
+}
+
+.juridica-highlight-economia::before {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+}
+
+.juridica-icon-economia {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.45);
+}
+
+.juridica-highlight-economia .juridica-content h3 {
+    color: #2ecc71;
+}
+
+.juridica-highlight-economia .juridica-content h3 i {
+    color: #f5a623;
+}
+
 .hero-buttons {
     display: flex;
     gap: 1rem;
@@ -1117,6 +1140,108 @@ section {
 .card-label {
     font-size: 0.875rem;
     color: var(--gray-color);
+}
+
+/* ============================================
+   Parceiros Section
+   ============================================ */
+.parceiros {
+    padding: 5rem 0 4rem;
+    background: var(--white-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.parceiros-marquee {
+    margin-top: 3rem;
+    overflow: hidden;
+    position: relative;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+.parceiros-track {
+    display: flex;
+    align-items: center;
+    gap: 3.5rem;
+    width: max-content;
+    animation: parceiros-scroll 35s linear infinite;
+}
+
+.parceiros-marquee:hover .parceiros-track {
+    animation-play-state: paused;
+}
+
+.parceiro-logo {
+    flex: 0 0 auto;
+    width: 170px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.25rem;
+    background: var(--white-color);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: var(--transition-normal);
+}
+
+.parceiro-logo:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(245, 166, 35, 0.4);
+}
+
+.parceiro-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(40%);
+    opacity: 0.85;
+    transition: var(--transition-normal);
+}
+
+.parceiro-logo:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.parceiros-cta-text {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    letter-spacing: 0.3px;
+}
+
+@keyframes parceiros-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+    .parceiro-logo {
+        width: 140px;
+        height: 85px;
+        padding: 0.75rem 1rem;
+    }
+    .parceiros-track {
+        gap: 2rem;
+        animation-duration: 28s;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .parceiros-track {
+        animation: none;
+    }
+    .parceiros-marquee {
+        overflow-x: auto;
+    }
 }
 
 /* ============================================
