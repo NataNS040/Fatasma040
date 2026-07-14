@@ -277,14 +277,14 @@
         </h3>
         <div class="cards-grid">
 
-            <a href="../gerador-encaminhamento-exame.html" class="tool-card card-saude">
+            <a href="/encaminhamento-exame" class="tool-card card-saude">
                 <div class="tool-icon"><i class="fas fa-notes-medical"></i></div>
                 <h3>Encaminhamento de Exame</h3>
                 <p>Gere encaminhamentos para exames ocupacionais com dados do colaborador, clínica e lista de exames necessários.</p>
                 <div class="tool-action">Abrir gerador <i class="fas fa-arrow-right"></i></div>
             </a>
 
-            <a href="./recibo.html" class="tool-card card-recibo">
+            <a href="/gerador-de-proposta/recibo.html" class="tool-card card-recibo">
                 <div class="tool-icon"><i class="fas fa-receipt"></i></div>
                 <h3>Gerador de Recibos</h3>
                 <p>Emita recibos timbrados rapidamente com os dados do colaborador e do serviço prestado.</p>
@@ -316,10 +316,10 @@
 
         const usuario = obterSessao();
         if (!usuario) {
-            window.location.href = './login.html';
+            window.location.href = '/gerador-de-proposta/login.html';
         } else if (usuario.cargo && usuario.cargo !== 'seguranca' && usuario.cargo !== 'admin') {
             // Outros cargos vão para o painel completo
-            window.location.href = './painel.html';
+            window.location.href = '/gerador-de-proposta/painel.html';
         } else {
             const nome = usuario.nome || usuario.email || 'Usuário';
             const primeiroNome = nome.split(' ')[0];
@@ -330,7 +330,7 @@
 
         function fazerLogout() {
             localStorage.removeItem(SESSION_KEY);
-            window.location.href = './login.html';
+            window.location.href = '/gerador-de-proposta/login.html';
         }
     </script>
 </body>

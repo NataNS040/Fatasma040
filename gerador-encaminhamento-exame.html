@@ -766,14 +766,14 @@
   (function verificarSessao() {
     const SESSION_KEY = 'engmarq_session';
     const token = localStorage.getItem(SESSION_KEY);
-    if (!token) { window.location.href = './gerador/login.html'; return; }
+    if (!token) { window.location.href = '/gerador-de-proposta/login.html'; return; }
     try {
       const payload = JSON.parse(atob(token));
       if (!payload?.exp || payload.exp < Date.now()) {
         localStorage.removeItem(SESSION_KEY);
-        window.location.href = './gerador/login.html';
+        window.location.href = '/gerador-de-proposta/login.html';
       }
-    } catch { window.location.href = './gerador/login.html'; }
+    } catch { window.location.href = '/gerador-de-proposta/login.html'; }
   })();
 
   montarExames();

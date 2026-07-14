@@ -87,9 +87,9 @@ loginForm?.addEventListener('submit', async (e) => {
         // Redirecionar conforme o cargo
         const cargo = resultadoLogin.usuario?.cargo;
         if (cargo === 'seguranca') {
-            window.location.href = './painel-seguranca.html';
+            window.location.href = '/gerador-de-proposta/painel-seguranca.html';
         } else {
-            window.location.href = './painel.html';
+            window.location.href = '/gerador-de-proposta/painel.html';
         }
     } else {
         btnLogin.classList.remove('loading');

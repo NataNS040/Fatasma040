@@ -22,6 +22,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         login: resolve(__dirname, 'login.html'),
         painel: resolve(__dirname, 'painel.html'),
+        'painel-seguranca': resolve(__dirname, 'painel-seguranca.html'),
         recibo: resolve(__dirname, 'recibo.html'),
         calculadora: resolve(__dirname, 'calculadora.html'),
         contrato: resolve(__dirname, 'contrato.html'),
