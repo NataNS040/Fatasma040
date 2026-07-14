@@ -471,10 +471,6 @@
         <input type="text" id="f-funcao" placeholder="Ex: Operador" />
       </div>
     </div>
-    <div class="form-group">
-      <label>Endereço do Colaborador</label>
-      <input type="text" id="f-endereco" placeholder="Rua, número, bairro, cidade - UF" />
-    </div>
     <div class="form-row">
       <div class="form-group">
         <label>Data do Exame</label>
@@ -567,12 +563,6 @@
             <span class="row-label">Função:</span>
             <span class="row-sep">|</span>
             <span class="row-value" id="prev-funcao">—</span>
-          </div>
-          <div class="doc-data-row">
-            <i class="fas fa-map-marker-alt row-icon"></i>
-            <span class="row-label">Endereço:</span>
-            <span class="row-sep">|</span>
-            <span class="row-value" id="prev-endereco">—</span>
           </div>
           <div class="doc-data-row">
             <i class="fas fa-calendar-check row-icon"></i>
@@ -727,7 +717,7 @@
 
   /* ─── Limpar formulário ──────────────────────────────────────── */
   function limparFormulario() {
-    ["f-nome","f-cpf","f-nascimento","f-funcao","f-endereco","f-data-exame","f-horario"].forEach(id => {
+    ["f-nome","f-cpf","f-nascimento","f-funcao","f-data-exame","f-horario"].forEach(id => {
       document.getElementById(id).value = "";
     });
     examesSelecionados.clear();
