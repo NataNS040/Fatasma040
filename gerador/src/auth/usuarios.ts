@@ -1,7 +1,7 @@
 import type { User } from '@supabase/supabase-js';
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabase';
 
-export type CargoUsuario = 'vendedor' | 'admin' | 'financeiro';
+export type CargoUsuario = 'vendedor' | 'admin' | 'financeiro' | 'seguranca';
 
 export interface Usuario {
     id: string;
@@ -44,11 +44,19 @@ export const usuariosAutorizados: Usuario[] = [
         senha: 'vendedor123',
         cargo: 'vendedor',
         ativo: true
+    },
+    {
+        id: '3',
+        nome: 'Equipe Segurança',
+        email: 'seguranca@engmarqsolution.com',
+        senha: 'seguranca2026',
+        cargo: 'seguranca',
+        ativo: true
     }
 ];
 
 function normalizarCargo(cargo: unknown): CargoUsuario {
-    if (cargo === 'admin' || cargo === 'financeiro') {
+    if (cargo === 'admin' || cargo === 'financeiro' || cargo === 'seguranca') {
         return cargo;
     }
     return 'vendedor';

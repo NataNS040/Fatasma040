@@ -84,8 +84,13 @@ loginForm?.addEventListener('submit', async (e) => {
             localStorage.removeItem('engmarq_email_salvo');
         }
 
-        // Redirecionar para o painel
-        window.location.href = './painel.html';
+        // Redirecionar conforme o cargo
+        const cargo = resultadoLogin.usuario?.cargo;
+        if (cargo === 'seguranca') {
+            window.location.href = './painel-seguranca.html';
+        } else {
+            window.location.href = './painel.html';
+        }
     } else {
         btnLogin.classList.remove('loading');
         btnLogin.disabled = false;
