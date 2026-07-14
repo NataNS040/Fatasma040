@@ -471,6 +471,22 @@
         <input type="text" id="f-funcao" placeholder="Ex: Operador" />
       </div>
     </div>
+    <div class="form-group">
+      <label>Tipo de ASO</label>
+      <select id="f-tipo-aso">
+        <option value="">Selecione o tipo...</option>
+        <option value="Admissional">Admissional</option>
+        <option value="Periódico">Periódico</option>
+        <option value="Demissional">Demissional</option>
+        <option value="Retorno ao Trabalho">Retorno ao Trabalho</option>
+        <option value="Mudança de Função">Mudança de Função</option>
+        <option value="__outro__">Outro (digitar)</option>
+      </select>
+    </div>
+    <div class="form-group" id="f-tipo-aso-outro-group" style="display:none">
+      <label>Especificar tipo</label>
+      <input type="text" id="f-tipo-aso-outro" placeholder="Descreva o tipo de ASO..." />
+    </div>
     <div class="form-row">
       <div class="form-group">
         <label>Data do Exame</label>
@@ -563,6 +579,12 @@
             <span class="row-label">Função:</span>
             <span class="row-sep">|</span>
             <span class="row-value" id="prev-funcao">—</span>
+          </div>
+          <div class="doc-data-row">
+            <i class="fas fa-file-medical row-icon"></i>
+            <span class="row-label">Tipo de ASO:</span>
+            <span class="row-sep">|</span>
+            <span class="row-value" id="prev-tipo-aso">—</span>
           </div>
           <div class="doc-data-row">
             <i class="fas fa-calendar-check row-icon"></i>
@@ -693,6 +715,12 @@
     document.getElementById("prev-cpf").textContent       = get("f-cpf")       || "—";
     document.getElementById("prev-nascimento").textContent = fmtData(get("f-nascimento"));
     document.getElementById("prev-funcao").textContent    = get("f-funcao")    || "—";
+
+    const tipoAso = get("f-tipo-aso");
+    const tipoAsoOutro = get("f-tipo-aso-outro");
+    document.getElementById("prev-tipo-aso").textContent =
+      tipoAso === "__outro__" ? (tipoAsoOutro || "—") : (tipoAso || "—");
+
     document.getElementById("prev-data-exame").textContent = fmtData(get("f-data-exame"));
     const hr = get("f-horario");
     document.getElementById("prev-horario").textContent   = hr || "—";
@@ -708,17 +736,26 @@
     }
   }
 
+  /* ─── Tipo ASO: mostrar/ocultar campo "outro" ───────────────── */
+  document.getElementById("f-tipo-aso").addEventListener("change", function () {
+    const grupo = document.getElementById("f-tipo-aso-outro-group");
+    grupo.style.display = this.value === "__outro__" ? "block" : "none";
+    atualizarPreview();
+  });
+
   /* ─── Listeners em todos os inputs ──────────────────────────── */
-  document.querySelectorAll("input[id^='f-'], textarea[id^='f-']").forEach(el => {
+  document.querySelectorAll("input[id^='f-'], textarea[id^='f-'], select[id^='f-']").forEach(el => {
     el.addEventListener("input", atualizarPreview);
     el.addEventListener("change", atualizarPreview);
   });
 
   /* ─── Limpar formulário ──────────────────────────────────────── */
   function limparFormulario() {
-    ["f-nome","f-cpf","f-nascimento","f-funcao","f-data-exame","f-horario"].forEach(id => {
+    ["f-nome","f-cpf","f-nascimento","f-funcao","f-tipo-aso-outro","f-data-exame","f-horario"].forEach(id => {
       document.getElementById(id).value = "";
     });
+    document.getElementById("f-tipo-aso").value = "";
+    document.getElementById("f-tipo-aso-outro-group").style.display = "none";
     examesSelecionados.clear();
     examesExtras = [];
     montarExames();
