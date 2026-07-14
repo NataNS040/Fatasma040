@@ -208,21 +208,25 @@
       align-items: center;
     }
 
-    /* ─── Document Card ────────────────────────────────────────────── */
+    /* ─── Document Card (A4) ───────────────────────────────────────── */
     .doc-card {
-      width: 480px;
+      width: 210mm;
+      min-height: 297mm;
       background: var(--white);
-      border-radius: 16px;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(13,46,92,.18);
+      box-shadow: 0 8px 32px rgba(13,46,92,.22);
+      display: flex;
+      flex-direction: column;
     }
 
     .doc-header-bar {
-      height: 7px;
+      height: 9px;
+      flex-shrink: 0;
       background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 100%);
     }
 
-    .doc-inner { padding: 26px 28px 22px; }
+    .doc-inner { padding: 36px 42px 28px; flex: 1; }
 
     /* Logo + title block */
     .doc-brand {
@@ -230,28 +234,18 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       gap: 6px;
     }
-    .doc-brand img { height: 100px; object-fit: contain; }
-    .doc-brand .brand-name {
-      font-family: "Montserrat", sans-serif;
-      font-size: 1.55rem;
-      font-weight: 800;
-      color: var(--navy);
-      letter-spacing: .02em;
-      line-height: 1;
-      margin-top: 2px;
-    }
-    .doc-brand .brand-name span { font-weight: 400; font-size: 1rem; letter-spacing: .18em; display: block; color: var(--navy); }
+    .doc-brand img { height: 90px; object-fit: contain; }
 
     .doc-title-block {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .doc-title-block h2 {
       font-family: "Montserrat", sans-serif;
-      font-size: 1.35rem;
+      font-size: 1.7rem;
       font-weight: 800;
       color: var(--navy);
       text-transform: uppercase;
@@ -260,8 +254,8 @@
     .doc-clinic-block {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin: 10px 0 18px;
+      gap: 12px;
+      margin: 12px 0 22px;
       position: relative;
     }
     .doc-clinic-block::before,
@@ -275,12 +269,12 @@
     .doc-clinic-block .clinic-info { text-align: center; white-space: nowrap; }
     .doc-clinic-block .clinic-name {
       font-family: "Montserrat", sans-serif;
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--teal);
     }
     .doc-clinic-block .clinic-sub {
-      font-size: .73rem;
+      font-size: .82rem;
       color: var(--muted);
     }
 
@@ -288,39 +282,39 @@
     .doc-section-header {
       background: var(--navy);
       color: #fff;
-      padding: 8px 14px;
+      padding: 10px 18px;
       border-radius: 8px;
       font-family: "Montserrat", sans-serif;
-      font-size: .82rem;
+      font-size: .92rem;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     /* Data rows */
     .doc-data-row {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      padding: 7px 4px;
+      gap: 12px;
+      padding: 9px 6px;
       border-bottom: 1px solid #edf1f5;
     }
     .doc-data-row:last-child { border-bottom: none; }
     .doc-data-row .row-icon {
       color: var(--navy);
-      width: 18px;
+      width: 20px;
       text-align: center;
       flex-shrink: 0;
       margin-top: 2px;
-      font-size: .85rem;
+      font-size: .92rem;
     }
     .doc-data-row .row-label {
-      font-size: .75rem;
+      font-size: .85rem;
       font-weight: 700;
       color: var(--navy);
-      min-width: 110px;
+      min-width: 130px;
       flex-shrink: 0;
     }
     .doc-data-row .row-sep {
@@ -328,7 +322,7 @@
       margin-top: 1px;
     }
     .doc-data-row .row-value {
-      font-size: .82rem;
+      font-size: .92rem;
       color: var(--text);
       flex: 1;
     }
@@ -336,73 +330,74 @@
     /* Exames list */
     .doc-exames-list {
       list-style: none;
-      padding: 4px 4px;
+      padding: 4px 6px;
     }
     .doc-exames-list li {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 0;
-      font-size: .82rem;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: .92rem;
       color: var(--text);
       border-bottom: 1px solid #edf1f5;
     }
     .doc-exames-list li:last-child { border-bottom: none; }
-    .doc-exames-list li i { color: var(--teal); font-size: .8rem; }
+    .doc-exames-list li i { color: var(--teal); font-size: .9rem; }
 
     /* Address block */
     .doc-address-block {
       background: #eef7f6;
       border: 1px solid #b2dbd7;
       border-radius: 8px;
-      padding: 10px 14px;
-      margin: 14px 0 0;
+      padding: 14px 18px;
+      margin: 18px 0 0;
       display: flex;
-      gap: 10px;
+      gap: 12px;
       align-items: flex-start;
     }
-    .doc-address-block i { color: var(--teal); margin-top: 2px; }
+    .doc-address-block i { color: var(--teal); margin-top: 2px; font-size: 1rem; }
     .doc-address-block .addr-content .addr-label {
-      font-size: .7rem;
+      font-size: .78rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: .05em;
       color: var(--teal2);
     }
     .doc-address-block .addr-content .addr-text {
-      font-size: .82rem;
+      font-size: .92rem;
       color: var(--text);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     /* Footer */
     .doc-footer {
       background: var(--navy);
       color: #fff;
-      padding: 12px 20px;
+      padding: 16px 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      margin-top: 20px;
+      gap: 5px;
+      flex-shrink: 0;
     }
     .doc-footer .footer-contact {
       font-family: "Montserrat", sans-serif;
-      font-size: .9rem;
+      font-size: 1rem;
       font-weight: 700;
     }
-    .doc-footer .footer-contact i { color: #25D366; margin-right: 5px; }
+    .doc-footer .footer-contact i { color: #25D366; margin-right: 6px; }
     .doc-footer .footer-tagline {
-      font-size: .72rem;
+      font-size: .8rem;
       opacity: .75;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    .no-exames-msg { font-size: .8rem; color: var(--muted); font-style: italic; padding: 4px; }
+    .no-exames-msg { font-size: .88rem; color: var(--muted); font-style: italic; padding: 4px; }
 
     /* ─── Print ──────────────────────────────────────────────────── */
+    @page { size: A4; margin: 0; }
     @media print {
       * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
       body { background: #fff; margin: 0; padding: 0; }
@@ -411,17 +406,15 @@
       .preview-area {
         padding: 0;
         background: #fff;
-        display: flex;
-        justify-content: center;
-        min-height: unset;
-        max-height: unset;
+        display: block;
         overflow: visible;
       }
       .doc-card {
         box-shadow: none;
         border-radius: 0;
-        width: 100%;
-        max-width: 520px;
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0 auto;
       }
       .doc-section-header { background: var(--navy) !important; color: #fff !important; }
       .doc-footer { background: var(--navy) !important; color: #fff !important; }
