@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0105 - PGR + PCMSO + LTCAT + Psicossocial | ARCO/RN | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions strong {
+            color: var(--secondary-color);
+        }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: var(--white-color);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+        }
+
+        .page-header-logo {
+            height: 35px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+        }
+
+        .page-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(245, 166, 35, 0.08) 0%, transparent 60%);
+            transform: rotate(35deg);
+        }
+
+        .cover-logo {
+            width: 170px;
+            margin-bottom: 24px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(245, 166, 35, 0.15);
+            border: 1px solid rgba(245, 166, 35, 0.4);
+            color: var(--secondary-color);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            z-index: 1;
+        }
+
+        .cover-icon {
+            font-size: 48px;
+            color: var(--secondary-color);
+            margin-bottom: 18px;
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.18;
+            margin-bottom: 15px;
+            z-index: 1;
+        }
+
+        .cover-title span {
+            display: block;
+            color: var(--secondary-color);
+            font-size: 22px;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .cover-subtitle {
+            font-size: 13px;
+            opacity: 0.92;
+            max-width: 540px;
+            margin: 0 auto 28px;
+            line-height: 1.5;
+            z-index: 1;
+        }
+
+        .cover-client {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px 28px;
+            margin-top: 8px;
+            z-index: 1;
+            max-width: 580px;
+        }
+
+        .cover-client-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+            margin: 0;
+        }
+
+        .cover-date {
+            margin-top: 28px;
+            font-size: 12px;
+            opacity: 0.85;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .section-number {
+            background: var(--secondary-color);
+            color: var(--white-color);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .section-title-text {
+            flex: 1;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title i {
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .highlight-box,
+        .info-box,
+        .green-box,
+        .purple-box {
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+            border-left: 4px solid var(--purple-color);
+        }
+
+        .highlight-box h4,
+        .info-box h4,
+        .green-box h4,
+        .purple-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .highlight-box h4 {
+            color: #b7791f;
+        }
+
+        .info-box h4 {
+            color: var(--primary-color);
+        }
+
+        .green-box h4 {
+            color: var(--success-color);
+        }
+
+        .purple-box h4 {
+            color: var(--purple-color);
+        }
+
+        .highlight-box p,
+        .info-box p,
+        .green-box p,
+        .purple-box p {
+            margin-bottom: 0;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 10px 0;
+        }
+
+        .feature-list li {
+            padding: 6px 0 6px 22px;
+            position: relative;
+            font-size: 11px;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .company-info-item {
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .company-info-item span {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .card {
+            background: var(--light-color);
+            border-radius: 8px;
+            padding: 10px 12px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .card h4 {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        .conditions-list {
+            margin: 12px 0;
+        }
+
+        .condition-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .condition-item:last-child {
+            border-bottom: none;
+        }
+
+        .condition-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--light-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .condition-text strong {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .condition-text span {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.3;
+        }
+
+        .contact-panel {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            border-radius: 12px;
+            padding: 20px;
+            color: var(--white-color);
+            margin-top: 18px;
+        }
+
+        .contact-panel h3 {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--white-color);
+        }
+
+        .contact-panel p {
+            text-align: left;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .contact-list {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        .contact-item i {
+            color: var(--secondary-color);
+            width: 16px;
+        }
+
+        @media print {
+            .pdf-controls {
+                display: none !important;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background: var(--white-color);
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            #pdf-content {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+
+            .page {
+                page-break-after: always !important;
+                width: 210mm !important;
+                min-height: 297mm !important;
+                margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important;
+                box-sizing: border-box !important;
+                position: relative !important;
+            }
+
+            .page:last-child {
+                page-break-after: auto !important;
+            }
+
+            .page-footer {
+                position: absolute !important;
+                bottom: 8mm !important;
+                left: 15mm !important;
+                right: 15mm !important;
+                font-size: 9px !important;
+            }
+        }
+
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botao acima</li>
+                <li>Selecione <strong>Salvar como PDF</strong></li>
+                <li>Clique em <strong>Salvar</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+        <div class="page page-cover">
+            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;z-index:1;">TM0105</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-building-shield"></i>
+                Associacao Recreativa
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-shield-heart"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Kit de Programas + Psicossocial</span>
+            </h1>
+
+            <p class="cover-subtitle">
+                Elaboracao do PGR, PCMSO, LTCAT e Avaliacao Psicossocial para atendimento das obrigacoes de seguranca e saude do trabalho da ARCO/RN, com base comercial para ate 5 colaboradores.
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">ARCO/RN</p>
+                <p style="font-size:10px;opacity:0.75;margin-top:5px;text-align:center;">Associacao Recreativa dos Funcionarios dos Correios-Arco/Rn · CNPJ 06.091.561/0001-20 · Sao Goncalo do Amarante/RN</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;24 de Junho de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Seguranca e Saude do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0105 - ARCO/RN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Identificacao da Empresa Contratante</span>
+            </h2>
+
+            <div class="company-info-grid">
+                <div class="company-info-item" style="grid-column:1/-1;">
+                    <label>Razao Social</label>
+                    <span>Associacao Recreativa dos Funcionarios dos Correios-Arco/Rn</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nome Fantasia</label>
+                    <span>ARCO/RN</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>06.091.561/0001-20</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Endereco</label>
+                    <span>Avenida Benedito Santana, 1956</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Bairro</label>
+                    <span>Amarante</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Municipio / UF</label>
+                    <span>Sao Goncalo do Amarante/RN</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CEP</label>
+                    <span>59296-515</span>
+                </div>
+                <div class="company-info-item" style="grid-column:1/-1;">
+                    <label>Base Comercial Considerada</label>
+                    <span>Ate 5 colaboradores</span>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top:14px;">
+                <h4><i class="fas fa-circle-info"></i>Objeto da Proposta</h4>
+                <p>Esta proposta contempla a contratacao avulsa do <strong>Kit de Programas de SST</strong>, composto por <strong>PGR, PCMSO e LTCAT</strong>, somado a <strong>Avaliacao Psicossocial</strong>, com foco em conformidade legal, organizacao documental e apoio preventivo a saude ocupacional da associacao.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4><i class="fas fa-bullseye"></i>Estrutura Comercial</h4>
+                <p><strong>Valor fechado:</strong> R$ 1.500,00 para elaboracao completa do pacote <strong>PGR + PCMSO + LTCAT + Psicossocial</strong>, limitado a uma base de <strong>ate 5 colaboradores</strong>.</p>
+            </div>
+
+            <div class="green-box">
+                <h4><i class="fas fa-scale-balanced"></i>Base Regulatoria</h4>
+                <p>O escopo foi estruturado para atendimento das exigencias da <strong>NR-01</strong>, <strong>NR-07</strong> e da legislacao previdenciaria aplicavel ao <strong>LTCAT</strong>, incluindo a leitura dos fatores de risco psicossociais integrados a gestao de SST.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0105 - ARCO/RN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Escopo do Pacote Contratado</span>
+            </h2>
+
+            <p>O servico sera executado como <strong>entrega avulsa</strong>, sem assessoria mensal recorrente, com levantamento das informacoes necessarias, consolidacao tecnica e emissao dos documentos correspondentes ao escopo comercial solicitado.</p>
+
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i>Itens inclusos</h3>
+            <ul class="feature-list">
+                <li><strong>PGR</strong> com inventario de riscos e plano de acao preventivo</li>
+                <li><strong>PCMSO</strong> com definicao dos exames ocupacionais aplicaveis conforme os riscos levantados</li>
+                <li><strong>LTCAT</strong> com caracterizacao tecnica das condicoes ambientais de trabalho para fins previdenciarios</li>
+                <li><strong>Avaliacao Psicossocial</strong> com aplicacao do instrumento, leitura dos resultados e consolidacao em relatorio tecnico</li>
+                <li><strong>Analise por funcao</strong> considerando a estrutura operacional informada pela contratante</li>
+                <li><strong>Base comercial limitada</strong> a ate 5 colaboradores</li>
+            </ul>
+
+            <div class="purple-box" style="margin-top:12px;">
+                <h4><i class="fas fa-file-contract"></i>Servico Pontual</h4>
+                <p>O pacote atende a necessidade atual de estruturacao documental da empresa. Eventuais demandas recorrentes, como gestao mensal de eSocial, treinamentos periodicos ou revisoes por ampliacao de quadro, poderao ser contratadas em escopo complementar.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-gears"></i>Fluxo resumido de execucao</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h4><i class="fas fa-clipboard"></i>Levantamento</h4>
+                    <p>Coleta das informacoes da empresa, funcoes, ambientes e rotinas de trabalho.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-magnifying-glass-chart"></i>Analise</h4>
+                    <p>Leitura tecnica dos riscos ocupacionais e dos fatores psicossociais aplicaveis.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-file-lines"></i>Elaboracao</h4>
+                    <p>Emissao dos programas e do relatorio psicossocial integrados ao escopo contratado.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-folder-open"></i>Entrega</h4>
+                    <p>Disponibilizacao dos documentos finais para guarda, consulta e apresentacao quando necessario.</p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0105 - ARCO/RN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">O Que Esta Sendo Entregue</span>
+            </h2>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h4><i class="fas fa-shield-alt"></i>PGR</h4>
+                    <p>Programa de Gerenciamento de Riscos com identificacao de perigos, avaliacao dos riscos ocupacionais e plano de acao com medidas preventivas e corretivas.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-heart-pulse"></i>PCMSO</h4>
+                    <p>Programa de Controle Medico de Saude Ocupacional com orientacao dos exames admissionais, periodicos, de retorno, mudanca de funcao e demissionais, conforme exposicoes levantadas.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-microscope"></i>LTCAT</h4>
+                    <p>Laudo Tecnico das Condicoes Ambientais do Trabalho para caracterizacao dos agentes nocivos e suporte tecnico-previdenciario conforme legislacao aplicavel.</p>
+                </div>
+                <div class="card">
+                    <h4><i class="fas fa-brain"></i>Psicossocial</h4>
+                    <p>Avaliacao dos fatores de risco psicossociais com consolidacao dos achados e recomendacoes para prevencao e melhoria das condicoes organizacionais.</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top:12px;">
+                <h4><i class="fas fa-link"></i>Integracao Tecnica</h4>
+                <p>Os documentos serao elaborados de forma integrada, de modo que o <strong>PGR</strong> sirva como base tecnica para o <strong>PCMSO</strong>, para o <strong>LTCAT</strong> e para a leitura dos <strong>fatores psicossociais</strong>, mantendo coerencia entre riscos, controles e vigilancia da saude.</p>
+            </div>
+
+            <div class="green-box">
+                <h4><i class="fas fa-building"></i>Aderencia ao Perfil da Contratante</h4>
+                <p>O conteudo sera ajustado a realidade operacional da associacao recreativa, considerando a estrutura funcional informada pela ARCO/RN e a base comercial de ate 5 colaboradores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0105 - ARCO/RN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="highlight-box" style="margin-bottom:14px;">
+                <h4><i class="fas fa-file-invoice-dollar"></i>Resumo Comercial</h4>
+                <p>A proposta `TM0105` apresenta um valor unico para a entrega completa do pacote documental e psicossocial solicitado, sem mensalidade recorrente neste escopo.</p>
+            </div>
+
+            <table style="width:100%;border-collapse:collapse;margin:8px 0 14px;border:1px solid #cbd5e0;">
+                <thead>
+                    <tr style="background:#553c9a;color:white;">
+                        <th style="padding:10px 14px;text-align:left;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;border:1px solid #553c9a;">Descricao</th>
+                        <th style="padding:10px 14px;text-align:center;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;border:1px solid #553c9a;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background:white;">
+                        <td style="padding:12px 14px;font-size:10px;color:#2d3748;border:1px solid #cbd5e0;">
+                            <i class="fas fa-file-alt" style="color:#805ad5;margin-right:6px;"></i><strong>PGR + PCMSO + LTCAT + Avaliacao Psicossocial</strong><br>
+                            <span style="font-size:9px;color:var(--gray-color);">Base comercial para ate 5 colaboradores · elaboracao documental completa · servico avulso</span>
+                        </td>
+                        <td style="padding:12px 14px;text-align:center;font-size:24px;color:#553c9a;font-weight:800;border:1px solid #cbd5e0;">R$ 1.500,00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="green-box">
+                <h4><i class="fas fa-circle-check"></i>Incluso no valor</h4>
+                <p>O investimento contempla a elaboracao tecnica dos documentos e do relatorio psicossocial dentro do limite comercial proposto. Alteracoes relevantes de escopo, ampliacao do quadro funcional ou inclusao de servicos recorrentes poderao demandar nova composicao comercial.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta TM0105 - ARCO/RN</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Condicoes de Contratacao</span>
+            </h2>
+
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-pix"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>PIX, transferencia bancaria ou boleto, conforme alinhamento comercial entre as partes.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="condition-text">
+                        <strong>Valor do Pacote</strong>
+                        <span>Valor total de <strong style="color:#553c9a;">R$ 1.500,00</strong> para o pacote PGR + PCMSO + LTCAT + Avaliacao Psicossocial, limitado a ate 5 colaboradores.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-users"></i></div>
+                    <div class="condition-text">
+                        <strong>Base Comercial</strong>
+                        <span>O valor proposto considera o quadro informado de ate 5 colaboradores. Havendo ampliacao acima deste limite, o escopo devera ser reavaliado comercialmente.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-file-signature"></i></div>
+                    <div class="condition-text">
+                        <strong>Formalizacao</strong>
+                        <span>Os servicos serao formalizados mediante aceite da proposta comercial e, quando aplicavel, assinatura contratual.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-days"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta e valida por 15 dias corridos a partir da data de emissao.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-panel">
+                <h3>Contato Comercial</h3>
+                <p>Ficamos a disposicao para dar sequencia a formalizacao e ao levantamento das informacoes necessarias para emissao dos documentos do escopo contratado.</p>
+                <div class="contact-list">
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>engmarqsolution@gmail.com</span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>+55 84 99928-5888</span></div>
+                    <div class="contact-item"><i class="fab fa-instagram"></i><span>@engmarq_solution</span></div>
+                    <div class="contact-item"><i class="fas fa-location-dot"></i><span>Natal/RN</span></div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log('EngMarq Solution - TM0105 | PGR + PCMSO + LTCAT + Psicossocial | ARCO/RN');
+    </script>
+</body>
+</html>

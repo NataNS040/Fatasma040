@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proposta TM0092 - Kit Programas + Psicossocial | Faz Contato &amp; João Maria Alves Rocha | EngMarq Solution</title>
+    <title>Proposta TM0098 - Assessoria SST | Natal Acai | EngMarq Solution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -105,7 +105,7 @@
         }
         .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 8px; text-align: center; }
         .cover-client-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; color: var(--secondary-color); text-align: center; margin-bottom: 4px; }
-        .cover-client-sub { font-family: var(--font-primary); font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); text-align: center; margin-bottom: 0; }
+        .cover-client-sub { font-family: var(--font-primary); font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.8); text-align: center; margin-bottom: 0; }
         .cover-date { margin-top: 20px; font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
         .cover-footer {
             position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center;
@@ -179,30 +179,44 @@
         .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
         .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
 
-        .page-contact { display: flex; flex-direction: column; justify-content: center; text-align: center; }
-        .contact-content { margin: auto 0; }
-
         /* Tabela investimento */
         .inv-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
         .inv-table thead tr { background: #2c5282; color: white; }
         .inv-table thead th { padding: 8px 12px; font-family: var(--font-primary); font-size: 10px; font-weight: 600; text-align: left; border: 1px solid #2c5282; }
         .inv-table thead th.right { text-align: right; }
+        .inv-table thead th.center { text-align: center; }
         .inv-table tbody tr:nth-child(even) { background: var(--light-color); }
         .inv-table tbody tr:nth-child(odd) { background: white; }
         .inv-table tbody td { padding: 7px 12px; border: 1px solid #e2e8f0; font-size: 10px; color: var(--dark-color); }
         .inv-table tbody td.right { text-align: right; font-weight: 600; color: var(--primary-color); }
         .inv-table tbody td.center { text-align: center; }
         .inv-table tbody td.sub { font-size: 8.5px; color: var(--gray-color); padding-top: 2px; }
-        .inv-table tbody tr.subtotal-row { background: #ebf8ff; }
-        .inv-table tbody tr.subtotal-row td { font-weight: 700; color: var(--primary-color); font-size: 10.5px; }
         .inv-table tbody tr.total-row { background: var(--primary-color); }
         .inv-table tbody tr.total-row td { color: white; font-weight: 700; font-family: var(--font-primary); font-size: 11px; border-color: var(--primary-color); }
-        .inv-table tbody tr.total-row td.right { color: var(--secondary-color); font-size: 15px; }
+        .inv-table tbody tr.total-row td.right { color: var(--secondary-color); font-size: 14px; }
         .inv-table tbody tr.incluso-row td { font-size: 10px; color: var(--success-color); font-weight: 600; }
         .inv-table tbody tr.incluso-row td.right { color: var(--success-color); }
+        .inv-table tbody tr.bonus-row td { font-size: 10px; color: var(--orange-color); font-weight: 600; }
+        .inv-table tbody tr.bonus-row td.right { color: var(--orange-color); }
 
-        /* Separador de empresa */
-        .empresa-separator { background: var(--primary-color); color: white; padding: 6px 12px; font-family: var(--font-primary); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; margin: 10px 0 4px; display: flex; align-items: center; gap: 8px; }
+        /* Cards de plano */
+        .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+        .plan-card { border-radius: 10px; overflow: hidden; border: 2px solid #e2e8f0; }
+        .plan-card.destaque { border-color: var(--secondary-color); box-shadow: 0 4px 16px rgba(245,166,35,0.25); }
+        .plan-header { padding: 12px 10px; text-align: center; background: var(--light-color); border-bottom: 2px solid #e2e8f0; }
+        .plan-card.destaque .plan-header { background: linear-gradient(135deg, #1a365d 0%, #234876 100%); border-bottom-color: var(--secondary-color); }
+        .plan-badge { font-family: var(--font-primary); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-color); margin-bottom: 4px; }
+        .plan-card.destaque .plan-badge { color: var(--secondary-color); }
+        .plan-name { font-family: var(--font-primary); font-size: 14px; font-weight: 800; color: var(--primary-color); margin-bottom: 2px; }
+        .plan-card.destaque .plan-name { color: var(--white-color); }
+        .plan-freq { font-size: 9px; color: var(--gray-color); }
+        .plan-card.destaque .plan-freq { color: rgba(255,255,255,0.75); }
+        .plan-body { padding: 10px; background: white; }
+        .plan-price { text-align: center; padding: 10px 0 8px; border-bottom: 1px solid var(--light-color); margin-bottom: 8px; }
+        .plan-price .price-label { font-size: 9px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 3px; }
+        .plan-price .price-value { font-family: var(--font-primary); font-size: 20px; font-weight: 800; color: var(--primary-color); }
+        .plan-price .price-period { font-size: 9px; color: var(--gray-color); }
+        .plan-price .price-annual { font-size: 9px; color: var(--success-color); font-weight: 600; display: block; margin-top: 2px; }
 
         @media print {
             .pdf-controls { display: none !important; }
@@ -246,13 +260,13 @@
 
         <!-- ====== PÁGINA 1: CAPA ====== -->
         <div class="page page-cover">
-            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;">TM0092</span>
+            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;">TM0098</span>
 
             <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
 
             <span class="cover-badge">
                 <i class="fas fa-shield-alt"></i>
-                Kit Programas + Psicossocial
+                Assessoria Técnica em SST
             </span>
 
             <div class="cover-icon">
@@ -261,20 +275,20 @@
 
             <h1 class="cover-title">
                 Proposta Comercial<br>
-                <span>Kit Programas e Psicossocial</span>
+                <span>Assessoria em Segurança do Trabalho</span>
             </h1>
             <p class="cover-subtitle">
-                Elaboração do Kit Programas ocupacionais com PGR, PCMSO e LTCAT, somada à avaliação de riscos psicossociais conforme NR-01, para atendimento técnico das duas empresas
+                Gestão técnica de SST · Kit Programas (PGR · PCMSO · LTCAT · LIP) · ART · Medições · eSocial · Avaliação Psicossocial · Treinamentos NR-01 · CIPA · Brigada · NR-06 · NR-12
             </p>
 
             <div class="cover-client">
                 <p class="cover-client-label">Proposta elaborada para</p>
-                <p class="cover-client-name">João Maria Alves Rocha Ltda</p>
-                <p class="cover-client-sub">&amp; Faz Contato Camisetas e Design Ltda</p>
+                <p class="cover-client-name">Natal Acai</p>
+                <p class="cover-client-sub">J G Bezerra Junior LTDA</p>
             </div>
 
             <p class="cover-date">
-                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;10 de Junho de 2026
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;16 de Junho de 2026
             </p>
 
             <div class="cover-footer">
@@ -282,69 +296,50 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 2: SOBRE AS EMPRESAS CONTRATANTES ====== -->
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0098 — Assessoria SST | Natal Acai</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">1</span>
-                <span class="section-title-text">Sobre as Empresas Contratantes</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
             </h2>
 
-            <!-- Empresa 1 -->
-            <div class="empresa-separator">
-                <i class="fas fa-building"></i> Empresa 1
-            </div>
             <div class="company-info-grid" style="margin-top:6px;">
                 <div class="company-info-item">
                     <label>Razão Social</label>
-                    <span>João Maria Alves Rocha Ltda</span>
+                    <span>J G Bezerra Junior LTDA</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nome Fantasia</label>
+                    <span>Natal Acai</span>
                 </div>
                 <div class="company-info-item">
                     <label>CNPJ</label>
-                    <span>51.371.160/0001-88</span>
+                    <span>70.324.215/0001-43</span>
                 </div>
                 <div class="company-info-item">
-                    <label>Ramo de Atividade</label>
-                    <span>A definir</span>
+                    <label>Número de Colaboradores</label>
+                    <span>46 colaboradores</span>
                 </div>
                 <div class="company-info-item">
-                    <label>Porte</label>
-                    <span>A definir</span>
-                </div>
-                <div class="company-info-item" style="grid-column:1/-1;">
-                    <label>Endereço</label>
-                    <span>A definir</span>
-                </div>
-            </div>
-
-            <!-- Empresa 2 -->
-            <div class="empresa-separator" style="margin-top:14px;">
-                <i class="fas fa-building"></i> Empresa 2
-            </div>
-            <div class="company-info-grid" style="margin-top:6px;">
-                <div class="company-info-item">
-                    <label>Razão Social</label>
-                    <span>Faz Contato Camisetas e Design Ltda</span>
+                    <label>Logradouro</label>
+                    <span>Rua Ulisses Jerônimo, 506</span>
                 </div>
                 <div class="company-info-item">
-                    <label>CNPJ</label>
-                    <span>13.937.642/0001-63</span>
+                    <label>Bairro / CEP</label>
+                    <span>Parque de Exposições — CEP 59146-450</span>
                 </div>
                 <div class="company-info-item">
-                    <label>Ramo de Atividade</label>
-                    <span>Confecção e Design — Camisetas</span>
+                    <label>Município</label>
+                    <span>Parnamirim</span>
                 </div>
                 <div class="company-info-item">
-                    <label>Porte</label>
-                    <span>A definir</span>
-                </div>
-                <div class="company-info-item" style="grid-column:1/-1;">
-                    <label>Endereço</label>
-                    <span>A definir</span>
+                    <label>Estado</label>
+                    <span>Rio Grande do Norte — RN</span>
                 </div>
             </div>
 
@@ -373,10 +368,15 @@
                 <span class="section-title-text">Sobre a Proposta</span>
             </h2>
 
-            <p>Esta proposta tem por objeto a prestação do serviço avulso de <strong>Kit Programas com Avaliação de Riscos Psicossociais</strong> para as empresas <strong>João Maria Alves Rocha Ltda</strong> e <strong>Faz Contato Camisetas e Design Ltda</strong>, contemplando a elaboração dos documentos obrigatórios de SST e o diagnóstico psicossocial conforme exigências da NR-01.</p>
+            <p>Esta proposta tem por objeto a prestação de serviços de <strong>Assessoria em Segurança e Saúde do Trabalho (SST)</strong> para a empresa <strong>Natal Acai (J G Bezerra Junior LTDA)</strong>, contemplando gestão técnica dos programas obrigatórios, medições de higiene ocupacional, treinamentos de capacitação online, avaliação de riscos psicossociais e acompanhamento contínuo da conformidade legal para <strong>46 colaboradores</strong>.</p>
 
             <div class="highlight-box">
-                <p><strong><i class="fas fa-tag"></i> Modalidade:</strong> serviço avulso, com cobrança em parcela única e condição comercial especial para fechamento imediato.</p>
+                <p><strong><i class="fas fa-calendar-alt"></i> Vigência:</strong> 12 meses contados da assinatura do contrato, com renovação automática salvo aviso prévio de 30 dias.</p>
+            </div>
+
+            <div class="info-box" style="margin-top:10px;">
+                <h4><i class="fas fa-laptop"></i> Treinamentos em Modalidade Online</h4>
+                <p>Todos os treinamentos previstos nesta proposta serão realizados em <strong>modalidade online (EAD)</strong>, com certificação digital válida, permitindo maior flexibilidade de agenda e sem necessidade de deslocamento, garantindo cumprimento das exigências legais com praticidade e eficiência operacional.</p>
             </div>
 
             <div class="page-footer">
@@ -389,49 +389,57 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0098 — Assessoria SST | Natal Acai</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">3</span>
-                <span class="section-title-text">Escopo Técnico dos Serviços</span>
+                <span class="section-title-text">Fornecimento de Equipe Técnica</span>
             </h2>
 
             <div class="info-box" style="margin-bottom:10px;">
-                <h4><i class="fas fa-file-medical-alt"></i> Kit Programas + Avaliação Psicossocial — 2 Empresas</h4>
-                <p>Serviço técnico pontual para estruturação documental das obrigações de SST das duas empresas, com levantamento de informações, elaboração dos programas e relatório psicossocial consolidado.</p>
+                <h4><i class="fas fa-users-cog"></i> Assessoria Personalizada em SST — Natal Acai</h4>
+                <p>Serviço especializado de acompanhamento técnico e gestão dos processos de segurança do trabalho, com profissional habilitado dedicado ao atendimento contínuo da empresa e seus 46 colaboradores.</p>
             </div>
 
             <div style="background:var(--light-color);border-radius:6px;padding:10px;margin:8px 0;border-left:3px solid var(--secondary-color);">
-                <h4 style="font-family:var(--font-primary);font-size:11px;color:var(--primary-color);margin-bottom:4px;display:flex;align-items:center;gap:6px;"><i class="fas fa-id-badge" style="color:var(--secondary-color);"></i> Equipe Técnica Habilitada</h4>
-                <p style="margin:0;font-size:10px;line-height:1.5;">Atendimento realizado por profissional habilitado em SST para coleta de dados, análise dos ambientes e emissão dos documentos técnicos necessários ao pacote contratado.</p>
+                <h4 style="font-family:var(--font-primary);font-size:11px;color:var(--primary-color);margin-bottom:4px;display:flex;align-items:center;gap:6px;"><i class="fas fa-id-badge" style="color:var(--secondary-color);"></i> 1 Técnico de Segurança do Trabalho</h4>
+                <p style="margin:0;font-size:10px;line-height:1.5;">Profissional habilitado e registrado conforme exigências do MTE, com visitas técnicas periódicas à empresa e suporte online sob demanda, conforme plano contratado.</p>
             </div>
 
-            <h3 class="subsection-title"><i class="fas fa-tasks"></i> Entregáveis Contemplados no Pacote</h3>
+            <h3 class="subsection-title"><i class="fas fa-tasks"></i> Atividades do Profissional de Segurança do Trabalho</h3>
             <ul class="feature-list">
-                <li>Levantamento inicial das atividades, funções, ambientes e quantitativo de colaboradores das duas empresas</li>
-                <li>Elaboração do PGR com inventário de riscos e plano de ação preventivo</li>
-                <li>Elaboração do PCMSO com definição dos exames ocupacionais aplicáveis</li>
-                <li>Elaboração do LTCAT com análise técnica das condições ambientais de trabalho</li>
-                <li>Aplicação da avaliação de riscos psicossociais conforme atualização da NR-01</li>
-                <li>Relatório técnico consolidado com diagnóstico e recomendações de adequação</li>
-                <li>Organização documental para apoio ao cumprimento das obrigações legais de SST</li>
+                <li>Acompanhamento de OS — Ordem de Serviço conforme NR-01, descrevendo deveres e obrigações perante à segurança do trabalho</li>
+                <li>Inspeção técnica de Equipamentos de Proteção Individual (NR-06) e Equipamentos de Proteção Coletiva</li>
+                <li>Investigação e análise de acidente de trabalho (NR-04), emissão da CAT e evento S-2210 do eSocial</li>
+                <li>Fiscalização das condições de trabalho nos postos de trabalho</li>
+                <li>Gestão dos programas de SST (PGR, PCMSO e LTCAT), acompanhamento de cronogramas, funções e EPIs/EPCs</li>
+                <li>Suporte técnico online via WhatsApp e e-mail, sob demanda, para orientações e dúvidas de SST</li>
+                <li>Elaboração e atualização de documentos de segurança sempre que necessário</li>
             </ul>
 
-            <h3 class="subsection-title" style="margin-top:12px;"><i class="fas fa-file-alt"></i> Kit Programas — PGR · PCMSO · LTCAT · LIP</h3>
+            <h3 class="subsection-title" style="margin-top:10px;"><i class="fas fa-file-alt"></i> Kit Programas — PGR · PCMSO · LTCAT · LIP</h3>
             <div class="info-box">
-                <h4><i class="fas fa-check-circle"></i> Elaboração dos Programas Obrigatórios</h4>
-                <p>Inclui elaboração do <strong>PGR</strong> (Programa de Gerenciamento de Riscos), <strong>PCMSO</strong> (Programa de Controle Médico de Saúde Ocupacional) e <strong>LTCAT</strong> (Laudo Técnico das Condições Ambientais do Trabalho) para cada empresa, considerando o cenário atual informado no momento da contratação.</p>
+                <h4><i class="fas fa-check-circle"></i> Elaboração e Manutenção dos Programas Obrigatórios</h4>
+                <p>Inclui elaboração do <strong>PGR</strong> (Programa de Gerenciamento de Riscos), <strong>PCMSO</strong> (Programa de Controle Médico de Saúde Ocupacional), <strong>LTCAT</strong> (Laudo Técnico das Condições Ambientais do Trabalho) e <strong>LIP</strong> (Laudo de Insalubridade e Periculosidade), com atualização anual ou sempre que houver mudanças nas condições de trabalho.</p>
             </div>
 
-            <h3 class="subsection-title" style="margin-top:10px;"><i class="fas fa-brain"></i> Avaliação Psicossocial</h3>
-            <ul class="feature-list">
-                <li>Aplicação de questionário validado para identificação de fatores de risco psicossociais por função e setor</li>
-                <li>Análise dos resultados e emissão de relatório técnico com recomendações para integração ao PGR</li>
+            <h3 class="subsection-title" style="margin-top:8px;"><i class="fas fa-ruler-combined"></i> Medições de Higiene Ocupacional</h3>
+            <p style="font-size:10px;margin-bottom:4px;">Realização das medições ambientais exigidas pelas normas regulamentadoras para subsidiar o PGR e o LTCAT, incluindo:</p>
+            <ul class="feature-list" style="margin-top:0;">
+                <li>Medição de ruído ocupacional (dosimetria e mapa de ruído) — NHO-01 / NR-15</li>
+                <li>Medição de iluminância nos postos de trabalho — NR-17 / NBR 5413</li>
+                <li>Avaliação de calor (IBUTG) quando aplicável — NR-15 Anexo 3</li>
             </ul>
 
-            <h3 class="subsection-title" style="margin-top:10px;"><i class="fas fa-users"></i> Limite do Pacote</h3>
-            <p style="font-size:10px;">A condição apresentada nesta proposta contempla a execução do pacote para <strong>até 36 colaboradores</strong>, somando as duas empresas contratantes.</p>
+            <h3 class="subsection-title" style="margin-top:8px;"><i class="fas fa-cloud-upload-alt"></i> Envio de Eventos do eSocial</h3>
+            <ul class="feature-list">
+                <li>Gestão e envio dos eventos SST: S-2220, S-2240 e S-2210</li>
+                <li>Manutenção das obrigações previdenciárias em dia, evitando inconsistências e penalidades</li>
+            </ul>
+
+            <h3 class="subsection-title" style="margin-top:8px;"><i class="fas fa-stamp"></i> ART — Anotação de Responsabilidade Técnica</h3>
+            <p style="font-size:10px;margin:0;">Emissão de <strong>ART</strong> pelo Engenheiro de Segurança do Trabalho junto ao CREA para os documentos técnicos exigidos por lei, garantindo a validade jurídica dos laudos e programas elaborados.</p>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
@@ -443,60 +451,92 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0098 — Assessoria SST | Natal Acai</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">4</span>
-                <span class="section-title-text">Metodologia de Execução</span>
+                <span class="section-title-text">Treinamentos de Capacitação Técnica — Online</span>
             </h2>
 
-            <div class="info-box" style="margin-bottom:12px;">
-                <h4><i class="fas fa-diagram-project"></i> Etapas de Desenvolvimento do Pacote</h4>
-                <p>Os serviços serão executados em fluxo técnico organizado, com coleta de dados, elaboração documental e apresentação final dos materiais para as duas empresas.</p>
+            <div class="info-box" style="margin-bottom:10px;">
+                <h4><i class="fas fa-graduation-cap"></i> Capacitação Online Inclusa — 46 Colaboradores</h4>
+                <p>Todos os treinamentos estão integrados ao serviço de assessoria e serão realizados em <strong>modalidade online (EAD)</strong> com emissão de certificados digitais válidos. A frequência e os participantes de cada módulo estão descritos abaixo.</p>
             </div>
 
-            <!-- Etapa 1 -->
-            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-                    <h4 style="margin:0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
-                        <i class="fas fa-clipboard-list" style="color:var(--secondary-color);margin-right:6px;"></i>Diagnóstico Inicial e Levantamento de Informações
+            <!-- NR-01 -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;margin-bottom:7px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
+                    <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;">
+                        <i class="fas fa-clipboard-list" style="color:var(--secondary-color);margin-right:5px;"></i>Gestão de Riscos e Integração — NR-01
                     </h4>
-                    <div style="display:flex;gap:8px;font-size:10px;">
-                        <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-weight:600;">Etapa 1</span>
+                    <div style="display:flex;gap:6px;font-size:9px;flex-shrink:0;">
+                        <span style="background:#ebf8ff;color:var(--primary-color);padding:2px 7px;border-radius:4px;font-weight:600;">Até 1x/mês</span>
+                        <span style="background:#f7fafc;color:var(--gray-color);padding:2px 7px;border-radius:4px;font-weight:600;">46 colaboradores</span>
                     </div>
                 </div>
-                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Coleta das informações cadastrais, descrição das atividades, setores, funções e quantitativo de colaboradores para estruturação do escopo técnico dos documentos e da análise psicossocial.</p>
+                <p style="margin:0;font-size:10px;line-height:1.5;color:var(--gray-color);">Capacitação obrigatória abordando deveres, direitos, identificação de perigos e gerenciamento de riscos no ambiente de trabalho, incluindo integração admissional. Realizado mensalmente sob demanda para novos colaboradores ou reciclagens periódicas.</p>
             </div>
 
-            <!-- Etapa 2 -->
-            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-                    <h4 style="margin:0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
-                        <i class="fas fa-file-lines" style="color:var(--secondary-color);margin-right:6px;"></i>Elaboração do Kit Programas
+            <!-- CIPA -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;margin-bottom:7px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
+                    <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;">
+                        <i class="fas fa-users" style="color:var(--secondary-color);margin-right:5px;"></i>Comissão Interna de Prevenção de Acidentes — CIPA (NR-05)
                     </h4>
-                    <div style="display:flex;gap:8px;font-size:10px;">
-                        <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-weight:600;">Etapa 2</span>
+                    <div style="display:flex;gap:6px;font-size:9px;flex-shrink:0;">
+                        <span style="background:#f0fff4;color:var(--success-color);padding:2px 7px;border-radius:4px;font-weight:600;">1x/ano</span>
+                        <span style="background:#f7fafc;color:var(--gray-color);padding:2px 7px;border-radius:4px;font-weight:600;">10 colaboradores</span>
                     </div>
                 </div>
-                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Desenvolvimento técnico do PGR, PCMSO e LTCAT com base nas informações levantadas, considerando os ambientes, riscos e exigências ocupacionais de cada empresa.</p>
+                <p style="margin:0;font-size:10px;line-height:1.5;color:var(--gray-color);">Treinamento dos membros da CIPA conforme NR-05 para mapeamento de riscos, prevenção de acidentes e promoção da segurança no ambiente de trabalho. Inclui orientação para funcionamento, atas periódicas e organização da comissão.</p>
             </div>
 
-            <!-- Etapa 3 -->
-            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-                    <h4 style="margin:0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
-                        <i class="fas fa-brain" style="color:var(--alert-color);margin-right:6px;"></i>Avaliação de Riscos Psicossociais e Consolidação
+            <!-- Brigada -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;margin-bottom:7px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
+                    <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;">
+                        <i class="fas fa-fire-extinguisher" style="color:var(--alert-color);margin-right:5px;"></i>Brigada de Emergência e Combate a Incêndio
                     </h4>
-                    <div style="display:flex;gap:8px;font-size:10px;">
-                        <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-weight:600;">Etapa 3</span>
+                    <div style="display:flex;gap:6px;font-size:9px;flex-shrink:0;">
+                        <span style="background:#f0fff4;color:var(--success-color);padding:2px 7px;border-radius:4px;font-weight:600;">1x/ano</span>
+                        <span style="background:#f7fafc;color:var(--gray-color);padding:2px 7px;border-radius:4px;font-weight:600;">10 colaboradores</span>
                     </div>
                 </div>
-                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Aplicação da ferramenta psicossocial, análise dos fatores de risco identificados e entrega do relatório técnico final com orientações de enquadramento e plano de ação recomendado.</p>
+                <p style="margin:0;font-size:10px;line-height:1.5;color:var(--gray-color);">Formação de brigadistas voluntários para atuação em situações de emergência, prevenção de incêndio, primeiros socorros e procedimentos de evacuação conforme ABNT NBR 14276, adaptada à realidade da empresa.</p>
+            </div>
+
+            <!-- NR-12 -->
+            <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:10px;margin-bottom:7px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
+                    <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--primary-color);font-weight:600;">
+                        <i class="fas fa-cog" style="color:var(--orange-color);margin-right:5px;"></i>Segurança em Máquinas e Equipamentos — NR-12
+                    </h4>
+                    <div style="display:flex;gap:6px;font-size:9px;flex-shrink:0;">
+                        <span style="background:#f0fff4;color:var(--success-color);padding:2px 7px;border-radius:4px;font-weight:600;">1x/ano</span>
+                        <span style="background:#f7fafc;color:var(--gray-color);padding:2px 7px;border-radius:4px;font-weight:600;">10 colaboradores</span>
+                    </div>
+                </div>
+                <p style="margin:0;font-size:10px;line-height:1.5;color:var(--gray-color);">Capacitação obrigatória para operadores de máquinas e equipamentos conforme NR-12, abordando segurança no uso, manutenção, riscos específicos e procedimentos de parada de emergência. Garante conformidade legal e reduz riscos de acidentes mecânicos.</p>
+            </div>
+
+            <!-- NR-06 Bônus -->
+            <div style="background:linear-gradient(135deg,#fffaf0 0%,#fbd38d 100%);border:1px solid #f6ad55;border-radius:6px;padding:10px;margin-bottom:7px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:5px;">
+                    <h4 style="margin:0;font-family:var(--font-primary);font-size:11px;color:var(--orange-color);font-weight:600;">
+                        <i class="fas fa-hard-hat" style="color:var(--orange-color);margin-right:5px;"></i>Equipamentos de Proteção Individual — NR-06
+                        <span style="background:var(--orange-color);color:white;font-size:8px;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:middle;">BÔNUS</span>
+                    </h4>
+                    <div style="display:flex;gap:6px;font-size:9px;flex-shrink:0;">
+                        <span style="background:rgba(255,255,255,0.6);color:var(--orange-color);padding:2px 7px;border-radius:4px;font-weight:600;">1x/ano</span>
+                        <span style="background:rgba(255,255,255,0.6);color:var(--orange-color);padding:2px 7px;border-radius:4px;font-weight:600;">46 colaboradores</span>
+                    </div>
+                </div>
+                <p style="margin:0;font-size:10px;line-height:1.5;color:var(--dark-color);">Treinamento sobre uso correto, conservação e higienização dos Equipamentos de Proteção Individual (EPI) conforme NR-06. <strong>Oferecido como bônus exclusivo para a Natal Acai</strong>, sem custo adicional, assegurando que todos os colaboradores utilizem os EPIs adequadamente.</p>
             </div>
 
             <div class="highlight-box">
-                <p style="font-size:10px;margin:0;"><strong><i class="fas fa-calendar-check"></i> Execução:</strong> O pacote será executado mediante alinhamento prévio de cronograma e envio das informações necessárias pelas contratantes.</p>
+                <p style="font-size:10px;margin:0;"><strong><i class="fas fa-certificate"></i> Certificação:</strong> Todos os treinamentos geram certificados digitais individuais com validade legal. Os registros ficam disponíveis para apresentação ao MTE em caso de fiscalização.</p>
             </div>
 
             <div class="page-footer">
@@ -509,7 +549,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0098 — Assessoria SST | Natal Acai</span>
             </div>
 
             <h2 class="section-title">
@@ -518,21 +558,21 @@
             </h2>
 
             <div class="purple-box" style="margin-bottom:10px;">
-                <h4><i class="fas fa-brain"></i> Avaliação Psicossocial Inclusa — NR-01 Atualizada</h4>
-                <p>A avaliação de riscos psicossociais conforme NR-01 está <strong>inclusa</strong> nesta proposta para ambas as empresas. Abrange aplicação de questionário validado, análise dos dados coletados, identificação de fatores de risco e elaboração de relatório técnico com recomendações de intervenção.</p>
+                <h4><i class="fas fa-brain"></i> Avaliação Psicossocial Inclusa — NR-01 Atualizada (2024)</h4>
+                <p>A avaliação de riscos psicossociais conforme NR-01 está <strong>inclusa</strong> nesta proposta para <strong>até 46 colaboradores</strong>. Abrange aplicação de questionário validado, análise dos dados coletados, identificação de fatores de risco e elaboração de relatório técnico com recomendações de intervenção.</p>
             </div>
 
             <ul class="feature-list" style="margin-bottom:14px;">
-                <li>Aplicação de questionário de fatores psicossociais conforme exigência da NR-01 (atualização 2024)</li>
+                <li>Aplicação de questionário de fatores psicossociais conforme exigência da NR-01 (atualização 2024) — até 46 colaboradores</li>
                 <li>Identificação de fatores de risco: sobrecarga de trabalho, relações interpessoais, autonomia, violência e assédio</li>
-                <li>Análise e consolidação dos dados por função/setor em cada empresa</li>
+                <li>Análise e consolidação dos dados por função e setor</li>
                 <li>Relatório técnico com diagnóstico e plano de ação recomendado</li>
-                <li>Integração dos resultados ao PGR de cada empresa</li>
+                <li>Integração dos resultados ao PGR</li>
             </ul>
 
-            <h2 class="section-title">
+            <h2 class="section-title" style="margin-top:14px;">
                 <span class="section-number">6</span>
-                <span class="section-title-text">Benefícios do Pacote Contratado</span>
+                <span class="section-title-text">Benefícios da Assessoria</span>
             </h2>
 
             <div class="factors-grid">
@@ -542,31 +582,31 @@
                 </div>
                 <div class="factor-card">
                     <h4><i class="fas fa-shield-alt"></i> Prevenção de Acidentes</h4>
-                    <p>Identificação e controle proativo de riscos ocupacionais nas atividades de ambas as empresas.</p>
+                    <p>Identificação e controle proativo de riscos ocupacionais nas atividades da empresa.</p>
                 </div>
                 <div class="factor-card">
                     <h4><i class="fas fa-file-alt"></i> Documentação Completa</h4>
-                    <p>PGR, PCMSO, LTCAT e LIP organizados e atualizados para cada empresa, prontos para fiscalizações.</p>
+                    <p>PGR, PCMSO, LTCAT e LIP organizados e atualizados, prontos para fiscalizações do MTE.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-headset"></i> Suporte Contínuo</h4>
-                    <p>Entrega técnica organizada, facilitando a tomada de decisão e a implementação das adequações prioritárias.</p>
+                    <h4><i class="fas fa-ruler-combined"></i> Medições Regulamentares</h4>
+                    <p>Medições de ruído, iluminância e calor que embasam laudos técnicos e eliminam riscos de autuação.</p>
                 </div>
                 <div class="factor-card">
                     <h4><i class="fas fa-cloud-upload-alt"></i> eSocial em Dia</h4>
-                    <p>Base documental consistente para apoiar o correto enquadramento das obrigações ocupacionais e previdenciárias.</p>
+                    <p>Gestão centralizada dos eventos S-2220, S-2240 e S-2210, eliminando riscos de penalidades previdenciárias.</p>
                 </div>
                 <div class="factor-card">
                     <h4><i class="fas fa-brain"></i> Saúde Mental</h4>
                     <p>Avaliação psicossocial integrada ao PGR conforme NR-01 atualizada, promovendo bem-estar no trabalho.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-users"></i> Equipe Capacitada</h4>
-                    <p>Mapeamento técnico das funções e ambientes, com visão clara das prioridades de adequação em SST.</p>
+                    <h4><i class="fas fa-laptop"></i> Treinamentos Online</h4>
+                    <p>NR-01, CIPA, Brigada, NR-12 e NR-06 (bônus) sem impacto na operação, com certificação digital válida.</p>
                 </div>
                 <div class="factor-card">
                     <h4><i class="fas fa-money-bill-wave"></i> Redução de Passivos</h4>
-                    <p>Condição comercial especial com melhor custo de implantação para regularização inicial das empresas.</p>
+                    <p>LIP correto evita ações trabalhistas por adicional indevido; NR-12 reduz exposição a acidentes com máquinas.</p>
                 </div>
             </div>
 
@@ -580,7 +620,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0098 — Assessoria SST | Natal Acai</span>
             </div>
 
             <h2 class="section-title">
@@ -588,70 +628,119 @@
                 <span class="section-title-text">Investimento</span>
             </h2>
 
-            <div class="highlight-box" style="margin-bottom:12px;">
-                <p style="margin:0;"><strong><i class="fas fa-file-invoice-dollar"></i> Serviço:</strong> Kit Programas + Avaliação de Riscos Psicossociais para João Maria Alves Rocha Ltda &amp; Faz Contato Camisetas e Design Ltda</p>
-            </div>
+            <p style="font-size:10px;margin-bottom:8px;">A assessoria é oferecida em três planos de visita técnica — escolha a frequência que melhor atende à necessidade da Natal Acai. Todos os planos incluem os mesmos serviços, diferindo apenas na periodicidade das visitas presenciais.</p>
 
-            <!-- Tabela de investimento -->
+            <!-- Tabela de serviços inclusos em todos os planos -->
+            <p style="font-family:var(--font-primary);font-size:11px;font-weight:700;color:var(--primary-color);margin:10px 0 5px;">Serviços inclusos em todos os planos</p>
             <table class="inv-table">
                 <thead>
                     <tr>
-                        <th style="width:60%;">Item</th>
-                        <th class="right" style="width:40%;">Valor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <strong>Psicossocial + Kit Programas (PGR, PCMSO e LTCAT)</strong><br>
-                            <span class="sub">Aplicação, análise, relatório técnico e elaboração dos programas obrigatórios para ambas as empresas, limitado a até 36 colaboradores</span>
-                        </td>
-                        <td class="right">R$ 3.600,00</td>
-                    </tr>
-                    <tr class="total-row">
-                        <td><strong>TOTAL DO PACOTE AVULSO</strong></td>
-                        <td class="right">R$ 3.600,00</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- Condição comercial -->
-            <p style="font-family:var(--font-primary);font-size:11px;font-weight:700;color:var(--primary-color);margin:14px 0 6px;">Condição Comercial Especial</p>
-            <table class="inv-table">
-                <thead>
-                    <tr>
-                        <th style="width:70%;">Descrição</th>
+                        <th style="width:70%;">Item</th>
                         <th class="right" style="width:30%;">Valor</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>Valor de tabela do pacote</strong></td>
-                        <td class="right">R$ 4.000,00</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Condição especial de fechamento</strong></td>
-                        <td class="right" style="color:var(--success-color);">R$ 3.600,00</td>
+                    <tr class="incluso-row">
+                        <td><i class="fas fa-check" style="margin-right:5px;"></i> Kit Programas — PGR, PCMSO, LTCAT e LIP</td>
+                        <td class="right">Incluso</td>
                     </tr>
                     <tr class="incluso-row">
-                        <td><i class="fas fa-check" style="color:var(--success-color);margin-right:6px;"></i> Economia concedida nesta proposta</td>
-                        <td class="right">R$ 400,00</td>
+                        <td><i class="fas fa-check" style="margin-right:5px;"></i> Avaliação de Riscos Psicossociais (NR-01) — até 46 colaboradores</td>
+                        <td class="right">Incluso</td>
+                    </tr>
+                    <tr class="incluso-row">
+                        <td><i class="fas fa-check" style="margin-right:5px;"></i> ART — Anotação de Responsabilidade Técnica (CREA)</td>
+                        <td class="right">Incluso</td>
+                    </tr>
+                    <tr class="incluso-row">
+                        <td><i class="fas fa-check" style="margin-right:5px;"></i> Medições de Higiene Ocupacional (ruído, iluminância, calor)</td>
+                        <td class="right">Incluso</td>
+                    </tr>
+                    <tr class="incluso-row">
+                        <td><i class="fas fa-check" style="margin-right:5px;"></i> Envio de Eventos do eSocial (S-2220, S-2240, S-2210)</td>
+                        <td class="right">Incluso</td>
+                    </tr>
+                    <tr class="incluso-row">
+                        <td><i class="fas fa-check" style="margin-right:5px;"></i> NR-01 (online · até 46 colab. · até 1x/mês) + CIPA + Brigada + NR-12 (online · 10 colab. · 1x/ano)</td>
+                        <td class="right">Incluso</td>
+                    </tr>
+                    <tr class="bonus-row">
+                        <td><i class="fas fa-gift" style="margin-right:5px;"></i> NR-06 — EPI (online · 46 colab. · 1x/ano) <strong>— BÔNUS</strong></td>
+                        <td class="right">Bônus</td>
                     </tr>
                 </tbody>
             </table>
 
-            <div style="background:#f0fff4;border:1px solid #c6f6d5;border-radius:8px;padding:8px 12px;margin-top:6px;font-size:9.5px;color:var(--dark-color);">
-                <i class="fas fa-info-circle" style="color:var(--success-color);margin-right:5px;"></i>
-                <strong>Inclui:</strong> Aplicação de questionário psicossocial validado · Relatório técnico com diagnóstico e plano de ação · PGR (Programa de Gerenciamento de Riscos) · PCMSO (Programa de Controle Médico de Saúde Ocupacional) · LTCAT (Laudo Técnico das Condições Ambientais do Trabalho) · Integração ao eSocial. Limite: até 36 colaboradores.
+            <!-- Cards dos 3 planos -->
+            <p style="font-family:var(--font-primary);font-size:11px;font-weight:700;color:var(--primary-color);margin:12px 0 6px;">Escolha o plano de visita técnica</p>
+            <div class="plans-grid">
+                <!-- Plano Mensal -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-badge">Plano</div>
+                        <div class="plan-name">Mensal</div>
+                        <div class="plan-freq">1 visita técnica/mês</div>
+                    </div>
+                    <div class="plan-body">
+                        <div class="plan-price">
+                            <span class="price-label">Investimento mensal</span>
+                            <div><span class="price-value">R$ 2.434,17</span></div>
+                            <span class="price-period">/mês</span>
+                            <span class="price-annual">12x = R$ 29.210,04/ano</span>
+                        </div>
+                        <ul style="list-style:none;font-size:9.5px;color:var(--gray-color);line-height:1.7;">
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> 1 visita presencial/mês</li>
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> Suporte online contínuo</li>
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> Todos os serviços inclusos</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Plano Quinzenal (destaque) -->
+                <div class="plan-card destaque">
+                    <div class="plan-header">
+                        <div class="plan-badge">Mais Escolhido</div>
+                        <div class="plan-name">Quinzenal</div>
+                        <div class="plan-freq">2 visitas técnicas/mês</div>
+                    </div>
+                    <div class="plan-body">
+                        <div class="plan-price">
+                            <span class="price-label" style="color:var(--gray-color);">Investimento mensal</span>
+                            <div><span class="price-value" style="color:var(--secondary-color);">R$ 2.876,67</span></div>
+                            <span class="price-period" style="color:var(--gray-color);">/mês</span>
+                            <span class="price-annual">12x = R$ 34.520,04/ano</span>
+                        </div>
+                        <ul style="list-style:none;font-size:9.5px;color:var(--gray-color);line-height:1.7;">
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> 2 visitas presenciais/mês</li>
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> Suporte online contínuo</li>
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> Todos os serviços inclusos</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Plano Semanal -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <div class="plan-badge">Plano</div>
+                        <div class="plan-name">Semanal</div>
+                        <div class="plan-freq">4 visitas técnicas/mês</div>
+                    </div>
+                    <div class="plan-body">
+                        <div class="plan-price">
+                            <span class="price-label">Investimento mensal</span>
+                            <div><span class="price-value">R$ 3.761,67</span></div>
+                            <span class="price-period">/mês</span>
+                            <span class="price-annual">12x = R$ 45.140,04/ano</span>
+                        </div>
+                        <ul style="list-style:none;font-size:9.5px;color:var(--gray-color);line-height:1.7;">
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> 4 visitas presenciais/mês</li>
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> Suporte online contínuo</li>
+                            <li><i class="fas fa-check" style="color:var(--success-color);margin-right:4px;font-size:9px;"></i> Todos os serviços inclusos</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <!-- Totais -->
-            <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px;">
-                <div style="background:#f0fff4;border:1px solid #c6f6d5;border-radius:8px;padding:10px 14px;">
-                    <p style="font-family:var(--font-primary);font-size:11px;font-weight:700;color:var(--success-color);margin:0 0 3px;">PSICOSSOCIAL + KIT PROGRAMAS</p>
-                    <p style="font-size:18px;font-weight:800;color:var(--success-color);margin:0;">R$ 3.600,00</p>
-                    <p style="font-size:9px;color:var(--gray-color);margin:2px 0 0;">Serviço avulso em condição especial — até 36 colaboradores</p>
-                </div>
+            <div class="highlight-box" style="margin-top:8px;">
+                <p style="margin:0;font-size:10px;"><strong><i class="fas fa-info-circle"></i> Observação:</strong> Os valores acima referem-se à mensalidade de assessoria técnica em SST para 12 meses. Todos os treinamentos, programas, medições, psicossocial e eSocial estão inclusos independentemente do plano escolhido. A NR-06 é oferecida como bônus exclusivo.</p>
             </div>
 
             <div class="page-footer">
@@ -660,11 +749,11 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 7: CONDIÇÕES DE CONTRATAÇÃO ====== -->
+        <!-- ====== PÁGINA 7: CONDIÇÕES DE CONTRATAÇÃO + RESPONSÁVEL ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0098 — Assessoria SST | Natal Acai</span>
             </div>
 
             <h2 class="section-title">
@@ -677,44 +766,51 @@
                     <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
                     <div class="condition-text">
                         <strong>Forma de Pagamento</strong>
-                        <span>Pagamento em parcela única via PIX, boleto bancário ou transferência bancária, conforme alinhamento entre as partes.</span>
+                        <span>Pagamento mensal via PIX, boleto bancário ou transferência até o dia 10 de cada mês.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-file-contract"></i></div>
                     <div class="condition-text">
-                        <strong>Natureza da Contratação</strong>
-                        <span>Serviço avulso para elaboração e entrega do pacote técnico descrito nesta proposta.</span>
+                        <strong>Vigência do Contrato</strong>
+                        <span>12 meses, com renovação automática, mediante aviso prévio de 30 dias para cancelamento.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-percent"></i></div>
                     <div class="condition-text">
-                        <strong>Condição Comercial</strong>
-                        <span>Valor promocional de R$ 3.600,00 concedido exclusivamente para esta negociação, em substituição ao valor base de R$ 4.000,00.</span>
+                        <strong>Reajuste Anual</strong>
+                        <span>Reajuste pelo INPC/IBGE ou índice que o substitua, aplicado no aniversário do contrato.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-calendar-alt"></i></div>
                     <div class="condition-text">
                         <strong>Início dos Serviços</strong>
-                        <span>Os serviços têm início após a aprovação formal da proposta e a confirmação do pagamento acordado.</span>
+                        <span>Os serviços têm início após a assinatura do contrato e o recebimento do primeiro pagamento.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-laptop"></i></div>
+                    <div class="condition-text">
+                        <strong>Treinamentos Online</strong>
+                        <span>Os treinamentos são realizados em plataforma EAD com emissão de certificados digitais individuais com validade legal.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-tasks"></i></div>
                     <div class="condition-text">
                         <strong>Escopo Complementar</strong>
-                        <span>Serviços adicionais não contemplados nesta proposta, como assessoria mensal, treinamentos ou documentos extras, poderão ser negociados separadamente mediante proposta específica.</span>
+                        <span>Serviços adicionais não contemplados nesta proposta podem ser negociados e contratados separadamente mediante proposta específica.</span>
                     </div>
                 </div>
             </div>
 
-            <div class="highlight-box" style="margin-top:12px;">
+            <div class="highlight-box" style="margin-top:10px;">
                 <p style="margin:0;font-size:10px;"><strong><i class="fas fa-info-circle"></i> Validade da Proposta:</strong> Esta proposta é válida por 15 (quinze) dias a partir da data de emissão.</p>
             </div>
 
-            <h2 class="section-title" style="margin-top:18px;">
+            <h2 class="section-title" style="margin-top:14px;">
                 <span class="section-number">9</span>
                 <span class="section-title-text">Responsável pela Proposta</span>
             </h2>
@@ -741,7 +837,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0098 — Assessoria SST | Natal Acai</span>
             </div>
 
             <h2 class="section-title">
@@ -751,11 +847,11 @@
 
             <div class="info-box" style="margin-bottom:14px;">
                 <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
-                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação do pacote de Kit Programas com Avaliação de Riscos Psicossociais.</p>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação dos serviços de Assessoria em Segurança do Trabalho.</p>
             </div>
 
             <!-- Proponente -->
-            <div style="background:var(--light-color);border-radius:10px;padding:18px;margin-bottom:12px;">
+            <div style="background:var(--light-color);border-radius:10px;padding:18px;margin-bottom:14px;">
                 <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:14px;margin-bottom:12px;text-align:center;border-bottom:2px solid var(--purple-color);padding-bottom:8px;">
                     <i class="fas fa-building" style="color:var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
                 </h3>
@@ -776,40 +872,40 @@
                 </div>
             </div>
 
-            <!-- Aprovadores — 2 empresas -->
+            <!-- Contratante -->
             <div style="background:var(--light-color);border-radius:10px;padding:18px;">
                 <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:14px;margin-bottom:12px;text-align:center;border-bottom:2px solid var(--secondary-color);padding-bottom:8px;">
                     <i class="fas fa-user-tie" style="color:var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
                 </h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
                     <div>
-                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Empresa 1 — Razão Social</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">João Maria Alves Rocha Ltda</p>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Razão Social</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">J G Bezerra Junior LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Nome Fantasia</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">Natal Acai</p>
                     </div>
                     <div>
                         <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">51.371.160/0001-88</p>
-                    </div>
-                    <div>
-                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Empresa 2 — Razão Social</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">Faz Contato Camisetas e Design Ltda</p>
-                    </div>
-                    <div>
-                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">13.937.642/0001-63</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">70.324.215/0001-43</p>
                     </div>
                     <div>
                         <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Nome do Responsável</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">A definir</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">A definir</p>
                     </div>
                     <div>
                         <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Cargo / Função</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">A definir</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">A definir</p>
+                    </div>
+                    <div>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Data de Assinatura</p>
+                        <p style="margin:0;font-size:12px;font-weight:600;">_____ / _____ / 2026</p>
                     </div>
                 </div>
                 <div style="padding-top:12px;border-top:1px dashed var(--gray-color);text-align:center;">
                     <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 4px;height:30px;max-width:400px;"></div>
-                    <p style="margin:0;font-size:10px;color:var(--gray-color);">Assinatura do Aprovador</p>
+                    <p style="margin:0;font-size:10px;color:var(--gray-color);">Assinatura do Contratante</p>
                 </div>
             </div>
 

@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0109 - PGR e PCMSO | Mirantes Empreendimentos Imobiliarios LTDA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background: #e2e8f0;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15);
+            max-width: 280px;
+        }
+
+        .btn-generate {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+        }
+
+        .pdf-instructions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .pdf-instructions h4 {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .pdf-instructions ol {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--dark-color);
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .pdf-instructions li {
+            margin-bottom: 4px;
+        }
+
+        .pdf-instructions strong {
+            color: var(--secondary-color);
+        }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            min-height: 297mm;
+            max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm;
+            page-break-after: always;
+            position: relative;
+            background: var(--white-color);
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid var(--light-color);
+            position: relative;
+        }
+
+        .page-header-logo {
+            height: 40px;
+        }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 18mm;
+            right: 18mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 8px;
+            border-top: 1px solid var(--light-color);
+            font-size: 10px;
+            color: var(--gray-color);
+            background: var(--white-color);
+            z-index: 10;
+        }
+
+        .page-number {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 25mm 20mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(56, 161, 105, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cover-logo {
+            width: 180px;
+            max-width: 100%;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            position: relative;
+            z-index: 1;
+            object-fit: contain;
+        }
+
+        .cover-badge {
+            background: rgba(245, 166, 35, 0.2);
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-family: var(--font-primary);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-badge i {
+            margin-right: 8px;
+        }
+
+        .cover-icon {
+            width: 90px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 42px;
+            color: var(--secondary-color);
+            border: 2px solid rgba(245, 166, 35, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-title span {
+            display: block;
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--secondary-color);
+            margin-top: 8px;
+            line-height: 1.2;
+        }
+
+        .cover-subtitle {
+            max-width: 400px;
+            font-size: 13px;
+            line-height: 1.6;
+            opacity: 0.9;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-client {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px 40px;
+            border-radius: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-client-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .cover-client-name {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-align: center;
+        }
+
+        .cover-date {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-footer {
+            position: absolute;
+            bottom: 18mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10px;
+            opacity: 0.7;
+            padding: 0 18mm;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cover-footer p {
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .section-number {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: var(--white-color);
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 26px;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .section-title-text {
+            flex: 1;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 12px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subsection-title i {
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 8px;
+            text-align: justify;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--alert-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .alert-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .green-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: #276749;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .green-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+            border-left: 4px solid var(--purple-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .purple-box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            color: #553c9a;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .purple-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 4px 0;
+            font-size: 11px;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: var(--success-color);
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .factors-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .factor-card {
+            background: var(--light-color);
+            padding: 8px 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .factor-card h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .factor-card h4 i {
+            color: var(--secondary-color);
+            font-size: 11px;
+        }
+
+        .factor-card p {
+            font-size: 10px;
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+
+        .conditions-list {
+            margin: 12px 0;
+        }
+
+        .condition-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--light-color);
+        }
+
+        .condition-item:last-child {
+            border-bottom: none;
+        }
+
+        .condition-icon {
+            width: 26px;
+            height: 26px;
+            background: var(--light-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .condition-text strong {
+            font-family: var(--font-primary);
+            font-size: 11px;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .condition-text span {
+            font-size: 10px;
+            color: var(--gray-color);
+            line-height: 1.3;
+        }
+
+        .deliverables-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .deliverable-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: var(--light-color);
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .deliverable-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white-color);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .deliverable-text h4 {
+            font-family: var(--font-primary);
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-bottom: 3px;
+        }
+
+        .deliverable-text p {
+            font-size: 9px;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .company-info-item {
+            padding: 8px 10px;
+            background: var(--light-color);
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .company-info-item label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--gray-color);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .company-info-item span {
+            font-size: 11px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            padding: 18px;
+            border-radius: 10px;
+            color: var(--white-color);
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .responsible-avatar {
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 166, 35, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 28px;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+        }
+
+        .responsible-name {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-role {
+            font-size: 11px;
+            opacity: 0.9;
+            margin-bottom: 3px;
+            text-align: center;
+        }
+
+        .responsible-company {
+            font-size: 10px;
+            opacity: 0.8;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .responsible-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .responsible-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+        }
+
+        .responsible-contact-item i {
+            color: var(--secondary-color);
+            width: 15px;
+        }
+
+        @media print {
+            @page {
+                size: 210mm 297mm;
+                margin: 0;
+            }
+
+            body {
+                background: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .pdf-controls {
+                display: none !important;
+            }
+
+            #pdf-content {
+                width: 100% !important;
+                box-shadow: none !important;
+            }
+
+            .page {
+                page-break-after: always !important;
+                page-break-before: auto !important;
+                break-after: page !important;
+                break-inside: avoid !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                min-height: 297mm !important;
+                max-height: 297mm !important;
+                margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+                position: relative !important;
+            }
+
+            .page:last-child {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
+            .page-cover {
+                padding: 20mm 18mm 18mm 18mm !important;
+            }
+
+            .page-header {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                margin-bottom: 10px !important;
+                padding-bottom: 8px !important;
+            }
+
+            .page-footer {
+                position: absolute !important;
+                bottom: 8mm !important;
+                left: 15mm !important;
+                right: 15mm !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                font-size: 9px !important;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 210mm 297mm;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botao acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+        <div class="page page-cover">
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0109</span>
+            
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            
+            <span class="cover-badge">
+                <i class="fas fa-shield-alt"></i>
+                Conformidade Legal NR-01 | NR-07 | IN 128
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-hard-hat"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>PGR e PCMSO</span>
+            </h1>
+            <p class="cover-subtitle">
+                PGR e PCMSO estruturados para conformidade legal, organizacao documental e atendimento das obrigacoes de SST
+            </p>
+            
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Mirantes Empreendimentos Imobiliarios LTDA</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                10 de Julho de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Seguranca e Saude do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PGR e PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-building"></i> Dados da Empresa</h3>
+            
+            <div class="company-info-grid">
+                <div class="company-info-item">
+                    <label>Razao Social</label>
+                    <span>Mirantes Empreendimentos Imobiliarios LTDA</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>20.300.896/0001-31</span>
+                </div>
+                <div class="company-info-item" style="grid-column: span 2;">
+                    <label>Endereco</label>
+                    <span>Avenida Afonso Pena, 1206</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Bairro</label>
+                    <span>Tirol</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CEP</label>
+                    <span>59020-265</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Municipio / UF</label>
+                    <span>Natal - RN</span>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 18px;">
+                <h4><i class="fas fa-users"></i> Perfil Operacional Inicial</h4>
+                <p style="margin-bottom: 8px;">Esta proposta considera a unidade <strong>Mirantes Empreendimentos Imobiliarios LTDA</strong> com base nos dados cadastrais apresentados para elaboracao comercial.</p>
+                <p style="margin-bottom: 8px;">O detalhamento completo das funcoes, ambientes, exposicoes ocupacionais e enquadramentos tecnicos sera confirmado na visita tecnica e na etapa de levantamento documental.</p>
+                <p style="margin: 0;">A partir desse reconhecimento tecnico, a EngMarq estruturara os documentos <strong>PGR e PCMSO</strong> de forma integrada e coerente com a realidade operacional da empresa.</p>
+            </div>
+
+            <div class="info-box" style="margin-top: 25px;">
+                <h4><i class="fas fa-handshake"></i> Proposta Integrada</h4>
+                <p>Esta proposta contempla a elaboracao integrada do <strong>PGR e PCMSO</strong>, garantindo conformidade legal com as NRs 01 e 07 do Ministerio do Trabalho e alinhamento tecnico entre riscos ocupacionais e monitoramento medico.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PGR e PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-building"></i></span>
+                <span class="section-title-text">Dados da Empresa Contratada</span>
+            </h2>
+
+            <div class="green-box" style="margin-bottom: 25px;">
+                <h4><i class="fas fa-info-circle"></i> Informacoes para Faturamento e Contrato</h4>
+                <p>Abaixo estao os dados cadastrais da EngMarq Solution para formalizacao contratual e emissao de documentos fiscais.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 30px; margin-bottom: 25px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid var(--success-color);">
+                    <img src="../assets/logoengmarq.png" alt="EngMarq Solution" style="height: 60px;">
+                    <div>
+                        <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 20px; margin-bottom: 5px;">EngMarq Solution LTDA</h3>
+                        <p style="margin: 0; color: var(--gray-color); font-size: 13px;">Engenharia de Seguranca e Saude do Trabalho</p>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">60.545.359/0001-76</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razao Social</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">Engmarq Solution LTDA</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-file-contract"></i> Documentacao:</strong> Todos os documentos societarios, certidoes e comprovacoes de regularidade fiscal estao disponiveis mediante solicitacao para processo de homologacao de fornecedores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PGR e PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Contexto e Obrigacao Legal</span>
+            </h2>
+
+            <div class="alert-box">
+                <h4><i class="fas fa-gavel"></i> Obrigacoes Legais Integradas</h4>
+                <p>As <strong>NR-01 e NR-07</strong> estabelecem que as empresas devem manter programas de SST atualizados e tecnicamente consistentes para atendimento legal e suporte as obrigacoes correlatas do eSocial.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-contract"></i> Base Legal dos Programas</h3>
+            
+            <p><strong>PGR - Programa de Gerenciamento de Riscos (NR-01):</strong> Obrigatorio para todas as empresas, substitui o antigo PPRA. Constitui a base tecnica para identificacao, avaliacao e controle dos riscos ocupacionais, servindo de referencia para as acoes de saude ocupacional.</p>
+            
+            <p><strong>PCMSO - Programa de Controle Medico de Saude Ocupacional (NR-07):</strong> Programa obrigatorio para todas as empresas que estabelece diretrizes e parametros para <strong>vigilancia da saude dos trabalhadores</strong>. Define os exames medicos ocupacionais com base nos riscos ocupacionais mapeados no PGR.</p>
+
+            <div class="highlight-box">
+                <p><strong>Integracao obrigatoria:</strong> A NR-01 determina que o PGR deve ser a <strong>base tecnica</strong> para os demais documentos de SST. O PCMSO deve estar alinhado com os riscos identificados no inventario de riscos do PGR.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> Riscos Juridicos do Nao Cumprimento</h3>
+            <ul class="feature-list">
+                <li><strong>Multas do MTE</strong> por ausencia ou inadequacao dos programas de SST</li>
+                <li><strong>Inconsistencias documentais</strong> que impactam obrigacoes acessorias e o eSocial</li>
+                <li><strong>Acoes regressivas do INSS</strong> por beneficios acidentarios concedidos</li>
+                <li><strong>Processos trabalhistas</strong> por doencas ocupacionais nao prevenidas</li>
+                <li><strong>Responsabilizacao civil</strong> em caso de acidentes graves ou contingencias evitaveis</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PGR e PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">O que sao PGR e PCMSO?</span>
+            </h2>
+
+            <div class="green-box">
+                <h4><i class="fas fa-shield-alt"></i> PGR - Programa de Gerenciamento de Riscos</h4>
+                <p>Documento obrigatorio pela <strong>NR-01</strong> que estabelece o processo sistematico de identificacao de perigos, avaliacao de riscos e implementacao de medidas de controle. E a <strong>base tecnica central</strong> que orienta o planejamento das acoes de saude ocupacional.</p>
+            </div>
+
+            <div class="purple-box">
+                <h4><i class="fas fa-heartbeat"></i> PCMSO - Programa de Controle Medico de Saude Ocupacional</h4>
+                <p>Programa obrigatorio pela <strong>NR-07</strong> que tem por objetivo a <strong>promocao e preservacao da saude dos trabalhadores</strong> atraves de acoes integradas de vigilancia epidemiologica e medica. Define os exames medicos ocupacionais com base nos riscos do PGR.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-project-diagram"></i> Integracao entre os Programas</h3>
+
+            <div class="factors-grid">
+                <div class="factor-card">
+                    <h4><i class="fas fa-search"></i> Inventario de Riscos (PGR)</h4>
+                    <p>Base tecnica que mapeia todos os perigos e riscos ocupacionais por funcao e ambiente de trabalho.</p>
+                </div>
+                <div class="factor-card">
+                    <h4><i class="fas fa-stethoscope"></i> Vigilancia da Saude (PCMSO)</h4>
+                    <p>Define exames medicos e parametros de monitoramento baseados nos riscos do PGR.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong>Fluxo de Integracao:</strong> O PGR identifica os riscos e medidas de controle -> O PCMSO define os exames medicos necessarios e o acompanhamento clinico. Ambos devem estar <strong>consistentes e atualizados</strong>.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PGR e PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Entregaveis e Escopo dos Servicos</span>
+            </h2>
+
+            <p>Ao final do trabalho, a empresa recebera os seguintes documentos tecnicos, integrados e em conformidade com a legislacao vigente:</p>
+
+            <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Tecnicos (PDF)</h3>
+
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PGR - Programa de Gerenciamento de Riscos</h4>
+                        <p>Inventario de riscos completo com classificacao, plano de acao com medidas de controle, cronograma e responsaveis.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PCMSO - Programa de Controle Medico</h4>
+                        <p>Programa completo com matriz de exames ocupacionais por funcao e diretrizes de vigilancia a saude dos trabalhadores.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-user-md"></i> Atuacao Tecnica Especializada</h3>
+            <ul class="feature-list" style="margin-bottom: 20px;">
+                <li>Visita tecnica presencial para reconhecimento dos ambientes de trabalho</li>
+                <li>Avaliacao qualitativa dos riscos ocupacionais</li>
+                <li>Analise integrada dos riscos ocupacionais por funcao</li>
+                <li>Orientacao tecnica para implementacao das medidas de controle</li>
+                <li>Orientacao para organizacao documental e coerencia com obrigacoes do eSocial</li>
+            </ul>
+
+            <div class="alert-box">
+                <h4><i class="fas fa-exclamation-triangle"></i> Importante: O que NAO esta incluso no escopo</h4>
+                <p>• Realizacao de exames medicos ocupacionais (ASO)<br>
+                • Treinamentos de seguranca do trabalho<br>
+                • Fornecimento de EPIs<br>
+                • Acompanhamento mensal de SST</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PGR e PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <p>O valor abaixo corresponde ao investimento global para execucao completa do <strong>PGR e PCMSO</strong>:</p>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0; border: 1px solid #cbd5e0;">
+                <thead>
+                    <tr style="background: #2c5282; color: white;">
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Unidade</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">CNPJ</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Localizacao</th>
+                        <th style="padding: 12px 15px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; border: 1px solid #2c5282;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: white;">
+                        <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">Mirantes Empreendimentos Imobiliarios LTDA</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">20.300.896/0001-31</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 11px; color: #2d3748; border: 1px solid #cbd5e0;">Natal/RN</td>
+                        <td style="padding: 12px 15px; text-align: center; font-size: 16px; color: #2d3748; font-weight: 700; border: 1px solid #cbd5e0;">R$ 1.700,00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title"><i class="fas fa-check-circle"></i> O Que Esta Incluso</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; font-size: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>PGR completo com inventario de riscos e plano de acao</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>PCMSO com quadro de exames por funcao</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Visita tecnica presencial aos ambientes de trabalho</span>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 8px;">
+                    <i class="fas fa-check" style="color: #38a169; margin-top: 2px; font-size: 10px;"></i>
+                    <span>Orientacao tecnica para adequacao documental e legal</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-credit-card"></i> Condicoes Comerciais</h3>
+
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta comercial e valida por 15 (quinze) dias a partir da data de emissao.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="condition-text">
+                        <strong>Condicoes de Pagamento</strong>
+                        <span>50% na aprovacao da proposta e 50% na entrega dos documentos finais. PIX, boleto ou transferencia.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Execucao</strong>
+                        <span>O trabalho sera concluido em ate 15 (quinze) dias uteis apos a aprovacao e agendamento da visita tecnica.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PGR e PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Responsavel pela Proposta</span>
+            </h2>
+
+            <p style="text-align: center; margin-bottom: 30px; color: var(--gray-color);">
+                Esta proposta comercial foi elaborada para garantir a conformidade legal plena da sua empresa com as normas de SST e legislacao previdenciaria.
+            </p>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="responsible-name">Thiago Marques</h3>
+                <p class="responsible-role">Diretor</p>
+                <p class="responsible-company">EngMarq Solution</p>
+                
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="green-box" style="margin-top: 30px;">
+                <h4><i class="fas fa-headset"></i> Atendimento Especializado</h4>
+                <p>Estamos a disposicao para esclarecer qualquer duvida sobre o escopo dos servicos, ajustar a proposta conforme necessidade e acompanhar todo o processo de implantacao dos programas de SST.</p>
+            </div>
+
+            <div class="info-box" style="margin-top: 20px;">
+                <h4><i class="fas fa-clock"></i> Horario de Atendimento</h4>
+                <p>Segunda a Sexta: 08h as 18h | Sabado: 08h as 12h</p>
+                <p style="margin-top: 10px;"><strong>Atendimento via WhatsApp:</strong> Resposta em ate 2 horas durante o horario comercial</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - PGR e PCMSO</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite da Proposta</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 20px;">
+                <h4><i class="fas fa-check-circle"></i> Declaracao de Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condicoes, valores e prazos descritos nesta proposta comercial, formalizando a contratacao dos servicos especificados.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--success-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--success-color);"></i> RESPONSAVEL PELA ELABORACAO DA PROPOSTA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razao Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Engmarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <p style="margin: 0; font-size: 13px; font-weight: 600;">Thiago Marques - Diretor</p>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 16px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> RESPONSAVEL PELA APROVACAO DA PROPOSTA
+                </h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">Razao Social</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">Mirantes Empreendimentos Imobiliarios LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 11px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600;">20.300.896/0001-31</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Aprovador</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
+            }
+        });
+
+        console.log('Proposta TM0109: PGR e PCMSO - Mirantes Empreendimentos Imobiliarios LTDA');
+        console.log('Clique em "Gerar PDF" ou pressione Ctrl+P');
+        console.log('Selecione "Salvar como PDF" na janela de impressao');
+    </script>
+</body>
+</html>

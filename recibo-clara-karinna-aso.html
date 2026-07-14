@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comprovante de Pagamento - Clara Karinna Teixeira de Medeiros</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --primary-dark: #0f2744;
+      --accent: #f5a623;
+      --success: #10b981;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --paper: #ffffff;
+      --line: #d8e1e8;
+      --surface: #f8fafc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Open Sans", "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(145deg, #eef4fa 0%, #f9fbfd 100%);
+      padding: 28px;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(26, 54, 93, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background: linear-gradient(135deg, #1a365d 0%, #2d4a6f 70%, #f5a623 100%);
+    }
+
+    .content {
+      padding: 34px 38px 30px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 78px;
+      height: 78px;
+      object-fit: contain;
+      border-radius: 10px;
+      border: 1px solid #e8edf2;
+      background: #fff;
+      padding: 6px;
+    }
+
+    .brand-text h1,
+    .title h2,
+    .section-title,
+    .value-box strong {
+      font-family: "Montserrat", "Segoe UI", Arial, sans-serif;
+    }
+
+    .brand-text h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 0.5px;
+      color: var(--primary-dark);
+    }
+
+    .brand-text p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .title {
+      text-align: right;
+    }
+
+    .title h2 {
+      margin: 0;
+      font-size: 24px;
+      color: var(--primary);
+      letter-spacing: 1.2px;
+    }
+
+    .title span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .value-box {
+      margin: 22px 0;
+      padding: 22px 24px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #1a365d 0%, #2d4a6f 100%);
+      color: #fff;
+      text-align: center;
+    }
+
+    .value-box span {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+
+    .value-box strong {
+      display: block;
+      font-size: 34px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .value-box p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 14px;
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-height: 56px;
+    }
+
+    .field-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .field-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .lead {
+      margin: 2px 0 18px;
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .highlight {
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .table-wrap {
+      margin-top: 8px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 12px 14px;
+      background: #edf4fb;
+      color: var(--primary-dark);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    tbody td {
+      padding: 13px 14px;
+      border-top: 1px solid #e7eef5;
+      vertical-align: top;
+    }
+
+    .value {
+      text-align: right;
+      white-space: nowrap;
+      width: 170px;
+    }
+
+    .summary {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #f6fbfe 0%, #eef7fc 100%);
+      border: 1px solid #dbeaf3;
+    }
+
+    .summary p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .summary strong {
+      color: var(--primary-dark);
+    }
+
+    .receipt-stamp {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(16, 185, 129, 0.24);
+      color: #0f766e;
+      background: rgba(16, 185, 129, 0.08);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 36px;
+      display: grid;
+      gap: 28px;
+    }
+
+    .place-date {
+      font-size: 14px;
+    }
+
+    .signature {
+      margin-top: 2px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .signature-line {
+      width: 340px;
+      border-top: 1px solid #8998a7;
+      padding-top: 8px;
+      font-size: 14px;
+      color: var(--primary-dark);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .signature-meta {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--primary-dark);
+      line-height: 1.5;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .actions {
+      width: 210mm;
+      margin: 14px auto 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn {
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    @page {
+      size: A4;
+      margin: 10mm;
+    }
+
+    @media print {
+      html,
+      body {
+        width: 210mm;
+        height: 297mm;
+      }
+
+      body {
+        background: #fff;
+        padding: 0;
+        margin: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .actions {
+        display: none;
+      }
+
+      .page {
+        box-shadow: none;
+        border: none;
+        width: 100%;
+        min-height: 100%;
+        margin: 0;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      body {
+        padding: 10px;
+      }
+
+      .page,
+      .actions {
+        width: 100%;
+      }
+
+      .content {
+        padding: 22px 18px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .title {
+        text-align: left;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .signature-line {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="content">
+      <header class="header">
+        <div class="brand">
+          <img class="logo" src="assets/logoengmarq.png" alt="Logo Engmarq Solution" />
+          <div class="brand-text">
+            <h1>ENGMARQ SOLUTION</h1>
+            <p>Saude e Seguranca do Trabalho</p>
+          </div>
+        </div>
+        <div class="title">
+          <h2>RECIBO</h2>
+          <span>Comprovante de pagamento</span>
+        </div>
+      </header>
+
+      <div class="value-box">
+        <span>Valor recebido</span>
+        <strong>R$ 40,00</strong>
+        <p>Pagamento referente ao servico de ASO</p>
+      </div>
+
+      <section class="card">
+        <h3 class="section-title">Dados da colaboradora</h3>
+        <div class="grid">
+          <div class="field">
+            <span class="field-label">Nome completo</span>
+            <span class="field-value">Clara Karinna Teixeira de Medeiros</span>
+          </div>
+          <div class="field">
+            <span class="field-label">CPF</span>
+            <span class="field-value">074.493.604-70</span>
+          </div>
+          <div class="field">
+            <span class="field-label">Data de nascimento</span>
+            <span class="field-value">13/10/1990</span>
+          </div>
+          <div class="field">
+            <span class="field-label">Funcao</span>
+            <span class="field-value">Engenheira de Producao</span>
+          </div>
+        </div>
+      </section>
+
+      <p class="lead">
+        A <span class="highlight">Engmarq Solution</span> declara, para os devidos fins, que recebeu de
+        <span class="highlight">Clara Karinna Teixeira de Medeiros</span> a quantia de
+        <span class="highlight">R$ 40,00</span> (quarenta reais), referente ao servico de
+        <span class="highlight">ASO</span>.
+      </p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Descricao</th>
+              <th class="value">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ASO - Atendimento ocupacional da colaboradora</td>
+              <td class="value">R$ 40,00</td>
+            </tr>
+            <tr>
+              <td><strong>Total recebido</strong></td>
+              <td class="value"><strong>R$ 40,00</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="summary">
+        <p>
+          <strong>Recebedor:</strong> Engmarq Solution Ltda.<br />
+          <strong>CNPJ:</strong> 60.545.359/0001-76<br />
+          <strong>Referencia:</strong> Comprovante de pagamento do servico de ASO.<br />
+          <strong>Data de emissao:</strong> 09/07/2026.
+        </p>
+      </div>
+
+      <div class="receipt-stamp">Pagamento confirmado pela Engmarq Solution</div>
+
+      <footer class="footer">
+        <div class="place-date">
+          Natal/RN, 09 de julho de 2026.
+        </div>
+
+        <div class="signature">
+          <div>
+            <div class="signature-line">ENGMARQ SOLUTION LTDA</div>
+            <div class="signature-meta">
+              Thiago Marques - Diretor<br />
+              CNPJ: 60.545.359/0001-76
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <p class="note">
+        Documento emitido como comprovante de pagamento e recebimento do valor informado neste recibo.
+      </p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="window.print()">Imprimir / Salvar em PDF</button>
+  </div>
+</body>
+</html>

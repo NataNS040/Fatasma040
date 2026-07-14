@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta TM0105 - Exames Ocupacionais | Casa do Bizote | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            background: #e2e8f0;
+            line-height: 1.55;
+        }
+
+        .pdf-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white-color);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            max-width: 270px;
+        }
+
+        .btn-generate {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            padding: 13px 18px;
+            background: var(--primary-color);
+            color: var(--white-color);
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .btn-generate:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .pdf-instructions {
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--gray-color);
+            line-height: 1.45;
+        }
+
+        #pdf-content {
+            width: 210mm;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 15mm 20mm 15mm;
+            position: relative;
+            page-break-after: always;
+            overflow: hidden;
+            background: var(--white-color);
+        }
+
+        .page:last-child { page-break-after: auto; }
+
+        .page-cover {
+            background: linear-gradient(145deg, #0f2744 0%, #1a365d 45%, #224f83 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .cover-logo {
+            width: 200px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 24px;
+        }
+
+        .cover-badge {
+            background: rgba(245,166,35,0.85); color: var(--white-color); padding: 10px 25px;
+            border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 20px; display: inline-flex; align-items: center;
+            justify-content: center; gap: 8px; position: relative; z-index: 1;
+        }
+
+        .cover-icon {
+            width: 60px; height: 60px; background: rgba(245,166,35,0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            position: relative; z-index: 1;
+        }
+        .cover-icon i { font-size: 28px; color: var(--secondary-color); }
+
+        .cover-title {
+            font-family: var(--font-primary);
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 15px;
+            position: relative; z-index: 1;
+        }
+        .cover-title span { color: var(--secondary-color); display: block; }
+
+        .cover-subtitle {
+            font-size: 13px; font-weight: 300; margin-bottom: 25px; opacity: 0.95;
+            max-width: 460px; margin-left: auto; margin-right: auto;
+            position: relative; z-index: 1; line-height: 1.5;
+        }
+
+        .cover-client {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 18px 35px;
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); position: relative;
+            z-index: 1; margin: 0 auto; max-width: 520px; width: 100%;
+        }
+        .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 8px; text-align: center; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; color: var(--secondary-color); text-align: center; margin-bottom: 4px; }
+        .cover-client-sub { font-family: var(--font-primary); font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.8); text-align: center; margin-bottom: 0; }
+
+        .cover-date { margin-top: 20px; font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
+
+        .cover-footer {
+            position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center;
+            font-size: 10px; opacity: 0.7; padding: 0 18mm;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .cover-footer p { margin: 0; text-align: center; width: 100%; }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 9px;
+            margin-bottom: 12px;
+        }
+
+        .page-header-logo { height: 34px; }
+
+        .page-header-title {
+            font-family: var(--font-primary);
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 10px;
+        }
+
+        .page-footer {
+            position: absolute;
+            left: 15mm;
+            right: 15mm;
+            bottom: 10mm;
+            border-top: 1px solid var(--light-color);
+            padding-top: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--gray-color);
+            font-size: 9px;
+        }
+
+        .page-number { color: var(--primary-color); font-weight: 700; }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary-color);
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        p { font-size: 11px; margin-bottom: 9px; text-align: justify; }
+
+        .box { border-radius: 9px; padding: 11px 12px; margin: 10px 0; }
+
+        .box h4 {
+            font-family: var(--font-primary);
+            font-size: 12px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .box p, .box li { font-size: 10px; }
+
+        .box-info { background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%); border-left: 4px solid var(--primary-color); }
+        .box-success { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-left: 4px solid var(--success-color); }
+        .box-highlight { background: linear-gradient(135deg, #fffaf0 0%, #feebc8 100%); border-left: 4px solid var(--secondary-color); }
+        .box-alert { background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%); border-left: 4px solid var(--alert-color); }
+
+        .list { list-style: none; margin-top: 8px; }
+        .list li {
+            position: relative;
+            padding: 5px 0 5px 21px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 10px;
+        }
+        .list li:last-child { border-bottom: none; }
+        .list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-size: 10px;
+        }
+
+        .subsection-title {
+            font-family: var(--font-primary);
+            font-size: 13px;
+            color: var(--primary-color);
+            margin: 13px 0 7px;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 10px; }
+        .table th {
+            background: #2c5282;
+            color: white;
+            padding: 7px 8px;
+            border: 1px solid #2c5282;
+            text-align: left;
+            font-family: var(--font-primary);
+            font-size: 10px;
+        }
+        .table td { border: 1px solid #e2e8f0; padding: 6px 8px; vertical-align: top; }
+        .table tr:nth-child(even) td { background: #f8fafc; }
+
+        /* Tabela de exames por função */
+        .exam-table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 9.5px; }
+        .exam-table th {
+            background: #2c5282; color: white; padding: 6px 5px;
+            border: 1px solid #2c5282; text-align: center;
+            font-family: var(--font-primary); font-size: 9px;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .exam-table td {
+            border: 1px solid #e2e8f0; padding: 5px 6px;
+            text-align: center; vertical-align: middle;
+        }
+        .exam-table td.funcao { text-align: left; font-weight: 600; color: var(--primary-color); }
+        .exam-table td.total { font-weight: 700; color: var(--primary-color); background: #ebf8ff; }
+        .exam-table tr:nth-child(even) td { background: #f8fafc; }
+        .exam-table tr:nth-child(even) td.total { background: #d6eaff; }
+        .exam-table tfoot td {
+            background: #1a365d !important; color: white; font-weight: 700;
+            font-family: var(--font-primary); font-size: 10px;
+        }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+            body {
+                margin: 0;
+                background: white;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                width: 210mm !important;
+                min-height: 297mm !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                padding: 13mm 15mm 18mm 15mm !important;
+            }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            Clique em <strong>Gerar PDF</strong> e selecione <strong>Salvar como PDF</strong>.
+        </div>
+    </div>
+
+    <div id="pdf-content">
+        <!-- ====== CAPA ====== -->
+        <section class="page page-cover">
+            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;">TM0105</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-stethoscope"></i>
+                Exames Ocupacionais
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-microscope"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Exames Complementares ao PCMSO</span>
+            </h1>
+
+            <p class="cover-subtitle">
+                Valores unitários por função e exame, conforme o protocolo de riscos ocupacionais identificados nas atividades da Casa do Bizote.
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Casa do Bizote</p>
+                <p class="cover-client-sub">Parnamirim · RN</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;02 de Julho de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 2: EMPRESA E ESCOPO ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Exames Ocupacionais — PCMSO</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">1</span>Empresa Contratante</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Razão Social</th>
+                        <th style="width: 18%;">Nome Fantasia</th>
+                        <th style="width: 18%;">CNPJ</th>
+                        <th>Endereço</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Casa do Bizote Industria e Comercio de Vidros Temperados LTDA</td>
+                        <td>Casa do Bizote</td>
+                        <td>21.516.336/0001-81</td>
+                        <td>Rod BR-101, 5697, KM 110, Nova Esperança, Parnamirim/RN, CEP 59.143-360</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-industry"></i>Atividade e Contexto Ocupacional</h4>
+                <p>CNAE 23.11-7-00 — Fabricação de vidro plano e de segurança. Operação industrial com exposição a ruído contínuo, particulados, calor, esforço físico, agentes químicos e riscos ergonômicos, exigindo protocolo de exames complementares para grupos funcionais específicos.</p>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">2</span>Escopo desta Proposta</h2>
+
+            <p>Esta proposta contempla exclusivamente a <strong>execução dos exames complementares ao ASO (Atestado de Saúde Ocupacional)</strong> exigidos por função da Casa do Bizote, conforme o quadro de riscos ocupacionais aplicáveis a cada cargo.</p>
+
+            <ul class="list">
+                <li>Valores unitários fixos por exame, aplicados por colaborador.</li>
+                <li>Cobrança conforme demanda: por colaborador efetivamente examinado.</li>
+                <li>Aplicável a exames admissionais, periódicos, de retorno ao trabalho, de mudança de função e demissional.</li>
+                <li>Emissão de ASO assinado por médico do trabalho.</li>
+                <li>Registro dos exames para vinculação ao PCMSO e envio ao eSocial (S-2220).</li>
+            </ul>
+
+            <div class="box box-highlight">
+                <h4><i class="fas fa-info-circle"></i>Observação Importante</h4>
+                <p>Os valores desta tabela referem-se apenas aos <strong>exames complementares por função</strong>. Serviços de elaboração de PGR, PCMSO, LTCAT, LIP, avaliação psicossocial e assessoria mensal em SST estão previstos em proposta específica (TM0037).</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | escopo dos exames complementares</span>
+                <span class="page-number">02</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 3: TABELA DE EXAMES POR FUNÇÃO ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Exames Complementares por Função</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">3</span>Exames por Função — Valores Unitários</h2>
+
+            <p style="font-style: italic; color: var(--gray-color); font-size: 10px; margin-bottom: 6px;">
+                Valores unitários (R$) dos exames exigidos para cada função. Dosagem de glicose: R$ 10,00.
+            </p>
+
+            <table class="exam-table">
+                <thead>
+                    <tr>
+                        <th style="width: 22%; text-align: left;">Função</th>
+                        <th>Avaliação Clínica (ASO)</th>
+                        <th>Audiometria</th>
+                        <th>Espirometria</th>
+                        <th>Hemograma Completo</th>
+                        <th>Sumário de Urina</th>
+                        <th>Raio X do Tórax</th>
+                        <th>Dosagem de Glicose</th>
+                        <th style="width: 10%;">Total por Função</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="funcao">Diretoras</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Auxiliar Administrativo</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Auxiliar de Escritório</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Vendedor</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Caixa</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Coordenador de Expedição</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Auxiliar de Expedição</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Expedidor de Mercadorias</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Forneiro</td>
+                        <td>40</td><td>65</td><td>50</td><td>9</td><td>8</td><td>—</td><td>—</td>
+                        <td class="total">172</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Temperador de Vidros</td>
+                        <td>40</td><td>65</td><td>50</td><td>9</td><td>8</td><td>—</td><td>—</td>
+                        <td class="total">172</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Marcador de Corte</td>
+                        <td>40</td><td>65</td><td>50</td><td>9</td><td>8</td><td>—</td><td>—</td>
+                        <td class="total">172</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Operador de Corte de Vidro</td>
+                        <td>40</td><td>65</td><td>50</td><td>9</td><td>8</td><td>—</td><td>—</td>
+                        <td class="total">172</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Lapidador de Vidro e Cristais</td>
+                        <td>40</td><td>65</td><td>50</td><td>9</td><td>8</td><td>60</td><td>—</td>
+                        <td class="total">232</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Encarregado de Produção</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Auxiliar de Produção</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Auxiliar de Serviços Gerais</td>
+                        <td>40</td><td>65</td><td>—</td><td>9</td><td>8</td><td>—</td><td>—</td>
+                        <td class="total">122</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Operador de Máquinas</td>
+                        <td>40</td><td>65</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td>
+                        <td class="total">105</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Motorista de Caminhão</td>
+                        <td>40</td><td>65</td><td>—</td><td>9</td><td>—</td><td>—</td><td>10</td>
+                        <td class="total">124</td>
+                    </tr>
+                    <tr>
+                        <td class="funcao">Motorista de Carro Leve</td>
+                        <td>40</td><td>65</td><td>—</td><td>9</td><td>—</td><td>—</td><td>10</td>
+                        <td class="total">124</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="box box-info" style="margin-top: 10px;">
+                <h4><i class="fas fa-money-bill-wave"></i>Como a Cobrança Funciona</h4>
+                <p>O valor cobrado por colaborador é o <strong>somatório dos exames aplicáveis à função</strong>, conforme a última coluna da tabela. A cobrança é feita mediante realização efetiva dos exames — sem custo fixo mensal para este serviço.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | valores unitários por função</span>
+                <span class="page-number">03</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 4: RESUMO DE VALORES POR FUNÇÃO ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Resumo — Investimento por Colaborador</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">4</span>Resumo por Função — Investimento por Colaborador</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 42%;">Função</th>
+                        <th>Exames Aplicáveis</th>
+                        <th style="width: 18%; text-align: center;">Valor por Colaborador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Diretoras</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Auxiliar Administrativo</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Auxiliar de Escritório</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Vendedor</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Caixa</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Coordenador de Expedição</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Auxiliar de Expedição</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Expedidor de Mercadorias</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Forneiro</td>
+                        <td>ASO + Audiometria + Espirometria + Hemograma + Sumário de Urina</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 172,00</td>
+                    </tr>
+                    <tr>
+                        <td>Temperador de Vidros</td>
+                        <td>ASO + Audiometria + Espirometria + Hemograma + Sumário de Urina</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 172,00</td>
+                    </tr>
+                    <tr>
+                        <td>Marcador de Corte</td>
+                        <td>ASO + Audiometria + Espirometria + Hemograma + Sumário de Urina</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 172,00</td>
+                    </tr>
+                    <tr>
+                        <td>Operador de Corte de Vidro</td>
+                        <td>ASO + Audiometria + Espirometria + Hemograma + Sumário de Urina</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 172,00</td>
+                    </tr>
+                    <tr>
+                        <td>Lapidador de Vidro e Cristais</td>
+                        <td>ASO + Audiometria + Espirometria + Hemograma + Sumário de Urina + Raio X do Tórax</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 232,00</td>
+                    </tr>
+                    <tr>
+                        <td>Encarregado de Produção</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Auxiliar de Produção</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Auxiliar de Serviços Gerais</td>
+                        <td>ASO + Audiometria + Hemograma + Sumário de Urina</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 122,00</td>
+                    </tr>
+                    <tr>
+                        <td>Operador de Máquinas</td>
+                        <td>ASO + Audiometria</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 105,00</td>
+                    </tr>
+                    <tr>
+                        <td>Motorista de Caminhão</td>
+                        <td>ASO + Audiometria + Hemograma + Dosagem de Glicose</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 124,00</td>
+                    </tr>
+                    <tr>
+                        <td>Motorista de Carro Leve</td>
+                        <td>ASO + Audiometria + Hemograma + Dosagem de Glicose</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color);">R$ 124,00</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="box box-highlight">
+                <h4><i class="fas fa-calculator"></i>Como calcular o custo por colaborador</h4>
+                <p>O valor total por colaborador é resultado da soma dos exames obrigatórios para a sua função. Exemplo: um <strong>Lapidador de Vidro e Cristais</strong> = ASO (R$ 40,00) + Audiometria (R$ 65,00) + Espirometria (R$ 50,00) + Hemograma Completo (R$ 9,00) + Sumário de Urina (R$ 8,00) + Raio X do Tórax (R$ 60,00) = <strong>R$ 232,00</strong>.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | resumo do investimento por colaborador</span>
+                <span class="page-number">04</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 5: CONDIÇÕES COMERCIAIS ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Condições Comerciais</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">5</span>Condições Comerciais</h2>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-credit-card"></i>Forma de Pagamento e Faturamento</h4>
+                <ul class="list">
+                    <li>Faturamento mensal, conforme quantidade de colaboradores efetivamente examinados no período.</li>
+                    <li>Emissão de nota fiscal e fechamento após a realização dos exames.</li>
+                    <li>Valores unitários fixos conforme tabela apresentada nesta proposta.</li>
+                </ul>
+            </div>
+
+            <div class="box box-success">
+                <h4><i class="fas fa-check-circle"></i>O que está incluso</h4>
+                <ul class="list">
+                    <li>Realização dos exames complementares conforme função e tabela apresentada.</li>
+                    <li>Emissão do ASO assinado por médico do trabalho.</li>
+                    <li>Vinculação dos resultados ao PCMSO da empresa.</li>
+                    <li>Registro para envio do evento S-2220 no eSocial.</li>
+                </ul>
+            </div>
+
+            <div class="box box-info">
+                <h4><i class="fas fa-hospital"></i>Local de Realização dos Exames</h4>
+                <p>Os valores apresentados nesta proposta referem-se à realização dos exames e procedimentos <strong>nas dependências da clínica credenciada</strong>. O colaborador deverá comparecer ao local indicado munido dos documentos necessários. Atendimento <strong>in loco</strong> (nas instalações da empresa) não está incluso neste escopo e, caso necessário, será orçado separadamente.</p>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 16px;"><span class="section-num">6</span>Vigência e Validade</h2>
+            <ul class="list">
+                <li>Validade desta proposta: 15 dias corridos a partir da data de emissão.</li>
+                <li>Vigência: 12 meses após o aceite, renovável mediante acordo entre as partes.</li>
+                <li>Alterações de escopo, inclusão de novos exames ou funções serão formalizadas mediante aditivo comercial.</li>
+                <li>Reajuste anual conforme índice oficial (IPCA acumulado nos 12 meses anteriores) ou por acordo entre as partes.</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | condições comerciais</span>
+                <span class="page-number">05</span>
+            </div>
+        </section>
+
+        <!-- ====== PÁGINA 6: TERMO DE ACEITE ====== -->
+        <section class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Termo de Aceite</span>
+            </div>
+
+            <h2 class="section-title"><span class="section-num">7</span>Termo de Aceite</h2>
+
+            <p>Ao assinar este termo, as partes declaram ciência e concordância com o escopo técnico, os valores unitários por exame, o modelo de faturamento e as condições comerciais estabelecidas nesta proposta comercial (TM0105).</p>
+
+            <div class="box box-info" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i>Formalização do Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições e valores descritos nesta proposta comercial.</p>
+            </div>
+
+            <!-- Assinatura EngMarq -->
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px; margin-bottom: 15px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 14px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 10px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> ASSINATURA DA ENGMARQ SOLUTION
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Empresa</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">EngMarq Solution LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">60.545.359/0001-76</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura da EngMarq Solution</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Assinatura Casa do Bizote -->
+            <div style="background: var(--light-color); border-radius: 12px; padding: 20px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 14px; margin-bottom: 15px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px;">
+                    <i class="fas fa-file-signature" style="color: var(--secondary-color);"></i> ASSINATURA DA CONTRATANTE — CASA DO BIZOTE
+                </h3>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">Empresa</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">Casa do Bizote Industria e Comercio de Vidros Temperados LTDA</p>
+                    </div>
+                    <div>
+                        <p style="margin: 0 0 3px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase;">CNPJ</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600;">21.516.336/0001-81</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed var(--gray-color);">
+                    <div style="text-align: center;">
+                        <div style="border-bottom: 1px solid var(--dark-color); margin: 0 auto 5px; height: 35px; max-width: 450px;"></div>
+                        <p style="margin: 0; font-size: 11px; color: var(--gray-color); text-align: center;">Assinatura do Responsável — Casa do Bizote</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

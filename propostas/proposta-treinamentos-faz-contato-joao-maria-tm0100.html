@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proposta TM0092 - Kit Programas + Psicossocial | Faz Contato &amp; João Maria Alves Rocha | EngMarq Solution</title>
+    <title>Proposta TM0100 - Treinamentos em SST | Faz Contato &amp; João Maria Alves Rocha | EngMarq Solution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -71,7 +71,6 @@
         }
         .page-number { font-weight: 600; color: var(--primary-color); }
 
-        /* CAPA */
         .page-cover {
             background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
             color: var(--white-color); display: flex; flex-direction: column;
@@ -114,7 +113,6 @@
         }
         .cover-footer p { margin: 0; text-align: center; width: 100%; }
 
-        /* Títulos */
         .section-number {
             display: inline-block; background: var(--secondary-color); color: var(--white-color);
             width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px;
@@ -133,7 +131,6 @@
         .subsection-title i { color: var(--secondary-color); }
         p { margin-bottom: 8px; text-align: justify; font-size: 11px; line-height: 1.5; }
 
-        /* Boxes */
         .highlight-box { background: linear-gradient(135deg,#fef5e7 0%,#fdebd0 100%); border-left: 4px solid var(--secondary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
         .highlight-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; }
         .highlight-box strong { color: var(--primary-color); }
@@ -179,29 +176,25 @@
         .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
         .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
 
-        .page-contact { display: flex; flex-direction: column; justify-content: center; text-align: center; }
-        .contact-content { margin: auto 0; }
+        .training-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; margin: 10px 0; }
+        .training-card { background: white; border: 1px solid #e2e8f0; border-left: 4px solid var(--secondary-color); border-radius: 8px; padding: 10px 12px; }
+        .training-card h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .training-card h4 i { color: var(--secondary-color); }
+        .training-card p { font-size: 10px; margin-bottom: 0; line-height: 1.45; }
 
-        /* Tabela investimento */
         .inv-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
         .inv-table thead tr { background: #2c5282; color: white; }
-        .inv-table thead th { padding: 8px 12px; font-family: var(--font-primary); font-size: 10px; font-weight: 600; text-align: left; border: 1px solid #2c5282; }
+        .inv-table thead th { padding: 8px 10px; font-family: var(--font-primary); font-size: 9px; font-weight: 600; text-align: left; border: 1px solid #2c5282; }
         .inv-table thead th.right { text-align: right; }
         .inv-table tbody tr:nth-child(even) { background: var(--light-color); }
         .inv-table tbody tr:nth-child(odd) { background: white; }
-        .inv-table tbody td { padding: 7px 12px; border: 1px solid #e2e8f0; font-size: 10px; color: var(--dark-color); }
-        .inv-table tbody td.right { text-align: right; font-weight: 600; color: var(--primary-color); }
+        .inv-table tbody td { padding: 7px 10px; border: 1px solid #e2e8f0; font-size: 9.5px; color: var(--dark-color); vertical-align: top; }
+        .inv-table tbody td.right { text-align: right; font-weight: 700; color: var(--primary-color); white-space: nowrap; }
         .inv-table tbody td.center { text-align: center; }
-        .inv-table tbody td.sub { font-size: 8.5px; color: var(--gray-color); padding-top: 2px; }
-        .inv-table tbody tr.subtotal-row { background: #ebf8ff; }
-        .inv-table tbody tr.subtotal-row td { font-weight: 700; color: var(--primary-color); font-size: 10.5px; }
         .inv-table tbody tr.total-row { background: var(--primary-color); }
         .inv-table tbody tr.total-row td { color: white; font-weight: 700; font-family: var(--font-primary); font-size: 11px; border-color: var(--primary-color); }
         .inv-table tbody tr.total-row td.right { color: var(--secondary-color); font-size: 15px; }
-        .inv-table tbody tr.incluso-row td { font-size: 10px; color: var(--success-color); font-weight: 600; }
-        .inv-table tbody tr.incluso-row td.right { color: var(--success-color); }
 
-        /* Separador de empresa */
         .empresa-separator { background: var(--primary-color); color: white; padding: 6px 12px; font-family: var(--font-primary); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px; margin: 10px 0 4px; display: flex; align-items: center; gap: 8px; }
 
         @media print {
@@ -226,7 +219,6 @@
 </head>
 <body>
 
-    <!-- Controles de PDF -->
     <div class="pdf-controls">
         <button class="btn-generate" onclick="generatePDF()">
             <i class="fas fa-file-pdf"></i> Gerar PDF
@@ -241,30 +233,28 @@
         </div>
     </div>
 
-    <!-- Conteúdo do PDF -->
     <div id="pdf-content">
 
-        <!-- ====== PÁGINA 1: CAPA ====== -->
         <div class="page page-cover">
-            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;">TM0092</span>
+            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:var(--secondary-color);letter-spacing:3px;">TM0100</span>
 
             <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
 
             <span class="cover-badge">
-                <i class="fas fa-shield-alt"></i>
-                Kit Programas + Psicossocial
+                <i class="fas fa-chalkboard-teacher"></i>
+                Treinamentos em SST
             </span>
 
             <div class="cover-icon">
-                <i class="fas fa-hard-hat"></i>
+                <i class="fas fa-graduation-cap"></i>
             </div>
 
             <h1 class="cover-title">
                 Proposta Comercial<br>
-                <span>Kit Programas e Psicossocial</span>
+                <span>Capacitações Obrigatórias em SST</span>
             </h1>
             <p class="cover-subtitle">
-                Elaboração do Kit Programas ocupacionais com PGR, PCMSO e LTCAT, somada à avaliação de riscos psicossociais conforme NR-01, para atendimento técnico das duas empresas
+                Execução de treinamentos obrigatórios em Segurança e Saúde do Trabalho com foco em conformidade legal, orientação prática e certificação dos participantes
             </p>
 
             <div class="cover-client">
@@ -274,7 +264,7 @@
             </div>
 
             <p class="cover-date">
-                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;10 de Junho de 2026
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;18 de Junho de 2026
             </p>
 
             <div class="cover-footer">
@@ -282,11 +272,10 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 2: SOBRE AS EMPRESAS CONTRATANTES ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0100 — Treinamentos em SST | João Maria Alves Rocha &amp; Faz Contato</span>
             </div>
 
             <h2 class="section-title">
@@ -294,7 +283,6 @@
                 <span class="section-title-text">Sobre as Empresas Contratantes</span>
             </h2>
 
-            <!-- Empresa 1 -->
             <div class="empresa-separator">
                 <i class="fas fa-building"></i> Empresa 1
             </div>
@@ -321,7 +309,6 @@
                 </div>
             </div>
 
-            <!-- Empresa 2 -->
             <div class="empresa-separator" style="margin-top:14px;">
                 <i class="fas fa-building"></i> Empresa 2
             </div>
@@ -336,7 +323,7 @@
                 </div>
                 <div class="company-info-item">
                     <label>Ramo de Atividade</label>
-                    <span>Confecção e Design — Camisetas</span>
+                    <span>Confecção e Design - Camisetas</span>
                 </div>
                 <div class="company-info-item">
                     <label>Porte</label>
@@ -373,10 +360,10 @@
                 <span class="section-title-text">Sobre a Proposta</span>
             </h2>
 
-            <p>Esta proposta tem por objeto a prestação do serviço avulso de <strong>Kit Programas com Avaliação de Riscos Psicossociais</strong> para as empresas <strong>João Maria Alves Rocha Ltda</strong> e <strong>Faz Contato Camisetas e Design Ltda</strong>, contemplando a elaboração dos documentos obrigatórios de SST e o diagnóstico psicossocial conforme exigências da NR-01.</p>
+            <p>Esta proposta tem por objeto a prestação de <strong>treinamentos obrigatórios em Segurança e Saúde do Trabalho</strong> para as empresas <strong>João Maria Alves Rocha Ltda</strong> e <strong>Faz Contato Camisetas e Design Ltda</strong>, com foco na capacitação dos colaboradores, atendimento às Normas Regulamentadoras aplicáveis e emissão da documentação comprobatória correspondente.</p>
 
             <div class="highlight-box">
-                <p><strong><i class="fas fa-tag"></i> Modalidade:</strong> serviço avulso, com cobrança em parcela única e condição comercial especial para fechamento imediato.</p>
+                <p><strong><i class="fas fa-tag"></i> Modalidade:</strong> serviço avulso, com execução por treinamento conforme cronograma acordado entre as partes.</p>
             </div>
 
             <div class="page-footer">
@@ -385,53 +372,53 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 3: EQUIPE TÉCNICA E SERVIÇOS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0100 — Treinamentos em SST | João Maria Alves Rocha &amp; Faz Contato</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">3</span>
-                <span class="section-title-text">Escopo Técnico dos Serviços</span>
+                <span class="section-title-text">Escopo dos Treinamentos</span>
             </h2>
 
             <div class="info-box" style="margin-bottom:10px;">
-                <h4><i class="fas fa-file-medical-alt"></i> Kit Programas + Avaliação Psicossocial — 2 Empresas</h4>
-                <p>Serviço técnico pontual para estruturação documental das obrigações de SST das duas empresas, com levantamento de informações, elaboração dos programas e relatório psicossocial consolidado.</p>
+                <h4><i class="fas fa-chalkboard"></i> Capacitações Contempladas</h4>
+                <p>O escopo contempla treinamentos teóricos e práticos em SST, ministrados por profissional habilitado, com organização das turmas, controle de presença e emissão de certificados individuais.</p>
             </div>
 
-            <div style="background:var(--light-color);border-radius:6px;padding:10px;margin:8px 0;border-left:3px solid var(--secondary-color);">
-                <h4 style="font-family:var(--font-primary);font-size:11px;color:var(--primary-color);margin-bottom:4px;display:flex;align-items:center;gap:6px;"><i class="fas fa-id-badge" style="color:var(--secondary-color);"></i> Equipe Técnica Habilitada</h4>
-                <p style="margin:0;font-size:10px;line-height:1.5;">Atendimento realizado por profissional habilitado em SST para coleta de dados, análise dos ambientes e emissão dos documentos técnicos necessários ao pacote contratado.</p>
+            <div class="training-grid">
+                <div class="training-card">
+                    <h4><i class="fas fa-book"></i> NR-01</h4>
+                    <p>Integração e orientações gerais de SST para até 40 colaboradores, abordando deveres, riscos ocupacionais, condutas seguras e responsabilidades previstas na norma.</p>
+                </div>
+                <div class="training-card">
+                    <h4><i class="fas fa-users"></i> CIPA</h4>
+                    <p>Capacitação de uma turma com até 15 colaboradores para atuação na prevenção de acidentes, identificação de riscos e apoio às ações internas de segurança.</p>
+                </div>
+                <div class="training-card">
+                    <h4><i class="fas fa-fire-extinguisher"></i> Brigada</h4>
+                    <p>Formação de uma turma com até 15 colaboradores para resposta inicial a emergências, abandono de área, combate a princípio de incêndio e primeiros socorros básicos.</p>
+                </div>
+                <div class="training-card">
+                    <h4><i class="fas fa-cogs"></i> NR-12</h4>
+                    <p>Treinamento de uma turma com até 15 colaboradores para operação segura de máquinas e equipamentos, com ênfase em riscos mecânicos, proteções e procedimentos seguros.</p>
+                </div>
+                <div class="training-card" style="grid-column:1/-1;">
+                    <h4><i class="fas fa-helmet-safety"></i> NR-06</h4>
+                    <p>Capacitação para até 40 colaboradores sobre seleção, uso, guarda, higienização, responsabilidades e controles relacionados aos Equipamentos de Proteção Individual.</p>
+                </div>
             </div>
 
-            <h3 class="subsection-title"><i class="fas fa-tasks"></i> Entregáveis Contemplados no Pacote</h3>
+            <h3 class="subsection-title"><i class="fas fa-list-check"></i> Entregáveis Inclusos</h3>
             <ul class="feature-list">
-                <li>Levantamento inicial das atividades, funções, ambientes e quantitativo de colaboradores das duas empresas</li>
-                <li>Elaboração do PGR com inventário de riscos e plano de ação preventivo</li>
-                <li>Elaboração do PCMSO com definição dos exames ocupacionais aplicáveis</li>
-                <li>Elaboração do LTCAT com análise técnica das condições ambientais de trabalho</li>
-                <li>Aplicação da avaliação de riscos psicossociais conforme atualização da NR-01</li>
-                <li>Relatório técnico consolidado com diagnóstico e recomendações de adequação</li>
-                <li>Organização documental para apoio ao cumprimento das obrigações legais de SST</li>
+                <li>Planejamento prévio das turmas e alinhamento do cronograma de execução</li>
+                <li>Ministração dos conteúdos com abordagem prática aplicada à rotina das contratantes</li>
+                <li>Lista de presença dos participantes por treinamento</li>
+                <li>Certificados individuais emitidos conforme a capacitação realizada</li>
+                <li>Registro documental para comprovação do atendimento às exigências de SST</li>
             </ul>
-
-            <h3 class="subsection-title" style="margin-top:12px;"><i class="fas fa-file-alt"></i> Kit Programas — PGR · PCMSO · LTCAT · LIP</h3>
-            <div class="info-box">
-                <h4><i class="fas fa-check-circle"></i> Elaboração dos Programas Obrigatórios</h4>
-                <p>Inclui elaboração do <strong>PGR</strong> (Programa de Gerenciamento de Riscos), <strong>PCMSO</strong> (Programa de Controle Médico de Saúde Ocupacional) e <strong>LTCAT</strong> (Laudo Técnico das Condições Ambientais do Trabalho) para cada empresa, considerando o cenário atual informado no momento da contratação.</p>
-            </div>
-
-            <h3 class="subsection-title" style="margin-top:10px;"><i class="fas fa-brain"></i> Avaliação Psicossocial</h3>
-            <ul class="feature-list">
-                <li>Aplicação de questionário validado para identificação de fatores de risco psicossociais por função e setor</li>
-                <li>Análise dos resultados e emissão de relatório técnico com recomendações para integração ao PGR</li>
-            </ul>
-
-            <h3 class="subsection-title" style="margin-top:10px;"><i class="fas fa-users"></i> Limite do Pacote</h3>
-            <p style="font-size:10px;">A condição apresentada nesta proposta contempla a execução do pacote para <strong>até 36 colaboradores</strong>, somando as duas empresas contratantes.</p>
 
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
@@ -439,11 +426,10 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 4: TREINAMENTOS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0100 — Treinamentos em SST | João Maria Alves Rocha &amp; Faz Contato</span>
             </div>
 
             <h2 class="section-title">
@@ -451,52 +437,43 @@
                 <span class="section-title-text">Metodologia de Execução</span>
             </h2>
 
-            <div class="info-box" style="margin-bottom:12px;">
-                <h4><i class="fas fa-diagram-project"></i> Etapas de Desenvolvimento do Pacote</h4>
-                <p>Os serviços serão executados em fluxo técnico organizado, com coleta de dados, elaboração documental e apresentação final dos materiais para as duas empresas.</p>
-            </div>
-
-            <!-- Etapa 1 -->
             <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
                     <h4 style="margin:0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
-                        <i class="fas fa-clipboard-list" style="color:var(--secondary-color);margin-right:6px;"></i>Diagnóstico Inicial e Levantamento de Informações
+                        <i class="fas fa-calendar-check" style="color:var(--secondary-color);margin-right:6px;"></i>Alinhamento e Organização das Turmas
                     </h4>
-                    <div style="display:flex;gap:8px;font-size:10px;">
-                        <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-weight:600;">Etapa 1</span>
-                    </div>
+                    <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;">Etapa 1</span>
                 </div>
-                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Coleta das informações cadastrais, descrição das atividades, setores, funções e quantitativo de colaboradores para estruturação do escopo técnico dos documentos e da análise psicossocial.</p>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Definição das datas, quantidade de participantes por turma, infraestrutura disponível e ordem de execução dos treinamentos conforme a operação das empresas.</p>
             </div>
 
-            <!-- Etapa 2 -->
             <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
                     <h4 style="margin:0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
-                        <i class="fas fa-file-lines" style="color:var(--secondary-color);margin-right:6px;"></i>Elaboração do Kit Programas
+                        <i class="fas fa-person-chalkboard" style="color:var(--secondary-color);margin-right:6px;"></i>Execução dos Treinamentos
                     </h4>
-                    <div style="display:flex;gap:8px;font-size:10px;">
-                        <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-weight:600;">Etapa 2</span>
-                    </div>
+                    <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;">Etapa 2</span>
                 </div>
-                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Desenvolvimento técnico do PGR, PCMSO e LTCAT com base nas informações levantadas, considerando os ambientes, riscos e exigências ocupacionais de cada empresa.</p>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Realização das capacitações com conteúdo compatível com cada norma, aplicação prática orientada e reforço das medidas de prevenção aplicáveis às atividades desenvolvidas.</p>
             </div>
 
-            <!-- Etapa 3 -->
             <div style="background:white;border:1px solid #e2e8f0;border-radius:6px;padding:12px;margin-bottom:8px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
                     <h4 style="margin:0;font-family:var(--font-primary);font-size:12px;color:var(--primary-color);font-weight:600;">
-                        <i class="fas fa-brain" style="color:var(--alert-color);margin-right:6px;"></i>Avaliação de Riscos Psicossociais e Consolidação
+                        <i class="fas fa-file-circle-check" style="color:var(--success-color);margin-right:6px;"></i>Certificação e Fechamento
                     </h4>
-                    <div style="display:flex;gap:8px;font-size:10px;">
-                        <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-weight:600;">Etapa 3</span>
-                    </div>
+                    <span style="background:#f7fafc;color:var(--primary-color);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;">Etapa 3</span>
                 </div>
-                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Aplicação da ferramenta psicossocial, análise dos fatores de risco identificados e entrega do relatório técnico final com orientações de enquadramento e plano de ação recomendado.</p>
+                <p style="margin:0;font-size:10px;line-height:1.6;color:var(--gray-color);">Consolidação das listas de presença, emissão dos certificados e entrega dos registros necessários para comprovação da capacitação realizada.</p>
+            </div>
+
+            <div class="green-box">
+                <h4><i class="fas fa-certificate"></i> Documentação Entregue</h4>
+                <p>Ao final de cada treinamento serão disponibilizados os comprovantes de participação e certificados individuais dos colaboradores treinados, conforme o escopo contratado.</p>
             </div>
 
             <div class="highlight-box">
-                <p style="font-size:10px;margin:0;"><strong><i class="fas fa-calendar-check"></i> Execução:</strong> O pacote será executado mediante alinhamento prévio de cronograma e envio das informações necessárias pelas contratantes.</p>
+                <p style="font-size:10px;margin:0;"><strong><i class="fas fa-circle-info"></i> Observação:</strong> A distribuição das turmas poderá ser ajustada em comum acordo, desde que respeitados os quantitativos previstos nesta proposta.</p>
             </div>
 
             <div class="page-footer">
@@ -505,68 +482,46 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 5: PSICOSSOCIAL + BENEFÍCIOS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0100 — Treinamentos em SST | João Maria Alves Rocha &amp; Faz Contato</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">5</span>
-                <span class="section-title-text">Avaliação de Riscos Psicossociais</span>
+                <span class="section-title-text">Benefícios da Contratação</span>
             </h2>
 
             <div class="purple-box" style="margin-bottom:10px;">
-                <h4><i class="fas fa-brain"></i> Avaliação Psicossocial Inclusa — NR-01 Atualizada</h4>
-                <p>A avaliação de riscos psicossociais conforme NR-01 está <strong>inclusa</strong> nesta proposta para ambas as empresas. Abrange aplicação de questionário validado, análise dos dados coletados, identificação de fatores de risco e elaboração de relatório técnico com recomendações de intervenção.</p>
+                <h4><i class="fas fa-shield-halved"></i> Conformidade e Capacitação</h4>
+                <p>A contratação do pacote de treinamentos fortalece a cultura preventiva das empresas, melhora o preparo das equipes e contribui para a evidência documental do cumprimento das exigências legais em SST.</p>
             </div>
-
-            <ul class="feature-list" style="margin-bottom:14px;">
-                <li>Aplicação de questionário de fatores psicossociais conforme exigência da NR-01 (atualização 2024)</li>
-                <li>Identificação de fatores de risco: sobrecarga de trabalho, relações interpessoais, autonomia, violência e assédio</li>
-                <li>Análise e consolidação dos dados por função/setor em cada empresa</li>
-                <li>Relatório técnico com diagnóstico e plano de ação recomendado</li>
-                <li>Integração dos resultados ao PGR de cada empresa</li>
-            </ul>
-
-            <h2 class="section-title">
-                <span class="section-number">6</span>
-                <span class="section-title-text">Benefícios do Pacote Contratado</span>
-            </h2>
 
             <div class="factors-grid">
                 <div class="factor-card">
                     <h4><i class="fas fa-gavel"></i> Conformidade Legal</h4>
-                    <p>Atendimento às NRs e legislação trabalhista vigente, evitando autuações, multas do MTE e passivos trabalhistas.</p>
+                    <p>Atendimento às exigências normativas relacionadas à capacitação obrigatória dos colaboradores.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-shield-alt"></i> Prevenção de Acidentes</h4>
-                    <p>Identificação e controle proativo de riscos ocupacionais nas atividades de ambas as empresas.</p>
+                    <h4><i class="fas fa-user-shield"></i> Redução de Riscos</h4>
+                    <p>Orientação prática para prevenção de acidentes, falhas operacionais e respostas inseguras no ambiente de trabalho.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-file-alt"></i> Documentação Completa</h4>
-                    <p>PGR, PCMSO, LTCAT e LIP organizados e atualizados para cada empresa, prontos para fiscalizações.</p>
+                    <h4><i class="fas fa-folder-open"></i> Evidência Documental</h4>
+                    <p>Registros e certificados aptos a compor o arquivo de SST das contratantes.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-headset"></i> Suporte Contínuo</h4>
-                    <p>Entrega técnica organizada, facilitando a tomada de decisão e a implementação das adequações prioritárias.</p>
+                    <h4><i class="fas fa-users-gear"></i> Equipe Mais Preparada</h4>
+                    <p>Colaboradores orientados sobre condutas seguras, uso correto de EPI e atuação em situações de emergência.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-cloud-upload-alt"></i> eSocial em Dia</h4>
-                    <p>Base documental consistente para apoiar o correto enquadramento das obrigações ocupacionais e previdenciárias.</p>
+                    <h4><i class="fas fa-fire-flame-curved"></i> Resposta a Emergências</h4>
+                    <p>Capacitação inicial da brigada e disseminação de práticas de abandono e combate a princípios de incêndio.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-brain"></i> Saúde Mental</h4>
-                    <p>Avaliação psicossocial integrada ao PGR conforme NR-01 atualizada, promovendo bem-estar no trabalho.</p>
-                </div>
-                <div class="factor-card">
-                    <h4><i class="fas fa-users"></i> Equipe Capacitada</h4>
-                    <p>Mapeamento técnico das funções e ambientes, com visão clara das prioridades de adequação em SST.</p>
-                </div>
-                <div class="factor-card">
-                    <h4><i class="fas fa-money-bill-wave"></i> Redução de Passivos</h4>
-                    <p>Condição comercial especial com melhor custo de implantação para regularização inicial das empresas.</p>
+                    <h4><i class="fas fa-clipboard-check"></i> Padronização</h4>
+                    <p>Treinamentos executados com planejamento, controle de participação e conteúdo compatível com o escopo contratado.</p>
                 </div>
             </div>
 
@@ -576,81 +531,89 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 6: INVESTIMENTO ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0100 — Treinamentos em SST | João Maria Alves Rocha &amp; Faz Contato</span>
             </div>
 
             <h2 class="section-title">
-                <span class="section-number">7</span>
+                <span class="section-number">6</span>
                 <span class="section-title-text">Investimento</span>
             </h2>
 
             <div class="highlight-box" style="margin-bottom:12px;">
-                <p style="margin:0;"><strong><i class="fas fa-file-invoice-dollar"></i> Serviço:</strong> Kit Programas + Avaliação de Riscos Psicossociais para João Maria Alves Rocha Ltda &amp; Faz Contato Camisetas e Design Ltda</p>
+                <p style="margin:0;"><strong><i class="fas fa-file-invoice-dollar"></i> Escopo:</strong> Treinamentos NR-01, CIPA, Brigada, NR-12 e NR-06 para João Maria Alves Rocha Ltda &amp; Faz Contato Camisetas e Design Ltda.</p>
             </div>
 
-            <!-- Tabela de investimento -->
             <table class="inv-table">
                 <thead>
                     <tr>
-                        <th style="width:60%;">Item</th>
-                        <th class="right" style="width:40%;">Valor</th>
+                        <th style="width:34%;">Treinamento</th>
+                        <th style="width:22%;">Público / Limite</th>
+                        <th style="width:24%;">Formato</th>
+                        <th class="right" style="width:20%;">Valor</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <strong>Psicossocial + Kit Programas (PGR, PCMSO e LTCAT)</strong><br>
-                            <span class="sub">Aplicação, análise, relatório técnico e elaboração dos programas obrigatórios para ambas as empresas, limitado a até 36 colaboradores</span>
-                        </td>
-                        <td class="right">R$ 3.600,00</td>
+                        <td><strong>NR-01</strong><br><span style="font-size:8.5px;color:var(--gray-color);">Integração e orientações gerais de SST</span></td>
+                        <td>40 colaboradores</td>
+                        <td>Treinamento coletivo</td>
+                        <td class="right">R$ 3.700,00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CIPA</strong><br><span style="font-size:8.5px;color:var(--gray-color);">Capacitação da comissão</span></td>
+                        <td>1 turma de até 15 col.</td>
+                        <td>Turma única</td>
+                        <td class="right">R$ 2.500,00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Brigada</strong><br><span style="font-size:8.5px;color:var(--gray-color);">Brigada de emergência e incêndio</span></td>
+                        <td>1 turma de até 15 col.</td>
+                        <td>Turma única</td>
+                        <td class="right">R$ 2.900,00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NR-12</strong><br><span style="font-size:8.5px;color:var(--gray-color);">Segurança em máquinas e equipamentos</span></td>
+                        <td>1 turma de até 15 col.</td>
+                        <td>Turma única</td>
+                        <td class="right">R$ 3.400,00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NR-06</strong><br><span style="font-size:8.5px;color:var(--gray-color);">Uso correto de EPI</span></td>
+                        <td>40 colaboradores</td>
+                        <td>Treinamento coletivo</td>
+                        <td class="right">R$ 3.800,00</td>
                     </tr>
                     <tr class="total-row">
-                        <td><strong>TOTAL DO PACOTE AVULSO</strong></td>
-                        <td class="right">R$ 3.600,00</td>
+                        <td colspan="3"><strong>INVESTIMENTO GLOBAL</strong></td>
+                        <td class="right">R$ 16.300,00</td>
                     </tr>
                 </tbody>
             </table>
 
-            <!-- Condição comercial -->
-            <p style="font-family:var(--font-primary);font-size:11px;font-weight:700;color:var(--primary-color);margin:14px 0 6px;">Condição Comercial Especial</p>
-            <table class="inv-table">
-                <thead>
-                    <tr>
-                        <th style="width:70%;">Descrição</th>
-                        <th class="right" style="width:30%;">Valor</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Valor de tabela do pacote</strong></td>
-                        <td class="right">R$ 4.000,00</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Condição especial de fechamento</strong></td>
-                        <td class="right" style="color:var(--success-color);">R$ 3.600,00</td>
-                    </tr>
-                    <tr class="incluso-row">
-                        <td><i class="fas fa-check" style="color:var(--success-color);margin-right:6px;"></i> Economia concedida nesta proposta</td>
-                        <td class="right">R$ 400,00</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div style="background:#f0fff4;border:1px solid #c6f6d5;border-radius:8px;padding:8px 12px;margin-top:6px;font-size:9.5px;color:var(--dark-color);">
-                <i class="fas fa-info-circle" style="color:var(--success-color);margin-right:5px;"></i>
-                <strong>Inclui:</strong> Aplicação de questionário psicossocial validado · Relatório técnico com diagnóstico e plano de ação · PGR (Programa de Gerenciamento de Riscos) · PCMSO (Programa de Controle Médico de Saúde Ocupacional) · LTCAT (Laudo Técnico das Condições Ambientais do Trabalho) · Integração ao eSocial. Limite: até 36 colaboradores.
+            <div class="green-box">
+                <h4><i class="fas fa-star"></i> Inclusões do Pacote</h4>
+                <p>Instrutoria técnica especializada, execução dos treinamentos previstos, listas de presença, certificados individuais e alinhamento operacional para realização das turmas.</p>
             </div>
 
-            <!-- Totais -->
-            <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px;">
-                <div style="background:#f0fff4;border:1px solid #c6f6d5;border-radius:8px;padding:10px 14px;">
-                    <p style="font-family:var(--font-primary);font-size:11px;font-weight:700;color:var(--success-color);margin:0 0 3px;">PSICOSSOCIAL + KIT PROGRAMAS</p>
-                    <p style="font-size:18px;font-weight:800;color:var(--success-color);margin:0;">R$ 3.600,00</p>
-                    <p style="font-size:9px;color:var(--gray-color);margin:2px 0 0;">Serviço avulso em condição especial — até 36 colaboradores</p>
+            <div class="company-info-grid" style="margin-top:12px;">
+                <div class="company-info-item">
+                    <label>Forma de Pagamento</label>
+                    <span>PIX, boleto ou transferência bancária</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Prazo de Execução</label>
+                    <span>A combinar conforme cronograma</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Validade da Proposta</label>
+                    <span>15 dias corridos</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Início dos Serviços</label>
+                    <span>Após aprovação formal e alinhamento das datas</span>
                 </div>
             </div>
 
@@ -660,52 +623,51 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 7: CONDIÇÕES DE CONTRATAÇÃO ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0100 — Treinamentos em SST | João Maria Alves Rocha &amp; Faz Contato</span>
             </div>
 
             <h2 class="section-title">
-                <span class="section-number">8</span>
+                <span class="section-number">7</span>
                 <span class="section-title-text">Condições de Contratação</span>
             </h2>
 
             <div class="conditions-list">
                 <div class="condition-item">
-                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-icon"><i class="fas fa-credit-card"></i></div>
                     <div class="condition-text">
                         <strong>Forma de Pagamento</strong>
-                        <span>Pagamento em parcela única via PIX, boleto bancário ou transferência bancária, conforme alinhamento entre as partes.</span>
+                        <span>Pagamento via PIX, boleto bancário ou transferência bancária, conforme definição entre as partes no fechamento.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-file-contract"></i></div>
                     <div class="condition-text">
                         <strong>Natureza da Contratação</strong>
-                        <span>Serviço avulso para elaboração e entrega do pacote técnico descrito nesta proposta.</span>
-                    </div>
-                </div>
-                <div class="condition-item">
-                    <div class="condition-icon"><i class="fas fa-percent"></i></div>
-                    <div class="condition-text">
-                        <strong>Condição Comercial</strong>
-                        <span>Valor promocional de R$ 3.600,00 concedido exclusivamente para esta negociação, em substituição ao valor base de R$ 4.000,00.</span>
+                        <span>Serviço avulso para realização dos treinamentos descritos nesta proposta, sem vinculação a assessoria mensal recorrente.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-calendar-alt"></i></div>
                     <div class="condition-text">
-                        <strong>Início dos Serviços</strong>
-                        <span>Os serviços têm início após a aprovação formal da proposta e a confirmação do pagamento acordado.</span>
+                        <strong>Agendamento</strong>
+                        <span>As datas serão definidas após aprovação da proposta, conforme disponibilidade operacional das contratantes e da equipe técnica.</span>
                     </div>
                 </div>
                 <div class="condition-item">
-                    <div class="condition-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="condition-icon"><i class="fas fa-users"></i></div>
+                    <div class="condition-text">
+                        <strong>Limites Considerados</strong>
+                        <span>NR-01 e NR-06 para até 40 colaboradores. CIPA, Brigada e NR-12 em uma turma cada, limitada a até 15 colaboradores.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-plus"></i></div>
                     <div class="condition-text">
                         <strong>Escopo Complementar</strong>
-                        <span>Serviços adicionais não contemplados nesta proposta, como assessoria mensal, treinamentos ou documentos extras, poderão ser negociados separadamente mediante proposta específica.</span>
+                        <span>Treinamentos adicionais, turmas extras ou revisões de escopo poderão ser orçados separadamente mediante solicitação específica.</span>
                     </div>
                 </div>
             </div>
@@ -715,7 +677,7 @@
             </div>
 
             <h2 class="section-title" style="margin-top:18px;">
-                <span class="section-number">9</span>
+                <span class="section-number">8</span>
                 <span class="section-title-text">Responsável pela Proposta</span>
             </h2>
 
@@ -737,11 +699,10 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 8: TERMO DE ACEITE E ASSINATURAS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0092 — Kit Programas + Psicossocial | João Maria Alves Rocha &amp; Faz Contato</span>
+                <span class="page-header-title">Proposta TM0100 — Treinamentos em SST | João Maria Alves Rocha &amp; Faz Contato</span>
             </div>
 
             <h2 class="section-title">
@@ -751,10 +712,9 @@
 
             <div class="info-box" style="margin-bottom:14px;">
                 <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
-                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação do pacote de Kit Programas com Avaliação de Riscos Psicossociais.</p>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com os termos, condições, valores e limites de participantes descritos nesta proposta comercial, formalizando a contratação dos treinamentos aqui especificados.</p>
             </div>
 
-            <!-- Proponente -->
             <div style="background:var(--light-color);border-radius:10px;padding:18px;margin-bottom:12px;">
                 <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:14px;margin-bottom:12px;text-align:center;border-bottom:2px solid var(--purple-color);padding-bottom:8px;">
                     <i class="fas fa-building" style="color:var(--purple-color);"></i> RESPONSÁVEL PELA ELABORAÇÃO DA PROPOSTA
@@ -769,21 +729,20 @@
                         <p style="margin:0;font-size:12px;font-weight:600;">60.545.359/0001-76</p>
                     </div>
                 </div>
-                <p style="margin:0 0 14px 0;font-size:12px;font-weight:600;">Thiago Marques — Diretor</p>
+                <p style="margin:0 0 14px 0;font-size:12px;font-weight:600;">Thiago Marques - Diretor</p>
                 <div style="padding-top:12px;border-top:1px dashed var(--gray-color);text-align:center;">
                     <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 4px;height:30px;max-width:400px;"></div>
                     <p style="margin:0;font-size:10px;color:var(--gray-color);">Assinatura do Proponente</p>
                 </div>
             </div>
 
-            <!-- Aprovadores — 2 empresas -->
             <div style="background:var(--light-color);border-radius:10px;padding:18px;">
                 <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:14px;margin-bottom:12px;text-align:center;border-bottom:2px solid var(--secondary-color);padding-bottom:8px;">
                     <i class="fas fa-user-tie" style="color:var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
                 </h3>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
                     <div>
-                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Empresa 1 — Razão Social</p>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Empresa 1 - Razão Social</p>
                         <p style="margin:0;font-size:11px;font-weight:600;">João Maria Alves Rocha Ltda</p>
                     </div>
                     <div>
@@ -791,7 +750,7 @@
                         <p style="margin:0;font-size:11px;font-weight:600;">51.371.160/0001-88</p>
                     </div>
                     <div>
-                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Empresa 2 — Razão Social</p>
+                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Empresa 2 - Razão Social</p>
                         <p style="margin:0;font-size:11px;font-weight:600;">Faz Contato Camisetas e Design Ltda</p>
                     </div>
                     <div>

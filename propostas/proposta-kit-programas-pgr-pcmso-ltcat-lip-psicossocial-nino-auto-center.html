@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta RC0001 - Kit de Programas SST (PGR + PCMSO + LTCAT + LIP + Psicossocial) - Nino Auto Center LTDA | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+
+        body { font-family: var(--font-secondary); color: var(--dark-color); line-height: 1.6; background: #e2e8f0; }
+
+        .pdf-controls {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: var(--white-color); padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.15); max-width: 280px;
+        }
+        .btn-generate {
+            background: var(--primary-color); color: var(--white-color); padding: 15px 30px;
+            border: none; border-radius: 8px; font-family: var(--font-primary); font-weight: 600;
+            font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            transition: all 0.3s ease; width: 100%; justify-content: center;
+        }
+        .btn-generate:hover { background: var(--secondary-color); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245,166,35,0.4); }
+        .pdf-instructions { margin-top: 15px; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .pdf-instructions h4 { font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); margin-bottom: 8px; }
+        .pdf-instructions ol { font-size: 12px; line-height: 1.6; color: var(--dark-color); padding-left: 18px; margin: 0; }
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+
+        #pdf-content { width: 210mm; margin: 0 auto; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
+
+        .page {
+            width: 210mm; height: 297mm; min-height: 297mm; max-height: 297mm;
+            padding: 15mm 15mm 22mm 15mm; page-break-after: always; position: relative;
+            background: var(--white-color); box-sizing: border-box; overflow: hidden;
+        }
+        .page:last-child { page-break-after: auto; }
+
+        .page-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 10px; margin-bottom: 12px; border-bottom: 2px solid var(--light-color);
+        }
+        .page-header-logo { height: 35px; }
+        .page-header-title { font-family: var(--font-primary); font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; }
+
+        .page-footer {
+            position: absolute; bottom: 15mm; left: 15mm; right: 15mm;
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 8px; border-top: 1px solid var(--light-color);
+            font-size: 10px; color: var(--gray-color); background: var(--white-color); z-index: 10;
+        }
+        .page-number { font-weight: 600; color: var(--primary-color); }
+
+        .page-cover {
+            background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
+            color: var(--white-color); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 25mm 20mm; position: relative; overflow: hidden;
+        }
+        .page-cover::before {
+            content: ''; position: absolute; top: -50%; right: -30%;
+            width: 80%; height: 200%;
+            background: radial-gradient(ellipse, rgba(128, 90, 213, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .cover-logo { width: 180px; margin-bottom: 30px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
+        .cover-badge {
+            background: rgba(128, 90, 213, 0.9); color: var(--white-color);
+            padding: 10px 25px; border-radius: 20px; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            position: relative; z-index: 1;
+        }
+        .cover-icon {
+            width: 60px; height: 60px; background: rgba(245, 166, 35, 0.2); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            position: relative; z-index: 1;
+        }
+        .cover-icon i { font-size: 28px; color: var(--secondary-color); }
+        .cover-title { font-family: var(--font-primary); font-size: 26px; font-weight: 800; margin-bottom: 15px; line-height: 1.25; position: relative; z-index: 1; }
+        .cover-title span { color: var(--secondary-color); display: block; }
+        .cover-subtitle {
+            font-size: 14px; font-weight: 300; margin-bottom: 30px; opacity: 0.95;
+            max-width: 450px; margin-left: auto; margin-right: auto;
+            position: relative; z-index: 1; line-height: 1.5;
+        }
+        .cover-client {
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            padding: 18px 35px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);
+            position: relative; z-index: 1; margin: 0 auto; max-width: 420px;
+        }
+        .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 6px; text-align: center; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; color: var(--secondary-color); text-align: center; }
+        .cover-date { margin-top: 25px; font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
+        .cover-footer {
+            position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center;
+            font-size: 10px; opacity: 0.7; padding: 0 18mm;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .cover-footer p { margin: 0; text-align: center; width: 100%; }
+
+        .section-number {
+            display: inline-block; background: var(--secondary-color); color: var(--white-color);
+            width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px;
+            font-family: var(--font-primary); font-weight: 700; font-size: 12px; margin-right: 10px;
+        }
+        .section-title {
+            font-family: var(--font-primary); font-size: 18px; font-weight: 700;
+            color: var(--primary-color); margin-bottom: 14px; display: flex; align-items: center;
+            padding-bottom: 10px; border-bottom: 3px solid var(--secondary-color);
+        }
+        .section-title-text { flex: 1; }
+        .subsection-title {
+            font-family: var(--font-primary); font-size: 13px; font-weight: 700;
+            color: var(--primary-color); margin: 12px 0 8px; display: flex; align-items: center; gap: 8px;
+        }
+        .subsection-title i { color: var(--secondary-color); }
+
+        p { margin-bottom: 8px; text-align: justify; font-size: 11px; line-height: 1.5; }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border-left: 4px solid var(--alert-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .alert-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--alert-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .alert-box p { margin-bottom: 0; color: var(--dark-color); font-size: 10px; line-height: 1.4; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%);
+            border-left: 4px solid var(--secondary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .highlight-box p { margin-bottom: 0; color: var(--dark-color); font-size: 10px; line-height: 1.4; }
+        .highlight-box strong { color: var(--primary-color); }
+
+        .info-box {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            border-left: 4px solid var(--primary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .info-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .info-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .green-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border-left: 4px solid var(--success-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .green-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .purple-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%);
+            border-left: 4px solid var(--purple-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0;
+        }
+        .purple-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--purple-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .purple-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+
+        .feature-list { list-style: none; margin: 10px 0; }
+        .feature-list li { padding: 5px 0; padding-left: 22px; position: relative; font-size: 11px; border-bottom: 1px solid var(--light-color); }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--success-color); font-size: 10px; }
+
+        .factors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; }
+        .factor-card { background: var(--light-color); padding: 8px 10px; border-radius: 6px; border-left: 3px solid var(--success-color); }
+        .factor-card h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 3px; display: flex; align-items: center; gap: 5px; }
+        .factor-card h4 i { color: var(--success-color); font-size: 11px; }
+        .factor-card p { font-size: 10px; margin-bottom: 0; line-height: 1.4; }
+
+        .methodology-steps { margin: 12px 0; }
+        .step { display: flex; gap: 10px; margin-bottom: 8px; padding: 8px 10px; background: var(--light-color); border-radius: 6px; }
+        .step-number {
+            background: var(--primary-color); color: var(--white-color); width: 26px; height: 26px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-primary); font-weight: 700; font-size: 11px; flex-shrink: 0;
+        }
+        .step-content h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 2px; }
+        .step-content p { font-size: 10px; margin-bottom: 0; line-height: 1.35; }
+
+        .deliverables-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; }
+        .deliverable-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px; background: var(--light-color); border-radius: 6px; }
+        .deliverable-icon { width: 26px; height: 26px; background: var(--secondary-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--white-color); font-size: 11px; flex-shrink: 0; }
+        .deliverable-text h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 2px; }
+        .deliverable-text p { font-size: 9px; margin-bottom: 0; line-height: 1.35; }
+
+        .conditions-list { margin: 12px 0; }
+        .condition-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--light-color); }
+        .condition-item:last-child { border-bottom: none; }
+        .condition-icon { width: 26px; height: 26px; background: var(--light-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 11px; flex-shrink: 0; }
+        .condition-text strong { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); display: block; margin-bottom: 2px; }
+        .condition-text span { font-size: 10px; color: var(--gray-color); line-height: 1.3; }
+
+        .page-contact { display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        .contact-content { margin: auto 0; }
+        .contact-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 28px; color: var(--secondary-color); }
+        .contact-title { font-family: var(--font-primary); font-size: 20px; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; }
+        .contact-subtitle { font-size: 12px; color: var(--gray-color); margin-bottom: 20px; max-width: 400px; margin-left: auto; margin-right: auto; }
+        .contact-info { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        .contact-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--dark-color); }
+        .contact-item i { color: var(--secondary-color); font-size: 16px; width: 22px; }
+        .contact-signature { margin-top: 25px; padding-top: 18px; border-top: 2px solid var(--light-color); }
+        .signature-text { font-size: 10px; color: var(--gray-color); line-height: 1.5; }
+
+        .responsible-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%);
+            padding: 18px; border-radius: 10px; color: var(--white-color); text-align: center; margin: 15px 0;
+        }
+        .responsible-avatar { width: 60px; height: 60px; background: rgba(245, 166, 35, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; color: var(--secondary-color); border: 2px solid var(--secondary-color); }
+        .responsible-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; margin-bottom: 3px; text-align: center; }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; text-align: center; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; text-align: center; }
+        .responsible-contacts { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+        .responsible-contact-item { display: flex; align-items: center; gap: 8px; font-size: 10px; }
+        .responsible-contact-item i { color: var(--secondary-color); width: 15px; }
+
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page {
+                page-break-after: always !important; page-break-inside: avoid !important;
+                break-after: page !important; break-inside: avoid !important;
+                width: 210mm !important; height: 297mm !important; min-height: 297mm !important;
+                max-height: 297mm !important; margin: 0 !important;
+                padding: 12mm 15mm 18mm 15mm !important; box-sizing: border-box !important;
+                overflow: hidden !important; position: relative !important;
+            }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover { padding: 20mm 18mm 18mm 18mm !important; }
+            .page-header { page-break-after: avoid !important; break-after: avoid !important; margin-bottom: 10px !important; padding-bottom: 8px !important; }
+            .page-footer { position: absolute !important; bottom: 8mm !important; left: 15mm !important; right: 15mm !important; page-break-after: avoid !important; break-after: avoid !important; font-size: 9px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Controles de PDF -->
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="generatePDF()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no botão acima</li>
+                <li>Selecione <strong>"Salvar como PDF"</strong></li>
+                <li>Clique em <strong>"Salvar"</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Conteúdo do PDF -->
+    <div id="pdf-content">
+
+        <!-- ====== PÁGINA 1: CAPA ====== -->
+        <div class="page page-cover">
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">RC0001</span>
+
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+
+            <span class="cover-badge">
+                <i class="fas fa-hard-hat"></i>
+                Kit Completo de Programas SST
+            </span>
+
+            <div class="cover-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Kit PGR + PCMSO + LTCAT + LIP + Psicossocial</span>
+            </h1>
+            <p class="cover-subtitle">
+                Proposta técnica para <strong style="color: var(--secondary-color);">adequação legal completa em SST</strong> — elaboração de PGR, PCMSO, LTCAT, LIP e Avaliação de Fatores de Riscos Psicossociais (NR-01) para até 9 colaboradores.
+            </p>
+
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">Nino Auto Center LTDA</p>
+            </div>
+
+            <p class="cover-date">
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;
+                06 de Julho de 2026
+            </p>
+
+            <div class="cover-footer">
+                <p>EngMarq Solution | Engenharia de Segurança e Saúde do Trabalho | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 2: SOBRE A EMPRESA CONTRATANTE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Sobre a Empresa Contratante</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 18px;">
+                <h4><i class="fas fa-building"></i> Dados da Empresa</h4>
+                <p>Esta proposta foi desenvolvida exclusivamente para atender às necessidades da <strong>Nino Auto Center LTDA</strong>, contemplando a elaboração do <strong>Kit de Programas SST (PGR + PCMSO + LTCAT + LIP)</strong> integrado à <strong>Avaliação de Fatores de Riscos Psicossociais (NR-01)</strong> para até <strong>9 colaboradores</strong>, em total conformidade com a legislação vigente.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 10px; padding: 18px; margin-bottom: 15px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">Nino Auto Center LTDA</p>
+                    </div>
+                    <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
+                        <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--dark-color);">04.899.529/0001-40</p>
+                    </div>
+                    <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Nome Fantasia</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">Nino Auto Center</p>
+                    </div>
+                    <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Nº de Colaboradores</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Até 9 colaboradores</p>
+                    </div>
+                    <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Logradouro</p>
+                        <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--dark-color);">R. Arcângelo Napoleone, 301 — Vila Honorina</p>
+                    </div>
+                    <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Município / CEP</p>
+                        <p style="margin: 0; font-size: 13px; font-weight: 600; color: var(--dark-color);">Agudos — SP | CEP 17.123-010</p>
+                    </div>
+                    <div style="background: white; padding: 12px; border-radius: 8px; border-left: 4px solid var(--primary-color); grid-column: 1 / -1;">
+                        <p style="margin: 0 0 4px 0; font-size: 10px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Atividade Econômica Principal (CNAE)</p>
+                        <p style="margin: 0; font-size: 11px; font-weight: 600; color: var(--dark-color);">45.30-7-03 — Comércio a varejo de peças e acessórios novos para veículos automotores</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-info-circle"></i> Sobre a Proposta:</strong> Esta proposta contempla a elaboração do <strong>PGR (Programa de Gerenciamento de Riscos)</strong>, <strong>PCMSO (Programa de Controle Médico de Saúde Ocupacional)</strong>, <strong>LTCAT (Laudo Técnico das Condições Ambientais do Trabalho)</strong>, <strong>LIP (Laudo de Insalubridade e Periculosidade)</strong> e <strong>Avaliação de Fatores de Riscos Psicossociais (NR-01)</strong> para a Nino Auto Center LTDA, para até <strong>9 colaboradores</strong>.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 3: DADOS DA EMPRESA CONTRATADA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-building"></i></span>
+                <span class="section-title-text">Dados da Empresa Contratada</span>
+            </h2>
+
+            <div class="purple-box" style="margin-bottom: 25px;">
+                <h4><i class="fas fa-info-circle"></i> Informações para Faturamento e Contrato</h4>
+                <p>Abaixo estão os dados cadastrais da EngMarq Solution para formalização contratual e emissão de documentos fiscais.</p>
+            </div>
+
+            <div style="background: var(--light-color); border-radius: 12px; padding: 30px; margin-bottom: 25px;">
+                <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid var(--purple-color);">
+                    <img src="../assets/logoengmarq.png" alt="EngMarq Solution" style="height: 60px;">
+                    <div>
+                        <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 20px; margin-bottom: 5px;">EngMarq Solution LTDA</h3>
+                        <p style="margin: 0; color: var(--gray-color); font-size: 13px;">Engenharia de Segurança e Saúde do Trabalho</p>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">CNPJ</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">60.545.359/0001-76</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">Razão Social</p>
+                        <p style="margin: 0; font-size: 16px; font-weight: 600; color: var(--dark-color);">Engmarq Solution LTDA</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">E-mail</p>
+                        <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--dark-color);">engmarqsolution@gmail.com</p>
+                    </div>
+                    <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid var(--secondary-color);">
+                        <p style="margin: 0 0 5px 0; font-size: 12px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px;">WhatsApp</p>
+                        <p style="margin: 0; font-size: 14px; font-weight: 600; color: var(--dark-color);">+55 84 99928-5888</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-file-contract"></i> Documentação:</strong> Todos os documentos societários, certidões e comprovações de regularidade fiscal estão disponíveis mediante solicitação para processo de homologação de fornecedores.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 4: CONTEXTO E OBRIGAÇÃO LEGAL ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Contexto e Obrigação Legal</span>
+            </h2>
+
+            <div class="alert-box">
+                <h4><i class="fas fa-gavel"></i> Atenção: Obrigação Legal em SST</h4>
+                <p>Toda empresa com vínculos empregatícios é obrigada por lei a possuir e manter atualizados os programas de Segurança e Saúde do Trabalho — <strong>PGR, PCMSO, LTCAT e LIP</strong>. Com a atualização da <strong>NR-01</strong>, também passa a ser obrigatória a avaliação e gestão dos <strong>Fatores de Riscos Psicossociais</strong> integrados ao PGR. A Nino Auto Center LTDA, como empresa com colaboradores em regime CLT, está plenamente enquadrada nessas exigências.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-file-contract"></i> O que a legislação exige?</h3>
+            <p>
+                A <strong>NR-01</strong> (Disposições Gerais e Gerenciamento de Riscos Ocupacionais), a <strong>NR-07</strong> (PCMSO), a <strong>NR-15</strong> (Insalubridade), a <strong>NR-16</strong> (Periculosidade) e a legislação previdenciária (LTCAT) estabelecem obrigações claras para toda empresa empregadora, independentemente do setor ou porte. A integração ao <strong>eSocial</strong> tornou o monitoramento dessas obrigações ainda mais rigoroso.
+            </p>
+            <p>
+                Para o setor automotivo, a <strong>NR-15</strong> é especialmente relevante, pois colaboradores expostos a agentes como ruído, substâncias químicas (óleos, solventes, graxas) e calor podem ter direito a <strong>adicional de insalubridade</strong>. O <strong>LIP</strong> é o documento técnico que comprova ou afasta esse direito, sendo obrigatório para fins trabalhistas.
+            </p>
+            <p>
+                A atualização da NR-01 incluiu explicitamente a obrigatoriedade de identificação, avaliação e gestão dos <strong>riscos psicossociais</strong> no PGR, reconhecendo que fatores organizacionais e relacionais impactam diretamente a saúde dos trabalhadores.
+            </p>
+
+            <div class="highlight-box">
+                <p><strong>Prazo de adequação:</strong> As organizações devem se adequar às novas exigências imediatamente. O descumprimento pode resultar em autuações, multas e passivos trabalhistas significativos.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-exclamation-triangle"></i> Riscos Jurídicos do Não Cumprimento</h3>
+            <ul class="feature-list">
+                <li><strong>Multas e autuações</strong> em fiscalizações do Ministério do Trabalho e Emprego</li>
+                <li><strong>Processos trabalhistas</strong> relacionados a acidentes e doenças ocupacionais</li>
+                <li><strong>Ações regressivas</strong> do INSS por afastamentos decorrentes de adoecimento ocupacional</li>
+                <li><strong>Responsabilização civil e criminal</strong> em casos de omissão comprovada</li>
+                <li><strong>Danos à imagem</strong> institucional e reputação da empresa</li>
+                <li><strong>Aumento do FAP</strong> (Fator Acidentário de Prevenção) e custos previdenciários</li>
+                <li><strong>Pendências no eSocial</strong> com impacto em certidões e processos licitatórios</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 5: OS PROGRAMAS DO KIT SST ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Os Programas do Kit SST</span>
+            </h2>
+
+            <p>O <strong>Kit de Programas SST</strong> reúne os cinco documentos técnicos obrigatórios para a conformidade legal da Nino Auto Center LTDA, elaborados de forma integrada e em conformidade com a legislação vigente:</p>
+
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0;">
+                <div class="factor-card" style="border-left-color: var(--primary-color);">
+                    <h4><i class="fas fa-hard-hat" style="color: var(--primary-color);"></i> PGR — Gerenciamento de Riscos</h4>
+                    <p>Identifica, avalia e controla todos os agentes de risco ocupacional (físico, químico, biológico, ergonômico e psicossocial), conforme NR-01. Base legal de toda a gestão de SST da empresa.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--success-color);">
+                    <h4><i class="fas fa-stethoscope" style="color: var(--success-color);"></i> PCMSO — Controle Médico</h4>
+                    <p>Define os exames médicos obrigatórios (admissional, periódico, demissional etc.) por função e risco, conforme NR-07. Garante o acompanhamento da saúde dos colaboradores.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--secondary-color);">
+                    <h4><i class="fas fa-file-medical" style="color: var(--secondary-color);"></i> LTCAT — Laudo Técnico Ambiental</h4>
+                    <p>Caracteriza a presença ou ausência de agentes nocivos para fins previdenciários (aposentadoria especial), conforme NR-15 e legislação da Previdência Social.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--alert-color);">
+                    <h4><i class="fas fa-radiation" style="color: var(--alert-color);"></i> LIP — Insalubridade e Periculosidade</h4>
+                    <p>Laudo técnico que caracteriza ou afasta o direito ao adicional de insalubridade e/ou periculosidade por função, conforme NR-15 e NR-16. Essencial para empresas automotivas.</p>
+                </div>
+                <div class="factor-card" style="border-left-color: var(--purple-color); grid-column: 1 / -1;">
+                    <h4><i class="fas fa-brain" style="color: var(--purple-color);"></i> Psicossocial — Riscos NR-01 (Nova Exigência)</h4>
+                    <p>Avalia os fatores organizacionais e relacionais que impactam a saúde mental dos colaboradores, com relatório técnico, plano de ação e palestra de conscientização, conforme NR-01 atualizada. Contempla os <strong>6 fatores essenciais</strong> (Demandas, Controle, Suporte, Relacionamentos, Papel e Mudanças), utilizando instrumentos validados cientificamente.</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 12px;">
+                <h4><i class="fas fa-link"></i> Integração Total dos Programas</h4>
+                <p>Os cinco programas são elaborados de forma <strong>integrada e complementar</strong>, garantindo consistência técnica, eliminando redundâncias e assegurando a conformidade completa da Nino Auto Center com todas as exigências legais de SST.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 6: IMPORTÂNCIA E BENEFÍCIOS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Importância e Benefícios do Kit SST</span>
+            </h2>
+
+            <h3 class="subsection-title"><i class="fas fa-chart-line"></i> Cenário Atual</h3>
+            <p>
+                Com a integração ao <strong>eSocial</strong> e o aumento das fiscalizações trabalhistas e previdenciárias, empresas que não possuem programas de SST adequados e atualizados enfrentam riscos crescentes de autuações, multas e processos judiciais. No setor de comércio automotivo, a exposição a agentes físicos e químicos — como ruído de veículos, óleos lubrificantes, solventes e fluidos — exige uma gestão técnica rigorosa para proteção dos colaboradores e da empresa.
+            </p>
+            <p>
+                Os <strong>transtornos mentais e comportamentais</strong> figuram entre as principais causas de afastamento no Brasil. A pressão por vendas, atendimento ao cliente e cumprimento de metas coloca colaboradores do setor automotivo em situação de vulnerabilidade, tornando a avaliação psicossocial um componente essencial da gestão de SST.
+            </p>
+
+            <div class="info-box">
+                <h4><i class="fas fa-shield-alt"></i> Segurança Jurídica para a Nino Auto Center</h4>
+                <p>A elaboração do Kit de Programas SST é a principal ferramenta para demonstrar a diligência da empresa no cumprimento das obrigações legais, protegendo-a de autuações, processos e responsabilizações civis e trabalhistas.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-star"></i> Benefícios para a Nino Auto Center</h3>
+            <ul class="feature-list">
+                <li><strong>Conformidade legal plena</strong> com NR-01, NR-07, NR-15, NR-16, LTCAT e legislação previdenciária</li>
+                <li><strong>Regularização no eSocial</strong> com envio correto dos eventos de SST</li>
+                <li><strong>Comprovação correta</strong> de insalubridade e periculosidade por função (LIP)</li>
+                <li><strong>Prevenção de passivos trabalhistas</strong> relacionados a acidentes e doenças ocupacionais</li>
+                <li><strong>Redução do absenteísmo</strong> por problemas de saúde física e mental</li>
+                <li><strong>Diminuição da rotatividade</strong> e custos com desligamentos e novas contratações</li>
+                <li><strong>Melhoria da produtividade</strong> e engajamento da equipe</li>
+                <li><strong>Proteção contra aumento do FAP</strong> e custos previdenciários extras</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p><strong>Investimento preventivo:</strong> A elaboração e manutenção dos programas de SST representa um investimento na saúde dos colaboradores e na segurança jurídica da Nino Auto Center LTDA, com retorno direto na redução de custos operacionais e passivos legais.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 7: METODOLOGIA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Metodologia de Elaboração</span>
+            </h2>
+
+            <p>Nossa metodologia segue um fluxo técnico estruturado, com coleta de dados in loco ou remota, análise documental e avaliação psicossocial, em conformidade com a NR-01 e demais normas vigentes:</p>
+
+            <div class="methodology-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Reunião de Alinhamento e Levantamento de Informações</h4>
+                        <p>Reunião estratégica com a gestão para coleta de dados da empresa, apresentação do cronograma, mapeamento das funções existentes e definição das áreas e grupos homogêneos de exposição.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Visita Técnica ou Coleta Remota</h4>
+                        <p>Reconhecimento do ambiente de trabalho, identificação dos agentes de risco físicos, químicos, biológicos e ergonômicos presentes nas instalações da Nino Auto Center em Agudos/SP, ou coleta remota via formulário e fotos quando aplicável.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Aplicação de Instrumentos Psicossociais Validados</h4>
+                        <p>Coleta de dados por meio de questionários padronizados e validados cientificamente para até <strong>9 colaboradores</strong>, garantindo confidencialidade, anonimato e adesão ética às diretrizes de pesquisa em saúde ocupacional.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>Elaboração Técnica dos Programas (PGR, PCMSO, LTCAT e LIP)</h4>
+                        <p>Elaboração integrada dos programas, com identificação e avaliação de riscos, definição de medidas de controle, cronograma médico, caracterização de agentes nocivos para fins previdenciários e laudo de insalubridade/periculosidade.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Relatório Psicossocial e Plano de Ação</h4>
+                        <p>Relatório técnico com diagnóstico, classificação dos riscos psicossociais, recomendações preventivas e corretivas, e plano de ação estruturado conforme NR-01.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Palestra de Conscientização — Presencial (1 Visita) ou EAD</h4>
+                        <p>Palestra de sensibilização destinada aos colaboradores sobre riscos psicossociais. Realizada em <strong>1 (uma) visita presencial</strong> às instalações em Agudos/SP, ou na modalidade <strong>EAD</strong>, conforme conveniência da empresa.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 8: ENTREGÁVEIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Entregáveis e Escopo dos Serviços</span>
+            </h2>
+
+            <p>Ao final dos trabalhos, a <strong>Nino Auto Center LTDA</strong> receberá os seguintes documentos técnicos em conformidade com a legislação vigente. <strong>Todos os entregáveis são fornecidos exclusivamente em formato digital (PDF), sem impressão ou envio físico.</strong></p>
+
+            <h3 class="subsection-title"><i class="fas fa-file-pdf"></i> Documentos Técnicos — Formato Digital (PDF)</h3>
+
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-hard-hat"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PGR — Programa de Gerenciamento de Riscos</h4>
+                        <p>Elaboração do PGR com identificação, avaliação e controle de todos os agentes de risco (físico, químico, biológico, ergonômico e psicossocial), conforme NR-01. <em>Entregue em formato digital (PDF).</em></p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-stethoscope"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PCMSO — Programa de Controle Médico de Saúde Ocupacional</h4>
+                        <p>Elaboração do PCMSO com definição dos exames médicos obrigatórios por função/risco, em conformidade com a NR-07. <em>Entregue em formato digital (PDF).</em></p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-file-medical"></i></div>
+                    <div class="deliverable-text">
+                        <h4>LTCAT — Laudo Técnico das Condições Ambientais do Trabalho</h4>
+                        <p>Elaboração do LTCAT para caracterização de agentes nocivos e fins previdenciários (aposentadoria especial), conforme NR-15 e Previdência Social. <em>Entregue em formato digital (PDF).</em></p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon" style="background: var(--alert-color);"><i class="fas fa-radiation"></i></div>
+                    <div class="deliverable-text">
+                        <h4>LIP — Laudo de Insalubridade e Periculosidade</h4>
+                        <p>Elaboração do LIP caracterizando ou afastando o direito ao adicional de insalubridade e/ou periculosidade por função, conforme NR-15 e NR-16. <em>Entregue em formato digital (PDF).</em></p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon" style="background: var(--purple-color);"><i class="fas fa-brain"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Relatório Técnico de Avaliação de Riscos Psicossociais</h4>
+                        <p>Diagnóstico organizacional completo, análise quantitativa e qualitativa, classificação por criticidade e mapeamento por setor/função, conforme NR-01. <em>Entregue em formato digital (PDF).</em></p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Plano de Ação Preventivo e Corretivo</h4>
+                        <p>Recomendações técnicas estruturadas com medidas de controle, prazos sugeridos e priorização conforme matriz de risco. <em>Entregue em formato digital (PDF).</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deliverables-grid" style="margin-top: 0;">
+                <div class="deliverable-item" style="grid-column: 1 / -1;">
+                    <div class="deliverable-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Palestra de Conscientização — Presencial ou EAD</h4>
+                        <p>Palestra sobre Fatores de Riscos Psicossociais em <strong>1 visita presencial</strong> às instalações em Agudos/SP <strong>ou</strong> na modalidade <strong>EAD</strong>, conforme escolha da empresa.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-box" style="margin-top: 8px;">
+                <h4><i class="fas fa-exclamation-triangle"></i> Importante: O que NÃO está incluso no escopo</h4>
+                <p>• Acompanhamento psicológico individual ou psicoterapia • Tratamento clínico de transtornos mentais<br>
+                • Serviços médicos ou de medicina ocupacional • Implementação direta das ações recomendadas<br>
+                • Treinamentos de SST (disponíveis como serviços adicionais)<br>
+                • Reavaliações periódicas (disponíveis como serviço adicional mediante negociação)<br>
+                • <strong>Impressão ou envio físico de documentos</strong> — todos os entregáveis são exclusivamente digitais</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 9: INVESTIMENTO ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-info-circle"></i> Estrutura de Investimento</h4>
+                <p>O <strong>Kit de Programas (PGR + PCMSO + LTCAT + LIP)</strong> em conjunto com a <strong>Avaliação de Fatores de Riscos Psicossociais (NR-01)</strong> será executado para a <strong>Nino Auto Center LTDA (até 9 colaboradores)</strong>, contemplando elaboração dos programas legais, diagnóstico organizacional completo, relatório técnico, plano de ação e palestra de conscientização (presencial ou EAD), em conformidade com a legislação vigente e a NR-01 atualizada.</p>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-calculator"></i> Composição da Proposta</h3>
+
+            <table style="width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10px;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #1a365d 0%, #234876 100%); color: white;">
+                        <th style="padding: 12px 10px; text-align: left; border: 1px solid #e2e8f0;">Serviço</th>
+                        <th style="padding: 12px 10px; text-align: left; border: 1px solid #e2e8f0;">Empresa</th>
+                        <th style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">CNPJ</th>
+                        <th style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">Qtd. Colaboradores</th>
+                        <th style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #f8f9fa;">
+                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;">Kit de Programas: PGR + PCMSO + LTCAT + LIP + Avaliação de Fatores de Riscos Psicossociais (NR-01)</td>
+                        <td style="padding: 12px 10px; border: 1px solid #e2e8f0;"><strong>Nino Auto Center LTDA</strong></td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">04.899.529/0001-40</td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0;">Até 9</td>
+                        <td style="padding: 12px 10px; text-align: center; border: 1px solid #e2e8f0; font-weight: 700; font-size: 13px; color: var(--success-color);">R$ 1.000,00</td>
+                    </tr>
+                    <tr style="background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); color: white; font-weight: 700;">
+                        <td style="padding: 14px 10px; border: 1px solid #e2e8f0; text-align: right; font-size: 12px;" colspan="4">VALOR TOTAL DA PROPOSTA</td>
+                        <td style="padding: 14px 10px; text-align: center; border: 1px solid #e2e8f0; font-size: 16px;"><strong>R$ 1.000,00</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <p><strong><i class="fas fa-info-circle"></i> Informação:</strong> Valor total de <strong>R$ 1.000,00 (mil reais)</strong> para o <strong>Kit de Programas (PGR + PCMSO + LTCAT + LIP)</strong> em conjunto com a <strong>Avaliação de Fatores de Riscos Psicossociais (NR-01)</strong> para até <strong>9 colaboradores</strong> da Nino Auto Center LTDA. Serviços complementares, caso solicitados, serão objeto de negociação em separado.</p>
+            </div>
+
+            <div class="green-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-piggy-bank"></i> Condições de Pagamento</h4>
+                <p><strong>50%</strong> na aprovação da proposta e <strong>50%</strong> na entrega dos documentos finais. Pagamento via PIX, transferência bancária ou boleto. Outras condições podem ser negociadas conforme necessidade.</p>
+            </div>
+
+            <div class="alert-box" style="margin-top: 10px;">
+                <h4><i class="fas fa-calendar-times"></i> Validade da Proposta</h4>
+                <p>Esta proposta comercial é válida por <strong>15 (quinze) dias</strong> a partir da data de emissão — até <strong>21 de Julho de 2026</strong>.</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">09</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 10: CONDIÇÕES COMERCIAIS ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">8</span>
+                <span class="section-title-text">Condições Comerciais</span>
+            </h2>
+
+            <div class="conditions-list">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta comercial é válida por 15 (quinze) dias a partir da data de emissão.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-credit-card"></i></div>
+                    <div class="condition-text">
+                        <strong>Condições de Pagamento</strong>
+                        <span>50% na aprovação da proposta e 50% na entrega dos documentos finais. Outras condições podem ser negociadas conforme necessidade.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Execução</strong>
+                        <span>Os serviços serão concluídos em até 30 (trinta) dias úteis, condicionado à disponibilidade para coleta de dados, aplicação dos questionários, realização da palestra e fornecimento das informações necessárias.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="condition-text">
+                        <strong>Modalidade da Palestra</strong>
+                        <span>A palestra de sensibilização poderá ser realizada de forma <strong>presencial</strong> (1 visita às instalações em Agudos/SP) ou na modalidade <strong>EAD</strong>, conforme conveniência e escolha da empresa.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-user-shield"></i></div>
+                    <div class="condition-text">
+                        <strong>Confidencialidade</strong>
+                        <span>Garantimos total sigilo sobre as informações coletadas. Os dados individuais são anonimizados e apenas resultados agregados são apresentados nos relatórios.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-tasks"></i></div>
+                    <div class="condition-text">
+                        <strong>Execução do Plano de Ação</strong>
+                        <span>A execução do plano de ação poderá ser contratada separadamente, com valores a combinar conforme escopo das ações necessárias.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-headset"></i></div>
+                    <div class="condition-text">
+                        <strong>Suporte Pós-Entrega</strong>
+                        <span>Suporte técnico por 60 dias após a entrega para esclarecimento de dúvidas sobre os documentos e orientações sobre o plano de ação.</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title"><i class="fas fa-handshake"></i> O que a empresa precisa fornecer</h3>
+            <ul class="feature-list">
+                <li>Lista de colaboradores por função/setor para dimensionamento da amostra (até 9)</li>
+                <li>Acesso aos colaboradores para aplicação dos questionários e palestra</li>
+                <li>Indicadores de RH dos últimos 12 meses <em style="color: var(--gray-color);">(caso disponíveis)</em></li>
+                <li>Disponibilidade da liderança para reuniões de alinhamento e apresentação dos resultados</li>
+                <li>Informações sobre o ambiente, processos e equipamentos utilizados (para PGR, LTCAT e LIP)</li>
+            </ul>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">10</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 11: RESPONSÁVEL PELA PROPOSTA ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number">9</span>
+                <span class="section-title-text">Responsável pela Proposta</span>
+            </h2>
+
+            <p style="text-align: center; margin-bottom: 25px; color: var(--gray-color);">
+                Esta proposta comercial foi elaborada para atender às exigências legais em SST, garantindo a elaboração completa do <strong>PGR, PCMSO, LTCAT e LIP</strong> integrados à <strong>Avaliação de Riscos Psicossociais (NR-01)</strong> e proporcionando segurança jurídica à Nino Auto Center LTDA.
+            </p>
+
+            <div class="responsible-card">
+                <div class="responsible-avatar">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="responsible-name">Ronaldo Cesar</h3>
+                <p class="responsible-role">Consultor Comercial</p>
+                <p class="responsible-company">EngMarq Solution</p>
+
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="purple-box" style="margin-top: 25px;">
+                <h4><i class="fas fa-headset"></i> Atendimento Especializado</h4>
+                <p>Estamos à disposição para esclarecer qualquer dúvida sobre o escopo dos serviços, ajustar a proposta conforme necessidade e acompanhar todo o processo de elaboração dos programas de SST para a Nino Auto Center LTDA.</p>
+            </div>
+
+            <div class="info-box" style="margin-top: 15px;">
+                <h4><i class="fas fa-clock"></i> Horário de Atendimento</h4>
+                <p>Segunda a Sexta: 08h às 18h | Sábado: 08h às 12h</p>
+                <p style="margin-top: 8px;"><strong>Atendimento via WhatsApp:</strong> Resposta em até 2 horas durante o horário comercial</p>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">11</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 12: ENCERRAMENTO E CONTATO ====== -->
+        <div class="page page-contact">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h2 class="contact-title">Proteja a Nino Auto Center com o Kit Completo de SST</h2>
+                <p class="contact-subtitle">
+                    A adequação legal em SST é uma <strong>obrigação legal</strong> que se aplica a todas as empresas com vínculos empregatícios. Com o <strong>Kit PGR + PCMSO + LTCAT + LIP + Psicossocial</strong>, sua empresa fica em total conformidade com a legislação. Conte com o apoio técnico especializado da EngMarq Solution.
+                </p>
+
+                <div class="alert-box" style="text-align: left; max-width: 450px; margin: 0 auto 25px;">
+                    <h4><i class="fas fa-gavel"></i> Não deixe para depois</h4>
+                    <p>Empresas que não possuem os programas de SST atualizados estão sujeitas a multas, autuações fiscais, pendências no eSocial e responsabilização em processos trabalhistas relacionados à saúde e segurança dos colaboradores.</p>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+
+                <div class="contact-signature">
+                    <p class="signature-text">
+                        <strong>EngMarq Solution</strong><br>
+                        Engenharia de Segurança e Saúde do Trabalho<br>
+                        <em>Garantindo segurança jurídica para sua organização.</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">12</span>
+            </div>
+        </div>
+
+        <!-- ====== PÁGINA 13: TERMO DE ACEITE ====== -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial - Kit SST | RC0001</span>
+            </div>
+
+            <h2 class="section-title">
+                <span class="section-number"><i class="fas fa-file-signature"></i></span>
+                <span class="section-title-text">Termo de Aceite da Proposta</span>
+            </h2>
+
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-check-circle"></i> Declaração de Aceite</h4>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação do <strong>Kit de Programas (PGR + PCMSO + LTCAT + LIP)</strong> em conjunto com a <strong>Avaliação de Fatores de Riscos Psicossociais (NR-01)</strong> para a <strong>Nino Auto Center LTDA</strong> (até 9 colaboradores) pelo valor de <strong>R$ 1.000,00 (mil reais)</strong>.</p>
+            </div>
+
+            <!-- EngMarq -->
+            <div style="background: var(--light-color); border-radius: 10px; padding: 15px; margin-bottom: 12px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 13px; margin-bottom: 10px; text-align: center; border-bottom: 2px solid var(--purple-color); padding-bottom: 8px;">
+                    <i class="fas fa-building" style="color: var(--purple-color);"></i> PRESTADORA DE SERVIÇOS — EngMarq Solution
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; font-size: 10px;">
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Razão Social</span><br><strong>Engmarq Solution LTDA</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">CNPJ</span><br><strong>60.545.359/0001-76</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Representante</span><br><strong>Ronaldo Cesar</strong></div>
+                </div>
+                <div style="border-bottom: 1px solid var(--dark-color); margin: 8px auto 4px; height: 30px; max-width: 500px;"></div>
+                <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura do Proponente</p>
+            </div>
+
+            <!-- Contratante -->
+            <div style="background: var(--light-color); border-radius: 10px; padding: 15px; margin-bottom: 12px;">
+                <h3 style="font-family: var(--font-primary); color: var(--primary-color); font-size: 13px; margin-bottom: 10px; text-align: center; border-bottom: 2px solid var(--secondary-color); padding-bottom: 8px;">
+                    <i class="fas fa-user-tie" style="color: var(--secondary-color);"></i> CONTRATANTE — Nino Auto Center
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; font-size: 10px;">
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">Razão Social</span><br><strong>Nino Auto Center LTDA</strong></div>
+                    <div><span style="color: var(--gray-color); text-transform: uppercase; font-size: 9px;">CNPJ</span><br><strong>04.899.529/0001-40</strong></div>
+                </div>
+                <div style="border-bottom: 1px solid var(--dark-color); margin: 12px auto 4px; height: 30px; max-width: 500px;"></div>
+                <p style="margin: 0; font-size: 10px; color: var(--gray-color); text-align: center;">Assinatura do Representante Legal</p>
+            </div>
+
+            <div style="margin-top: 10px; text-align: center; font-size: 9px; color: var(--gray-color);">
+                Agudos - SP, 06 de Julho de 2026
+            </div>
+
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">13</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function generatePDF() {
+            window.print();
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') { e.preventDefault(); generatePDF(); }
+        });
+    </script>
+</body>
+</html>
