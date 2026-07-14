@@ -42,6 +42,10 @@
       "dest": "/gerador/dist/index.html"
     },
     {
+      "src": "/encaminhamento-exame",
+      "dest": "/gerador-encaminhamento-exame.html"
+    },
+    {
       "src": "/plano-comercial-2026",
       "dest": "/plano-comercial-estrategico-2026.html"
     },
