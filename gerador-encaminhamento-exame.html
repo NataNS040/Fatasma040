@@ -404,21 +404,28 @@
 
     /* ─── Print ──────────────────────────────────────────────────── */
     @media print {
-      body { background: #fff; }
-      .app-header, .sidebar, .preview-area > *:not(.doc-card) { display: none !important; }
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      body { background: #fff; margin: 0; padding: 0; }
+      .app-header, .sidebar { display: none !important; }
       .app-body { display: block; }
       .preview-area {
         padding: 0;
         background: #fff;
         display: flex;
         justify-content: center;
+        min-height: unset;
+        max-height: unset;
+        overflow: visible;
       }
       .doc-card {
         box-shadow: none;
         border-radius: 0;
         width: 100%;
-        max-width: 480px;
+        max-width: 520px;
       }
+      .doc-section-header { background: var(--navy) !important; color: #fff !important; }
+      .doc-footer { background: var(--navy) !important; color: #fff !important; }
+      .doc-header-bar { background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 100%) !important; }
     }
   </style>
 </head>
@@ -693,7 +700,6 @@
     document.getElementById("prev-cpf").textContent       = get("f-cpf")       || "—";
     document.getElementById("prev-nascimento").textContent = fmtData(get("f-nascimento"));
     document.getElementById("prev-funcao").textContent    = get("f-funcao")    || "—";
-    document.getElementById("prev-endereco").textContent  = get("f-endereco")  || "—";
     document.getElementById("prev-data-exame").textContent = fmtData(get("f-data-exame"));
     const hr = get("f-horario");
     document.getElementById("prev-horario").textContent   = hr || "—";
