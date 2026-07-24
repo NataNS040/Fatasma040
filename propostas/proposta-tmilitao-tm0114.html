@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta - Kit SST + Psicossocial + NR-20 + NR-35 Reciclagem | T Milit&atilde;o Transportes | EngMarq Solution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #f5a623;
+            --dark-color: #2d3748;
+            --gray-color: #718096;
+            --light-color: #f7fafc;
+            --white-color: #ffffff;
+            --success-color: #38a169;
+            --alert-color: #e53e3e;
+            --purple-color: #805ad5;
+            --orange-color: #dd6b20;
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+        }
+        body { font-family: var(--font-secondary); color: var(--dark-color); line-height: 1.6; background: #e2e8f0; }
+        .pdf-controls { position: fixed; top: 20px; right: 20px; z-index: 1000; background: var(--white-color); padding: 20px; border-radius: 12px; box-shadow: 0 4px 25px rgba(0,0,0,0.15); max-width: 280px; }
+        .btn-generate { background: var(--primary-color); color: var(--white-color); padding: 15px 30px; border: none; border-radius: 8px; font-family: var(--font-primary); font-weight: 600; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; width: 100%; justify-content: center; }
+        .btn-generate:hover { background: var(--secondary-color); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245,166,35,0.4); }
+        .pdf-instructions { margin-top: 15px; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid var(--primary-color); }
+        .pdf-instructions h4 { font-family: var(--font-primary); font-size: 13px; color: var(--primary-color); margin-bottom: 8px; }
+        .pdf-instructions ol { font-size: 12px; line-height: 1.6; color: var(--dark-color); padding-left: 18px; margin: 0; }
+        .pdf-instructions li { margin-bottom: 4px; }
+        .pdf-instructions strong { color: var(--secondary-color); }
+        #pdf-content { width: 210mm; margin: 0 auto; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
+        .page { width: 210mm; height: 297mm; min-height: 297mm; max-height: 297mm; padding: 15mm 15mm 22mm 15mm; page-break-after: always; position: relative; background: var(--white-color); box-sizing: border-box; overflow: hidden; }
+        .page:last-child { page-break-after: auto; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; margin-bottom: 12px; border-bottom: 2px solid var(--light-color); }
+        .page-header-logo { height: 35px; }
+        .page-header-title { font-family: var(--font-primary); font-size: 11px; color: var(--gray-color); text-transform: uppercase; letter-spacing: 1px; }
+        .page-footer { position: absolute; bottom: 15mm; left: 18mm; right: 18mm; display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--light-color); font-size: 10px; color: var(--gray-color); background: var(--white-color); z-index: 10; }
+        .page-number { font-weight: 600; color: var(--primary-color); }
+        .page-cover { background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%); color: var(--white-color); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 25mm 20mm; position: relative; overflow: hidden; }
+        .page-cover::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 200%; background: radial-gradient(ellipse, rgba(56,161,105,0.1) 0%, transparent 60%); pointer-events: none; }
+        .cover-logo { width: 180px; margin-bottom: 30px; filter: brightness(0) invert(1); position: relative; z-index: 1; }
+        .cover-badge { background: rgba(128,90,213,0.9); color: var(--white-color); padding: 10px 25px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; position: relative; z-index: 1; }
+        .cover-icon { width: 60px; height: 60px; background: rgba(245,166,35,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; z-index: 1; }
+        .cover-icon i { font-size: 28px; color: var(--secondary-color); }
+        .cover-title { font-family: var(--font-primary); font-size: 26px; font-weight: 800; margin-bottom: 15px; line-height: 1.25; position: relative; z-index: 1; }
+        .cover-title span { color: var(--secondary-color); display: block; }
+        .cover-subtitle { font-size: 13px; font-weight: 300; margin-bottom: 30px; opacity: 0.95; max-width: 450px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; line-height: 1.5; }
+        .cover-client { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 18px 35px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2); position: relative; z-index: 1; margin: 0 auto; max-width: 420px; }
+        .cover-client-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 6px; text-align: center; }
+        .cover-client-name { font-family: var(--font-primary); font-size: 17px; font-weight: 700; color: var(--secondary-color); text-align: center; }
+        .cover-date { margin-top: 25px; font-size: 12px; opacity: 0.8; position: relative; z-index: 1; }
+        .cover-footer { position: absolute; bottom: 18mm; left: 0; right: 0; text-align: center; font-size: 10px; opacity: 0.7; padding: 0 18mm; display: flex; justify-content: center; align-items: center; }
+        .cover-footer p { margin: 0; text-align: center; width: 100%; }
+        .section-number { display: inline-block; background: var(--secondary-color); color: var(--white-color); width: 26px; height: 26px; border-radius: 50%; text-align: center; line-height: 26px; font-family: var(--font-primary); font-weight: 700; font-size: 12px; margin-right: 10px; }
+        .section-title { font-family: var(--font-primary); font-size: 18px; font-weight: 700; color: var(--primary-color); margin-bottom: 14px; display: flex; align-items: center; padding-bottom: 10px; border-bottom: 3px solid var(--secondary-color); }
+        .section-title-text { flex: 1; }
+        .subsection-title { font-family: var(--font-primary); font-size: 13px; font-weight: 700; color: var(--primary-color); margin: 12px 0 8px; display: flex; align-items: center; gap: 8px; }
+        .subsection-title i { color: var(--secondary-color); }
+        p { margin-bottom: 8px; text-align: justify; font-size: 11px; line-height: 1.5; }
+        .info-box { background: linear-gradient(135deg, #f0f9ff 0%, #bee3f8 100%); border-left: 4px solid var(--primary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .info-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .info-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .highlight-box { background: linear-gradient(135deg, #fef5e7 0%, #fdebd0 100%); border-left: 4px solid var(--secondary-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .highlight-box p { margin-bottom: 0; color: var(--dark-color); font-size: 10px; line-height: 1.4; }
+        .highlight-box strong { color: var(--primary-color); }
+        .green-box { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-left: 4px solid var(--success-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .green-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .purple-box { background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%); border-left: 4px solid var(--purple-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .purple-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--purple-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .purple-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .orange-box { background: linear-gradient(135deg, #fffaf0 0%, #fbd38d 100%); border-left: 4px solid var(--orange-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .orange-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--orange-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .orange-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .feature-list { list-style: none; margin: 10px 0; }
+        .feature-list li { padding: 5px 0; padding-left: 22px; position: relative; font-size: 11px; border-bottom: 1px solid var(--light-color); }
+        .feature-list li:last-child { border-bottom: none; }
+        .feature-list li::before { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; left: 0; color: var(--success-color); font-size: 10px; }
+        .company-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+        .company-info-item { padding: 8px 10px; background: var(--light-color); border-radius: 6px; border-left: 3px solid var(--secondary-color); }
+        .company-info-item label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-color); font-weight: 600; display: block; margin-bottom: 3px; }
+        .company-info-item span { font-size: 11px; color: var(--dark-color); font-weight: 500; }
+        .service-card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; border-left: 4px solid var(--primary-color); }
+        .service-card h4 { font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+        .service-card h4 i { width: 16px; }
+        .service-card p { font-size: 10px; margin: 0; line-height: 1.5; color: var(--gray-color); }
+        .training-block { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; margin-bottom: 10px; border-left: 4px solid var(--orange-color); }
+        .training-block-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+        .training-block-header h4 { margin: 0; font-family: var(--font-primary); font-size: 12px; color: var(--primary-color); font-weight: 600; }
+        .training-block-header h4 i { color: var(--orange-color); margin-right: 6px; }
+        .training-tags { display: flex; gap: 6px; font-size: 9px; flex-shrink: 0; }
+        .tag { padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+        .tag-hours { background: #ebf8ff; color: var(--primary-color); }
+        .tag-freq { background: #fff5eb; color: var(--orange-color); }
+        .tag-nr { background: #faf5ff; color: var(--purple-color); }
+        .training-block p { margin: 0; font-size: 10px; line-height: 1.5; color: var(--gray-color); }
+        .methodology-steps { margin: 12px 0; }
+        .step { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--light-color); }
+        .step:last-child { border-bottom: none; }
+        .step-number { background: var(--primary-color); color: var(--white-color); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-primary); font-weight: 700; font-size: 11px; flex-shrink: 0; }
+        .step-content h4 { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); margin-bottom: 2px; }
+        .step-content p { font-size: 10px; margin-bottom: 0; line-height: 1.35; }
+        .deliverables-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 12px 0; }
+        .deliverable-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px; background: var(--light-color); border-radius: 6px; }
+        .deliverable-icon { width: 26px; height: 26px; background: var(--secondary-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--white-color); font-size: 11px; flex-shrink: 0; }
+        .deliverable-icon.purple { background: var(--purple-color); }
+        .deliverable-icon.orange { background: var(--orange-color); }
+        .deliverable-text h4 { font-family: var(--font-primary); font-size: 10px; color: var(--primary-color); margin-bottom: 2px; }
+        .deliverable-text p { font-size: 9px; margin-bottom: 0; line-height: 1.35; }
+        .investment-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 10px; }
+        .investment-table thead tr { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); color: white; }
+        .investment-table th { padding: 10px 8px; text-align: left; font-family: var(--font-primary); font-weight: 600; font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .investment-table td { padding: 10px 8px; border-bottom: 1px solid var(--light-color); vertical-align: middle; font-size: 10px; }
+        .investment-table tbody tr:nth-child(even) { background: var(--light-color); }
+        .conditions-list { margin: 12px 0; }
+        .condition-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--light-color); }
+        .condition-item:last-child { border-bottom: none; }
+        .condition-icon { width: 28px; height: 28px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 11px; flex-shrink: 0; }
+        .condition-text strong { display: block; font-size: 11px; color: var(--primary-color); margin-bottom: 2px; }
+        .condition-text span { font-size: 10px; color: var(--gray-color); line-height: 1.3; }
+        .responsible-card { background: linear-gradient(135deg, var(--primary-color) 0%, #0f2744 100%); padding: 18px; border-radius: 10px; color: var(--white-color); text-align: center; margin: 15px 0; }
+        .responsible-avatar { width: 60px; height: 60px; background: rgba(245,166,35,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 26px; color: var(--secondary-color); border: 2px solid var(--secondary-color); }
+        .responsible-name { font-family: var(--font-primary); font-size: 16px; font-weight: 700; margin-bottom: 3px; text-align: center; }
+        .responsible-role { font-size: 11px; opacity: 0.9; margin-bottom: 3px; text-align: center; }
+        .responsible-company { font-size: 10px; opacity: 0.8; margin-bottom: 12px; text-align: center; }
+        .responsible-contacts { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+        .responsible-contact-item { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 10px; }
+        .responsible-contact-item i { color: var(--secondary-color); width: 15px; text-align: center; }
+        @media print {
+            .pdf-controls { display: none !important; }
+            body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            #pdf-content { width: 100%; margin: 0; box-shadow: none; }
+            .page { page-break-after: always !important; break-after: page !important; width: 210mm !important; height: 297mm !important; min-height: 297mm !important; max-height: 297mm !important; margin: 0 !important; padding: 12mm 15mm 18mm 15mm !important; box-sizing: border-box !important; overflow: hidden !important; position: relative !important; }
+            .page:last-child { page-break-after: auto !important; break-after: auto !important; }
+            .page-cover { padding: 20mm 18mm 18mm 18mm !important; }
+            .page-footer { position: absolute !important; bottom: 8mm !important; left: 15mm !important; right: 15mm !important; font-size: 9px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+        @page { size: 210mm 297mm; margin: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="pdf-controls">
+        <button class="btn-generate" onclick="window.print()">
+            <i class="fas fa-file-pdf"></i>
+            Gerar PDF
+        </button>
+        <div class="pdf-instructions">
+            <h4><i class="fas fa-info-circle"></i> Como gerar o PDF:</h4>
+            <ol>
+                <li>Clique no bot&atilde;o acima</li>
+                <li>Selecione <strong>&ldquo;Salvar como PDF&rdquo;</strong></li>
+                <li>Clique em <strong>&ldquo;Salvar&rdquo;</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <div id="pdf-content">
+
+        <!-- PAGINA 1: CAPA -->
+        <div class="page page-cover">
+            <span style="position: absolute; top: 25mm; left: 0; right: 0; text-align: center; font-family: var(--font-primary); font-size: 14px; font-weight: 700; color: var(--secondary-color); letter-spacing: 3px;">TM0114</span>
+            <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
+            <span class="cover-badge">
+                <i class="fas fa-hard-hat"></i>
+                Kit SST + Psicossocial + Treinamentos NR
+            </span>
+            <div class="cover-icon"><i class="fas fa-truck"></i></div>
+            <h1 class="cover-title">
+                Proposta Comercial<br>
+                <span>Kit SST &middot; NR-20 &middot; NR-35</span>
+            </h1>
+            <p class="cover-subtitle">
+                Kit Programas (PGR, PCMSO, LTCAT, LIP + Psicossocial), Treinamentos de Reciclagem NR-20 (L&iacute;quidos Combust&iacute;veis e Inflam&aacute;veis) e NR-35 (Trabalho em Altura)
+            </p>
+            <div class="cover-client">
+                <p class="cover-client-label">Proposta elaborada para</p>
+                <p class="cover-client-name">T Milit&atilde;o Transportes Ltda</p>
+            </div>
+            <p class="cover-date"><i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;22 de Julho de 2026</p>
+            <div class="cover-footer">
+                <p>EngMarq Solution | SST que traz seguran&ccedil;a jur&iacute;dica | Natal - RN</p>
+            </div>
+        </div>
+
+        <!-- PAGINA 2: APRESENTACAO E DADOS -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial &mdash; Kit SST + Psicossocial + NR-20 + NR-35</span>
+            </div>
+            <h2 class="section-title">
+                <span class="section-number">1</span>
+                <span class="section-title-text">Apresenta&ccedil;&atilde;o</span>
+            </h2>
+            <div class="info-box" style="margin-bottom: 15px;">
+                <h4><i class="fas fa-handshake"></i> SST que traz seguran&ccedil;a jur&iacute;dica</h4>
+                <p>A <strong>EngMarq Solution</strong> &eacute; uma empresa especializada em Engenharia de Seguran&ccedil;a e Sa&uacute;de do Trabalho. Nossa atua&ccedil;&atilde;o garante <strong>conformidade legal</strong> com as Normas Regulamentadoras vigentes, reduzindo passivos trabalhistas e promovendo ambientes de trabalho mais seguros e saud&aacute;veis.</p>
+            </div>
+            <p>Prezada <strong>T Milit&atilde;o Transportes Ltda</strong>,</p>
+            <p>Apresentamos nossa proposta t&eacute;cnica e comercial desenvolvida para os <strong>11 colaboradores</strong> da sua empresa, contemplando o <strong>Kit de Programas de SST</strong> (PGR, PCMSO, LTCAT, LIP e Avalia&ccedil;&atilde;o Psicossocial), al&eacute;m dos <strong>Treinamentos de Reciclagem NR-20</strong> e <strong>NR-35</strong>, obrigat&oacute;rios para a atividade de transporte rodovi&aacute;rio de produtos perigosos.</p>
+            <ul class="feature-list" style="margin-bottom: 18px;">
+                <li>PGR &mdash; Programa de Gerenciamento de Riscos com invent&aacute;rio completo</li>
+                <li>PCMSO &mdash; Programa de Controle M&eacute;dico de Sa&uacute;de Ocupacional</li>
+                <li>LTCAT &mdash; Laudo T&eacute;cnico das Condi&ccedil;&otilde;es Ambientais do Trabalho</li>
+                <li>LIP &mdash; Laudo de Insalubridade e Periculosidade</li>
+                <li>Avalia&ccedil;&atilde;o de Fatores de Riscos Psicossociais (NR-01/2024)</li>
+                <li>Treinamento de Reciclagem NR-20 &mdash; L&iacute;quidos Combust&iacute;veis e Inflam&aacute;veis</li>
+                <li>Treinamento de Reciclagem NR-35 &mdash; Trabalho em Altura</li>
+            </ul>
+            <h2 class="section-title" style="margin-top: 16px;">
+                <span class="section-number">2</span>
+                <span class="section-title-text">Dados do Contratante</span>
+            </h2>
+            <div class="company-info-grid">
+                <div class="company-info-item" style="grid-column: span 2;">
+                    <label>Raz&atilde;o Social</label>
+                    <span>T Milit&atilde;o Transportes Ltda</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Nome de Fantasia</label>
+                    <span>T Milit&atilde;o Transportes</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CNPJ</label>
+                    <span>09.608.305/0001-55</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Porte</label>
+                    <span>Microempresa (ME)</span>
+                </div>
+                <div class="company-info-item">
+                    <label>N&ordm; de Colaboradores</label>
+                    <span>11 colaboradores</span>
+                </div>
+                <div class="company-info-item" style="grid-column: span 2;">
+                    <label>Fun&ccedil;&otilde;es / Cargos</label>
+                    <span>Motorista &middot; Auxiliar de Servi&ccedil;os Gerais &middot; Gerente Financeiro &middot; Supervisora Administrativa</span>
+                </div>
+                <div class="company-info-item" style="grid-column: span 2;">
+                    <label>Atividade Principal (CNAE)</label>
+                    <span>49.30-2-03 &mdash; Transporte rodovi&aacute;rio de produtos perigosos</span>
+                </div>
+                <div class="company-info-item" style="grid-column: span 2;">
+                    <label>Endere&ccedil;o</label>
+                    <span>Av. Piloto Pereira Tim, 01 &mdash; Parque de Exposi&ccedil;&otilde;es</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Munic&iacute;pio / UF</label>
+                    <span>Parnamirim - RN</span>
+                </div>
+                <div class="company-info-item">
+                    <label>CEP</label>
+                    <span>59.146-480</span>
+                </div>
+                <div class="company-info-item">
+                    <label>E-mail</label>
+                    <span>gerencia@tmilitaotransportes.com.br</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Telefone</label>
+                    <span>(84) 2030-9580</span>
+                </div>
+            </div>
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">02</span>
+            </div>
+        </div>
+
+        <!-- PAGINA 3: ESCOPO DOS SERVICOS -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial &mdash; Kit SST + Psicossocial + NR-20 + NR-35</span>
+            </div>
+            <h2 class="section-title">
+                <span class="section-number">3</span>
+                <span class="section-title-text">Escopo dos Servi&ccedil;os</span>
+            </h2>
+            <p style="margin-bottom: 12px;">Os servi&ccedil;os foram estruturados para atender as obriga&ccedil;&otilde;es legais da <strong>T Milit&atilde;o Transportes</strong>, considerando a atividade de transporte rodovi&aacute;rio de produtos perigosos e as fun&ccedil;&otilde;es: Motorista, Auxiliar de Servi&ccedil;os Gerais, Gerente Financeiro e Supervisora Administrativa.</p>
+            <div class="service-card" style="border-left-color: var(--primary-color);">
+                <h4><i class="fas fa-folder-open" style="color: var(--secondary-color);"></i> Kit Programas SST &mdash; PGR &middot; PCMSO &middot; LTCAT &middot; LIP</h4>
+                <p>Elabora&ccedil;&atilde;o completa dos <strong>4 programas obrigat&oacute;rios de SST</strong>: <strong>PGR</strong> (invent&aacute;rio de riscos e plano de a&ccedil;&atilde;o), <strong>PCMSO</strong> (matriz de exames por fun&ccedil;&atilde;o), <strong>LTCAT</strong> (caracteriza&ccedil;&atilde;o de exposi&ccedil;&atilde;o a agentes nocivos para fins previdenci&aacute;rios) e <strong>LIP</strong> (laudo de insalubridade e periculosidade). Dimensionado para <strong>11 colaboradores</strong> em 4 fun&ccedil;&otilde;es.</p>
+            </div>
+            <div class="service-card" style="border-left-color: var(--purple-color);">
+                <h4><i class="fas fa-brain" style="color: var(--purple-color);"></i> Avalia&ccedil;&atilde;o de Fatores de Riscos Psicossociais &mdash; NR-01 (2024)</h4>
+                <p>Identifica&ccedil;&atilde;o e controle dos <strong>riscos psicossociais</strong> conforme NR-01 atualizada, obrigat&oacute;ria desde maio de 2025. Inclui question&aacute;rios validados, relat&oacute;rio t&eacute;cnico, plano de a&ccedil;&atilde;o preventivo/corretivo, palestra de sensibiliza&ccedil;&atilde;o e integra&ccedil;&atilde;o ao PGR. Abrange at&eacute; <strong>12 colaboradores</strong> &mdash; contrat&aacute;vel de forma avulsa ou integrada ao Kit Programas.</p>
+            </div>
+            <div class="training-block">
+                <div class="training-block-header">
+                    <h4><i class="fas fa-fire"></i> NR-20 Reciclagem &mdash; L&iacute;quidos Combust&iacute;veis e Inflam&aacute;veis</h4>
+                    <div class="training-tags">
+                        <span class="tag tag-hours"><i class="fas fa-clock"></i> 8h</span>
+                        <span class="tag tag-freq">Reciclagem</span>
+                        <span class="tag tag-nr">R$ 120/pessoa</span>
+                    </div>
+                </div>
+                <p>Reciclagem obrigat&oacute;ria para colaboradores que trabalham com produtos inflam&aacute;veis/combust&iacute;veis. Aborda: classifica&ccedil;&atilde;o de produtos, riscos de inc&ecirc;ndio e explos&atilde;o, manuseio, transporte e armazenamento seguro, EPIs e resposta a emerg&ecirc;ncias. Periodicidade bienal conforme Anexo II da NR-20.</p>
+            </div>
+            <div class="training-block">
+                <div class="training-block-header">
+                    <h4><i class="fas fa-arrows-up-down"></i> NR-35 Reciclagem &mdash; Trabalho em Altura</h4>
+                    <div class="training-tags">
+                        <span class="tag tag-hours"><i class="fas fa-clock"></i> 8h</span>
+                        <span class="tag tag-freq">Reciclagem</span>
+                        <span class="tag tag-nr">R$ 120/pessoa</span>
+                    </div>
+                </div>
+                <p>Reciclagem obrigat&oacute;ria para colaboradores que realizam atividades acima de 2m com risco de queda. Conte&uacute;do: avalia&ccedil;&atilde;o de riscos em altura, sistemas de ancoragem, EPIs/EPCs, procedimentos de trabalho e t&eacute;cnicas de resgate. Periodicidade bienal conforme NR-35.</p>
+            </div>
+            <div class="orange-box" style="margin-top: 10px;">
+                <h4><i class="fas fa-exclamation-triangle"></i> Obrigatoriedade Legal</h4>
+                <p>A atividade <strong>CNAE 49.30-2-03</strong> implica diretamente nas obriga&ccedil;&otilde;es da NR-20 e NR-35. A aus&ecirc;ncia de documentos SST atualizados e treinamentos v&aacute;lidos sujeita a empresa a <strong>autua&ccedil;&otilde;es fiscais, embargos e responsabiliza&ccedil;&atilde;o civil e criminal</strong> em caso de acidentes.</p>
+            </div>
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">03</span>
+            </div>
+        </div>
+
+        <!-- PAGINA 4: METODOLOGIA KIT PROGRAMAS -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial &mdash; Kit SST + Psicossocial + NR-20 + NR-35</span>
+            </div>
+            <h2 class="section-title">
+                <span class="section-number">4</span>
+                <span class="section-title-text">Metodologia &mdash; Kit Programas SST</span>
+            </h2>
+            <p style="margin-bottom: 12px;">A execu&ccedil;&atilde;o do Kit Programas segue um fluxo integrado, onde cada documento &eacute; constru&iacute;do sobre as informa&ccedil;&otilde;es coletadas na etapa anterior, garantindo <strong>consist&ecirc;ncia t&eacute;cnica e conformidade legal</strong>:</p>
+            <div class="methodology-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Visita T&eacute;cnica e Levantamento de Dados</h4>
+                        <p>Visita &agrave;s instala&ccedil;&otilde;es da T Milit&atilde;o Transportes para reconhecimento dos ambientes de trabalho, identifica&ccedil;&atilde;o de agentes de risco, mapeamento das 4 fun&ccedil;&otilde;es e coleta de informa&ccedil;&otilde;es organizacionais.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>PGR &mdash; Programa de Gerenciamento de Riscos</h4>
+                        <p>Elabora&ccedil;&atilde;o do invent&aacute;rio de riscos (f&iacute;sicos, qu&iacute;micos, biol&oacute;gicos, ergon&ocirc;micos, psicossociais e de acidentes) por fun&ccedil;&atilde;o e ambiente, com plano de a&ccedil;&atilde;o com medidas de controle e cronograma.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>LTCAT &mdash; Laudo T&eacute;cnico das Condi&ccedil;&otilde;es Ambientais</h4>
+                        <p>Caracteriza&ccedil;&atilde;o t&eacute;cnica da exposi&ccedil;&atilde;o a agentes nocivos (ru&iacute;do, produtos qu&iacute;micos, calor etc.) para fins previdenci&aacute;rios e base para aposentadoria especial.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>LIP &mdash; Laudo de Insalubridade e Periculosidade</h4>
+                        <p>Avalia&ccedil;&atilde;o para caracteriza&ccedil;&atilde;o ou descaracteriza&ccedil;&atilde;o de insalubridade/periculosidade por fun&ccedil;&atilde;o, conforme NR-15 e NR-16. Particularmente relevante para motoristas de produtos perigosos.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>PCMSO &mdash; Programa de Controle M&eacute;dico de Sa&uacute;de Ocupacional</h4>
+                        <p>Matriz de exames ocupacionais por fun&ccedil;&atilde;o (admissional, peri&oacute;dico, demissional), considerando os riscos identificados no PGR, LTCAT e LIP, conforme NR-07.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Integra&ccedil;&atilde;o ao eSocial e Entrega Final</h4>
+                        <p>Todos os documentos entregues em formato digital (PDF). Dados estruturados para envio dos eventos S-2240 e S-2220 ao eSocial.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 14px;">
+                <h4><i class="fas fa-ruler-combined"></i> Op&ccedil;&atilde;o com Medi&ccedil;&otilde;es Ambientais</h4>
+                <p>Para empresas que necessitam de <strong>medi&ccedil;&otilde;es quantitativas</strong> dos agentes de risco, a proposta inclui a op&ccedil;&atilde;o com <strong>1 Dosimetria de Ru&iacute;do</strong> e <strong>1 Avalia&ccedil;&atilde;o de Agente Qu&iacute;mico</strong> &mdash; ver tabela de investimento.</p>
+            </div>
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">04</span>
+            </div>
+        </div>
+
+        <!-- PAGINA 5: METODOLOGIA PSICOSSOCIAL -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial &mdash; Kit SST + Psicossocial + NR-20 + NR-35</span>
+            </div>
+            <h2 class="section-title">
+                <span class="section-number">5</span>
+                <span class="section-title-text">Metodologia &mdash; Avalia&ccedil;&atilde;o Psicossocial</span>
+            </h2>
+            <p style="margin-bottom: 12px;">A <strong>Avalia&ccedil;&atilde;o de Fatores de Riscos Psicossociais</strong> &eacute; conduzida de forma estruturada e &eacute;tica, em conformidade com a NR-01 (2024), podendo ser contratada de forma avulsa ou integrada ao Kit Programas:</p>
+            <div class="methodology-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Planejamento e Sensibiliza&ccedil;&atilde;o da Lideran&ccedil;a</h4>
+                        <p>Reuni&atilde;o com a gest&atilde;o da T Milit&atilde;o Transportes para apresenta&ccedil;&atilde;o do projeto, alinhamento de expectativas e engajamento dos colaboradores.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Palestra de Sensibiliza&ccedil;&atilde;o com os Colaboradores</h4>
+                        <p>Palestra sobre riscos psicossociais e sa&uacute;de mental no trabalho &mdash; presencial ou EAD, conforme conveni&ecirc;ncia da empresa.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Aplica&ccedil;&atilde;o de Instrumentos Psicossociais Validados</h4>
+                        <p>Question&aacute;rios padronizados e cientificamente validados para at&eacute; <strong>12 colaboradores</strong>, com total garantia de confidencialidade, anonimato e conformidade &eacute;tica (LGPD).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h4>An&aacute;lise por Setor, Fun&ccedil;&atilde;o e Indicadores de RH</h4>
+                        <p>Segmenta&ccedil;&atilde;o dos dados por cargos e grupos de exposi&ccedil;&atilde;o; revis&atilde;o de indicadores como absentismo, turnover e afastamentos quando dispon&iacute;veis.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h4>Classifica&ccedil;&atilde;o dos Riscos &mdash; Criticidade e Probabilidade</h4>
+                        <p>Matriz de risco psicossocial com classifica&ccedil;&atilde;o por criticidade e probabilidade, priorizando a&ccedil;&otilde;es conforme impacto potencial.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h4>Relat&oacute;rio T&eacute;cnico, Plano de A&ccedil;&atilde;o e Integra&ccedil;&atilde;o ao PGR</h4>
+                        <p>Relat&oacute;rio diagn&oacute;stico completo com recomenda&ccedil;&otilde;es preventivas/corretivas. Riscos psicossociais incorporados ao invent&aacute;rio do PGR conforme NR-01.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="purple-box" style="margin-top: 14px;">
+                <h4><i class="fas fa-list-check"></i> Principais Fatores Avaliados</h4>
+                <p>Ambiente organizacional, carga e ritmo de trabalho, rela&ccedil;&otilde;es interpessoais, ass&eacute;dio moral e sexual, autonomia, reconhecimento, equil&iacute;brio trabalho-vida pessoal e seguran&ccedil;a no emprego.</p>
+            </div>
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">05</span>
+            </div>
+        </div>
+
+        <!-- PAGINA 6: ENTREGAVEIS -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial &mdash; Kit SST + Psicossocial + NR-20 + NR-35</span>
+            </div>
+            <h2 class="section-title">
+                <span class="section-number">6</span>
+                <span class="section-title-text">Entreg&aacute;veis</span>
+            </h2>
+            <h3 class="subsection-title"><i class="fas fa-folder-open"></i> Kit Programas SST</h3>
+            <div class="deliverables-grid" style="margin-bottom: 14px;">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-clipboard-list"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PGR &mdash; Invent&aacute;rio de Riscos + Plano de A&ccedil;&atilde;o</h4>
+                        <p>Invent&aacute;rio completo por fun&ccedil;&atilde;o com classifica&ccedil;&atilde;o e plano de a&ccedil;&atilde;o com medidas de controle, prazos e respons&aacute;veis.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-file-medical-alt"></i></div>
+                    <div class="deliverable-text">
+                        <h4>LTCAT &mdash; Laudo das Condi&ccedil;&otilde;es Ambientais</h4>
+                        <p>Caracteriza&ccedil;&atilde;o da exposi&ccedil;&atilde;o a agentes nocivos para fins previdenci&aacute;rios e base para o PPP.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div class="deliverable-text">
+                        <h4>PCMSO &mdash; Matriz de Exames por Fun&ccedil;&atilde;o</h4>
+                        <p>Programa completo com exames ocupacionais por fun&ccedil;&atilde;o (admissional, peri&oacute;dico, demissional).</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon"><i class="fas fa-table"></i></div>
+                    <div class="deliverable-text">
+                        <h4>LIP &mdash; Laudo de Insalubridade e Periculosidade</h4>
+                        <p>Caracteriza&ccedil;&atilde;o ou descaracteriza&ccedil;&atilde;o de insalubridade/periculosidade por fun&ccedil;&atilde;o, conforme NR-15 e NR-16.</p>
+                    </div>
+                </div>
+            </div>
+            <h3 class="subsection-title"><i class="fas fa-brain" style="color: var(--purple-color);"></i> Avalia&ccedil;&atilde;o Psicossocial</h3>
+            <div class="deliverables-grid" style="margin-bottom: 14px;">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon purple"><i class="fas fa-file-alt"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Relat&oacute;rio T&eacute;cnico Psicossocial</h4>
+                        <p>Diagn&oacute;stico com an&aacute;lise quantitativa/qualitativa, mapeamento por fun&ccedil;&atilde;o e classifica&ccedil;&atilde;o por criticidade.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon purple"><i class="fas fa-tasks"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Plano de A&ccedil;&atilde;o Preventivo e Corretivo</h4>
+                        <p>Recomenda&ccedil;&otilde;es t&eacute;cnicas com medidas de controle, prazos e prioriza&ccedil;&atilde;o por matriz de risco.</p>
+                    </div>
+                </div>
+            </div>
+            <h3 class="subsection-title"><i class="fas fa-graduation-cap" style="color: var(--orange-color);"></i> Treinamentos NR-20 e NR-35</h3>
+            <div class="deliverables-grid">
+                <div class="deliverable-item">
+                    <div class="deliverable-icon orange"><i class="fas fa-certificate"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Certificados Nominais NR-20 e NR-35</h4>
+                        <p>Certificados individuais de conclus&atilde;o para cada participante, com validade bienal.</p>
+                    </div>
+                </div>
+                <div class="deliverable-item">
+                    <div class="deliverable-icon orange"><i class="fas fa-list-ol"></i></div>
+                    <div class="deliverable-text">
+                        <h4>Listas de Presen&ccedil;a + Conte&uacute;do Program&aacute;tico</h4>
+                        <p>Listas assinadas e programa detalhado para arquivo de conformidade e auditoria.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="green-box" style="margin-top: 12px;">
+                <h4><i class="fas fa-shield-alt"></i> Validade dos Documentos</h4>
+                <p>Programas SST devem ser revisados anualmente ou ap&oacute;s altera&ccedil;&otilde;es nas condi&ccedil;&otilde;es de trabalho. Certificados NR-20 e NR-35 t&ecirc;m <strong>validade de 2 anos</strong>. A EngMarq notifica previamente os vencimentos.</p>
+            </div>
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">06</span>
+            </div>
+        </div>
+
+        <!-- PAGINA 7: INVESTIMENTO -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial &mdash; Kit SST + Psicossocial + NR-20 + NR-35</span>
+            </div>
+            <h2 class="section-title">
+                <span class="section-number">7</span>
+                <span class="section-title-text">Investimento</span>
+            </h2>
+            <div class="highlight-box" style="margin-bottom: 14px;">
+                <p style="margin: 0;"><strong><i class="fas fa-users"></i> Abrang&ecirc;ncia:</strong> <strong>11 colaboradores</strong> &middot; 4 fun&ccedil;&otilde;es &middot; Parnamirim/RN | Treinamentos: precifica&ccedil;&atilde;o por participante</p>
+            </div>
+
+            <!-- OPCAO A -->
+            <div style="background: #f0fff4; border: 2px solid #38a169; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px;">
+                <p style="margin: 0 0 6px 0; font-family: var(--font-primary); font-size: 11px; font-weight: 700; color: #276749;">
+                    <i class="fas fa-check-circle" style="color: #38a169; margin-right: 6px;"></i>OP&Ccedil;&Atilde;O A &mdash; Psicossocial Avulso (sem Kit Programas)
+                </p>
+                <table style="width: 100%; border-collapse: collapse; font-size: 10px;">
+                    <tr style="background: white;">
+                        <td style="padding: 7px 8px; border: 1px solid #c6f6d5; width: 65%;">
+                            <i class="fas fa-brain" style="color: var(--purple-color); margin-right: 5px;"></i>
+                            <strong>Psicossocial</strong> &mdash; Avalia&ccedil;&atilde;o NR-01 (at&eacute; 12 colaboradores)<br>
+                            <span style="font-size: 9px; color: var(--gray-color);">Relat&oacute;rio t&eacute;cnico, plano de a&ccedil;&atilde;o, palestra e integra&ccedil;&atilde;o ao PGR</span>
+                        </td>
+                        <td style="padding: 7px 8px; border: 1px solid #c6f6d5; text-align: center; font-weight: 700; color: var(--primary-color); font-family: var(--font-primary); font-size: 13px;">R$ 900,00</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- OPCAO B -->
+            <div style="background: #ebf8ff; border: 2px solid #3182ce; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px;">
+                <p style="margin: 0 0 6px 0; font-family: var(--font-primary); font-size: 11px; font-weight: 700; color: #2c5282;">
+                    <i class="fas fa-star" style="color: #3182ce; margin-right: 6px;"></i>OP&Ccedil;&Atilde;O B &mdash; Kit Programas Completo
+                    <span style="background: #3182ce; color: white; font-size: 9px; padding: 1px 7px; border-radius: 10px; margin-left: 4px;">SEM MEDI&Ccedil;&Atilde;O</span>
+                </p>
+                <table style="width: 100%; border-collapse: collapse; font-size: 10px;">
+                    <tr style="background: white;">
+                        <td style="padding: 7px 8px; border: 1px solid #bee3f8; width: 65%;">
+                            <i class="fas fa-folder-open" style="color: var(--secondary-color); margin-right: 5px;"></i>
+                            <strong>Kit SST</strong> &mdash; PGR + PCMSO + LTCAT + LIP + Psicossocial<br>
+                            <span style="font-size: 9px; color: var(--gray-color);">11 colaboradores &middot; 4 fun&ccedil;&otilde;es &middot; sem medi&ccedil;&otilde;es ambientais</span>
+                        </td>
+                        <td style="padding: 7px 8px; border: 1px solid #bee3f8; text-align: center; font-weight: 700; color: #2c5282; font-family: var(--font-primary); font-size: 13px;">R$ 1.800,00</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- OPCAO C -->
+            <div style="background: #fffaf0; border: 2px solid var(--orange-color); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px;">
+                <p style="margin: 0 0 6px 0; font-family: var(--font-primary); font-size: 11px; font-weight: 700; color: var(--orange-color);">
+                    <i class="fas fa-medal" style="color: var(--orange-color); margin-right: 6px;"></i>OP&Ccedil;&Atilde;O C &mdash; Kit Programas Completo
+                    <span style="background: var(--orange-color); color: white; font-size: 9px; padding: 1px 7px; border-radius: 10px; margin-left: 4px;">COM MEDI&Ccedil;&Atilde;O</span>
+                </p>
+                <table style="width: 100%; border-collapse: collapse; font-size: 10px;">
+                    <tr style="background: white;">
+                        <td style="padding: 7px 8px; border: 1px solid #fbd38d; width: 65%;">
+                            <i class="fas fa-folder-open" style="color: var(--secondary-color); margin-right: 5px;"></i>
+                            <strong>Kit SST</strong> &mdash; PGR + PCMSO + LTCAT + LIP + Psicossocial<br>
+                            <span style="font-size: 9px; color: var(--gray-color);">+ <strong>1 Dosimetria de Ru&iacute;do</strong> + <strong>1 Avalia&ccedil;&atilde;o de Agente Qu&iacute;mico</strong></span>
+                        </td>
+                        <td style="padding: 7px 8px; border: 1px solid #fbd38d; text-align: center; font-weight: 700; color: var(--orange-color); font-family: var(--font-primary); font-size: 13px;">R$ 2.500,00</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p style="font-family: var(--font-primary); font-size: 11px; font-weight: 700; color: var(--primary-color); margin: 6px 0;">
+                <i class="fas fa-graduation-cap" style="color: var(--orange-color); margin-right: 6px;"></i>Treinamentos &mdash; Independentes das Op&ccedil;&otilde;es Acima
+            </p>
+            <table class="investment-table" style="margin: 0 0 10px 0;">
+                <thead>
+                    <tr>
+                        <th style="width: 55%;">Treinamento</th>
+                        <th style="width: 25%; text-align: center;">Modalidade</th>
+                        <th style="width: 20%; text-align: center;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <i class="fas fa-fire" style="color: var(--orange-color); margin-right: 5px;"></i>
+                            <strong>NR-20 Reciclagem</strong> &mdash; L&iacute;quidos Combust&iacute;veis e Inflam&aacute;veis
+                            <span style="display: block; font-size: 9px; color: var(--gray-color);">8h | Certificado nominal | V&aacute;lido 2 anos</span>
+                        </td>
+                        <td style="text-align: center;">Por participante</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color); font-family: var(--font-primary);">R$ 120,00/pessoa</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="fas fa-arrows-up-down" style="color: var(--orange-color); margin-right: 5px;"></i>
+                            <strong>NR-35 Reciclagem</strong> &mdash; Trabalho em Altura
+                            <span style="display: block; font-size: 9px; color: var(--gray-color);">8h | Certificado nominal | V&aacute;lido 2 anos</span>
+                        </td>
+                        <td style="text-align: center;">Por participante</td>
+                        <td style="text-align: center; font-weight: 700; color: var(--primary-color); font-family: var(--font-primary);">R$ 120,00/pessoa</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="info-box" style="margin-top: 4px;">
+                <h4><i class="fas fa-info-circle"></i> Total dos treinamentos</h4>
+                <p style="margin: 0;">Multiplique o n&uacute;mero de participantes por R$&nbsp;120,00. <strong>Ex.:</strong> 8 no NR-20 + 6 no NR-35 = R$&nbsp;1.680,00. Or&ccedil;amento detalhado ap&oacute;s confirma&ccedil;&atilde;o das turmas.</p>
+            </div>
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">07</span>
+            </div>
+        </div>
+
+        <!-- PAGINA 8: CONDICOES COMERCIAIS + RESPONSAVEL -->
+        <div class="page">
+            <div class="page-header">
+                <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
+                <span class="page-header-title">Proposta Comercial &mdash; Kit SST + Psicossocial + NR-20 + NR-35</span>
+            </div>
+            <h2 class="section-title">
+                <span class="section-number">8</span>
+                <span class="section-title-text">Condi&ccedil;&otilde;es Comerciais</span>
+            </h2>
+            <div class="conditions-list" style="margin-bottom: 20px;">
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-text">
+                        <strong>Validade da Proposta</strong>
+                        <span>Esta proposta &eacute; v&aacute;lida por 15 (quinze) dias a partir da data de emiss&atilde;o.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div class="condition-text">
+                        <strong>Forma de Pagamento</strong>
+                        <span>&Agrave; vista no ato da aprova&ccedil;&atilde;o (Pix, TED ou boleto banc&aacute;rio). Possibilidade de parcelamento mediante negocia&ccedil;&atilde;o pr&eacute;via.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-clock"></i></div>
+                    <div class="condition-text">
+                        <strong>Prazo de Execu&ccedil;&atilde;o &mdash; Kit Programas</strong>
+                        <span>Entrega em at&eacute; 20 dias &uacute;teis ap&oacute;s aprova&ccedil;&atilde;o e visita t&eacute;cnica, condicionado ao fornecimento das informa&ccedil;&otilde;es necess&aacute;rias.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div class="condition-text">
+                        <strong>Agendamento dos Treinamentos</strong>
+                        <span>As turmas de reciclagem NR-20 e NR-35 ser&atilde;o agendadas conforme disponibilidade da empresa, com data e local a combinar.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-user-shield"></i></div>
+                    <div class="condition-text">
+                        <strong>Confidencialidade e LGPD</strong>
+                        <span>Todos os dados s&atilde;o tratados com sigilo. Dados psicossociais s&atilde;o anonimizados &mdash; apenas resultados agregados constam no relat&oacute;rio.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="condition-text">
+                        <strong>O que a empresa precisa fornecer</strong>
+                        <span>Lista de colaboradores com fun&ccedil;&atilde;o e setor; acesso aos ambientes de trabalho para visita t&eacute;cnica; disponibilidade para question&aacute;rios e agendamento dos treinamentos.</span>
+                    </div>
+                </div>
+            </div>
+            <h2 class="section-title">
+                <span class="section-number">9</span>
+                <span class="section-title-text">Respons&aacute;vel pela Proposta</span>
+            </h2>
+            <div class="responsible-card">
+                <div class="responsible-avatar"><i class="fas fa-user-tie"></i></div>
+                <h3 class="responsible-name">Thiago Marques</h3>
+                <p class="responsible-role">Diretor</p>
+                <p class="responsible-company">EngMarq Solution</p>
+                <div class="responsible-contacts">
+                    <div class="responsible-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>+55 84 99928-5888</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="responsible-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                </div>
+            </div>
+            <div class="green-box" style="margin-top: 16px;">
+                <h4><i class="fas fa-headset"></i> Estamos &agrave; disposi&ccedil;&atilde;o</h4>
+                <p>Entre em contato para confirmar as turmas, escolher a op&ccedil;&atilde;o de investimento ou tirar d&uacute;vidas. Atendimento de segunda a sexta das 08h &agrave;s 18h e s&aacute;bados das 08h &agrave;s 12h. Resposta pelo WhatsApp em at&eacute; 2h no hor&aacute;rio comercial.</p>
+            </div>
+            <div class="page-footer">
+                <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
+                <span class="page-number">08</span>
+            </div>
+        </div>
+
+    </div><!-- #pdf-content -->
+
+</body>
+</html>
