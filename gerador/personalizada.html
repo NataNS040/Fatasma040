@@ -229,7 +229,7 @@
         #proposta-output { padding: 0; }
         .proposta-container { width: 210mm; margin: 0 auto; background: white; }
         .page {
-            width: 210mm; min-height: 297mm;
+            width: 210mm;
             padding: 15mm 15mm 22mm 15mm;
             position: relative; background: var(--white);
             box-sizing: border-box; page-break-after: always;
@@ -238,6 +238,7 @@
 
         /* Capa */
         .page-cover {
+            min-height: 297mm;
             background: linear-gradient(160deg, #1a365d 0%, #234876 40%, #1a365d 70%, #0f2744 100%);
             color: white; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
