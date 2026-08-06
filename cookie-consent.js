@@ -118,7 +118,7 @@
             '<div class="ccb-content">' +
                 '<div class="ccb-text">' +
                     '<h2 class="ccb-title"><i class="fas fa-cookie-bite" aria-hidden="true"></i> Cookies e Privacidade</h2>' +
-                    '<p>Utilizamos cookies para melhorar sua experiência. Cookies essenciais são necessários para o funcionamento do site. Você pode aceitar, rejeitar ou personalizar os demais cookies. Saiba mais em nossa <a href="politica-cookies.html">Política de Cookies</a> e <a href="politica-privacidade.html">Política de Privacidade</a>.</p>' +
+                    '<p>Utilizamos cookies para melhorar sua experiência. Cookies essenciais são necessários para o funcionamento do site. Você pode aceitar, rejeitar ou personalizar os demais cookies. Saiba mais em nossa <a href="politicas/politica-cookies.html">Política de Cookies</a> e <a href="politicas/politica-privacidade.html">Política de Privacidade</a>.</p>' +
                 '</div>' +
                 '<div class="ccb-actions">' +
                     '<button type="button" class="ccb-btn ccb-btn-accept" id="ccb-accept-all">Aceitar Todos</button>' +

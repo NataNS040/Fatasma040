@@ -67,11 +67,11 @@
     },
     {
       "src": "/privacidade",
-      "dest": "/politica-privacidade.html"
+      "dest": "/politicas/politica-privacidade.html"
     },
     {
       "src": "/cookies",
-      "dest": "/politica-cookies.html"
+      "dest": "/politicas/politica-cookies.html"
     },
     {
       "src": "/termos",
