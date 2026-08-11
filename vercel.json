@@ -66,6 +66,10 @@
       "dest": "/landing-kit-programas.html"
     },
     {
+      "src": "/consultoria-gratuita",
+      "dest": "/landing-consultoria-gratuita.html"
+    },
+    {
       "src": "/privacidade",
       "dest": "/politicas/politica-privacidade.html"
     },
