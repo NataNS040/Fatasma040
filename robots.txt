@@ -1,0 +1,35 @@
+User-agent: *
+Allow: /
+Allow: /nr01
+Allow: /consultoria-gratuita
+Allow: /kit-programas
+Allow: /encaminhamento-exame
+Allow: /privacidade
+Allow: /cookies
+Allow: /termos
+
+# Páginas internas — não indexar
+Disallow: /gerador-de-proposta
+Disallow: /gerador/
+Disallow: /propostas/
+Disallow: /contratos/
+Disallow: /recibo-timbrado-engmarq.html
+Disallow: /recibo-clara-karinna-aso.html
+Disallow: /relatorio-entregaveis-clientes.html
+Disallow: /relatorio-funcoes-equipe.html
+Disallow: /relatorio-precificacao-engmarq.html
+Disallow: /relatorio-tecnico-ieadern-2026.html
+Disallow: /plano-comercial-2026
+Disallow: /plano-comercial-estrategico-2026.html
+Disallow: /plano-comercial-2026.html
+Disallow: /descritivo-entregaveis-tecnicos.html
+Disallow: /descritivo-psicossocial.html
+Disallow: /nr01-card.html
+Disallow: /nr01-card-story.html
+Disallow: /presentation.html
+Disallow: /calculadora-precificacao/
+Disallow: /vaga-comercial.html
+Disallow: /politica-comissionamento.html
+Disallow: /assets/
+
+Sitemap: https://www.engmarqsolution.com/sitemap.xml

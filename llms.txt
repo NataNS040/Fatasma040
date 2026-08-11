@@ -1,0 +1,19 @@
+# EngMarq Solution
+
+> Consultoria especializada em Engenharia de Segurança e Saúde do Trabalho (SST) com foco em segurança jurídica para empresas. Mais de 500 empresas atendidas e 1.000 treinamentos realizados em Natal/RN e região.
+
+A EngMarq Solution oferece serviços de SST para empresas de todos os portes, incluindo elaboração de programas legais (PGR, PCMSO, LTCAT, LIP), adequação à NR-01 com gestão de riscos psicossociais, laudos técnicos, treinamentos em normas regulamentadoras e consultoria gratuita de diagnóstico.
+
+## Páginas principais
+
+- [Home](https://www.engmarqsolution.com/): Apresentação dos serviços de SST, diferenciais e contato.
+- [NR-01 Atualizada 2026](https://www.engmarqsolution.com/nr01): Informações sobre as mudanças da NR-01, obrigatoriedade de riscos psicossociais no PGR e adequação para empresas.
+- [Consultoria Gratuita](https://www.engmarqsolution.com/consultoria-gratuita): Diagnóstico completo e gratuito de conformidade para sua empresa, sem compromisso.
+- [Kit Programas SST](https://www.engmarqsolution.com/kit-programas): Pacote completo PGR + PCMSO + LTCAT + LIP com condição especial.
+- [Gerador de Encaminhamento de Exame](https://www.engmarqsolution.com/encaminhamento-exame): Ferramenta online para emissão de encaminhamentos de exames ocupacionais.
+
+## Políticas
+
+- [Política de Privacidade](https://www.engmarqsolution.com/privacidade)
+- [Política de Cookies](https://www.engmarqsolution.com/cookies)
+- [Termos de Uso](https://www.engmarqsolution.com/termos)
