@@ -363,6 +363,21 @@
         .resumo-card .valor { font-family: var(--font-primary); font-size: 20px; font-weight: 800; color: var(--primary-color); }
         .resumo-card.destaque .valor { color: var(--secondary-color); }
 
+        /* tag de valor unitário por exame */
+        .exam-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: #edf2f7;
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-size: 8.5px;
+            margin: 1px 2px 1px 0;
+            white-space: nowrap;
+        }
+        .exam-tag .exam-name { color: var(--dark-color); font-weight: 600; }
+        .exam-tag .exam-price { color: var(--primary-color); font-weight: 700; }
+
         /* linha divisória de mês */
         .mes-header td {
             background: #edf2f7 !important;
@@ -506,7 +521,13 @@
                     <td class="nome">Nerivan dos Santos</td>
                     <td class="funcao">Lapidador de Vidro e Cristais</td>
                     <td class="tipo"><span class="badge badge-retorno">Retorno ao Trabalho</span></td>
-                    <td class="exames">ASO · Audiometria · Espirometria · Sumário de Urina (EAS) · Hemograma</td>
+                    <td class="exames">
+                        <span class="exam-tag"><span class="exam-name">ASO</span><span class="exam-price">R$ 40</span></span>
+                        <span class="exam-tag"><span class="exam-name">Audiometria</span><span class="exam-price">R$ 65</span></span>
+                        <span class="exam-tag"><span class="exam-name">Espirometria</span><span class="exam-price">R$ 50</span></span>
+                        <span class="exam-tag"><span class="exam-name">Sumário de Urina</span><span class="exam-price">R$ 8</span></span>
+                        <span class="exam-tag"><span class="exam-name">Hemograma</span><span class="exam-price">R$ 9</span></span>
+                    </td>
                     <td class="data">06/07/2026</td>
                     <td class="valor">R$ 172,00</td>
                 </tr>
@@ -515,7 +536,12 @@
                     <td class="nome">Miclean da Silva Belarmino</td>
                     <td class="funcao">Operador de Corte de Vidro</td>
                     <td class="tipo"><span class="badge badge-demissional">Demissional</span></td>
-                    <td class="exames">ASO · Espirometria · Sumário de Urina (EAS) · Hemograma</td>
+                    <td class="exames">
+                        <span class="exam-tag"><span class="exam-name">ASO</span><span class="exam-price">R$ 40</span></span>
+                        <span class="exam-tag"><span class="exam-name">Espirometria</span><span class="exam-price">R$ 50</span></span>
+                        <span class="exam-tag"><span class="exam-name">Sumário de Urina</span><span class="exam-price">R$ 8</span></span>
+                        <span class="exam-tag"><span class="exam-name">Hemograma</span><span class="exam-price">R$ 9</span></span>
+                    </td>
                     <td class="data">15/07/2026</td>
                     <td class="valor">R$ 107,00</td>
                 </tr>
@@ -524,7 +550,12 @@
                     <td class="nome">Cristian Emerson do Nascimento Silva</td>
                     <td class="funcao">Operador de Corte de Vidro</td>
                     <td class="tipo"><span class="badge badge-mudanca">Mudança de Riscos</span></td>
-                    <td class="exames">ASO · Espirometria · Sumário de Urina (EAS) · Hemograma</td>
+                    <td class="exames">
+                        <span class="exam-tag"><span class="exam-name">ASO</span><span class="exam-price">R$ 40</span></span>
+                        <span class="exam-tag"><span class="exam-name">Espirometria</span><span class="exam-price">R$ 50</span></span>
+                        <span class="exam-tag"><span class="exam-name">Sumário de Urina</span><span class="exam-price">R$ 8</span></span>
+                        <span class="exam-tag"><span class="exam-name">Hemograma</span><span class="exam-price">R$ 9</span></span>
+                    </td>
                     <td class="data">27/07/2026</td>
                     <td class="valor">R$ 107,00</td>
                 </tr>
@@ -533,7 +564,9 @@
                     <td class="nome">Amanda Talia da Rocha</td>
                     <td class="funcao">Vendedora</td>
                     <td class="tipo"><span class="badge badge-mudanca">Mudança de Riscos</span></td>
-                    <td class="exames">ASO</td>
+                    <td class="exames">
+                        <span class="exam-tag"><span class="exam-name">ASO</span><span class="exam-price">R$ 40</span></span>
+                    </td>
                     <td class="data">27/07/2026</td>
                     <td class="valor">R$ 40,00</td>
                 </tr>
@@ -542,7 +575,9 @@
                     <td class="nome">Odimar Amaro de Oliveira Junior</td>
                     <td class="funcao">Gestor de Frotas</td>
                     <td class="tipo"><span class="badge badge-mudanca">Mudança de Riscos</span></td>
-                    <td class="exames">ASO</td>
+                    <td class="exames">
+                        <span class="exam-tag"><span class="exam-name">ASO</span><span class="exam-price">R$ 40</span></span>
+                    </td>
                     <td class="data">27/07/2026</td>
                     <td class="valor">R$ 40,00</td>
                 </tr>

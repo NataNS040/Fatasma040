@@ -1,0 +1,2344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17875424072"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17875424072');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultoria Gratuita SST | Diagnóstico Completo para Sua Empresa | EngMarq Solution</title>
+    <meta name="description" content="Agende sua consultoria gratuita de SST e descubra exatamente o que sua empresa precisa para estar em conformidade com as Normas Regulamentadoras. Sem compromisso.">
+    <meta name="keywords" content="consultoria gratuita SST, diagnóstico SST, segurança do trabalho, NR, PGR, PCMSO, conformidade trabalhista">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logoengmarq.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --secondary-color: #f5a623;
+            --accent-color: #38a169;
+            --success-color: #38a169;
+            --warning-color: #dd6b20;
+            --danger-color: #e53e3e;
+            --light-color: #f7fafc;
+            --gray-color: #718096;
+            --dark-color: #2d3748;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #1a365d 0%, #0f2744 100%);
+            --gradient-success: linear-gradient(135deg, #38a169 0%, #276749 100%);
+            --gradient-gold: linear-gradient(135deg, #f5a623 0%, #d69e2e 100%);
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+            --shadow-lg: 0 20px 40px rgba(26, 54, 93, 0.15);
+            --shadow-xl: 0 25px 50px rgba(26, 54, 93, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ========== PROMO BAR ========== */
+        .promo-bar {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+        }
+
+        .promo-bar i {
+            margin-right: 8px;
+            animation: bounce-icon 1s infinite;
+        }
+
+        .promo-bar .promo-highlight {
+            background: var(--secondary-color);
+            color: var(--primary-dark);
+            padding: 3px 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        @keyframes bounce-icon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: var(--white);
+            padding: 15px 0;
+            position: fixed;
+            top: 44px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+        }
+
+        .header-cta {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-phone {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .header-phone i {
+            color: var(--success-color);
+            margin-right: 5px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-success {
+            background: var(--gradient-success);
+            color: white;
+            box-shadow: 0 4px 15px rgba(56, 161, 105, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 161, 105, 0.5);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(26, 54, 93, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 54, 93, 0.5);
+        }
+
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+            animation: pulse-gold 2s infinite;
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 25px rgba(245, 166, 35, 0.6); }
+        }
+
+        .btn-lg {
+            padding: 18px 40px;
+            font-size: 18px;
+            border-radius: 12px;
+        }
+
+        /* ========== HERO SECTION ========== */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-primary);
+            padding-top: 180px;
+            padding-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            background-size: 50px 50px;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text {
+            color: white;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-badge i {
+            animation: bounce-icon 1s infinite;
+        }
+
+        .hero-title {
+            font-family: var(--font-primary);
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .highlight {
+            color: var(--secondary-color);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .hero-checks {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 35px;
+        }
+
+        .hero-check-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .hero-check-item i {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* ========== HERO CARD ========== */
+        .hero-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-gold);
+        }
+
+        .hero-card-badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--success-color);
+            color: white;
+            padding: 8px 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transform: rotate(45deg);
+        }
+
+        .hero-card h3 {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .hero-card .card-subtitle {
+            text-align: center;
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .card-free-tag {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(56,161,105,0.15) 0%, rgba(39,103,73,0.15) 100%);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .card-free-tag .free-label {
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--success-color);
+            line-height: 1;
+        }
+
+        .card-free-tag .free-desc {
+            font-size: 14px;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .card-includes {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .card-includes li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            font-size: 14px;
+            color: var(--dark-color);
+        }
+
+        .card-includes li:last-child {
+            border-bottom: none;
+        }
+
+        .card-includes li i {
+            color: var(--success-color);
+            flex-shrink: 0;
+        }
+
+        .card-cta .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .card-guarantee {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--gray-color);
+        }
+
+        .card-guarantee i {
+            color: var(--success-color);
+        }
+
+        /* ========== STATS BAR ========== */
+        .stats-bar {
+            background: var(--light-color);
+            padding: 30px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-primary);
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+
+        /* ========== SECTION STYLES ========== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(26, 54, 93, 0.1);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ========== PROBLEMS SECTION ========== */
+        .problems-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .problem-card {
+            background: var(--light-color);
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            border-left: 5px solid var(--danger-color);
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .problem-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(229, 62, 62, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .problem-icon i {
+            font-size: 28px;
+            color: var(--danger-color);
+        }
+
+        .problem-card h3 {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+
+        .problem-card p {
+            color: var(--gray-color);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ========== WHAT IS SECTION ========== */
+        .whatis-section {
+            padding: 80px 0;
+            background: var(--light-color);
+        }
+
+        .whatis-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .whatis-text h2 {
+            font-family: var(--font-primary);
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .whatis-text h2 span {
+            color: var(--success-color);
+        }
+
+        .whatis-text p {
+            color: var(--gray-color);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .whatis-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .whatis-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            font-size: 15px;
+            color: var(--dark-color);
+        }
+
+        .whatis-list li i {
+            width: 30px;
+            height: 30px;
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .whatis-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .visual-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .visual-card .vc-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .vc-icon.blue { background: var(--gradient-primary); }
+        .vc-icon.green { background: var(--gradient-success); }
+        .vc-icon.gold { background: var(--gradient-gold); }
+
+        .visual-card .vc-icon i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .vc-icon.gold i { color: var(--primary-dark); }
+
+        .visual-card h4 {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .visual-card p {
+            font-size: 13px;
+            color: var(--gray-color);
+            line-height: 1.5;
+        }
+
+        /* ========== WHAT WE ANALYZE ========== */
+        .analyze-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .analyze-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .analyze-card {
+            background: var(--light-color);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analyze-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .analyze-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .analyze-number {
+            font-family: var(--font-primary);
+            font-size: 48px;
+            font-weight: 900;
+            color: rgba(26, 54, 93, 0.1);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .analyze-card h3 {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .analyze-card p {
+            color: var(--gray-color);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .analyze-tag {
+            display: inline-block;
+            background: rgba(26, 54, 93, 0.1);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* ========== BENEFITS SECTION ========== */
+        .benefits-section {
+            padding: 80px 0;
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .benefits-section .section-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .benefits-section .section-title {
+            color: white;
+        }
+
+        .benefits-section .section-subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .benefit-icon i {
+            font-size: 28px;
+            color: var(--primary-dark);
+        }
+
+        .benefit-card h3 {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .benefit-card p {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        /* ========== PROCESS SECTION ========== */
+        .process-section {
+            padding: 80px 0;
+            background: var(--light-color);
+        }
+
+        .process-timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 4px;
+            background: var(--gradient-gold);
+            border-radius: 2px;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .process-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-primary);
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(26, 54, 93, 0.3);
+        }
+
+        .process-step h3 {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            color: var(--gray-color);
+            font-size: 14px;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        /* ========== WHO NEEDS SECTION ========== */
+        .whoneeds-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .whoneeds-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .whoneeds-card {
+            background: var(--light-color);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .whoneeds-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .whoneeds-card:hover h3 {
+            color: white;
+        }
+
+        .whoneeds-card:hover p {
+            color: rgba(255,255,255,0.85);
+        }
+
+        .whoneeds-card:hover .wn-icon {
+            background: var(--gradient-gold);
+        }
+
+        .wn-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            transition: all 0.3s ease;
+        }
+
+        .wn-icon i {
+            font-size: 28px;
+            color: var(--secondary-color);
+        }
+
+        .whoneeds-card h3 {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .whoneeds-card p {
+            font-size: 13px;
+            color: var(--gray-color);
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials-section {
+            padding: 80px 0;
+            background: var(--light-color);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 80px;
+            font-family: Georgia, serif;
+            color: var(--primary-color);
+            opacity: 0.1;
+            line-height: 1;
+        }
+
+        .testimonial-stars {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--dark-color);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .testimonial-info h4 {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            color: var(--dark-color);
+        }
+
+        .testimonial-info p {
+            font-size: 13px;
+            color: var(--gray-color);
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            padding: 80px 0;
+            background: var(--gradient-success);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-primary);
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            opacity: 0.95;
+            margin-bottom: 35px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-guarantee {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .cta-guarantee i {
+            color: var(--secondary-color);
+        }
+
+        /* ========== FORM SECTION ========== */
+        .form-section {
+            padding: 80px 0;
+            background: var(--gradient-primary);
+        }
+
+        .form-section .section-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .form-section .section-title {
+            color: white;
+        }
+
+        .form-section .section-subtitle {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto 0;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-container h3 {
+            font-family: var(--font-primary);
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .form-container .form-subtitle {
+            text-align: center;
+            color: var(--gray-color);
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .form-free-banner {
+            background: linear-gradient(135deg, rgba(56,161,105,0.12) 0%, rgba(39,103,73,0.12) 100%);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-free-banner i {
+            font-size: 28px;
+            color: var(--success-color);
+            flex-shrink: 0;
+        }
+
+        .form-free-banner strong {
+            display: block;
+            font-family: var(--font-primary);
+            font-size: 16px;
+            color: var(--success-color);
+        }
+
+        .form-free-banner span {
+            font-size: 13px;
+            color: var(--gray-color);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: var(--font-secondary);
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);
+        }
+
+        .form-btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .form-security {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--gray-color);
+        }
+
+        .form-security i {
+            color: var(--success-color);
+        }
+
+        /* ========== FAQ SECTION ========== */
+        .faq-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 50px auto 0;
+        }
+
+        .faq-item {
+            background: var(--light-color);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #edf2f7;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 25px 20px;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: var(--gray-color);
+            line-height: 1.7;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand img {
+            height: 150px;
+            margin-bottom: 20px;
+            filter: brightness(0) invert(1);
+        }
+
+        .footer-brand p {
+            opacity: 0.8;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .footer-contact-item i {
+            color: var(--secondary-color);
+            width: 20px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        /* ========== FLOATING WHATSAPP ========== */
+        .floating-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+        }
+
+        .floating-whatsapp a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            border-radius: 50%;
+            color: white;
+            font-size: 32px;
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* ========== URGENCY BANNER ========== */
+        .urgency-banner {
+            background: linear-gradient(135deg, var(--warning-color) 0%, #c05621 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-family: var(--font-primary);
+        }
+
+        .urgency-banner strong {
+            font-size: 18px;
+        }
+
+        .urgency-banner p {
+            font-size: 14px;
+            margin-top: 5px;
+            opacity: 0.95;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 992px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-checks {
+                align-items: center;
+            }
+
+            .hero-card {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .whatis-content {
+                grid-template-columns: 1fr;
+            }
+
+            .problems-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analyze-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .whoneeds-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .promo-bar {
+                font-size: 12px;
+                padding: 10px 15px;
+            }
+
+            .promo-bar .promo-highlight {
+                display: none;
+            }
+
+            .header {
+                top: 38px;
+            }
+
+            .header-phone {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 120px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .analyze-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .whoneeds-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-timeline {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .process-timeline::before {
+                display: none;
+            }
+
+            .cta-section h2 {
+                font-size: 28px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-contact-item {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Promo Bar -->
+    <div class="promo-bar">
+        <i class="fas fa-gift"></i>
+        DIAGNÓSTICO GRATUITO: Descubra o que sua empresa precisa em SST — sem custo e sem compromisso!
+        <span class="promo-highlight">100% Gratuito</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution">
+            </a>
+            <div class="header-cta">
+                <span class="header-phone">
+                    <i class="fas fa-phone"></i> (84) 99928-5888
+                </span>
+                <a href="#agendar" class="btn btn-success">
+                    <i class="fas fa-calendar-check"></i> Agendar Consultoria
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-right">
+                    <span class="hero-badge">
+                        <i class="fas fa-gift"></i> 100% Gratuito
+                    </span>
+                    <h1 class="hero-title">
+                        Consultoria Gratuita<br>
+                        de <span class="highlight">SST</span> para<br>
+                        Sua Empresa
+                    </h1>
+                    <p class="hero-subtitle">
+                        Agende agora e descubra <strong>exatamente o que sua empresa precisa</strong> 
+                        para estar em conformidade com as Normas Regulamentadoras. 
+                        Um especialista analisa sua situação <strong>sem cobrar nada</strong>.
+                    </p>
+
+                    <div class="hero-checks">
+                        <div class="hero-check-item">
+                            <i class="fas fa-check"></i>
+                            <span>Diagnóstico completo da situação atual da sua empresa</span>
+                        </div>
+                        <div class="hero-check-item">
+                            <i class="fas fa-check"></i>
+                            <span>Identificação dos documentos obrigatórios que faltam</span>
+                        </div>
+                        <div class="hero-check-item">
+                            <i class="fas fa-check"></i>
+                            <span>Riscos de multas e autuações que você pode estar correndo</span>
+                        </div>
+                        <div class="hero-check-item">
+                            <i class="fas fa-check"></i>
+                            <span>Orientações personalizadas e plano de ação para regularização</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-buttons">
+                        <a href="#agendar" class="btn btn-gold btn-lg">
+                            <i class="fas fa-calendar-check"></i> Quero Minha Consultoria Grátis
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-card" data-aos="fade-left">
+                    <span class="hero-card-badge">Grátis</span>
+                    <h3><i class="fas fa-search"></i> Diagnóstico SST</h3>
+                    <p class="card-subtitle">Entenda sua situação real em minutos</p>
+
+                    <div class="card-free-tag">
+                        <div>
+                            <div class="free-label">GRÁTIS</div>
+                        </div>
+                        <div>
+                            <div class="free-desc">Consultoria de diagnóstico SST completa, sem custo e sem compromisso de contratação</div>
+                        </div>
+                    </div>
+
+                    <ul class="card-includes">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Análise do perfil de risco da empresa
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Checklist de documentos obrigatórios
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Levantamento de pendências legais
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Orientação sobre NRs aplicáveis
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Plano de regularização personalizado
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Estimativa de riscos e penalidades
+                        </li>
+                    </ul>
+
+                    <div class="card-cta">
+                        <a href="#agendar" class="btn btn-success btn-lg">
+                            <i class="fas fa-paper-plane"></i> Agendar Agora
+                        </a>
+                        <p class="card-guarantee">
+                            <i class="fas fa-shield-alt"></i> Sem compromisso · Sem custo · 100% online
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="fade-up">
+                    <div class="stat-number">+500</div>
+                    <div class="stat-label">Empresas Diagnosticadas</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Empresas com Pendências</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-number">R$ 0</div>
+                    <div class="stat-label">Custo da Consultoria</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">Anos de Experiência</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Problems Section -->
+    <section class="problems-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-exclamation-triangle"></i> Riscos Reais
+                </span>
+                <h2 class="section-title">Sua Empresa Pode Estar em Risco</h2>
+                <p class="section-subtitle">Veja o que acontece quando a SST não está regularizada</p>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card" data-aos="fade-up">
+                    <div class="problem-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Multas e Autuações</h3>
+                    <p>A ausência de documentos como PGR e PCMSO pode gerar multas que vão de R$ 2.000 a R$ 200.000 por irregularidade identificada pelo MTE.</p>
+                </div>
+
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="problem-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3>Interdição da Empresa</h3>
+                    <p>Em casos graves, o auditor fiscal pode interditar setores ou até mesmo toda a empresa até que as irregularidades sejam corrigidas.</p>
+                </div>
+
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="problem-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Ações Trabalhistas</h3>
+                    <p>Trabalhadores expostos a riscos sem os laudos e documentos corretos têm respaldo jurídico para processar a empresa por danos à saúde.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What Is Section -->
+    <section class="whatis-section">
+        <div class="container">
+            <div class="whatis-content">
+                <div class="whatis-text" data-aos="fade-right">
+                    <h2>O Que é a<br><span>Consultoria Gratuita</span>?</h2>
+                    <p>
+                        É uma reunião de diagnóstico conduzida por um especialista da EngMarq Solution 
+                        para mapear a situação real da sua empresa em relação às exigências legais de 
+                        Segurança e Saúde do Trabalho.
+                    </p>
+                    <p>
+                        Ao final, você recebe um relatório claro com tudo que está em conformidade, 
+                        tudo que precisa ser regularizado e qual o caminho mais rápido para isso.
+                    </p>
+                    <ul class="whatis-list">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Realizada por engenheiro de segurança do trabalho credenciado
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Pode ser feita de forma online (vídeo) ou presencial em Natal/RN
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Duração de 30 a 60 minutos dependendo do porte da empresa
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            Sem qualquer obrigação de contratar ao final
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="whatis-visual" data-aos="fade-left">
+                    <div class="visual-card">
+                        <div class="vc-icon blue">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div>
+                            <h4>Análise de Conformidade</h4>
+                            <p>Verificamos todos os documentos SST obrigatórios para o seu CNAE e porte.</p>
+                        </div>
+                    </div>
+                    <div class="visual-card">
+                        <div class="vc-icon green">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div>
+                            <h4>Relatório de Pendências</h4>
+                            <p>Você recebe um checklist completo com o que está ok e o que precisa regularizar.</p>
+                        </div>
+                    </div>
+                    <div class="visual-card">
+                        <div class="vc-icon gold">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div>
+                            <h4>Plano de Ação</h4>
+                            <p>Orientações práticas com prioridades e prazos para regularização completa.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Analyze Section -->
+    <section class="analyze-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-microscope"></i> O Que Analisamos
+                </span>
+                <h2 class="section-title">Tudo Que Verificamos na Consultoria</h2>
+                <p class="section-subtitle">Uma análise completa de todas as obrigações legais da sua empresa em SST</p>
+            </div>
+
+            <div class="analyze-grid">
+                <div class="analyze-card" data-aos="fade-up">
+                    <div class="analyze-number">01</div>
+                    <h3>PGR</h3>
+                    <p>Verificamos se o Programa de Gerenciamento de Riscos está elaborado, atualizado e em conformidade com a NR-01 vigente.</p>
+                    <span class="analyze-tag">NR-01 / NR-09</span>
+                </div>
+
+                <div class="analyze-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="analyze-number">02</div>
+                    <h3>PCMSO</h3>
+                    <p>Checamos se o programa de controle médico está vigente, se os exames periódicos estão em dia e se o médico coordenador está definido.</p>
+                    <span class="analyze-tag">NR-07</span>
+                </div>
+
+                <div class="analyze-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="analyze-number">03</div>
+                    <h3>LTCAT</h3>
+                    <p>Analisamos se o Laudo de Condições Ambientais está adequado às exigências do eSocial e do INSS para aposentadoria especial.</p>
+                    <span class="analyze-tag">Previdenciário</span>
+                </div>
+
+                <div class="analyze-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="analyze-number">04</div>
+                    <h3>LIP</h3>
+                    <p>Verificamos se há laudo de insalubridade e periculosidade e se os adicionais pagos (ou não pagos) têm respaldo técnico legal.</p>
+                    <span class="analyze-tag">NR-15 / NR-16</span>
+                </div>
+
+                <div class="analyze-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="analyze-number">05</div>
+                    <h3>eSocial SST</h3>
+                    <p>Avaliamos se os eventos SST (S-2220, S-2240, S-2210) estão sendo enviados corretamente ao eSocial, evitando inconsistências.</p>
+                    <span class="analyze-tag">eSocial</span>
+                </div>
+
+                <div class="analyze-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="analyze-number">06</div>
+                    <h3>NRs Específicas</h3>
+                    <p>Identificamos quais Normas Regulamentadoras se aplicam à sua atividade e verificamos a conformidade com cada uma delas.</p>
+                    <span class="analyze-tag">NRs Aplicáveis</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-star"></i> Benefícios
+                </span>
+                <h2 class="section-title">Por Que Fazer a Consultoria?</h2>
+                <p class="section-subtitle">Conhecimento é a base da proteção da sua empresa</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card" data-aos="fade-up">
+                    <div class="benefit-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Visão Clara</h3>
+                    <p>Saiba exatamente onde você está e o que falta, sem achismos ou suposições.</p>
+                </div>
+
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Proteção Preventiva</h3>
+                    <p>Evite multas e autuações antes que o fiscal chegue na sua empresa.</p>
+                </div>
+
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="benefit-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <h3>Economia Inteligente</h3>
+                    <p>Priorize o que é urgente e gaste somente com o que realmente precisa.</p>
+                </div>
+
+                <div class="benefit-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Especialista Dedicado</h3>
+                    <p>Atendimento direto com engenheiro de segurança experiente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-route"></i> Como Funciona
+                </span>
+                <h2 class="section-title">Processo Simples em 4 Passos</h2>
+                <p class="section-subtitle">Da solicitação até o seu diagnóstico completo</p>
+            </div>
+
+            <div class="process-timeline">
+                <div class="process-step" data-aos="fade-up">
+                    <div class="process-number">1</div>
+                    <h3>Solicitação</h3>
+                    <p>Preencha o formulário e aguarde nosso contato em até 24h</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="process-number">2</div>
+                    <h3>Agendamento</h3>
+                    <p>Escolha o melhor dia e horário para a consultoria online ou presencial</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="process-number">3</div>
+                    <h3>Diagnóstico</h3>
+                    <p>O especialista analisa sua empresa e identifica todas as necessidades</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="process-number">4</div>
+                    <h3>Relatório</h3>
+                    <p>Você recebe um plano de ação claro com prioridades e próximos passos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Needs Section -->
+    <section class="whoneeds-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-building"></i> Para Quem É
+                </span>
+                <h2 class="section-title">Ideal Para Qualquer Empresa</h2>
+                <p class="section-subtitle">Se você tem funcionários registrados, esta consultoria é para você</p>
+            </div>
+
+            <div class="whoneeds-grid">
+                <div class="whoneeds-card" data-aos="fade-up">
+                    <div class="wn-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Indústrias</h3>
+                    <p>Metalúrgicas, fábricas, gráficas e demais empresas industriais</p>
+                </div>
+
+                <div class="whoneeds-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="wn-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Comércio</h3>
+                    <p>Supermercados, lojas, distribuidoras e redes varejistas</p>
+                </div>
+
+                <div class="whoneeds-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="wn-icon">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h3>Construção Civil</h3>
+                    <p>Construtoras, empreiteiras e empresas de reforma</p>
+                </div>
+
+                <div class="whoneeds-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="wn-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <h3>Saúde e Clínicas</h3>
+                    <p>Clínicas, consultórios, laboratórios e hospitais</p>
+                </div>
+
+                <div class="whoneeds-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="wn-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Alimentação</h3>
+                    <p>Restaurantes, padarias, frigoríficos e indústrias alimentícias</p>
+                </div>
+
+                <div class="whoneeds-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="wn-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Serviços e TI</h3>
+                    <p>Empresas de tecnologia, call centers e prestadores de serviços</p>
+                </div>
+
+                <div class="whoneeds-card" data-aos="fade-up" data-aos-delay="350">
+                    <div class="wn-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Educação</h3>
+                    <p>Escolas, universidades, cursos técnicos e creches</p>
+                </div>
+
+                <div class="whoneeds-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="wn-icon">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                    <h3>Outros Segmentos</h3>
+                    <p>Toda empresa com funcionários CLT tem obrigações em SST</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-star"></i> Depoimentos
+                </span>
+                <h2 class="section-title">Quem Já Fez o Diagnóstico</h2>
+                <p class="section-subtitle">Veja o que dizem as empresas que fizeram a consultoria gratuita</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Achei que estava em dia com a legislação. Na consultoria descobri que tinha 4 pendências graves que poderiam me gerar multa superior a R$ 30 mil. Regularizei tudo antes do fiscal aparecer!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AP</div>
+                        <div class="testimonial-info">
+                            <h4>Ana Paula</h4>
+                            <p>Proprietária - Clínica Odontológica</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"A consultoria foi muito objetiva. Em menos de 1 hora tinham mapeado tudo e me mostrado exatamente o que precisava. Sem enrolação, direto ao ponto. Recomendo muito!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MS</div>
+                        <div class="testimonial-info">
+                            <h4>Marcos Souza</h4>
+                            <p>Gerente - Distribuidora</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Fiz a consultoria sem nenhuma pretensão de contratar, só para saber como estava. O relatório que recebi foi tão completo que contratei na mesma hora. Transparência total."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">LO</div>
+                        <div class="testimonial-info">
+                            <h4>Luciana Oliveira</h4>
+                            <p>Diretora - Rede de Restaurantes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container" data-aos="fade-up">
+            <h2><i class="fas fa-calendar-check"></i> Agende Sua Consultoria Gratuita!</h2>
+            <p>Descubra agora o que sua empresa realmente precisa em SST — antes que o problema chegue até você.</p>
+
+            <div class="cta-buttons">
+                <a href="#agendar" class="btn btn-gold btn-lg">
+                    <i class="fas fa-file-alt"></i> Quero Meu Diagnóstico Grátis
+                </a>
+                <a href="https://wa.me/5584999285888?text=Olá! Quero agendar a consultoria gratuita de SST para minha empresa." target="_blank" class="btn btn-primary btn-lg">
+                    <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+                </a>
+            </div>
+
+            <div class="cta-guarantee">
+                <i class="fas fa-shield-alt"></i>
+                Totalmente gratuito • Sem compromisso de contratação • Atendimento em até 24h
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-question-circle"></i> FAQ
+                </span>
+                <h2 class="section-title">Dúvidas Sobre a Consultoria</h2>
+                <p class="section-subtitle">Respostas para as perguntas mais frequentes</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        A consultoria é realmente gratuita? Tem algum custo oculto?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim, é 100% gratuita. Não existe nenhum custo oculto, nenhuma taxa de agendamento e nenhuma obrigação de contratar qualquer serviço ao final. Nossa intenção é mostrar o nosso trabalho e construir uma relação de confiança com você.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="50">
+                    <div class="faq-question">
+                        Como é feita a consultoria? Precisa ser presencial?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A consultoria pode ser feita de forma online (via Google Meet, Zoom ou WhatsApp) ou presencial para empresas em Natal/RN e região. Para o diagnóstico inicial, o formato online funciona muito bem e é suficiente para a maioria dos casos.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="faq-question">
+                        O que preciso levar ou preparar para a consultoria?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Não precisa de nada especial. Se possível, tenha em mãos o CNPJ da empresa, o número aproximado de funcionários e os documentos SST que você já possui (PGR, PCMSO, laudos, etc.). Mas mesmo sem eles, conseguimos fazer o diagnóstico inicial.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
+                    <div class="faq-question">
+                        Quanto tempo dura a consultoria?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A duração média é de 30 a 60 minutos, dependendo do porte da empresa e da quantidade de informações a serem analisadas. Empresas menores costumam ter diagnósticos mais rápidos, enquanto empresas com muitos colaboradores ou setores distintos podem exigir mais tempo.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="faq-question">
+                        Serei obrigado a contratar depois da consultoria?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutamente não. A consultoria é gratuita e sem compromisso. Após o diagnóstico, se você tiver interesse em contratar nossos serviços, apresentaremos uma proposta. Se não quiser, tudo bem — o diagnóstico é seu e você pode usá-lo da forma que quiser.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
+                    <div class="faq-question">
+                        Em quanto tempo recebo o retorno após o agendamento?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Nossa equipe entra em contato em até 24 horas úteis após o preenchimento do formulário para confirmar o agendamento e combinar o horário mais conveniente para você.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section" id="agendar">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-calendar-check"></i> Agendamento
+                </span>
+                <h2 class="section-title">Agende Sua Consultoria Gratuita</h2>
+                <p class="section-subtitle">Preencha o formulário e entraremos em contato em até 24 horas</p>
+            </div>
+
+            <div class="form-container" data-aos="fade-up">
+                <h3><i class="fas fa-search"></i> Quero Meu Diagnóstico SST</h3>
+                <p class="form-subtitle">Rápido, gratuito e sem compromisso</p>
+
+                <div class="form-free-banner">
+                    <i class="fas fa-gift"></i>
+                    <div>
+                        <strong>Consultoria 100% Gratuita</strong>
+                        <span>Sem custo, sem compromisso e sem pegadinha</span>
+                    </div>
+                </div>
+
+                <form id="leadForm">
+                    <div class="form-group">
+                        <label>Nome completo *</label>
+                        <input type="text" name="nome" placeholder="Digite seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp *</label>
+                        <input type="tel" name="whatsapp" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" name="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Nome da empresa *</label>
+                        <input type="text" name="empresa" placeholder="Nome da sua empresa" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Segmento da empresa *</label>
+                        <select name="segmento" required>
+                            <option value="">Selecione seu segmento...</option>
+                            <option value="Indústria">Indústria / Manufatura</option>
+                            <option value="Comércio">Comércio / Varejo</option>
+                            <option value="Construção Civil">Construção Civil</option>
+                            <option value="Saúde">Saúde / Clínicas</option>
+                            <option value="Alimentação">Alimentação / Restaurante</option>
+                            <option value="Serviços">Serviços / TI</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade de funcionários *</label>
+                        <select name="funcionarios" required>
+                            <option value="">Selecione...</option>
+                            <option value="1-10">1 a 10 funcionários</option>
+                            <option value="11-50">11 a 50 funcionários</option>
+                            <option value="51-100">51 a 100 funcionários</option>
+                            <option value="101-500">101 a 500 funcionários</option>
+                            <option value="500+">Mais de 500 funcionários</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sua empresa possui algum documento SST?</label>
+                        <select name="situacao">
+                            <option value="Não possui nenhum documento">Não — não possuo nenhum documento</option>
+                            <option value="Possui alguns documentos desatualizados">Possuo alguns documentos desatualizados</option>
+                            <option value="Possui documentos mas não sei se estão corretos">Tenho documentos, mas não sei se estão corretos</option>
+                            <option value="Possui documentos atualizados">Sim, possuo documentos atualizados</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Alguma dúvida ou observação?</label>
+                        <textarea name="observacao" placeholder="Descreva sua situação ou dúvida principal (opcional)"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg form-btn">
+                        <i class="fab fa-whatsapp"></i> Agendar Consultoria Gratuita
+                    </button>
+                    <div class="form-security">
+                        <i class="fas fa-lock"></i>
+                        Seus dados estão seguros. Não enviamos spam.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logoengmarq.png" alt="EngMarq Solution">
+                    <p>Especialistas em Engenharia de Segurança e Saúde do Trabalho, com foco em Segurança Jurídica para sua empresa.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Nossos Serviços</h4>
+                    <ul class="footer-links">
+                        <li><a href="landing-kit-programas.html">Kit de Programas SST</a></li>
+                        <li><a href="landing-nr01.html">Adequação NR-01</a></li>
+                        <li><a href="#">PGR e PCMSO</a></li>
+                        <li><a href="#">Treinamentos NR</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Links Úteis</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Site Principal</a></li>
+                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="politicas/politica-privacidade.html">Política de Privacidade</a></li>
+                        <li><a href="politicas/politica-cookies.html">Política de Cookies</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Contato</h4>
+                    <div class="footer-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>(84) 99928-5888</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal - RN</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fab fa-instagram"></i>
+                        <span>@engmarq_solution</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 EngMarq Solution. Todos os direitos reservados. | CNPJ: 60.545.359/0001-76</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <div class="floating-whatsapp">
+        <a href="https://wa.me/5584999285888?text=Olá! Vim pela página de Consultoria Gratuita SST e gostaria de agendar." target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form Submit to WhatsApp
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nome = this.querySelector('[name="nome"]').value;
+            const whatsapp = this.querySelector('[name="whatsapp"]').value;
+            const email = this.querySelector('[name="email"]').value;
+            const empresa = this.querySelector('[name="empresa"]').value;
+            const segmento = this.querySelector('[name="segmento"]').value;
+            const funcionarios = this.querySelector('[name="funcionarios"]').value;
+            const situacao = this.querySelector('[name="situacao"]').value;
+            const observacao = this.querySelector('[name="observacao"]').value;
+
+            const message = `Olá! Vim pela landing page de Consultoria Gratuita SST e gostaria de agendar meu diagnóstico.
+
+*Minhas informações são:*
+📋 Nome: ${nome}
+📱 WhatsApp: ${whatsapp}
+📧 E-mail: ${email || 'Não informado'}
+🏢 Empresa: ${empresa}
+🏭 Segmento: ${segmento}
+👥 Funcionários: ${funcionarios}
+📄 Situação atual: ${situacao}
+${observacao ? `💬 Observação: ${observacao}` : ''}
+
+Aguardo o agendamento da consultoria gratuita!`;
+
+            const encodedMessage = encodeURIComponent(message);
+
+            // Track Google Ads conversion
+            gtag('event', 'conversion', {'send_to': 'AW-17875424072/consultoria_gratuita'});
+
+            window.open(`https://wa.me/5584999285888?text=${encodedMessage}`, '_blank');
+        });
+    </script>
+
+</body>
+</html>
