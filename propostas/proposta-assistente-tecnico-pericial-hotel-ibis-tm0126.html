@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proposta TM0125 - Relatório Analítico do PCMSO | Lumen Energia e Automação LTDA | EngMarq Solution</title>
+    <title>Proposta TM0126 - Assistente Técnico Pericial | Hotel Ibis | EngMarq Solution</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -200,6 +200,16 @@
         .inv-table tbody tr.incluso-row td { font-size: 10px; color: var(--success-color); font-weight: 600; }
         .inv-table tbody tr.incluso-row td.right { color: var(--success-color); }
 
+        /* Tabela pagamento */
+        .pay-table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+        .pay-table thead tr { background: var(--teal-color); color: white; }
+        .pay-table thead th { padding: 7px 12px; font-family: var(--font-primary); font-size: 10px; font-weight: 600; text-align: left; border: 1px solid var(--teal-color); }
+        .pay-table thead th.right { text-align: right; }
+        .pay-table tbody tr:nth-child(even) { background: var(--light-color); }
+        .pay-table tbody tr:nth-child(odd) { background: white; }
+        .pay-table tbody td { padding: 7px 12px; border: 1px solid #e2e8f0; font-size: 10px; color: var(--dark-color); }
+        .pay-table tbody td.right { text-align: right; font-weight: 600; color: var(--teal-color); }
+
         @media print {
             .pdf-controls { display: none !important; }
             body { margin: 0; padding: 0; background: white; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -240,35 +250,35 @@
 
         <!-- ====== PÁGINA 1: CAPA ====== -->
         <div class="page page-cover">
-            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:#81e6d9;letter-spacing:3px;">TM0125</span>
+            <span style="position:absolute;top:25mm;left:0;right:0;text-align:center;font-family:var(--font-primary);font-size:14px;font-weight:700;color:#81e6d9;letter-spacing:3px;">TM0126</span>
 
             <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="cover-logo">
 
             <span class="cover-badge">
-                <i class="fas fa-heartbeat"></i>
-                PCMSO — Relatório Analítico
+                <i class="fas fa-gavel"></i>
+                Assistente Técnico Pericial — Processo Trabalhista
             </span>
 
             <div class="cover-icon">
-                <i class="fas fa-chart-bar"></i>
+                <i class="fas fa-balance-scale"></i>
             </div>
 
             <h1 class="cover-title">
                 Proposta Comercial<br>
-                <span>Relatório Analítico do PCMSO</span>
+                <span>Gestão e Assessoria Técnica Pericial</span>
             </h1>
             <p class="cover-subtitle">
-                Elaboração do Relatório Analítico do Programa de Controle Médico de Saúde Ocupacional conforme a NR-7 e as obrigações do eSocial
+                Prestação de serviços de Engenharia de Segurança do Trabalho com atuação como Assistente Técnico em processo judicial trabalhista
             </p>
 
             <div class="cover-client">
                 <p class="cover-client-label">Proposta elaborada para</p>
-                <p class="cover-client-name">Lumen Energia e Automação LTDA</p>
-                <p class="cover-client-sub">CNPJ: 25.268.057/0001-05</p>
+                <p class="cover-client-name">Hotel Ibis</p>
+                <p class="cover-client-sub">Vitrine Empreendimentos Ltda — Filial | CNPJ: 06.033.835/0003-96</p>
             </div>
 
             <p class="cover-date">
-                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;11 de Agosto de 2026
+                <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;12 de Agosto de 2026
             </p>
 
             <div class="cover-footer">
@@ -276,57 +286,62 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 2: DADOS DA EMPRESA + SOBRE A PROPOSTA ====== -->
+        <!-- ====== PÁGINA 2: IDENTIFICAÇÃO + OBJETO DA PROPOSTA ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0125 — Relatório Analítico do PCMSO | Lumen Energia e Automação</span>
+                <span class="page-header-title">Proposta TM0126 — Assistente Técnico Pericial | Hotel Ibis</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">1</span>
-                <span class="section-title-text">Sobre a Empresa Contratante</span>
+                <span class="section-title-text">Identificação da Empresa Contratante</span>
             </h2>
 
             <div class="company-info-grid" style="margin-top:6px;">
                 <div class="company-info-item">
                     <label>Razão Social</label>
-                    <span>Lumen Energia e Automação LTDA</span>
+                    <span>Vitrine Empreendimentos Ltda — Filial</span>
                 </div>
                 <div class="company-info-item">
                     <label>CNPJ</label>
-                    <span>25.268.057/0001-05</span>
+                    <span>06.033.835/0003-96</span>
                 </div>
                 <div class="company-info-item" style="grid-column:1/-1;">
                     <label>Endereço</label>
-                    <span>Rua Irma Reis Duarte, 05 B, Nova Parnamirim, CEP 59150-070, Parnamirim / RN</span>
+                    <span>Av. Lima e Silva, 1921 — Lagoa Nova, Natal - RN — CEP: 59075-710</span>
                 </div>
-            </div>
-
-            <div class="green-box" style="margin-top:12px;">
-                <h4><i class="fas fa-history"></i> Cliente EngMarq Solution</h4>
-                <p>A Lumen Energia e Automação LTDA é cliente da EngMarq Solution, com histórico de atendimento em SST. Este relatório complementa os serviços já prestados, garantindo a completude documental exigida pela NR-7.</p>
+                <div class="company-info-item">
+                    <label>Nome Fantasia</label>
+                    <span>Hotel Ibis</span>
+                </div>
+                <div class="company-info-item">
+                    <label>Responsável pelo Contato</label>
+                    <span>A definir</span>
+                </div>
             </div>
 
             <h2 class="section-title" style="margin-top:16px;">
                 <span class="section-number">2</span>
-                <span class="section-title-text">Sobre a Proposta</span>
+                <span class="section-title-text">Objeto da Proposta</span>
             </h2>
 
-            <p>Esta proposta tem por objeto a elaboração do <strong>Relatório Analítico do Programa de Controle Médico de Saúde Ocupacional (PCMSO)</strong> para a empresa <strong>Lumen Energia e Automação LTDA</strong>, conforme as exigências da <strong>NR-7 (Portaria MTb nº 3.214/78)</strong> e as obrigações de monitoramento da saúde do trabalhador junto ao <strong>eSocial</strong>.</p>
+            <p>Esta proposta tem por objeto a prestação de serviços técnicos profissionais de <strong>Engenharia de Segurança do Trabalho</strong> para <strong>Gestão e Assessoria Técnica Pericial</strong>, incluindo a atuação como <strong>Assistente Técnico do Hotel Ibis</strong> em processo judicial trabalhista.</p>
+
+            <p>A atuação da EngMarq Solution abrange desde a análise prévia da documentação de Segurança e Saúde no Trabalho (SST), o suporte técnico ao departamento jurídico, o acompanhamento da diligência pericial, até a elaboração de parecer técnico, análise do laudo judicial e manifestações técnicas pertinentes.</p>
 
             <div class="highlight-box">
-                <p><strong><i class="fas fa-file-medical-alt"></i> Serviço:</strong> Elaboração do Relatório Analítico do PCMSO — documento técnico obrigatório que consolida os resultados dos exames ocupacionais realizados no período, com análise epidemiológica, indicadores de saúde e recomendações para o próximo ciclo.</p>
+                <p><strong><i class="fas fa-gavel"></i> Serviço:</strong> Gestão, Assessoria Técnica Pericial e atuação como Assistente Técnico da empresa em processo judicial trabalhista, com suporte especializado em Engenharia de Segurança do Trabalho em todas as fases do processo pericial.</p>
             </div>
 
             <div class="info-box" style="margin-top:10px;">
-                <h4><i class="fas fa-gavel"></i> Base Legal — NR-7</h4>
-                <p>A NR-7 determina que o Médico Coordenador do PCMSO elabore <strong>relatório anual</strong> com os resultados consolidados dos exames realizados, incluindo indicadores de saúde, absenteísmo, doenças ocupacionais identificadas e recomendações preventivas. O documento deve ser apresentado na reunião anual da CIPA e mantido em arquivo à disposição da fiscalização.</p>
+                <h4><i class="fas fa-shield-alt"></i> Atuação Técnica Especializada</h4>
+                <p>O Assistente Técnico é o profissional habilitado indicado pela parte para acompanhar e contestar tecnicamente a perícia judicial. Sua atuação é fundamental para garantir que os aspectos técnicos de Segurança e Saúde no Trabalho sejam corretamente avaliados e que a defesa da empresa esteja bem fundamentada do ponto de vista técnico-científico.</p>
             </div>
 
             <div class="teal-box" style="margin-top:10px;">
-                <h4><i class="fas fa-laptop"></i> Integração com o eSocial — S-2220</h4>
-                <p>O Relatório Analítico subsidia o correto preenchimento e transmissão do evento <strong>S-2220 (Monitoramento da Saúde do Trabalhador)</strong>, garantindo conformidade com as obrigações digitais da empresa junto ao Governo Federal e evitando inconsistências e penalidades fiscais.</p>
+                <h4><i class="fas fa-hard-hat"></i> Especialidade Técnica</h4>
+                <p>A EngMarq Solution atua com profissionais especializados em Engenharia de Segurança do Trabalho, com experiência em questões periciais trabalhistas, análise de insalubridade, periculosidade, condições ambientais de trabalho e conformidade com as Normas Regulamentadoras do MTE.</p>
             </div>
 
             <div class="page-footer">
@@ -335,57 +350,38 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 3: O QUE É O RELATÓRIO ANALÍTICO ====== -->
+        <!-- ====== PÁGINA 3: ESCOPO DOS SERVIÇOS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0125 — Relatório Analítico do PCMSO | Lumen Energia e Automação</span>
+                <span class="page-header-title">Proposta TM0126 — Assistente Técnico Pericial | Hotel Ibis</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">3</span>
-                <span class="section-title-text">O que é o Relatório Analítico do PCMSO</span>
+                <span class="section-title-text">Escopo dos Serviços</span>
             </h2>
 
-            <p>O <strong>Relatório Analítico do PCMSO</strong> é um documento técnico obrigatório, previsto na <strong>NR-7</strong>, elaborado pelo Médico Coordenador do programa ao final de cada período de vigência. Ele tem como objetivo consolidar e analisar todos os dados de saúde dos trabalhadores obtidos por meio dos exames médicos ocupacionais realizados no decorrer do ano.</p>
+            <p>A prestação dos serviços compreende as seguintes atividades técnicas, realizadas de forma integrada ao longo de todas as fases do processo pericial:</p>
 
-            <div class="alert-box">
-                <h4><i class="fas fa-exclamation-triangle"></i> Obrigatoriedade Legal</h4>
-                <p>A ausência do Relatório Analítico do PCMSO configura irregularidade perante a NR-7, sujeitando a empresa a autuações pelo Ministério do Trabalho e Emprego, multas administrativas e passivos trabalhistas em ações relacionadas a doenças ocupacionais.</p>
-            </div>
+            <ul class="feature-list">
+                <li><strong>Análise da petição inicial</strong> — avaliação técnica das alegações e pedidos relacionados a condições de trabalho, agentes nocivos e normas de SST</li>
+                <li><strong>Análise da documentação de Segurança e Saúde no Trabalho</strong> — exame dos documentos técnicos e registros da empresa relacionados ao processo (PGR, PCMSO, PPP, ASOs, laudos técnicos, entre outros)</li>
+                <li><strong>Suporte técnico ao departamento jurídico</strong> — assessoria especializada para subsidiar a elaboração da defesa e a estratégia processual da empresa</li>
+                <li><strong>Definição da estratégia técnica para a perícia</strong> — planejamento da atuação técnica com base na análise documental e nas especificidades do processo</li>
+                <li><strong>Elaboração de quesitos técnicos</strong> — formulação de quesitos periciais fundamentados, voltados à elucidação dos aspectos técnicos controvertidos</li>
+                <li><strong>Contato e alinhamentos necessários antes da perícia</strong> — comunicação e alinhamento com o perito judicial e com a equipe jurídica da empresa nos momentos prévios à diligência</li>
+                <li><strong>Acompanhamento da diligência pericial</strong> — presença técnica durante a perícia judicial, com registro e avaliação em tempo real dos procedimentos adotados pelo perito</li>
+                <li><strong>Avaliação técnica dos procedimentos adotados durante a perícia</strong> — análise crítica das metodologias, instrumentos e critérios utilizados pelo perito judicial</li>
+                <li><strong>Elaboração de parecer técnico</strong> — documento técnico fundamentado apresentando a visão da empresa sobre os aspectos de SST discutidos no processo</li>
+                <li><strong>Análise do laudo pericial judicial</strong> — avaliação técnica detalhada do laudo elaborado pelo perito do juízo, com identificação de eventuais inconsistências ou pontos passíveis de contestação</li>
+                <li><strong>Elaboração de impugnação ou manifestação técnica</strong> — quando necessária, elaboração de documento técnico-jurídico contestando conclusões do laudo pericial</li>
+                <li><strong>Elaboração de quesitos complementares e esclarecimentos</strong> — quando aplicável, formulação de quesitos suplementares para dirimir dúvidas técnicas remanescentes</li>
+            </ul>
 
-            <h3 class="subsection-title"><i class="fas fa-list-alt"></i> Conteúdo do Relatório Analítico</h3>
-
-            <div class="factors-grid">
-                <div class="factor-card" style="border-left-color:var(--teal-color);">
-                    <h4><i class="fas fa-users" style="color:var(--teal-color);"></i> Dados do Quadro Funcional</h4>
-                    <p>Relação de trabalhadores, funções, setores e exposições a agentes nocivos identificadas no PGR.</p>
-                </div>
-                <div class="factor-card" style="border-left-color:var(--primary-color);">
-                    <h4><i class="fas fa-stethoscope" style="color:var(--primary-color);"></i> Exames Realizados</h4>
-                    <p>Consolidação de todos os exames admissionais, periódicos, de retorno, de mudança de risco e demissionais realizados no período.</p>
-                </div>
-                <div class="factor-card" style="border-left-color:var(--success-color);">
-                    <h4><i class="fas fa-chart-pie" style="color:var(--success-color);"></i> Indicadores de Saúde</h4>
-                    <p>Análise epidemiológica dos resultados, com identificação de tendências, prevalências e incidências de agravos à saúde.</p>
-                </div>
-                <div class="factor-card" style="border-left-color:var(--orange-color);">
-                    <h4><i class="fas fa-user-slash" style="color:var(--orange-color);"></i> Absenteísmo</h4>
-                    <p>Levantamento de afastamentos por doença ou acidente de trabalho, com análise das causas e impactos operacionais.</p>
-                </div>
-                <div class="factor-card" style="border-left-color:var(--alert-color);">
-                    <h4><i class="fas fa-notes-medical" style="color:var(--alert-color);"></i> Doenças Ocupacionais</h4>
-                    <p>Identificação e notificação de doenças relacionadas ao trabalho detectadas no período, com nexo causal estabelecido.</p>
-                </div>
-                <div class="factor-card" style="border-left-color:var(--purple-color);">
-                    <h4><i class="fas fa-lightbulb" style="color:var(--purple-color);"></i> Recomendações</h4>
-                    <p>Medidas preventivas e corretivas recomendadas pelo Médico Coordenador para o próximo período de vigência do PCMSO.</p>
-                </div>
-            </div>
-
-            <div class="teal-box" style="margin-top:10px;">
-                <h4><i class="fas fa-users-cog"></i> Apresentação na CIPA</h4>
-                <p>O Relatório Analítico deve ser apresentado e discutido na <strong>reunião anual da CIPA (Comissão Interna de Prevenção de Acidentes)</strong>, ou na reunião de representantes dos trabalhadores nas empresas dispensadas de constituir CIPA, conforme previsão da NR-7.</p>
+            <div class="green-box" style="margin-top:10px;">
+                <h4><i class="fas fa-plus-circle"></i> Serviços Adicionais Incluídos</h4>
+                <p>Também estão incluídos: <strong>reuniões preliminares e pré-periciais por videoconferência</strong>, quando necessárias; <strong>assessoria técnica sobre insalubridade e periculosidade</strong> relacionadas ao processo; e <strong>comunicação de eventuais desvios técnicos</strong> identificados durante a atuação.</p>
             </div>
 
             <div class="page-footer">
@@ -394,54 +390,64 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 4: ENTREGÁVEIS E BENEFÍCIOS ====== -->
+        <!-- ====== PÁGINA 4: OBJETIVO + BENEFÍCIOS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0125 — Relatório Analítico do PCMSO | Lumen Energia e Automação</span>
+                <span class="page-header-title">Proposta TM0126 — Assistente Técnico Pericial | Hotel Ibis</span>
             </div>
 
             <h2 class="section-title">
                 <span class="section-number">4</span>
-                <span class="section-title-text">Entregáveis do Serviço</span>
+                <span class="section-title-text">Objetivo</span>
             </h2>
 
-            <div class="info-box" style="margin-bottom:10px;">
-                <h4><i class="fas fa-box-open"></i> O que será entregue ao final do serviço</h4>
-                <p>A Lumen Energia e Automação LTDA receberá o Relatório Analítico do PCMSO completo, estruturado conforme a NR-7, pronto para apresentação em reunião de CIPA, fiscalizações do MTE e como base para os registros no eSocial.</p>
-            </div>
+            <p>O objetivo desta proposta é apresentar a atuação da <strong>EngMarq Solution</strong> como suporte técnico especializado ao <strong>Hotel Ibis</strong> durante o processo pericial, proporcionando maior segurança técnica ao longo de todas as suas fases.</p>
 
-            <ul class="feature-list">
-                <li><strong>Relatório Analítico do PCMSO</strong> — documento técnico completo, assinado pelo Médico Coordenador, com validade legal plena perante a NR-7 e a CLT</li>
-                <li><strong>Consolidação dos exames ocupacionais realizados</strong> — listagem detalhada de todos os exames do período com resultados, pendências e recomendações individuais</li>
-                <li><strong>Análise epidemiológica</strong> — estatísticas de saúde do quadro funcional, com indicadores de morbidade, afastamentos e tendências</li>
-                <li><strong>Identificação de doenças ocupacionais</strong> — diagnóstico de agravos relacionados ao trabalho com nexo causal fundamentado</li>
-                <li><strong>Recomendações técnicas</strong> — plano de ação preventivo para o próximo ciclo, com medidas de controle e ações médicas prioritárias</li>
-                <li><strong>Subsídio para o eSocial</strong> — dados estruturados para emissão e transmissão do evento S-2220 (Monitoramento da Saúde do Trabalhador)</li>
-                <li><strong>Arquivo digital em PDF</strong> — assinado pelo Médico Coordenador, pronto para arquivamento e apresentação institucional</li>
-            </ul>
+            <p>A presença de um Assistente Técnico especializado em Engenharia de Segurança do Trabalho permite que a defesa da empresa disponha de fundamentação técnica sólida, baseada nas Normas Regulamentadoras e na legislação trabalhista vigente, contribuindo para uma análise mais precisa das condições de trabalho envolvidas no processo e para a identificação antecipada de riscos e vulnerabilidades técnicas.</p>
+
+            <div class="alert-box" style="margin-bottom: 10px;">
+                <h4><i class="fas fa-exclamation-triangle"></i> Nota Importante</h4>
+                <p>A atuação da EngMarq Solution como Assistente Técnico tem como finalidade oferecer suporte técnico especializado e fundamentação adequada ao processo. Não implica, em nenhuma hipótese, garantia ou promessa de resultado favorável no processo judicial.</p>
+            </div>
 
             <h2 class="section-title" style="margin-top:14px;">
                 <span class="section-number">5</span>
-                <span class="section-title-text">Benefícios para a Lumen Energia e Automação</span>
+                <span class="section-title-text">Benefícios para o Hotel Ibis</span>
             </h2>
 
             <div class="factors-grid">
                 <div class="factor-card">
-                    <h4><i class="fas fa-gavel"></i> Conformidade Legal</h4>
-                    <p>Atendimento integral à NR-7, evitando autuações, multas do MTE e irregularidades trabalhistas.</p>
+                    <h4><i class="fas fa-hard-hat"></i> Suporte Técnico Especializado</h4>
+                    <p>Equipe com formação específica em Engenharia de Segurança do Trabalho, atuando em conformidade com as NRs e a legislação trabalhista vigente.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-shield-alt"></i> Proteção ao Trabalhador</h4>
-                    <p>Identificação precoce de agravos à saúde, reduzindo afastamentos, custos previdenciários e litígios trabalhistas.</p>
+                    <h4><i class="fas fa-route"></i> Maior Previsibilidade</h4>
+                    <p>Avaliação técnica prévia das alegações e da documentação, permitindo antecipar pontos críticos e orientar melhor a estratégia processual.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-balance-scale"></i> Segurança Jurídica</h4>
-                    <p>Documentação técnica sólida para defesa em processos trabalhistas relacionados a doenças ocupacionais.</p>
+                    <h4><i class="fas fa-handshake"></i> Apoio Técnico ao Jurídico</h4>
+                    <p>Interface direta com o departamento jurídico para subsidiar a defesa com dados técnicos precisos e devidamente fundamentados.</p>
                 </div>
                 <div class="factor-card">
-                    <h4><i class="fas fa-laptop"></i> eSocial em Dia</h4>
-                    <p>Envio correto do S-2220 ao eSocial, evitando pendências fiscais e irregularidades junto à Receita Federal.</p>
+                    <h4><i class="fas fa-file-alt"></i> Análise Especializada da Documentação</h4>
+                    <p>Exame detalhado dos documentos de SST da empresa, identificando conformidades e eventuais fragilidades que possam impactar o processo.</p>
+                </div>
+                <div class="factor-card" style="border-left-color:var(--teal-color);">
+                    <h4><i class="fas fa-user-check" style="color:var(--teal-color);"></i> Acompanhamento Profissional da Perícia</h4>
+                    <p>Presença técnica durante toda a diligência pericial, assegurando o acompanhamento adequado dos procedimentos realizados pelo perito judicial.</p>
+                </div>
+                <div class="factor-card" style="border-left-color:var(--teal-color);">
+                    <h4><i class="fas fa-pen-alt" style="color:var(--teal-color);"></i> Manifestações Técnicas Fundamentadas</h4>
+                    <p>Elaboração de pareceres, impugnações e manifestações com embasamento técnico-científico robusto, contribuindo para a qualidade da defesa.</p>
+                </div>
+                <div class="factor-card" style="border-left-color:var(--purple-color);">
+                    <h4><i class="fas fa-search" style="color:var(--purple-color);"></i> Identificação de Pontos Críticos</h4>
+                    <p>Mapeamento de aspectos técnicos que possam impactar o desfecho do processo, orientando a empresa sobre vulnerabilidades e conformidades.</p>
+                </div>
+                <div class="factor-card" style="border-left-color:var(--purple-color);">
+                    <h4><i class="fas fa-chess" style="color:var(--purple-color);"></i> Segurança na Tomada de Decisões</h4>
+                    <p>Informações técnicas precisas para embasar decisões estratégicas relacionadas ao processo, reduzindo a exposição a passivos trabalhistas.</p>
                 </div>
             </div>
 
@@ -451,11 +457,11 @@
             </div>
         </div>
 
-        <!-- ====== PÁGINA 5: INVESTIMENTO ====== -->
+        <!-- ====== PÁGINA 5: INVESTIMENTO + CONDIÇÕES GERAIS ====== -->
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0125 — Relatório Analítico do PCMSO | Lumen Energia e Automação</span>
+                <span class="page-header-title">Proposta TM0126 — Assistente Técnico Pericial | Hotel Ibis</span>
             </div>
 
             <h2 class="section-title">
@@ -464,7 +470,7 @@
             </h2>
 
             <div class="highlight-box" style="margin-bottom:12px;">
-                <p style="margin:0;"><strong><i class="fas fa-file-medical-alt"></i> Serviço:</strong> Elaboração do Relatório Analítico do PCMSO — Lumen Energia e Automação LTDA — CNPJ: 25.268.057/0001-05</p>
+                <p style="margin:0;"><strong><i class="fas fa-gavel"></i> Serviço:</strong> Gestão e Assessoria Técnica Pericial — Assistente Técnico em processo judicial trabalhista — Hotel Ibis</p>
             </div>
 
             <table class="inv-table">
@@ -477,66 +483,105 @@
                 <tbody>
                     <tr>
                         <td>
-                            <strong>Relatório Analítico do PCMSO</strong><br>
-                            <span class="sub">Elaboração do relatório anual · consolidação de exames · análise epidemiológica · indicadores de saúde · recomendações técnicas · entrega em PDF assinado</span>
+                            <strong>Gestão e Assessoria Técnica Pericial — Assistente Técnico</strong><br>
+                            <span class="sub">Análise de petição inicial · análise de documentação SST · suporte ao jurídico · quesitos técnicos · acompanhamento de perícia · parecer técnico · análise de laudo · manifestações técnicas</span>
                         </td>
-                        <td class="right">R$ 800,00</td>
+                        <td class="right">R$ 2.000,00</td>
                     </tr>
                     <tr class="incluso-row">
-                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Consolidação de todos os exames ocupacionais do período</td>
+                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Reuniões preliminares e pré-periciais por videoconferência</td>
                         <td class="right">Incluso</td>
                     </tr>
                     <tr class="incluso-row">
-                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Análise epidemiológica e indicadores de saúde</td>
+                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Assessoria técnica sobre insalubridade e periculosidade</td>
                         <td class="right">Incluso</td>
                     </tr>
                     <tr class="incluso-row">
-                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Subsídio para o eSocial — evento S-2220</td>
-                        <td class="right">Incluso</td>
-                    </tr>
-                    <tr class="incluso-row">
-                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Arquivo digital em PDF assinado pelo Médico Coordenador</td>
+                        <td><i class="fas fa-check" style="margin-right:6px;"></i> Comunicação de eventuais desvios técnicos identificados</td>
                         <td class="right">Incluso</td>
                     </tr>
                     <tr class="total-row">
-                        <td><strong>VALOR TOTAL DO SERVIÇO</strong></td>
-                        <td class="right">R$ 800,00</td>
+                        <td><strong>VALOR TOTAL — POR PROCESSO</strong></td>
+                        <td class="right">R$ 2.000,00</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h2 class="section-title" style="margin-top:18px;">
+            <h3 class="subsection-title" style="margin-top:14px;"><i class="fas fa-money-check-alt"></i> Sugestão de Forma de Pagamento</h3>
+
+            <table class="pay-table">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">Parcela</th>
+                        <th style="width:50%;">Condição / Marco</th>
+                        <th class="right" style="width:40%;">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="center"><strong>1ª</strong></td>
+                        <td>Após a entrega dos quesitos técnicos, antes da realização da perícia</td>
+                        <td class="right">R$ 1.000,00 (50%)</td>
+                    </tr>
+                    <tr>
+                        <td class="center"><strong>2ª</strong></td>
+                        <td>Após a entrega do parecer técnico, após a realização da perícia</td>
+                        <td class="right">R$ 1.000,00 (50%)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="teal-box" style="margin-top:10px;">
+                <h4><i class="fas fa-info-circle"></i> Meios de Pagamento</h4>
+                <p>Pagamento via Pix ou transferência bancária. Os dados para pagamento serão informados no momento da formalização da contratação.</p>
+            </div>
+
+            <h2 class="section-title" style="margin-top:14px;">
                 <span class="section-number">7</span>
-                <span class="section-title-text">Condições de Contratação</span>
+                <span class="section-title-text">Condições Gerais</span>
             </h2>
 
             <div class="conditions-list">
                 <div class="condition-item">
-                    <div class="condition-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="condition-icon"><i class="fas fa-folder-open"></i></div>
                     <div class="condition-text">
-                        <strong>Forma de Pagamento</strong>
-                        <span>Pagamento único na confirmação da proposta, mediante Pix ou boleto bancário.</span>
+                        <strong>Fornecimento de Documentação</strong>
+                        <span>O Hotel Ibis deverá disponibilizar os documentos e as informações necessários para a análise do caso, incluindo registros de SST e demais documentos pertinentes ao processo.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-calendar-alt"></i></div>
                     <div class="condition-text">
-                        <strong>Início dos Serviços</strong>
-                        <span>Os serviços têm início após a confirmação da proposta e o recebimento do pagamento, mediante envio das informações necessárias pela empresa contratante.</span>
+                        <strong>Comunicação da Data da Perícia</strong>
+                        <span>A data da diligência pericial deverá ser informada à EngMarq Solution preferencialmente com pelo menos 5 (cinco) dias de antecedência para o adequado planejamento da atuação técnica.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-redo"></i></div>
+                    <div class="condition-text">
+                        <strong>Segunda Visita ou Segunda Perícia</strong>
+                        <span>Eventual segunda visita ao local ou realização de segunda perícia poderá gerar honorários adicionais, a serem negociados previamente entre as partes.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-plane"></i></div>
+                    <div class="condition-text">
+                        <strong>Despesas Extraordinárias</strong>
+                        <span>Despesas de viagem, hospedagem, alimentação ou deslocamento, quando necessárias, serão tratadas separadamente e acordadas previamente entre as partes.</span>
+                    </div>
+                </div>
+                <div class="condition-item">
+                    <div class="condition-icon"><i class="fas fa-file-contract"></i></div>
+                    <div class="condition-text">
+                        <strong>Escopo por Processo Individual</strong>
+                        <span>O valor desta proposta é válido para processo judicial individual. Processos coletivos ou com características especiais deverão ser analisados e negociados separadamente.</span>
                     </div>
                 </div>
                 <div class="condition-item">
                     <div class="condition-icon"><i class="fas fa-clock"></i></div>
                     <div class="condition-text">
-                        <strong>Prazo de Entrega</strong>
-                        <span>O Relatório Analítico do PCMSO será entregue em até 7 (sete) dias úteis contados da confirmação do pagamento e do recebimento de todas as informações.</span>
-                    </div>
-                </div>
-                <div class="condition-item">
-                    <div class="condition-icon"><i class="fas fa-info-circle"></i></div>
-                    <div class="condition-text">
                         <strong>Validade da Proposta</strong>
-                        <span>Esta proposta é válida por 15 (quinze) dias a partir da data de emissão.</span>
+                        <span>Esta proposta comercial é válida por 30 (trinta) dias a partir da data de emissão.</span>
                     </div>
                 </div>
             </div>
@@ -551,7 +596,7 @@
         <div class="page">
             <div class="page-header">
                 <img src="../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo">
-                <span class="page-header-title">Proposta TM0125 — Relatório Analítico do PCMSO | Lumen Energia e Automação</span>
+                <span class="page-header-title">Proposta TM0126 — Assistente Técnico Pericial | Hotel Ibis</span>
             </div>
 
             <h2 class="section-title">
@@ -578,7 +623,7 @@
 
             <div class="info-box" style="margin-bottom:14px;">
                 <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
-                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação da elaboração do Relatório Analítico do PCMSO.</p>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e condições gerais descritos nesta proposta comercial, formalizando a contratação dos serviços de Gestão e Assessoria Técnica Pericial.</p>
             </div>
 
             <!-- Proponente -->
@@ -611,11 +656,11 @@
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
                     <div>
                         <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Razão Social</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">Lumen Energia e Automação LTDA</p>
+                        <p style="margin:0;font-size:11px;font-weight:600;">Vitrine Empreendimentos Ltda — Filial</p>
                     </div>
                     <div>
                         <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">25.268.057/0001-05</p>
+                        <p style="margin:0;font-size:11px;font-weight:600;">06.033.835/0003-96</p>
                     </div>
                     <div>
                         <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Nome do Responsável</p>
