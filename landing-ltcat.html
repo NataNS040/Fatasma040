@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17875424072"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17875424072');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LTCAT | Laudo Técnico das Condições Ambientais do Trabalho | EngMarq Solution</title>
+    <meta name="description" content="Sua empresa tem o LTCAT atualizado? O Laudo Técnico das Condições Ambientais do Trabalho é exigido pelo INSS e protege sua empresa de passivos previdenciários. Orçamento gratuito.">
+    <meta name="keywords" content="LTCAT, laudo técnico condições ambientais do trabalho, aposentadoria especial, agentes nocivos, INSS, PPP, segurança do trabalho, insalubridade">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logoengmarq.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --secondary-color: #f5a623;
+            --indigo: #553c9a;
+            --indigo-dark: #44337a;
+            --indigo-light: #e9d8fd;
+            --success-color: #38a169;
+            --danger-color: #e53e3e;
+            --warning-color: #dd6b20;
+            --light-color: #f7fafc;
+            --gray-color: #718096;
+            --dark-color: #2d3748;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #1a365d 0%, #0f2744 100%);
+            --gradient-indigo: linear-gradient(135deg, #553c9a 0%, #44337a 100%);
+            --gradient-gold: linear-gradient(135deg, #f5a623 0%, #d69e2e 100%);
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+            --shadow-lg: 0 20px 40px rgba(26, 54, 93, 0.15);
+            --shadow-xl: 0 25px 50px rgba(26, 54, 93, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ========== ALERT BAR ========== */
+        .alert-bar {
+            background: var(--gradient-indigo);
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1001;
+        }
+
+        .alert-bar i { margin-right: 8px; }
+
+        .alert-bar span {
+            background: var(--secondary-color);
+            color: var(--primary-dark);
+            padding: 3px 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: var(--white);
+            padding: 15px 0;
+            position: fixed;
+            top: 44px; left: 0; right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { height: 80px; }
+        .header-cta { display: flex; gap: 15px; align-items: center; }
+
+        .header-phone {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .header-phone i { color: var(--success-color); margin-right: 5px; }
+
+        /* ========== BUTTONS ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); }
+
+        .btn-indigo {
+            background: var(--gradient-indigo);
+            color: white;
+            box-shadow: 0 4px 15px rgba(85, 60, 154, 0.4);
+            animation: pulse-indigo 2s infinite;
+        }
+
+        .btn-indigo:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(85, 60, 154, 0.6); }
+
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+            animation: pulse-gold 2s infinite;
+        }
+
+        @keyframes pulse-indigo {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(85, 60, 154, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 25px rgba(85, 60, 154, 0.6); }
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 25px rgba(245, 166, 35, 0.6); }
+        }
+
+        @keyframes bounce-icon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .btn-lg { padding: 18px 40px; font-size: 18px; border-radius: 12px; }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-primary);
+            padding-top: 180px;
+            padding-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.07)"/></svg>') repeat;
+            background-size: 50px 50px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text { color: white; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-badge i { animation: bounce-icon 1s infinite; }
+
+        .hero-title {
+            font-family: var(--font-primary);
+            font-size: 50px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .highlight { color: var(--secondary-color); }
+
+        .hero-subtitle {
+            font-size: 19px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .hero-checklist {
+            list-style: none;
+            margin-bottom: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .hero-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+        }
+
+        .hero-checklist li i {
+            width: 26px;
+            height: 26px;
+            background: rgba(85, 60, 154, 0.35);
+            color: #d6bcfa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+
+        /* ========== HERO CARD ========== */
+        .hero-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: var(--gradient-indigo);
+        }
+
+        .hero-card-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-indigo);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(85, 60, 154, 0.3);
+        }
+
+        .hero-card-icon i { font-size: 36px; color: white; }
+
+        .hero-card h3 {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .hero-card .card-subtitle {
+            text-align: center;
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .hero-card-features { list-style: none; margin-bottom: 25px; }
+
+        .hero-card-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            font-size: 15px;
+        }
+
+        .hero-card-features li:last-child { border-bottom: none; }
+
+        .hero-card-features li i {
+            width: 28px;
+            height: 28px;
+            background: rgba(85, 60, 154, 0.1);
+            color: var(--indigo);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        /* ========== STATS BAR ========== */
+        .stats-bar { background: white; padding: 30px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item { padding: 10px; }
+
+        .stat-number {
+            font-family: var(--font-primary);
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .stat-label { font-size: 14px; color: var(--gray-color); }
+
+        /* ========== SECTION COMMONS ========== */
+        .section-header { text-align: center; margin-bottom: 50px; }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(26, 54, 93, 0.1);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ========== WHAT IS SECTION ========== */
+        .whatis-section { padding: 80px 0; background: var(--light-color); }
+
+        .whatis-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .whatis-visual {
+            background: var(--gradient-primary);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatis-visual::before {
+            content: '';
+            position: absolute;
+            top: -50px; right: -50px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .whatis-visual i { font-size: 100px; color: var(--secondary-color); margin-bottom: 20px; display: block; }
+        .whatis-visual h3 { font-family: var(--font-primary); font-size: 24px; margin-bottom: 10px; }
+        .whatis-visual p { opacity: 0.85; font-size: 15px; line-height: 1.7; }
+
+        .inss-tag {
+            display: inline-block;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .whatis-list { list-style: none; }
+
+        .whatis-list li {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 22px;
+            padding: 20px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--indigo);
+            transition: transform 0.2s;
+        }
+
+        .whatis-list li:hover { transform: translateX(4px); }
+
+        .whatis-list li .icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(85, 60, 154, 0.1);
+            color: var(--indigo);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .whatis-list li h4 { font-family: var(--font-primary); font-size: 16px; color: var(--dark-color); margin-bottom: 4px; }
+        .whatis-list li p { font-size: 14px; color: var(--gray-color); line-height: 1.6; }
+
+        /* ========== PROBLEM SECTION ========== */
+        .problem-section { padding: 80px 0; background: white; }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .problem-card {
+            background: var(--light-color);
+            border-radius: 16px;
+            padding: 35px;
+            border-top: 4px solid var(--danger-color);
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+        .problem-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--danger-color) 0%, #9b2c2c 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .problem-icon i { font-size: 28px; color: white; }
+
+        .problem-card h3 { font-family: var(--font-primary); font-size: 20px; color: var(--dark-color); margin-bottom: 12px; }
+        .problem-card p { color: var(--gray-color); font-size: 15px; line-height: 1.7; }
+
+        .problem-value {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--danger-color);
+            margin-top: 15px;
+        }
+
+        /* ========== AGENTS SECTION ========== */
+        .agents-section { padding: 80px 0; background: var(--light-color); }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .agent-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            border-bottom: 4px solid var(--indigo);
+            transition: all 0.3s ease;
+        }
+
+        .agent-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+
+        .agent-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(85, 60, 154, 0.1);
+            color: var(--indigo);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 18px;
+        }
+
+        .agent-card h3 { font-family: var(--font-primary); font-size: 18px; color: var(--indigo); margin-bottom: 8px; }
+        .agent-card p { font-size: 14px; color: var(--gray-color); line-height: 1.6; }
+
+        .agent-tag {
+            display: inline-block;
+            background: rgba(85, 60, 154, 0.1);
+            color: var(--indigo);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* ========== SOLUTION SECTION ========== */
+        .solution-section { padding: 80px 0; background: white; }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .solution-card {
+            background: var(--light-color);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+        .solution-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-indigo);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .solution-icon i { font-size: 28px; color: white; }
+        .solution-card h3 { font-family: var(--font-primary); font-size: 17px; color: var(--primary-color); margin-bottom: 10px; }
+        .solution-card p { font-size: 14px; color: var(--gray-color); line-height: 1.6; }
+
+        /* ========== PPP CONNECTION SECTION ========== */
+        .ppp-section { padding: 80px 0; background: var(--light-color); }
+
+        .ppp-banner {
+            background: var(--gradient-indigo);
+            border-radius: 24px;
+            padding: 50px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ppp-banner::before {
+            content: '';
+            position: absolute;
+            bottom: -60px; right: -60px;
+            width: 250px; height: 250px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .ppp-banner h2 {
+            font-family: var(--font-primary);
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .ppp-banner h2 span { color: var(--secondary-color); }
+        .ppp-banner p { opacity: 0.9; font-size: 16px; line-height: 1.7; margin-bottom: 25px; }
+
+        .ppp-items { list-style: none; display: flex; flex-direction: column; gap: 15px; }
+
+        .ppp-items li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: rgba(255,255,255,0.12);
+            padding: 18px 20px;
+            border-radius: 12px;
+        }
+
+        .ppp-items li i { font-size: 20px; color: var(--secondary-color); margin-top: 2px; flex-shrink: 0; }
+        .ppp-items li div h4 { font-family: var(--font-primary); font-size: 15px; margin-bottom: 4px; }
+        .ppp-items li div p { font-size: 13px; opacity: 0.8; margin: 0; }
+
+        /* ========== PROCESS SECTION ========== */
+        .process-section { padding: 80px 0; background: var(--gradient-primary); }
+
+        .process-section .section-badge { background: rgba(255,255,255,0.2); color: white; }
+        .process-section .section-title { color: white; }
+        .process-section .section-subtitle { color: rgba(255,255,255,0.75); }
+
+        .process-timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .process-step { text-align: center; color: white; position: relative; }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 40px; right: -15px;
+            width: 30px; height: 2px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .process-step:last-child::after { display: none; }
+
+        .process-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(245, 166, 35, 0.3);
+        }
+
+        .process-step h3 { font-family: var(--font-primary); font-size: 18px; margin-bottom: 10px; }
+        .process-step p { opacity: 0.8; font-size: 14px; }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials-section { padding: 80px 0; background: white; }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card { background: var(--light-color); border-radius: 16px; padding: 35px; }
+        .testimonial-stars { color: #f5a623; margin-bottom: 15px; font-size: 18px; }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--gray-color);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-indigo);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .testimonial-info h4 { font-family: var(--font-primary); font-size: 15px; color: var(--dark-color); }
+        .testimonial-info p { font-size: 13px; color: var(--gray-color); }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section { padding: 80px 0; background: var(--gradient-indigo); text-align: center; }
+
+        .cta-section h2 {
+            font-family: var(--font-primary);
+            font-size: 40px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            max-width: 700px;
+            margin: 0 auto 35px;
+            line-height: 1.7;
+        }
+
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .cta-guarantee { margin-top: 20px; color: rgba(255,255,255,0.75); font-size: 14px; }
+        .cta-guarantee i { margin-right: 6px; }
+
+        /* ========== FAQ ========== */
+        .faq-section { padding: 80px 0; background: var(--light-color); }
+
+        .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+
+        .faq-item { border: 2px solid #e2e8f0; border-radius: 12px; overflow: hidden; transition: border-color 0.3s; }
+        .faq-item.active { border-color: var(--indigo); }
+
+        .faq-question {
+            padding: 20px 25px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            color: var(--primary-color);
+            transition: background 0.2s;
+        }
+
+        .faq-item.active .faq-question { background: rgba(85, 60, 154, 0.07); }
+        .faq-question i { transition: transform 0.3s; color: var(--indigo); flex-shrink: 0; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .faq-item.active .faq-answer { max-height: 220px; }
+        .faq-answer p { padding: 0 25px 20px; font-size: 14px; color: var(--gray-color); line-height: 1.7; }
+
+        /* ========== FORM SECTION ========== */
+        .form-section { padding: 80px 0; background: var(--gradient-primary); }
+
+        .form-section .section-badge { background: rgba(255,255,255,0.2); color: white; }
+        .form-section .section-title { color: white; }
+        .form-section .section-subtitle { color: rgba(255,255,255,0.8); }
+
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto 0;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-container h3 { font-family: var(--font-primary); font-size: 22px; color: var(--primary-color); margin-bottom: 6px; text-align: center; }
+        .form-subtitle { text-align: center; color: var(--gray-color); margin-bottom: 25px; font-size: 14px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: 600; color: var(--dark-color); margin-bottom: 5px; font-size: 14px; }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: var(--font-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--indigo);
+            box-shadow: 0 0 0 3px rgba(85, 60, 154, 0.1);
+        }
+
+        .form-btn { width: 100%; margin-top: 10px; }
+
+        .form-security {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--gray-color);
+        }
+
+        .form-security i { color: var(--success-color); }
+
+        /* ========== FOOTER ========== */
+        .footer { background: var(--primary-dark); color: rgba(255,255,255,0.8); padding: 60px 0 30px; }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand img { height: 70px; margin-bottom: 15px; }
+        .footer-brand p { font-size: 14px; line-height: 1.7; opacity: 0.7; }
+        .footer-title { font-family: var(--font-primary); font-weight: 700; color: white; margin-bottom: 20px; font-size: 16px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links li a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .footer-links li a:hover { color: var(--secondary-color); }
+
+        .footer-contact-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 14px; }
+        .footer-contact-item i { color: var(--secondary-color); width: 16px; }
+
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: center; font-size: 13px; opacity: 0.5; }
+
+        /* ========== FLOATING WHATSAPP ========== */
+        .floating-whatsapp { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
+
+        .floating-whatsapp a {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            animation: pulse-wa 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes pulse-wa {
+            0%, 100% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5); }
+            50% { box-shadow: 0 8px 35px rgba(37, 211, 102, 0.8); }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .solution-grid { grid-template-columns: repeat(2, 1fr); }
+            .agents-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content { grid-template-columns: 1fr; gap: 40px; }
+            .hero-title { font-size: 34px; }
+            .hero-card { display: none; }
+            .whatis-content { grid-template-columns: 1fr; }
+            .problem-grid { grid-template-columns: 1fr; }
+            .agents-grid { grid-template-columns: 1fr; }
+            .solution-grid { grid-template-columns: 1fr; }
+            .ppp-banner { grid-template-columns: 1fr; padding: 35px 25px; }
+            .process-timeline { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .header-phone { display: none; }
+            .section-title { font-size: 28px; }
+            .cta-section h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Alert Bar -->
+    <div class="alert-bar">
+        <i class="fas fa-file-signature"></i>
+        LTCAT desatualizado = passivo previdenciário e multas do INSS
+        <span>Regularize Agora</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution">
+            </a>
+            <div class="header-cta">
+                <span class="header-phone">
+                    <i class="fas fa-phone"></i> (84) 99928-5888
+                </span>
+                <a href="#orcamento" class="btn btn-indigo">
+                    <i class="fas fa-file-signature"></i> Orçamento Grátis
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-right">
+                    <span class="hero-badge">
+                        <i class="fas fa-university"></i> Exigência do INSS — Lei 8.213/91
+                    </span>
+                    <h1 class="hero-title">
+                        Sua Empresa Tem<br>
+                        <span class="highlight">LTCAT</span><br>
+                        Atualizado?
+                    </h1>
+                    <p class="hero-subtitle">
+                        O <strong>Laudo Técnico das Condições Ambientais do Trabalho</strong> é exigido pelo INSS para toda empresa com trabalhadores expostos a <strong>agentes nocivos</strong>. Sem ele, sua empresa acumula passivo previdenciário e está sujeita a autuação.
+                    </p>
+
+                    <ul class="hero-checklist">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Elaboração do LTCAT por engenheiro ou médico do trabalho</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Medições e avaliações quantitativas dos agentes nocivos</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Identificação dos cargos e funções em condições especiais</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Base legal para emissão do PPP dos seus colaboradores</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Integração completa com o eSocial (S-2240)</span>
+                        </li>
+                    </ul>
+
+                    <div class="hero-buttons">
+                        <a href="#orcamento" class="btn btn-gold btn-lg">
+                            <i class="fas fa-arrow-down"></i> Quero Meu LTCAT Agora
+                        </a>
+                        <a href="https://wa.me/5584999285888?text=Olá! Vim pela página do LTCAT e quero mais informações." class="btn btn-whatsapp btn-lg" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-card" data-aos="fade-left">
+                    <div class="hero-card-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h3>LTCAT Completo e com Validade Legal</h3>
+                    <p class="card-subtitle">Documento técnico assinado por responsável habilitado</p>
+
+                    <ul class="hero-card-features">
+                        <li><i class="fas fa-check"></i><span>Levantamento dos agentes nocivos por função</span></li>
+                        <li><i class="fas fa-check"></i><span>Medições de ruído, calor e agentes físicos</span></li>
+                        <li><i class="fas fa-check"></i><span>Avaliação de agentes químicos e biológicos</span></li>
+                        <li><i class="fas fa-check"></i><span>Eficácia dos EPIs e EPCs documentada</span></li>
+                        <li><i class="fas fa-check"></i><span>Identificação das atividades especiais (Decreto 3.048)</span></li>
+                        <li><i class="fas fa-check"></i><span>Assinatura de Engenheiro de Segurança do Trabalho</span></li>
+                        <li><i class="fas fa-check"></i><span>Base para emissão do PPP individual</span></li>
+                        <li><i class="fas fa-check"></i><span>Envio integrado ao eSocial (S-2240)</span></li>
+                    </ul>
+
+                    <a href="#orcamento" class="btn btn-indigo btn-lg" style="width: 100%; justify-content: center;">
+                        <i class="fas fa-file-signature"></i> Solicitar Orçamento Grátis
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="fade-up">
+                    <div class="stat-number">+500</div>
+                    <div class="stat-label">Empresas Atendidas</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Laudos com Validade Legal</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">Anos de Experiência</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Passivos por LTCAT nos Nossos Clientes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- What Is Section -->
+    <section class="whatis-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-info-circle"></i> O que é o LTCAT
+                </span>
+                <h2 class="section-title">O Laudo que Documenta a Exposição dos Seus Trabalhadores a Agentes Nocivos</h2>
+                <p class="section-subtitle">Exigido pelo INSS, o LTCAT é a prova documental das condições ambientais do trabalho — essencial para aposentadoria especial e PPP</p>
+            </div>
+
+            <div class="whatis-content">
+                <div class="whatis-visual" data-aos="fade-right">
+                    <i class="fas fa-microscope"></i>
+                    <h3>Laudo Técnico das Condições Ambientais do Trabalho</h3>
+                    <p>Previsto na <strong>Lei 8.213/91</strong> e no <strong>Decreto 3.048/99</strong>, o LTCAT documenta tecnicamente se os trabalhadores estiveram expostos a agentes nocivos à saúde ou à integridade física em intensidade superior aos limites legais.</p>
+                    <span class="inss-tag"><i class="fas fa-university"></i> INSS — Lei 8.213/91 — Decreto 3.048/99</span>
+                </div>
+
+                <ul class="whatis-list" data-aos="fade-left">
+                    <li>
+                        <div class="icon"><i class="fas fa-file-medical-alt"></i></div>
+                        <div>
+                            <h4>Documento Previdenciário Obrigatório</h4>
+                            <p>Toda empresa que possui trabalhadores expostos a agentes nocivos deve ter o LTCAT elaborado e disponível para fiscalização do INSS.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon"><i class="fas fa-id-card-alt"></i></div>
+                        <div>
+                            <h4>Base para o PPP</h4>
+                            <p>O PPP (Perfil Profissiográfico Previdenciário) de cada trabalhador é elaborado com base nas informações do LTCAT — sem o laudo, o PPP não tem validade.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon"><i class="fas fa-link"></i></div>
+                        <div>
+                            <h4>Integração com o eSocial</h4>
+                            <p>O LTCAT alimenta o evento S-2240 (Condições Ambientais do Trabalho), tornando os dados dos trabalhadores consistentes no sistema do governo.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <h4>Proteção Contra Passivo Previdenciário</h4>
+                            <p>Sem o LTCAT correto, a empresa pode ser obrigada a pagar contribuições retroativas ao INSS por aposentadorias especiais não reconhecidas.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-exclamation-triangle"></i> Riscos de Não Ter o LTCAT
+                </span>
+                <h2 class="section-title">O Que Acontece Quando Sua Empresa Não Tem LTCAT?</h2>
+                <p class="section-subtitle">As consequências vão desde multas previdenciárias até ações trabalhistas custosas</p>
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-card" data-aos="fade-up">
+                    <div class="problem-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3>Autuação do INSS</h3>
+                    <p>O INSS pode autuar a empresa durante fiscalizações por ausência ou incorreção do LTCAT. O passivo previdenciário é calculado retroativamente sobre os períodos irregulares.</p>
+                    <div class="problem-value">Cobrança Retroativa</div>
+                </div>
+
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="problem-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Ações na Justiça do Trabalho</h3>
+                    <p>Trabalhadores podem acionar a empresa judicialmente exigindo o reconhecimento de período especial e a regularização do PPP, além de indenizações por prejuízo previdenciário.</p>
+                    <div class="problem-value">Condenação Trabalhista</div>
+                </div>
+
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="problem-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Irregularidade no eSocial</h3>
+                    <p>Sem o LTCAT, o envio do evento S-2240 fica incorreto ou incompleto — gerando inconsistências que podem bloquear o FGTS e impedir a emissão da CND previdenciária.</p>
+                    <div class="problem-value">Bloqueio de CND</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agents Section -->
+    <section class="agents-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-radiation"></i> Agentes Nocivos
+                </span>
+                <h2 class="section-title">Quais Agentes o LTCAT Avalia?</h2>
+                <p class="section-subtitle">O Decreto 3.048/99 lista os agentes que caracterizam exposição a condições especiais de trabalho</p>
+            </div>
+
+            <div class="agents-grid">
+                <div class="agent-card" data-aos="fade-up">
+                    <div class="agent-icon">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3>Agentes Físicos</h3>
+                    <p>Ruído acima de 85 dB(A), calor intenso, vibração, radiações ionizantes e não ionizantes, pressões anormais, frio e umidade excessivos. Avaliados por medições técnicas em campo.</p>
+                    <span class="agent-tag">Medição obrigatória</span>
+                </div>
+
+                <div class="agent-card" data-aos="fade-up" data-aos-delay="80">
+                    <div class="agent-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Agentes Químicos</h3>
+                    <p>Poeiras minerais, fumos metálicos, névoas ácidas, gases tóxicos, solventes orgânicos, amianto, benzeno e demais substâncias químicas com concentração acima dos limites de tolerância.</p>
+                    <span class="agent-tag">Análise laboratorial</span>
+                </div>
+
+                <div class="agent-card" data-aos="fade-up" data-aos-delay="160">
+                    <div class="agent-icon">
+                        <i class="fas fa-biohazard"></i>
+                    </div>
+                    <h3>Agentes Biológicos</h3>
+                    <p>Exposição a vírus, bactérias, fungos, parasitas e outros microrganismos que possam causar doenças infecciosas e parasitárias — comum em saúde, esgoto e frigoríficos.</p>
+                    <span class="agent-tag">Avaliação qualitativa</span>
+                </div>
+
+                <div class="agent-card" data-aos="fade-up" data-aos-delay="240">
+                    <div class="agent-icon">
+                        <i class="fas fa-hardhat"></i>
+                    </div>
+                    <h3>Atividades de Risco</h3>
+                    <p>Trabalho em altura, em espaço confinado, com eletricidade de alta tensão, exposição a explosivos e outras atividades enquadradas como de risco grave e iminente.</p>
+                    <span class="agent-tag">Enquadramento legal</span>
+                </div>
+
+                <div class="agent-card" data-aos="fade-up" data-aos-delay="320">
+                    <div class="agent-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <h3>Calor e Temperaturas Extremas</h3>
+                    <p>Ambientes com exposição ao calor acima do IBUTG determinado pela NR-15, como fornos, caldeiras, fundições e trabalhos a céu aberto em regiões quentes.</p>
+                    <span class="agent-tag">Medição IBUTG</span>
+                </div>
+
+                <div class="agent-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="agent-icon">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <h3>Radiações</h3>
+                    <p>Radiações ionizantes (raios-X, gama) e não ionizantes (ultravioleta, laser, microondas) em atividades como saúde, soldagem, transmissão e ensaios não destrutivos.</p>
+                    <span class="agent-tag">Dosimetria especializada</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-check-circle"></i> Nossa Entrega
+                </span>
+                <h2 class="section-title">O Que a EngMarq Entrega no Seu LTCAT</h2>
+                <p class="section-subtitle">Um laudo técnico completo, com assinatura habilitada e validade legal garantida</p>
+            </div>
+
+            <div class="solution-grid">
+                <div class="solution-card" data-aos="fade-up">
+                    <div class="solution-icon">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <h3>Visita Técnica e Medições</h3>
+                    <p>Realizamos visita às instalações com equipamentos calibrados para medir os agentes físicos e químicos de cada função e setor.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="solution-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h3>Elaboração do LTCAT</h3>
+                    <p>Documento técnico completo, com identificação de todos os agentes, eficácia dos EPIs e conclusão por enquadramento legal, assinado por responsável habilitado.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="solution-icon">
+                        <i class="fas fa-id-badge"></i>
+                    </div>
+                    <h3>Apoio na Emissão do PPP</h3>
+                    <p>Orientamos a empresa na emissão do Perfil Profissiográfico Previdenciário de cada trabalhador com base nas informações do LTCAT.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="solution-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Atualização e eSocial</h3>
+                    <p>Atualizamos o LTCAT sempre que há mudanças nas condições de trabalho e garantimos a correta transmissão do evento S-2240 no eSocial.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PPP Connection Section -->
+    <section class="ppp-section">
+        <div class="container">
+            <div class="ppp-banner" data-aos="fade-up">
+                <div>
+                    <h2>LTCAT e <span>PPP</span>: dois documentos inseparáveis</h2>
+                    <p>O LTCAT é a fundação. O PPP é a certidão individual de cada trabalhador. Sem um LTCAT correto e atualizado, o PPP não tem base técnica válida — e o trabalhador pode perder o direito à aposentadoria especial.</p>
+                    <a href="#orcamento" class="btn btn-gold btn-lg" style="animation: none;">
+                        <i class="fas fa-arrow-right"></i> Regularizar LTCAT e PPP Agora
+                    </a>
+                </div>
+                <ul class="ppp-items">
+                    <li>
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <h4>PPP — Perfil Profissiográfico Previdenciário</h4>
+                            <p>Documento individual que comprova a exposição do trabalhador a agentes nocivos ao longo da carreira. Obrigatório na demissão.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <h4>Guarda por 20 Anos</h4>
+                            <p>O LTCAT deve ser conservado pela empresa por no mínimo 20 anos após a cessação da exposição do último trabalhador coberto pelo laudo.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-laptop-code"></i>
+                        <div>
+                            <h4>eSocial S-2240</h4>
+                            <p>Os dados do LTCAT alimentam o evento S-2240 do eSocial, tornando a exposição dos trabalhadores registrada de forma permanente e rastreável.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-route"></i> Como Funciona
+                </span>
+                <h2 class="section-title">Como Elaboramos o Seu LTCAT</h2>
+                <p class="section-subtitle">Processo técnico, ágil e com laudo válido ao final</p>
+            </div>
+
+            <div class="process-timeline">
+                <div class="process-step" data-aos="fade-up">
+                    <div class="process-number">1</div>
+                    <h3>Contato</h3>
+                    <p>Fale conosco, descreva as atividades da empresa e os agentes suspeitos de exposição</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="process-number">2</div>
+                    <h3>Visita Técnica</h3>
+                    <p>Nosso engenheiro vai até a empresa com equipamentos de medição e realiza o levantamento completo</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="process-number">3</div>
+                    <h3>Elaboração do Laudo</h3>
+                    <p>Emitimos o LTCAT com todas as avaliações, enquadramentos e conclusões técnicas assinadas</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="process-number">4</div>
+                    <h3>Entrega e eSocial</h3>
+                    <p>Entregamos o laudo assinado e orientamos o envio correto ao eSocial via S-2240</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-star"></i> Depoimentos
+                </span>
+                <h2 class="section-title">Empresas que Regularizaram o LTCAT</h2>
+                <p class="section-subtitle">Veja a experiência de quem contou com a EngMarq para elaborar o laudo</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Recebemos uma intimação do INSS por falta de LTCAT. A EngMarq resolveu em menos de duas semanas — laudo elaborado, eSocial atualizado e a situação regularizada antes do prazo. Serviço impecável."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">RA</div>
+                        <div class="testimonial-info">
+                            <h4>Roberto Araújo</h4>
+                            <p>Gerente Geral — Metalúrgica</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Trabalhamos com frigorífico e tínhamos dúvidas sobre quais funções tinham exposição ao frio reconhecida. A EngMarq fez as medições, identificou tudo e emitiu o LTCAT com clareza total. Ótimo custo-benefício."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">CS</div>
+                        <div class="testimonial-info">
+                            <h4>Cláudia Santos</h4>
+                            <p>Diretora Administrativa — Frigorífico</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Um ex-funcionário abriu processo alegando tempo especial sem amparo. O LTCAT correto da EngMarq mostrou que a exposição estava dentro dos limites — a ação foi julgada improcedente. O laudo nos poupou muito dinheiro."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">BL</div>
+                        <div class="testimonial-info">
+                            <h4>Bruno Lima</h4>
+                            <p>Sócio — Empresa de Construção</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container" data-aos="fade-up">
+            <h2><i class="fas fa-file-signature"></i> Regularize Seu LTCAT Hoje</h2>
+            <p>Não espere uma fiscalização do INSS ou uma ação na Justiça do Trabalho. Com o LTCAT em dia, sua empresa tem segurança previdenciária e protege o histórico de cada trabalhador.</p>
+
+            <div class="cta-buttons">
+                <a href="#orcamento" class="btn btn-gold btn-lg">
+                    <i class="fas fa-file-signature"></i> Solicitar Orçamento Gratuito
+                </a>
+                <a href="https://wa.me/5584999285888?text=Olá! Vim pela página do LTCAT e quero regularizar minha empresa." class="btn btn-whatsapp btn-lg" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Falar Agora no WhatsApp
+                </a>
+            </div>
+
+            <div class="cta-guarantee">
+                <i class="fas fa-shield-alt"></i>
+                Orçamento gratuito e sem compromisso &bull; Atendimento em até 24h &bull; Atendemos todo o Brasil
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-question-circle"></i> Dúvidas Frequentes
+                </span>
+                <h2 class="section-title">Perguntas Sobre o LTCAT</h2>
+                <p class="section-subtitle">Respostas para as principais dúvidas sobre o laudo</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        Todo empresa é obrigada a ter LTCAT?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Toda empresa que possua trabalhadores expostos a agentes nocivos — físicos, químicos ou biológicos — é obrigada a ter o LTCAT elaborado e disponível. Se a empresa não possui nenhuma exposição a agentes nocivos, o LTCAT pode concluir pela ausência de condições especiais, mas deve existir como documento.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="50">
+                    <div class="faq-question">
+                        Qual a diferença entre LTCAT e PPRA/PGR?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O PGR (antigo PPRA) é exigido pelo Ministério do Trabalho e foca em <strong>prevenir</strong> riscos ocupacionais. O LTCAT é exigido pelo <strong>INSS</strong> e tem finalidade previdenciária: documenta se houve exposição a agentes nocivos para fins de aposentadoria especial. São documentos complementares, mas com finalidades distintas.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="faq-question">
+                        Quem pode assinar o LTCAT?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Conforme a Lei 8.213/91, o LTCAT deve ser elaborado e assinado por <strong>Médico do Trabalho</strong> ou <strong>Engenheiro de Segurança do Trabalho</strong> habilitados. Documentos assinados por profissionais sem essa habilitação não têm validade legal perante o INSS.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
+                    <div class="faq-question">
+                        Com que frequência o LTCAT precisa ser atualizado?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O LTCAT deve ser atualizado sempre que houver alteração nas condições de trabalho — novos equipamentos, mudança de layout, substituição de substâncias, novos EPIs ou EPCs, mudanças nas funções expostas. Sem atualização, o laudo perde a validade para o período posterior à mudança.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="faq-question">
+                        O LTCAT substitui o Laudo de Insalubridade?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Não. São documentos distintos com finalidades diferentes. O <strong>Laudo de Insalubridade</strong> (NR-15) é exigido pelo Ministério do Trabalho para fins de adicional salarial. O <strong>LTCAT</strong> é exigido pelo INSS para fins previdenciários. Muitas empresas precisam de ambos, e as avaliações técnicas podem ser complementares.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
+                    <div class="faq-question">
+                        O que acontece se o trabalhador se aposentar sem o LTCAT correto?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O trabalhador pode não conseguir reconhecer o período especial junto ao INSS, perdendo tempo de contribuição com desconto diferenciado. Em seguida, ele pode acionar a empresa judicialmente exigindo reparação pelo prejuízo previdenciário — o que gera passivos trabalhistas elevados para o empregador.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section" id="orcamento">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-file-signature"></i> Orçamento Gratuito
+                </span>
+                <h2 class="section-title">Solicite o Seu Orçamento Agora</h2>
+                <p class="section-subtitle">Preencha o formulário e receba uma proposta personalizada para o LTCAT da sua empresa</p>
+            </div>
+
+            <div class="form-container" data-aos="fade-up">
+                <h3><i class="fas fa-paper-plane"></i> Fale Conosco</h3>
+                <p class="form-subtitle">Respondemos em até 24 horas</p>
+
+                <form id="leadForm">
+                    <div class="form-group">
+                        <label>Nome completo *</label>
+                        <input type="text" name="nome" placeholder="Digite seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp *</label>
+                        <input type="tel" name="whatsapp" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" name="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Nome da empresa *</label>
+                        <input type="text" name="empresa" placeholder="Nome da sua empresa" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade de funcionários *</label>
+                        <select name="funcionarios" required>
+                            <option value="">Selecione...</option>
+                            <option value="1-10">1 a 10 funcionários</option>
+                            <option value="11-50">11 a 50 funcionários</option>
+                            <option value="51-100">51 a 100 funcionários</option>
+                            <option value="101-500">101 a 500 funcionários</option>
+                            <option value="500+">Mais de 500 funcionários</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Principal agente suspeito de exposição</label>
+                        <select name="agente">
+                            <option value="">Selecione...</option>
+                            <option value="Ruído">Ruído</option>
+                            <option value="Calor">Calor</option>
+                            <option value="Agentes Químicos">Agentes Químicos</option>
+                            <option value="Agentes Biológicos">Agentes Biológicos</option>
+                            <option value="Radiações">Radiações</option>
+                            <option value="Vários agentes">Vários agentes</option>
+                            <option value="Não sei identificar">Não sei identificar</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-indigo btn-lg form-btn">
+                        <i class="fab fa-whatsapp"></i> Enviar e Falar no WhatsApp
+                    </button>
+                    <div class="form-security">
+                        <i class="fas fa-lock"></i>
+                        Seus dados estão seguros. Não enviamos spam.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logoengmarq.png" alt="EngMarq Solution">
+                    <p>Especialistas em Engenharia de Segurança e Saúde do Trabalho, com foco em conformidade legal e proteção jurídica para empresas de todos os portes.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Serviços</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">LTCAT</a></li>
+                        <li><a href="landing-pgr.html">PGR — Gerenciamento de Riscos</a></li>
+                        <li><a href="landing-pcmso.html">PCMSO</a></li>
+                        <li><a href="landing-nr01.html">Adequação NR-01</a></li>
+                        <li><a href="#">Treinamentos SST</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Links Úteis</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Site Principal</a></li>
+                        <li><a href="landing-pgr.html">Landing PGR</a></li>
+                        <li><a href="landing-pcmso.html">Landing PCMSO</a></li>
+                        <li><a href="politicas/politica-privacidade.html">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Contato</h4>
+                    <div class="footer-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>(84) 99928-5888</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal — RN</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fab fa-instagram"></i>
+                        <span>@engmarq_solution</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 EngMarq Solution. Todos os direitos reservados. | CNPJ: 60.545.359/0001-76</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <div class="floating-whatsapp">
+        <a href="https://wa.me/5584999285888?text=Olá! Vim pela página do LTCAT e gostaria de mais informações." target="_blank" aria-label="Falar no WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const wasActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!wasActive) item.classList.add('active');
+            });
+        });
+
+        // Form Submit to WhatsApp
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nome = this.querySelector('[name="nome"]').value;
+            const whatsapp = this.querySelector('[name="whatsapp"]').value;
+            const email = this.querySelector('[name="email"]').value;
+            const empresa = this.querySelector('[name="empresa"]').value;
+            const funcionarios = this.querySelector('[name="funcionarios"]').value;
+            const agente = this.querySelector('[name="agente"]').value;
+
+            const message = `Olá! Vim pela landing page do LTCAT e gostaria de um orçamento.
+
+*Minhas informações:*
+📋 Nome: ${nome}
+📱 WhatsApp: ${whatsapp}
+📧 E-mail: ${email || 'Não informado'}
+🏢 Empresa: ${empresa}
+👥 Funcionários: ${funcionarios}
+⚠️ Agente suspeito: ${agente || 'Não informado'}
+
+Aguardo o retorno!`;
+
+            const encodedMessage = encodeURIComponent(message);
+
+            gtag('event', 'conversion', {'send_to': 'AW-17875424072/9xyTCKyKjfcbEMim1ctC'});
+
+            window.open(`https://wa.me/5584999285888?text=${encodedMessage}`, '_blank');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17875424072"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17875424072');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PGR 2026 | Programa de Gerenciamento de Riscos Obrigatório | EngMarq Solution</title>
+    <meta name="description" content="Sua empresa tem PGR atualizado? O Programa de Gerenciamento de Riscos é obrigatório pela NR-1 para todas as empresas com funcionários CLT. Inclui riscos psicossociais. Orçamento gratuito.">
+    <meta name="keywords" content="PGR, NR-1, programa de gerenciamento de riscos, GRO, inventário de riscos, plano de ação, segurança do trabalho, riscos psicossociais">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logoengmarq.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --primary-dark: #0f2744;
+            --secondary-color: #f5a623;
+            --green: #276749;
+            --green-dark: #1a4731;
+            --green-light: #c6f6d5;
+            --success-color: #38a169;
+            --danger-color: #e53e3e;
+            --warning-color: #dd6b20;
+            --light-color: #f7fafc;
+            --gray-color: #718096;
+            --dark-color: #2d3748;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(135deg, #1a365d 0%, #0f2744 100%);
+            --gradient-green: linear-gradient(135deg, #276749 0%, #1a4731 100%);
+            --gradient-gold: linear-gradient(135deg, #f5a623 0%, #d69e2e 100%);
+            --font-primary: 'Montserrat', sans-serif;
+            --font-secondary: 'Open Sans', sans-serif;
+            --shadow-lg: 0 20px 40px rgba(26, 54, 93, 0.15);
+            --shadow-xl: 0 25px 50px rgba(26, 54, 93, 0.25);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ========== ALERT BAR ========== */
+        .alert-bar {
+            background: var(--gradient-green);
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 14px;
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1001;
+        }
+
+        .alert-bar i { margin-right: 8px; }
+
+        .alert-bar span {
+            background: var(--secondary-color);
+            color: var(--primary-dark);
+            padding: 3px 12px;
+            border-radius: 4px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+
+        /* ========== HEADER ========== */
+        .header {
+            background: var(--white);
+            padding: 15px 0;
+            position: fixed;
+            top: 44px; left: 0; right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .header .container { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo img { height: 80px; }
+
+        .header-cta { display: flex; gap: 15px; align-items: center; }
+
+        .header-phone {
+            font-family: var(--font-primary);
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+
+        .header-phone i { color: var(--success-color); margin-right: 5px; }
+
+        /* ========== BUTTONS ========== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5); }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(26, 54, 93, 0.4);
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); }
+
+        .btn-green {
+            background: var(--gradient-green);
+            color: white;
+            box-shadow: 0 4px 15px rgba(39, 103, 73, 0.4);
+            animation: pulse-green 2s infinite;
+        }
+
+        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(39, 103, 73, 0.6); }
+
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4);
+            animation: pulse-gold 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(39, 103, 73, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 25px rgba(39, 103, 73, 0.6); }
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(245, 166, 35, 0.4); }
+            50% { transform: scale(1.02); box-shadow: 0 6px 25px rgba(245, 166, 35, 0.6); }
+        }
+
+        @keyframes bounce-icon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .btn-lg { padding: 18px 40px; font-size: 18px; border-radius: 12px; }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-primary);
+            padding-top: 180px;
+            padding-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.07)"/></svg>') repeat;
+            background-size: 50px 50px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text { color: white; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-badge i { animation: bounce-icon 1s infinite; }
+
+        .hero-title {
+            font-family: var(--font-primary);
+            font-size: 50px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .highlight { color: var(--secondary-color); }
+
+        .hero-subtitle {
+            font-size: 19px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .hero-checklist {
+            list-style: none;
+            margin-bottom: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .hero-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+        }
+
+        .hero-checklist li i {
+            width: 26px;
+            height: 26px;
+            background: rgba(39, 103, 73, 0.3);
+            color: #68d391;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+
+        /* ========== HERO CARD ========== */
+        .hero-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 6px;
+            background: var(--gradient-green);
+        }
+
+        .hero-card-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(39, 103, 73, 0.3);
+        }
+
+        .hero-card-icon i { font-size: 36px; color: white; }
+
+        .hero-card h3 {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .hero-card .card-subtitle {
+            text-align: center;
+            color: var(--gray-color);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .hero-card-features { list-style: none; margin-bottom: 25px; }
+
+        .hero-card-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            font-size: 15px;
+        }
+
+        .hero-card-features li:last-child { border-bottom: none; }
+
+        .hero-card-features li i {
+            width: 28px;
+            height: 28px;
+            background: rgba(39, 103, 73, 0.1);
+            color: var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        /* ========== STATS BAR ========== */
+        .stats-bar { background: white; padding: 30px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item { padding: 10px; }
+
+        .stat-number {
+            font-family: var(--font-primary);
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .stat-label { font-size: 14px; color: var(--gray-color); }
+
+        /* ========== SECTION COMMONS ========== */
+        .section-header { text-align: center; margin-bottom: 50px; }
+
+        .section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(26, 54, 93, 0.1);
+            color: var(--primary-color);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-family: var(--font-primary);
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--gray-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ========== WHAT IS SECTION ========== */
+        .whatis-section { padding: 80px 0; background: var(--light-color); }
+
+        .whatis-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .whatis-visual {
+            background: var(--gradient-primary);
+            border-radius: 24px;
+            padding: 50px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatis-visual::before {
+            content: '';
+            position: absolute;
+            top: -50px; right: -50px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .whatis-visual i {
+            font-size: 100px;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .whatis-visual h3 { font-family: var(--font-primary); font-size: 24px; margin-bottom: 10px; }
+        .whatis-visual p { opacity: 0.85; font-size: 15px; line-height: 1.7; }
+
+        .nr1-tag {
+            display: inline-block;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .whatis-list { list-style: none; }
+
+        .whatis-list li {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 22px;
+            padding: 20px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--green);
+            transition: transform 0.2s;
+        }
+
+        .whatis-list li:hover { transform: translateX(4px); }
+
+        .whatis-list li .icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(39, 103, 73, 0.1);
+            color: var(--green);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .whatis-list li h4 {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            color: var(--dark-color);
+            margin-bottom: 4px;
+        }
+
+        .whatis-list li p { font-size: 14px; color: var(--gray-color); line-height: 1.6; }
+
+        /* ========== NOVIDADE NR-01 SECTION ========== */
+        .update-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .update-banner {
+            background: linear-gradient(135deg, #1a365d 0%, #276749 100%);
+            border-radius: 24px;
+            padding: 50px 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .update-banner::before {
+            content: '';
+            position: absolute;
+            bottom: -60px; right: -60px;
+            width: 250px; height: 250px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .update-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(229, 62, 62, 0.9);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .update-banner h2 {
+            font-family: var(--font-primary);
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .update-banner h2 span { color: var(--secondary-color); }
+
+        .update-banner p { opacity: 0.9; font-size: 16px; line-height: 1.7; margin-bottom: 25px; }
+
+        .update-items { list-style: none; display: flex; flex-direction: column; gap: 15px; }
+
+        .update-items li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: rgba(255,255,255,0.1);
+            padding: 18px 20px;
+            border-radius: 12px;
+        }
+
+        .update-items li i {
+            font-size: 20px;
+            color: var(--secondary-color);
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .update-items li div h4 {
+            font-family: var(--font-primary);
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .update-items li div p { font-size: 13px; opacity: 0.8; margin: 0; }
+
+        /* ========== PROBLEM SECTION ========== */
+        .problem-section { padding: 80px 0; background: var(--light-color); }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .problem-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            border-top: 4px solid var(--danger-color);
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+        .problem-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--danger-color) 0%, #9b2c2c 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .problem-icon i { font-size: 28px; color: white; }
+
+        .problem-card h3 {
+            font-family: var(--font-primary);
+            font-size: 20px;
+            color: var(--dark-color);
+            margin-bottom: 12px;
+        }
+
+        .problem-card p { color: var(--gray-color); font-size: 15px; line-height: 1.7; }
+
+        .problem-value {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--danger-color);
+            margin-top: 15px;
+        }
+
+        /* ========== SOLUTION SECTION ========== */
+        .solution-section { padding: 80px 0; background: white; }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .solution-card {
+            background: var(--light-color);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+
+        .solution-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .solution-icon i { font-size: 28px; color: white; }
+
+        .solution-card h3 {
+            font-family: var(--font-primary);
+            font-size: 17px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .solution-card p { font-size: 14px; color: var(--gray-color); line-height: 1.6; }
+
+        /* ========== COMPONENTS DO PGR ========== */
+        .components-section { padding: 80px 0; background: var(--light-color); }
+
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .component-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            border-bottom: 4px solid var(--green);
+            transition: all 0.3s ease;
+        }
+
+        .component-card:hover { transform: translateY(-4px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+
+        .component-card .comp-num {
+            font-family: var(--font-primary);
+            font-size: 44px;
+            font-weight: 800;
+            color: rgba(39, 103, 73, 0.15);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .component-card h3 {
+            font-family: var(--font-primary);
+            font-size: 18px;
+            color: var(--green);
+            margin-bottom: 10px;
+        }
+
+        .component-card p { font-size: 14px; color: var(--gray-color); line-height: 1.6; }
+
+        /* ========== PROCESS SECTION ========== */
+        .process-section {
+            padding: 80px 0;
+            background: var(--gradient-primary);
+        }
+
+        .process-section .section-badge { background: rgba(255,255,255,0.2); color: white; }
+        .process-section .section-title { color: white; }
+        .process-section .section-subtitle { color: rgba(255,255,255,0.75); }
+
+        .process-timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .process-step { text-align: center; color: white; position: relative; }
+
+        .process-step::after {
+            content: '';
+            position: absolute;
+            top: 40px; right: -15px;
+            width: 30px; height: 2px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .process-step:last-child::after { display: none; }
+
+        .process-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-gold);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-primary);
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(245, 166, 35, 0.3);
+        }
+
+        .process-step h3 { font-family: var(--font-primary); font-size: 18px; margin-bottom: 10px; }
+        .process-step p { opacity: 0.8; font-size: 14px; }
+
+        /* ========== TESTIMONIALS ========== */
+        .testimonials-section { padding: 80px 0; background: white; }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--light-color);
+            border-radius: 16px;
+            padding: 35px;
+        }
+
+        .testimonial-stars { color: #f5a623; margin-bottom: 15px; font-size: 18px; }
+
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--gray-color);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: var(--font-primary);
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .testimonial-info h4 { font-family: var(--font-primary); font-size: 15px; color: var(--dark-color); }
+        .testimonial-info p { font-size: 13px; color: var(--gray-color); }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            padding: 80px 0;
+            background: var(--gradient-green);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-family: var(--font-primary);
+            font-size: 40px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            max-width: 700px;
+            margin: 0 auto 35px;
+            line-height: 1.7;
+        }
+
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+        .cta-guarantee { margin-top: 20px; color: rgba(255,255,255,0.75); font-size: 14px; }
+        .cta-guarantee i { margin-right: 6px; }
+
+        /* ========== FAQ SECTION ========== */
+        .faq-section { padding: 80px 0; background: var(--light-color); }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .faq-item { border: 2px solid #e2e8f0; border-radius: 12px; overflow: hidden; transition: border-color 0.3s; }
+        .faq-item.active { border-color: var(--green); }
+
+        .faq-question {
+            padding: 20px 25px;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            color: var(--primary-color);
+            transition: background 0.2s;
+        }
+
+        .faq-item.active .faq-question { background: rgba(39, 103, 73, 0.07); }
+        .faq-question i { transition: transform 0.3s; color: var(--green); flex-shrink: 0; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .faq-item.active .faq-answer { max-height: 200px; }
+
+        .faq-answer p { padding: 0 25px 20px; font-size: 14px; color: var(--gray-color); line-height: 1.7; }
+
+        /* ========== FORM SECTION ========== */
+        .form-section { padding: 80px 0; background: var(--gradient-primary); }
+
+        .form-section .section-badge { background: rgba(255,255,255,0.2); color: white; }
+        .form-section .section-title { color: white; }
+        .form-section .section-subtitle { color: rgba(255,255,255,0.8); }
+
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto 0;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .form-container h3 {
+            font-family: var(--font-primary);
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .form-subtitle { text-align: center; color: var(--gray-color); margin-bottom: 25px; font-size: 14px; }
+
+        .form-group { margin-bottom: 15px; }
+
+        .form-group label { display: block; font-weight: 600; color: var(--dark-color); margin-bottom: 5px; font-size: 14px; }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: var(--font-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(39, 103, 73, 0.1);
+        }
+
+        .form-btn { width: 100%; margin-top: 10px; }
+
+        .form-security {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--gray-color);
+        }
+
+        .form-security i { color: var(--success-color); }
+
+        /* ========== FOOTER ========== */
+        .footer { background: var(--primary-dark); color: rgba(255,255,255,0.8); padding: 60px 0 30px; }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand img { height: 70px; margin-bottom: 15px; }
+        .footer-brand p { font-size: 14px; line-height: 1.7; opacity: 0.7; }
+        .footer-title { font-family: var(--font-primary); font-weight: 700; color: white; margin-bottom: 20px; font-size: 16px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links li a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .footer-links li a:hover { color: var(--secondary-color); }
+
+        .footer-contact-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 14px; }
+        .footer-contact-item i { color: var(--secondary-color); width: 16px; }
+
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: center; font-size: 13px; opacity: 0.5; }
+
+        /* ========== FLOATING WHATSAPP ========== */
+        .floating-whatsapp { position: fixed; bottom: 30px; right: 30px; z-index: 9999; }
+
+        .floating-whatsapp a {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            animation: pulse-wa 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes pulse-wa {
+            0%, 100% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5); }
+            50% { box-shadow: 0 8px 35px rgba(37, 211, 102, 0.8); }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .solution-grid { grid-template-columns: repeat(2, 1fr); }
+            .components-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content { grid-template-columns: 1fr; gap: 40px; }
+            .hero-title { font-size: 34px; }
+            .hero-card { display: none; }
+            .whatis-content { grid-template-columns: 1fr; }
+            .update-banner { grid-template-columns: 1fr; padding: 35px 25px; }
+            .problem-grid { grid-template-columns: 1fr; }
+            .solution-grid { grid-template-columns: 1fr; }
+            .components-grid { grid-template-columns: 1fr; }
+            .process-timeline { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .faq-grid { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .header-phone { display: none; }
+            .section-title { font-size: 28px; }
+            .cta-section h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Alert Bar -->
+    <div class="alert-bar">
+        <i class="fas fa-shield-alt"></i>
+        PGR sem riscos psicossociais = empresa irregular desde maio de 2026
+        <span>Atualize Agora</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/logoengmarq.png" alt="EngMarq Solution">
+            </a>
+            <div class="header-cta">
+                <span class="header-phone">
+                    <i class="fas fa-phone"></i> (84) 99928-5888
+                </span>
+                <a href="#orcamento" class="btn btn-green">
+                    <i class="fas fa-file-alt"></i> Orçamento Grátis
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-right">
+                    <span class="hero-badge">
+                        <i class="fas fa-exclamation-circle"></i> Obrigação Legal — NR-1
+                    </span>
+                    <h1 class="hero-title">
+                        O <span class="highlight">PGR</span> da Sua<br>
+                        Empresa Está<br>
+                        em Dia?
+                    </h1>
+                    <p class="hero-subtitle">
+                        O <strong>Programa de Gerenciamento de Riscos</strong> é exigido pela NR-1 para toda empresa com funcionários CLT. Com a atualização de 2026, ele passa a incluir obrigatoriamente os <strong>fatores de riscos psicossociais</strong>.
+                    </p>
+
+                    <ul class="hero-checklist">
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Elaboração e revisão completa do PGR</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Inventário de riscos de todas as funções</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Inclusão dos riscos psicossociais (NR-1 2026)</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Plano de ação com medidas de controle</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check"></i>
+                            <span>Integração com eSocial e demais programas SST</span>
+                        </li>
+                    </ul>
+
+                    <div class="hero-buttons">
+                        <a href="#orcamento" class="btn btn-gold btn-lg">
+                            <i class="fas fa-arrow-down"></i> Quero Meu PGR Agora
+                        </a>
+                        <a href="https://wa.me/5584999285888?text=Olá! Vim pela página do PGR e quero mais informações." class="btn btn-whatsapp btn-lg" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Falar no WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-card" data-aos="fade-left">
+                    <div class="hero-card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>PGR Completo e Atualizado</h3>
+                    <p class="card-subtitle">Tudo o que sua empresa precisa para a conformidade total com a NR-1</p>
+
+                    <ul class="hero-card-features">
+                        <li><i class="fas fa-check"></i><span>Inventário de Riscos por Função</span></li>
+                        <li><i class="fas fa-check"></i><span>Avaliação de Riscos Físicos</span></li>
+                        <li><i class="fas fa-check"></i><span>Avaliação de Riscos Químicos</span></li>
+                        <li><i class="fas fa-check"></i><span>Avaliação de Riscos Biológicos</span></li>
+                        <li><i class="fas fa-check"></i><span>Avaliação de Riscos Ergonômicos</span></li>
+                        <li><i class="fas fa-check"></i><span>Riscos Psicossociais — NR-1 2026</span></li>
+                        <li><i class="fas fa-check"></i><span>Plano de Ação com Prazos e Responsáveis</span></li>
+                        <li><i class="fas fa-check"></i><span>Monitoramento e Revisão Periódica</span></li>
+                    </ul>
+
+                    <a href="#orcamento" class="btn btn-green btn-lg" style="width: 100%; justify-content: center;">
+                        <i class="fas fa-file-alt"></i> Solicitar Orçamento Grátis
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="fade-up">
+                    <div class="stat-number">+500</div>
+                    <div class="stat-label">Empresas Atendidas</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Conformidade com a NR-1</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">Anos de Experiência</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Autuações nos Nossos Clientes</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- What Is PGR Section -->
+    <section class="whatis-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-info-circle"></i> O que é o PGR
+                </span>
+                <h2 class="section-title">O Programa que Mapeia e Controla Todos os Riscos da Sua Empresa</h2>
+                <p class="section-subtitle">O PGR é o documento central do Gerenciamento de Riscos Ocupacionais, exigido pela NR-1 e integrado ao eSocial</p>
+            </div>
+
+            <div class="whatis-content">
+                <div class="whatis-visual" data-aos="fade-right">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Programa de Gerenciamento de Riscos</h3>
+                    <p>Substituiu o antigo PPRA e ampliou o escopo: agora abrange <strong>todos os riscos ocupacionais</strong> — físicos, químicos, biológicos, ergonômicos, de acidentes e, desde 2026, os <strong>fatores de riscos psicossociais</strong>.</p>
+                    <span class="nr1-tag"><i class="fas fa-gavel"></i> Exigência da NR-1 — Portaria MTE</span>
+                </div>
+
+                <ul class="whatis-list" data-aos="fade-left">
+                    <li>
+                        <div class="icon"><i class="fas fa-search"></i></div>
+                        <div>
+                            <h4>Identificação de Todos os Riscos</h4>
+                            <p>Mapeia os perigos de cada função, setor e processo da empresa, gerando o inventário de riscos completo.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon"><i class="fas fa-chart-bar"></i></div>
+                        <div>
+                            <h4>Avaliação e Hierarquização</h4>
+                            <p>Avalia a probabilidade e a gravidade de cada risco para priorizar as ações de controle conforme sua criticidade.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon"><i class="fas fa-tasks"></i></div>
+                        <div>
+                            <h4>Plano de Ação</h4>
+                            <p>Define medidas preventivas e corretivas com prazos, responsáveis e indicadores de eficácia.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="icon"><i class="fas fa-link"></i></div>
+                        <div>
+                            <h4>Integração com eSocial</h4>
+                            <p>Os dados do PGR alimentam o evento S-2240 do eSocial, obrigatório para todas as empresas.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- NR-01 Update Section -->
+    <section class="update-section">
+        <div class="container">
+            <div class="update-banner" data-aos="fade-up">
+                <div>
+                    <span class="update-badge"><i class="fas fa-exclamation-triangle"></i> Novidade Obrigatória 2026</span>
+                    <h2>A NR-1 Mudou.<br>Seu PGR Precisa <span>Incluir Riscos Psicossociais</span>.</h2>
+                    <p>Com a atualização de 2026, a NR-1 tornou obrigatória a identificação, avaliação e controle dos fatores de riscos psicossociais no PGR. Empresas com documentos anteriores a essa atualização estão <strong>irregulares</strong>.</p>
+                    <a href="#orcamento" class="btn btn-gold btn-lg" style="animation: none;">
+                        <i class="fas fa-arrow-right"></i> Atualizar Meu PGR Agora
+                    </a>
+                </div>
+                <ul class="update-items">
+                    <li>
+                        <i class="fas fa-brain"></i>
+                        <div>
+                            <h4>Fatores de Riscos Psicossociais</h4>
+                            <p>Estresse, assédio, sobrecarga, pressão por metas — agora são riscos oficiais que devem constar no PGR.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-clipboard-list"></i>
+                        <div>
+                            <h4>Inventário de Riscos Atualizado</h4>
+                            <p>O inventário de riscos deve ser revisado para incluir os novos fatores psicossociais identificados em cada função.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-users-cog"></i>
+                        <div>
+                            <h4>Plano de Ação Específico</h4>
+                            <p>Deve haver um plano de ação documentado com medidas de prevenção e controle dos riscos psicossociais.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-exclamation-triangle"></i> Consequências
+                </span>
+                <h2 class="section-title">Empresa Sem PGR: Quais São os Riscos?</h2>
+                <p class="section-subtitle">Não ter o PGR ou mantê-lo desatualizado expõe sua empresa a consequências graves</p>
+            </div>
+
+            <div class="problem-grid">
+                <div class="problem-card" data-aos="fade-up">
+                    <div class="problem-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Autuação e Multas</h3>
+                    <p>A ausência ou desatualização do PGR é infração direta à NR-1, sujeita à autuação imediata em qualquer fiscalização do Ministério do Trabalho.</p>
+                    <div class="problem-value">Multa Imediata</div>
+                </div>
+
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="problem-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Ações Trabalhistas</h3>
+                    <p>Sem o PGR, a empresa não consegue comprovar que identificou e controlou os riscos a que o trabalhador foi exposto, facilitando condenações por doenças e acidentes.</p>
+                    <div class="problem-value">Passivo Trabalhista</div>
+                </div>
+
+                <div class="problem-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="problem-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <h3>Interdição de Atividades</h3>
+                    <p>Em infrações graves ou reincidentes, o fiscal do trabalho pode interditar setores ou a empresa inteira até a regularização completa dos programas de SST.</p>
+                    <div class="problem-value">Paralisação Total</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-check-circle"></i> Nossa Entrega
+                </span>
+                <h2 class="section-title">O Que a EngMarq Entrega no Seu PGR</h2>
+                <p class="section-subtitle">Um programa robusto, personalizado para os riscos reais da sua empresa</p>
+            </div>
+
+            <div class="solution-grid">
+                <div class="solution-card" data-aos="fade-up">
+                    <div class="solution-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Visita Técnica</h3>
+                    <p>Nossos técnicos visitam as instalações para identificar os riscos reais de cada função e setor antes de elaborar qualquer documento.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="solution-icon">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <h3>Inventário Completo</h3>
+                    <p>Mapeamos e documentamos todos os riscos ocupacionais — físicos, químicos, biológicos, ergonômicos, acidentes e psicossociais.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="solution-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Plano de Ação</h3>
+                    <p>Definimos medidas preventivas e corretivas com prioridades, responsáveis e cronograma realista para eliminação ou controle dos riscos.</p>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="solution-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Revisão e Atualização</h3>
+                    <p>Mantemos o PGR vivo: revisamos o documento sempre que há mudanças nos processos ou nos riscos, e anualmente de forma preventiva.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Components Section -->
+    <section class="components-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-layer-group"></i> Estrutura do PGR
+                </span>
+                <h2 class="section-title">Os 6 Tipos de Risco que o PGR Deve Cobrir</h2>
+                <p class="section-subtitle">A NR-1 exige o gerenciamento de todos os grupos de risco ocupacional — nenhum pode ficar de fora</p>
+            </div>
+
+            <div class="components-grid">
+                <div class="component-card" data-aos="fade-up">
+                    <div class="comp-num">01</div>
+                    <h3>Riscos Físicos</h3>
+                    <p>Ruído, vibrações, temperaturas extremas, radiações ionizantes e não ionizantes, pressões anormais e umidade. Devem ser medidos e comparados com os limites de tolerância da NR-15.</p>
+                </div>
+
+                <div class="component-card" data-aos="fade-up" data-aos-delay="80">
+                    <div class="comp-num">02</div>
+                    <h3>Riscos Químicos</h3>
+                    <p>Poeiras, fumos, névoas, gases, vapores e substâncias compostas que possam penetrar no organismo por inalação, absorção ou ingestão. Avaliados conforme NR-15.</p>
+                </div>
+
+                <div class="component-card" data-aos="fade-up" data-aos-delay="160">
+                    <div class="comp-num">03</div>
+                    <h3>Riscos Biológicos</h3>
+                    <p>Bactérias, fungos, parasitas, vírus, entre outros agentes biológicos com potencial de causar danos à saúde dos trabalhadores expostos.</p>
+                </div>
+
+                <div class="component-card" data-aos="fade-up" data-aos-delay="240">
+                    <div class="comp-num">04</div>
+                    <h3>Riscos Ergonômicos</h3>
+                    <p>Esforço físico intenso, postura inadequada, repetitividade, ritmo excessivo e outros fatores que comprometam a saúde musculoesquelética do trabalhador.</p>
+                </div>
+
+                <div class="component-card" data-aos="fade-up" data-aos-delay="320">
+                    <div class="comp-num">05</div>
+                    <h3>Riscos de Acidentes</h3>
+                    <p>Arranjo físico inadequado, máquinas sem proteção, ferramentas defeituosas, eletricidade, incêndio, queda em altura e demais perigos de acidentes.</p>
+                </div>
+
+                <div class="component-card" data-aos="fade-up" data-aos-delay="400" style="background: rgba(39,103,73,0.06); border-bottom-color: var(--secondary-color);">
+                    <div class="comp-num" style="color: rgba(245,166,35,0.3);">06</div>
+                    <h3 style="color: var(--warning-color);">Riscos Psicossociais</h3>
+                    <p>Novidade obrigatória da NR-1 2026! Assédio, estresse crônico, violência, sobrecarga de trabalho, falta de autonomia e outros fatores que afetam a saúde mental.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-route"></i> Passo a Passo
+                </span>
+                <h2 class="section-title">Como Elaboramos o Seu PGR</h2>
+                <p class="section-subtitle">Um processo técnico, ágil e transparente</p>
+            </div>
+
+            <div class="process-timeline">
+                <div class="process-step" data-aos="fade-up">
+                    <div class="process-number">1</div>
+                    <h3>Contato</h3>
+                    <p>Entre em contato pelo WhatsApp ou formulário e nos fale sobre sua empresa e atividades</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="100">
+                    <div class="process-number">2</div>
+                    <h3>Visita Técnica</h3>
+                    <p>Nosso técnico visita as instalações para identificar os riscos reais de cada função e processo</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="200">
+                    <div class="process-number">3</div>
+                    <h3>Elaboração</h3>
+                    <p>Desenvolvemos o PGR completo com inventário de riscos, avaliações e plano de ação</p>
+                </div>
+
+                <div class="process-step" data-aos="fade-up" data-aos-delay="300">
+                    <div class="process-number">4</div>
+                    <h3>Implantação</h3>
+                    <p>Entregamos o documento final, orientamos a equipe e mantemos o PGR atualizado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-star"></i> Depoimentos
+                </span>
+                <h2 class="section-title">Empresas com PGR em Dia</h2>
+                <p class="section-subtitle">Veja o que dizem gestores que contaram com a EngMarq</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Tínhamos ainda o antigo PPRA. A EngMarq fez a transição para o PGR de forma rápida e incluiu todos os novos riscos. Passamos por fiscalização sem nenhuma autuação."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JO</div>
+                        <div class="testimonial-info">
+                            <h4>Jorge Oliveira</h4>
+                            <p>Diretor Industrial — Metalúrgica</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"A EngMarq identificou riscos que nem sabíamos que existiam na nossa operação. O PGR veio completo, integrado ao eSocial e com um plano de ação realista. Serviço de altíssima qualidade."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">PT</div>
+                        <div class="testimonial-info">
+                            <h4>Patricia Torres</h4>
+                            <p>Gerente de Operações — Logística</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Com a nova NR-1, nosso PGR antigo virou papel. A EngMarq elaborou um novo do zero, incluindo os riscos psicossociais, e explicou tudo para nossa equipe de RH. Recomendo muito!"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MF</div>
+                        <div class="testimonial-info">
+                            <h4>Marcos Freitas</h4>
+                            <p>Sócio-Gerente — Construtora</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container" data-aos="fade-up">
+            <h2><i class="fas fa-shield-alt"></i> Seu PGR Atualizado Protege Sua Empresa</h2>
+            <p>Não espere uma autuação para agir. Com o PGR em dia, sua empresa está protegida contra fiscalizações, ações trabalhistas e o passivo dos riscos não controlados.</p>
+
+            <div class="cta-buttons">
+                <a href="#orcamento" class="btn btn-gold btn-lg">
+                    <i class="fas fa-file-alt"></i> Solicitar Orçamento Gratuito
+                </a>
+                <a href="https://wa.me/5584999285888?text=Olá! Vim pela página do PGR e quero regularizar minha empresa." class="btn btn-whatsapp btn-lg" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Falar Agora no WhatsApp
+                </a>
+            </div>
+
+            <div class="cta-guarantee">
+                <i class="fas fa-shield-alt"></i>
+                Orçamento gratuito e sem compromisso &bull; Atendimento em até 24h &bull; Atendemos todo o Brasil
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-question-circle"></i> Dúvidas Frequentes
+                </span>
+                <h2 class="section-title">Perguntas Sobre o PGR</h2>
+                <p class="section-subtitle">Tire suas dúvidas sobre o Programa de Gerenciamento de Riscos</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item" data-aos="fade-up">
+                    <div class="faq-question">
+                        O PGR substituiu o PPRA?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim. O PGR (Programa de Gerenciamento de Riscos), criado pela NR-1, substituiu o PPRA (Programa de Prevenção de Riscos Ambientais) da antiga NR-9. O PGR tem escopo mais amplo: abrange todos os tipos de riscos ocupacionais, não apenas os ambientais, e agora inclui obrigatoriamente os fatores de riscos psicossociais.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="50">
+                    <div class="faq-question">
+                        Toda empresa precisa de PGR?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim. A NR-1 determina que toda empresa que possua empregados regidos pela CLT deve elaborar e implementar o PGR. Não há isenção por porte ou setor. Microempresas e EPPs podem ter versões simplificadas, mas a obrigação existe para todas.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="faq-question">
+                        Com que frequência o PGR deve ser atualizado?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O PGR deve ser revisado sempre que houver mudança nos processos, ambientes, equipamentos ou quando novos riscos forem identificados. Além disso, recomenda-se revisão periódica anual. Com a inclusão dos riscos psicossociais em 2026, todo PGR elaborado antes dessa data precisou ser atualizado.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="150">
+                    <div class="faq-question">
+                        Qual a diferença entre PGR e GRO?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O GRO (Gerenciamento de Riscos Ocupacionais) é o processo amplo de gestão de riscos exigido pela NR-1. O PGR é o documento que materializa esse processo — ele registra o inventário de riscos, a avaliação e o plano de ação. Em resumo: GRO é a sistemática; PGR é o instrumento.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="faq-question">
+                        O PGR precisa ser integrado ao eSocial?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim. Os dados do PGR alimentam o evento S-2240 do eSocial (Condições Ambientais do Trabalho). A transmissão incorreta ou a ausência de envio pode gerar inconsistências na folha de pagamento e multas por descumprimento das obrigações acessórias.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-aos="fade-up" data-aos-delay="250">
+                    <div class="faq-question">
+                        Vocês atendem empresas fora do Rio Grande do Norte?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim! Atendemos empresas em todo o Brasil. A maior parte do processo pode ser feita de forma remota. Para as visitas técnicas presenciais, contamos com parceiros técnicos em diversas regiões. Entre em contato e encontramos a melhor forma de atender sua empresa.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section" id="orcamento">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-badge">
+                    <i class="fas fa-file-alt"></i> Orçamento Gratuito
+                </span>
+                <h2 class="section-title">Solicite o Seu Orçamento Agora</h2>
+                <p class="section-subtitle">Preencha o formulário e receba uma proposta personalizada para o PGR da sua empresa</p>
+            </div>
+
+            <div class="form-container" data-aos="fade-up">
+                <h3><i class="fas fa-paper-plane"></i> Fale Conosco</h3>
+                <p class="form-subtitle">Respondemos em até 24 horas</p>
+
+                <form id="leadForm">
+                    <div class="form-group">
+                        <label>Nome completo *</label>
+                        <input type="text" name="nome" placeholder="Digite seu nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp *</label>
+                        <input type="tel" name="whatsapp" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" name="email" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Nome da empresa *</label>
+                        <input type="text" name="empresa" placeholder="Nome da sua empresa" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantidade de funcionários *</label>
+                        <select name="funcionarios" required>
+                            <option value="">Selecione...</option>
+                            <option value="1-10">1 a 10 funcionários</option>
+                            <option value="11-50">11 a 50 funcionários</option>
+                            <option value="51-100">51 a 100 funcionários</option>
+                            <option value="101-500">101 a 500 funcionários</option>
+                            <option value="500+">Mais de 500 funcionários</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Situação atual do PGR</label>
+                        <select name="situacao">
+                            <option value="">Selecione...</option>
+                            <option value="Não tenho PGR">Não tenho PGR</option>
+                            <option value="Tenho PPRA antigo, preciso migrar para PGR">Tenho PPRA antigo, preciso migrar para PGR</option>
+                            <option value="PGR desatualizado (sem riscos psicossociais)">PGR desatualizado (sem riscos psicossociais)</option>
+                            <option value="PGR em dia, quero revisar">PGR em dia, quero revisar</option>
+                            <option value="Empresa nova, preciso elaborar">Empresa nova, preciso elaborar</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-green btn-lg form-btn">
+                        <i class="fab fa-whatsapp"></i> Enviar e Falar no WhatsApp
+                    </button>
+                    <div class="form-security">
+                        <i class="fas fa-lock"></i>
+                        Seus dados estão seguros. Não enviamos spam.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logoengmarq.png" alt="EngMarq Solution">
+                    <p>Especialistas em Engenharia de Segurança e Saúde do Trabalho, com foco em conformidade legal e proteção jurídica para empresas de todos os portes.</p>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Serviços</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">PGR — Gerenciamento de Riscos</a></li>
+                        <li><a href="landing-pcmso.html">PCMSO</a></li>
+                        <li><a href="landing-nr01.html">Adequação NR-01</a></li>
+                        <li><a href="#">LTCAT e LIP</a></li>
+                        <li><a href="#">Treinamentos SST</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Links Úteis</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Site Principal</a></li>
+                        <li><a href="landing-nr01.html">Landing NR-01</a></li>
+                        <li><a href="landing-pcmso.html">Landing PCMSO</a></li>
+                        <li><a href="politicas/politica-privacidade.html">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-title">Contato</h4>
+                    <div class="footer-contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>(84) 99928-5888</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>engmarqsolution@gmail.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Natal — RN</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fab fa-instagram"></i>
+                        <span>@engmarq_solution</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 EngMarq Solution. Todos os direitos reservados. | CNPJ: 60.545.359/0001-76</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp -->
+    <div class="floating-whatsapp">
+        <a href="https://wa.me/5584999285888?text=Olá! Vim pela página do PGR e gostaria de mais informações." target="_blank" aria-label="Falar no WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const wasActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!wasActive) item.classList.add('active');
+            });
+        });
+
+        // Form Submit to WhatsApp
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nome = this.querySelector('[name="nome"]').value;
+            const whatsapp = this.querySelector('[name="whatsapp"]').value;
+            const email = this.querySelector('[name="email"]').value;
+            const empresa = this.querySelector('[name="empresa"]').value;
+            const funcionarios = this.querySelector('[name="funcionarios"]').value;
+            const situacao = this.querySelector('[name="situacao"]').value;
+
+            const message = `Olá! Vim pela landing page do PGR e gostaria de um orçamento.
+
+*Minhas informações:*
+📋 Nome: ${nome}
+📱 WhatsApp: ${whatsapp}
+📧 E-mail: ${email || 'Não informado'}
+🏢 Empresa: ${empresa}
+👥 Funcionários: ${funcionarios}
+📄 Situação do PGR: ${situacao || 'Não informada'}
+
+Aguardo o retorno!`;
+
+            const encodedMessage = encodeURIComponent(message);
+
+            gtag('event', 'conversion', {'send_to': 'AW-17875424072/9xyTCKyKjfcbEMim1ctC'});
+
+            window.open(`https://wa.me/5584999285888?text=${encodedMessage}`, '_blank');
+        });
+    </script>
+</body>
+</html>
