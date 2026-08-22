@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comprovante de Locação — Kit Primeiros Socorros | IF Assessoria | EngMarq Solution</title>
+  <style>
+    :root {
+      --primary: #1a365d;
+      --primary-dark: #0f2744;
+      --accent: #f5a623;
+      --red: #c53030;
+      --green: #276749;
+      --text: #2d3748;
+      --muted: #718096;
+      --paper: #ffffff;
+      --line: #e2e8f0;
+      --light: #f7fafc;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: linear-gradient(145deg, #eef5f9 0%, #f8fbfd 100%);
+      padding: 28px;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(26,54,93,0.13);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+    }
+
+    .content { padding: 32px 36px 28px; }
+
+    /* ── CABEÇALHO ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; }
+
+    .logo {
+      width: 72px; height: 72px;
+      object-fit: contain;
+      border-radius: 10px;
+      border: 1px solid #e8edf2;
+      background: #fff;
+      padding: 6px;
+    }
+
+    .brand-text h1 { font-size: 20px; letter-spacing: 0.5px; color: var(--primary-dark); margin-bottom: 3px; }
+    .brand-text p  { color: var(--muted); font-size: 12px; }
+
+    .doc-title { text-align: right; }
+    .doc-title h2 {
+      font-size: 22px;
+      color: var(--primary);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .doc-title .ref   { font-size: 11px; color: var(--muted); display: block; }
+
+    /* badge PAGO */
+    .badge-pago {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0fff4;
+      color: var(--green);
+      border: 1.5px solid #c6f6d5;
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ── CLIENTE ── */
+    .client-box {
+      background: var(--light);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+    }
+    .client-box h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .client-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px 20px;
+      font-size: 13px;
+    }
+    .client-grid .lbl { color: var(--muted); font-size: 11px; display: block; margin-bottom: 1px; }
+    .client-grid .val { font-weight: 600; color: var(--text); }
+
+    /* ── TEXTO LEAD ── */
+    .lead {
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    /* ── TABELA DE ITENS ── */
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+
+    thead th {
+      padding: 9px 13px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+    thead th.center { text-align: center; }
+
+    tbody tr:nth-child(even) { background: var(--light); }
+    tbody td { padding: 7px 13px; border-top: 1px solid #edf2f6; color: var(--text); }
+    tbody td.center { text-align: center; font-weight: 600; color: var(--primary); }
+
+    tbody tr.section-row td {
+      background: #ebf4ff;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 6px 13px;
+    }
+
+    tbody tr.total-row td {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 13px;
+    }
+    tbody tr.total-row td.right {
+      text-align: right;
+      color: var(--accent);
+      font-size: 16px;
+    }
+
+    /* ── RESUMO PAGAMENTO ── */
+    .payment-box {
+      background: linear-gradient(135deg, #f0fff4 0%, #e6ffed 100%);
+      border: 1.5px solid #9ae6b4;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+    }
+    .payment-box p { font-size: 13px; line-height: 1.65; margin: 0; }
+    .payment-box strong { color: var(--primary-dark); }
+
+    /* ── RODAPÉ / ASSINATURA ── */
+    .footer-section {
+      margin-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+    }
+
+    .place-date { font-size: 13px; color: var(--text); line-height: 1.6; }
+    .place-date span { display: block; color: var(--muted); font-size: 11px; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    .sig-block { text-align: center; flex-shrink: 0; min-width: 280px; }
+    .sig-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 6px;
+    }
+    .sig-space { height: 60px; }
+    .sig-line {
+      width: 100%;
+      border-top: 1.5px solid var(--primary);
+      padding-top: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+    .sig-meta {
+      margin-top: 4px;
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      line-height: 1.5;
+    }
+
+    .actions {
+      width: 210mm;
+      margin: 12px auto 0;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .btn:hover { background: var(--primary-dark); }
+
+    @page { size: A4; margin: 10mm; }
+
+    @media print {
+      body { background: #fff; padding: 0; margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .actions { display: none; }
+      .page { box-shadow: none; border: none; width: 100%; min-height: 100%; margin: 0; }
+    }
+
+    @media screen and (max-width: 900px) {
+      body { padding: 10px; }
+      .page, .actions { width: 100%; }
+      .content { padding: 20px 16px; }
+      .header { flex-direction: column; align-items: flex-start; }
+      .doc-title { text-align: left; }
+      .client-grid { grid-template-columns: 1fr; }
+      .footer-section { flex-direction: column; align-items: flex-start; }
+      .sig-line { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="content">
+
+      <!-- CABEÇALHO -->
+      <header class="header">
+        <div class="brand">
+          <img class="logo" src="../../assets/logoengmarq.png" alt="Logo EngMarq Solution" />
+          <div class="brand-text">
+            <h1>ENGMARQ SOLUTION</h1>
+            <p>Saúde e Segurança do Trabalho</p>
+            <p style="margin-top:2px;font-size:11px;">CNPJ: 60.545.359/0001-76</p>
+          </div>
+        </div>
+        <div class="doc-title">
+          <h2>Comprovante de Locação</h2>
+          <span class="ref">Ref. Proposta TM0133 · 21/08/2026</span>
+          <div style="display:flex;justify-content:flex-end;margin-top:4px;">
+            <span class="badge-pago">&#10003;&nbsp; PAGO</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- DADOS DO LOCATÁRIO -->
+      <section class="client-box">
+        <h3>Dados do Locatário</h3>
+        <div class="client-grid">
+          <div>
+            <span class="lbl">Razão Social / Nome Fantasia</span>
+            <span class="val">IF Assessoria em Segurança do Trabalho</span>
+          </div>
+          <div>
+            <span class="lbl">CNPJ</span>
+            <span class="val">61.737.225/0001-10</span>
+          </div>
+          <div>
+            <span class="lbl">Segmento</span>
+            <span class="val">Assessoria em Segurança do Trabalho</span>
+          </div>
+          <div>
+            <span class="lbl">Telefone / WhatsApp</span>
+            <span class="val">(84) 9 9699-5284</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEXTO DO COMPROVANTE -->
+      <p class="lead">
+        Recebemos de <strong>IF Assessoria em Segurança do Trabalho</strong>
+        (CNPJ 61.737.225/0001-10) o valor de <strong>R$ 350,00 (trezentos e cinquenta reais)</strong>,
+        referente à <strong>locação do Kit EngMarq de Primeiros Socorros</strong>, conforme itens
+        discriminados abaixo.
+      </p>
+
+      <!-- TABELA DE ITENS -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Item Locado</th>
+              <th class="center" style="width:60px;">Qtd.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="section-row">
+              <td colspan="2">Equipamentos de Imobilização e Resgate</td>
+            </tr>
+            <tr>
+              <td>Prancha longa em polietileno</td>
+              <td class="center">1</td>
+            </tr>
+            <tr>
+              <td>Imobilizador de cabeça — Head Block</td>
+              <td class="center">1</td>
+            </tr>
+            <tr>
+              <td>Cintos para fixação na prancha</td>
+              <td class="center">3</td>
+            </tr>
+            <tr>
+              <td>Talas aramadas em EVA (tamanhos variados)</td>
+              <td class="center">4</td>
+            </tr>
+            <tr>
+              <td>Colares cervicais — tamanhos P, M e G</td>
+              <td class="center">3</td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="2">Materiais de Primeiros Socorros</td>
+            </tr>
+            <tr>
+              <td>Bandagem triangular</td>
+              <td class="center">1</td>
+            </tr>
+            <tr>
+              <td>Manta térmica aluminizada</td>
+              <td class="center">1</td>
+            </tr>
+            <tr>
+              <td>Ataduras de crepe 10 cm</td>
+              <td class="center">4</td>
+            </tr>
+            <tr>
+              <td>Ataduras de crepe 15 cm</td>
+              <td class="center">4</td>
+            </tr>
+            <tr>
+              <td>Fita Micropore</td>
+              <td class="center">1</td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="2">Proteção Individual e RCP</td>
+            </tr>
+            <tr>
+              <td>Pares de luvas</td>
+              <td class="center">4</td>
+            </tr>
+            <tr>
+              <td>Tesoura de ponta romba</td>
+              <td class="center">1</td>
+            </tr>
+            <tr>
+              <td>Óculos de proteção</td>
+              <td class="center">2</td>
+            </tr>
+            <tr>
+              <td>Máscaras para RCP</td>
+              <td class="center">2</td>
+            </tr>
+            <tr class="section-row">
+              <td colspan="2">Equipamentos Adicionais Especiais</td>
+            </tr>
+            <tr>
+              <td>AMBU — Reanimador Manual</td>
+              <td class="center">1</td>
+            </tr>
+            <tr>
+              <td>Boneco / Manequim para treinamento de RCP</td>
+              <td class="center">1</td>
+            </tr>
+            <tr>
+              <td>Bolsa/capa para acondicionamento do kit</td>
+              <td class="center">1</td>
+            </tr>
+            <tr class="total-row">
+              <td><strong>Total pago — Locação do Kit EngMarq de Primeiros Socorros</strong></td>
+              <td class="right"><strong>R$ 350,00</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- RESUMO DO PAGAMENTO -->
+      <div class="payment-box">
+        <p>
+          <strong>Valor recebido:</strong> R$ 350,00 (trezentos e cinquenta reais)<br>
+          <strong>Forma de pagamento:</strong> PIX / Transferência bancária<br>
+          <strong>Situação:</strong> <span style="color:#276749;font-weight:700;">&#10003; PAGO</span><br>
+          <strong>Observação:</strong> Kit entregue higienizado, conferido e acondicionado em bolsa/capa de transporte, conforme proposta TM0133.
+        </p>
+      </div>
+
+      <!-- RODAPÉ COM ASSINATURA -->
+      <div class="footer-section">
+        <div class="place-date">
+          <span>Local e Data</span>
+          Natal / RN, 21 de agosto de 2026
+        </div>
+        <div class="sig-block">
+          <p class="sig-label">Assinatura do Responsável</p>
+          <div class="sig-space"></div>
+          <div class="sig-line">&nbsp;</div>
+          <div class="sig-meta">
+            <strong>Thiago Marques</strong> — Diretor<br>
+            EngMarq Solution LTDA · CNPJ: 60.545.359/0001-76
+          </div>
+        </div>
+      </div>
+
+      <p class="note">
+        Documento emitido para fins de comprovação de locação e pagamento. Emitido pela EngMarq Solution em 21/08/2026.
+        Para dúvidas, entre em contato: engmarqsolution@gmail.com · +55 84 99928-5888 · @engmarq_solution
+      </p>
+
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="window.print()">&#128438;&nbsp; Imprimir / Salvar em PDF</button>
+  </div>
+
+</body>
+</html>
