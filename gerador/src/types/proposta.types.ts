@@ -90,6 +90,7 @@ export interface EmpresaGrupo {
  * Dados do cliente/empresa para a proposta
  */
 export interface DadosCliente {
+    modeloId?: string;
     codigoProposta: string;
     dataProposta: string;
     razaoSocial: string;
@@ -101,6 +102,8 @@ export interface DadosCliente {
     cidade: string;
     estado: string;
     qtdColaboradores: string;
+    qtdFuncoes?: string;
+    condicoesPagamento?: string;
     elaborador: DadosElaborador;
     solicitante: DadosSolicitante;
     treinamentos?: TreinamentoSelecionado[];
@@ -147,6 +150,8 @@ export interface DadosTemplate {
     cidade: string;
     uf: string;
     qtdColaboradores: string;
+    qtdFuncoes?: string;
+    condicoesPagamento?: string;
     elaborador: DadosElaborador;
     solicitante: DadosSolicitante;
     logoUrl: string;

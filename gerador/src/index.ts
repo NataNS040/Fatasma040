@@ -7,6 +7,7 @@ export * from './types/proposta.types';
 
 // Config
 export { configs, getConfig, isValidTipo } from './config/proposta-config';
+export { modelosProntos, modelosPorId, getModeloPronto } from './config/modelos-prontos';
 
 // Utils
 export { 

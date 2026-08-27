@@ -12,6 +12,8 @@ import { getTemplateAssessoria } from '../templates/template-assessoria';
 import { getTemplateKitSST } from '../templates/template-kit-sst';
 import { getTemplateTreinamentos } from '../templates/template-treinamentos';
 import { getTemplatePersonalizada } from '../templates/template-personalizada';
+import { getTemplateModeloPronto } from '../templates/template-modelo-pronto';
+import { getModeloPronto } from '../config/modelos-prontos';
 import { formatData } from '../utils/formatters';
 import logoEngmarq from '../../assets/logoengmarq.png';
 
@@ -30,6 +32,8 @@ export function prepararDadosTemplate(dados: DadosCliente): DadosTemplate {
         cidade: dados.cidade,
         uf: dados.estado,
         qtdColaboradores: dados.qtdColaboradores,
+        qtdFuncoes: dados.qtdFuncoes,
+        condicoesPagamento: dados.condicoesPagamento,
         elaborador: dados.elaborador,
         solicitante: dados.solicitante,
         logoUrl: logoEngmarq,
@@ -96,7 +100,10 @@ export function gerarHTMLProposta(
     const dados = prepararDadosTemplate(dadosCliente);
     
     // Obtém o template do conteúdo
-    const template = selecionarTemplate(tipo, dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
+    const modelo = dadosCliente.modeloId ? getModeloPronto(dadosCliente.modeloId) : undefined;
+    const template = modelo && !modelo.tipoLegado
+        ? getTemplateModeloPronto(modelo, dados, valorFinal)
+        : selecionarTemplate(modelo?.tipoLegado || tipo, dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
     
     // Monta o HTML completo
     const html = `<!DOCTYPE html>

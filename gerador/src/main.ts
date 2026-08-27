@@ -4,6 +4,7 @@
 
 import { TipoProposta, DadosCliente, PropostaConfigs, TreinamentoSelecionado, TreinamentoId, EntregavelPsico, EntregavelPsicoId, EmpresaGrupo, ItemPersonalizado } from './types/proposta.types';
 import { configs, isValidTipo } from './config/proposta-config';
+import { modelosProntos, getModeloPronto } from './config/modelos-prontos';
 import { formatMoeda, parseValorMonetario, calcularDesconto, formatData } from './utils/formatters';
 import { gerarHTMLProposta } from './generators/gerador-proposta';
 import { obterSessao, removerSessao, sincronizarSessaoSupabase } from './auth/usuarios';
@@ -593,6 +594,7 @@ function atualizarTotalGrupo(): void {
  */
 function atualizarPreview(): void {
     const tipo = getElement<HTMLSelectElement>('tipo_proposta').value;
+    const modelo = getModeloPronto(tipo);
     const numero = getElement<HTMLInputElement>('numero_proposta').value || 'TM0000';
     const dataStr = getElement<HTMLInputElement>('data_proposta').value;
     
@@ -610,13 +612,13 @@ function atualizarPreview(): void {
     
     // Atualizar classe do tipo
     const previewPage = getElement<HTMLDivElement>('preview-page');
-    previewPage.className = 'preview-page ' + tipo;
+    previewPage.className = 'preview-page ' + (modelo?.tipoLegado || 'kit-sst');
     
     // Atualizar badge (número da proposta)
     getElement<HTMLDivElement>('preview-badge').textContent = numero;
     
     // Atualizar ícone
-    const config = previewConfigs[tipo] || previewConfigs.brigada;
+    const config = modelo ? { icon: modelo.icone, titleTop: modelo.categoria.toUpperCase(), titleMain: modelo.nome.toUpperCase(), subtitle: modelo.descricao } : (previewConfigs[tipo] || previewConfigs.brigada);
     getElement<HTMLDivElement>('preview-icon').innerHTML = `<i class="${config.icon}"></i>`;
     
     // Atualizar títulos
@@ -642,6 +644,9 @@ function atualizarPreview(): void {
  * Inicializa os event listeners do formulário
  */
 function inicializarEventos(): void {
+    const seletorModelos = getElement<HTMLSelectElement>('tipo_proposta');
+    const categorias = [...new Set(modelosProntos.map(modelo => modelo.categoria))];
+    seletorModelos.innerHTML = categorias.map(categoria => `<optgroup label="${categoria}">${modelosProntos.filter(modelo => modelo.categoria === categoria).map(modelo => `<option value="${modelo.id}">${modelo.nome}</option>`).join('')}</optgroup>`).join('');
     // Data inicial
     const hoje = new Date();
     getElement<HTMLInputElement>('data_proposta').value = hoje.toISOString().split('T')[0];
@@ -655,29 +660,35 @@ function inicializarEventos(): void {
     // Controle de visibilidade baseado no tipo
     getElement<HTMLSelectElement>('tipo_proposta').addEventListener('change', function(this: HTMLSelectElement) {
         const tipo = this.value;
+        const modelo = getModeloPronto(tipo);
+        const tipoLegado = modelo?.tipoLegado;
         
         // Seção de colaboradores (apenas para psicossocial)
         const sectionColaboradores = document.querySelector('.form-section:has(#num_colaboradores)') as HTMLElement | null;
         if (sectionColaboradores) {
-            sectionColaboradores.style.display = tipo === 'psicossocial' ? 'block' : 'none';
+            sectionColaboradores.style.display = modelo?.campos.length ? 'block' : 'none';
         }
+        const grupoColaboradores = document.getElementById('campo-colaboradores');
+        const grupoFuncoes = document.getElementById('campo-funcoes');
+        if (grupoColaboradores) grupoColaboradores.style.display = modelo?.campos.includes('colaboradores') ? 'block' : 'none';
+        if (grupoFuncoes) grupoFuncoes.style.display = modelo?.campos.includes('funcoes') ? 'block' : 'none';
         
         // Seção de treinamentos (apenas para treinamentos)
         const sectionTreinamentos = document.getElementById('section-treinamentos');
         if (sectionTreinamentos) {
-            sectionTreinamentos.style.display = tipo === 'treinamentos' ? 'block' : 'none';
+            sectionTreinamentos.style.display = tipoLegado === 'treinamentos' ? 'block' : 'none';
         }
         
         // Seção de entregáveis psicossocial (apenas para psicossocial)
         const sectionPsicossocial = document.getElementById('section-psicossocial');
         if (sectionPsicossocial) {
-            sectionPsicossocial.style.display = tipo === 'psicossocial' ? 'block' : 'none';
+            sectionPsicossocial.style.display = tipoLegado === 'psicossocial' ? 'block' : 'none';
         }
         
         // Seção de itens personalizados (apenas para personalizada)
         const sectionPersonalizada = document.getElementById('section-personalizada');
         if (sectionPersonalizada) {
-            sectionPersonalizada.style.display = tipo === 'personalizada' ? 'block' : 'none';
+            sectionPersonalizada.style.display = 'none';
         }
         
         atualizarPreview();
@@ -687,29 +698,13 @@ function inicializarEventos(): void {
     getElement<HTMLInputElement>('valor_proposta').addEventListener('input', atualizarValor);
     
     // Inicializar visibilidade do campo colaboradores
-    const tipoInicial = getElement<HTMLSelectElement>('tipo_proposta').value;
-    const section = document.querySelector('.form-section:has(#num_colaboradores)') as HTMLElement | null;
-    if (section) {
-        section.style.display = tipoInicial === 'psicossocial' ? 'block' : 'none';
-    }
+    getElement<HTMLSelectElement>('tipo_proposta').dispatchEvent(new Event('change'));
     
     // Inicializar visibilidade da seção de treinamentos
-    const sectionTreinamentos = document.getElementById('section-treinamentos');
-    if (sectionTreinamentos) {
-        sectionTreinamentos.style.display = tipoInicial === 'treinamentos' ? 'block' : 'none';
-    }
     
     // Inicializar visibilidade da seção de psicossocial
-    const sectionPsicossocial = document.getElementById('section-psicossocial');
-    if (sectionPsicossocial) {
-        sectionPsicossocial.style.display = tipoInicial === 'psicossocial' ? 'block' : 'none';
-    }
     
     // Inicializar visibilidade da seção de personalizada
-    const sectionPersonalizada = document.getElementById('section-personalizada');
-    if (sectionPersonalizada) {
-        sectionPersonalizada.style.display = tipoInicial === 'personalizada' ? 'block' : 'none';
-    }
     
     // Event listeners para checkboxes de treinamentos
     const trainingCheckboxes = document.querySelectorAll('.training-item input[type="checkbox"]');
@@ -794,9 +789,11 @@ function inicializarEventos(): void {
  * Gera a proposta com base nos dados do formulário
  */
 function gerarProposta(): void {
-    const tipoStr = getElement<HTMLSelectElement>('tipo_proposta').value;
+    const modeloId = getElement<HTMLSelectElement>('tipo_proposta').value;
+    const modelo = getModeloPronto(modeloId);
+    const tipoStr = modelo?.tipoLegado || 'kit-sst';
     
-    if (!isValidTipo(tipoStr)) {
+    if (!modelo || !isValidTipo(tipoStr)) {
         alert('Tipo de proposta inválido');
         return;
     }
@@ -856,6 +853,7 @@ function gerarProposta(): void {
     }
     
     const dados: DadosCliente = {
+        modeloId,
         codigoProposta: getElement<HTMLInputElement>('numero_proposta').value || 'TM0000',
         dataProposta: getElement<HTMLInputElement>('data_proposta').value,
         razaoSocial: isGrupo && nomeGrupo ? nomeGrupo : primeiraEmpresa.razaoSocial,
@@ -867,6 +865,8 @@ function gerarProposta(): void {
         cidade: primeiraEmpresa.cidade,
         estado: primeiraEmpresa.estado,
         qtdColaboradores: qtdColaboradoresTotal || getElement<HTMLInputElement>('num_colaboradores').value || '',
+        qtdFuncoes: (document.getElementById('num_funcoes') as HTMLInputElement)?.value || '',
+        condicoesPagamento: (document.getElementById('condicoes_pagamento') as HTMLTextAreaElement)?.value || '',
         elaborador: {
             nome: getElement<HTMLInputElement>('elaborador_nome').value || 'Thiago Marques',
             cargo: getElement<HTMLInputElement>('elaborador_cargo').value || 'Diretor',
