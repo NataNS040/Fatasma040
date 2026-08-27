@@ -13,6 +13,7 @@ import { getTemplateKitSST } from '../templates/template-kit-sst';
 import { getTemplateTreinamentos } from '../templates/template-treinamentos';
 import { getTemplatePersonalizada } from '../templates/template-personalizada';
 import { getTemplateModeloPronto } from '../templates/template-modelo-pronto';
+import { getTemplateAssistenteTecnicoPericial } from '../templates/template-assistente-tecnico-pericial';
 import { getModeloPronto } from '../config/modelos-prontos';
 import { formatData } from '../utils/formatters';
 import logoEngmarq from '../../assets/logoengmarq.png';
@@ -25,6 +26,7 @@ export function prepararDadosTemplate(dados: DadosCliente): DadosTemplate {
         numero: dados.codigoProposta,
         data: formatData(dados.dataProposta),
         razaoSocial: dados.razaoSocial,
+        nomeFantasia: dados.nomeFantasia,
         cnpj: dados.cnpj,
         endereco: dados.endereco,
         bairro: dados.bairro,
@@ -101,7 +103,9 @@ export function gerarHTMLProposta(
     
     // Obtém o template do conteúdo
     const modelo = dadosCliente.modeloId ? getModeloPronto(dadosCliente.modeloId) : undefined;
-    const template = modelo && !modelo.tipoLegado
+    const template = modelo?.templateEspecial === 'assistente-tecnico-pericial'
+        ? getTemplateAssistenteTecnicoPericial(dados, valorFinal)
+        : modelo && !modelo.tipoLegado
         ? getTemplateModeloPronto(modelo, dados, valorFinal)
         : selecionarTemplate(modelo?.tipoLegado || tipo, dados, valorOriginal, valorFinal, percentualDesc, temDesconto);
     

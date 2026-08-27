@@ -143,6 +143,7 @@ export interface DadosTemplate {
     numero: string;
     data: string;
     razaoSocial: string;
+    nomeFantasia: string;
     cnpj: string;
     endereco: string;
     bairro: string;

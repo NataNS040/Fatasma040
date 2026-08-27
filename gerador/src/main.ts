@@ -662,6 +662,21 @@ function inicializarEventos(): void {
         const tipo = this.value;
         const modelo = getModeloPronto(tipo);
         const tipoLegado = modelo?.tipoLegado;
+
+        const tinhaPadraoEspecial = this.dataset.modeloComPadrao === 'true';
+        if (modelo?.valorPadrao) {
+            getElement<HTMLInputElement>('valor_proposta').value = modelo.valorPadrao;
+            atualizarValor();
+        } else if (tinhaPadraoEspecial) {
+            getElement<HTMLInputElement>('valor_proposta').value = '1.700,00';
+            atualizarValor();
+        }
+        if (modelo?.pagamentoPadrao) {
+            getElement<HTMLTextAreaElement>('condicoes_pagamento').value = modelo.pagamentoPadrao;
+        } else if (tinhaPadraoEspecial) {
+            getElement<HTMLTextAreaElement>('condicoes_pagamento').value = '50% na aprovação e 50% na entrega. PIX, boleto ou transferência.';
+        }
+        this.dataset.modeloComPadrao = modelo?.valorPadrao || modelo?.pagamentoPadrao ? 'true' : 'false';
         
         // Seção de colaboradores (apenas para psicossocial)
         const sectionColaboradores = document.querySelector('.form-section:has(#num_colaboradores)') as HTMLElement | null;

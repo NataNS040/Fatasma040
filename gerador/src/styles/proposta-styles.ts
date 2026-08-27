@@ -113,6 +113,9 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
         .green-box { background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%); border-left: 4px solid var(--success-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
         .green-box h4 { font-family: var(--font-primary); font-size: 12px; color: var(--success-color); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .green-box p { margin-bottom: 0; font-size: 11px; line-height: 1.4; }
+        .teal-box { background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%); border-left: 4px solid #2c7a7b; padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
+        .teal-box h4 { font-family: var(--font-primary); font-size: 12px; color: #2c7a7b; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .teal-box p { margin-bottom: 0; font-size: 10px; line-height: 1.4; }
         
         /* Purple box */
         .purple-box { background: linear-gradient(135deg, #faf5ff 0%, #e9d8fd 100%); border-left: 4px solid var(--purple-color); padding: 10px 12px; margin: 10px 0; border-radius: 0 8px 8px 0; }
@@ -212,6 +215,28 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
         .condition-icon { width: 26px; height: 26px; background: var(--light-color); border-radius: 5px; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-size: 11px; flex-shrink: 0; }
         .condition-text strong { font-family: var(--font-primary); font-size: 11px; color: var(--primary-color); display: block; margin-bottom: 2px; }
         .condition-text span { font-size: 10px; color: var(--gray-color); line-height: 1.3; }
+
+        /* Tabelas do modelo Assistente Técnico Pericial */
+        .inv-table, .pay-table { width: 100%; border-collapse: collapse; margin: 7px 0; }
+        .inv-table thead tr { background: #2c5282; color: white; }
+        .inv-table th, .inv-table td, .pay-table th, .pay-table td { padding: 6px 10px; border: 1px solid #e2e8f0; font-size: 10px; text-align: left; }
+        .inv-table th.right, .inv-table td.right { text-align: right; }
+        .inv-table tbody tr:nth-child(even), .pay-table tbody tr:nth-child(even) { background: var(--light-color); }
+        .inv-table .incluso-row td { color: var(--success-color); font-weight: 600; }
+        .inv-table .total-row { background: var(--primary-color) !important; }
+        .inv-table .total-row td { color: white; font-weight: 700; border-color: var(--primary-color); }
+        .inv-table .total-row td.right { color: var(--secondary-color); font-size: 13px; }
+        .pay-table thead tr { background: #2c7a7b; color: white; }
+        .pay-table tbody td { line-height: 1.25; }
+        .page-investment .page-header { margin-bottom: 6px; padding-bottom: 5px; }
+        .page-investment .section-title { font-size: 15px; margin-bottom: 6px; padding-bottom: 4px; }
+        .page-investment .highlight-box, .page-investment .teal-box { padding: 6px 10px; margin: 5px 0; }
+        .page-investment .subsection-title { margin: 5px 0 3px; }
+        .page-investment .conditions-list { margin: 2px 0; }
+        .page-investment .condition-item { padding: 1px 0; gap: 8px; }
+        .page-investment .condition-icon { width: 22px; height: 22px; }
+        .page-investment .condition-text strong { font-size: 10px; margin-bottom: 0; }
+        .page-investment .condition-text span { font-size: 9px; line-height: 1.1; }
         
         /* Carga horária */
         .carga-horaria { display: flex; gap: 12px; margin: 12px 0; }
@@ -311,6 +336,9 @@ export function getPropostaStyles(tipo: TipoProposta = 'brigada'): string {
             
             .page-cover {
                 padding: 20mm 18mm 18mm 18mm !important;
+            }
+            .page.page-investment {
+                padding: 10mm 15mm 18mm 15mm !important;
             }
             
             .page-header {
