@@ -198,6 +198,19 @@
         .inv-table tbody tr.total-row td { color: white; font-weight: 700; font-family: var(--font-primary); font-size: 11px; border-color: var(--primary-color); }
         .inv-table tbody tr.total-row td.right { color: var(--secondary-color); font-size: 15px; }
         .inv-table tbody tr.incluso-row td { font-size: 10px; color: var(--success-color); font-weight: 600; }
+        .acceptance-instruction { background:#fff7e6; border:1px solid #f6c56f; border-left:4px solid var(--secondary-color); border-radius:8px; padding:10px 14px; margin:10px 0 14px; color:var(--primary-color); font-weight:700; text-align:center; }
+        .acceptance-card { border:1.5px solid #cbd5e0; border-radius:10px; padding:14px 16px; margin-bottom:14px; background:#fff; break-inside:avoid; page-break-inside:avoid; }
+        .acceptance-card.option-two { border-color:#f6c56f; }
+        .acceptance-card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding-bottom:8px; margin-bottom:8px; border-bottom:2px solid var(--primary-color); }
+        .acceptance-card.option-two .acceptance-card-header { border-bottom-color:var(--secondary-color); }
+        .acceptance-card-title { font-family:var(--font-primary); font-size:13px; font-weight:800; color:var(--primary-color); margin:0; }
+        .acceptance-card-scope { font-size:10px; color:var(--gray-color); margin:2px 0 0; }
+        .acceptance-card-value { font-family:var(--font-primary); font-size:17px; font-weight:800; color:var(--primary-color); white-space:nowrap; }
+        .acceptance-text { font-size:10.5px; line-height:1.5; margin:0 0 10px; }
+        .signature-area { background:#fff; padding-top:8px; }
+        .signature-label { font-size:10px; font-weight:700; color:var(--dark-color); margin:0 0 4px; }
+        .signature-space { height:42px; border-bottom:1px solid var(--dark-color); margin-bottom:7px; }
+        .signature-date { font-size:10px; margin:0; color:var(--dark-color); }
 
         @media print {
             .pdf-controls { display: none !important; }
@@ -259,7 +272,7 @@
                 <span>Laudo de Insalubridade</span>
             </h1>
             <p class="cover-subtitle">
-                Avaliação técnica específica das condições ambientais de trabalho da função de <strong>Auxiliar de Serviços Gerais (ASG)</strong> e elaboração do Laudo de Insalubridade (LI) conforme <strong style="color:var(--secondary-color);">NR-15</strong> e Portaria MTb nº 3.214/78
+                Duas alternativas para elaboração do Laudo de Insalubridade (LI): avaliação específica da função de <strong>Auxiliar de Serviços Gerais (ASG)</strong> ou avaliação completa das funções da empresa, conforme <strong style="color:var(--secondary-color);">NR-15</strong>
             </p>
 
             <div class="cover-client">
@@ -329,10 +342,10 @@
                 <span class="section-title-text">Sobre a Proposta</span>
             </h2>
 
-            <p>Esta proposta tem por objeto a elaboração do <strong>Laudo de Insalubridade (LI)</strong> para a empresa <strong>ML5</strong>, <strong>exclusivamente para a função de Auxiliar de Serviços Gerais (ASG)</strong>. O escopo é restrito à função ASG e compreende a identificação e a classificação dos agentes ocupacionais pertinentes às atividades efetivamente realizadas por essa função, conforme a <strong>NR-15</strong> e a Portaria MTb nº 3.214/78.</p>
+            <p>Esta proposta apresenta duas alternativas independentes para a elaboração do <strong>Laudo de Insalubridade (LI)</strong> da empresa <strong>ML5</strong>. A empresa poderá optar pela avaliação específica da função de <strong>Auxiliar de Serviços Gerais (ASG)</strong> ou pela avaliação completa das funções existentes, conforme sua necessidade.</p>
 
             <div class="highlight-box">
-                <p><strong><i class="fas fa-file-alt"></i> Serviço:</strong> Elaboração do Laudo de Insalubridade (LI), exclusivamente para a função de Auxiliar de Serviços Gerais (ASG) — entrega única, com emissão de ART pelo Engenheiro de Segurança do Trabalho junto ao CREA.</p>
+                <p><strong><i class="fas fa-file-alt"></i> Alternativas de contratação:</strong> Opção 1 — somente a função ASG; ou Opção 2 — todas as funções da empresa (aproximadamente 40 funções). A opção escolhida inclui emissão de ART pelo Engenheiro de Segurança do Trabalho junto ao CREA.</p>
             </div>
 
             <div class="page-footer">
@@ -360,36 +373,34 @@
                 <p>A CLT (art. 190 e 192) e a NR-15 determinam que toda empresa que possua atividades ou operações insalubres deve ter o laudo elaborado por profissional habilitado. A ausência do documento expõe a empresa a passivos trabalhistas e autuações do MTE.</p>
             </div>
 
-            <h3 class="subsection-title"><i class="fas fa-search"></i> Agentes Ocupacionais Pertinentes à Função ASG</h3>
+            <h3 class="subsection-title"><i class="fas fa-search"></i> Agentes Ocupacionais Aplicáveis ao Escopo Escolhido</h3>
 
             <div class="factors-grid">
                 <div class="factor-card" style="border-left-color:var(--primary-color);">
                     <h4><i class="fas fa-volume-up" style="color:var(--primary-color);"></i> Agentes Físicos — Ruído</h4>
-                    <p>Avaliação da exposição ao ruído, quando pertinente às atividades efetivamente realizadas pelo ASG, conforme NR-15 Anexo 1 e NHO-01 da Fundacentro.</p>
+                    <p>Avaliação da exposição ao ruído nas atividades abrangidas pela opção contratada, conforme NR-15 Anexo 1 e NHO-01 da Fundacentro.</p>
                 </div>
                 <div class="factor-card" style="border-left-color:var(--orange-color);">
                     <h4><i class="fas fa-thermometer-half" style="color:var(--orange-color);"></i> Agentes Físicos — Calor</h4>
-                    <p>Verificação da exposição ao calor, quando pertinente aos ambientes e às atividades efetivamente realizadas pelo ASG.</p>
+                    <p>Verificação da exposição ao calor, quando pertinente aos ambientes e postos de trabalho abrangidos.</p>
                 </div>
                 <div class="factor-card" style="border-left-color:var(--alert-color);">
                     <h4><i class="fas fa-wind" style="color:var(--alert-color);"></i> Agentes Químicos</h4>
-                    <p>Avaliação dos produtos, substâncias e poeiras aos quais o ASG esteja efetivamente exposto durante suas atividades, conforme os anexos aplicáveis da NR-15.</p>
+                    <p>Avaliação dos produtos, substâncias e poeiras presentes nas atividades contempladas, conforme os anexos aplicáveis da NR-15.</p>
                 </div>
                 <div class="factor-card" style="border-left-color:var(--teal-color);">
                     <h4><i class="fas fa-broadcast-tower" style="color:var(--teal-color);"></i> Biológicos e Outros</h4>
-                    <p>Análise dos agentes biológicos e de outros agentes ocupacionais somente quando pertinentes às atividades efetivamente realizadas pela função ASG.</p>
+                    <p>Análise dos agentes biológicos e de outros agentes ocupacionais pertinentes ao escopo selecionado.</p>
                 </div>
             </div>
 
-            <h3 class="subsection-title" style="margin-top:12px;"><i class="fas fa-list-ol"></i> Metodologia de Execução</h3>
+            <h3 class="subsection-title" style="margin-top:12px;"><i class="fas fa-list-ol"></i> Escopo conforme a alternativa escolhida</h3>
             <ul class="feature-list">
-                <li>Vistoria técnica presencial nos ambientes em que a função de Auxiliar de Serviços Gerais (ASG) é exercida na ML5</li>
-                <li>Levantamento e análise das atividades, rotinas e condições de exposição específicas da função ASG</li>
-                <li>Identificação e avaliação qualitativa e/ou quantitativa dos agentes insalubres pertinentes às atividades efetivamente realizadas pelo ASG (físicos, químicos e biológicos)</li>
-                <li>Comparação dos resultados com os limites de tolerância estabelecidos pela NR-15 e seus Anexos</li>
-                <li>Classificação da função ASG, quando aplicável, por grau de insalubridade: Mínimo (10%), Médio (20%) ou Máximo (40%)</li>
-                <li>Emissão do Laudo Técnico assinado por Engenheiro de Segurança do Trabalho com ART</li>
-                <li>Entrega do documento em formato digital (PDF) assinado</li>
+                <li><strong>Opção 1 — somente ASG:</strong> vistoria e avaliação específica da função, análise dos agentes ocupacionais aplicáveis, enquadramento conforme NR-15 e emissão do laudo com ART inclusa</li>
+                <li><strong>Opção 2 — todas as funções:</strong> vistoria técnica e avaliação das funções/postos existentes (aproximadamente 40 funções), organizados por função ou GHE quando aplicável</li>
+                <li>Identificação e avaliação qualitativa e/ou quantitativa dos agentes ocupacionais físicos, químicos e biológicos pertinentes ao escopo contratado</li>
+                <li>Comparação dos resultados com os limites de tolerância da NR-15 e seus Anexos e emissão do laudo completo correspondente à opção escolhida</li>
+                <li>Entrega do documento em formato digital (PDF), assinado por Engenheiro de Segurança do Trabalho, com ART inclusa</li>
             </ul>
 
             <h3 class="subsection-title" style="margin-top:10px;"><i class="fas fa-stamp"></i> ART — Anotação de Responsabilidade Técnica</h3>
@@ -418,12 +429,12 @@
 
             <div class="info-box" style="margin-bottom:10px;">
                 <h4><i class="fas fa-box-open"></i> O que será entregue ao final do serviço</h4>
-                <p>Ao término da avaliação técnica específica da função ASG, a ML5 receberá um laudo juridicamente válido, restrito a essa função, pronto para apresentação em fiscalizações do MTE, processos trabalhistas e auditorias internas.</p>
+                <p>Ao término do serviço, a ML5 receberá um laudo juridicamente válido correspondente à alternativa contratada: avaliação específica da função ASG ou avaliação completa das funções da empresa.</p>
             </div>
 
             <ul class="feature-list">
-                <li><strong>Laudo de Insalubridade (LI)</strong> — documento técnico com análise exclusiva da função de Auxiliar de Serviços Gerais (ASG)</li>
-                <li><strong>Enquadramento da função ASG</strong> — conclusão clara sobre a caracterização ou não da insalubridade e, quando aplicável, o respectivo grau (mínimo, médio ou máximo)</li>
+                <li><strong>Laudo de Insalubridade (LI)</strong> — documento técnico correspondente ao escopo da opção comercial escolhida</li>
+                <li><strong>Enquadramento técnico</strong> — conclusão por função avaliada sobre a caracterização ou não da insalubridade e, quando aplicável, o respectivo grau</li>
                 <li><strong>Descrição dos agentes nocivos identificados</strong> — fundamentação técnica e normativa de cada agente avaliado</li>
                 <li><strong>ART do Engenheiro de Segurança do Trabalho</strong> — emitida junto ao CREA/RN, incluída no custo do serviço</li>
                 <li><strong>Arquivo digital em PDF</strong> — assinado eletronicamente e com ART anexa, para guarda e apresentação imediata</li>
@@ -446,7 +457,7 @@
                 </div>
                 <div class="factor-card">
                     <h4><i class="fas fa-money-bill-wave"></i> Controle de Passivos</h4>
-                    <p>Definição técnica do enquadramento da função ASG quanto ao adicional, evitando pagamentos indevidos ou passivos retroativos.</p>
+                    <p>Definição técnica do enquadramento das funções abrangidas pela opção escolhida, evitando pagamentos indevidos ou passivos retroativos.</p>
                 </div>
                 <div class="factor-card">
                     <h4><i class="fas fa-shield-alt"></i> Proteção ao Trabalhador</h4>
@@ -486,23 +497,27 @@
             </h2>
 
             <div class="highlight-box" style="margin-bottom:12px;">
-                <p style="margin:0;"><strong><i class="fas fa-file-alt"></i> Serviço:</strong> Elaboração do Laudo de Insalubridade (LI) — ML5 — exclusivamente para a função ASG — entrega única com ART inclusa</p>
+                <p style="margin:0;"><strong><i class="fas fa-file-alt"></i> Escolha uma alternativa:</strong> as opções abaixo são independentes e não serão somadas. A opção selecionada contempla a elaboração do laudo e a ART inclusa.</p>
             </div>
 
             <table class="inv-table">
                 <thead>
                     <tr>
-                        <th style="width:70%;">Descrição do Serviço</th>
-                        <th class="right" style="width:30%;">Valor</th>
+                        <th style="width:18%;">Opção</th>
+                        <th style="width:57%;">Escopo</th>
+                        <th class="right" style="width:25%;">Valor</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <strong>Laudo de Insalubridade (LI)</strong><br>
-                            <span class="sub">Vistoria técnica presencial · avaliação específica e exclusiva da função de Auxiliar de Serviços Gerais (ASG) · elaboração do laudo técnico</span>
-                        </td>
-                        <td class="right">R$ 900,00</td>
+                        <td><strong>Opção 1</strong></td>
+                        <td><strong>Somente ASG</strong><br><span class="sub">Vistoria e avaliação específica da função de Auxiliar de Serviços Gerais, enquadramento conforme NR-15 e emissão do laudo</span></td>
+                        <td class="right">R$ 450,00</td>
+                    </tr>
+                    <tr style="background:#fff7e6;border-left:4px solid var(--secondary-color);">
+                        <td><strong>Opção 2</strong><br><span style="font-size:8px;font-weight:700;color:var(--orange-color);">VALOR ESPECIAL</span></td>
+                        <td><strong>Todas as funções da empresa</strong><br><span class="sub">Avaliação abrangente de aproximadamente 40 funções, organizadas por função/GHE quando aplicável, e emissão do laudo completo</span></td>
+                        <td class="right">R$ 880,00</td>
                     </tr>
                     <tr class="incluso-row">
                         <td><i class="fas fa-check" style="margin-right:6px;"></i> ART — Anotação de Responsabilidade Técnica (CREA)</td>
@@ -516,19 +531,8 @@
                         <td><i class="fas fa-check" style="margin-right:6px;"></i> Recomendações técnicas de controle dos agentes identificados</td>
                         <td class="right">Incluso</td>
                     </tr>
-                    <tr class="total-row">
-                        <td><strong>VALOR TOTAL DO SERVIÇO</strong></td>
-                        <td class="right">R$ 900,00</td>
-                    </tr>
                 </tbody>
             </table>
-
-            <div style="background:#ebf8ff;border:1px solid #bee3f8;border-radius:10px;padding:14px 18px;margin-top:14px;text-align:center;">
-                <p style="font-family:var(--font-primary);font-size:11px;font-weight:700;color:var(--primary-color);margin:0 0 4px;">VALOR TOTAL</p>
-                <p style="font-size:28px;font-weight:800;color:var(--primary-color);margin:0;">R$ 900,00</p>
-                <p style="font-size:10px;color:var(--gray-color);margin:4px 0 0;"><strong>Valor correspondente exclusivamente à elaboração do laudo da função ASG, com ART inclusa.</strong></p>
-                <p style="font-size:10px;color:var(--gray-color);margin:4px 0 0;">Pagamento único — entrega após realização da vistoria técnica</p>
-            </div>
 
             <h2 class="section-title" style="margin-top:18px;">
                 <span class="section-number">7</span>
@@ -603,7 +607,7 @@
 
             <div class="info-box" style="margin-bottom:14px;">
                 <h4><i class="fas fa-handshake"></i> Formalização do Aceite</h4>
-                <p>Ao assinar este documento, as partes declaram estar de acordo com todos os termos, condições, valores e prazos descritos nesta proposta comercial, formalizando a contratação do serviço de elaboração do Laudo de Insalubridade exclusivamente para a função de Auxiliar de Serviços Gerais (ASG).</p>
+                <p>Ao assinar este documento, as partes declaram estar de acordo com os termos, condições, valor e prazo da alternativa comercial escolhida, formalizando a contratação do Laudo de Insalubridade conforme a Opção 1 (somente ASG) ou a Opção 2 (todas as funções da empresa).</p>
             </div>
 
             <!-- Proponente -->
@@ -628,31 +632,28 @@
                 </div>
             </div>
 
-            <!-- Aprovador -->
-            <div style="background:var(--light-color);border-radius:10px;padding:16px;">
-                <h3 style="font-family:var(--font-primary);color:var(--primary-color);font-size:13px;margin-bottom:10px;text-align:center;border-bottom:2px solid var(--secondary-color);padding-bottom:8px;">
-                    <i class="fas fa-user-tie" style="color:var(--secondary-color);"></i> RESPONSÁVEL PELA APROVAÇÃO DA PROPOSTA
-                </h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-                    <div>
-                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">Razão Social</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">ML5</p>
-                    </div>
-                    <div>
-                        <p style="margin:0 0 2px 0;font-size:10px;color:var(--gray-color);text-transform:uppercase;">CNPJ</p>
-                        <p style="margin:0;font-size:11px;font-weight:600;">49.036.333/0001-60</p>
-                    </div>
-                </div>
-                <div style="padding-top:10px;border-top:1px dashed var(--gray-color);text-align:center;">
-                    <div style="border-bottom:1px solid var(--dark-color);margin:0 auto 4px;height:28px;max-width:400px;"></div>
-                    <p style="margin:0;font-size:10px;color:var(--gray-color);text-align:center;">Assinatura do Aprovador</p>
-                </div>
-            </div>
-
             <div class="page-footer">
                 <span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span>
                 <span class="page-number">06</span>
             </div>
+        </div>
+
+        <!-- PÁGINA 7: Aceites comerciais independentes -->
+        <div class="page">
+            <div class="page-header"><img src="../../assets/logoengmarq.png" alt="EngMarq Solution" class="page-header-logo"><span class="page-header-title">Proposta TM0132 — Laudo de Insalubridade | ML5</span></div>
+            <h2 class="section-title"><span class="section-number"><i class="fas fa-file-signature"></i></span><span class="section-title-text">Aceite da Opção Comercial</span></h2>
+            <p class="acceptance-instruction">Para formalizar a contratação, assine somente a opção escolhida.</p>
+            <div class="acceptance-card">
+                <div class="acceptance-card-header"><div><p class="acceptance-card-title">OPÇÃO 1 — SOMENTE ASG</p><p class="acceptance-card-scope">Laudo exclusivo para Auxiliar de Serviços Gerais</p></div><div class="acceptance-card-value">R$ 450,00</div></div>
+                <p class="acceptance-text">Declaro estar de acordo com a contratação da <strong>Opção 1 — Laudo de Insalubridade exclusivamente para a função de Auxiliar de Serviços Gerais — ASG</strong>, no valor de <strong>R$ 450,00</strong>.</p>
+                <div class="signature-area"><p class="signature-label">Assinatura do Contratante:</p><div class="signature-space"></div><p class="signature-date">Data: ____ / ____ / ________</p></div>
+            </div>
+            <div class="acceptance-card option-two">
+                <div class="acceptance-card-header"><div><p class="acceptance-card-title">OPÇÃO 2 — TODAS AS FUNÇÕES</p><p class="acceptance-card-scope">Laudo contemplando todas as funções da empresa</p></div><div class="acceptance-card-value">R$ 880,00</div></div>
+                <p class="acceptance-text">Declaro estar de acordo com a contratação da <strong>Opção 2 — Laudo de Insalubridade contemplando todas as funções da empresa</strong>, no valor especial de <strong>R$ 880,00</strong>.</p>
+                <div class="signature-area"><p class="signature-label">Assinatura do Contratante:</p><div class="signature-space"></div><p class="signature-date">Data: ____ / ____ / ________</p></div>
+            </div>
+            <div class="page-footer"><span>EngMarq Solution | engmarqsolution@gmail.com | +55 84 99928-5888 | @engmarq_solution</span><span class="page-number">07</span></div>
         </div>
 
     </div>
