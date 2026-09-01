@@ -66,6 +66,30 @@
       "dest": "/landing-kit-programas.html"
     },
     {
+      "src": "/aso",
+      "dest": "/aso.html"
+    },
+    {
+      "src": "/pcmso",
+      "dest": "/landing-pcmso.html"
+    },
+    {
+      "src": "/pgr",
+      "dest": "/landing-pgr.html"
+    },
+    {
+      "src": "/ltcat",
+      "dest": "/landing-ltcat.html"
+    },
+    {
+      "src": "/insalubridade",
+      "dest": "/landing-insalubridade.html"
+    },
+    {
+      "src": "/periculosidade",
+      "dest": "/landing-periculosidade.html"
+    },
+    {
       "src": "/consultoria-gratuita",
       "dest": "/landing-consultoria-gratuita.html"
     },
