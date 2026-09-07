@@ -1,0 +1,7 @@
+body { margin: 0; background: #e7ebf0; color: #243447; font: 14px 'Open Sans', sans-serif; }
+.preview-tools { padding: 16px 24px; background: white; border-bottom: 3px solid #f5a623; }
+.preview-tools label,.preview-tools button { margin-left: 24px; }
+button,select { padding: 8px; }
+#pages { padding: 24px; overflow: auto; }
+.pagedjs_page { margin: 0 auto 24px; background: white; box-shadow: 0 3px 14px #1a365d24; }
+@media print { .preview-tools { display: none !important; } body,#pages { margin: 0; padding: 0; background: white; } .pagedjs_page { margin: 0; box-shadow: none; } }

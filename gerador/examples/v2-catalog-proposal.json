@@ -1,0 +1,883 @@
+{
+  "schemaVersion": 2,
+  "metadata": {
+    "id": "fixture-universal-catalog",
+    "number": "V2-DEMO-003",
+    "issuedOn": "2026-08-25",
+    "revision": 0,
+    "title": "Programas, avaliações e gestão de SST",
+    "author": {
+      "name": "Equipe EngMarq"
+    }
+  },
+  "client": {
+    "kind": "single",
+    "displayName": "Empresa Exemplo"
+  },
+  "companies": [
+    {
+      "id": "company-1",
+      "legalName": "Empresa Exemplo",
+      "employeeCount": 18
+    }
+  ],
+  "scope": {
+    "objective": "Elaboração de programas e laudos, avaliação psicossocial, gestão dos eventos SST e registro de responsabilidade técnica para a Empresa Exemplo.",
+    "exclusions": [
+      "Medições quantitativas não selecionadas.",
+      "Exames médicos ocupacionais não contratados."
+    ],
+    "assumptions": [
+      "Disponibilização dos dados da empresa e dos colaboradores."
+    ]
+  },
+  "services": [
+    {
+      "id": "demo-pgr",
+      "companyId": "company-1",
+      "catalogId": "pgr",
+      "kind": "program",
+      "content": {
+        "title": "PGR — Programa de Gerenciamento de Riscos",
+        "objective": "Organizar a identificação de perigos, a avaliação dos riscos e as medidas de prevenção para subsidiar a gestão de SST da contratante.",
+        "methodology": [
+          "Alinhamento inicial do escopo, coleta de documentos e definição do cronograma com a contratante.",
+          "Visita de reconhecimento, análise documental e levantamento das exposições por função e ambiente.",
+          "Classificação dos riscos e priorização das medidas de prevenção conforme as condições identificadas."
+        ],
+        "deliverables": [
+          "Inventário de riscos ocupacionais.",
+          "Plano de ação com medidas preventivas, prioridades e orientação de acompanhamento.",
+          "PGR identificado e assinado pelo responsável técnico."
+        ],
+        "references": [
+          "NR-01 — Gerenciamento de Riscos Ocupacionais."
+        ],
+        "exclusions": [
+          "Avaliações quantitativas não selecionadas no escopo.",
+          "Execução das adequações e medidas de controle propostas."
+        ],
+        "responsibilities": [],
+        "provenance": {
+          "source": "propostas/maio-2026/proposta-pgr-pcmso-ltcat-atecmontagem.html",
+          "sources": [
+            "propostas/maio-2026/proposta-pgr-pcmso-ltcat-atecmontagem.html",
+            "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html"
+          ],
+          "revision": "2026-09-07.2",
+          "review": "pending"
+        },
+        "profile": {
+          "shortName": "PGR",
+          "category": "programs",
+          "summary": "Elaboração do inventário de riscos ocupacionais e do plano de ação, considerando atividades, funções e ambientes da empresa.",
+          "scope": [
+            "Reconhecimento das atividades e dos ambientes abrangidos.",
+            "Avaliação qualitativa dos riscos físicos, químicos, biológicos, ergonômicos e de acidentes.",
+            "Inventário de riscos e plano de ação individualizados por empresa."
+          ],
+          "executionSteps": [
+            "Alinhar dados cadastrais, funções e cronograma.",
+            "Reconhecer perigos e condições de exposição.",
+            "Consolidar inventário e prioridades de controle.",
+            "Elaborar plano de ação e entregar o programa."
+          ],
+          "providerResponsibilities": [
+            "Designar profissional com qualificação compatível com os serviços contratados.",
+            "Entregar os documentos e registros previstos no escopo, identificados por empresa."
+          ],
+          "clientResponsibilities": [
+            "Fornecer informações atualizadas sobre funções, atividades, ambientes e colaboradores abrangidos.",
+            "Disponibilizar acesso aos ambientes e um responsável para acompanhar as atividades agendadas.",
+            "A implementação das medidas recomendadas cabe à contratante."
+          ],
+          "inclusions": [
+            "Levantamento qualitativo necessário à elaboração do programa.",
+            "Orientações para utilização do inventário e do plano de ação."
+          ],
+          "observations": [
+            "Medições quantitativas somente integram a contratação quando selecionadas e dimensionadas no escopo.",
+            "PCMSO, LTCAT e demais serviços mantêm entregáveis próprios, ainda que contratados em conjunto."
+          ],
+          "periodicity": {
+            "mode": "on-demand",
+            "description": "Elaboração conforme contratação; revisões por alterações de atividades ou condições de trabalho devem ter seu alcance definido no escopo."
+          },
+          "parameters": [
+            {
+              "id": "employeeCount",
+              "label": "Colaboradores abrangidos",
+              "unit": "pessoas",
+              "required": false,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Colaboradores abrangidos considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "roleCount",
+              "label": "Funções abrangidas",
+              "unit": "funções",
+              "required": false,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Funções abrangidas considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "workAreas",
+              "label": "Setores e unidades",
+              "required": false,
+              "type": "list",
+              "description": "Setores e unidades expressamente abrangidos pelo escopo."
+            }
+          ],
+          "defaultDetail": "standard",
+          "icon": "file-shield",
+          "visual": {
+            "accent": "#2b6cb0",
+            "section": "programs",
+            "order": 10
+          }
+        }
+      },
+      "parameters": {},
+      "detailLevel": "full"
+    },
+    {
+      "id": "demo-pcmso",
+      "companyId": "company-1",
+      "catalogId": "pcmso",
+      "kind": "program",
+      "content": {
+        "title": "PCMSO — Programa de Controle Médico de Saúde Ocupacional",
+        "objective": "Orientar a vigilância da saúde dos trabalhadores com base nos riscos ocupacionais informados e identificados para a empresa.",
+        "methodology": [
+          "Alinhamento inicial do escopo, coleta de documentos e definição do cronograma com a contratante.",
+          "Análise do inventário de riscos disponível e das informações de funções e exposições.",
+          "Planejamento médico dos exames e ações de acompanhamento, alinhado aos riscos do PGR."
+        ],
+        "deliverables": [
+          "Matriz de exames ocupacionais por função.",
+          "Cronograma de acompanhamento médico.",
+          "PCMSO assinado pelo médico responsável."
+        ],
+        "references": [
+          "NR-07 — Programa de Controle Médico de Saúde Ocupacional."
+        ],
+        "exclusions": [
+          "Realização e custeio de exames, consultas e procedimentos médicos não contratados."
+        ],
+        "responsibilities": [],
+        "provenance": {
+          "source": "propostas/maio-2026/proposta-pgr-pcmso-ltcat-atecmontagem.html",
+          "sources": [
+            "propostas/maio-2026/proposta-pgr-pcmso-ltcat-atecmontagem.html"
+          ],
+          "revision": "2026-09-07.2",
+          "review": "pending"
+        },
+        "profile": {
+          "shortName": "PCMSO",
+          "category": "programs",
+          "summary": "Programa médico ocupacional com matriz de exames por função e planejamento do acompanhamento da saúde dos trabalhadores.",
+          "scope": [
+            "Análise dos riscos relacionados às funções abrangidas.",
+            "Definição dos exames ocupacionais e respectivos critérios de acompanhamento.",
+            "Organização do cronograma de ações de saúde ocupacional."
+          ],
+          "executionSteps": [
+            "Receber inventário e relação de funções.",
+            "Definir matriz de exames e periodicidades aplicáveis.",
+            "Organizar cronograma de acompanhamento.",
+            "Entregar o programa sob responsabilidade médica."
+          ],
+          "providerResponsibilities": [
+            "Designar profissional com qualificação compatível com os serviços contratados.",
+            "Entregar os documentos e registros previstos no escopo, identificados por empresa.",
+            "Disponibilizar responsabilidade médica para elaboração do PCMSO."
+          ],
+          "clientResponsibilities": [
+            "Fornecer informações atualizadas sobre funções, atividades, ambientes e colaboradores abrangidos.",
+            "Disponibilizar acesso aos ambientes e um responsável para acompanhar as atividades agendadas.",
+            "A implementação das medidas recomendadas cabe à contratante.",
+            "Disponibilizar o inventário de riscos e organizar a realização dos exames previstos."
+          ],
+          "inclusions": [
+            "Elaboração documental do programa médico e orientação sobre a matriz de exames."
+          ],
+          "observations": [
+            "A contratação do PCMSO não pressupõe a contratação de clínica ou de exames ocupacionais."
+          ],
+          "periodicity": {
+            "mode": "on-demand",
+            "description": "Elaboração conforme contratação; revisões por alterações de atividades ou condições de trabalho devem ter seu alcance definido no escopo."
+          },
+          "parameters": [
+            {
+              "id": "employeeCount",
+              "label": "Colaboradores abrangidos",
+              "unit": "pessoas",
+              "required": false,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Colaboradores abrangidos considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "roleCount",
+              "label": "Funções abrangidas",
+              "unit": "funções",
+              "required": false,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Funções abrangidas considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "workAreas",
+              "label": "Setores e unidades",
+              "required": false,
+              "type": "list",
+              "description": "Setores e unidades expressamente abrangidos pelo escopo."
+            }
+          ],
+          "defaultDetail": "standard",
+          "icon": "file-medical",
+          "visual": {
+            "accent": "#2b6cb0",
+            "section": "programs",
+            "order": 20
+          }
+        }
+      },
+      "parameters": {},
+      "detailLevel": "full"
+    },
+    {
+      "id": "demo-ltcat",
+      "companyId": "company-1",
+      "catalogId": "ltcat",
+      "kind": "report",
+      "content": {
+        "title": "LTCAT — Laudo Técnico das Condições Ambientais do Trabalho",
+        "objective": "Documentar as condições de exposição ocupacional das funções abrangidas e apresentar conclusões técnicas para fins previdenciários.",
+        "methodology": [
+          "Alinhamento inicial do escopo, coleta de documentos e definição do cronograma com a contratante.",
+          "Reconhecimento dos ambientes e análise das exposições por função.",
+          "Análise técnica das evidências disponíveis e dos resultados de avaliações contratadas."
+        ],
+        "deliverables": [
+          "Caracterização das exposições por função ou grupo avaliado.",
+          "Conclusões técnicas previdenciárias.",
+          "LTCAT assinado pelo responsável técnico."
+        ],
+        "references": [
+          "Lei nº 8.213/91.",
+          "Decreto nº 3.048/1999.",
+          "IN 128/INSS — referência utilizada nas propostas de origem."
+        ],
+        "exclusions": [
+          "Avaliações quantitativas não selecionadas no escopo.",
+          "Envio de eventos do eSocial quando não contratado."
+        ],
+        "responsibilities": [],
+        "provenance": {
+          "source": "propostas/maio-2026/proposta-pgr-pcmso-ltcat-atecmontagem.html",
+          "sources": [
+            "propostas/maio-2026/proposta-pgr-pcmso-ltcat-atecmontagem.html",
+            "propostas/maio-2026/proposta-programas-medicoes-unimetais.html"
+          ],
+          "revision": "2026-09-07.2",
+          "review": "pending"
+        },
+        "profile": {
+          "shortName": "LTCAT",
+          "category": "programs",
+          "summary": "Caracterização técnica das condições ambientais e da exposição a agentes nocivos para subsidiar a documentação previdenciária.",
+          "scope": [
+            "Levantamento das atividades, agentes e condições de exposição.",
+            "Análise das informações ambientais e avaliações disponíveis.",
+            "Conclusão técnica relativa às condições de trabalho avaliadas."
+          ],
+          "executionSteps": [
+            "Levantar funções, atividades e agentes nocivos.",
+            "Analisar condições e registros de exposição.",
+            "Identificar necessidade de informações ou avaliações complementares.",
+            "Emitir o laudo com conclusões e identificação da responsabilidade técnica."
+          ],
+          "providerResponsibilities": [
+            "Designar profissional com qualificação compatível com os serviços contratados.",
+            "Entregar os documentos e registros previstos no escopo, identificados por empresa."
+          ],
+          "clientResponsibilities": [
+            "Fornecer informações atualizadas sobre funções, atividades, ambientes e colaboradores abrangidos.",
+            "Disponibilizar acesso aos ambientes e um responsável para acompanhar as atividades agendadas.",
+            "A implementação das medidas recomendadas cabe à contratante."
+          ],
+          "inclusions": [
+            "Levantamento e análise técnica para elaboração do laudo."
+          ],
+          "observations": [
+            "Medições quantitativas somente integram a contratação quando selecionadas e dimensionadas no escopo.",
+            "ART deve constar expressamente nos itens contratados quando aplicável; não é cobrada novamente dentro deste item."
+          ],
+          "periodicity": {
+            "mode": "on-demand",
+            "description": "Elaboração conforme contratação; revisões por alterações de atividades ou condições de trabalho devem ter seu alcance definido no escopo."
+          },
+          "parameters": [
+            {
+              "id": "employeeCount",
+              "label": "Colaboradores abrangidos",
+              "unit": "pessoas",
+              "required": false,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Colaboradores abrangidos considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "roleCount",
+              "label": "Funções abrangidas",
+              "unit": "funções",
+              "required": false,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Funções abrangidas considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "workAreas",
+              "label": "Setores e unidades",
+              "required": false,
+              "type": "list",
+              "description": "Setores e unidades expressamente abrangidos pelo escopo."
+            }
+          ],
+          "defaultDetail": "standard",
+          "icon": "file-lines",
+          "visual": {
+            "accent": "#2b6cb0",
+            "section": "programs",
+            "order": 30
+          }
+        }
+      },
+      "parameters": {},
+      "detailLevel": "full"
+    },
+    {
+      "id": "demo-lip",
+      "companyId": "company-1",
+      "catalogId": "lip",
+      "kind": "report",
+      "content": {
+        "title": "Laudo de Insalubridade e Periculosidade",
+        "objective": "Avaliar as condições de trabalho abrangidas e fundamentar as conclusões técnicas relativas às exposições e operações analisadas.",
+        "methodology": [
+          "Alinhamento inicial do escopo, coleta de documentos e definição do cronograma com a contratante.",
+          "Inspeção técnica, análise documental e avaliação das exposições conforme os critérios aplicáveis.",
+          "Consideração dos resultados de medições contratadas e dos controles existentes."
+        ],
+        "deliverables": [
+          "Descrição das atividades e exposições avaliadas.",
+          "Análise técnica de insalubridade e periculosidade.",
+          "Laudo com conclusões e assinatura do responsável técnico."
+        ],
+        "references": [
+          "NR-15 — Atividades e Operações Insalubres.",
+          "NR-16 — Atividades e Operações Perigosas."
+        ],
+        "exclusions": [
+          "Avaliações quantitativas não selecionadas no escopo.",
+          "Atuação como assistente técnico judicial não contratada."
+        ],
+        "responsibilities": [],
+        "provenance": {
+          "source": "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html",
+          "sources": [
+            "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html",
+            "propostas/maio-2026/proposta-programas-medicoes-unimetais.html"
+          ],
+          "revision": "2026-09-07.2",
+          "review": "pending"
+        },
+        "profile": {
+          "shortName": "LIP",
+          "category": "programs",
+          "summary": "Análise das atividades e ambientes para caracterização técnica das condições de insalubridade e periculosidade.",
+          "scope": [
+            "Inspeção das atividades e condições de exposição.",
+            "Análise dos agentes e operações presentes no escopo.",
+            "Conclusões de insalubridade e periculosidade por atividade avaliada."
+          ],
+          "executionSteps": [
+            "Identificar atividades e exposições.",
+            "Analisar medidas de proteção e avaliações disponíveis.",
+            "Aplicar os critérios técnicos pertinentes.",
+            "Consolidar conclusões no laudo."
+          ],
+          "providerResponsibilities": [
+            "Designar profissional com qualificação compatível com os serviços contratados.",
+            "Entregar os documentos e registros previstos no escopo, identificados por empresa."
+          ],
+          "clientResponsibilities": [
+            "Fornecer informações atualizadas sobre funções, atividades, ambientes e colaboradores abrangidos.",
+            "Disponibilizar acesso aos ambientes e um responsável para acompanhar as atividades agendadas.",
+            "A implementação das medidas recomendadas cabe à contratante."
+          ],
+          "inclusions": [
+            "Análise técnica documental e das atividades incluídas na proposta."
+          ],
+          "observations": [
+            "Medições quantitativas somente integram a contratação quando selecionadas e dimensionadas no escopo.",
+            "As conclusões dependem das condições efetivamente constatadas; não há resultado de enquadramento predeterminado."
+          ],
+          "periodicity": {
+            "mode": "on-demand",
+            "description": "Elaboração conforme contratação; revisões por alterações de atividades ou condições de trabalho devem ter seu alcance definido no escopo."
+          },
+          "parameters": [
+            {
+              "id": "employeeCount",
+              "label": "Colaboradores abrangidos",
+              "unit": "pessoas",
+              "required": false,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Colaboradores abrangidos considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "roleCount",
+              "label": "Funções abrangidas",
+              "unit": "funções",
+              "required": false,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Funções abrangidas considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "workAreas",
+              "label": "Setores e unidades",
+              "required": false,
+              "type": "list",
+              "description": "Setores e unidades expressamente abrangidos pelo escopo."
+            }
+          ],
+          "defaultDetail": "standard",
+          "icon": "file-circle-exclamation",
+          "visual": {
+            "accent": "#2b6cb0",
+            "section": "programs",
+            "order": 40
+          }
+        }
+      },
+      "parameters": {},
+      "detailLevel": "full"
+    },
+    {
+      "id": "demo-art",
+      "companyId": "company-1",
+      "catalogId": "art",
+      "kind": "management",
+      "content": {
+        "title": "Anotação de Responsabilidade Técnica",
+        "objective": "Identificar o profissional responsável e vincular o registro técnico aos serviços e documentos contratados.",
+        "methodology": [
+          "Alinhamento inicial do escopo, coleta de documentos e definição do cronograma com a contratante.",
+          "Conferência do objeto e das atividades técnicas antes do preenchimento e registro da ART."
+        ],
+        "deliverables": [
+          "ART registrada vinculada aos serviços técnicos especificados."
+        ],
+        "references": [],
+        "exclusions": [
+          "Registros de serviços ou empresas não abrangidos pela proposta."
+        ],
+        "responsibilities": [],
+        "provenance": {
+          "source": "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html",
+          "sources": [
+            "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html",
+            "propostas/agosto-2026/TM0137-Grupo Bertis.html"
+          ],
+          "revision": "2026-09-07.2",
+          "review": "pending"
+        },
+        "profile": {
+          "shortName": "ART",
+          "category": "management",
+          "summary": "Registro da responsabilidade técnica junto ao CREA para os serviços de engenharia expressamente abrangidos na contratação.",
+          "scope": [
+            "Identificação do contratante, do profissional e das atividades técnicas abrangidas.",
+            "Registro da ART correspondente ao objeto contratado."
+          ],
+          "executionSteps": [
+            "Identificar serviços e documentos abrangidos.",
+            "Conferir dados do contratante e do responsável técnico.",
+            "Registrar e disponibilizar a ART correspondente."
+          ],
+          "providerResponsibilities": [
+            "Designar profissional com qualificação compatível com os serviços contratados.",
+            "Entregar os documentos e registros previstos no escopo, identificados por empresa.",
+            "Providenciar o registro pelo profissional responsável pelas atividades técnicas abrangidas."
+          ],
+          "clientResponsibilities": [
+            "Fornecer dados cadastrais e confirmar o objeto da contratação."
+          ],
+          "inclusions": [
+            "Registro técnico para o objeto e a quantidade expressamente contratados."
+          ],
+          "observations": [
+            "O registro não substitui os programas ou laudos correspondentes.",
+            "A responsabilidade médica do PCMSO é distinta do registro de engenharia."
+          ],
+          "periodicity": {
+            "mode": "on-demand",
+            "description": "Vinculada ao objeto contratado; alterações de objeto devem ser avaliadas pelo responsável técnico."
+          },
+          "parameters": [
+            {
+              "id": "quantity",
+              "label": "Registros previstos",
+              "unit": "ARTs",
+              "required": true,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Registros previstos considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "coveredServices",
+              "label": "Serviços técnicos abrangidos",
+              "required": true,
+              "type": "list",
+              "description": "Serviços técnicos abrangidos expressamente abrangidos pelo escopo."
+            }
+          ],
+          "defaultDetail": "standard",
+          "icon": "stamp",
+          "visual": {
+            "accent": "#38a169",
+            "section": "technical-responsibility",
+            "order": 10
+          }
+        }
+      },
+      "parameters": {
+        "quantity": 1,
+        "coveredServices": [
+          "PGR",
+          "LTCAT",
+          "LIP"
+        ]
+      },
+      "detailLevel": "full"
+    },
+    {
+      "psychosocial": {
+        "participantCount": 18,
+        "instruments": [
+          "Instrumento definido no planejamento técnico"
+        ],
+        "integration": "Integração ao PGR da Empresa Exemplo."
+      },
+      "id": "demo-psychosocial",
+      "companyId": "company-1",
+      "catalogId": "psychosocial",
+      "kind": "psychosocial",
+      "content": {
+        "title": "Avaliação de Fatores Psicossociais",
+        "objective": "Identificar fatores associados à organização do trabalho e orientar medidas preventivas para os grupos e participantes abrangidos.",
+        "methodology": [
+          "Alinhamento inicial do escopo, coleta de documentos e definição do cronograma com a contratante.",
+          "Aplicação de instrumento de avaliação definido pela equipe técnica para a população contratada.",
+          "Análise dos dados, identificação dos fatores de risco e devolutiva com recomendações."
+        ],
+        "deliverables": [
+          "Relatório técnico de fatores psicossociais relacionados ao trabalho.",
+          "Plano de ação com recomendações preventivas.",
+          "Devolutiva e orientação para integração dos resultados ao PGR."
+        ],
+        "references": [
+          "NR-01 — Gerenciamento de Riscos Ocupacionais."
+        ],
+        "exclusions": [
+          "Palestras, campanhas e reavaliações não selecionadas na proposta."
+        ],
+        "responsibilities": [],
+        "provenance": {
+          "source": "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html",
+          "sources": [
+            "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html",
+            "propostas/maio-2026/proposta-treinamentos-psicossocial-imperthane.html"
+          ],
+          "revision": "2026-09-07.2",
+          "review": "pending"
+        },
+        "profile": {
+          "shortName": "Psicossocial",
+          "category": "management",
+          "summary": "Avaliação dos fatores de riscos psicossociais relacionados ao trabalho, com relatório técnico, plano de ação e integração à gestão de riscos.",
+          "scope": [
+            "Planejamento e sensibilização da empresa e dos participantes.",
+            "Avaliação de fatores como demandas de trabalho, autonomia, relações interpessoais, violência e assédio.",
+            "Consolidação dos resultados por função ou setor e recomendações de intervenção."
+          ],
+          "executionSteps": [
+            "Alinhar população, instrumento e cronograma.",
+            "Sensibilizar e orientar os participantes.",
+            "Aplicar a avaliação e consolidar os dados.",
+            "Elaborar relatório, plano de ação e orientações de integração ao PGR."
+          ],
+          "providerResponsibilities": [
+            "Designar profissional com qualificação compatível com os serviços contratados.",
+            "Entregar os documentos e registros previstos no escopo, identificados por empresa."
+          ],
+          "clientResponsibilities": [
+            "Fornecer informações atualizadas sobre funções, atividades, ambientes e colaboradores abrangidos.",
+            "Disponibilizar acesso aos ambientes e um responsável para acompanhar as atividades agendadas.",
+            "Apoiar a comunicação e disponibilizar os participantes nas condições acordadas.",
+            "A implementação das medidas recomendadas cabe à contratante."
+          ],
+          "inclusions": [
+            "Aplicação do instrumento, análise técnica e documentação para a população dimensionada."
+          ],
+          "observations": [
+            "O escopo trata de fatores relacionados ao trabalho, não de avaliação clínica individual.",
+            "Quantidades, instrumento e integração constam dos parâmetros do item."
+          ],
+          "periodicity": {
+            "mode": "on-demand",
+            "description": "Aplicação conforme contratação; reavaliações e campanhas precisam de programação expressa."
+          },
+          "parameters": [
+            {
+              "id": "participantCount",
+              "label": "Participantes",
+              "unit": "pessoas",
+              "binding": "psychosocial.participantCount",
+              "required": true,
+              "min": 1,
+              "integer": true,
+              "type": "number",
+              "description": "Participantes considerados na contratação; ajustar à realidade da empresa."
+            },
+            {
+              "id": "instruments",
+              "label": "Instrumentos previstos",
+              "binding": "psychosocial.instruments",
+              "required": true,
+              "type": "list",
+              "description": "Instrumentos previstos expressamente abrangidos pelo escopo."
+            },
+            {
+              "id": "integration",
+              "label": "Integração dos resultados",
+              "binding": "psychosocial.integration",
+              "required": true,
+              "type": "text",
+              "description": "Integração dos resultados a definir no alinhamento técnico."
+            }
+          ],
+          "defaultDetail": "standard",
+          "icon": "brain",
+          "visual": {
+            "accent": "#38a169",
+            "section": "complementary",
+            "order": 20
+          }
+        }
+      },
+      "parameters": {}
+    },
+    {
+      "id": "demo-esocial",
+      "companyId": "company-1",
+      "catalogId": "esocial",
+      "kind": "management",
+      "content": {
+        "title": "Gestão dos Eventos de SST do eSocial",
+        "objective": "Apoiar a manutenção das informações de SST no eSocial com consistência entre documentos, dados da empresa e eventos contratados.",
+        "methodology": [
+          "Alinhamento inicial do escopo, coleta de documentos e definição do cronograma com a contratante.",
+          "Organização de dados cadastrais e documentos de SST relativos aos eventos previstos.",
+          "Preparação, envio e acompanhamento dos registros de transmissão."
+        ],
+        "deliverables": [
+          "Registros dos eventos de SST transmitidos.",
+          "Orientação sobre informações e pendências necessárias aos envios."
+        ],
+        "references": [
+          "Manual de Orientação do eSocial — referência de operação utilizada nas propostas de origem."
+        ],
+        "exclusions": [
+          "Elaboração de programas, laudos e realização de exames não contratados.",
+          "Eventos e rotinas não relacionados ao escopo de SST selecionado."
+        ],
+        "responsibilities": [],
+        "provenance": {
+          "source": "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html",
+          "sources": [
+            "propostas/agosto-2026/TM0136-Condominio Villaggio Di Roma.html",
+            "propostas/maio-2026/proposta-programas-medicoes-unimetais.html"
+          ],
+          "revision": "2026-09-07.2",
+          "review": "pending"
+        },
+        "profile": {
+          "shortName": "eSocial SST",
+          "category": "management",
+          "summary": "Organização e envio dos eventos de SST selecionados, a partir das informações técnicas e cadastrais disponibilizadas pela contratante.",
+          "scope": [
+            "Conferência das informações necessárias aos eventos selecionados.",
+            "Preparação e transmissão das informações de SST abrangidas.",
+            "Acompanhamento dos registros de envio e orientação sobre pendências identificadas."
+          ],
+          "executionSteps": [
+            "Definir eventos abrangidos e responsáveis pelo fornecimento das informações.",
+            "Receber e conferir dados e documentos.",
+            "Transmitir os eventos contratados.",
+            "Disponibilizar registros de envio e comunicar pendências."
+          ],
+          "providerResponsibilities": [
+            "Designar profissional com qualificação compatível com os serviços contratados.",
+            "Entregar os documentos e registros previstos no escopo, identificados por empresa."
+          ],
+          "clientResponsibilities": [
+            "Fornecer informações atualizadas sobre funções, atividades, ambientes e colaboradores abrangidos.",
+            "Disponibilizar acesso aos ambientes e um responsável para acompanhar as atividades agendadas.",
+            "Fornecer documentos técnicos, dados cadastrais e autorizações necessárias ao envio.",
+            "Comunicar ocorrências e alterações que afetem os eventos contratados."
+          ],
+          "inclusions": [
+            "Gestão dos eventos expressamente selecionados no item."
+          ],
+          "observations": [
+            "S-2210, S-2220 e S-2240 são opções de escopo, não inclusões automáticas."
+          ],
+          "periodicity": {
+            "mode": "contract",
+            "description": "Frequência e duração conforme o plano contratado; atividades adicionais devem ser alinhadas entre as partes."
+          },
+          "parameters": [
+            {
+              "id": "events",
+              "label": "Eventos contratados",
+              "required": true,
+              "choices": [
+                "S-2210",
+                "S-2220",
+                "S-2240"
+              ],
+              "type": "list",
+              "description": "Eventos contratados expressamente abrangidos pelo escopo."
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "required": true,
+              "type": "text",
+              "description": "Período de atendimento a definir no alinhamento técnico."
+            }
+          ],
+          "defaultDetail": "standard",
+          "icon": "cloud-arrow-up",
+          "visual": {
+            "accent": "#38a169",
+            "section": "esocial",
+            "order": 10
+          }
+        }
+      },
+      "parameters": {
+        "events": [
+          "S-2220",
+          "S-2240"
+        ],
+        "servicePeriod": "12 meses"
+      }
+    }
+  ],
+  "trainings": [],
+  "measurements": [],
+  "assistance": [],
+  "commercial": {
+    "currency": "BRL",
+    "lines": [
+      {
+        "itemId": "demo-pgr",
+        "price": {
+          "mode": "charge",
+          "cadence": "once",
+          "amountCents": 100000
+        }
+      },
+      {
+        "itemId": "demo-pcmso",
+        "price": {
+          "mode": "charge",
+          "cadence": "once",
+          "amountCents": 100000
+        }
+      },
+      {
+        "itemId": "demo-ltcat",
+        "price": {
+          "mode": "charge",
+          "cadence": "once",
+          "amountCents": 100000
+        }
+      },
+      {
+        "itemId": "demo-lip",
+        "price": {
+          "mode": "charge",
+          "cadence": "once",
+          "amountCents": 100000
+        }
+      },
+      {
+        "itemId": "demo-art",
+        "price": {
+          "mode": "charge",
+          "cadence": "once",
+          "amountCents": 100000
+        }
+      },
+      {
+        "itemId": "demo-psychosocial",
+        "price": {
+          "mode": "charge",
+          "cadence": "once",
+          "amountCents": 100000
+        }
+      },
+      {
+        "itemId": "demo-esocial",
+        "price": {
+          "mode": "charge",
+          "cadence": "monthly",
+          "amountCents": 20000
+        }
+      }
+    ],
+    "validityDays": 15,
+    "paymentTerms": [
+      "Serviços únicos: 50% na aprovação e 50% na entrega.",
+      "eSocial: cobrança mensal durante 12 meses."
+    ],
+    "executionTerms": [
+      "Prazo a acordar após recebimento dos dados."
+    ]
+  },
+  "options": {
+    "includeCover": true,
+    "includeAcceptance": true,
+    "detailLevel": "full"
+  }
+}

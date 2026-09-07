@@ -19,6 +19,8 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       input: {
+        v2: resolve(__dirname, 'v2.html'),
+        'v2-preview': resolve(__dirname, 'v2-preview.html'),
         main: resolve(__dirname, 'index.html'),
         login: resolve(__dirname, 'login.html'),
         painel: resolve(__dirname, 'painel.html'),

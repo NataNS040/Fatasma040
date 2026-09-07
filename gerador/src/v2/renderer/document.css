@@ -1,0 +1,29 @@
+@page { size: A4; margin: 19mm 16mm 20mm; @top-left { content: element(documentHeader); } @bottom-left { content: element(documentFooter); } @bottom-right { content: counter(page) ' / ' counter(pages); font: 8pt 'Open Sans'; color: #526172; } }
+.engmarq-document { color: #243447; font: 9pt/1.5 'Open Sans', sans-serif; }
+.engmarq-document * { box-sizing: border-box; }
+.page-header { position: running(documentHeader); font: 8pt 'Montserrat'; color: #1a365d; border-bottom: 1pt solid #f5a623; padding-bottom: 3mm; }
+.page-footer { position: running(documentFooter); font: 7pt 'Open Sans'; color: #526172; }
+.cover { break-after: page; padding-top: 32mm; }
+.cover-logo { width: 78mm; height: auto; margin-bottom: 35mm; }
+.cover h1 { font: 700 29pt/1.2 'Montserrat'; color: #1a365d; border-left: 2mm solid #f5a623; padding-left: 6mm; }
+.cover-client { font-size: 18pt; margin-top: 14mm; }
+.eyebrow { font-size: 9pt; letter-spacing: 1pt; color: #88601d; }
+.document-section { margin-bottom: 5mm; break-before: auto; break-after: auto; }
+h2,h3,h4 { color: #1a365d; font-family: 'Montserrat', sans-serif; break-after: avoid; page-break-after: avoid; }
+h2 { font-size: 15pt; border-bottom: 1pt solid #f5a623; padding-bottom: 2mm; margin: 5mm 0 3mm; }
+h3 { font-size: 11pt; margin: 4mm 0 2mm; }
+h4 { font-size: 9pt; margin: 3mm 0 1mm; }
+p { margin: 1.5mm 0 3mm; }
+p,li { widows: 3; orphans: 3; overflow-wrap: anywhere; }
+ul { padding-left: 5mm; margin: 1mm 0 3mm; }
+li { margin-bottom: 1mm; }
+.service-card { border-left: 2pt solid #d8e2ee; padding-left: 3mm; margin-bottom: 5mm; }
+/* Long cards flow through pages. Only rows and signatures are atomic. */
+table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 8pt; margin: 2mm 0 4mm; }
+thead { display: table-header-group; }
+th { background: #1a365d; color: white; text-align: left; font-weight: 600; }
+th,td { padding: 2mm; border: .3pt solid #d8e2ee; vertical-align: top; overflow-wrap: anywhere; white-space: pre-line; }
+tr,.signature { break-inside: avoid; page-break-inside: avoid; }
+.info-box { background: #f0f4f8; border-left: 2pt solid #f5a623; padding: 2mm 3mm; margin: 3mm 0; break-inside: avoid; }
+.applies-to { font-size: 7.5pt; color: #526172; }
+.signature { margin-top: 7mm; padding: 4mm 0; border-top: .5pt solid #aab7c6; white-space: pre-line; }

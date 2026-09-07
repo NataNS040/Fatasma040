@@ -1,0 +1,53 @@
+import { common, defineEntry, numberParameter, sources, textParameter } from './shared';
+
+const definitions = [
+    { id: 'nr01', name: 'NR-01 / Integração em Segurança do Trabalho', short: 'NR-01 / Integração', icon: 'helmet-safety', source: sources.group,
+        summary: 'Integração dos colaboradores em riscos ocupacionais, medidas preventivas e procedimentos de segurança relacionados às atividades da empresa.',
+        topics: ['Identificação de perigos e riscos ocupacionais.', 'Direitos, deveres e medidas preventivas.', 'Procedimentos de segurança e condutas esperadas.'], reference: 'NR-01 — Disposições Gerais e Gerenciamento de Riscos Ocupacionais.' },
+    { id: 'nr05', name: 'NR-05 / Capacitação da CIPA', short: 'NR-05 / CIPA', icon: 'users', source: sources.cipa,
+        summary: 'Capacitação dos membros da CIPA ou designado para identificação de riscos, prevenção de acidentes e promoção da segurança no trabalho.',
+        topics: ['Mapeamento de riscos no ambiente de trabalho.', 'Prevenção de acidentes e promoção da saúde.', 'Atuação da comissão e orientação sobre suas rotinas e registros.'], reference: 'NR-05 — Comissão Interna de Prevenção de Acidentes e de Assédio.' },
+    { id: 'nr06', name: 'NR-06 / Equipamentos de Proteção Individual', short: 'NR-06 / EPI', icon: 'hard-hat', source: sources.marista,
+        summary: 'Orientação sobre seleção, uso, guarda, conservação e limitações dos equipamentos de proteção individual utilizados pelos colaboradores.',
+        topics: ['Seleção e uso correto dos EPIs.', 'Guarda, higienização, conservação e limitações.', 'Responsabilidades e controles relacionados aos equipamentos.'], reference: 'NR-06 — Equipamento de Proteção Individual.' },
+    { id: 'nr10', name: 'NR-10 / Segurança em Instalações e Serviços em Eletricidade', short: 'NR-10', icon: 'bolt', source: sources.marista,
+        summary: 'Capacitação em riscos elétricos e procedimentos de segurança para colaboradores que interagem com instalações e serviços em eletricidade.',
+        topics: ['Riscos elétricos e medidas de controle.', 'Bloqueio, etiquetagem e procedimentos seguros.', 'Equipamentos de proteção aplicáveis às atividades.'], reference: 'NR-10 — Segurança em Instalações e Serviços em Eletricidade.' },
+    { id: 'nr12', name: 'NR-12 / Segurança em Máquinas e Equipamentos', short: 'NR-12', icon: 'gears', source: sources.marista,
+        summary: 'Capacitação para operação segura de máquinas e equipamentos, com foco em riscos mecânicos, proteções e procedimentos da atividade.',
+        topics: ['Reconhecimento de riscos mecânicos.', 'Dispositivos de proteção e medidas coletivas.', 'Procedimentos de operação e trabalho seguro.'], reference: 'NR-12 — Segurança no Trabalho em Máquinas e Equipamentos.' },
+    { id: 'nr18', name: 'NR-18 / Segurança na Indústria da Construção', short: 'NR-18', icon: 'trowel-bricks', source: sources.domus,
+        summary: 'Capacitação em prevenção de acidentes e medidas de segurança aplicadas às atividades e aos ambientes da construção civil.',
+        topics: ['Riscos específicos da construção e medidas preventivas.', 'Utilização de EPI e EPC no canteiro.', 'Procedimentos de segurança nas atividades abrangidas.'], reference: 'NR-18 — Segurança e Saúde no Trabalho na Indústria da Construção.' },
+    { id: 'nr20', name: 'NR-20 / Segurança com Inflamáveis e Combustíveis', short: 'NR-20', icon: 'fire', source: sources.marista,
+        summary: 'Capacitação para trabalhadores que manipulam ou atuam próximos a inflamáveis e combustíveis, com foco em prevenção e resposta a emergências.',
+        topics: ['Reconhecimento dos riscos de inflamáveis e combustíveis.', 'Medidas preventivas nas atividades selecionadas.', 'Procedimentos e resposta inicial a emergências.'], reference: 'NR-20 — Segurança com Inflamáveis e Combustíveis.' },
+    { id: 'nr33', name: 'NR-33 / Segurança em Espaços Confinados', short: 'NR-33', icon: 'person-shelter', source: sources.training,
+        summary: 'Capacitação para atividades em espaços confinados, com reconhecimento, avaliação e controle de riscos e abordagem de emergência e resgate.',
+        topics: ['Reconhecimento e avaliação dos riscos de espaços confinados.', 'Medidas de controle e procedimentos de trabalho.', 'Procedimentos de emergência e resgate.'], reference: 'NR-33 — Segurança e Saúde nos Trabalhos em Espaços Confinados.' },
+    { id: 'nr35', name: 'NR-35 / Trabalho em Altura', short: 'NR-35', icon: 'person-falling-burst', source: sources.marista,
+        summary: 'Capacitação em planejamento e execução segura de atividades em altura, com sistemas de proteção, EPI e procedimentos de trabalho.',
+        topics: ['Riscos e planejamento do trabalho em altura.', 'Sistemas de proteção, ancoragem e EPI específico.', 'Permissão de Trabalho e procedimentos de resgate.'], reference: 'NR-35 — Trabalho em Altura.' },
+    { id: 'brigade', name: 'Brigada de Incêndio', short: 'Brigada de Incêndio', icon: 'fire-extinguisher', source: sources.brigade,
+        summary: 'Formação de brigadistas para prevenção, combate inicial a incêndios, abandono de área e noções de primeiros socorros.',
+        topics: ['Funções do brigadista, ciência do fogo e prevenção.', 'Reconhecimento de equipamentos e uso de extintores.', 'Abandono de área e noções de primeiros socorros.', 'Prática supervisionada de resposta inicial a incêndio.'], reference: 'IT 17/2025 do CBMRN — referência da proposta de origem para brigada no RN.' }
+];
+
+export const trainingEntries = definitions.map((d, index) => defineEntry({
+    id: d.id, kind: 'training', title: d.name, shortName: d.short,
+    category: 'trainings', section: 'trainings', order: (index + 1) * 10, icon: d.icon,
+    summary: d.summary,
+    objective: `Preparar os participantes para aplicar medidas de prevenção e procedimentos relacionados à capacitação ${d.short}, considerando as atividades da contratante.`,
+    scope: d.topics,
+    methodology: [common.trainingPlanning, 'Ministração do conteúdo com abordagem aplicada às atividades abrangidas e à modalidade contratada.', 'Controle de participação, avaliação da aprendizagem e consolidação dos registros da capacitação.'],
+    steps: ['Alinhar público, modalidade, carga horária e cronograma.', `Desenvolver os conteúdos de ${d.short} previstos no programa.`, 'Realizar atividades e avaliações compatíveis com a capacitação.', 'Consolidar registros de presença e certificados.'],
+    deliverables: ['Conteúdo programático da capacitação.', common.attendance, common.certificates],
+    references: [d.reference], provider: [common.qualified, 'Organizar conteúdo e material didático compatíveis com a capacitação.', common.delivery],
+    client: ['Disponibilizar relação de participantes e condições para cumprimento do cronograma.', 'Providenciar infraestrutura e acesso às atividades conforme modalidade acordada.', ...(d.id === 'brigade' ? ['Disponibilizar extintores, materiais e área segura para a prática, salvo acordo específico.'] : [])],
+    inclusions: ['Capacitação e registros para os participantes, turmas e ocorrências contratados.'],
+    exclusions: ['Participantes, turmas e capacitações adicionais não previstos.', ...(d.id === 'brigade' ? ['Fornecimento de materiais de combate a incêndio para a prática, salvo contratação expressa.'] : [])],
+    observations: ['Modalidade, carga horária e abrangência devem ser definidas tecnicamente para a capacitação; valores das propostas de origem não são padrões universais.', 'Certificação corresponde à participação e avaliação na capacitação realizada.'],
+    periodicity: { mode: 'contract', description: 'Ocorrências conforme contratação; reciclagem e validade devem ser definidas para a capacitação, sem frequência normativa presumida.' },
+    parameters: [numberParameter('participants', 'Participantes', 'pessoas', 'participants'), numberParameter('classes', 'Turmas', 'turmas', 'classes'), numberParameter('hoursPerClass', 'Carga horária por turma', 'horas', 'hoursPerClass', true, 0.25, false), numberParameter('occurrences', 'Ocorrências contratadas', 'ocorrências', 'occurrences'), { id: 'modality', label: 'Modalidade', description: 'Selecionar conforme planejamento técnico da capacitação.', type: 'choice', choices: ['onsite', 'online', 'hybrid'], required: true, binding: 'modality' }, textParameter('audience', 'Público e perfil da capacitação', undefined, false)],
+    sources: [d.source, sources.marista, ...(d.id === 'nr05' ? ['propostas/agosto-2026/TM0123-RM de Oliveira Bebidas.html'] : [])]
+}));

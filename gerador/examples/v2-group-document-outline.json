@@ -1,0 +1,2245 @@
+{
+  "compositionVersion": 3,
+  "isGroup": true,
+  "blocks": [
+    {
+      "id": "cover",
+      "kind": "cover"
+    },
+    {
+      "id": "companies",
+      "kind": "companies"
+    },
+    {
+      "id": "scope",
+      "kind": "scope"
+    },
+    {
+      "id": "section:assistance",
+      "kind": "technical-section",
+      "title": "Escopo da assessoria e acompanhamento",
+      "services": [
+        {
+          "itemId": "padaria:assistance",
+          "companyId": "padaria",
+          "catalogId": "assistance",
+          "parameters": [
+            {
+              "id": "termMonths",
+              "label": "Vigência",
+              "value": 12,
+              "unit": "meses"
+            },
+            {
+              "id": "renewal",
+              "label": "Renovação",
+              "value": "Renovação mediante acordo entre as partes."
+            },
+            {
+              "id": "adjustment",
+              "label": "Reajuste",
+              "value": "Reajuste conforme condições contratuais."
+            }
+          ],
+          "visits": {
+            "included": true,
+            "frequency": "monthly",
+            "durationHours": 4,
+            "quantity": 12,
+            "notes": "Agendamento com o responsável pela unidade."
+          }
+        },
+        {
+          "itemId": "padaria:technical-support",
+          "companyId": "padaria",
+          "catalogId": "technical-support",
+          "parameters": [
+            {
+              "id": "channels",
+              "label": "Canais de atendimento",
+              "value": [
+                "E-mail",
+                "Atendimento remoto"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-salao:assistance",
+          "companyId": "pizzaria-salao",
+          "catalogId": "assistance",
+          "parameters": [
+            {
+              "id": "termMonths",
+              "label": "Vigência",
+              "value": 12,
+              "unit": "meses"
+            },
+            {
+              "id": "renewal",
+              "label": "Renovação",
+              "value": "Renovação mediante acordo entre as partes."
+            },
+            {
+              "id": "adjustment",
+              "label": "Reajuste",
+              "value": "Reajuste conforme condições contratuais."
+            }
+          ],
+          "visits": {
+            "included": true,
+            "frequency": "monthly",
+            "durationHours": 4,
+            "quantity": 12,
+            "notes": "Agendamento com o responsável pela unidade."
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:technical-support",
+          "companyId": "pizzaria-salao",
+          "catalogId": "technical-support",
+          "parameters": [
+            {
+              "id": "channels",
+              "label": "Canais de atendimento",
+              "value": [
+                "E-mail",
+                "Atendimento remoto"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-norte:assistance",
+          "companyId": "pizzaria-norte",
+          "catalogId": "assistance",
+          "parameters": [
+            {
+              "id": "termMonths",
+              "label": "Vigência",
+              "value": 12,
+              "unit": "meses"
+            },
+            {
+              "id": "renewal",
+              "label": "Renovação",
+              "value": "Renovação mediante acordo entre as partes."
+            },
+            {
+              "id": "adjustment",
+              "label": "Reajuste",
+              "value": "Reajuste conforme condições contratuais."
+            }
+          ],
+          "visits": {
+            "included": true,
+            "frequency": "monthly",
+            "durationHours": 4,
+            "quantity": 12,
+            "notes": "Agendamento com o responsável pela unidade."
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:technical-support",
+          "companyId": "pizzaria-norte",
+          "catalogId": "technical-support",
+          "parameters": [
+            {
+              "id": "channels",
+              "label": "Canais de atendimento",
+              "value": [
+                "E-mail",
+                "Atendimento remoto"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-sul:assistance",
+          "companyId": "pizzaria-sul",
+          "catalogId": "assistance",
+          "parameters": [
+            {
+              "id": "termMonths",
+              "label": "Vigência",
+              "value": 12,
+              "unit": "meses"
+            },
+            {
+              "id": "renewal",
+              "label": "Renovação",
+              "value": "Renovação mediante acordo entre as partes."
+            },
+            {
+              "id": "adjustment",
+              "label": "Reajuste",
+              "value": "Reajuste conforme condições contratuais."
+            }
+          ],
+          "visits": {
+            "included": true,
+            "frequency": "monthly",
+            "durationHours": 4,
+            "quantity": 12,
+            "notes": "Agendamento com o responsável pela unidade."
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:technical-support",
+          "companyId": "pizzaria-sul",
+          "catalogId": "technical-support",
+          "parameters": [
+            {
+              "id": "channels",
+              "label": "Canais de atendimento",
+              "value": [
+                "E-mail",
+                "Atendimento remoto"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        },
+        {
+          "itemId": "delivery:assistance",
+          "companyId": "delivery",
+          "catalogId": "assistance",
+          "parameters": [
+            {
+              "id": "termMonths",
+              "label": "Vigência",
+              "value": 12,
+              "unit": "meses"
+            },
+            {
+              "id": "renewal",
+              "label": "Renovação",
+              "value": "Renovação mediante acordo entre as partes."
+            },
+            {
+              "id": "adjustment",
+              "label": "Reajuste",
+              "value": "Reajuste conforme condições contratuais."
+            }
+          ],
+          "visits": {
+            "included": true,
+            "frequency": "monthly",
+            "durationHours": 4,
+            "quantity": 12,
+            "notes": "Agendamento com o responsável pela unidade."
+          }
+        },
+        {
+          "itemId": "delivery:technical-support",
+          "companyId": "delivery",
+          "catalogId": "technical-support",
+          "parameters": [
+            {
+              "id": "channels",
+              "label": "Canais de atendimento",
+              "value": [
+                "E-mail",
+                "Atendimento remoto"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:programs",
+      "kind": "technical-section",
+      "title": "Programas e laudos de SST",
+      "services": [
+        {
+          "itemId": "padaria:pgr",
+          "companyId": "padaria",
+          "catalogId": "pgr",
+          "parameters": []
+        },
+        {
+          "itemId": "padaria:pcmso",
+          "companyId": "padaria",
+          "catalogId": "pcmso",
+          "parameters": []
+        },
+        {
+          "itemId": "padaria:ltcat",
+          "companyId": "padaria",
+          "catalogId": "ltcat",
+          "parameters": []
+        },
+        {
+          "itemId": "padaria:lip",
+          "companyId": "padaria",
+          "catalogId": "lip",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-salao:pgr",
+          "companyId": "pizzaria-salao",
+          "catalogId": "pgr",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-salao:pcmso",
+          "companyId": "pizzaria-salao",
+          "catalogId": "pcmso",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-salao:ltcat",
+          "companyId": "pizzaria-salao",
+          "catalogId": "ltcat",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-salao:lip",
+          "companyId": "pizzaria-salao",
+          "catalogId": "lip",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-norte:pgr",
+          "companyId": "pizzaria-norte",
+          "catalogId": "pgr",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-norte:pcmso",
+          "companyId": "pizzaria-norte",
+          "catalogId": "pcmso",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-norte:ltcat",
+          "companyId": "pizzaria-norte",
+          "catalogId": "ltcat",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-norte:lip",
+          "companyId": "pizzaria-norte",
+          "catalogId": "lip",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-sul:pgr",
+          "companyId": "pizzaria-sul",
+          "catalogId": "pgr",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-sul:pcmso",
+          "companyId": "pizzaria-sul",
+          "catalogId": "pcmso",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-sul:ltcat",
+          "companyId": "pizzaria-sul",
+          "catalogId": "ltcat",
+          "parameters": []
+        },
+        {
+          "itemId": "pizzaria-sul:lip",
+          "companyId": "pizzaria-sul",
+          "catalogId": "lip",
+          "parameters": []
+        },
+        {
+          "itemId": "delivery:pgr",
+          "companyId": "delivery",
+          "catalogId": "pgr",
+          "parameters": []
+        },
+        {
+          "itemId": "delivery:pcmso",
+          "companyId": "delivery",
+          "catalogId": "pcmso",
+          "parameters": []
+        },
+        {
+          "itemId": "delivery:ltcat",
+          "companyId": "delivery",
+          "catalogId": "ltcat",
+          "parameters": []
+        },
+        {
+          "itemId": "delivery:lip",
+          "companyId": "delivery",
+          "catalogId": "lip",
+          "parameters": []
+        }
+      ]
+    },
+    {
+      "id": "section:complementary",
+      "kind": "technical-section",
+      "title": "Avaliações complementares",
+      "services": [
+        {
+          "itemId": "padaria:psychosocial",
+          "companyId": "padaria",
+          "catalogId": "psychosocial",
+          "parameters": [
+            {
+              "id": "participantCount",
+              "label": "Participantes",
+              "value": 23,
+              "unit": "pessoas"
+            },
+            {
+              "id": "instruments",
+              "label": "Instrumentos previstos",
+              "value": [
+                "Instrumento definido no planejamento técnico"
+              ]
+            },
+            {
+              "id": "integration",
+              "label": "Integração dos resultados",
+              "value": "Integração dos resultados ao PGR da empresa."
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-salao:psychosocial",
+          "companyId": "pizzaria-salao",
+          "catalogId": "psychosocial",
+          "parameters": [
+            {
+              "id": "participantCount",
+              "label": "Participantes",
+              "value": 22,
+              "unit": "pessoas"
+            },
+            {
+              "id": "instruments",
+              "label": "Instrumentos previstos",
+              "value": [
+                "Instrumento definido no planejamento técnico"
+              ]
+            },
+            {
+              "id": "integration",
+              "label": "Integração dos resultados",
+              "value": "Integração dos resultados ao PGR da empresa."
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-norte:psychosocial",
+          "companyId": "pizzaria-norte",
+          "catalogId": "psychosocial",
+          "parameters": [
+            {
+              "id": "participantCount",
+              "label": "Participantes",
+              "value": 17,
+              "unit": "pessoas"
+            },
+            {
+              "id": "instruments",
+              "label": "Instrumentos previstos",
+              "value": [
+                "Instrumento definido no planejamento técnico"
+              ]
+            },
+            {
+              "id": "integration",
+              "label": "Integração dos resultados",
+              "value": "Integração dos resultados ao PGR da empresa."
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-sul:psychosocial",
+          "companyId": "pizzaria-sul",
+          "catalogId": "psychosocial",
+          "parameters": [
+            {
+              "id": "participantCount",
+              "label": "Participantes",
+              "value": 8,
+              "unit": "pessoas"
+            },
+            {
+              "id": "instruments",
+              "label": "Instrumentos previstos",
+              "value": [
+                "Instrumento definido no planejamento técnico"
+              ]
+            },
+            {
+              "id": "integration",
+              "label": "Integração dos resultados",
+              "value": "Integração dos resultados ao PGR da empresa."
+            }
+          ]
+        },
+        {
+          "itemId": "delivery:psychosocial",
+          "companyId": "delivery",
+          "catalogId": "psychosocial",
+          "parameters": [
+            {
+              "id": "participantCount",
+              "label": "Participantes",
+              "value": 9,
+              "unit": "pessoas"
+            },
+            {
+              "id": "instruments",
+              "label": "Instrumentos previstos",
+              "value": [
+                "Instrumento definido no planejamento técnico"
+              ]
+            },
+            {
+              "id": "integration",
+              "label": "Integração dos resultados",
+              "value": "Integração dos resultados ao PGR da empresa."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:esocial",
+      "kind": "technical-section",
+      "title": "Gestão do eSocial",
+      "services": [
+        {
+          "itemId": "padaria:esocial",
+          "companyId": "padaria",
+          "catalogId": "esocial",
+          "parameters": [
+            {
+              "id": "events",
+              "label": "Eventos contratados",
+              "value": [
+                "S-2210",
+                "S-2220",
+                "S-2240"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-salao:esocial",
+          "companyId": "pizzaria-salao",
+          "catalogId": "esocial",
+          "parameters": [
+            {
+              "id": "events",
+              "label": "Eventos contratados",
+              "value": [
+                "S-2210",
+                "S-2220",
+                "S-2240"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-norte:esocial",
+          "companyId": "pizzaria-norte",
+          "catalogId": "esocial",
+          "parameters": [
+            {
+              "id": "events",
+              "label": "Eventos contratados",
+              "value": [
+                "S-2210",
+                "S-2220",
+                "S-2240"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-sul:esocial",
+          "companyId": "pizzaria-sul",
+          "catalogId": "esocial",
+          "parameters": [
+            {
+              "id": "events",
+              "label": "Eventos contratados",
+              "value": [
+                "S-2210",
+                "S-2220",
+                "S-2240"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        },
+        {
+          "itemId": "delivery:esocial",
+          "companyId": "delivery",
+          "catalogId": "esocial",
+          "parameters": [
+            {
+              "id": "events",
+              "label": "Eventos contratados",
+              "value": [
+                "S-2210",
+                "S-2220",
+                "S-2240"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:measurements",
+      "kind": "technical-section",
+      "title": "Medições ocupacionais",
+      "services": [
+        {
+          "itemId": "padaria:heat",
+          "companyId": "padaria",
+          "catalogId": "heat",
+          "parameters": [
+            {
+              "id": "agent",
+              "label": "Agente e tipo de exposição",
+              "value": "Calor"
+            },
+            {
+              "id": "method",
+              "label": "Método previsto",
+              "value": "IBUTG"
+            },
+            {
+              "id": "quantity",
+              "label": "Quantidade contratada",
+              "value": 1,
+              "unit": "avaliações"
+            },
+            {
+              "id": "unit",
+              "label": "Unidade de medição",
+              "value": "point"
+            },
+            {
+              "id": "workGroups",
+              "label": "Grupos e atividades",
+              "value": [
+                "Área operacional"
+              ]
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-salao:heat",
+          "companyId": "pizzaria-salao",
+          "catalogId": "heat",
+          "parameters": [
+            {
+              "id": "agent",
+              "label": "Agente e tipo de exposição",
+              "value": "Calor"
+            },
+            {
+              "id": "method",
+              "label": "Método previsto",
+              "value": "IBUTG"
+            },
+            {
+              "id": "quantity",
+              "label": "Quantidade contratada",
+              "value": 1,
+              "unit": "avaliações"
+            },
+            {
+              "id": "unit",
+              "label": "Unidade de medição",
+              "value": "point"
+            },
+            {
+              "id": "workGroups",
+              "label": "Grupos e atividades",
+              "value": [
+                "Área operacional"
+              ]
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-norte:heat",
+          "companyId": "pizzaria-norte",
+          "catalogId": "heat",
+          "parameters": [
+            {
+              "id": "agent",
+              "label": "Agente e tipo de exposição",
+              "value": "Calor"
+            },
+            {
+              "id": "method",
+              "label": "Método previsto",
+              "value": "IBUTG"
+            },
+            {
+              "id": "quantity",
+              "label": "Quantidade contratada",
+              "value": 1,
+              "unit": "avaliações"
+            },
+            {
+              "id": "unit",
+              "label": "Unidade de medição",
+              "value": "point"
+            },
+            {
+              "id": "workGroups",
+              "label": "Grupos e atividades",
+              "value": [
+                "Área operacional"
+              ]
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-sul:heat",
+          "companyId": "pizzaria-sul",
+          "catalogId": "heat",
+          "parameters": [
+            {
+              "id": "agent",
+              "label": "Agente e tipo de exposição",
+              "value": "Calor"
+            },
+            {
+              "id": "method",
+              "label": "Método previsto",
+              "value": "IBUTG"
+            },
+            {
+              "id": "quantity",
+              "label": "Quantidade contratada",
+              "value": 1,
+              "unit": "avaliações"
+            },
+            {
+              "id": "unit",
+              "label": "Unidade de medição",
+              "value": "point"
+            },
+            {
+              "id": "workGroups",
+              "label": "Grupos e atividades",
+              "value": [
+                "Área operacional"
+              ]
+            }
+          ]
+        },
+        {
+          "itemId": "delivery:heat",
+          "companyId": "delivery",
+          "catalogId": "heat",
+          "parameters": [
+            {
+              "id": "agent",
+              "label": "Agente e tipo de exposição",
+              "value": "Calor"
+            },
+            {
+              "id": "method",
+              "label": "Método previsto",
+              "value": "IBUTG"
+            },
+            {
+              "id": "quantity",
+              "label": "Quantidade contratada",
+              "value": 1,
+              "unit": "avaliações"
+            },
+            {
+              "id": "unit",
+              "label": "Unidade de medição",
+              "value": "point"
+            },
+            {
+              "id": "workGroups",
+              "label": "Grupos e atividades",
+              "value": [
+                "Área operacional"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:trainings",
+      "kind": "technical-section",
+      "title": "Treinamentos",
+      "services": [
+        {
+          "itemId": "padaria:nr01",
+          "companyId": "padaria",
+          "catalogId": "nr01",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 23,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 4,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "padaria:nr06",
+          "companyId": "padaria",
+          "catalogId": "nr06",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 23,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 2,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "padaria:brigade",
+          "companyId": "padaria",
+          "catalogId": "brigade",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 10,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 8,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "onsite"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-salao:nr01",
+          "companyId": "pizzaria-salao",
+          "catalogId": "nr01",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 22,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 4,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-salao:nr06",
+          "companyId": "pizzaria-salao",
+          "catalogId": "nr06",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 22,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 2,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-salao:brigade",
+          "companyId": "pizzaria-salao",
+          "catalogId": "brigade",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 10,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 8,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "onsite"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-norte:nr01",
+          "companyId": "pizzaria-norte",
+          "catalogId": "nr01",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 17,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 4,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-norte:nr06",
+          "companyId": "pizzaria-norte",
+          "catalogId": "nr06",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 17,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 2,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-norte:brigade",
+          "companyId": "pizzaria-norte",
+          "catalogId": "brigade",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 10,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 8,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "onsite"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-sul:nr01",
+          "companyId": "pizzaria-sul",
+          "catalogId": "nr01",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 8,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 4,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-sul:nr06",
+          "companyId": "pizzaria-sul",
+          "catalogId": "nr06",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 8,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 2,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "pizzaria-sul:brigade",
+          "companyId": "pizzaria-sul",
+          "catalogId": "brigade",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 8,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 8,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "onsite"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "delivery:nr01",
+          "companyId": "delivery",
+          "catalogId": "nr01",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 9,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 4,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "delivery:nr06",
+          "companyId": "delivery",
+          "catalogId": "nr06",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 9,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 2,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "online"
+            }
+          ],
+          "frequency": "annual"
+        },
+        {
+          "itemId": "delivery:brigade",
+          "companyId": "delivery",
+          "catalogId": "brigade",
+          "parameters": [
+            {
+              "id": "participants",
+              "label": "Participantes",
+              "value": 9,
+              "unit": "pessoas"
+            },
+            {
+              "id": "classes",
+              "label": "Turmas",
+              "value": 1,
+              "unit": "turmas"
+            },
+            {
+              "id": "hoursPerClass",
+              "label": "Carga horária por turma",
+              "value": 8,
+              "unit": "horas"
+            },
+            {
+              "id": "occurrences",
+              "label": "Ocorrências contratadas",
+              "value": 1,
+              "unit": "ocorrências"
+            },
+            {
+              "id": "modality",
+              "label": "Modalidade",
+              "value": "onsite"
+            }
+          ],
+          "frequency": "annual"
+        }
+      ]
+    },
+    {
+      "id": "section:technical-responsibility",
+      "kind": "technical-section",
+      "title": "Responsabilidade técnica",
+      "services": [
+        {
+          "itemId": "padaria:art",
+          "companyId": "padaria",
+          "catalogId": "art",
+          "parameters": [
+            {
+              "id": "quantity",
+              "label": "Registros previstos",
+              "value": 1,
+              "unit": "ARTs"
+            },
+            {
+              "id": "coveredServices",
+              "label": "Serviços técnicos abrangidos",
+              "value": [
+                "PGR",
+                "LTCAT",
+                "LIP"
+              ]
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-salao:art",
+          "companyId": "pizzaria-salao",
+          "catalogId": "art",
+          "parameters": [
+            {
+              "id": "quantity",
+              "label": "Registros previstos",
+              "value": 1,
+              "unit": "ARTs"
+            },
+            {
+              "id": "coveredServices",
+              "label": "Serviços técnicos abrangidos",
+              "value": [
+                "PGR",
+                "LTCAT",
+                "LIP"
+              ]
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-norte:art",
+          "companyId": "pizzaria-norte",
+          "catalogId": "art",
+          "parameters": [
+            {
+              "id": "quantity",
+              "label": "Registros previstos",
+              "value": 1,
+              "unit": "ARTs"
+            },
+            {
+              "id": "coveredServices",
+              "label": "Serviços técnicos abrangidos",
+              "value": [
+                "PGR",
+                "LTCAT",
+                "LIP"
+              ]
+            }
+          ]
+        },
+        {
+          "itemId": "pizzaria-sul:art",
+          "companyId": "pizzaria-sul",
+          "catalogId": "art",
+          "parameters": [
+            {
+              "id": "quantity",
+              "label": "Registros previstos",
+              "value": 1,
+              "unit": "ARTs"
+            },
+            {
+              "id": "coveredServices",
+              "label": "Serviços técnicos abrangidos",
+              "value": [
+                "PGR",
+                "LTCAT",
+                "LIP"
+              ]
+            }
+          ]
+        },
+        {
+          "itemId": "delivery:art",
+          "companyId": "delivery",
+          "catalogId": "art",
+          "parameters": [
+            {
+              "id": "quantity",
+              "label": "Registros previstos",
+              "value": 1,
+              "unit": "ARTs"
+            },
+            {
+              "id": "coveredServices",
+              "label": "Serviços técnicos abrangidos",
+              "value": [
+                "PGR",
+                "LTCAT",
+                "LIP"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:shared",
+      "kind": "shared-technical"
+    },
+    {
+      "id": "investment",
+      "kind": "investment",
+      "visibility": {
+        "showMonthlyValue": true,
+        "showContractTotal": false,
+        "showAggregateTotal": false,
+        "showPerCompanyPricing": true
+      },
+      "rows": [
+        {
+          "itemId": "padaria:assistance",
+          "companyId": "padaria",
+          "title": "Assessoria em Segurança e Saúde do Trabalho",
+          "price": {
+            "mode": "package",
+            "onceCents": 0,
+            "monthlyCents": 157000
+          },
+          "billing": {
+            "termMonths": 12,
+            "installmentCount": 12,
+            "paymentTerms": [
+              "Pagamento mensal por PIX, boleto ou transferência."
+            ]
+          }
+        },
+        {
+          "itemId": "padaria:pgr",
+          "companyId": "padaria",
+          "title": "PGR — Programa de Gerenciamento de Riscos",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:pcmso",
+          "companyId": "padaria",
+          "title": "PCMSO — Programa de Controle Médico de Saúde Ocupacional",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:ltcat",
+          "companyId": "padaria",
+          "title": "LTCAT — Laudo Técnico das Condições Ambientais do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:lip",
+          "companyId": "padaria",
+          "title": "Laudo de Insalubridade e Periculosidade",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:psychosocial",
+          "companyId": "padaria",
+          "title": "Avaliação de Fatores Psicossociais",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:esocial",
+          "companyId": "padaria",
+          "title": "Gestão dos Eventos de SST do eSocial",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:art",
+          "companyId": "padaria",
+          "title": "Anotação de Responsabilidade Técnica",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:technical-support",
+          "companyId": "padaria",
+          "title": "Suporte Técnico em SST",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:nr01",
+          "companyId": "padaria",
+          "title": "NR-01 / Integração em Segurança do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:nr06",
+          "companyId": "padaria",
+          "title": "NR-06 / Equipamentos de Proteção Individual",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:brigade",
+          "companyId": "padaria",
+          "title": "Brigada de Incêndio",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "padaria:heat",
+          "companyId": "padaria",
+          "title": "Calor / Avaliação de IBUTG",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "padaria:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:assistance",
+          "companyId": "pizzaria-salao",
+          "title": "Assessoria em Segurança e Saúde do Trabalho",
+          "price": {
+            "mode": "package",
+            "onceCents": 0,
+            "monthlyCents": 154500
+          },
+          "billing": {
+            "termMonths": 12,
+            "installmentCount": 12,
+            "paymentTerms": [
+              "Pagamento mensal por PIX, boleto ou transferência."
+            ]
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:pgr",
+          "companyId": "pizzaria-salao",
+          "title": "PGR — Programa de Gerenciamento de Riscos",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:pcmso",
+          "companyId": "pizzaria-salao",
+          "title": "PCMSO — Programa de Controle Médico de Saúde Ocupacional",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:ltcat",
+          "companyId": "pizzaria-salao",
+          "title": "LTCAT — Laudo Técnico das Condições Ambientais do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:lip",
+          "companyId": "pizzaria-salao",
+          "title": "Laudo de Insalubridade e Periculosidade",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:psychosocial",
+          "companyId": "pizzaria-salao",
+          "title": "Avaliação de Fatores Psicossociais",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:esocial",
+          "companyId": "pizzaria-salao",
+          "title": "Gestão dos Eventos de SST do eSocial",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:art",
+          "companyId": "pizzaria-salao",
+          "title": "Anotação de Responsabilidade Técnica",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:technical-support",
+          "companyId": "pizzaria-salao",
+          "title": "Suporte Técnico em SST",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:nr01",
+          "companyId": "pizzaria-salao",
+          "title": "NR-01 / Integração em Segurança do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:nr06",
+          "companyId": "pizzaria-salao",
+          "title": "NR-06 / Equipamentos de Proteção Individual",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:brigade",
+          "companyId": "pizzaria-salao",
+          "title": "Brigada de Incêndio",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-salao:heat",
+          "companyId": "pizzaria-salao",
+          "title": "Calor / Avaliação de IBUTG",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-salao:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:assistance",
+          "companyId": "pizzaria-norte",
+          "title": "Assessoria em Segurança e Saúde do Trabalho",
+          "price": {
+            "mode": "package",
+            "onceCents": 0,
+            "monthlyCents": 149000
+          },
+          "billing": {
+            "termMonths": 12,
+            "installmentCount": 12,
+            "paymentTerms": [
+              "Pagamento mensal por PIX, boleto ou transferência."
+            ]
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:pgr",
+          "companyId": "pizzaria-norte",
+          "title": "PGR — Programa de Gerenciamento de Riscos",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:pcmso",
+          "companyId": "pizzaria-norte",
+          "title": "PCMSO — Programa de Controle Médico de Saúde Ocupacional",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:ltcat",
+          "companyId": "pizzaria-norte",
+          "title": "LTCAT — Laudo Técnico das Condições Ambientais do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:lip",
+          "companyId": "pizzaria-norte",
+          "title": "Laudo de Insalubridade e Periculosidade",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:psychosocial",
+          "companyId": "pizzaria-norte",
+          "title": "Avaliação de Fatores Psicossociais",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:esocial",
+          "companyId": "pizzaria-norte",
+          "title": "Gestão dos Eventos de SST do eSocial",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:art",
+          "companyId": "pizzaria-norte",
+          "title": "Anotação de Responsabilidade Técnica",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:technical-support",
+          "companyId": "pizzaria-norte",
+          "title": "Suporte Técnico em SST",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:nr01",
+          "companyId": "pizzaria-norte",
+          "title": "NR-01 / Integração em Segurança do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:nr06",
+          "companyId": "pizzaria-norte",
+          "title": "NR-06 / Equipamentos de Proteção Individual",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:brigade",
+          "companyId": "pizzaria-norte",
+          "title": "Brigada de Incêndio",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-norte:heat",
+          "companyId": "pizzaria-norte",
+          "title": "Calor / Avaliação de IBUTG",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-norte:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:assistance",
+          "companyId": "pizzaria-sul",
+          "title": "Assessoria em Segurança e Saúde do Trabalho",
+          "price": {
+            "mode": "package",
+            "onceCents": 0,
+            "monthlyCents": 121000
+          },
+          "billing": {
+            "termMonths": 12,
+            "installmentCount": 12,
+            "paymentTerms": [
+              "Pagamento mensal por PIX, boleto ou transferência."
+            ]
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:pgr",
+          "companyId": "pizzaria-sul",
+          "title": "PGR — Programa de Gerenciamento de Riscos",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:pcmso",
+          "companyId": "pizzaria-sul",
+          "title": "PCMSO — Programa de Controle Médico de Saúde Ocupacional",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:ltcat",
+          "companyId": "pizzaria-sul",
+          "title": "LTCAT — Laudo Técnico das Condições Ambientais do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:lip",
+          "companyId": "pizzaria-sul",
+          "title": "Laudo de Insalubridade e Periculosidade",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:psychosocial",
+          "companyId": "pizzaria-sul",
+          "title": "Avaliação de Fatores Psicossociais",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:esocial",
+          "companyId": "pizzaria-sul",
+          "title": "Gestão dos Eventos de SST do eSocial",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:art",
+          "companyId": "pizzaria-sul",
+          "title": "Anotação de Responsabilidade Técnica",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:technical-support",
+          "companyId": "pizzaria-sul",
+          "title": "Suporte Técnico em SST",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:nr01",
+          "companyId": "pizzaria-sul",
+          "title": "NR-01 / Integração em Segurança do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:nr06",
+          "companyId": "pizzaria-sul",
+          "title": "NR-06 / Equipamentos de Proteção Individual",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:brigade",
+          "companyId": "pizzaria-sul",
+          "title": "Brigada de Incêndio",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "pizzaria-sul:heat",
+          "companyId": "pizzaria-sul",
+          "title": "Calor / Avaliação de IBUTG",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "pizzaria-sul:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:assistance",
+          "companyId": "delivery",
+          "title": "Assessoria em Segurança e Saúde do Trabalho",
+          "price": {
+            "mode": "package",
+            "onceCents": 0,
+            "monthlyCents": 125000
+          },
+          "billing": {
+            "termMonths": 12,
+            "installmentCount": 12,
+            "paymentTerms": [
+              "Pagamento mensal por PIX, boleto ou transferência."
+            ]
+          }
+        },
+        {
+          "itemId": "delivery:pgr",
+          "companyId": "delivery",
+          "title": "PGR — Programa de Gerenciamento de Riscos",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:pcmso",
+          "companyId": "delivery",
+          "title": "PCMSO — Programa de Controle Médico de Saúde Ocupacional",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:ltcat",
+          "companyId": "delivery",
+          "title": "LTCAT — Laudo Técnico das Condições Ambientais do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:lip",
+          "companyId": "delivery",
+          "title": "Laudo de Insalubridade e Periculosidade",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:psychosocial",
+          "companyId": "delivery",
+          "title": "Avaliação de Fatores Psicossociais",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:esocial",
+          "companyId": "delivery",
+          "title": "Gestão dos Eventos de SST do eSocial",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:art",
+          "companyId": "delivery",
+          "title": "Anotação de Responsabilidade Técnica",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:technical-support",
+          "companyId": "delivery",
+          "title": "Suporte Técnico em SST",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:nr01",
+          "companyId": "delivery",
+          "title": "NR-01 / Integração em Segurança do Trabalho",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:nr06",
+          "companyId": "delivery",
+          "title": "NR-06 / Equipamentos de Proteção Individual",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:brigade",
+          "companyId": "delivery",
+          "title": "Brigada de Incêndio",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        },
+        {
+          "itemId": "delivery:heat",
+          "companyId": "delivery",
+          "title": "Calor / Avaliação de IBUTG",
+          "price": {
+            "mode": "included",
+            "coveredByItemId": "delivery:assistance"
+          }
+        }
+      ],
+      "terms": {
+        "currency": "BRL",
+        "termMonths": 12,
+        "installmentCount": 12,
+        "validityDays": 15,
+        "paymentTerms": [
+          "Pagamento mensal por PIX, boleto ou transferência."
+        ],
+        "executionTerms": [
+          "Início após formalização e alinhamento do cronograma."
+        ],
+        "showMonthlyValue": true,
+        "showContractTotal": false,
+        "showAggregateTotal": false,
+        "showPerCompanyPricing": true
+      },
+      "companyRows": [
+        {
+          "onceCents": 0,
+          "monthlyCents": 157000,
+          "companyId": "padaria",
+          "companyName": "Padaria Exemplo",
+          "billing": [
+            {
+              "termMonths": 12,
+              "installmentCount": 12,
+              "paymentTerms": [
+                "Pagamento mensal por PIX, boleto ou transferência."
+              ]
+            }
+          ]
+        },
+        {
+          "onceCents": 0,
+          "monthlyCents": 154500,
+          "companyId": "pizzaria-salao",
+          "companyName": "Pizzaria Salão Exemplo",
+          "billing": [
+            {
+              "termMonths": 12,
+              "installmentCount": 12,
+              "paymentTerms": [
+                "Pagamento mensal por PIX, boleto ou transferência."
+              ]
+            }
+          ]
+        },
+        {
+          "onceCents": 0,
+          "monthlyCents": 149000,
+          "companyId": "pizzaria-norte",
+          "companyName": "Pizzaria Norte Exemplo",
+          "billing": [
+            {
+              "termMonths": 12,
+              "installmentCount": 12,
+              "paymentTerms": [
+                "Pagamento mensal por PIX, boleto ou transferência."
+              ]
+            }
+          ]
+        },
+        {
+          "onceCents": 0,
+          "monthlyCents": 121000,
+          "companyId": "pizzaria-sul",
+          "companyName": "Pizzaria Sul Exemplo",
+          "billing": [
+            {
+              "termMonths": 12,
+              "installmentCount": 12,
+              "paymentTerms": [
+                "Pagamento mensal por PIX, boleto ou transferência."
+              ]
+            }
+          ]
+        },
+        {
+          "onceCents": 0,
+          "monthlyCents": 125000,
+          "companyId": "delivery",
+          "companyName": "Delivery Exemplo",
+          "billing": [
+            {
+              "termMonths": 12,
+              "installmentCount": 12,
+              "paymentTerms": [
+                "Pagamento mensal por PIX, boleto ou transferência."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "acceptance",
+      "kind": "acceptance"
+    }
+  ]
+}

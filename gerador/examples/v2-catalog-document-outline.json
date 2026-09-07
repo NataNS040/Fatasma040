@@ -1,0 +1,590 @@
+{
+  "proposalNumber": "V2-DEMO-003",
+  "compositionVersion": 3,
+  "stage": "composed",
+  "sourceItemIds": [
+    "demo-pgr",
+    "demo-pcmso",
+    "demo-ltcat",
+    "demo-lip",
+    "demo-art",
+    "demo-psychosocial",
+    "demo-esocial"
+  ],
+  "blocks": [
+    {
+      "id": "cover",
+      "kind": "cover"
+    },
+    {
+      "id": "companies",
+      "kind": "companies"
+    },
+    {
+      "id": "scope",
+      "kind": "scope"
+    },
+    {
+      "id": "section:programs",
+      "kind": "technical-section",
+      "title": "Programas e laudos de SST",
+      "services": [
+        {
+          "itemId": "demo-pgr",
+          "catalogId": "pgr",
+          "companyId": "company-1",
+          "level": "full",
+          "fields": [
+            "summary",
+            "objective",
+            "scope",
+            "methodology",
+            "executionSteps",
+            "deliverables",
+            "inclusions",
+            "exclusions",
+            "observations",
+            "periodicity"
+          ],
+          "parameters": [],
+          "sharedContentIds": [
+            "shared:1",
+            "shared:2",
+            "shared:3",
+            "shared:4",
+            "shared:5",
+            "shared:6",
+            "shared:7",
+            "shared:8",
+            "shared:9"
+          ]
+        },
+        {
+          "itemId": "demo-pcmso",
+          "catalogId": "pcmso",
+          "companyId": "company-1",
+          "level": "full",
+          "fields": [
+            "summary",
+            "objective",
+            "scope",
+            "methodology",
+            "executionSteps",
+            "deliverables",
+            "providerResponsibilities",
+            "clientResponsibilities",
+            "references",
+            "inclusions",
+            "exclusions",
+            "observations",
+            "periodicity"
+          ],
+          "parameters": [],
+          "sharedContentIds": [
+            "shared:1",
+            "shared:2",
+            "shared:3",
+            "shared:4",
+            "shared:5",
+            "shared:6"
+          ]
+        },
+        {
+          "itemId": "demo-ltcat",
+          "catalogId": "ltcat",
+          "companyId": "company-1",
+          "level": "full",
+          "fields": [
+            "summary",
+            "objective",
+            "scope",
+            "methodology",
+            "executionSteps",
+            "deliverables",
+            "references",
+            "inclusions",
+            "exclusions",
+            "observations",
+            "periodicity"
+          ],
+          "parameters": [],
+          "sharedContentIds": [
+            "shared:1",
+            "shared:2",
+            "shared:3",
+            "shared:4",
+            "shared:5",
+            "shared:6",
+            "shared:8",
+            "shared:9"
+          ]
+        },
+        {
+          "itemId": "demo-lip",
+          "catalogId": "lip",
+          "companyId": "company-1",
+          "level": "full",
+          "fields": [
+            "summary",
+            "objective",
+            "scope",
+            "methodology",
+            "executionSteps",
+            "deliverables",
+            "references",
+            "inclusions",
+            "exclusions",
+            "observations",
+            "periodicity"
+          ],
+          "parameters": [],
+          "sharedContentIds": [
+            "shared:1",
+            "shared:2",
+            "shared:3",
+            "shared:4",
+            "shared:5",
+            "shared:6",
+            "shared:8",
+            "shared:9"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:complementary",
+      "kind": "technical-section",
+      "title": "Avaliações complementares",
+      "services": [
+        {
+          "itemId": "demo-psychosocial",
+          "catalogId": "psychosocial",
+          "companyId": "company-1",
+          "level": "full",
+          "fields": [
+            "summary",
+            "objective",
+            "scope",
+            "methodology",
+            "executionSteps",
+            "deliverables",
+            "clientResponsibilities",
+            "inclusions",
+            "exclusions",
+            "observations",
+            "periodicity"
+          ],
+          "parameters": [
+            {
+              "id": "participantCount",
+              "label": "Participantes",
+              "value": 18,
+              "unit": "pessoas"
+            },
+            {
+              "id": "instruments",
+              "label": "Instrumentos previstos",
+              "value": [
+                "Instrumento definido no planejamento técnico"
+              ]
+            },
+            {
+              "id": "integration",
+              "label": "Integração dos resultados",
+              "value": "Integração ao PGR da Empresa Exemplo."
+            }
+          ],
+          "sharedContentIds": [
+            "shared:1",
+            "shared:2",
+            "shared:3",
+            "shared:4",
+            "shared:5",
+            "shared:6",
+            "shared:7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:esocial",
+      "kind": "technical-section",
+      "title": "Gestão do eSocial",
+      "services": [
+        {
+          "itemId": "demo-esocial",
+          "catalogId": "esocial",
+          "companyId": "company-1",
+          "level": "full",
+          "fields": [
+            "summary",
+            "objective",
+            "scope",
+            "methodology",
+            "executionSteps",
+            "deliverables",
+            "clientResponsibilities",
+            "references",
+            "inclusions",
+            "exclusions",
+            "observations",
+            "periodicity"
+          ],
+          "parameters": [
+            {
+              "id": "events",
+              "label": "Eventos contratados",
+              "value": [
+                "S-2220",
+                "S-2240"
+              ]
+            },
+            {
+              "id": "servicePeriod",
+              "label": "Período de atendimento",
+              "value": "12 meses"
+            }
+          ],
+          "sharedContentIds": [
+            "shared:1",
+            "shared:2",
+            "shared:3",
+            "shared:4",
+            "shared:5"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:technical-responsibility",
+      "kind": "technical-section",
+      "title": "Responsabilidade técnica",
+      "services": [
+        {
+          "itemId": "demo-art",
+          "catalogId": "art",
+          "companyId": "company-1",
+          "level": "full",
+          "fields": [
+            "summary",
+            "objective",
+            "scope",
+            "methodology",
+            "executionSteps",
+            "deliverables",
+            "providerResponsibilities",
+            "clientResponsibilities",
+            "inclusions",
+            "exclusions",
+            "observations",
+            "periodicity"
+          ],
+          "parameters": [
+            {
+              "id": "quantity",
+              "label": "Registros previstos",
+              "value": 1,
+              "unit": "ARTs"
+            },
+            {
+              "id": "coveredServices",
+              "label": "Serviços técnicos abrangidos",
+              "value": [
+                "PGR",
+                "LTCAT",
+                "LIP"
+              ]
+            }
+          ],
+          "sharedContentIds": [
+            "shared:1",
+            "shared:2",
+            "shared:3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "section:shared",
+      "kind": "shared-technical",
+      "title": "Metodologia, entregas e condições compartilhadas",
+      "content": [
+        {
+          "id": "shared:1",
+          "field": "methodology",
+          "text": "Alinhamento inicial do escopo, coleta de documentos e definição do cronograma com a contratante.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-pcmso",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-ltcat",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-lip",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-psychosocial",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-esocial",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-art",
+              "companyId": "company-1"
+            }
+          ]
+        },
+        {
+          "id": "shared:2",
+          "field": "providerResponsibilities",
+          "text": "Designar profissional com qualificação compatível com os serviços contratados.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-pcmso",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-ltcat",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-lip",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-psychosocial",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-esocial",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-art",
+              "companyId": "company-1"
+            }
+          ]
+        },
+        {
+          "id": "shared:3",
+          "field": "providerResponsibilities",
+          "text": "Entregar os documentos e registros previstos no escopo, identificados por empresa.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-pcmso",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-ltcat",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-lip",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-psychosocial",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-esocial",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-art",
+              "companyId": "company-1"
+            }
+          ]
+        },
+        {
+          "id": "shared:4",
+          "field": "clientResponsibilities",
+          "text": "Fornecer informações atualizadas sobre funções, atividades, ambientes e colaboradores abrangidos.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-pcmso",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-ltcat",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-lip",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-psychosocial",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-esocial",
+              "companyId": "company-1"
+            }
+          ]
+        },
+        {
+          "id": "shared:5",
+          "field": "clientResponsibilities",
+          "text": "Disponibilizar acesso aos ambientes e um responsável para acompanhar as atividades agendadas.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-pcmso",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-ltcat",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-lip",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-psychosocial",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-esocial",
+              "companyId": "company-1"
+            }
+          ]
+        },
+        {
+          "id": "shared:6",
+          "field": "clientResponsibilities",
+          "text": "A implementação das medidas recomendadas cabe à contratante.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-pcmso",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-ltcat",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-lip",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-psychosocial",
+              "companyId": "company-1"
+            }
+          ]
+        },
+        {
+          "id": "shared:7",
+          "field": "references",
+          "text": "NR-01 — Gerenciamento de Riscos Ocupacionais.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-psychosocial",
+              "companyId": "company-1"
+            }
+          ]
+        },
+        {
+          "id": "shared:8",
+          "field": "exclusions",
+          "text": "Avaliações quantitativas não selecionadas no escopo.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-ltcat",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-lip",
+              "companyId": "company-1"
+            }
+          ]
+        },
+        {
+          "id": "shared:9",
+          "field": "observations",
+          "text": "Medições quantitativas somente integram a contratação quando selecionadas e dimensionadas no escopo.",
+          "appliesTo": [
+            {
+              "itemId": "demo-pgr",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-ltcat",
+              "companyId": "company-1"
+            },
+            {
+              "itemId": "demo-lip",
+              "companyId": "company-1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "investment",
+      "kind": "investment",
+      "totals": {
+        "onceCents": 600000,
+        "monthlyCents": 20000,
+        "byCompany": [
+          {
+            "onceCents": 600000,
+            "monthlyCents": 20000,
+            "companyId": "company-1",
+            "companyName": "Empresa Exemplo",
+            "billing": [
+              {
+                "paymentTerms": [
+                  "Serviços únicos: 50% na aprovação e 50% na entrega.",
+                  "eSocial: cobrança mensal durante 12 meses."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "acceptance",
+      "kind": "acceptance"
+    }
+  ]
+}

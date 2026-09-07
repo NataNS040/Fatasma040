@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "pageCount": 4,
+  "errors": [],
+  "scenarios": [
+    "single",
+    "group",
+    "live-update",
+    "per-company-training",
+    "pricing-visibility",
+    "print",
+    "mobile"
+  ]
+}
