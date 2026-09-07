@@ -1,6 +1,7 @@
 import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import ts from 'typescript';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadV2 } from '../scripts/load-v2.mjs';
@@ -119,9 +120,9 @@ test('opções removem só capa e aceite; conteúdo longo não é cortado', () =
     assert.equal(result.document.stage, 'composed');
 });
 
-test('catálogo cobre os 25 serviços pedidos e assessoria, com conteúdo e fontes locais', () => {
+test('catálogo cobre os serviços anteriores e LI específico, com conteúdo e fontes locais', () => {
     const entries = listCatalogEntries();
-    const expected = ['pgr', 'pcmso', 'ltcat', 'lip', 'aet', 'psychosocial', 'esocial', 'art', 'technical-support', 'technical-visit', 'noise', 'heat', 'vibration', 'chemicals', 'dust', 'nr01', 'nr05', 'nr06', 'nr10', 'nr12', 'nr18', 'nr20', 'nr33', 'nr35', 'brigade', 'assistance'];
+    const expected = ['pgr', 'pcmso', 'ltcat', 'lip', 'li', 'aet', 'psychosocial', 'esocial', 'art', 'technical-support', 'technical-visit', 'noise', 'heat', 'vibration', 'chemicals', 'dust', 'nr01', 'nr05', 'nr06', 'nr10', 'nr12', 'nr18', 'nr20', 'nr33', 'nr35', 'brigade', 'assistance'];
     assert.deepEqual(entries.map(e => e.id).sort(), expected.sort());
     assert.equal(new Set(entries.map(e => e.id)).size, entries.length);
     const root = fileURLToPath(new URL('../../', import.meta.url));
@@ -141,7 +142,7 @@ test('catálogo cobre os 25 serviços pedidos e assessoria, com conteúdo e font
 
 test('summary, standard e full projetam campos diferentes sem apagar o snapshot', () => {
     const p = singleProposal();
-    const expected = { summary: ['summary'], standard: ['summary', 'methodology', 'deliverables'] };
+    const expected = { summary: ['summary'], standard: ['summary', 'scope', 'methodology', 'deliverables', 'providerResponsibilities', 'clientResponsibilities', 'references', 'exclusions', 'observations'] };
     const snapshots = [];
     for (const level of ['summary', 'standard', 'full']) {
         p.options.detailLevel = level;
@@ -222,6 +223,33 @@ test('kit-completo materializa cinco seleções editáveis e não possui HTML ou
     assert.throws(() => instantiatePreset('kit-completo', 'c', 'x', { noise: {} }));
 });
 
+test('presets migrados preservam aliases, parâmetros obrigatórios e escopos distintos', () => {
+    const presets = listPresets();
+    const legacyIds = presets.flatMap(preset => preset.legacyIds);
+    assert.equal(new Set(legacyIds).size, legacyIds.length);
+    for (const preset of presets) {
+        assert.equal(new Set(preset.services.map(service => service.catalogId)).size, preset.services.length);
+        for (const service of preset.services) assert.ok(getCatalogEntry(service.catalogId));
+    }
+    assert.deepEqual(instantiatePreset('pgr-pcmso-ltcat', 'company', 'kit'), instantiatePreset('kit-programas', 'company', 'kit'));
+    const li = instantiatePreset('laudo-insalubridade', 'company', 'li');
+    assert.deepEqual(li.map(item => item.catalogId), ['li', 'art']);
+    assert.ok(li[0].content.exclusions.some(text => text.includes('Periculosidade')));
+    assert.throws(() => instantiatePreset('medicao-ruido', 'company', 'noise'));
+    assert.throws(() => instantiatePreset('brigada', 'company', 'brigade'));
+    assert.equal(api.getPreset('combo-completo').services.some(service => service.catalogId === 'psychosocial'), true);
+    assert.equal(api.getPreset('assessoria-programas').documentMode, 'consultive');
+});
+
+test('todos os modelos V1 têm destino ou pendência documentada, sem importar V1 em produção', async () => {
+    const source = readFileSync(new URL('../src/config/modelos-prontos.ts', import.meta.url), 'utf8');
+    const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2020 } }).outputText;
+    const legacy = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+    const accounted = [...listPresets().flatMap(preset => preset.legacyIds), ...api.pendingLegacyPresets.map(preset => preset.id)];
+    assert.equal(new Set(accounted).size, accounted.length);
+    assert.deepEqual(accounted.sort(), legacy.modelosProntos.map(model => model.id).sort());
+});
+
 test('parâmetros configuram treinamentos e medições sem duplicar campos do domínio', () => {
     const training = createCatalogItem('nr35', { id: 't', companyId: 'company-1', parameters: { participants: 12, classes: 2, hoursPerClass: 8, occurrences: 1, modality: 'hybrid' } });
     assert.equal(training.participants, 12);
@@ -271,6 +299,38 @@ test('TM136: mensalidade por 12 meses sem total global; medição em orçamento 
     assert.equal(optional.measurements[0].status, 'separate-quote');
     assert.equal(result.document.blocks.filter(b => b.kind === 'technical-section').flatMap(b => b.services).some(s => s.catalogId === 'heat'), false);
     assert.equal(JSON.stringify(result.document).includes('assistanceConfig'), false);
+});
+
+test('modos adaptam seções sem alterar escopo, preço ou opções explícitas', () => {
+    const proposal = universalCatalogProposal();
+    const documents = ['compact', 'standard', 'consultive'].map(documentMode => {
+        proposal.options.documentMode = documentMode;
+        const result = composeProposal(proposal);
+        assert.equal(result.ok, true);
+        assert.equal(result.document.documentMode, documentMode);
+        return result.document;
+    });
+    assert.equal(documents[0].blocks.filter(block => block.kind === 'technical-section').length, 1);
+    assert.ok(documents[1].blocks.filter(block => block.kind === 'technical-section').length > 1);
+    assert.ok(documents[2].blocks.some(block => block.kind === 'coordination'));
+    for (const document of documents) {
+        assert.deepEqual(document.sourceItems, documents[0].sourceItems);
+        assert.deepEqual(document.blocks.find(block => block.kind === 'investment'), documents[0].blocks.find(block => block.kind === 'investment'));
+        assert.ok(document.blocks.some(block => block.kind === 'cover'));
+    }
+    proposal.options.documentMode = 'invalid';
+    assert.equal(composeProposal(proposal).ok, false);
+});
+
+test('consultive respeita detalhes explícitos e exclui dependências não contratadas', () => {
+    const proposal = tm136AssistanceProposal();
+    proposal.options.documentMode = 'consultive';
+    delete proposal.options.detailLevel;
+    const document = composeProposal(proposal).document;
+    assert.ok(document.blocks.filter(block => block.kind === 'technical-section').flatMap(block => block.services).every(service => service.level === 'full'));
+    assert.ok(!document.blocks.find(block => block.kind === 'coordination').entries.some(entry => entry.title === 'Dependência das avaliações'));
+    proposal.options.detailLevel = 'standard';
+    assert.ok(composeProposal(proposal).document.blocks.filter(block => block.kind === 'technical-section').flatMap(block => block.services).every(service => service.level === 'standard'));
 });
 
 test('TM137: escopo comum, participantes e mensalidades individuais, nenhum agregado', () => {

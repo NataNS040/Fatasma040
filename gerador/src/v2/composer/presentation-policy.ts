@@ -2,7 +2,7 @@ import type { ContentField, DetailLevel, SectionGroup } from '../domain/content'
 
 export const presentationFields: Readonly<Record<DetailLevel, readonly ContentField[]>> = {
     summary: ['summary'],
-    standard: ['summary', 'methodology', 'deliverables'],
+    standard: ['summary', 'scope', 'methodology', 'deliverables', 'providerResponsibilities', 'clientResponsibilities', 'responsibilities', 'references', 'exclusions', 'observations'],
     full: ['summary', 'objective', 'scope', 'methodology', 'executionSteps', 'deliverables', 'providerResponsibilities', 'clientResponsibilities', 'responsibilities', 'references', 'inclusions', 'exclusions', 'observations', 'periodicity']
 };
 

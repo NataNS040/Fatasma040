@@ -1,0 +1,229 @@
+{
+  "browser": "147.0.7727.15",
+  "platform": "win32",
+  "baselineUpdate": false,
+  "results": [
+    {
+      "id": "training",
+      "passed": true,
+      "pages": 2,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "brigade",
+      "passed": true,
+      "pages": 3,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "psychosocial",
+      "passed": true,
+      "pages": 3,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "program-kit",
+      "passed": true,
+      "pages": 5,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "complete-kit",
+      "passed": true,
+      "pages": 6,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "measurement",
+      "passed": true,
+      "pages": 2,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Calor / Avaliação de IBUTG."
+      ]
+    },
+    {
+      "id": "simple-assistance",
+      "passed": true,
+      "pages": 4,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Condomínio Residencial Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "robust-assistance",
+      "passed": true,
+      "pages": 15,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Condomínio Residencial Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "group",
+      "passed": true,
+      "pages": 21,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Padaria Exemplo.",
+        "Endereço incompleto ou ausente: Pizzaria Salão Exemplo.",
+        "Endereço incompleto ou ausente: Pizzaria Norte Exemplo.",
+        "Endereço incompleto ou ausente: Pizzaria Sul Exemplo.",
+        "Endereço incompleto ou ausente: Delivery Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Calor / Avaliação de IBUTG.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Calor / Avaliação de IBUTG.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Calor / Avaliação de IBUTG.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Calor / Avaliação de IBUTG.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Calor / Avaliação de IBUTG.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "many-services",
+      "passed": true,
+      "pages": 12,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Ruído / Dosimetria Ocupacional.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Calor / Avaliação de IBUTG.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Avaliação de Vibração Ocupacional.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Avaliação de Agentes Químicos.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Medição sem observação de execução: Avaliação de Poeiras Ocupacionais."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "overflow": {
+    "codes": [
+      "overflow"
+    ],
+    "ready": false
+  },
+  "clipped-content": {
+    "codes": [
+      "clipped-content"
+    ],
+    "ready": false
+  },
+  "table-width": {
+    "codes": [
+      "table-width"
+    ],
+    "ready": false
+  },
+  "empty-page": {
+    "codes": [
+      "empty-page"
+    ],
+    "ready": false
+  },
+  "hidden-page": {
+    "codes": [
+      "empty-page"
+    ],
+    "ready": false
+  },
+  "footer-overlap": {
+    "codes": [
+      "overflow",
+      "footer-overlap"
+    ],
+    "ready": false
+  },
+  "split-block": {
+    "codes": [
+      "sparse-page",
+      "split-block"
+    ],
+    "ready": false
+  },
+  "missing-content": {
+    "codes": [
+      "missing-content"
+    ],
+    "ready": false
+  },
+  "sparse-page": {
+    "codes": [
+      "sparse-page"
+    ],
+    "ready": true
+  },
+  "noPages": {
+    "ready": false
+  }
+}

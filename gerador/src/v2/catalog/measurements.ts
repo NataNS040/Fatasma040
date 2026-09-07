@@ -19,7 +19,7 @@ const definitions = [
         method: 'Medições com equipamento para avaliação de calor, incluindo termômetro de globo, e análise dos registros de IBUTG.',
         steps: ['Planejar pontos e condições de avaliação.', 'Registrar atividades e condições ambientais.', 'Realizar medições de IBUTG.', 'Consolidar cálculo, análise e relatório.'],
         deliverables: ['Registros das medições de IBUTG.', 'Memória de cálculo e relatório técnico de exposição ao calor.'],
-        references: ['NR-15, Anexo 3.', 'NHO-06 da Fundacentro — referência do catálogo V1.'], sources: [sources.unimetais, sources.group, 'gerador/src/config/modelos-prontos.ts']
+        references: ['NR-15, Anexo 3.', 'NHO-06 da Fundacentro.'], sources: [sources.unimetais, sources.group, 'gerador/src/config/modelos-prontos.ts']
     },
     {
         id: 'vibration', name: 'Avaliação de Vibração Ocupacional', short: 'Vibração', icon: 'wave-square',
@@ -39,7 +39,7 @@ const definitions = [
         method: 'Coleta com bomba de amostragem e meios de coleta compatíveis com o agente, seguida de análise laboratorial pelo método definido tecnicamente.',
         steps: ['Identificar agentes, grupos e quantidade de amostras.', 'Definir método e meios de coleta com o laboratório.', 'Executar e registrar a amostragem.', 'Consolidar resultados laboratoriais e relatório técnico.'],
         deliverables: ['Registros de coleta e resultados laboratoriais dos agentes contratados.', 'Relatório técnico com método, análise e conclusões.'],
-        references: ['NR-15 e métodos técnicos aplicáveis ao agente avaliado.', 'Métodos NIOSH/OSHA — referências presentes na proposta de origem, sujeitos à seleção técnica.'], sources: [sources.unimetais, sources.measurements]
+        references: ['NR-15 e métodos técnicos aplicáveis ao agente avaliado.', 'Métodos NIOSH/OSHA compatíveis com o agente e a estratégia de amostragem.'], sources: [sources.unimetais, sources.measurements]
     },
     {
         id: 'dust', name: 'Avaliação de Poeiras Ocupacionais', short: 'Poeiras', icon: 'smog',
@@ -49,7 +49,7 @@ const definitions = [
         method: 'Amostragem com bomba e sistema de coleta compatíveis com a fração selecionada; análise laboratorial definida conforme a composição investigada.',
         steps: ['Definir poeira, fração, grupos e amostras.', 'Selecionar meios de coleta e método laboratorial.', 'Executar a coleta e registrar condições de exposição.', 'Analisar resultados e emitir relatório.'],
         deliverables: ['Registros de amostragem e resultados laboratoriais da poeira avaliada.', 'Relatório técnico de exposição às poeiras contratadas.'],
-        references: ['NR-15 — critérios aplicáveis ao agente.', 'NHO-08 e NIOSH 7500 — referências da avaliação de poeira respirável/sílica na proposta ML2.'], sources: [sources.measurements]
+        references: ['NR-15 — critérios aplicáveis ao agente.', 'NHO-08 para coleta de particulado; NIOSH 7500 quando aplicável à análise de sílica cristalina.'], sources: [sources.measurements]
     }
 ];
 
@@ -57,12 +57,13 @@ export const measurementEntries = definitions.map((d, index) => defineEntry({
     id: d.id, kind: 'measurement', title: d.name, shortName: d.short,
     category: 'measurements', section: 'measurements', order: (index + 1) * 10, icon: d.icon,
     summary: d.summary, objective: d.objective, scope: d.scope,
-    methodology: [common.planning, d.method], steps: d.steps, deliverables: d.deliverables, references: d.references,
+    methodology: [common.planning, d.method, 'Registrar duração, condições operacionais e representatividade da avaliação; interpretar resultados conforme o método e o critério técnico aplicáveis.'], steps: d.steps,
+    deliverables: [...d.deliverables, 'Identificação dos instrumentos e calibrações, condições da coleta, critérios de comparação e recomendações de controle.'], references: d.references,
     provider: [common.qualified, 'Utilizar instrumentação compatível com a avaliação e com registros de calibração.', common.delivery],
     client: [common.information, common.access, 'Disponibilizar as atividades e condições operacionais necessárias à avaliação programada.'],
     inclusions: ['Avaliações e registros correspondentes ao agente, método e quantidades contratados.'],
     exclusions: ['Agentes, amostras, pontos e avaliações adicionais não discriminados.', 'Elaboração ou atualização de programas e laudos não selecionados.'],
-    observations: ['Cada quantidade se aplica à empresa e ao agente indicados no item.', 'Referências da fonte não substituem a definição do método aplicável à avaliação contratada.'],
+    observations: ['Cada quantidade se aplica à empresa e ao agente indicados no item.', 'Resultados representam as condições avaliadas, não uma garantia para todas as jornadas. Mudanças operacionais ou coleta inviável exigem replanejamento e eventual revisão comercial.', ...(d.id === 'chemicals' || d.id === 'dust' ? ['Agente, fração, meio de coleta e método laboratorial devem ser compatibilizados antes da campanha; análise de outros compostos não está presumida.'] : [])],
     periodicity: { mode: 'on-demand', description: 'Campanha de avaliação conforme escopo; novas campanhas dependem de contratação ou previsão expressa.' },
     parameters: [textParameter('agent', 'Agente e tipo de exposição', 'agent'), textParameter('method', 'Método previsto', 'method'), numberParameter('quantity', 'Quantidade contratada', 'avaliações', 'quantity'), { id: 'unit', label: 'Unidade de medição', description: 'Unidade que delimita o quantitativo contratado.', required: true, type: 'choice', choices: ['point', 'sample', 'dosimetry'], binding: 'unit' }, listParameter('workGroups', 'Grupos e atividades', 'workGroups')],
     sources: d.sources

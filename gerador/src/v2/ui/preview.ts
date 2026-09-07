@@ -1,5 +1,6 @@
 import { singleProposal, universalCatalogProposal, tm136AssistanceProposal, tm137GroupProposal } from '../fixtures/proposals';
 import { DocumentPaginator, type ExportPreparation } from '../pagination/engine';
+import { qualityScenarios } from '../fixtures/quality';
 import './preview.css';
 
 const scenarios = { short: singleProposal, medium: () => {
@@ -7,8 +8,11 @@ const scenarios = { short: singleProposal, medium: () => {
     proposal.options.detailLevel = 'standard';
     proposal.services.forEach(service => { service.detailLevel = 'standard'; });
     return proposal;
-}, assistance: tm136AssistanceProposal, group: tm137GroupProposal };
+}, assistance: tm136AssistanceProposal, group: tm137GroupProposal, ...qualityScenarios };
 const selector = document.querySelector<HTMLSelectElement>('#scenario')!;
+for (const id of Object.keys(qualityScenarios)) {
+    const option = document.createElement('option'); option.value = id; option.textContent = `Qualidade: ${id}`; selector.append(option);
+}
 const button = document.querySelector<HTMLButtonElement>('#export')!;
 const status = document.querySelector<HTMLElement>('#status')!;
 const warnings = document.querySelector<HTMLElement>('#warnings')!;

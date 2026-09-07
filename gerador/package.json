@@ -7,6 +7,11 @@
   "scripts": {
     "dev": "vite",
     "dev:v2": "vite --open /gerador-de-proposta/v2.html",
+    "dev:v2:quality": "vite --open /gerador-de-proposta/v2-quality-lab.html",
+    "test:v2": "node scripts/test-v2-all.mjs",
+    "test:v2:unit": "node --test tests/v2.test.mjs tests/v2-editor.test.mjs tests/v2-regression.test.mjs tests/v2-architecture.test.mjs",
+    "test:v2:regression": "node scripts/test-v2-regression.mjs",
+    "test:v2:update-baselines": "node scripts/test-v2-regression.mjs --update-baselines",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",

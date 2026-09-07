@@ -18,8 +18,9 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
     const p = resolved.proposal;
     const issues: ValidationIssue[] = [];
     const error = (code: string, path: string, message: string): void => { issues.push({ severity: 'error', code, path, message }); };
+    const warning = (code: string, path: string, message: string): void => { issues.push({ severity: 'warning', code, path, message }); };
     const required = (value: string, path: string): void => {
-        if (!value.trim()) error('required', path, 'Preencha o texto obrigatório.');
+        if (typeof value !== 'string' || !value.trim()) error('required', path, 'Preencha o texto obrigatório.');
     };
     const integer = (value: number, path: string, min = 0): void => {
         if (!isNonNegativeInteger(value) || value < min) error('invalid-number', path, `Informe inteiro seguro maior ou igual a ${min}.`);
@@ -31,15 +32,18 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
     required(p.metadata.id, 'metadata.id');
     required(p.metadata.number, 'metadata.number');
     required(p.metadata.title, 'metadata.title');
-    required(p.metadata.author.name, 'metadata.author.name');
+    if (!p.metadata.author.name?.trim()) warning('missing-responsible', 'metadata.author.name', 'Responsável da EngMarq não informado.');
+    if (!p.client.contact?.name?.trim()) warning('missing-contact', 'client.contact.name', 'Responsável do cliente não informado.');
     integer(p.metadata.revision, 'metadata.revision');
     if (!isCivilDate(p.metadata.issuedOn)) error('invalid-date', 'metadata.issuedOn', 'Use uma data civil válida YYYY-MM-DD.');
     required(p.client.displayName, 'client.displayName');
+    if (!['single', 'group'].includes(p.client.kind)) error('client-kind', 'client.kind', 'Tipo de cliente inválido.');
     if (p.isGroup !== undefined && p.isGroup !== (p.client.kind === 'group')) error('group-identity', 'isGroup', 'isGroup deve corresponder ao tipo de cliente.');
     if (p.isGroup === true && (!p.groupName?.trim() || p.groupName !== p.client.displayName)) error('group-name', 'groupName', 'Defina o nome do grupo, igual ao destinatário da proposta.');
     if (p.client.kind === 'single' && p.groupName !== undefined) error('group-name', 'groupName', 'Empresa única não possui nome de grupo.');
     required(p.scope.objective, 'scope.objective');
     const levels = ['summary', 'standard', 'full'];
+    if (p.options.documentMode !== undefined && !['compact', 'standard', 'consultive'].includes(p.options.documentMode)) error('document-mode', 'options.documentMode', 'Modo de documento inválido.');
     if (p.options.detailLevel !== undefined && !levels.includes(p.options.detailLevel)) error('detail-level', 'options.detailLevel', 'Nível de apresentação inválido.');
     const minCompanies = p.client.kind === 'group' ? 2 : 1;
     if (p.companies.length < minCompanies || (p.client.kind === 'single' && p.companies.length !== 1)) {
@@ -50,6 +54,7 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
         const path = `companies[${index}]`;
         required(company.id, `${path}.id`);
         required(company.legalName, `${path}.legalName`);
+        if (!company.address?.street?.trim() || !company.address.city?.trim() || !company.address.state?.trim()) warning('missing-address', `${path}.address`, `Endereço incompleto ou ausente: ${company.legalName || company.id}.`);
         if (companyIds.has(company.id)) error('duplicate-id', `${path}.id`, 'ID de empresa duplicado.');
         companyIds.add(company.id);
         if (company.employeeCount !== undefined) integer(company.employeeCount, `${path}.employeeCount`);
@@ -77,6 +82,7 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
         if (item.content.provenance.review === 'pending') issues.push({ severity: 'warning', code: 'technical-review', path: `${path}.content`, message: 'Conteúdo técnico pendente de revisão antes de uso comercial.' });
         switch (item.kind) {
             case 'training':
+                if (!['onsite', 'online', 'hybrid'].includes(item.modality)) error('training-modality', `${path}.modality`, 'Modalidade de treinamento inválida.');
                 integer(item.participants, `${path}.participants`, 1);
                 integer(item.classes, `${path}.classes`, 1);
                 positive(item.hoursPerClass, `${path}.hoursPerClass`);
@@ -87,6 +93,7 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
                 if (item.frequency === 'once' && item.occurrences !== 1) error('frequency', `${path}.occurrences`, 'Frequência única exige uma ocorrência.');
                 break;
             case 'measurement':
+                if (!item.notes?.trim()) warning('measurement-notes', `${path}.notes`, `Medição sem observação de execução: ${item.content.title}.`);
                 integer(item.quantity, `${path}.quantity`, 1);
                 required(item.agent, `${path}.agent`);
                 required(item.method, `${path}.method`);
@@ -125,7 +132,7 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
     });
     if (p.commercial.currency !== 'BRL') error('currency', 'commercial.currency', 'Moeda não suportada.');
     integer(p.commercial.validityDays, 'commercial.validityDays', 1);
-    if (!p.commercial.paymentTerms.length) error('payment-terms', 'commercial.paymentTerms', 'Defina as condições de pagamento.');
+    if (!p.commercial.paymentTerms.length || p.commercial.paymentTerms.some(term => typeof term !== 'string' || !term.trim())) error('payment-terms', 'commercial.paymentTerms', 'Defina condições de pagamento não vazias.');
     for (const key of ['showMonthlyValue', 'showContractTotal', 'showAggregateTotal', 'showPerCompanyPricing'] as const) {
         if (p.commercial[key] !== undefined && typeof p.commercial[key] !== 'boolean') error('commercial-visibility', `commercial.${key}`, 'A opção de exibição deve ser booleana.');
     }
@@ -138,6 +145,7 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
         if (priced.has(line.itemId)) error('duplicate-price', `${path}.itemId`, 'Cada item deve ter uma única condição de preço.');
         priced.add(line.itemId);
         if (line.price.mode === 'charge') {
+            if (!['once', 'monthly'].includes(line.price.cadence)) error('price-cadence', `${path}.price.cadence`, 'Cadência de cobrança inválida.');
             integer(line.price.amountCents, `${path}.price.amountCents`);
         } else if (line.price.mode === 'package') {
             integer(line.price.onceCents, `${path}.price.onceCents`);
@@ -150,7 +158,7 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
             if (targetId === line.itemId || !target || !['charge', 'package'].includes(target.price.mode) || !item || !coveringItem || item.companyId !== coveringItem.companyId) {
                 error('invalid-inclusion', `${path}.price.coveredByItemId`, 'Item incluso deve apontar diretamente para uma cobrança da mesma empresa.');
             }
-        }
+        } else if (line.price.mode !== 'separate-quote') error('price-mode', `${path}.price.mode`, 'Modo de cobrança inválido.');
         if (line.billing?.termMonths !== undefined) integer(line.billing.termMonths, `${path}.billing.termMonths`, 1);
         if (line.billing?.installmentCount !== undefined) integer(line.billing.installmentCount, `${path}.billing.installmentCount`, 1);
         if (line.billing?.paymentTerms !== undefined && (!line.billing.paymentTerms.length || line.billing.paymentTerms.some(term => !term.trim()))) error('payment-terms', `${path}.billing.paymentTerms`, 'Informe condições de pagamento não vazias.');

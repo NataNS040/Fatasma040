@@ -34,15 +34,14 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"],
-      "@types/*": ["./types/*"],
-      "@config/*": ["./config/*"],
-      "@utils/*": ["./utils/*"],
-      "@styles/*": ["./styles/*"],
-      "@templates/*": ["./templates/*"],
-      "@generators/*": ["./generators/*"]
+      "@/*": ["./src/*"],
+      "@types/*": ["./src/types/*"],
+      "@config/*": ["./src/config/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@templates/*": ["./src/templates/*"],
+      "@generators/*": ["./src/generators/*"]
     }
   },
   "include": ["src/**/*"],

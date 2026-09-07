@@ -1,5 +1,15 @@
 # Interface do Gerador V2
 
+Para fixtures representativas, bloqueios de exportação e regressão automatizada,
+consulte [V2-QUALITY.md](V2-QUALITY.md). O Quality Lab é exclusivo de desenvolvimento.
+Responsáveis e endereço ausentes geram avisos; os campos técnicos e comerciais
+obrigatórios continuam bloqueando o PDF.
+
+O escopo agora oferece **Modo do documento** (Compacto, Padrão e Consultivo) e
+**Outros presets**, alimentados pelo registro V2. Os sete atalhos anteriores
+permanecem. Detalhamento, capa e aceite continuam editáveis separadamente.
+Ver [V2-MIGRATION.md](V2-MIGRATION.md) para critérios e limitações dos presets.
+
 ## Abrir
 
 Da raiz do repositório, execute `npm run dev:v2 --prefix gerador`.
@@ -32,6 +42,11 @@ sob a base configurada. Não abrir diretamente pelo protocolo `file://`.
 No desktop, formulário e documento ficam lado a lado com rolagens independentes.
 No celular, **Ver preview** / **Voltar ao formulário** alternam as duas vistas.
 Não há animações de transição nem persistência remota.
+
+O editor invalida o PDF na primeira alteração, prepara após pausa de 550 ms e
+reutiliza validação por revisão. Solicitações de paginação superadas são descartadas.
+Há aviso ao sair de um rascunho alterado, mas ele não salva nem recupera dados.
+Procedimentos e limites de uso em [V2-USER-GUIDE.md](V2-USER-GUIDE.md).
 
 ## Estado e responsabilidades
 

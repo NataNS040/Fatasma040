@@ -7,6 +7,7 @@ export * from './catalog/services';
 export * from './catalog/select-service';
 export * from './presets/program-kit';
 export * from './presets/catalog-presets';
+export * from './presets/migration';
 export * from './composer/presentation-policy';
 export * from './composer/compose-proposal';
 export * from './validation/proposal';

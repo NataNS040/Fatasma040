@@ -1,4 +1,8 @@
-export interface LayoutWarning { code: 'overflow' | 'table-width' | 'split-block' | 'empty-page' | 'sparse-page' | 'footer-overlap' | 'missing-content'; page: number; message: string; severity: 'warning' | 'error'; }
+export interface LayoutWarning { code: 'overflow' | 'table-width' | 'split-block' | 'empty-page' | 'sparse-page' | 'footer-overlap' | 'missing-content' | 'clipped-content'; page: number; message: string; severity: 'warning' | 'error'; }
+
+export function isLayoutExportable(pages: number, warnings: LayoutWarning[]): boolean {
+    return pages > 0 && !warnings.some(warning => warning.severity === 'error');
+}
 
 /** Geometria real após paginação; tolerância de 2px para arredondamento de impressão. */
 export function inspectLayout(container: HTMLElement, expectedContent: { id: string; text: string }[] = []): LayoutWarning[] {
@@ -10,13 +14,15 @@ export function inspectLayout(container: HTMLElement, expectedContent: { id: str
     const report = (code: LayoutWarning['code'], page: number, message: string, severity: LayoutWarning['severity'] = 'error'): void => { if (!warnings.some(w => w.code === code && w.page === page && w.message === message)) warnings.push({ code, page, message, severity }); };
     pages.forEach((page, index) => {
         const area = page.querySelector<HTMLElement>('.pagedjs_page_content');
-        if (!area) return;
+        if (!area) { report('empty-page', index + 1, 'Página sem área de conteúdo.'); return; }
         const bounds = area.getBoundingClientRect();
         const leaves = [...area.querySelectorAll<HTMLElement>('[data-layout-id],img')];
         let bottom = bounds.top;
+        let visibleLeaves = 0;
         for (const leaf of leaves) {
             const rect = leaf.getBoundingClientRect();
             if (!rect.width || !rect.height) continue;
+            if (leaf.textContent?.trim() || leaf.tagName === 'IMG') visibleLeaves++;
             const id = leaf.dataset.layoutId;
             if (id) { found.add(id); fragments.set(id, [...(fragments.get(id) ?? []), leaf.textContent ?? '']); }
             bottom = Math.max(bottom, rect.bottom);
@@ -25,11 +31,19 @@ export function inspectLayout(container: HTMLElement, expectedContent: { id: str
                 if (atomicPages.has(id) && atomicPages.get(id) !== index) report('split-block', index + 1, `Bloco indivisível fragmentado: ${id}.`);
                 atomicPages.set(id, index);
             }
+            for (let parent: HTMLElement | null = leaf; parent && parent !== area; parent = parent.parentElement) {
+                const style = getComputedStyle(parent);
+                const clipsX = ['hidden', 'clip', 'auto', 'scroll'].includes(style.overflowX);
+                const clipsY = ['hidden', 'clip', 'auto', 'scroll'].includes(style.overflowY);
+                if ((clipsX && parent.scrollWidth > parent.clientWidth + 2) || (clipsY && parent.scrollHeight > parent.clientHeight + 2)) {
+                    report('clipped-content', index + 1, `Conteúdo cortado por contêiner: ${parent.dataset.layoutId ?? id ?? 'imagem'}.`);
+                }
+            }
         }
         for (const table of area.querySelectorAll('table')) if (table.getBoundingClientRect().width > bounds.width + 2 || table.scrollWidth > table.clientWidth + 2) report('table-width', index + 1, 'Tabela excede a largura imprimível.');
         const footer = page.querySelector('.pagedjs_margin-bottom');
         if (footer && bottom > footer.getBoundingClientRect().top + 2) report('footer-overlap', index + 1, 'Conteúdo invade a região do rodapé.');
-        if (!leaves.length) report('empty-page', index + 1, 'Página sem conteúdo.');
+        if (!visibleLeaves) report('empty-page', index + 1, 'Página sem conteúdo visível.');
         else if (!area.querySelector('.cover') && index !== pages.length - 1 && (bottom - bounds.top) / bounds.height < .25) report('sparse-page', index + 1, 'Página com menos de 25% da altura ocupada.', 'warning');
     });
     const normalized = (text: string): string => text.replace(/[\s\u00ad]/g, '');

@@ -22,6 +22,7 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
     const footer = element('footer', 'page-footer', 'Engenharia de Segurança e Medicina do Trabalho');
     root.append(header, footer);
     const companies = model.blocks.find(block => block.kind === 'companies');
+    const serviceNames = new Map(model.blocks.flatMap(block => block.kind === 'technical-section' ? block.services.map(service => [service.itemId, service.shortName] as const) : []));
     const companyName = (id: string): string => companies?.kind === 'companies' ? companies.companies.find(c => c.id === id)?.legalName ?? id : id;
     for (const block of model.blocks) {
         let node: HTMLElement;
@@ -34,13 +35,20 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
             }
             case 'companies':
                 node = section(model.isGroup ? `Empresas atendidas · ${model.groupName}` : 'Identificação da empresa');
-                node.append(dataTable(['Empresa', 'Identificação e endereço', 'Equipe'], block.companies.map(c => [c.legalName + (c.tradeName ? `\n${c.tradeName}` : ''), [c.taxId, c.address ? `${c.address.street}, ${c.address.city} / ${c.address.state}` : ''].filter(Boolean).join('\n') || 'Não informado', [c.employeeCount !== undefined ? `${c.employeeCount} colaboradores` : '', c.roles?.join(', '), c.roleCount !== undefined ? `${c.roleCount} funções` : ''].filter(Boolean).join('\n')]), 'companies-table'));
-                if (block.contact) node.append(element('p', '', `Contato: ${[block.contact.name, block.contact.email, block.contact.phone].filter(Boolean).join(' · ')}`));
+                node.append(dataTable(['Empresa', 'Identificação e endereço', 'Equipe'], block.companies.map(c => [c.legalName + (c.tradeName && c.tradeName !== c.legalName ? `\n${c.tradeName}` : ''), [c.taxId, c.address ? `${c.address.street}, ${c.address.city} / ${c.address.state}` : ''].filter(Boolean).join('\n') || 'Não informado', [c.employeeCount !== undefined ? `${c.employeeCount} colaboradores` : '', c.roles?.join(', '), c.roleCount !== undefined ? `${c.roleCount} funções` : ''].filter(Boolean).join('\n')]), 'companies-table'));
+                if (block.contact && [block.contact.name, block.contact.email, block.contact.phone].some(value => value?.trim())) node.append(element('p', '', `Contato: ${[block.contact.name, block.contact.email, block.contact.phone].filter(Boolean).join(' · ')}`));
                 break;
             case 'scope':
                 node = section('Sobre a proposta'); node.append(element('p', 'text-block', block.scope.objective));
                 if (block.scope.assumptions.length) node.append(featureList('Premissas', block.scope.assumptions));
                 if (block.scope.exclusions.length) node.append(featureList('Fora do escopo', block.scope.exclusions));
+                break;
+            case 'coordination':
+                node = section(block.title);
+                for (const entry of block.entries) {
+                    node.append(element('h3', '', entry.title), element('p', '', entry.text));
+                    if (model.isGroup) node.append(element('p', 'applies-to', entry.companyIds.map(companyName).join(' · ')));
+                }
                 break;
             case 'technical-section':
                 node = section(block.title);
@@ -55,8 +63,14 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                         const service = services[0];
                         const card = element('article', 'service-card');
                         card.append(element('h3', '', service.title));
-                        const rows = services.map(s => [companyName(s.companyId), s.parameters.map(p => `${p.label}: ${Array.isArray(p.value) ? p.value.join(', ') : translate(String(p.value))}${p.unit ? ` ${p.unit}` : ''}`).join('\n') || 'Conforme escopo técnico', [s.frequency ? `Frequência: ${translate(s.frequency)}` : '', s.visits ? s.visits.included ? `Visitas: ${s.visits.quantity} no contrato · ${translate(s.visits.frequency)} · ${s.visits.durationHours} h por visita. ${s.visits.notes ?? ''}` : `Visitas não incluídas. ${s.visits.notes ?? ''}` : '', s.notes].filter(Boolean).join('\n')]);
-                        card.append(dataTable(['Empresa', 'Configuração', 'Condições específicas'], rows, block.group === 'trainings' ? 'training-table' : 'data-grid'));
+                        const rows = services.map(s => [companyName(s.companyId), s.parameters.map(p => `${p.label}: ${Array.isArray(p.value) ? p.value.join(', ') : translate(String(p.value))}${p.unit ? ` ${p.unit}` : ''}`).join('\n'), [s.frequency ? `Frequência: ${translate(s.frequency)}` : '', s.visits ? s.visits.included ? `Visitas: ${s.visits.quantity} no contrato · ${translate(s.visits.frequency)} · ${s.visits.durationHours} h por visita. ${s.visits.notes ?? ''}` : `Visitas não incluídas. ${s.visits.notes ?? ''}` : '', s.notes].filter(Boolean).join('\n')]);
+                        if (!model.isGroup) {
+                            rows.forEach(row => row.slice(1).filter(Boolean).forEach(text => card.append(element('p', 'service-configuration', text.split('\n').join(' · ')))));
+                        } else {
+                            const columns = [0, 1, 2].filter(index => rows.some(row => row[index]));
+                            if (columns.length === 1) card.append(element('p', 'applies-to', `Empresas: ${rows.map(row => row[0]).join(' · ')}`));
+                            else card.append(dataTable(columns.map(index => ['Empresa', 'Configuração', 'Condições específicas'][index]), rows.map(row => columns.map(index => row[index])), block.group === 'trainings' ? 'training-table' : 'data-grid'));
+                        }
                         for (const [field, values] of Object.entries(service.fields)) if (values?.length) card.append(featureList(translate(field), values));
                         node.append(card);
                     }
@@ -72,15 +86,25 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                     if (existing) existing.appliesTo.push(...item.appliesTo);
                     else shared.set(key, { ...item, appliesTo: [...item.appliesTo] });
                 }
+                const grouped = new Map<string, Map<string, string[]>>();
                 for (const item of shared.values()) {
-                    const box = element('div', 'info-box');
                     const applicability = new Map<string, string[]>();
                     for (const id of new Set(item.appliesTo.map(ref => ref.companyId))) {
-                        const names = [...new Set(item.appliesTo.filter(ref => ref.companyId === id).map(ref => model.blocks.flatMap(b => b.kind === 'technical-section' ? b.services : []).find(s => s.itemId === ref.itemId)?.shortName ?? ref.itemId))].sort().join(', ');
+                        const names = [...new Set(item.appliesTo.filter(ref => ref.companyId === id).map(ref => serviceNames.get(ref.itemId) ?? ref.itemId))].sort().join(', ');
                         applicability.set(names, [...(applicability.get(names) ?? []), companyName(id)]);
                     }
-                    box.append(element('h4', '', translate(item.field)), element('p', '', item.text), element('p', 'applies-to', [...applicability].map(([services, names]) => `${names.join(' · ')} — ${services}`).join('\n')));
-                    node.append(box);
+                    const applies = [...applicability].map(([services, names]) => `${names.join(' · ')} — ${services}`).join('\n');
+                    const field = grouped.get(item.field) ?? new Map<string, string[]>();
+                    field.set(applies, [...(field.get(applies) ?? []), item.text]);
+                    grouped.set(item.field, field);
+                }
+                for (const [field, groups] of grouped) {
+                    node.append(element('h4', '', translate(field)));
+                    for (const [applies, texts] of groups) {
+                        const list = element('ul');
+                        texts.forEach(text => list.append(element('li', '', text)));
+                        node.append(list, element('p', 'applies-to', applies));
+                    }
                 }
                 }
                 break;
@@ -100,7 +124,7 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                 break;
             case 'acceptance':
                 node = section('Aceite e responsabilidade');
-                node.append(element('p', '', `Responsável pela proposta: ${[block.author.name, block.author.role, block.author.email, block.author.phone].filter(Boolean).join(' · ')}`));
+                node.append(element('p', '', `Responsável pela proposta: ${[block.author.name, block.author.role, block.author.email, block.author.phone].filter(value => value?.trim()).join(' · ') || 'Não informado'}`));
                 for (const id of block.companyIds) { const signature = element('div', 'signature', `${companyName(id)}\nResponsável: ________________________    Data: ____ / ____ / ______`); signature.dataset.atomic = 'signature'; node.append(signature); }
                 break;
         }

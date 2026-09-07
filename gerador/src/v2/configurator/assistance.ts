@@ -24,7 +24,7 @@ export function createAssistanceProposal(input: AssistanceProposalInput): Propos
 }
 
 const allowedIds = {
-    programs: ['pgr', 'pcmso', 'ltcat', 'lip', 'aet'],
+    programs: ['pgr', 'pcmso', 'ltcat', 'lip', 'li', 'aet'],
     management: ['psychosocial', 'esocial', 'art', 'technical-support'],
     measurements: ['noise', 'heat', 'vibration', 'chemicals', 'dust'],
     trainings: ['nr01', 'nr05', 'nr06', 'nr10', 'nr12', 'nr18', 'nr20', 'nr33', 'nr35', 'brigade']
@@ -87,10 +87,10 @@ export function resolveAssistanceProposal(input: Proposal): AssistanceResolution
         // Nenhuma visita, suporte, programa ou medição é prometido pelo texto base.
         content.objective = 'Coordenar os serviços de SST expressamente selecionados para a empresa durante a vigência contratada.';
         content.methodology = ['Alinhamento inicial dos serviços contratados e acompanhamento de sua execução.'];
-        content.deliverables = ['Registros de acompanhamento dos serviços contratados.'];
+        content.deliverables = ['Registros de acompanhamento dos serviços contratados, com entregas, pendências e encaminhamentos por empresa.'];
         content.profile.summary = 'Gestão e acompanhamento de SST conforme o escopo individual configurado para a empresa.';
         content.profile.scope = ['Coordenação das entregas expressamente selecionadas na proposta.'];
-        content.profile.executionSteps = ['Alinhar a programação.', 'Acompanhar os serviços contratados.', 'Consolidar registros e orientações.'];
+        content.profile.executionSteps = ['Pactuar prioridades, responsáveis e programação dos serviços selecionados.', 'Acompanhar a execução e registrar pendências para decisão da contratante.', 'Consolidar entregas e orientações individualizadas por empresa.'];
         content.profile.parameters = content.profile.parameters.filter(definition => !['visitsPerMonth', 'hoursPerVisit', 'support'].includes(definition.id));
         const support = services.management['technical-support'];
         const channels = support?.selected && Array.isArray(support.parameters?.['channels']) ? support.parameters['channels'] : [];
@@ -120,7 +120,7 @@ export function resolveAssistanceProposal(input: Proposal): AssistanceResolution
         for (const [id, option] of Object.entries(services.trainings)) {
             if (!option.selected || !allowedIds.trainings.includes(id)) continue;
             if (!option.frequency) error(`${path}.trainings.${id}.frequency`, 'Defina a frequência do treinamento.');
-            const parameters = { participants: option.participants, classes: option.classes, hoursPerClass: option.hoursPerClass, occurrences: option.occurrences, modality: option.modality };
+            const parameters = { ...option.parameters, participants: option.participants, classes: option.classes, hoursPerClass: option.hoursPerClass, occurrences: option.occurrences, modality: option.modality };
             const item = add(id, option, parameters as ParameterValues, 'trainings');
             if (item?.kind === 'training') { item.frequency = option.frequency; p.trainings.push(item); }
         }

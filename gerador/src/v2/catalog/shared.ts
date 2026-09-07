@@ -24,6 +24,7 @@ export const common = {
     delivery: 'Entregar os documentos e registros previstos no escopo, identificados por empresa.',
     implementation: 'A implementação das medidas recomendadas cabe à contratante.',
     quantitative: 'Medições quantitativas somente integram a contratação quando selecionadas e dimensionadas no escopo.',
+    art: 'ART de engenharia somente integra este escopo quando selecionada, com objeto e quantidade discriminados; a responsabilidade médica do PCMSO permanece distinta.',
     trainingPlanning: 'Organizar datas, participantes, turmas e infraestrutura com a contratante.',
     attendance: 'Lista de presença ou registro de conclusão por capacitação.',
     certificates: 'Certificados individuais correspondentes à capacitação efetivamente realizada.'
@@ -63,7 +64,7 @@ export function defineEntry(data: {
             title: data.title, objective: data.objective, methodology: data.methodology,
             deliverables: data.deliverables, references: data.references, exclusions: data.exclusions,
             responsibilities: [],
-            provenance: { source: data.sources[0], sources: [...new Set(data.sources)], revision: '2026-09-07.2', review: 'pending' },
+            provenance: { source: data.sources[0], sources: [...new Set(data.sources)], revision: '2026-09-07.3', review: 'pending' },
             profile: {
                 shortName: data.shortName, category: data.category, summary: data.summary,
                 scope: data.scope, executionSteps: data.steps,

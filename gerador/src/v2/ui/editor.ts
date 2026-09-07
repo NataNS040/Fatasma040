@@ -1,5 +1,5 @@
 import { DocumentPaginator, type ExportPreparation } from '../pagination/engine';
-import { newDraft, newCompany, newSelection, applyEditorPreset, draftProposal, editorPresets, editorCatalog, type Selection, type DraftCompany } from './draft';
+import { newDraft, newCompany, newSelection, applyEditorPreset, draftProposal, editorPresets, availableEditorPresets, editorCatalog, type Selection, type DraftCompany } from './draft';
 import { element as el } from '../components/document';
 import type { ParameterDefinition } from '../domain/content';
 import type { ServiceFrequency } from '../domain/assistance';
@@ -10,6 +10,9 @@ let step = 0;
 let revision = 0;
 let timer: ReturnType<typeof setTimeout>;
 let prepared: ExportPreparation | undefined;
+let validatedRevision = -1;
+let validationResult: ReturnType<typeof draftProposal>;
+let preparationRequest = 0;
 const titles = ['Cliente', 'Escopo', 'Comercial', 'Revisão'];
 const frequencies = { once: 'Uma vez', weekly: 'Semanal', monthly: 'Mensal', quarterly: 'Trimestral', semiannual: 'Semestral', annual: 'Anual', 'on-demand': 'Sob demanda' };
 const translated: Record<string, string> = { onsite: 'Presencial', online: 'Online', hybrid: 'Híbrida', point: 'Ponto', sample: 'Amostra', dosimetry: 'Dosimetria' };
@@ -49,8 +52,10 @@ const resize = new ResizeObserver(fitPages); resize.observe(preview);
 function button(label: string, action: () => void, className = ''): HTMLButtonElement { const b = el('button', className, label); b.type = 'button'; b.addEventListener('click', action); return b; }
 function changed(structural = false): void {
     revision++; prepared = undefined; exportButton.disabled = true; pages.classList.add('stale');
+    paginator.invalidate();
+    status.textContent = 'Rascunho alterado · aguardando conferência.';
     if (structural) render();
-    clearTimeout(timer); validate(); timer = setTimeout(() => { void prepare(); }, 550);
+    clearTimeout(timer); timer = setTimeout(() => { void prepare(); }, 550);
 }
 function field(label: string, value: string, write: (value: string) => void, type = 'text', hint = ''): HTMLElement {
     const wrapper = el('label', `field ${type === 'textarea' ? 'wide' : ''}`);
@@ -117,7 +122,8 @@ function scopeFields(): void {
         const b = button('', () => { applyEditorPreset(draft, preset.id); changed(true); }, 'preset');
         b.append(el('strong', '', preset.name), el('small', '', preset.description)); presets.append(b);
     }
-    form.append(presets, el('p', 'hint', 'Atalhos adicionam serviços. Tudo continua editável abaixo.'), toggle('Ativar assessoria em SST', draft.assistance, v => draft.assistance = v));
+    form.append(presets, select('Outros presets', '', { '': 'Selecionar preset', ...Object.fromEntries(availableEditorPresets.map(preset => [preset.id, preset.name])) }, id => { if (id) applyEditorPreset(draft, id); }, true), toggle('Ativar assessoria em SST', draft.assistance, v => draft.assistance = v));
+    form.append(select('Modo do documento', draft.documentMode ?? 'standard', { compact: 'Compacto', standard: 'Padrão', consultive: 'Consultivo' }, value => draft.documentMode = value as NonNullable<typeof draft.documentMode>));
     for (const [category, label] of Object.entries({ programs: 'Programas e laudos', management: 'Gestão e complementos', measurements: 'Medições', trainings: 'Treinamentos' })) {
         const group = el('section', 'catalog-group'); group.append(el('h2', '', label));
         for (const entry of editorCatalog.filter(e => e.content.profile.category === category)) {
@@ -168,7 +174,7 @@ function render(): void {
         if (draft.isGroup) form.append(field('Nome do grupo *', draft.groupName, v => draft.groupName = v));
         (draft.isGroup ? draft.companies : draft.companies.slice(0, 1)).forEach((c, i) => form.append(companyFields(c, i)));
         if (draft.isGroup) form.append(button('+ Adicionar empresa', () => { draft.companies.push(newCompany(crypto.randomUUID())); changed(true); }, 'secondary'));
-        form.append(el('h2', '', 'Contato e identificação'), grid(field('Responsável do cliente *', draft.contact, v => draft.contact = v), field('E-mail do contato', draft.email, v => draft.email = v, 'email'), field('Número da proposta *', draft.number, v => draft.number = v), field('Data de emissão *', draft.date, v => draft.date = v, 'date'), field('Responsável EngMarq *', draft.author, v => draft.author = v)));
+        form.append(el('h2', '', 'Contato e identificação'), grid(field('Responsável do cliente', draft.contact, v => draft.contact = v), field('E-mail do contato', draft.email, v => draft.email = v, 'email'), field('Número da proposta *', draft.number, v => draft.number = v), field('Data de emissão *', draft.date, v => draft.date = v, 'date'), field('Responsável EngMarq', draft.author, v => draft.author = v)));
     }
     if (step === 1) scopeFields();
     if (step === 2) {
@@ -191,7 +197,8 @@ function render(): void {
     form.scrollTop = scroll; validate();
 }
 function validate(): ReturnType<typeof draftProposal> {
-    const result = draftProposal(draft);
+    if (validatedRevision !== revision) { validationResult = draftProposal(draft); validatedRevision = revision; }
+    const result = validationResult;
     checks.replaceChildren(...[...titles.slice(0, 3), 'Layout'].map((title, i) => {
         const valid = i === 3 ? Boolean(prepared?.ready) : !result.issues.some(issue => issue.step === i);
         return el('span', valid ? 'check valid' : 'check', `${valid ? '✓' : '○'} ${title}`);
@@ -202,9 +209,9 @@ function validate(): ReturnType<typeof draftProposal> {
     if (issueArea) {
         issueArea.replaceChildren(el('h2', '', result.issues.length ? 'Antes de gerar' : prepared?.ready ? 'Pronto para gerar' : 'Conferindo o layout'));
         for (const issue of result.issues) issueArea.append(button(`${titles[issue.step]} · ${issue.message}`, () => { step = issue.step; render(); }, 'issue-link'));
+        for (const message of new Set(result.warnings?.map(issue => issue.message))) issueArea.append(el('p', 'notice', `Aviso: ${message}`));
         if (prepared) {
-            for (const warning of prepared.warnings) issueArea.append(el('p', 'notice', warning.severity === 'error' ? 'Uma página precisa de ajuste. Reduza o conteúdo de observações ou divida os itens longos antes de gerar.' : 'Confira o aproveitamento de espaço das páginas.'));
-            if (prepared.validationWarnings.length) issueArea.append(el('p', 'notice', 'O conteúdo técnico do catálogo deve ser revisado pelo responsável antes do envio ao cliente.'));
+            for (const warning of prepared.warnings) issueArea.append(el('p', 'notice', `${warning.severity === 'error' ? 'Erro' : 'Aviso'} de layout · Página ${warning.page}: ${warning.message}`));
         }
     }
     if (result.issues.length) { status.textContent = 'Rascunho · complete os campos indicados na revisão.'; exportButton.disabled = true; }
@@ -212,24 +219,29 @@ function validate(): ReturnType<typeof draftProposal> {
 }
 async function prepare(print = false): Promise<void> {
     clearTimeout(timer);
+    const request = ++preparationRequest;
     const version = revision;
     const { proposal } = validate();
     if (!proposal) return;
     exportButton.disabled = true;
     status.textContent = 'Atualizando documento e conferindo as páginas…';
-    activePreparations++; pages.style.zoom = '1';
+    activePreparations++; pages.style.zoom = '1'; preview.classList.add('is-preparing');
     try {
         const result = await paginator.prepareDocumentForExport(proposal);
-        if (version !== revision) return;
+        if (version !== revision || request !== preparationRequest || result.superseded) return;
         prepared = result; pages.classList.remove('stale'); placeholder.hidden = true;
         status.textContent = result.ready ? `Pronto para gerar · ${result.pages} páginas A4` : 'O documento precisa de ajustes de layout. Confira a revisão.';
         exportButton.disabled = !result.ready; validate();
         if (print && result.ready) window.print();
-    } catch {
-        if (version !== revision) return;
+    } catch (error) {
+        console.error('Falha na preparação do documento V2.', error);
+        if (version !== revision || request !== preparationRequest) return;
         prepared = undefined; exportButton.disabled = true;
         status.textContent = 'Não foi possível preparar o documento. Confira os campos e tente novamente na revisão.';
         validate();
-    } finally { activePreparations--; fitPages(); }
+    } finally { activePreparations--; if (!activePreparations) preview.classList.remove('is-preparing'); fitPages(); }
 }
+window.addEventListener('beforeunload', event => {
+    if (revision > 0) { event.preventDefault(); event.returnValue = ''; }
+});
 render();

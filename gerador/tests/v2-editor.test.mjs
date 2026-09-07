@@ -9,6 +9,19 @@ function complete() {
     d.companies[0].legalName = 'Empresa Exemplo'; d.companies[0].once = '1500,00';
     editor.applyEditorPreset(d, 'pgr'); return d;
 }
+test('assessoria preserva público do treinamento e explica inconsistências específicas', () => {
+    const draft = complete();
+    editor.applyEditorPreset(draft, 'assistance'); draft.companies[0].monthly = '1500';
+    draft.selections.nr06 = editor.newSelection('nr06');
+    Object.assign(draft.selections.nr06.parameters, { participants: 10, classes: 1, hoursPerClass: 2, occurrences: 1, audience: 'Equipe de manutenção: reciclagem' });
+    const result = editor.draftProposal(draft);
+    assert.deepEqual(result.issues, []);
+    assert.equal(result.proposal.trainings[0].parameters.audience, 'Equipe de manutenção: reciclagem');
+    draft.selections.nr06.parameters.classes = 11;
+    const invalid = editor.draftProposal(draft);
+    assert.equal(invalid.proposal, undefined);
+    assert.ok(invalid.issues.some(issue => issue.step === 1 && issue.message.includes('turmas maior')));
+});
 test('rascunho incompleto retorna mensagens por etapa; valores monetários não são arredondados silenciosamente', () => {
     const result = editor.draftProposal(editor.newDraft());
     assert.equal(result.proposal, undefined);
@@ -52,4 +65,39 @@ test('visitas e medições têm quantidades próprias; dados incompletos não la
     assert.equal(editor.draftProposal(d).proposal, undefined);
     d.visitHours = '4'; d.date = '2026-02-31';
     assert.ok(editor.draftProposal(d).issues.some(i => i.step === 0 && i.message.includes('data')));
+});
+
+test('modo e presets do catálogo chegam à Proposal sem apagar personalizações', () => {
+    const draft = editor.newDraft();
+    editor.applyEditorPreset(draft, 'medicao-calor');
+    assert.equal(draft.documentMode, 'compact');
+    assert.equal(draft.cover, false);
+    assert.ok(draft.selections.heat);
+    draft.documentMode = 'consultive';
+    editor.applyEditorPreset(draft, 'pgr-pcmso-ltcat');
+    assert.equal(draft.documentMode, 'consultive');
+    assert.ok(draft.selections.heat && draft.selections.ltcat);
+    const valid = complete();
+    valid.documentMode = 'compact';
+    assert.equal(editor.draftProposal(valid).proposal.options.documentMode, 'compact');
+});
+
+test('avisos de endereço e responsáveis não impedem exportação; erros obrigatórios impedem', () => {
+    const draft = complete();
+    draft.author = ''; draft.contact = '';
+    const result = editor.draftProposal(draft);
+    assert.ok(result.proposal);
+    assert.deepEqual(result.issues, []);
+    assert.ok(result.warnings.some(issue => issue.message.includes('Endereço')));
+    assert.ok(result.warnings.some(issue => issue.message.includes('Responsável')));
+    for (const mutate of [
+        value => value.companies[0].legalName = '',
+        value => value.selections = {},
+        value => value.companies[0].once = '',
+        value => editor.applyEditorPreset(value, 'brigade')
+    ]) {
+        const invalid = complete(); mutate(invalid);
+        assert.equal(editor.draftProposal(invalid).proposal, undefined);
+        assert.ok(editor.draftProposal(invalid).issues.length);
+    }
 });

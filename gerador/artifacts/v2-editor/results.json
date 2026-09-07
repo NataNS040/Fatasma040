@@ -1,6 +1,6 @@
 {
   "passed": true,
-  "pageCount": 4,
+  "pageCount": 5,
   "errors": [],
   "scenarios": [
     "single",
@@ -9,6 +9,9 @@
     "per-company-training",
     "pricing-visibility",
     "print",
-    "mobile"
+    "mobile",
+    "critical-fields-block-export",
+    "warnings-allow-export",
+    "overflow-blocks-print"
   ]
 }

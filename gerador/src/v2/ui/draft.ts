@@ -3,10 +3,12 @@ import { createCatalogItem } from '../catalog/select-service';
 import { createAssistanceProposal, resolveAssistanceProposal } from '../configurator/assistance';
 import { composeProposal } from '../composer/compose-proposal';
 import type { Company, Proposal, ProposalItem } from '../domain/proposal';
-import type { ParameterValues, DetailLevel } from '../domain/content';
+import type { ParameterValues, DetailLevel, DocumentMode } from '../domain/content';
+import { getPreset, listPresets } from '../presets/catalog-presets';
 import type { AssistanceConfiguration, ServiceFrequency } from '../domain/assistance';
 import { validateParameterValue } from '../validation/parameters';
 import { isCivilDate } from '../utils/value';
+import type { ValidationIssue } from '../validation/proposal';
 
 export interface Selection { parameters: ParameterValues; notes: string; frequency: ServiceFrequency; separate: boolean; }
 export interface DraftCompany {
@@ -20,17 +22,18 @@ export interface EditorDraft {
     selections: Record<string, Selection>; assistance: boolean; visits: boolean; visitQuantity: string; visitHours: string; visitFrequency: ServiceFrequency; visitNotes: string;
     charge: 'once' | 'monthly' | 'both'; term: string; installments: string; validity: string; payment: string; execution: string;
     showMonthlyValue: boolean; showContractTotal: boolean; showAggregateTotal: boolean; showPerCompanyPricing: boolean;
-    detail: DetailLevel; cover: boolean; acceptance: boolean;
+    detail: DetailLevel; documentMode?: DocumentMode; cover: boolean; acceptance: boolean;
 }
 export const editorPresets = [
-    { id: 'pgr', name: 'PGR', description: 'Gerenciamento de riscos', services: ['pgr'] },
-    { id: 'pcmso', name: 'PCMSO', description: 'Saúde ocupacional', services: ['pcmso'] },
-    { id: 'kit', name: 'Kit SST', description: 'PGR, PCMSO e LTCAT', services: ['pgr', 'pcmso', 'ltcat'] },
-    { id: 'complete', name: 'Combo completo', description: 'Kit + LIP e ART', services: ['pgr', 'pcmso', 'ltcat', 'lip', 'art'] },
-    { id: 'psychosocial', name: 'Psicossocial', description: 'Avaliação de fatores', services: ['psychosocial'] },
-    { id: 'brigade', name: 'Brigada', description: 'Capacitação da equipe', services: ['brigade'] },
-    { id: 'assistance', name: 'Assessoria', description: 'Programas e gestão de SST', services: ['pgr', 'pcmso', 'ltcat', 'lip', 'art', 'esocial', 'technical-support'] }
+    { id: 'pgr', name: 'PGR', description: 'Gerenciamento de riscos', presetId: 'pgr' },
+    { id: 'pcmso', name: 'PCMSO', description: 'Saúde ocupacional', presetId: 'pcmso' },
+    { id: 'kit', name: 'Kit SST', description: 'PGR, PCMSO e LTCAT', presetId: 'kit-programas' },
+    { id: 'complete', name: 'Combo completo', description: 'Kit + LIP e ART', presetId: 'kit-completo' },
+    { id: 'psychosocial', name: 'Psicossocial', description: 'Avaliação de fatores', presetId: 'psychosocial' },
+    { id: 'brigade', name: 'Brigada', description: 'Capacitação da equipe', presetId: 'brigade' },
+    { id: 'assistance', name: 'Assessoria', description: 'Programas e gestão de SST', presetId: 'assessoria-integrada' }
 ];
+export const availableEditorPresets = listPresets();
 export function newCompany(id: string): DraftCompany {
     return { id, legalName: '', tradeName: '', taxId: '', street: '', city: '', state: '', postalCode: '', employees: '', roles: '', once: '', monthly: '', overrides: {} };
 }
@@ -63,12 +66,29 @@ export function newSelection(id: string): Selection {
 }
 /** Presets adicionam seleções, preservando campos e personalizações já preenchidos. */
 export function applyEditorPreset(draft: EditorDraft, id: string): void {
-    const preset = editorPresets.find(p => p.id === id);
-    if (!preset) return;
-    for (const service of preset.services) draft.selections[service] ??= newSelection(service);
-    if (id === 'assistance') { draft.assistance = true; draft.charge = 'monthly'; draft.installments = '12'; }
+    const preset = getPreset(editorPresets.find(item => item.id === id)?.presetId ?? id);
+    if (!Object.keys(draft.selections).length && draft.documentMode === undefined) {
+        draft.documentMode = preset.documentMode;
+        draft.detail = preset.documentMode === 'consultive' ? 'full' : 'standard';
+        draft.cover = preset.documentMode !== 'compact';
+    }
+    for (const service of preset.services) {
+        if (service.catalogId === 'assistance') {
+            draft.assistance = true; draft.charge = 'monthly'; draft.installments = draft.term;
+        } else if (!draft.selections[service.catalogId]) {
+            const selection = newSelection(service.catalogId);
+            Object.assign(selection.parameters, service.parameters);
+            draft.selections[service.catalogId] = selection;
+        }
+    }
 }
 export type DraftIssue = { step: number; message: string };
+function draftIssues(issues: ValidationIssue[]): DraftIssue[] {
+    return issues.map(issue => ({
+        step: issue.path.startsWith('commercial') || issue.path.includes('.pricing') ? 2 : issue.path.startsWith('metadata') || issue.path.startsWith('client') || issue.code.startsWith('missing-') || ['company-count', 'group-name', 'group-identity'].includes(issue.code) ? 0 : 1,
+        message: issue.message
+    }));
+}
 const lines = (value: string): string[] => value.split('\n').map(s => s.trim()).filter(Boolean);
 export function parseMoney(value: string): number | undefined {
     if (!/^\d+(?:[.,]\d{1,2})?$/.test(value.trim())) return undefined;
@@ -76,14 +96,13 @@ export function parseMoney(value: string): number | undefined {
     const cents = Number(whole) * 100 + Number(fraction.padEnd(2, '0'));
     return Number.isSafeInteger(cents) ? cents : undefined;
 }
-export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: DraftIssue[] } {
+export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: DraftIssue[]; warnings?: DraftIssue[] } {
     const issues: DraftIssue[] = [];
     const add = (step: number, message: string): void => { issues.push({ step, message }); };
     const companies = d.isGroup ? d.companies : d.companies.slice(0, 1);
     if (d.isGroup && (!d.groupName.trim() || companies.length < 2)) add(0, 'Informe o nome do grupo e cadastre pelo menos duas empresas.');
     if (!d.number.trim()) add(0, 'Informe o número da proposta.');
     if (!isCivilDate(d.date)) add(0, 'Informe uma data de emissão válida.');
-    if (!d.author.trim() || !d.contact.trim()) add(0, 'Informe o responsável da EngMarq e o contato do cliente.');
     if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) add(0, 'Confira o e-mail do contato.');
     for (const [i, c] of companies.entries()) {
         if (!c.legalName.trim()) add(0, `Informe a razão social da empresa ${i + 1}.`);
@@ -103,10 +122,10 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
     const proposal: Proposal = {
         schemaVersion: 2, isGroup: d.isGroup, groupName: d.isGroup ? d.groupName : undefined,
         metadata: { id: 'editor-session', number: d.number, issuedOn: d.date, revision: 0, title: d.title, author: { name: d.author } },
-        client: { kind: d.isGroup ? 'group' : 'single', displayName: d.isGroup ? d.groupName : companies[0].tradeName || companies[0].legalName, contact: { name: d.contact, email: d.email || undefined } }, companies: mapped,
+        client: { kind: d.isGroup ? 'group' : 'single', displayName: d.isGroup ? d.groupName : companies[0]?.tradeName || companies[0]?.legalName || '', contact: { name: d.contact, email: d.email || undefined } }, companies: mapped,
         scope: { objective: d.objective, exclusions: lines(d.exclusions), assumptions: lines(d.assumptions) }, services: [], trainings: [], measurements: [], assistance: [],
         commercial: { currency: 'BRL', lines: [], termMonths: Number(d.term), installmentCount: Number(d.installments), validityDays: Number(d.validity), paymentTerms: lines(d.payment), executionTerms: lines(d.execution), showMonthlyValue: d.showMonthlyValue, showContractTotal: d.showContractTotal, showAggregateTotal: d.showAggregateTotal, showPerCompanyPricing: d.showPerCompanyPricing },
-        options: { detailLevel: d.detail, includeCover: d.cover, includeAcceptance: d.acceptance }
+        options: { detailLevel: d.detail, documentMode: d.documentMode ?? 'standard', includeCover: d.cover, includeAcceptance: d.acceptance }
     };
     const visits: AssistanceConfiguration['visits'] = d.visits ? { included: true, quantity: Number(d.visitQuantity), durationHours: Number(d.visitHours), frequency: d.visitFrequency, notes: d.visitNotes } : { included: false };
     if (d.visits && (!Number.isSafeInteger(Number(d.visitQuantity)) || Number(d.visitQuantity) < 1 || Number(d.visitHours) <= 0 || !Number.isFinite(Number(d.visitHours)))) add(1, 'Informe a quantidade total e duração das visitas.');
@@ -166,11 +185,11 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
     if (d.assistance) {
         const configured = createAssistanceProposal({ ...proposal, isGroup: d.isGroup, assistanceConfiguration: common, contact: proposal.client.contact });
         const resolved = resolveAssistanceProposal(configured);
-        if (!resolved.ok) return { issues: [{ step: 1, message: 'Confira os serviços, as visitas e as quantidades da assessoria.' }] };
+        if (!resolved.ok) return { issues: draftIssues(resolved.issues) };
         final = resolved.proposal;
     }
     const composed = composeProposal(final);
-    if (!composed.ok) return { issues: [{ step: 1, message: 'Confira a data, os serviços selecionados e seus parâmetros antes de continuar.' }] };
-    return { proposal: final, issues: [] };
+    if (!composed.ok) return { issues: draftIssues(composed.issues.filter(issue => issue.severity === 'error')) };
+    return { proposal: final, issues: [], warnings: draftIssues(composed.issues.filter(issue => issue.severity === 'warning')) };
 }
 export const editorCatalog = listCatalogEntries().filter(e => !['assistance', 'technical-visit'].includes(e.id));

@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "pages": 9,
+  "typingMs": 0.6000000014901161,
+  "errors": [],
+  "outbound": [],
+  "checks": [
+    "assistance-group",
+    "training-audience",
+    "individual-visits",
+    "separate-measurement",
+    "once-monthly",
+    "contract-aggregate-visibility",
+    "literal-html",
+    "print",
+    "mobile-typing",
+    "beforeunload"
+  ]
+}

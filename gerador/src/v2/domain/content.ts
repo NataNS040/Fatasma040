@@ -1,4 +1,5 @@
 export type DetailLevel = 'summary' | 'standard' | 'full';
+export type DocumentMode = 'compact' | 'standard' | 'consultive';
 export type ServiceCategory = 'programs' | 'management' | 'measurements' | 'trainings';
 export type SectionGroup = 'assistance' | 'programs' | 'complementary' | 'esocial' | 'measurements' | 'trainings' | 'technical-responsibility' | 'other';
 export type ParameterValue = string | number | string[];

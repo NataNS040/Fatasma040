@@ -1,0 +1,68 @@
+{
+  "completedAt": "2026-09-07T15:47:27.575Z",
+  "results": [
+    {
+      "name": "unit",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 4184
+    },
+    {
+      "name": "pagination",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 11189
+    },
+    {
+      "name": "editor",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 10453
+    },
+    {
+      "name": "team-workflows",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 6809
+    },
+    {
+      "name": "quality-examples",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 29567
+    },
+    {
+      "name": "regression-lab",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 22523
+    },
+    {
+      "name": "typecheck",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 3198
+    },
+    {
+      "name": "build",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 3515
+    },
+    {
+      "name": "production-isolation",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 617
+    }
+  ]
+}

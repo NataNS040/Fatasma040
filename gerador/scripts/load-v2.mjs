@@ -16,7 +16,7 @@ export function loadV2() {
         rmSync(output, { recursive: true, force: true });
     };
     try {
-        const program = ts.createProgram([join(source, 'index.ts'), join(source, 'fixtures/proposals.ts'), join(source, 'ui/draft.ts')], {
+        const program = ts.createProgram([join(source, 'index.ts'), join(source, 'fixtures/proposals.ts'), join(source, 'fixtures/regression.ts'), join(source, 'ui/draft.ts')], {
             target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS,
             strict: true, noUnusedLocals: true, noUnusedParameters: true, skipLibCheck: true,
             rootDir: source, outDir: output, types: []
@@ -27,7 +27,7 @@ export function loadV2() {
         }));
         if (program.emit().emitSkipped) throw new Error('Emissão TypeScript não concluída.');
         const require = createRequire(import.meta.url);
-        return { api: require(join(output, 'index.js')), fixtures: require(join(output, 'fixtures/proposals.js')), editor: require(join(output, 'ui/draft.js')), dispose };
+        return { api: require(join(output, 'index.js')), fixtures: require(join(output, 'fixtures/proposals.js')), regression: require(join(output, 'fixtures/regression.js')), editor: require(join(output, 'ui/draft.js')), dispose };
     } catch (error) {
         dispose();
         throw error;

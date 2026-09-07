@@ -1,4 +1,4 @@
-import type { DetailLevel, ParameterValues, ServiceProfile } from './content';
+import type { DetailLevel, DocumentMode, ParameterValues, ServiceProfile } from './content';
 import type { AssistanceConfiguration, CompanyAssistanceConfiguration, ServiceFrequency, VisitConfiguration } from './assistance';
 
 /** Contrato local V2. Strings são texto, nunca HTML. Datas civis: YYYY-MM-DD. */
@@ -137,7 +137,7 @@ export interface Proposal {
     /** Fonte canônica configurável. Não combinar com coleções/linhas já materializadas. */
     assistanceConfiguration?: AssistanceConfiguration;
     commercial: Commercial;
-    options: { includeCover: boolean; includeAcceptance: boolean; detailLevel?: DetailLevel };
+    options: { includeCover: boolean; includeAcceptance: boolean; detailLevel?: DetailLevel; documentMode?: DocumentMode };
 }
 
 export type ProposalItem = Service | Training | Measurement | Assistance;

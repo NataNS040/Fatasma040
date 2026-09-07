@@ -1,6 +1,6 @@
 import type { BillingTerms, CommercialVisibility, Company, Contact, Price, Proposal, ProposalItem } from './proposal';
 import type { ServiceFrequency, VisitConfiguration } from './assistance';
-import type { ContentField, DetailLevel, ParameterValue, SectionGroup } from './content';
+import type { ContentField, DetailLevel, DocumentMode, ParameterValue, SectionGroup } from './content';
 
 export interface ServicePresentation {
     itemId: string;
@@ -34,6 +34,7 @@ export type DocumentBlock =
     | { id: string; kind: 'cover'; title: string; clientName: string }
     | { id: string; kind: 'companies'; companies: Omit<Company, 'assistanceConfig'>[]; contact?: Contact }
     | { id: string; kind: 'scope'; scope: Proposal['scope'] }
+    | { id: string; kind: 'coordination'; title: string; entries: { title: string; text: string; companyIds: string[] }[] }
     | TechnicalSectionBlock
     | { id: string; kind: 'additional-scope'; title: string; measurements: { itemId: string; companyId: string; title: string; quantity: number; unit: string; notes?: string; status: 'separate-quote' }[] }
     | InvestmentBlock
@@ -87,6 +88,7 @@ export interface ProposalDocument {
     locale: 'pt-BR';
     currency: 'BRL';
     theme: 'engmarq';
+    documentMode?: DocumentMode;
     /** Snapshot integral para revisão/recomposição; o renderer apresenta somente blocks. */
     sourceItems: ProposalItem[];
     blocks: DocumentBlock[];

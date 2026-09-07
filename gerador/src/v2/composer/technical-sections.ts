@@ -1,4 +1,4 @@
-import type { ContentField, DetailLevel, ParameterValue, SectionGroup } from '../domain/content';
+import type { ContentField, DetailLevel, DocumentMode, ParameterValue, SectionGroup } from '../domain/content';
 import type { ProposalItem } from '../domain/proposal';
 import type { ServicePresentation, SharedTechnicalContent, TechnicalSectionBlock } from '../domain/document';
 import { readParameter } from '../validation/parameters';
@@ -25,8 +25,14 @@ function projectService(item: ProposalItem, proposalLevel?: DetailLevel): Servic
         periodicity: profile ? [profile.periodicity.description] : []
     };
     const fields: ServicePresentation['fields'] = {};
+    const presented = new Set<string>();
     for (const field of presentationFields[level]) {
-        const values = available[field].filter(text => text.trim());
+        const values = available[field].filter(text => {
+            const key = normalized(text);
+            if (!key || presented.has(key)) return false;
+            presented.add(key);
+            return true;
+        });
         if (values.length) fields[field] = [...values];
     }
     const parameters: ServicePresentation['parameters'] = [];
@@ -42,7 +48,7 @@ function projectService(item: ProposalItem, proposalLevel?: DetailLevel): Servic
 }
 
 /** Entrada já validada pelo composer público. Compartilha texto exato por campo e CNPJ. */
-export function composeTechnicalSections(items: ProposalItem[], companyIds: string[], defaultLevel: DetailLevel | undefined, options: CompositionOptions): TechnicalSectionBlock[] {
+export function composeTechnicalSections(items: ProposalItem[], companyIds: string[], defaultLevel: DetailLevel | undefined, options: CompositionOptions, mode: DocumentMode = 'standard'): TechnicalSectionBlock[] {
     const sectionOrder = (group: SectionGroup | 'shared'): number => options.sectionOrder?.[group] ?? sectionDefinitions[group].order;
     const title = (group: SectionGroup | 'shared'): string => options.sectionTitles?.[group] ?? sectionDefinitions[group].title;
     const groupOf = (item: ProposalItem): SectionGroup => item.content.profile?.visual.section ?? fallbackGroups[item.kind];
@@ -92,5 +98,8 @@ export function composeTechnicalSections(items: ProposalItem[], companyIds: stri
         const bGroup = b.kind === 'technical-section' ? b.group : 'shared';
         return sectionOrder(aGroup) - sectionOrder(bGroup) || compare(aGroup, bGroup);
     });
+    if (mode === 'compact' && sections.size) {
+        return [{ id: 'section:compact', kind: 'technical-section', group: 'other', title: 'Escopo técnico contratado', services: blocks.flatMap(block => block.kind === 'technical-section' ? block.services : []) }, ...blocks.filter(block => block.kind === 'shared-technical')];
+    }
     return blocks;
 }

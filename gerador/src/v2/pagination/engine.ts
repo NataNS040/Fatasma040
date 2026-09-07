@@ -3,13 +3,13 @@ import { composeProposal } from '../composer/compose-proposal';
 import type { Proposal } from '../domain/proposal';
 import { renderDocument } from '../renderer/document';
 import documentCss from '../renderer/document.css?raw';
-import { inspectLayout, type LayoutWarning } from './layout';
+import { inspectLayout, isLayoutExportable, type LayoutWarning } from './layout';
 import '@fontsource/montserrat/latin-400.css';
 import '@fontsource/montserrat/latin-700.css';
 import '@fontsource/open-sans/latin-400.css';
 import '@fontsource/open-sans/latin-600.css';
 
-export interface ExportPreparation { pages: number; warnings: LayoutWarning[]; validationWarnings: string[]; ready: boolean; }
+export interface ExportPreparation { pages: number; warnings: LayoutWarning[]; validationWarnings: string[]; ready: boolean; superseded?: boolean; }
 async function deadline<T>(promise: Promise<T>, label: string): Promise<T> {
     let timer: ReturnType<typeof setTimeout> | undefined;
     try { return await Promise.race([promise, new Promise<never>((_, reject) => { timer = setTimeout(() => reject(new Error(`Tempo excedido: ${label}.`)), 30000); })]); }
@@ -24,15 +24,21 @@ export async function waitForAssets(root: HTMLElement): Promise<void> {
 export class DocumentPaginator {
     private previewer?: Previewer;
     private queue: Promise<unknown> = Promise.resolve();
+    private revision = 0;
     constructor(private readonly target: HTMLElement) {}
+    invalidate(): void { this.revision++; }
     prepareDocumentForExport(proposal: Proposal): Promise<ExportPreparation> {
+        const revision = ++this.revision;
         const snapshot = structuredClone(proposal);
+        const superseded = (): ExportPreparation => ({ pages: 0, warnings: [], validationWarnings: [], ready: false, superseded: true });
         const task = this.queue.catch(() => undefined).then(async () => {
+            if (revision !== this.revision) return superseded();
             const result = composeProposal(snapshot);
             if (!result.ok) throw new Error(result.issues.map(issue => issue.message).join('\n'));
             const source = renderDocument(result.document);
             const expected = [...source.querySelectorAll<HTMLElement>('[data-layout-id]')].filter(n => !n.closest('.page-header,.page-footer') && n.tagName !== 'TR').map(n => ({ id: n.dataset.layoutId!, text: n.textContent ?? '' }));
             await waitForAssets(source);
+            if (revision !== this.revision) return superseded();
             this.previewer?.chunker.destroy();
             this.previewer?.polisher.destroy();
             this.target.replaceChildren();
@@ -46,7 +52,8 @@ export class DocumentPaginator {
             await waitForAssets(this.target);
             await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
             const warnings = inspectLayout(this.target, expected);
-            return { pages: flow.total, warnings, validationWarnings: result.issues.filter(i => i.severity === 'warning').map(i => i.message), ready: flow.total > 0 && !warnings.some(w => w.severity === 'error') };
+            if (revision !== this.revision) return superseded();
+            return { pages: flow.total, warnings, validationWarnings: result.issues.filter(i => i.severity === 'warning').map(i => i.message), ready: isLayoutExportable(flow.total, warnings) };
         });
         this.queue = task;
         return task;

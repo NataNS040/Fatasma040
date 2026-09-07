@@ -17,7 +17,7 @@ try {
         const errors = [];
         page.on('pageerror', error => errors.push(error.stack ?? error.message));
         await page.goto(`http://127.0.0.1:5186/gerador-de-proposta/v2-preview.html?scenario=${scenario}`);
-        await page.waitForFunction(() => window.engmarqV2?.result || document.querySelector('#status').textContent.startsWith('Falha:'), { timeout: 120000 });
+        await page.waitForFunction(() => window.engmarqV2?.result || document.querySelector('#status').textContent.startsWith('Falha:'), undefined, { timeout: 120000 });
         const result = await page.evaluate(() => window.engmarqV2?.result ?? { failure: document.querySelector('#status').textContent });
         console.log(scenario, JSON.stringify({ pages: result.pages, ready: result.ready, warnings: result.warnings, failure: result.failure }));
         const dir = path.join(artifacts, scenario);
@@ -50,6 +50,22 @@ try {
             assert.ok(text.includes('Mensalidade:'));
         }
         if (scenario === 'short') {
+            const concurrent = await page.evaluate(async () => {
+                const { DocumentPaginator } = await import('/gerador-de-proposta/src/v2/pagination/engine.ts');
+                const { singleProposal } = await import('/gerador-de-proposta/src/v2/fixtures/proposals.ts');
+                const target = document.createElement('div'); document.body.append(target);
+                const paginator = new DocumentPaginator(target);
+                const proposal = singleProposal();
+                const results = await Promise.all([paginator.prepareDocumentForExport(proposal), paginator.prepareDocumentForExport(proposal), paginator.prepareDocumentForExport(proposal)]);
+                const pending = paginator.prepareDocumentForExport(proposal);
+                paginator.invalidate();
+                const invalidated = await pending;
+                target.remove();
+                return { results, invalidated };
+            });
+            assert.deepEqual(concurrent.results.map(result => result.ready), [false, false, true]);
+            assert.ok(concurrent.results.slice(0, 2).every(result => result.superseded));
+            assert.equal(concurrent.invalidated.superseded, true);
             const diagnostics = await page.evaluate(async () => {
                 const { inspectLayout } = await import('/gerador-de-proposta/src/v2/pagination/layout.ts');
                 const area = document.querySelector('.pagedjs_page_content');

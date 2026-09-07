@@ -1,7 +1,7 @@
 import type { DetailLevel, ParameterValues } from './content';
 
 export type ServiceFrequency = 'once' | 'weekly' | 'monthly' | 'quarterly' | 'semiannual' | 'annual' | 'on-demand';
-export type ProgramId = 'pgr' | 'pcmso' | 'ltcat' | 'lip' | 'aet';
+export type ProgramId = 'pgr' | 'pcmso' | 'ltcat' | 'lip' | 'li' | 'aet';
 export type ManagementId = 'psychosocial' | 'esocial' | 'art' | 'technical-support';
 export type MeasurementId = 'noise' | 'heat' | 'vibration' | 'chemicals' | 'dust';
 export type TrainingId = 'nr01' | 'nr05' | 'nr06' | 'nr10' | 'nr12' | 'nr18' | 'nr20' | 'nr33' | 'nr35' | 'brigade';
@@ -20,6 +20,7 @@ export type VisitConfiguration =
 /** Campos podem ser completados na empresa; após herança todos os obrigatórios são validados. */
 export interface TrainingConfiguration {
     selected: boolean;
+    parameters?: ParameterValues;
     participants?: number;
     modality?: 'onsite' | 'online' | 'hybrid';
     frequency?: ServiceFrequency;

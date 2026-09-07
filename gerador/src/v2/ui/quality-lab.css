@@ -1,0 +1,25 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #edf0f2; color: #253342; font: 13px/1.5 'Open Sans', sans-serif; }
+#quality-lab { display: grid; grid-template-columns: 300px minmax(0, 1fr); grid-template-rows: 76px minmax(0, 1fr); height: 100dvh; }
+.lab-header { grid-column: 1 / -1; display: flex; align-items: center; gap: 20px; padding: 14px 24px; background: white; border-bottom: 2px solid #f5a623; }
+.lab-header img { width: 115px; height: 44px; object-fit: contain; }
+.lab-header h1 { font: 700 21px 'Montserrat'; margin: 0; }
+.lab-badge { margin-left: auto; color: #476b59; font-size: 12px; }
+.lab-controls { padding: 20px; overflow-y: auto; background: #fff; border-right: 1px solid #ccd4de; }
+.lab-controls h2 { font: 700 15px 'Montserrat'; }
+.lab-controls select,.lab-controls button { width: 100%; margin: 0 0 12px; padding: 10px; font: inherit; border: 1px solid #b9c5d1; border-radius: 4px; background: white; color: #253342; }
+.lab-controls button { cursor: pointer; }
+#lab-export { color: white; background: #1a365d; }
+#lab-export:disabled { opacity: .45; cursor: not-allowed; }
+.lab-source { font-size: 11px; overflow-wrap: anywhere; color: #617283; }
+.lab-status { font-weight: 600; }
+.lab-issues { padding-left: 18px; font-size: 11px; }
+.lab-issues li { margin-bottom: 10px; }
+.lab-error { color: #a22f37; }
+.lab-warning { color: #806020; }
+.lab-viewport { padding: 24px; overflow: auto; min-width: 0; }
+.lab-pages { width: 794px; margin: auto; }
+.lab-stale { opacity: .3; }
+.pagedjs_page { background: white; margin-bottom: 24px; box-shadow: 0 2px 12px #22334420; }
+@media (max-width: 760px) { #quality-lab { display: block; height: auto; } .lab-header { gap: 10px; flex-wrap: wrap; } .lab-header h1 { font-size: 18px; } .lab-controls { border-bottom: 1px solid #ccd4de; } .lab-viewport { max-width: 100%; } }
+@media print { .lab-header,.lab-controls { display: none; } #quality-lab,.lab-viewport { display: block; height: auto; overflow: visible; margin: 0; padding: 0; } .lab-pages { width: auto; } .pagedjs_page { margin: 0; box-shadow: none; } }

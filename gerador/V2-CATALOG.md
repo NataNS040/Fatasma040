@@ -1,5 +1,9 @@
 # Catálogo universal e composição técnica V2
 
+Atualização: ver [V2-MIGRATION.md](V2-MIGRATION.md) para a política comercial
+atual, modos de documento, 27 entradas (incluindo LI), presets migrados e exemplos
+HTML. O registro abaixo descreve a etapa anterior e suas APIs preservadas.
+
 ## O que está implementado
 
 26 entradas locais: os 25 serviços solicitados e a assessoria da fundação.
