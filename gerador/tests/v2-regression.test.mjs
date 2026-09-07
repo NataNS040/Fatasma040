@@ -68,6 +68,7 @@ test('composer: ordem estável e deduplicação preservam contextos diferentes',
     assert.equal(planning.length, 1);
     assert.ok(planning[0].appliesTo.length > 1);
     const changed = fixture('program-kit');
+    changed.options.documentMode = 'consultive';
     changed.services[0].content.methodology = ['Visita: 2 horas.'];
     changed.services[1].content.methodology = ['Visita: 4 horas.'];
     const text = JSON.stringify(technical(document(changed)));
@@ -83,9 +84,54 @@ test('composer: três níveis preservam valores e fonte, sem reduzir standard a 
         assert.deepEqual(pricing(model), pricing(models[0]));
     }
     const text = JSON.stringify(technical(models[1]));
-    for (const field of ['deliverables', 'exclusions', 'methodology', 'clientResponsibilities']) assert.ok(text.includes(field));
+    assert.ok(text.includes('deliverables'));
+    for (const field of ['exclusions', 'methodology', 'clientResponsibilities']) assert.ok(!text.includes(field));
     assert.ok(JSON.stringify(technical(models[2])).includes('executionSteps'));
     assert.ok(JSON.stringify(technical(models[2])).length > text.length);
+});
+
+test('densidade comercial: standard projeta resumo/entregas, sem bloco técnico automático', () => {
+    for (const id of ['pgr', 'pgr-nr20', 'program-kit', 'complete-kit', 'training']) {
+        const proposal = fixture(id); proposal.options.documentMode = 'standard';
+        const model = document(proposal);
+        for (const shared of model.blocks.filter(block => block.kind === 'shared-technical')) {
+            assert.equal(shared.title, 'Condições de execução');
+            assert.ok(shared.content.every(content => content.field === 'observations'));
+        }
+        for (const service of model.blocks.flatMap(block => block.kind === 'technical-section' ? block.services : [])) {
+            assert.deepEqual(Object.keys(service.fields).filter(field => field !== 'observations'), ['summary', 'deliverables']);
+            const source = model.sourceItems.find(item => item.id === service.itemId);
+            assert.deepEqual(service.fields.deliverables, source.content.deliverables);
+            assert.ok((service.fields.observations ?? []).every(text => source.content.profile.commercialConditions?.includes(text)));
+        }
+    }
+});
+
+test('contexto: serviço único consultivo mais detalhado que kit, full explícito e assessoria preservados', () => {
+    const single = fixture('pgr'); single.options.documentMode = 'consultive'; delete single.options.detailLevel;
+    const singleService = document(single).blocks.find(block => block.kind === 'technical-section').services[0];
+    assert.ok(singleService.fields.executionSteps?.length);
+    const kit = fixture('complete-kit'); kit.options.documentMode = 'consultive'; delete kit.options.detailLevel;
+    assert.ok(document(kit).blocks.filter(block => block.kind === 'technical-section').flatMap(block => block.services).every(service => !service.fields.methodology && !service.fields.executionSteps));
+    kit.services[0].detailLevel = 'full';
+    assert.ok(document(kit).blocks.find(block => block.kind === 'technical-section').services[0].fields.executionSteps?.length);
+    for (const id of ['robust-assistance', 'group']) assert.ok(JSON.stringify(technical(document(fixture(id)))).includes('executionSteps'));
+});
+
+test('modos preservam condições explícitas, parâmetros, fontes e investimento', () => {
+    const proposal = fixture('pgr-nr20');
+    proposal.trainings[0].notes = 'Exige liberação da turma antes da mobilização.';
+    const models = ['compact', 'standard', 'consultive'].map(mode => { proposal.options.documentMode = mode; return document(proposal); });
+    for (const model of models) {
+        assert.deepEqual(model.sourceItems, models[0].sourceItems);
+        assert.deepEqual(pricing(model), pricing(models[0]));
+        const training = model.blocks.flatMap(block => block.kind === 'technical-section' ? block.services : []).find(service => service.catalogId === 'nr20');
+        assert.equal(training.notes, proposal.trainings[0].notes);
+        assert.ok(training.parameters.some(parameter => parameter.value === 25));
+    }
+    assert.equal(models[0].blocks.filter(block => block.kind === 'technical-section').length, 1);
+    assert.equal(models[1].blocks.filter(block => block.kind === 'technical-section').length, 2);
+    assert.ok(JSON.stringify(technical(models[2])).length > JSON.stringify(technical(models[1])).length);
 });
 
 test('comercial: valor único, mensalidade, flags e valores individuais exatos', () => {
@@ -107,4 +153,29 @@ test('comercial: valor único, mensalidade, flags e valores individuais exatos',
     proposal.commercial.showContractTotal = false;
     proposal.commercial.showAggregateTotal = false;
     assert.deepEqual(pricing(document(proposal)), block);
+});
+
+test('condições essenciais sobrevivem a todos os modos e ao nível resumido', () => {
+    for (const mode of ['compact', 'standard', 'consultive']) {
+        const proposal = fixture('complete-kit');
+        proposal.options.documentMode = mode; proposal.options.detailLevel = 'summary';
+        const model = document(proposal);
+        const text = JSON.stringify(technical(model));
+        for (const item of model.sourceItems) for (const condition of item.content.profile?.commercialConditions ?? []) assert.ok(text.includes(condition));
+        assert.ok(!text.includes('methodology'));
+    }
+});
+
+test('quantidade contextual conta serviços distintos, não repetições por empresa', () => {
+    const proposal = fixture('pgr');
+    proposal.options.documentMode = 'consultive'; delete proposal.options.detailLevel;
+    proposal.client.kind = 'group'; proposal.client.displayName = 'Grupo de teste';
+    const original = proposal.services[0];
+    for (const suffix of ['2', '3', '4']) {
+        const companyId = `company-${suffix}`;
+        proposal.companies.push({ id: companyId, legalName: `Empresa ${suffix}` });
+        proposal.services.push({ ...structuredClone(original), id: `pgr-${suffix}`, companyId });
+        proposal.commercial.lines.push({ itemId: `pgr-${suffix}`, price: { mode: 'charge', cadence: 'once', amountCents: 100000 } });
+    }
+    assert.ok(document(proposal).blocks.flatMap(block => block.kind === 'technical-section' ? block.services : []).every(service => service.fields.executionSteps?.length));
 });

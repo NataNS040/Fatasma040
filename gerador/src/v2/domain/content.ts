@@ -31,6 +31,7 @@ export interface ServiceProfile {
     clientResponsibilities: string[];
     inclusions: string[];
     observations: string[];
+    commercialConditions?: string[];
     periodicity: { mode: 'on-demand' | 'contract'; description: string };
     parameters: ParameterDefinition[];
     defaultDetail: DetailLevel;

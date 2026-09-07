@@ -54,6 +54,7 @@ export function defineEntry(data: {
     summary: string; objective: string; scope: string[]; methodology: string[]; steps: string[];
     deliverables: string[]; references: string[]; provider: string[]; client: string[];
     inclusions: string[]; exclusions: string[]; observations: string[];
+    commercialConditions?: string[];
     periodicity: CatalogEntry['content']['profile']['periodicity']; parameters: ParameterDefinition[];
     sources: string[];
 }): CatalogEntry {
@@ -70,6 +71,7 @@ export function defineEntry(data: {
                 scope: data.scope, executionSteps: data.steps,
                 providerResponsibilities: data.provider, clientResponsibilities: data.client,
                 inclusions: data.inclusions, observations: data.observations, periodicity: data.periodicity,
+                ...(data.commercialConditions ? { commercialConditions: data.commercialConditions } : {}),
                 parameters: data.parameters, defaultDetail: 'standard', icon: data.icon,
                 visual: { accent: accents[data.category], section: data.section, order: data.order }
             }

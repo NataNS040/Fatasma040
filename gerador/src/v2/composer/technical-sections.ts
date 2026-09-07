@@ -2,7 +2,7 @@ import type { ContentField, DetailLevel, DocumentMode, ParameterValue, SectionGr
 import type { ProposalItem } from '../domain/proposal';
 import type { ServicePresentation, SharedTechnicalContent, TechnicalSectionBlock } from '../domain/document';
 import { readParameter } from '../validation/parameters';
-import { presentationFields, sectionDefinitions, sharedFields, type CompositionOptions } from './presentation-policy';
+import { servicePresentationPolicy, sectionDefinitions, sharedFields, type CompositionOptions } from './presentation-policy';
 
 const compare = (a: string, b: string): number => a < b ? -1 : a > b ? 1 : 0;
 const normalized = (text: string): string => text.trim().replace(/\s+/g, ' ');
@@ -11,10 +11,11 @@ const fallbackGroups: Record<ProposalItem['kind'], SectionGroup> = {
     management: 'assistance', custom: 'other', training: 'trainings', measurement: 'measurements', assistance: 'assistance'
 };
 
-function projectService(item: ProposalItem, proposalLevel?: DetailLevel): ServicePresentation {
+function projectService(item: ProposalItem, mode: DocumentMode, serviceCount: number, proposalLevel?: DetailLevel): ServicePresentation {
     const c = item.content;
     const profile = c.profile;
-    const level = item.detailLevel ?? proposalLevel ?? profile?.defaultDetail ?? 'standard';
+    const policy = servicePresentationPolicy(item, mode, serviceCount, proposalLevel);
+    const level = policy.level;
     const available: Record<ContentField, string[]> = {
         summary: [profile?.summary ?? c.objective], objective: [c.objective],
         scope: item.kind === 'training' ? item.syllabus : profile?.scope ?? [], methodology: c.methodology,
@@ -26,7 +27,7 @@ function projectService(item: ProposalItem, proposalLevel?: DetailLevel): Servic
     };
     const fields: ServicePresentation['fields'] = {};
     const presented = new Set<string>();
-    for (const field of presentationFields[level]) {
+    for (const field of policy.fields) {
         const values = available[field].filter(text => {
             const key = normalized(text);
             if (!key || presented.has(key)) return false;
@@ -34,6 +35,12 @@ function projectService(item: ProposalItem, proposalLevel?: DetailLevel): Servic
             return true;
         });
         if (values.length) fields[field] = [...values];
+    }
+    for (const condition of profile?.commercialConditions ?? []) {
+        const key = normalized(condition);
+        if (!key || presented.has(key)) continue;
+        presented.add(key);
+        (fields.observations ??= []).push(condition);
     }
     const parameters: ServicePresentation['parameters'] = [];
     for (const definition of profile?.parameters ?? []) {
@@ -57,6 +64,7 @@ export function composeTechnicalSections(items: ProposalItem[], companyIds: stri
         companyIds.indexOf(a.companyId) - companyIds.indexOf(b.companyId) ||
         (a.content.profile?.visual.order ?? 100) - (b.content.profile?.visual.order ?? 100) || compare(a.id, b.id));
     const sections = new Map<SectionGroup, Extract<TechnicalSectionBlock, { kind: 'technical-section' }>>();
+    const serviceCount = new Set(items.map(item => item.catalogId ?? item.content.title)).size;
     for (const item of ordered) {
         const group = groupOf(item);
         let section = sections.get(group);
@@ -64,12 +72,16 @@ export function composeTechnicalSections(items: ProposalItem[], companyIds: stri
             section = { id: `section:${group}`, kind: 'technical-section', group, title: title(group), services: [] };
             sections.set(group, section);
         }
-        section.services.push(projectService(item, defaultLevel));
+        section.services.push(projectService(item, mode, serviceCount, defaultLevel));
     }
     const presentations = [...sections.values()].flatMap(section => section.services);
     const candidates = new Map<string, { field: ContentField; text: string; entries: ServicePresentation[] }>();
     for (const service of presentations) {
+        const item = items.find(candidate => candidate.id === service.itemId)!;
+        const technical = servicePresentationPolicy(item, mode, serviceCount, defaultLevel).technical;
         for (const field of sharedFields) {
+            if (field === 'deliverables') continue;
+            if (!technical && field !== 'observations') continue;
             for (const text of service.fields[field] ?? []) {
                 const key = JSON.stringify([service.companyId, field, normalized(text)]);
                 const candidate = candidates.get(key) ?? { field, text, entries: [] };

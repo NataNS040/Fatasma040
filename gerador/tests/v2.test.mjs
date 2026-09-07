@@ -142,7 +142,7 @@ test('catálogo cobre os serviços anteriores e LI específico, com conteúdo e 
 
 test('summary, standard e full projetam campos diferentes sem apagar o snapshot', () => {
     const p = singleProposal();
-    const expected = { summary: ['summary'], standard: ['summary', 'scope', 'methodology', 'deliverables', 'providerResponsibilities', 'clientResponsibilities', 'references', 'exclusions', 'observations'] };
+    const expected = { summary: ['summary', 'observations'], standard: ['summary', 'deliverables', 'observations'] };
     const snapshots = [];
     for (const level of ['summary', 'standard', 'full']) {
         p.options.detailLevel = level;
@@ -189,6 +189,7 @@ test('deduplicação preserva campo, empresa e texto divergente', () => {
     assert.ok(shared.length);
     for (const fragment of shared) assert.equal(new Set(fragment.appliesTo.map(i => i.companyId)).size, 1);
     const q = singleProposal();
+    q.options.documentMode = 'consultive';
     q.services = createProgramKit('company-1', 'kit');
     q.services[0].content.methodology = ['Visita de 4 horas.'];
     q.services[1].content.methodology = ['Visita de 8 horas.'];
@@ -327,10 +328,14 @@ test('consultive respeita detalhes explícitos e exclui dependências não contr
     proposal.options.documentMode = 'consultive';
     delete proposal.options.detailLevel;
     const document = composeProposal(proposal).document;
-    assert.ok(document.blocks.filter(block => block.kind === 'technical-section').flatMap(block => block.services).every(service => service.level === 'full'));
+    const services = document.blocks.filter(block => block.kind === 'technical-section').flatMap(block => block.services);
+    assert.equal(services.find(service => service.catalogId === 'assistance').level, 'full');
+    assert.ok(services.filter(service => service.catalogId !== 'assistance').every(service => service.level === 'standard'));
     assert.ok(!document.blocks.find(block => block.kind === 'coordination').entries.some(entry => entry.title === 'Dependência das avaliações'));
     proposal.options.detailLevel = 'standard';
-    assert.ok(composeProposal(proposal).document.blocks.filter(block => block.kind === 'technical-section').flatMap(block => block.services).every(service => service.level === 'standard'));
+    assert.ok(composeProposal(proposal).document.blocks.filter(block => block.kind === 'technical-section').flatMap(block => block.services).filter(service => service.catalogId !== 'assistance').every(service => service.level === 'standard'));
+    proposal.options.detailLevel = 'full';
+    assert.ok(composeProposal(proposal).document.blocks.filter(block => block.kind === 'technical-section').flatMap(block => block.services).every(service => service.level === 'full'));
 });
 
 test('TM137: escopo comum, participantes e mensalidades individuais, nenhum agregado', () => {

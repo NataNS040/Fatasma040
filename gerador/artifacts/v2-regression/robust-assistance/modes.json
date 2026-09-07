@@ -1,0 +1,20 @@
+[
+  {
+    "mode": "compact",
+    "pages": 8,
+    "ready": true,
+    "warnings": []
+  },
+  {
+    "mode": "standard",
+    "pages": 19,
+    "ready": true,
+    "warnings": []
+  },
+  {
+    "mode": "consultive",
+    "pages": 20,
+    "ready": true,
+    "warnings": []
+  }
+]

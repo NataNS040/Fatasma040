@@ -111,13 +111,18 @@ intenção. As opções não eliminam os valores do rascunho.
 
 ## Escolher apresentação
 
-**Modo do documento**: Compacto reúne os serviços em uma seção; Padrão organiza
-por famílias; Consultivo acrescenta planejamento conforme os serviços contratados.
+**Modo do documento**: Compacto reúne resumos e entregas em uma seção; Padrão
+organiza essa apresentação comercial por famílias, sem todas as subseções técnicas.
+Consultivo acrescenta planejamento e conteúdo técnico conforme a quantidade de
+serviços: um permite maior detalhe, dois/três usam seleção intermediária e quatro
+ou mais ficam resumidos por serviço, salvo assessoria ou nível Completo explícito.
 Abra **Texto e apresentação do documento** para título, objetivo, premissas,
 exclusões, detalhamento, capa e aceite.
 
-Detalhamento Padrão é a recomendação usual; Completo amplia etapas/inclusões;
-Resumido reduz conteúdo por escolha explícita. Modo não altera preços/quantidades.
+Detalhamento Padrão é a recomendação usual; Completo amplia etapas/inclusões nos
+modos Padrão e Consultivo. Compacto permanece comercial. Resumido reduz conteúdo
+por escolha explícita. Notas, parâmetros e condições essenciais continuam visíveis;
+modo não altera preços/quantidades. O catálogo técnico completo não é apagado.
 Sem aceite, as assinaturas e a identificação do responsável dessa seção não são
 impressas; mantenha a opção para documentos que exigem aceite/responsabilidade.
 

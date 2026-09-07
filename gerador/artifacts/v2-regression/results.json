@@ -4,7 +4,7 @@
   "baselineUpdate": false,
   "results": [
     {
-      "id": "training",
+      "id": "pgr",
       "passed": true,
       "pages": 3,
       "warnings": [],
@@ -15,9 +15,32 @@
       ]
     },
     {
-      "id": "brigade",
+      "id": "pgr-nr20",
       "passed": true,
       "pages": 4,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "training",
+      "passed": true,
+      "pages": 2,
+      "warnings": [],
+      "validationWarnings": [
+        "Responsável do cliente não informado.",
+        "Endereço incompleto ou ausente: Empresa Exemplo.",
+        "Conteúdo técnico pendente de revisão antes de uso comercial."
+      ]
+    },
+    {
+      "id": "brigade",
+      "passed": true,
+      "pages": 3,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -28,7 +51,7 @@
     {
       "id": "psychosocial",
       "passed": true,
-      "pages": 4,
+      "pages": 3,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -39,7 +62,7 @@
     {
       "id": "program-kit",
       "passed": true,
-      "pages": 6,
+      "pages": 4,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -52,7 +75,7 @@
     {
       "id": "complete-kit",
       "passed": true,
-      "pages": 7,
+      "pages": 4,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -67,7 +90,7 @@
     {
       "id": "measurement",
       "passed": true,
-      "pages": 3,
+      "pages": 2,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -90,7 +113,7 @@
     {
       "id": "robust-assistance",
       "passed": true,
-      "pages": 19,
+      "pages": 20,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -197,7 +220,7 @@
     {
       "id": "many-services",
       "passed": true,
-      "pages": 17,
+      "pages": 24,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",

@@ -3,6 +3,17 @@ import { proposalItems } from '../domain/proposal';
 import { createProgramKit } from '../presets/program-kit';
 import { qualityScenarios } from './quality';
 import { singleProposal, tm136AssistanceProposal } from './proposals';
+import { instantiatePreset } from '../presets/catalog-presets';
+
+function pgrTraining(): Proposal {
+    const proposal = qualityScenarios.pgr();
+    const items = instantiatePreset('nr20', 'company-1', 'regression-nr20', { nr20: { parameters: { participants: 25, classes: 1, hoursPerClass: 8, occurrences: 1, modality: 'onsite' } } });
+    proposal.trainings = items.filter((item): item is Proposal['trainings'][number] => item.kind === 'training');
+    proposal.metadata.title = 'Proposta de PGR + NR-20';
+    proposal.scope.objective = 'Elaboração do PGR e capacitação NR-20 para a empresa e os quantitativos definidos nesta proposta.';
+    proposal.commercial.lines.push(...proposal.trainings.map(item => ({ itemId: item.id, price: { mode: 'charge' as const, cadence: 'once' as const, amountCents: 180000 } })));
+    return proposal;
+}
 
 function programKit(): Proposal {
     const proposal = singleProposal();
@@ -44,6 +55,8 @@ function manyServices(): Proposal {
 }
 
 export const regressionFixtures = [
+    { id: 'pgr', name: 'PGR sozinho', source: 'propostas/maio-2026/proposta-pgr-pcmso-ltcat-atecmontagem.html', create: qualityScenarios.pgr },
+    { id: 'pgr-nr20', name: 'PGR + NR-20', source: 'propostas/julho-2026/TM0117-Colegio Marista Natal.html', create: pgrTraining },
     { id: 'training', name: 'Treinamento simples', source: 'propostas/julho-2026/TM0117-Colegio Marista Natal.html', create: qualityScenarios['treinamento-simples'] },
     { id: 'brigade', name: 'Brigada', source: 'propostas/maio-2026/proposta-brigada-incendio-ceneged.html', create: qualityScenarios.brigada },
     { id: 'psychosocial', name: 'Psicossocial', source: 'propostas/maio-2026/proposta-treinamentos-psicossocial-imperthane.html', create: qualityScenarios.psicossocial },

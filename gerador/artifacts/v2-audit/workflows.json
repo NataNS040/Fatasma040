@@ -1,7 +1,7 @@
 {
   "passed": true,
   "pages": 11,
-  "typingMs": 1,
+  "typingMs": 0.5,
   "errors": [],
   "outbound": [],
   "checks": [

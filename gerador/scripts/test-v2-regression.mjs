@@ -64,6 +64,7 @@ async function inspectEditorial(page, id) {
         const missingIcons = expectedIcons.filter(icon => icons.filter(actual => actual.dataset.icon === icon.dataset.icon).length < expectedIcons.filter(expected => expected.dataset.icon === icon.dataset.icon).length);
         const visibleText = [...target.querySelectorAll('[data-layout-id]')].map(node => node.textContent).join(' ').replace(/\s+/g, ' ');
         const missingText = [...source.querySelectorAll('.editorial-item,.service-summary,.service-subtitle')].filter(node => !visibleText.includes(node.textContent.replace(/\s+/g, ' '))).map(node => node.textContent);
+        for (const term of [...proposal.commercial.paymentTerms, ...proposal.commercial.executionTerms]) if (!visibleText.includes(term.replace(/\s+/g, ' '))) missingText.push(term);
         return { icons: icons.length, invalidIcons: invalidIcons.length, missingIcons: missingIcons.length, missingText, cover: Boolean(target.querySelector('.cover')), expectedCover: Boolean(source.querySelector('.cover')), numberedSteps: [...target.querySelectorAll('.method-steps')].every(list => list.tagName === 'OL' && [...list.children].every(item => /^\d+$/.test(item.dataset.step))) };
     }, id);
 }
@@ -149,17 +150,24 @@ try {
             assert.equal([...pdf.toString('latin1').matchAll(/\/Type\s*\/Page\b/g)].length, result.pages);
             await page.evaluate(() => window.engmarqQualityLab.prepare()); await wait(page);
             compare(await snapshot(page), actual);
-            if (id === 'training' || id === 'robust-assistance') {
+            if (['pgr', 'pgr-nr20', 'program-kit', 'complete-kit', 'training', 'robust-assistance', 'group'].includes(id)) {
+                const modes = [];
                 for (const mode of ['compact', 'standard', 'consultive']) {
                     await page.getByLabel('Modo do documento').selectOption(mode); await wait(page);
                     assert.equal(await page.locator('#lab-export').isDisabled(), false, `${id}/${mode}: layout`);
                     const modeEditorial = await inspectEditorial(page, id);
                     assert.equal(modeEditorial.invalidIcons + modeEditorial.missingIcons, 0);
                     assert.deepEqual(modeEditorial.missingText, []);
+                    const prepared = await page.evaluate(() => window.engmarqQualityLab.result);
+                    modes.push({ mode, pages: prepared.pages, ready: prepared.ready, warnings: prepared.warnings });
                     const modeStyle = await page.addStyleTag({ content: '#quality-lab { display:block;height:auto; } .lab-header,.lab-controls { display:none; } .lab-viewport { overflow:visible;padding:0; } .lab-pages { margin:0; }' });
                     await page.locator('.pagedjs_page').nth(1).screenshot({ path: path.join(directory, `mode-${mode}.png`) });
+                    if (id === 'pgr' || id === 'pgr-nr20') {
+                        for (let index = 0; index < prepared.pages; index++) await page.locator('.pagedjs_page').nth(index).screenshot({ path: path.join(directory, `mode-${mode}-page-${String(index + 1).padStart(2, '0')}.png`) });
+                    }
                     await modeStyle.evaluate(node => node.remove());
                 }
+                await writeFile(path.join(directory, 'modes.json'), JSON.stringify(modes, null, 2));
                 await page.getByLabel('Modo do documento').selectOption(''); await wait(page);
             }
             const reference = path.join(baselines, `${id}.json`);

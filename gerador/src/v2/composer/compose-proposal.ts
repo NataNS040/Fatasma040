@@ -38,7 +38,7 @@ export function composeProposal(input: Proposal, options: CompositionOptions = {
         const coordination = composeCoordination(includedItems, companyIds);
         if (coordination) blocks.push(coordination);
     }
-    blocks.push(...composeTechnicalSections(includedItems, companyIds, p.options.detailLevel ?? (mode === 'consultive' ? 'full' : undefined), options, mode));
+    blocks.push(...composeTechnicalSections(includedItems, companyIds, p.options.detailLevel, options, mode));
     const separateMeasurements = p.measurements.filter(item => separateIds.has(item.id));
     if (separateMeasurements.length) blocks.push({ id: 'additional-scope', kind: 'additional-scope', title: 'Medições sujeitas a orçamento separado', measurements: separateMeasurements.map(item => ({ itemId: item.id, companyId: item.companyId, title: item.content.title, quantity: item.quantity, unit: item.unit, notes: item.notes, status: 'separate-quote' })) });
     blocks.push(composeInvestment(p).block);

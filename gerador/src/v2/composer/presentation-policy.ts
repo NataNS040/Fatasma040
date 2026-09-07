@@ -1,10 +1,23 @@
-import type { ContentField, DetailLevel, SectionGroup } from '../domain/content';
+import type { ContentField, DetailLevel, DocumentMode, SectionGroup } from '../domain/content';
+import type { ProposalItem } from '../domain/proposal';
 
 export const presentationFields: Readonly<Record<DetailLevel, readonly ContentField[]>> = {
     summary: ['summary'],
     standard: ['summary', 'scope', 'methodology', 'deliverables', 'providerResponsibilities', 'clientResponsibilities', 'responsibilities', 'references', 'exclusions', 'observations'],
     full: ['summary', 'objective', 'scope', 'methodology', 'executionSteps', 'deliverables', 'providerResponsibilities', 'clientResponsibilities', 'responsibilities', 'references', 'inclusions', 'exclusions', 'observations', 'periodicity']
 };
+
+export function servicePresentationPolicy(item: ProposalItem, mode: DocumentMode, serviceCount: number, proposalLevel?: DetailLevel): { level: DetailLevel; fields: readonly ContentField[]; technical: boolean } {
+    const explicit = item.detailLevel && item.detailLevel !== 'standard' ? item.detailLevel : proposalLevel;
+    if (explicit === 'summary') return { level: 'summary', fields: presentationFields.summary, technical: false };
+    const commercial: readonly ContentField[] = ['summary', 'deliverables'];
+    if (mode === 'compact') return { level: 'standard', fields: commercial, technical: false };
+    if (explicit === 'full') return { level: 'full', fields: presentationFields.full, technical: true };
+    if (mode === 'standard') return { level: 'standard', fields: commercial, technical: false };
+    if (item.kind === 'assistance' || (serviceCount === 1 && explicit !== 'standard')) return { level: 'full', fields: presentationFields.full, technical: true };
+    if (serviceCount >= 4) return { level: 'standard', fields: commercial, technical: false };
+    return { level: 'standard', fields: ['summary', 'objective', 'scope', 'methodology', 'deliverables', 'exclusions'], technical: true };
+}
 
 export const sectionDefinitions: Readonly<Record<SectionGroup | 'shared', { title: string; order: number }>> = {
     assistance: { title: 'Escopo da assessoria e acompanhamento', order: 10 },
@@ -15,7 +28,7 @@ export const sectionDefinitions: Readonly<Record<SectionGroup | 'shared', { titl
     trainings: { title: 'Treinamentos', order: 60 },
     'technical-responsibility': { title: 'Responsabilidade técnica', order: 70 },
     other: { title: 'Serviços complementares', order: 80 },
-    shared: { title: 'Metodologia, entregas e condições compartilhadas', order: 90 }
+    shared: { title: 'Condições de execução', order: 90 }
 };
 
 export interface CompositionOptions {

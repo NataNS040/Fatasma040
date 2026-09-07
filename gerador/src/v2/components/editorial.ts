@@ -7,7 +7,10 @@ export function serviceHeader(title: string, shortName: string, catalogId?: stri
     const fragment = document.createDocumentFragment();
     const heading = element('h3', 'service-heading');
     heading.append(documentIcon(serviceIcon(catalogId)), document.createTextNode(shortName));
-    if (title !== shortName) heading.append(element('span', 'service-subtitle', title));
+    if (title !== shortName) {
+        const subtitle = title.startsWith(`${shortName} — `) ? title.slice(shortName.length + 3) : title;
+        heading.append(element('span', 'service-subtitle', subtitle));
+    }
     fragment.append(heading);
     return fragment;
 }
@@ -24,9 +27,11 @@ export function editorialContent(field: string, title: string, values: string[],
         heading.append(document.createTextNode(title)); fragment.append(heading);
     }
     if (!values.length) return fragment;
-    const list = field === 'executionSteps' ? element('ol', 'editorial-list method-steps') : element('ul', `editorial-list field-${field}`);
+    const list = field === 'executionSteps' ? element('ol', 'editorial-list method-steps') : element(field === 'deliverables' ? 'span' : 'ul', `editorial-list field-${field}`);
+    if (field === 'deliverables') list.setAttribute('role', 'list');
     values.forEach((value, index) => {
-        const item = element('li', `editorial-item field-${field}`, value);
+        const item = element(field === 'deliverables' ? 'span' : 'li', `editorial-item field-${field}`, value);
+        if (field === 'deliverables') item.setAttribute('role', 'listitem');
         if (field === 'executionSteps') item.dataset.step = String(index + 1).padStart(2, '0');
         if (['deliverables', 'inclusions'].includes(field)) item.prepend(documentIcon('check'));
         list.append(item);

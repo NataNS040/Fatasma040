@@ -2,7 +2,7 @@
 
 Sistema visual e decisão pontual de repetição de cabeçalhos:
 [V2-EDITORIAL.md](V2-EDITORIAL.md). A regressão editorial compara os três modos,
-confere textos integrais e SVGs locais, exige cabeçalhos nas tabelas fragmentadas
+confere textos projetados integrais, termos comerciais e SVGs locais, exige cabeçalhos nas tabelas fragmentadas
 e reabre os exemplos autônomos com a rede desligada.
 
 Auditoria pré-persistência: ver [V2-AUDIT.md](V2-AUDIT.md). A suíte agora inclui
@@ -37,6 +37,8 @@ usa porta efêmera. Todos os servidores de teste são encerrados ao terminar.
 `src/v2/fixtures/regression.ts` é o registro único do Lab e dos testes: treinamento
 simples, brigada, psicossocial, PGR + PCMSO + LTCAT, kit completo, medição pontual,
 assessoria simples, assessoria robusta, grupo empresarial e muitos serviços.
+Inclui também PGR sozinho e PGR + NR-20: são 12 fixtures. Sete casos comparam
+compact/standard/consultive e gravam contagens em `modes.json`, além das capturas.
 Reutiliza catálogo, presets e configuração de assessoria existentes. Há data,
 identificação e valores determinísticos. O cenário extenso contém pelo menos 15 itens.
 

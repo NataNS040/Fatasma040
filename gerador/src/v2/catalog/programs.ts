@@ -18,6 +18,7 @@ export const programEntries = [
         inclusions: ['Levantamento qualitativo necessário à elaboração do programa.', 'Orientações para utilização do inventário e do plano de ação.'],
         exclusions: ['Avaliações quantitativas não selecionadas no escopo.', 'Execução das adequações e medidas de controle propostas.'],
         observations: [common.quantitative, 'PCMSO, LTCAT e demais serviços mantêm entregáveis próprios, ainda que contratados em conjunto.'],
+        commercialConditions: [common.quantitative],
         periodicity, parameters: programParameters, sources: [sources.programs, sources.assistance]
     }),
     defineEntry({
@@ -35,6 +36,7 @@ export const programEntries = [
         inclusions: ['Elaboração documental do programa médico e orientação sobre a matriz de exames.'],
         exclusions: ['Realização e custeio de exames, consultas e procedimentos médicos não contratados.'],
         observations: ['A contratação do PCMSO não pressupõe a contratação de clínica ou de exames ocupacionais.', 'O programa depende de inventário de riscos consistente; lacunas devem ser comunicadas para complementação antes das definições médicas afetadas.'],
+        commercialConditions: ['A contratação do PCMSO não pressupõe a contratação de clínica ou de exames ocupacionais.'],
         periodicity, parameters: programParameters, sources: [sources.programs]
     }),
     defineEntry({
@@ -51,6 +53,7 @@ export const programEntries = [
         inclusions: ['Levantamento e análise técnica para elaboração do laudo.'],
         exclusions: ['Avaliações quantitativas não selecionadas no escopo.', 'Envio de eventos do eSocial quando não contratado.'],
         observations: [common.quantitative, common.art, 'O LTCAT subsidia informações previdenciárias e o PPP, mas não substitui o LIP nem garante reconhecimento de benefício. Evidências insuficientes devem ser complementadas antes da conclusão afetada.'],
+        commercialConditions: [common.quantitative, common.art],
         periodicity, parameters: programParameters, sources: [sources.programs, sources.unimetais]
     }),
     defineEntry({
@@ -67,6 +70,7 @@ export const programEntries = [
         inclusions: ['Análise técnica documental e das atividades incluídas na proposta.'],
         exclusions: ['Avaliações quantitativas não selecionadas no escopo.', 'Atuação como assistente técnico judicial não contratada.'],
         observations: [common.quantitative, common.art, 'As conclusões dependem das condições efetivamente constatadas; não há resultado de enquadramento predeterminado.'],
+        commercialConditions: [common.quantitative, common.art],
         periodicity, parameters: programParameters, sources: [sources.assistance, sources.unimetais]
     }),
     defineEntry({

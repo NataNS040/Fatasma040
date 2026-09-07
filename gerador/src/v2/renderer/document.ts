@@ -6,7 +6,7 @@ const logoUrl = new URL('../../../assets/logoengmarq.png', import.meta.url).href
 
 const labels: Record<string, string> = {
     summary: 'Apresentação', objective: 'Objetivo', scope: 'Escopo', methodology: 'Metodologia', executionSteps: 'Etapas de execução',
-    deliverables: 'Entregáveis', references: 'Fundamentação', providerResponsibilities: 'Responsabilidades da EngMarq', clientResponsibilities: 'Responsabilidades do cliente',
+    deliverables: 'Principais entregas', references: 'Fundamentação', providerResponsibilities: 'Responsabilidades da EngMarq', clientResponsibilities: 'Responsabilidades do cliente',
     responsibilities: 'Responsabilidades', inclusions: 'Inclusões', exclusions: 'Exclusões', observations: 'Observações', periodicity: 'Periodicidade',
     once: 'Única', weekly: 'Semanal', monthly: 'Mensal', quarterly: 'Trimestral', semiannual: 'Semestral', annual: 'Anual', 'on-demand': 'Sob demanda',
     onsite: 'Presencial', online: 'Online', hybrid: 'Híbrida', point: 'ponto', sample: 'amostra', dosimetry: 'dosimetria'
@@ -125,7 +125,9 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                 node.append(element('p', '', `Validade da proposta: ${block.terms.validityDays} dias.`));
                 if (block.terms.termMonths) node.append(element('p', '', `Vigência: ${block.terms.termMonths} meses.`));
                 if (block.terms.installmentCount) node.append(element('p', '', `Parcelamento: ${block.terms.installmentCount} parcelas.`));
-                node.append(featureList('Pagamento', block.terms.paymentTerms), featureList('Execução', block.terms.executionTerms));
+                if (!block.companyRows?.length || !block.companyRows.every(row => block.terms.paymentTerms.every(term => row.billing.some(billing => billing.paymentTerms?.includes(term))))) node.append(featureList('Pagamento', block.terms.paymentTerms));
+                if (block.terms.executionTerms.length === 1) node.append(element('h4', '', 'Execução'), element('p', '', block.terms.executionTerms[0]));
+                else node.append(featureList('Execução', block.terms.executionTerms));
                 break;
             case 'acceptance':
                 node = section('Aceite e responsabilidade');
@@ -147,6 +149,6 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
         }
     }
     root.querySelectorAll<HTMLElement>('.info-box').forEach(node => { node.dataset.atomic = 'info-box'; });
-    root.querySelectorAll('p,li,h1,h2,h3,h4,tr,td,th,.signature,.info-box').forEach((node, index) => (node as HTMLElement).dataset.layoutId = `content-${index}`);
+    root.querySelectorAll('p,li,h1,h2,h3,h4,tr,td,th,.signature,.info-box,[role="listitem"]').forEach((node, index) => (node as HTMLElement).dataset.layoutId = `content-${index}`);
     return root;
 }
