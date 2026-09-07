@@ -4,6 +4,7 @@ import type { Proposal } from '../domain/proposal';
 import { renderDocument } from '../renderer/document';
 import documentCss from '../renderer/document.css?raw';
 import { inspectLayout, isLayoutExportable, type LayoutWarning } from './layout';
+import { repeatTableHeader } from './table-headers';
 import '@fontsource/montserrat/latin-400.css';
 import '@fontsource/montserrat/latin-700.css';
 import '@fontsource/open-sans/latin-400.css';
@@ -44,6 +45,7 @@ export class DocumentPaginator {
             this.target.replaceChildren();
             const { Previewer } = await import('pagedjs');
             this.previewer = new Previewer();
+            this.previewer.chunker.hooks.renderNode.register(repeatTableHeader);
             const coverStyle = result.document.blocks.some(b => b.kind === 'cover') ? '@page :first { @top-left { content: none; } @bottom-left { content: none; } }' : '';
             const flow = await this.previewer.preview(source, [{ [window.location.href]: documentCss + coverStyle }], this.target);
             // Snapshot A4 imutável: mudanças de mídia não devem acionar repaginação

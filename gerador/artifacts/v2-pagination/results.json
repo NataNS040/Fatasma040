@@ -13,7 +13,7 @@
   },
   {
     "scenario": "medium",
-    "pages": 8,
+    "pages": 9,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -31,7 +31,7 @@
   },
   {
     "scenario": "assistance",
-    "pages": 14,
+    "pages": 18,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -55,7 +55,7 @@
   },
   {
     "scenario": "group",
-    "pages": 16,
+    "pages": 19,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",

@@ -28,11 +28,11 @@ async function snapshot(page) {
     const pages = await page.evaluate(() => [...document.querySelectorAll('.pagedjs_page')].map(page => {
         const area = page.querySelector('.pagedjs_page_content').getBoundingClientRect();
         const bounds = page.getBoundingClientRect();
-        return { size: [bounds.width, bounds.height], nodes: [...page.querySelectorAll('[data-layout-id],img')].map(node => {
+        return { size: [bounds.width, bounds.height], nodes: [...page.querySelectorAll('[data-layout-id],img,svg.document-icon')].map(node => {
             const rect = node.getBoundingClientRect();
             const style = getComputedStyle(node);
             return {
-                identity: [node.dataset.layoutId ?? 'image', node.tagName, (node.textContent ?? '').replace(/\s+/g, ' ').trim()],
+                identity: [node.dataset.layoutId ?? node.dataset.icon ?? 'image', node.tagName, node.tagName.toLowerCase() === 'svg' ? [...node.querySelectorAll('path')].map(path => path.getAttribute('d')).join('|') : (node.textContent ?? '').replace(/\s+/g, ' ').trim()],
                 rect: [rect.x - area.x, rect.y - area.y, rect.width, rect.height].map(value => Math.round(value * 100) / 100),
                 style: [style.fontFamily, style.fontSize, style.fontWeight, style.lineHeight, style.color, style.backgroundColor, style.borderTopWidth, style.borderTopColor],
                 image: node.tagName === 'IMG' ? [new URL(node.src).pathname, node.naturalWidth, node.naturalHeight] : null
@@ -40,7 +40,32 @@ async function snapshot(page) {
         }) };
     }));
     for (const page of pages) for (const node of page.nodes) node.identity[2] = hash(node.identity[2]);
-    return { schema: 1, pages };
+    return { schema: 2, pages };
+}
+
+async function inspectEditorial(page, id) {
+    return page.evaluate(async fixtureId => {
+        const { createRegressionFixture } = await import('/gerador-de-proposta/src/v2/fixtures/regression.ts');
+        const { composeProposal } = await import('/gerador-de-proposta/src/v2/composer/compose-proposal.ts');
+        const { renderDocument } = await import('/gerador-de-proposta/src/v2/renderer/document.ts');
+        const proposal = createRegressionFixture(fixtureId);
+        const mode = document.querySelector('[aria-label="Modo do documento"]').value;
+        if (mode) proposal.options.documentMode = mode;
+        const composed = composeProposal(proposal);
+        if (!composed.ok) throw new Error(JSON.stringify(composed.issues));
+        const source = renderDocument(composed.document);
+        const target = document.querySelector('#lab-pages');
+        const icons = [...target.querySelectorAll('svg.document-icon')];
+        const expectedIcons = [...source.querySelectorAll('svg.document-icon')];
+        const invalidIcons = icons.filter(icon => {
+            const box = icon.getBBox(); const rect = icon.getBoundingClientRect();
+            return box.width <= 0 || box.height <= 0 || rect.width <= 0 || rect.height <= 0 || icon.getAttribute('stroke') !== 'currentColor' || icon.getAttribute('aria-hidden') !== 'true' || !icon.querySelector('path[d]') || icon.querySelector('image,use');
+        });
+        const missingIcons = expectedIcons.filter(icon => icons.filter(actual => actual.dataset.icon === icon.dataset.icon).length < expectedIcons.filter(expected => expected.dataset.icon === icon.dataset.icon).length);
+        const visibleText = [...target.querySelectorAll('[data-layout-id]')].map(node => node.textContent).join(' ').replace(/\s+/g, ' ');
+        const missingText = [...source.querySelectorAll('.editorial-item,.service-summary,.service-subtitle')].filter(node => !visibleText.includes(node.textContent.replace(/\s+/g, ' '))).map(node => node.textContent);
+        return { icons: icons.length, invalidIcons: invalidIcons.length, missingIcons: missingIcons.length, missingText, cover: Boolean(target.querySelector('.cover')), expectedCover: Boolean(source.querySelector('.cover')), numberedSteps: [...target.querySelectorAll('.method-steps')].every(list => list.tagName === 'OL' && [...list.children].every(item => /^\d+$/.test(item.dataset.step))) };
+    }, id);
 }
 
 function compare(actual, expected) {
@@ -106,6 +131,14 @@ try {
             assert.equal(result?.ready, true, await page.locator('#lab-issues').innerText());
             assert.equal(await page.locator('#lab-export').isDisabled(), false);
             assert.ok(await page.evaluate(() => [...document.images].every(image => image.complete && image.naturalWidth > 0)));
+            const editorial = await inspectEditorial(page, id);
+            assert.ok(editorial.icons > 0);
+            assert.equal(editorial.invalidIcons, 0, 'SVGs devem permanecer visíveis e locais');
+            assert.equal(editorial.missingIcons, 0, 'Ícones não podem desaparecer na paginação');
+            assert.deepEqual(editorial.missingText, [], 'Conteúdo editorial deve permanecer integral');
+            assert.equal(editorial.cover, editorial.expectedCover);
+            assert.equal(editorial.numberedSteps, true);
+            assert.ok(await page.locator('.pagedjs_page table').evaluateAll(tables => tables.every(table => table.tHead && table.tBodies[0]?.rows.length)), 'Toda tabela paginada deve conter cabeçalho e dados');
             const actual = await snapshot(page);
             await writeFile(path.join(directory, 'actual.json'), JSON.stringify(actual, null, 2));
             const pages = page.locator('.pagedjs_page');
@@ -116,6 +149,19 @@ try {
             assert.equal([...pdf.toString('latin1').matchAll(/\/Type\s*\/Page\b/g)].length, result.pages);
             await page.evaluate(() => window.engmarqQualityLab.prepare()); await wait(page);
             compare(await snapshot(page), actual);
+            if (id === 'training' || id === 'robust-assistance') {
+                for (const mode of ['compact', 'standard', 'consultive']) {
+                    await page.getByLabel('Modo do documento').selectOption(mode); await wait(page);
+                    assert.equal(await page.locator('#lab-export').isDisabled(), false, `${id}/${mode}: layout`);
+                    const modeEditorial = await inspectEditorial(page, id);
+                    assert.equal(modeEditorial.invalidIcons + modeEditorial.missingIcons, 0);
+                    assert.deepEqual(modeEditorial.missingText, []);
+                    const modeStyle = await page.addStyleTag({ content: '#quality-lab { display:block;height:auto; } .lab-header,.lab-controls { display:none; } .lab-viewport { overflow:visible;padding:0; } .lab-pages { margin:0; }' });
+                    await page.locator('.pagedjs_page').nth(1).screenshot({ path: path.join(directory, `mode-${mode}.png`) });
+                    await modeStyle.evaluate(node => node.remove());
+                }
+                await page.getByLabel('Modo do documento').selectOption(''); await wait(page);
+            }
             const reference = path.join(baselines, `${id}.json`);
             if (update) pendingBaselines.push({ reference, actual });
             else compare(actual, JSON.parse(await readFile(reference, 'utf8')));

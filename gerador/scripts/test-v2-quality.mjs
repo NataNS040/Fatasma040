@@ -67,8 +67,14 @@ try {
             assert.ok(!text.includes('Consolidado') && !text.includes('Valor contratual:'));
             assert.equal(await page.getByRole('heading', { name: 'Responsabilidade técnica', exact: true }).count(), 1);
         }
+        const iconPaths = await page.locator('#pages svg.document-icon path').evaluateAll(paths => paths.map(path => path.getAttribute('d')));
+        assert.ok(iconPaths.length > 0);
+        await page.context().setOffline(true);
         await page.goto(new URL(`../examples/quality/${scenario}.html`, import.meta.url).href);
         await page.waitForFunction(() => [...document.images].every(image => image.complete && image.naturalWidth > 0));
+        await page.evaluate(() => document.fonts.ready);
+        assert.deepEqual(await page.locator('#pages svg.document-icon path').evaluateAll(paths => paths.map(path => path.getAttribute('d'))), iconPaths, 'HTML offline preserva os paths dos ícones');
+        assert.ok(await page.locator('#pages svg.document-icon').evaluateAll(icons => icons.every(icon => { const box = icon.getBBox(); return box.width > 0 && box.height > 0 && getComputedStyle(icon).visibility === 'visible'; })), 'Ícones offline visíveis');
         assert.equal(await page.locator('.pagedjs_page').count(), result.pages);
         const standalonePdf = await page.pdf({ preferCSSPageSize: true, printBackground: true, displayHeaderFooter: false });
         assert.equal([...standalonePdf.toString('latin1').matchAll(/\/Type\s*\/Page\b/g)].length, result.pages, 'HTML autônomo preserva paginação');

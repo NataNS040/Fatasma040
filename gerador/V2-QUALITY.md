@@ -1,5 +1,10 @@
 # V2 Quality Lab e regressão
 
+Sistema visual e decisão pontual de repetição de cabeçalhos:
+[V2-EDITORIAL.md](V2-EDITORIAL.md). A regressão editorial compara os três modos,
+confere textos integrais e SVGs locais, exige cabeçalhos nas tabelas fragmentadas
+e reabre os exemplos autônomos com a rede desligada.
+
 Auditoria pré-persistência: ver [V2-AUDIT.md](V2-AUDIT.md). A suíte agora inclui
 quatro testes AST de arquitetura/segurança e `test-v2-workflows.mjs`, com assessoria
 em grupo, público do treinamento, visitas individuais, valores, texto literal,
@@ -88,6 +93,8 @@ Ambiente registrado em `tests/baselines/v2/environment.json`: Chromium, sistema,
 viewport 1440x1000, DPR 1; fontes locais aguardadas antes de medir. Geometria relativa
 à área A4 tem tolerância de 1px. Texto normalizado usa hash SHA-256 truncado; estilo
 e identidade dos elementos são exatos. Imagens comparam caminho e dimensões naturais.
+O schema 2 inclui os SVGs inline: paths, geometria e estilos. A inspeção também
+confere bounding boxes não vazias, currentColor e ausência de referências externas.
 Não há diff pixel a pixel: mudanças de rasterização, pixels de uma imagem substituída
 com mesmo nome/tamanho e estilos não capturados exigem inspeção das PNGs. Mudança de
 browser/SO/fontes pode exigir regeneração justificada, nunca tolerância automática maior.

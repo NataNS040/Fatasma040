@@ -6,7 +6,7 @@
     {
       "id": "training",
       "passed": true,
-      "pages": 2,
+      "pages": 3,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -17,7 +17,7 @@
     {
       "id": "brigade",
       "passed": true,
-      "pages": 3,
+      "pages": 4,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -28,7 +28,7 @@
     {
       "id": "psychosocial",
       "passed": true,
-      "pages": 3,
+      "pages": 4,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -39,7 +39,7 @@
     {
       "id": "program-kit",
       "passed": true,
-      "pages": 5,
+      "pages": 6,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -52,7 +52,7 @@
     {
       "id": "complete-kit",
       "passed": true,
-      "pages": 6,
+      "pages": 7,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -67,7 +67,7 @@
     {
       "id": "measurement",
       "passed": true,
-      "pages": 2,
+      "pages": 3,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -90,7 +90,7 @@
     {
       "id": "robust-assistance",
       "passed": true,
-      "pages": 15,
+      "pages": 19,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -113,7 +113,7 @@
     {
       "id": "group",
       "passed": true,
-      "pages": 21,
+      "pages": 25,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -197,7 +197,7 @@
     {
       "id": "many-services",
       "passed": true,
-      "pages": 12,
+      "pages": 17,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",

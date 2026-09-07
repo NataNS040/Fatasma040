@@ -25,7 +25,7 @@
   },
   {
     "scenario": "ltcat",
-    "pages": 3,
+    "pages": 4,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -50,7 +50,7 @@
   },
   {
     "scenario": "kit",
-    "pages": 6,
+    "pages": 7,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -66,7 +66,7 @@
   },
   {
     "scenario": "kit-psicossocial",
-    "pages": 6,
+    "pages": 7,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -81,7 +81,7 @@
   },
   {
     "scenario": "psicossocial",
-    "pages": 3,
+    "pages": 4,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -93,7 +93,7 @@
   },
   {
     "scenario": "medicao-unica",
-    "pages": 2,
+    "pages": 3,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -106,7 +106,7 @@
   },
   {
     "scenario": "medicoes",
-    "pages": 6,
+    "pages": 8,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -128,18 +128,6 @@
   },
   {
     "scenario": "treinamento-simples",
-    "pages": 2,
-    "warnings": [],
-    "validationWarnings": [
-      "Responsável do cliente não informado.",
-      "Endereço incompleto ou ausente: Empresa Exemplo.",
-      "Conteúdo técnico pendente de revisão antes de uso comercial."
-    ],
-    "ready": true,
-    "errors": []
-  },
-  {
-    "scenario": "brigada",
     "pages": 3,
     "warnings": [],
     "validationWarnings": [
@@ -151,8 +139,20 @@
     "errors": []
   },
   {
+    "scenario": "brigada",
+    "pages": 4,
+    "warnings": [],
+    "validationWarnings": [
+      "Responsável do cliente não informado.",
+      "Endereço incompleto ou ausente: Empresa Exemplo.",
+      "Conteúdo técnico pendente de revisão antes de uso comercial."
+    ],
+    "ready": true,
+    "errors": []
+  },
+  {
     "scenario": "treinamentos",
-    "pages": 5,
+    "pages": 6,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -168,7 +168,7 @@
   },
   {
     "scenario": "assessoria",
-    "pages": 15,
+    "pages": 19,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",
@@ -192,7 +192,7 @@
   },
   {
     "scenario": "grupo",
-    "pages": 21,
+    "pages": 25,
     "warnings": [],
     "validationWarnings": [
       "Responsável do cliente não informado.",

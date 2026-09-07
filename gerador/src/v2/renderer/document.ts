@@ -1,5 +1,7 @@
 import type { ProposalDocument, VisibleAmounts } from '../domain/document';
 import { element, section, featureList, dataTable } from '../components/document';
+import { editorialContent, serviceHeader } from '../components/editorial';
+import { documentIcon } from '../components/icons';
 const logoUrl = new URL('../../../assets/logoengmarq.png', import.meta.url).href;
 
 const labels: Record<string, string> = {
@@ -17,7 +19,7 @@ function amounts(value: VisibleAmounts): string {
 
 /** Renderiza exclusivamente os blocos de apresentação; nunca sourceItems ou preços brutos. */
 export function renderDocument(model: ProposalDocument): HTMLElement {
-    const root = element('article', 'engmarq-document');
+    const root = element('article', `engmarq-document mode-${model.documentMode ?? 'standard'}`);
     const header = element('header', 'page-header', `ENGMARQ SOLUTION · ${model.metadata.number}`);
     const footer = element('footer', 'page-footer', 'Engenharia de Segurança e Medicina do Trabalho');
     root.append(header, footer);
@@ -30,7 +32,8 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
             case 'cover': {
                 node = element('section', 'cover');
                 const logo = element('img', 'cover-logo'); logo.src = logoUrl; logo.alt = 'EngMarq Solution';
-                node.append(logo, element('p', 'eyebrow', 'PROPOSTA TÉCNICA E COMERCIAL'), element('h1', '', block.title), element('p', 'cover-client', block.clientName), element('p', '', `${model.metadata.number} · ${model.metadata.issuedOn.split('-').reverse().join('/')} · Revisão ${model.metadata.revision}`));
+                const clientName = model.isGroup ? model.groupName || block.clientName : (companies?.kind === 'companies' ? companies.companies[0]?.legalName : undefined) || block.clientName;
+                node.append(logo, element('p', 'cover-code', model.metadata.number), element('p', 'eyebrow', 'PROPOSTA COMERCIAL'), element('h1', '', block.title), element('p', 'cover-caption', 'ELABORADA PARA'), element('p', 'cover-client', clientName), element('p', 'cover-date', `${model.metadata.issuedOn.split('-').reverse().join('/')} · Revisão ${model.metadata.revision}`), element('p', 'cover-brand', 'EngMarq Solution\nEngenharia de Segurança e Medicina do Trabalho'));
                 break;
             }
             case 'companies':
@@ -39,9 +42,9 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                 if (block.contact && [block.contact.name, block.contact.email, block.contact.phone].some(value => value?.trim())) node.append(element('p', '', `Contato: ${[block.contact.name, block.contact.email, block.contact.phone].filter(Boolean).join(' · ')}`));
                 break;
             case 'scope':
-                node = section('Sobre a proposta'); node.append(element('p', 'text-block', block.scope.objective));
+                node = section('Sobre a proposta'); node.append(element('p', 'section-intro', block.scope.objective));
                 if (block.scope.assumptions.length) node.append(featureList('Premissas', block.scope.assumptions));
-                if (block.scope.exclusions.length) node.append(featureList('Fora do escopo', block.scope.exclusions));
+                if (block.scope.exclusions.length) node.append(editorialContent('exclusions', 'Fora do escopo', block.scope.exclusions));
                 break;
             case 'coordination':
                 node = section(block.title);
@@ -62,16 +65,19 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                     for (const services of groups.values()) {
                         const service = services[0];
                         const card = element('article', 'service-card');
-                        card.append(element('h3', '', service.title));
+                        card.append(serviceHeader(service.title, service.shortName, service.catalogId));
+                        if (service.fields.summary?.length) card.append(editorialContent('summary', '', service.fields.summary));
                         const rows = services.map(s => [companyName(s.companyId), s.parameters.map(p => `${p.label}: ${Array.isArray(p.value) ? p.value.join(', ') : translate(String(p.value))}${p.unit ? ` ${p.unit}` : ''}`).join('\n'), [s.frequency ? `Frequência: ${translate(s.frequency)}` : '', s.visits ? s.visits.included ? `Visitas: ${s.visits.quantity} no contrato · ${translate(s.visits.frequency)} · ${s.visits.durationHours} h por visita. ${s.visits.notes ?? ''}` : `Visitas não incluídas. ${s.visits.notes ?? ''}` : '', s.notes].filter(Boolean).join('\n')]);
                         if (!model.isGroup) {
-                            rows.forEach(row => row.slice(1).filter(Boolean).forEach(text => card.append(element('p', 'service-configuration', text.split('\n').join(' · ')))));
+                            const parameters = services.flatMap(item => item.parameters);
+                            if (parameters.length) card.append(dataTable(['Parâmetro', 'Configuração contratada'], parameters.map(parameter => [parameter.label, `${Array.isArray(parameter.value) ? parameter.value.join(', ') : translate(String(parameter.value))}${parameter.unit ? ` ${parameter.unit}` : ''}`]), `parameter-table${block.group === 'trainings' ? ' training-table' : ''}`));
+                            rows.forEach(row => { if (row[2]) card.append(element('p', 'service-configuration', row[2])); });
                         } else {
                             const columns = [0, 1, 2].filter(index => rows.some(row => row[index]));
                             if (columns.length === 1) card.append(element('p', 'applies-to', `Empresas: ${rows.map(row => row[0]).join(' · ')}`));
                             else card.append(dataTable(columns.map(index => ['Empresa', 'Configuração', 'Condições específicas'][index]), rows.map(row => columns.map(index => row[index])), block.group === 'trainings' ? 'training-table' : 'data-grid'));
                         }
-                        for (const [field, values] of Object.entries(service.fields)) if (values?.length) card.append(featureList(translate(field), values));
+                        for (const [field, values] of Object.entries(service.fields)) if (field !== 'summary' && values?.length) card.append(editorialContent(field, translate(field), values));
                         node.append(card);
                     }
                 }
@@ -99,21 +105,20 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                     grouped.set(item.field, field);
                 }
                 for (const [field, groups] of grouped) {
-                    node.append(element('h4', '', translate(field)));
+                    node.append(editorialContent(field, translate(field), []));
                     for (const [applies, texts] of groups) {
-                        const list = element('ul');
-                        texts.forEach(text => list.append(element('li', '', text)));
-                        node.append(list, element('p', 'applies-to', applies));
+                        node.append(editorialContent(field, translate(field), texts, false), element('p', 'applies-to', applies));
                     }
                 }
                 }
                 break;
             case 'additional-scope':
                 node = section(block.title);
-                node.append(dataTable(['Empresa / medição', 'Quantidade', 'Condição'], block.measurements.map(m => [`${companyName(m.companyId)}\n${m.title}`, `${m.quantity} ${translate(m.unit)}`, `Orçamento separado. ${m.notes ?? ''}`])));
+                node.append(dataTable(['Empresa / medição', 'Quantidade', 'Condição'], block.measurements.map(m => [`${companyName(m.companyId)}\n${m.title}`, `${m.quantity} ${translate(m.unit)}`, `Orçamento separado. ${m.notes ?? ''}`]), 'measurement-table'));
                 break;
             case 'investment':
                 node = section('Condições comerciais');
+                node.querySelector('h2')!.prepend(documentIcon('money'));
                 if (block.companyRows?.length) node.append(dataTable(['Empresa', 'Investimento', 'Vigência / pagamento'], block.companyRows.map(row => [row.companyName, amounts(row), row.billing.map(b => [b.termMonths ? `${b.termMonths} meses` : '', b.installmentCount ? `${b.installmentCount} parcelas` : '', ...(b.paymentTerms ?? [])].filter(Boolean).join(' · ')).join('\n')]), 'commercial-table'));
                 else node.append(dataTable(['Serviço / empresa', 'Condição'], block.rows.map(row => [`${row.title}\n${companyName(row.companyId)}`, amounts(row.price) || (row.price.mode === 'included' ? 'Incluído no pacote' : row.price.mode === 'separate-quote' ? 'Orçamento separado' : 'Conforme condições comerciais')]), 'commercial-table'));
                 if (block.totals && amounts(block.totals)) node.append(element('p', 'info-box', `Consolidado\n${amounts(block.totals)}`));
@@ -133,6 +138,14 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
     }
     // Fluxo raso evita a perda de irmãos em quebras de contêineres aninhados no Paged.js 0.4.
     for (const wrapper of root.querySelectorAll('.service-card,.feature-list')) wrapper.replaceWith(...wrapper.childNodes);
+    for (const sectionNode of root.querySelectorAll('.document-section')) {
+        const heading = sectionNode.firstElementChild;
+        const service = heading?.nextElementSibling;
+        if (heading?.tagName === 'H2' && service?.matches('.service-heading')) {
+            const start = element('div', 'section-start');
+            heading.replaceWith(start); start.append(heading, service);
+        }
+    }
     root.querySelectorAll<HTMLElement>('.info-box').forEach(node => { node.dataset.atomic = 'info-box'; });
     root.querySelectorAll('p,li,h1,h2,h3,h4,tr,td,th,.signature,.info-box').forEach((node, index) => (node as HTMLElement).dataset.layoutId = `content-${index}`);
     return root;
