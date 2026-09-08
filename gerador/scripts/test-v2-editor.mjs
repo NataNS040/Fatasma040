@@ -32,6 +32,10 @@ try {
     await page.screenshot({ path: path.join(artifacts, '02-comercial-preview.png') });
     assert.ok((await page.locator('#editor-pages').innerText()).includes('1.500,00'));
     assert.ok((await page.locator('#editor-pages').innerText()).includes('Escopo técnico contratado'));
+    const commercialText = await page.locator('#editor-pages').innerText();
+    assert.doesNotMatch(commercialText, /vigência|12 meses/i);
+    assert.ok(commercialText.includes('Pagamento') && commercialText.includes('parcelas'));
+    assert.ok(commercialText.includes('Validade da proposta:'));
     await page.getByLabel('Investimento único (R$) *', { exact: true }).fill('');
     assert.equal(await pdf.isDisabled(), true);
     await page.getByLabel('Investimento único (R$) *', { exact: true }).fill('1500,00');
@@ -106,6 +110,7 @@ try {
     assert.ok(content.includes('23') && content.includes('22'));
     assert.ok(content.includes('1.800,00') && content.includes('1.400,00'));
     assert.ok(!content.includes('Consolidado') && !content.includes('Valor contratual:'));
+    assert.doesNotMatch(content, /vigência|12 meses/i);
     await page.screenshot({ path: path.join(artifacts, '04-revisao-desktop.png') });
     await page.evaluate(() => { window.print = () => { window.printRequested = true; }; });
     await pdf.click();
