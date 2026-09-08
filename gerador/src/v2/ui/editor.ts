@@ -184,7 +184,7 @@ function render(): void {
             if (draft.charge !== 'monthly') fields.append(field('Investimento único (R$) *', c.once, v => c.once = v));
             if (draft.charge !== 'once') fields.append(field('Mensalidade (R$) *', c.monthly, v => c.monthly = v)); card.append(fields); form.append(card);
         }
-        form.append(grid(field('Quantidade de parcelas *', draft.installments, v => draft.installments = v, 'number'), field('Vigência (meses) *', draft.term, v => draft.term = v, 'number'), field('Validade da proposta (dias) *', draft.validity, v => draft.validity = v, 'number'), field('Condições de pagamento *', draft.payment, v => draft.payment = v, 'textarea'), field('Condições de execução', draft.execution, v => draft.execution = v, 'textarea')));
+        form.append(grid(field('Quantidade de parcelas *', draft.installments, v => draft.installments = v, 'number'), field('Validade da proposta (dias) *', draft.validity, v => draft.validity = v, 'number'), field('Condições de pagamento *', draft.payment, v => draft.payment = v, 'textarea'), field('Condições de execução', draft.execution, v => draft.execution = v, 'textarea')));
         form.append(el('h2', '', 'Valores exibidos no documento'), toggle('Exibir mensalidade', draft.showMonthlyValue, v => draft.showMonthlyValue = v, false), toggle('Exibir valor total do contrato', draft.showContractTotal, v => draft.showContractTotal = v, false), toggle('Exibir total agregado', draft.showAggregateTotal, v => draft.showAggregateTotal = v, false), toggle('Exibir valores por empresa', draft.showPerCompanyPricing, v => draft.showPerCompanyPricing = v, false), el('p', 'hint', 'Você pode contratar 12 mensalidades sem exibir o valor total do contrato ou do grupo.'));
     }
     if (step === 3) {
