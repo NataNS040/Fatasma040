@@ -113,7 +113,7 @@
     {
       "id": "robust-assistance",
       "passed": true,
-      "pages": 20,
+      "pages": 19,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
