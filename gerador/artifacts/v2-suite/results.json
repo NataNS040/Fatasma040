@@ -1,68 +1,82 @@
 {
-  "completedAt": "2026-09-08T03:13:10.283Z",
+  "completedAt": "2026-09-08T03:50:50.926Z",
   "results": [
     {
       "name": "unit",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 4111
+      "durationMs": 4055
     },
     {
       "name": "pagination",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 11820
+      "durationMs": 12508
+    },
+    {
+      "name": "acceptance",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 2473
+    },
+    {
+      "name": "commercial-access",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 13050
     },
     {
       "name": "editor",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 10945
+      "durationMs": 11219
     },
     {
       "name": "team-workflows",
-      "passed": false,
-      "exitCode": 1,
+      "passed": true,
+      "exitCode": 0,
       "signal": null,
-      "durationMs": 32640
+      "durationMs": 7838
     },
     {
       "name": "quality-examples",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 34018
+      "durationMs": 37261
     },
     {
       "name": "regression-lab",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 43664
+      "durationMs": 47146
     },
     {
       "name": "typecheck",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 4289
+      "durationMs": 3035
     },
     {
       "name": "build",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 3691
+      "durationMs": 3476
     },
     {
       "name": "production-isolation",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 520
+      "durationMs": 2721
     }
   ]
 }

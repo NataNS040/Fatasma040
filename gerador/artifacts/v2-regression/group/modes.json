@@ -7,14 +7,21 @@
   },
   {
     "mode": "standard",
-    "pages": 24,
+    "pages": 25,
     "ready": true,
     "warnings": []
   },
   {
     "mode": "consultive",
-    "pages": 25,
+    "pages": 26,
     "ready": true,
-    "warnings": []
+    "warnings": [
+      {
+        "code": "sparse-page",
+        "page": 25,
+        "message": "Página com menos de 25% da altura ocupada.",
+        "severity": "warning"
+      }
+    ]
   }
 ]

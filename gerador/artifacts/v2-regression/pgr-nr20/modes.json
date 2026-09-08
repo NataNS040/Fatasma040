@@ -1,7 +1,7 @@
 [
   {
     "mode": "compact",
-    "pages": 3,
+    "pages": 4,
     "ready": true,
     "warnings": []
   },
@@ -13,7 +13,7 @@
   },
   {
     "mode": "consultive",
-    "pages": 4,
+    "pages": 5,
     "ready": true,
     "warnings": []
   }

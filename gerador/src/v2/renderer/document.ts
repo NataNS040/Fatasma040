@@ -22,7 +22,7 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
     const root = element('article', `engmarq-document mode-${model.documentMode ?? 'standard'}`);
     const header = element('header', 'page-header', `ENGMARQ SOLUTION · ${model.metadata.number}`);
     const footer = element('footer', 'page-footer', 'Engenharia de Segurança e Medicina do Trabalho');
-    root.append(header, footer);
+    if (!model.blocks.some(block => block.kind === 'cover')) root.append(header, footer);
     const companies = model.blocks.find(block => block.kind === 'companies');
     const serviceNames = new Map(model.blocks.flatMap(block => block.kind === 'technical-section' ? block.services.map(service => [service.itemId, service.shortName] as const) : []));
     const companyName = (id: string): string => companies?.kind === 'companies' ? companies.companies.find(c => c.id === id)?.legalName ?? id : id;
@@ -128,14 +128,30 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                 if (block.terms.executionTerms.length === 1) node.append(element('h4', '', 'Execução'), element('p', '', block.terms.executionTerms[0]));
                 else node.append(featureList('Execução', block.terms.executionTerms));
                 break;
-            case 'acceptance':
-                node = section('Aceite e responsabilidade');
-                node.append(element('p', '', `Responsável pela proposta: ${[block.author.name, block.author.role, block.author.email, block.author.phone].filter(value => value?.trim()).join(' · ') || 'Não informado'}`));
-                for (const id of block.companyIds) { const signature = element('div', 'signature', `${companyName(id)}\nResponsável: ________________________    Data: ____ / ____ / ______`); signature.dataset.atomic = 'signature'; node.append(signature); }
+            case 'acceptance': {
+                node = section('Aceite da proposta');
+                node.classList.add('acceptance-page');
+                const intro = element('div', 'acceptance-intro');
+                intro.append(node.firstElementChild!, element('p', '', 'Declaramos estar de acordo com o escopo, condições e valores apresentados nesta proposta.'), element('p', 'acceptance-date', 'LOCAL E DATA\n\n________________________________, ______ / ______ / __________'));
+                node.append(intro);
+                const pair = element('div', 'signature-pair');
+                const contact = companies?.kind === 'companies' ? companies.contact : undefined;
+                const signature = (label: string, company: string, name?: string, role?: string): HTMLElement => {
+                    const card = element('div', 'signature'); card.dataset.atomic = 'signature';
+                    card.append(element('h3', '', label), element('div', 'signature-line'), element('p', 'signature-company', company), element('p', 'signature-field', name?.trim() || 'Nome: __________________________'), element('p', 'signature-field', role?.trim() || 'Cargo: __________________________'));
+                    return card;
+                };
+                pair.append(signature('ENGMARQ SOLUTION', 'EngMarq Solution', block.author.name, block.author.role));
+                pair.append(signature('CONTRATANTE', model.isGroup ? model.groupName || block.companyIds.map(companyName).join(' · ') : companyName(block.companyIds[0]), contact?.name, contact?.role));
+                node.append(pair);
+                if (model.isGroup) node.append(element('p', 'applies-to', `Empresas abrangidas pelo aceite: ${block.companyIds.map(companyName).join(' · ')}`));
                 break;
+            }
         }
         node.dataset.blockId = block.id;
         root.append(node);
+        // Running elements before a named cover create an empty default page in Paged.js.
+        if (block.kind === 'cover') root.append(header, footer);
     }
     // Fluxo raso evita a perda de irmãos em quebras de contêineres aninhados no Paged.js 0.4.
     for (const wrapper of root.querySelectorAll('.service-card,.feature-list')) wrapper.replaceWith(...wrapper.childNodes);

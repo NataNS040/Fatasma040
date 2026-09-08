@@ -6,8 +6,15 @@
     {
       "id": "pgr",
       "passed": true,
-      "pages": 3,
-      "warnings": [],
+      "pages": 4,
+      "warnings": [
+        {
+          "code": "sparse-page",
+          "page": 3,
+          "message": "Página com menos de 25% da altura ocupada.",
+          "severity": "warning"
+        }
+      ],
       "validationWarnings": [
         "Responsável do cliente não informado.",
         "Endereço incompleto ou ausente: Empresa Exemplo.",
@@ -29,8 +36,15 @@
     {
       "id": "training",
       "passed": true,
-      "pages": 2,
-      "warnings": [],
+      "pages": 3,
+      "warnings": [
+        {
+          "code": "sparse-page",
+          "page": 2,
+          "message": "Página com menos de 25% da altura ocupada.",
+          "severity": "warning"
+        }
+      ],
       "validationWarnings": [
         "Responsável do cliente não informado.",
         "Endereço incompleto ou ausente: Empresa Exemplo.",
@@ -40,8 +54,15 @@
     {
       "id": "brigade",
       "passed": true,
-      "pages": 3,
-      "warnings": [],
+      "pages": 4,
+      "warnings": [
+        {
+          "code": "sparse-page",
+          "page": 3,
+          "message": "Página com menos de 25% da altura ocupada.",
+          "severity": "warning"
+        }
+      ],
       "validationWarnings": [
         "Responsável do cliente não informado.",
         "Endereço incompleto ou ausente: Empresa Exemplo.",
@@ -51,8 +72,15 @@
     {
       "id": "psychosocial",
       "passed": true,
-      "pages": 3,
-      "warnings": [],
+      "pages": 4,
+      "warnings": [
+        {
+          "code": "sparse-page",
+          "page": 3,
+          "message": "Página com menos de 25% da altura ocupada.",
+          "severity": "warning"
+        }
+      ],
       "validationWarnings": [
         "Responsável do cliente não informado.",
         "Endereço incompleto ou ausente: Empresa Exemplo.",
@@ -62,8 +90,15 @@
     {
       "id": "program-kit",
       "passed": true,
-      "pages": 4,
-      "warnings": [],
+      "pages": 5,
+      "warnings": [
+        {
+          "code": "sparse-page",
+          "page": 4,
+          "message": "Página com menos de 25% da altura ocupada.",
+          "severity": "warning"
+        }
+      ],
       "validationWarnings": [
         "Responsável do cliente não informado.",
         "Endereço incompleto ou ausente: Empresa Exemplo.",
@@ -75,7 +110,7 @@
     {
       "id": "complete-kit",
       "passed": true,
-      "pages": 4,
+      "pages": 5,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -90,8 +125,15 @@
     {
       "id": "measurement",
       "passed": true,
-      "pages": 2,
-      "warnings": [],
+      "pages": 3,
+      "warnings": [
+        {
+          "code": "sparse-page",
+          "page": 2,
+          "message": "Página com menos de 25% da altura ocupada.",
+          "severity": "warning"
+        }
+      ],
       "validationWarnings": [
         "Responsável do cliente não informado.",
         "Endereço incompleto ou ausente: Empresa Exemplo.",
@@ -102,7 +144,7 @@
     {
       "id": "simple-assistance",
       "passed": true,
-      "pages": 4,
+      "pages": 5,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -113,7 +155,7 @@
     {
       "id": "robust-assistance",
       "passed": true,
-      "pages": 19,
+      "pages": 20,
       "warnings": [],
       "validationWarnings": [
         "Responsável do cliente não informado.",
@@ -136,8 +178,15 @@
     {
       "id": "group",
       "passed": true,
-      "pages": 25,
-      "warnings": [],
+      "pages": 26,
+      "warnings": [
+        {
+          "code": "sparse-page",
+          "page": 25,
+          "message": "Página com menos de 25% da altura ocupada.",
+          "severity": "warning"
+        }
+      ],
       "validationWarnings": [
         "Responsável do cliente não informado.",
         "Endereço incompleto ou ausente: Padaria Exemplo.",

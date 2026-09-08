@@ -1,0 +1,57 @@
+{
+  "results": [
+    {
+      "role": "admin",
+      "passed": true,
+      "cards": [
+        "v2.html",
+        "personalizada.html",
+        "assessoria.html",
+        "index.html",
+        "contrato.html",
+        "recibo.html",
+        "orcamento.html",
+        "gerador-encaminhamento-exame.html",
+        "calculadora.html"
+      ]
+    },
+    {
+      "role": "vendedor",
+      "passed": true,
+      "cards": [
+        "v2.html",
+        "personalizada.html",
+        "assessoria.html",
+        "index.html",
+        "contrato.html",
+        "recibo.html",
+        "orcamento.html",
+        "gerador-encaminhamento-exame.html",
+        "calculadora.html"
+      ]
+    },
+    {
+      "role": "seguranca",
+      "passed": true,
+      "cards": [
+        "encaminhamento-exame",
+        "recibo.html"
+      ]
+    },
+    {
+      "role": "comercial",
+      "passed": true,
+      "cards": [
+        "v2.html",
+        "personalizada.html",
+        "assessoria.html",
+        "index.html",
+        "contrato.html",
+        "orcamento.html",
+        "calculadora.html"
+      ]
+    }
+  ],
+  "invalidCredentialsRejected": true,
+  "directRoutesBlocked": true
+}

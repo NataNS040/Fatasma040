@@ -46,8 +46,7 @@ export class DocumentPaginator {
             const { Previewer } = await import('pagedjs');
             this.previewer = new Previewer();
             this.previewer.chunker.hooks.renderNode.register(repeatTableHeader);
-            const coverStyle = result.document.blocks.some(b => b.kind === 'cover') ? '@page :first { @top-left { content: none; } @bottom-left { content: none; } }' : '';
-            const flow = await this.previewer.preview(source, [{ [window.location.href]: documentCss + coverStyle }], this.target);
+            const flow = await this.previewer.preview(source, [{ [window.location.href]: documentCss }], this.target);
             // Snapshot A4 imutável: mudanças de mídia não devem acionar repaginação
             // interna via ResizeObserver. Toda atualização passa novamente pela fila.
             this.previewer.chunker.pages.forEach(page => page.removeListeners());

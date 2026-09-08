@@ -1,8 +1,15 @@
 [
   {
     "scenario": "short",
-    "pages": 3,
-    "warnings": [],
+    "pages": 4,
+    "warnings": [
+      {
+        "code": "sparse-page",
+        "page": 3,
+        "message": "Página com menos de 25% da altura ocupada.",
+        "severity": "warning"
+      }
+    ],
     "validationWarnings": [
       "Responsável do cliente não informado.",
       "Endereço incompleto ou ausente: Empresa Exemplo.",
@@ -31,8 +38,15 @@
   },
   {
     "scenario": "assistance",
-    "pages": 19,
-    "warnings": [],
+    "pages": 20,
+    "warnings": [
+      {
+        "code": "sparse-page",
+        "page": 19,
+        "message": "Página com menos de 25% da altura ocupada.",
+        "severity": "warning"
+      }
+    ],
     "validationWarnings": [
       "Responsável do cliente não informado.",
       "Endereço incompleto ou ausente: Condomínio Residencial Exemplo.",
@@ -55,8 +69,15 @@
   },
   {
     "scenario": "group",
-    "pages": 12,
-    "warnings": [],
+    "pages": 13,
+    "warnings": [
+      {
+        "code": "sparse-page",
+        "page": 12,
+        "message": "Página com menos de 25% da altura ocupada.",
+        "severity": "warning"
+      }
+    ],
     "validationWarnings": [
       "Responsável do cliente não informado.",
       "Endereço incompleto ou ausente: Padaria Exemplo.",

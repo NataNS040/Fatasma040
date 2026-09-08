@@ -126,7 +126,8 @@ try {
     assert.equal(await page.getByLabel('Modo do documento', { exact: true }).inputValue(), 'consultive');
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await page.screenshot({ path: path.join(artifacts, '07-mobile-modos-presets.png') });
-    await page.waitForFunction(() => !document.querySelector('#editor-export').disabled, undefined, { timeout: 60000 });
+    await page.waitForFunction(() => !document.querySelector('#editor-export').disabled || document.querySelector('#editor-status').textContent.includes('ajustes de layout'), undefined, { timeout: 60000 });
+    assert.equal(await pdf.isDisabled(), false, 'Troca de preset em mobile deve produzir layout exportável');
     await page.getByRole('button', { name: 'Ver preview', exact: true }).click();
     await page.screenshot({ path: path.join(artifacts, '06-mobile-preview.png') });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
@@ -135,6 +136,12 @@ try {
     await writeFile(path.join(artifacts, 'results.json'), JSON.stringify({ passed: true, pageCount, errors, scenarios: ['single', 'group', 'live-update', 'per-company-training', 'pricing-visibility', 'print', 'mobile', 'critical-fields-block-export', 'warnings-allow-export', 'overflow-blocks-print'] }, null, 2));
     console.log('Interface: empresa única, grupo, atualização automática, parâmetros individuais, PDF e mobile aprovados.');
 } catch (error) {
-    if (page) { console.log(await page.locator('#editor-status').textContent()); await page.screenshot({ path: path.join(artifacts, 'failure.png') }); }
+    if (page) {
+        console.log(await page.locator('#editor-status').textContent());
+        await page.getByRole('button', { name: '4 Revisão', exact: true }).click();
+        console.log(await page.locator('.review-issues').innerText());
+        await writeFile(path.join(artifacts, 'failure-rendered.html'), await page.locator('#editor-pages').innerHTML());
+        await page.screenshot({ path: path.join(artifacts, 'failure.png') });
+    }
     throw error;
 } finally { await browser?.close(); await server.close(); }

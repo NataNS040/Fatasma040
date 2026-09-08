@@ -1,7 +1,7 @@
 import type { User } from '@supabase/supabase-js';
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabase';
 
-export type CargoUsuario = 'vendedor' | 'admin' | 'financeiro' | 'seguranca';
+export type CargoUsuario = 'vendedor' | 'admin' | 'financeiro' | 'seguranca' | 'comercial';
 
 export interface Usuario {
     id: string;
@@ -30,6 +30,15 @@ const SESSION_KEY = 'engmarq_session';
 // Fallback de transicao enquanto o Supabase ainda nao estiver configurado.
 export const usuariosAutorizados: Usuario[] = [
     {
+        id: '4',
+        nome: 'Equipe Comercial',
+        email: 'comercial@engmarqsolution.com',
+        // TODO: remover esta credencial tempor?ria hardcoded quando Supabase assumir a autentica??o.
+        senha: '9aCDWi1OB6yAvB4tU7r3ACVQAvdCmABY',
+        cargo: 'comercial',
+        ativo: true
+    },
+    {
         id: '1',
         nome: 'Admin EngMarq',
         email: 'admin@engmarqsolution.com',
@@ -56,7 +65,7 @@ export const usuariosAutorizados: Usuario[] = [
 ];
 
 function normalizarCargo(cargo: unknown): CargoUsuario {
-    if (cargo === 'admin' || cargo === 'financeiro' || cargo === 'seguranca') {
+    if (cargo === 'comercial' || cargo === 'admin' || cargo === 'financeiro' || cargo === 'seguranca') {
         return cargo;
     }
     return 'vendedor';
@@ -69,7 +78,7 @@ function mapearUsuarioSupabase(user: User): UsuarioSessao {
         user.email?.split('@')[0] ||
         'Usuario';
 
-    const cargoMetadata = user.app_metadata?.role ?? user.user_metadata?.cargo;
+    const cargoMetadata = user.app_metadata?.role ?? user.app_metadata?.cargo ?? user.user_metadata?.cargo;
 
     return {
         id: user.id,

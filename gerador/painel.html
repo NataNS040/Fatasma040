@@ -309,6 +309,8 @@
             .cards-grid { grid-template-columns: 1fr; gap: 16px; }
         }
     </style>
+<script src="/access-policy.js"></script>
+<style>html { visibility: hidden; }</style>
 </head>
 <body>
     <header class="header">
@@ -325,7 +327,7 @@
                 <strong id="userNameText">Usuário</strong>
                 <small id="userRoleText">Equipe EngMarq</small>
             </div>
-            <button class="btn-logout" onclick="fazerLogout()" title="Sair">
+            <button class="btn-logout"  title="Sair">
                 <i class="fas fa-sign-out-alt"></i>
             </button>
         </div>
@@ -444,45 +446,6 @@
         <p>© EngMarq Solution &middot; engmarqsolution@gmail.com &middot; +55 84 99928-5888</p>
     </footer>
 
-    <script>
-        // ===== VERIFICAÇÃO DE SESSÃO =====
-        const SESSION_KEY = 'engmarq_session';
-
-        function obterSessao() {
-            const token = localStorage.getItem(SESSION_KEY);
-            if (!token) return null;
-            try {
-                const payload = JSON.parse(atob(token));
-                if (payload?.exp && payload.exp < Date.now()) {
-                    localStorage.removeItem(SESSION_KEY);
-                    return null;
-                }
-                return payload?.usuario || payload || null;
-            } catch (e) {
-                localStorage.removeItem(SESSION_KEY);
-                return null;
-            }
-        }
-
-        const usuario = obterSessao();
-        if (!usuario) {
-            window.location.href = './login.html';
-        } else {
-            const nome = usuario.nome || usuario.email || 'Usuário';
-            const primeiroNome = nome.split(' ')[0];
-            const inicial = (nome[0] || 'U').toUpperCase();
-            document.getElementById('userNameText').textContent = nome;
-            document.getElementById('welcomeName').textContent = primeiroNome;
-            document.getElementById('userAvatar').textContent = inicial;
-            if (usuario.cargo || usuario.role) {
-                document.getElementById('userRoleText').textContent = usuario.cargo || usuario.role;
-            }
-        }
-
-        function fazerLogout() {
-            localStorage.removeItem(SESSION_KEY);
-            window.location.href = './login.html';
-        }
-    </script>
+    <script type="module" src="./src/painel.ts"></script>
 </body>
 </html>

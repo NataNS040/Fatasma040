@@ -1,19 +1,33 @@
 [
   {
     "mode": "compact",
-    "pages": 2,
+    "pages": 3,
     "ready": true,
-    "warnings": []
+    "warnings": [
+      {
+        "code": "sparse-page",
+        "page": 2,
+        "message": "Página com menos de 25% da altura ocupada.",
+        "severity": "warning"
+      }
+    ]
   },
   {
     "mode": "standard",
-    "pages": 2,
+    "pages": 3,
     "ready": true,
-    "warnings": []
+    "warnings": [
+      {
+        "code": "sparse-page",
+        "page": 2,
+        "message": "Página com menos de 25% da altura ocupada.",
+        "severity": "warning"
+      }
+    ]
   },
   {
     "mode": "consultive",
-    "pages": 2,
+    "pages": 3,
     "ready": true,
     "warnings": []
   }

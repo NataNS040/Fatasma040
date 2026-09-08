@@ -16,6 +16,7 @@ if (!sessao.logado) {
 }
 
 void sincronizarSessaoSupabase().then(() => {
+    if (!window.engmarqAccess.guard()) return;
     const sessaoAtual = obterSessao();
     if (!sessaoAtual.logado) {
         window.location.href = './login.html';

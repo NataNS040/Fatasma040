@@ -4,6 +4,7 @@ import { mkdir, writeFile, readdir, unlink } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import assert from 'node:assert/strict';
+import { checkPresentation } from './check-v2-presentation.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const artifacts = path.join(root, 'artifacts/v2-pagination');
@@ -26,6 +27,7 @@ try {
         for (const name of await readdir(dir)) if (/^page-\d+\.png$/.test(name)) await unlink(path.join(dir, name));
         await writeFile(path.join(dir, 'rendered.html'), await page.locator('#pages').innerHTML());
         const pages = page.locator('.pagedjs_page');
+        await checkPresentation(page);
         for (let i = 0; i < await pages.count(); i++) await pages.nth(i).screenshot({ path: path.join(dir, `page-${String(i + 1).padStart(2, '0')}.png`) });
         const pdf = await page.pdf({ path: path.join(dir, 'proposal.pdf'), preferCSSPageSize: true, printBackground: true, displayHeaderFooter: false });
         const pdfPages = [...pdf.toString('latin1').matchAll(/\/Type\s*\/Page\b/g)].length;
@@ -68,7 +70,7 @@ try {
             assert.equal(concurrent.invalidated.superseded, true);
             const diagnostics = await page.evaluate(async () => {
                 const { inspectLayout } = await import('/gerador-de-proposta/src/v2/pagination/layout.ts');
-                const area = document.querySelector('.pagedjs_page_content');
+                const area = document.querySelectorAll('.pagedjs_page_content')[1];
                 const probe = document.createElement('p');
                 probe.dataset.layoutId = 'overflow-probe';
                 probe.style.cssText = 'position:absolute;top:980px;left:0;width:1500px;height:50px';

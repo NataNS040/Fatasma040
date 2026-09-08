@@ -1430,16 +1430,24 @@
             "rgb(36, 52, 71)"
           ],
           "image": null
-        },
+        }
+      ]
+    },
+    {
+      "size": [
+        793.6875,
+        1122.515625
+      ],
+      "nodes": [
         {
           "identity": [
             "content-52",
             "H2",
-            "0ae714304096099ae802"
+            "dac84ccc2fee8889fadd"
           ],
           "rect": [
             0,
-            242.72,
+            18.89,
             672.75,
             38.55
           ],
@@ -1459,11 +1467,11 @@
           "identity": [
             "content-53",
             "P",
-            "aece33a17548bd8c7fec"
+            "06817fd3a43bdf55c18b"
           ],
           "rect": [
             0,
-            296.38,
+            72.55,
             672.75,
             19.5
           ],
@@ -1482,14 +1490,14 @@
         {
           "identity": [
             "content-54",
-            "DIV",
-            "f31020f1784c50048af6"
+            "P",
+            "b8a8bc36f5fd48a9e349"
           ],
           "rect": [
             0,
-            342.33,
+            137.39,
             672.75,
-            70.22
+            19.5
           ],
           "style": [
             "\"Open Sans\", sans-serif",
@@ -1498,8 +1506,248 @@
             "19.5px",
             "rgb(37, 51, 66)",
             "rgba(0, 0, 0, 0)",
-            "1px",
-            "rgb(170, 183, 198)"
+            "0px",
+            "rgb(37, 51, 66)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-55",
+            "DIV",
+            "8709053c52fec5348930"
+          ],
+          "rect": [
+            0,
+            217.34,
+            317.48,
+            321.28
+          ],
+          "style": [
+            "\"Open Sans\", sans-serif",
+            "13px",
+            "400",
+            "19.5px",
+            "rgb(37, 51, 66)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(37, 51, 66)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-56",
+            "H3",
+            "afe2b2f06298ebd41b66"
+          ],
+          "rect": [
+            0,
+            247.56,
+            317.48,
+            32.31
+          ],
+          "style": [
+            "Montserrat, sans-serif",
+            "13.3333px",
+            "700",
+            "20px",
+            "rgb(26, 54, 93)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(26, 54, 93)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-57",
+            "P",
+            "061188f455125950e761"
+          ],
+          "rect": [
+            0,
+            415.91,
+            317.48,
+            19.5
+          ],
+          "style": [
+            "\"Open Sans\", sans-serif",
+            "13px",
+            "600",
+            "19.5px",
+            "rgb(37, 51, 66)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(37, 51, 66)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-58",
+            "P",
+            "d1bd7c4e7acfc527f882"
+          ],
+          "rect": [
+            0,
+            454.3,
+            317.48,
+            19.5
+          ],
+          "style": [
+            "\"Open Sans\", sans-serif",
+            "13px",
+            "400",
+            "19.5px",
+            "rgb(37, 51, 66)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(37, 51, 66)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-59",
+            "P",
+            "de99cac95cfbfa3ff6f8"
+          ],
+          "rect": [
+            0,
+            492.69,
+            317.48,
+            19.5
+          ],
+          "style": [
+            "\"Open Sans\", sans-serif",
+            "13px",
+            "400",
+            "19.5px",
+            "rgb(37, 51, 66)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(37, 51, 66)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-60",
+            "DIV",
+            "04c3823b4d3f60a00e6a"
+          ],
+          "rect": [
+            355.27,
+            217.34,
+            317.48,
+            321.28
+          ],
+          "style": [
+            "\"Open Sans\", sans-serif",
+            "13px",
+            "400",
+            "19.5px",
+            "rgb(37, 51, 66)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(37, 51, 66)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-61",
+            "H3",
+            "0163b31d77853db1bff9"
+          ],
+          "rect": [
+            355.27,
+            247.56,
+            317.48,
+            32.31
+          ],
+          "style": [
+            "Montserrat, sans-serif",
+            "13.3333px",
+            "700",
+            "20px",
+            "rgb(26, 54, 93)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(26, 54, 93)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-62",
+            "P",
+            "e54baf3e3103e6a306fc"
+          ],
+          "rect": [
+            355.27,
+            415.91,
+            317.48,
+            19.5
+          ],
+          "style": [
+            "\"Open Sans\", sans-serif",
+            "13px",
+            "600",
+            "19.5px",
+            "rgb(37, 51, 66)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(37, 51, 66)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-63",
+            "P",
+            "0eb1b6219c89eae294cb"
+          ],
+          "rect": [
+            355.27,
+            454.3,
+            317.48,
+            19.5
+          ],
+          "style": [
+            "\"Open Sans\", sans-serif",
+            "13px",
+            "400",
+            "19.5px",
+            "rgb(37, 51, 66)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(37, 51, 66)"
+          ],
+          "image": null
+        },
+        {
+          "identity": [
+            "content-64",
+            "P",
+            "de99cac95cfbfa3ff6f8"
+          ],
+          "rect": [
+            355.27,
+            492.69,
+            317.48,
+            19.5
+          ],
+          "style": [
+            "\"Open Sans\", sans-serif",
+            "13px",
+            "400",
+            "19.5px",
+            "rgb(37, 51, 66)",
+            "rgba(0, 0, 0, 0)",
+            "0px",
+            "rgb(37, 51, 66)"
           ],
           "image": null
         }
