@@ -22271,13 +22271,13 @@
           "identity": [
             "content-705",
             "DIV",
-            "52a95237926a766330df"
+            "01a9c31f0d9dff6f9886"
           ],
           "rect": [
             0,
             217.34,
             317.48,
-            321.28
+            282.89
           ],
           "style": [
             "\"Open Sans\", sans-serif",
@@ -22366,14 +22366,14 @@
         {
           "identity": [
             "content-709",
-            "P",
-            "e46c39d690671b7b6e76"
+            "DIV",
+            "4bf20dca225ad9fd1a43"
           ],
           "rect": [
-            0,
-            492.69,
+            355.27,
+            217.34,
             317.48,
-            19.5
+            282.89
           ],
           "style": [
             "\"Open Sans\", sans-serif",
@@ -22390,30 +22390,6 @@
         {
           "identity": [
             "content-710",
-            "DIV",
-            "5852d838070e45ee5077"
-          ],
-          "rect": [
-            355.27,
-            217.34,
-            317.48,
-            321.28
-          ],
-          "style": [
-            "\"Open Sans\", sans-serif",
-            "13px",
-            "400",
-            "19.5px",
-            "rgb(37, 51, 66)",
-            "rgba(0, 0, 0, 0)",
-            "0px",
-            "rgb(37, 51, 66)"
-          ],
-          "image": null
-        },
-        {
-          "identity": [
-            "content-711",
             "H3",
             "0163b31d77853db1bff9"
           ],
@@ -22437,7 +22413,7 @@
         },
         {
           "identity": [
-            "content-712",
+            "content-711",
             "P",
             "ecd8b17eca9e80a0e68d"
           ],
@@ -22461,7 +22437,7 @@
         },
         {
           "identity": [
-            "content-713",
+            "content-712",
             "P",
             "0eb1b6219c89eae294cb"
           ],
@@ -22485,37 +22461,13 @@
         },
         {
           "identity": [
-            "content-714",
-            "P",
-            "de99cac95cfbfa3ff6f8"
-          ],
-          "rect": [
-            355.27,
-            492.69,
-            317.48,
-            19.5
-          ],
-          "style": [
-            "\"Open Sans\", sans-serif",
-            "13px",
-            "400",
-            "19.5px",
-            "rgb(37, 51, 66)",
-            "rgba(0, 0, 0, 0)",
-            "0px",
-            "rgb(37, 51, 66)"
-          ],
-          "image": null
-        },
-        {
-          "identity": [
-            "content-715",
+            "content-713",
             "P",
             "d690c768caa84600bd07"
           ],
           "rect": [
             0,
-            544.28,
+            505.89,
             672.75,
             15
           ],

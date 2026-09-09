@@ -2,6 +2,11 @@ import type { DetailLevel, DocumentMode, ParameterValues, ServiceProfile } from 
 import type { AssistanceConfiguration, CompanyAssistanceConfiguration, ServiceFrequency, VisitConfiguration } from './assistance';
 
 /** Contrato local V2. Strings são texto, nunca HTML. Datas civis: YYYY-MM-DD. */
+export interface IndividualClient { fullName: string; cpf: string; }
+
+/** Referência ao próprio cliente PF nos itens; não corresponde a uma Company. */
+export const INDIVIDUAL_CLIENT_ID = '@individual';
+
 export interface Contact {
     name: string;
     role?: string;
@@ -40,7 +45,7 @@ export interface TechnicalContent {
 
 export interface ScopeItem {
     id: string;
-    /** Uma instância por empresa permite quantidades e condições próprias por CNPJ. */
+    /** ID da empresa ou INDIVIDUAL_CLIENT_ID para o próprio cliente PF, sem Company. */
     companyId: string;
     content: TechnicalContent;
     catalogId?: string;
@@ -124,10 +129,11 @@ export interface CommercialLine {
 export interface Proposal {
     schemaVersion: 2;
     metadata: { id: string; number: string; issuedOn: string; revision: number; title: string; author: Contact };
-    client: { kind: 'single' | 'group'; displayName: string; contact?: Contact };
+    client: { kind: 'single' | 'group' | 'individual'; displayName: string; contact?: Contact };
     /** Explícitos no configurador; opcionais apenas para compatibilidade com Proposals V2 anteriores. */
     isGroup?: boolean;
     groupName?: string;
+    individualClient?: IndividualClient;
     companies: Company[];
     scope: { objective: string; exclusions: string[]; assumptions: string[] };
     services: Service[];

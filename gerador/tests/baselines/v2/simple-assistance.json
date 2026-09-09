@@ -2495,13 +2495,13 @@
           "identity": [
             "content-85",
             "DIV",
-            "52a95237926a766330df"
+            "01a9c31f0d9dff6f9886"
           ],
           "rect": [
             0,
             217.34,
             317.48,
-            321.28
+            282.89
           ],
           "style": [
             "\"Open Sans\", sans-serif",
@@ -2590,14 +2590,14 @@
         {
           "identity": [
             "content-89",
-            "P",
-            "e46c39d690671b7b6e76"
+            "DIV",
+            "9c01c5b91b27d9cf059a"
           ],
           "rect": [
-            0,
-            492.69,
+            355.27,
+            217.34,
             317.48,
-            19.5
+            282.89
           ],
           "style": [
             "\"Open Sans\", sans-serif",
@@ -2614,30 +2614,6 @@
         {
           "identity": [
             "content-90",
-            "DIV",
-            "6d128e64f4e3076253a8"
-          ],
-          "rect": [
-            355.27,
-            217.34,
-            317.48,
-            321.28
-          ],
-          "style": [
-            "\"Open Sans\", sans-serif",
-            "13px",
-            "400",
-            "19.5px",
-            "rgb(37, 51, 66)",
-            "rgba(0, 0, 0, 0)",
-            "0px",
-            "rgb(37, 51, 66)"
-          ],
-          "image": null
-        },
-        {
-          "identity": [
-            "content-91",
             "H3",
             "0163b31d77853db1bff9"
           ],
@@ -2661,7 +2637,7 @@
         },
         {
           "identity": [
-            "content-92",
+            "content-91",
             "P",
             "885553ab39fe20276df7"
           ],
@@ -2685,37 +2661,13 @@
         },
         {
           "identity": [
-            "content-93",
+            "content-92",
             "P",
             "0eb1b6219c89eae294cb"
           ],
           "rect": [
             355.27,
             454.3,
-            317.48,
-            19.5
-          ],
-          "style": [
-            "\"Open Sans\", sans-serif",
-            "13px",
-            "400",
-            "19.5px",
-            "rgb(37, 51, 66)",
-            "rgba(0, 0, 0, 0)",
-            "0px",
-            "rgb(37, 51, 66)"
-          ],
-          "image": null
-        },
-        {
-          "identity": [
-            "content-94",
-            "P",
-            "de99cac95cfbfa3ff6f8"
-          ],
-          "rect": [
-            355.27,
-            492.69,
             317.48,
             19.5
           ],

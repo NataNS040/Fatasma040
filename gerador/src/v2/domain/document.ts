@@ -32,6 +32,7 @@ export type TechnicalSectionBlock =
 /** Documento sem HTML e sem páginas presumidas. O renderer deve escapar todo texto. */
 export type DocumentBlock =
     | { id: string; kind: 'cover'; title: string; clientName: string }
+    | { id: string; kind: 'individual'; client: NonNullable<Proposal['individualClient']> }
     | { id: string; kind: 'companies'; companies: Omit<Company, 'assistanceConfig'>[]; contact?: Contact }
     | { id: string; kind: 'scope'; scope: Proposal['scope'] }
     | { id: string; kind: 'coordination'; title: string; entries: { title: string; text: string; companyIds: string[] }[] }

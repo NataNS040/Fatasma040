@@ -2,6 +2,8 @@ import { getCatalogEntry, listCatalogEntries } from '../catalog/services';
 import { createCatalogItem } from '../catalog/select-service';
 import { createAssistanceProposal, resolveAssistanceProposal } from '../configurator/assistance';
 import { composeProposal } from '../composer/compose-proposal';
+import { INDIVIDUAL_CLIENT_ID } from '../domain/proposal';
+import { formatCpf, isValidCpf } from '../utils/cpf';
 import type { Company, Proposal, ProposalItem } from '../domain/proposal';
 import type { ParameterValues, DetailLevel, DocumentMode } from '../domain/content';
 import { getPreset, listPresets } from '../presets/catalog-presets';
@@ -17,6 +19,9 @@ export interface DraftCompany {
     visits?: { quantity: string; hours: string; frequency: ServiceFrequency; notes: string };
 }
 export interface EditorDraft {
+    clientKind?: 'single' | 'group' | 'individual';
+    individualClient: { fullName: string; cpf: string };
+    individualPricing: { once: string; monthly: string };
     isGroup: boolean; groupName: string; companies: DraftCompany[]; contact: string; email: string; author: string;
     number: string; date: string; title: string; objective: string; exclusions: string; assumptions: string;
     selections: Record<string, Selection>; assistance: boolean; visits: boolean; visitQuantity: string; visitHours: string; visitFrequency: ServiceFrequency; visitNotes: string;
@@ -40,6 +45,7 @@ export function newCompany(id: string): DraftCompany {
 export function newDraft(): EditorDraft {
     const now = new Date();
     return {
+        individualClient: { fullName: '', cpf: '' }, individualPricing: { once: '', monthly: '' },
         isGroup: false, groupName: '', companies: [newCompany('company-1')], contact: '', email: '', author: 'Equipe EngMarq',
         number: '', date: `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`,
         title: 'Proposta técnica e comercial', objective: 'Prestação dos serviços de SST selecionados, conforme escopo e condições desta proposta.',
@@ -48,6 +54,15 @@ export function newDraft(): EditorDraft {
         charge: 'once', term: '12', installments: '1', validity: '15', payment: 'Pagamento conforme condições acordadas entre as partes.', execution: 'Cronograma alinhado após aprovação e recebimento das informações.',
         showMonthlyValue: true, showContractTotal: false, showAggregateTotal: false, showPerCompanyPricing: true, detail: 'standard', cover: true, acceptance: true
     };
+}
+export function setClientKind(draft: EditorDraft, kind: NonNullable<EditorDraft['clientKind']>): void {
+    draft.clientKind = kind;
+    draft.isGroup = kind === 'group';
+    if (draft.isGroup && draft.companies.length < 2) {
+        let index = 2;
+        while (draft.companies.some(company => company.id === `company-${index}`)) index++;
+        draft.companies.push(newCompany(`company-${index}`));
+    }
 }
 export function newSelection(id: string): Selection {
     const parameters: ParameterValues = {};
@@ -85,7 +100,7 @@ export function applyEditorPreset(draft: EditorDraft, id: string): void {
 export type DraftIssue = { step: number; message: string };
 function draftIssues(issues: ValidationIssue[]): DraftIssue[] {
     return issues.map(issue => ({
-        step: issue.path.startsWith('commercial') || issue.path.includes('.pricing') ? 2 : issue.path.startsWith('metadata') || issue.path.startsWith('client') || issue.code.startsWith('missing-') || ['company-count', 'group-name', 'group-identity'].includes(issue.code) ? 0 : 1,
+        step: issue.path.startsWith('commercial') || issue.path.includes('.pricing') ? 2 : issue.path.startsWith('metadata') || issue.path.startsWith('client') || issue.path.startsWith('individualClient') || issue.code.startsWith('missing-') || ['company-count', 'group-name', 'group-identity'].includes(issue.code) ? 0 : 1,
         message: issue.message
     }));
 }
@@ -99,11 +114,19 @@ export function parseMoney(value: string): number | undefined {
 export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: DraftIssue[]; warnings?: DraftIssue[] } {
     const issues: DraftIssue[] = [];
     const add = (step: number, message: string): void => { issues.push({ step, message }); };
-    const companies = d.isGroup ? d.companies : d.companies.slice(0, 1);
-    if (d.isGroup && (!d.groupName.trim() || companies.length < 2)) add(0, 'Informe o nome do grupo e cadastre pelo menos duas empresas.');
+    const individual = d.clientKind === 'individual';
+    const isGroup = !individual && d.isGroup;
+    const companies = individual ? [] : isGroup ? d.companies : d.companies.slice(0, 1);
+    if (individual) {
+        if (!d.individualClient.fullName.trim()) add(0, 'Informe o nome completo.');
+        if (!isValidCpf(d.individualClient.cpf)) add(0, 'Informe um CPF válido.');
+        if (d.charge !== 'monthly' && parseMoney(d.individualPricing.once) === undefined) add(2, 'Informe o investimento do cliente em reais.');
+        if (d.charge !== 'once' && parseMoney(d.individualPricing.monthly) === undefined) add(2, 'Informe a mensalidade do cliente em reais.');
+    }
+    if (isGroup && (!d.groupName.trim() || companies.length < 2)) add(0, 'Informe o nome do grupo e cadastre pelo menos duas empresas.');
     if (!d.number.trim()) add(0, 'Informe o número da proposta.');
     if (!isCivilDate(d.date)) add(0, 'Informe uma data de emissão válida.');
-    if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) add(0, 'Confira o e-mail do contato.');
+    if (!individual && d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) add(0, 'Confira o e-mail do contato.');
     for (const [i, c] of companies.entries()) {
         if (!c.legalName.trim()) add(0, `Informe a razão social da empresa ${i + 1}.`);
         if (c.taxId && c.taxId.replace(/\D/g, '').length !== 14) add(0, `Confira os 14 dígitos do CNPJ de ${c.legalName || `empresa ${i + 1}`}.`);
@@ -120,9 +143,10 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
     const mapped: Company[] = companies.map(c => ({ id: c.id, legalName: c.legalName.trim(), tradeName: c.tradeName.trim() || undefined, taxId: c.taxId || undefined,
         ...(c.street ? { address: { street: c.street, city: c.city, state: c.state.toUpperCase(), postalCode: c.postalCode || undefined } } : {}), employeeCount: c.employees ? Number(c.employees) : undefined, roles: lines(c.roles), roleCount: lines(c.roles).length || undefined }));
     const proposal: Proposal = {
-        schemaVersion: 2, isGroup: d.isGroup, groupName: d.isGroup ? d.groupName : undefined,
+        schemaVersion: 2, isGroup, groupName: isGroup ? d.groupName : undefined,
+        ...(individual ? { individualClient: { fullName: d.individualClient.fullName.trim(), cpf: formatCpf(d.individualClient.cpf) } } : {}),
         metadata: { id: 'editor-session', number: d.number, issuedOn: d.date, revision: 0, title: d.title, author: { name: d.author } },
-        client: { kind: d.isGroup ? 'group' : 'single', displayName: d.isGroup ? d.groupName : companies[0]?.tradeName || companies[0]?.legalName || '', contact: { name: d.contact, email: d.email || undefined } }, companies: mapped,
+        client: individual ? { kind: 'individual', displayName: d.individualClient.fullName.trim() } : { kind: isGroup ? 'group' : 'single', displayName: isGroup ? d.groupName : companies[0]?.tradeName || companies[0]?.legalName || '', contact: { name: d.contact, email: d.email || undefined } }, companies: mapped,
         scope: { objective: d.objective, exclusions: lines(d.exclusions), assumptions: lines(d.assumptions) }, services: [], trainings: [], measurements: [], assistance: [],
         commercial: { currency: 'BRL', lines: [], termMonths: Number(d.term), installmentCount: Number(d.installments), validityDays: Number(d.validity), paymentTerms: lines(d.payment), executionTerms: lines(d.execution), showMonthlyValue: d.showMonthlyValue, showContractTotal: d.showContractTotal, showAggregateTotal: d.showAggregateTotal, showPerCompanyPricing: d.showPerCompanyPricing },
         options: { detailLevel: d.detail, documentMode: d.documentMode ?? 'standard', includeCover: d.cover, includeAcceptance: d.acceptance }
@@ -130,12 +154,14 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
     const visits: AssistanceConfiguration['visits'] = d.visits ? { included: true, quantity: Number(d.visitQuantity), durationHours: Number(d.visitHours), frequency: d.visitFrequency, notes: d.visitNotes } : { included: false };
     if (d.visits && (!Number.isSafeInteger(Number(d.visitQuantity)) || Number(d.visitQuantity) < 1 || Number(d.visitHours) <= 0 || !Number.isFinite(Number(d.visitHours)))) add(1, 'Informe a quantidade total e duração das visitas.');
     const common: AssistanceConfiguration = { visits, renewal: 'Mediante acordo entre as partes.', adjustment: 'Conforme condições contratuais.' };
-    for (const [index, c] of companies.entries()) {
+    // Alvos de execução compartilham apenas preço e configuração, sem cadastro empresarial para PF.
+    const targets = individual ? [{ id: INDIVIDUAL_CLIENT_ID, name: d.individualClient.fullName, ...d.individualPricing, overrides: {} as Record<string, Selection>, street: '', visits: undefined }] : companies.map(c => ({ ...c, name: c.legalName }));
+    for (const [index, c] of targets.entries()) {
         const config: NonNullable<Company['assistanceConfig']> = { pricing: { onceCents: d.charge !== 'monthly' ? parseMoney(c.once) : 0, monthlyCents: d.charge !== 'once' ? parseMoney(c.monthly) : 0 }, programs: {}, management: {}, trainings: {}, measurements: {} };
         const ownVisits = c.visits;
         const companyVisits = d.visits && ownVisits ? { included: true as const, quantity: Number(ownVisits.quantity), durationHours: Number(ownVisits.hours), frequency: ownVisits.frequency, notes: ownVisits.notes } : visits;
         const visitsValid = !companyVisits.included || Number.isSafeInteger(companyVisits.quantity) && companyVisits.quantity > 0 && Number.isFinite(companyVisits.durationHours) && companyVisits.durationHours >= .25;
-        if (!visitsValid) add(1, `Confira quantidade e duração das visitas de ${c.legalName || 'esta empresa'}.`);
+        if (!visitsValid) add(1, `Confira quantidade e duração das visitas de ${c.name || 'esta empresa'}.`);
         config.visits = companyVisits;
         const items: ProposalItem[] = [];
         for (const [id, shared] of Object.entries(d.selections)) {
@@ -148,7 +174,7 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
             }
             const invalid = entry.content.profile.parameters.filter(def => validateParameterValue(def, parameters[def.id]));
             if (invalid.length) {
-                add(1, `${entry.content.profile.shortName} · ${c.legalName || `empresa ${index + 1}`}: confira ${invalid.map(def => def.type === 'number' ? `${def.label.toLowerCase()} (mínimo ${def.min}${def.integer ? ', inteiro' : ''})` : def.label.toLowerCase()).join('; ')}.`);
+                add(1, `${entry.content.profile.shortName} · ${c.name || `empresa ${index + 1}`}: confira ${invalid.map(def => def.type === 'number' ? `${def.label.toLowerCase()} (mínimo ${def.min}${def.integer ? ', inteiro' : ''})` : def.label.toLowerCase()).join('; ')}.`);
                 continue;
             }
             try {
@@ -161,17 +187,22 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
                     Object.assign(category, { [id]: { selected: true, parameters, notes: selection.notes } });
                 }
                 items.push(item);
-            } catch { add(1, `Revise os campos obrigatórios de ${entry.content.profile.shortName} para ${c.legalName || `empresa ${index + 1}`}.`); }
+            } catch { add(1, `Revise os campos obrigatórios de ${entry.content.profile.shortName} para ${c.name || `empresa ${index + 1}`}.`); }
         }
-        if (d.assistance) { mapped[index].assistanceConfig = config; continue; }
+        if (d.assistance && !individual) { mapped[index].assistanceConfig = config; continue; }
+        if (d.assistance && individual && Number.isSafeInteger(Number(d.term)) && Number(d.term) > 0) {
+            items.unshift(createCatalogItem('assistance', { id: `${c.id}:assistance`, companyId: c.id, parameters: { termMonths: Number(d.term), visitsPerMonth: 0, hoursPerVisit: 0, support: ['Atendimento remoto'], renewal: common.renewal, adjustment: common.adjustment } }));
+        }
         if (companyVisits.included && visitsValid) {
-            const visit = createCatalogItem('technical-visit', { id: `${c.id}:visits`, companyId: c.id, parameters: { visits: companyVisits.quantity, hours: companyVisits.durationHours, locations: [c.street || c.legalName || 'Local a confirmar'] } });
+            const visit = createCatalogItem('technical-visit', { id: `${c.id}:visits`, companyId: c.id, parameters: { visits: companyVisits.quantity, hours: companyVisits.durationHours, locations: [c.street || c.name || 'Local a confirmar'] } });
             const names: Record<ServiceFrequency, string> = { once: 'uma vez', weekly: 'semanal', monthly: 'mensal', quarterly: 'trimestral', semiannual: 'semestral', annual: 'anual', 'on-demand': 'sob demanda' };
             visit.notes = `Frequência: ${names[companyVisits.frequency]}. ${companyVisits.notes ?? ''}`;
             items.push(visit);
         }
         const included = items.filter(item => item.kind !== 'measurement' || item.pricingMode !== 'separate-quote');
-        if (!included.length) add(1, `Selecione ao menos um serviço incluído para ${c.legalName || 'a empresa'}.`);
+        // Uma medição avulsa PF recebe a cobrança do pacote, sem apontar para si como inclusa.
+        if (individual && included[0]?.kind === 'measurement') delete included[0].pricingMode;
+        if (!included.length) add(1, `Selecione ao menos um serviço incluído para ${c.name || 'a empresa'}.`);
         for (const item of items) {
             if (item.kind === 'training') proposal.trainings.push(item);
             else if (item.kind === 'measurement') proposal.measurements.push(item);
@@ -182,7 +213,7 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
     }
     if (issues.length) return { issues };
     let final = proposal;
-    if (d.assistance) {
+    if (d.assistance && !individual) {
         const configured = createAssistanceProposal({ ...proposal, isGroup: d.isGroup, assistanceConfiguration: common, contact: proposal.client.contact });
         const resolved = resolveAssistanceProposal(configured);
         if (!resolved.ok) return { issues: draftIssues(resolved.issues) };

@@ -1,5 +1,6 @@
+import { formatCpf } from '../utils/cpf';
 import { DocumentPaginator, type ExportPreparation } from '../pagination/engine';
-import { newDraft, newCompany, newSelection, applyEditorPreset, draftProposal, editorPresets, availableEditorPresets, editorCatalog, type Selection, type DraftCompany } from './draft';
+import { newDraft, setClientKind, newCompany, newSelection, applyEditorPreset, draftProposal, editorPresets, availableEditorPresets, editorCatalog, type Selection, type DraftCompany } from './draft';
 import { element as el } from '../components/document';
 import type { ParameterDefinition } from '../domain/content';
 import type { ServiceFrequency } from '../domain/assistance';
@@ -164,31 +165,38 @@ function scopeFields(): void {
     ), toggle('Incluir capa', draft.cover, v => draft.cover = v, false), toggle('Incluir aceite e assinaturas', draft.acceptance, v => draft.acceptance = v, false)); form.append(detail);
 }
 function render(): void {
+    const individual = draft.clientKind === 'individual';
     const scroll = form.scrollTop;
     const openDetails = [...form.querySelectorAll('details[open] summary')].map(n => n.textContent);
     nav.replaceChildren(...titles.map((title, i) => { const b = button(`${i + 1}  ${title}`, () => { step = i; render(); form.scrollTop = 0; }); b.classList.toggle('active', i === step); if (i === step) b.setAttribute('aria-current', 'step'); return b; }));
     form.replaceChildren(); heading(titles[step], ['Quem receberá a proposta? Cadastre os dados e as empresas atendidas.', 'Escolha um atalho ou monte sua combinação de serviços.', 'Defina o investimento e o que será exibido no documento.', 'Confira as informações e o documento antes de gerar o PDF.'][step]);
     if (step < 3) form.append(el('div', 'step-issues'));
     if (step === 0) {
-        form.append(select('Tipo de cliente', draft.isGroup ? 'group' : 'single', { single: 'Empresa única', group: 'Grupo empresarial' }, v => { draft.isGroup = v === 'group'; if (draft.isGroup && draft.companies.length < 2) draft.companies.push(newCompany(crypto.randomUUID())); }, true));
+        form.append(select('Tipo de cliente', individual ? 'individual' : draft.isGroup ? 'group' : 'single', { single: 'Empresa única', group: 'Grupo empresarial', individual: 'Pessoa física' }, v => setClientKind(draft, v as NonNullable<typeof draft.clientKind>), true));
+        if (individual) {
+            const cpf = field('CPF *', draft.individualClient.cpf, v => draft.individualClient.cpf = formatCpf(v));
+            const input = cpf.querySelector('input')!; input.inputMode = 'numeric'; input.maxLength = 14;
+            input.addEventListener('input', () => input.value = draft.individualClient.cpf);
+            form.append(grid(field('Nome completo *', draft.individualClient.fullName, v => draft.individualClient.fullName = v), cpf));
+        }
         if (draft.isGroup) form.append(field('Nome do grupo *', draft.groupName, v => draft.groupName = v));
-        (draft.isGroup ? draft.companies : draft.companies.slice(0, 1)).forEach((c, i) => form.append(companyFields(c, i)));
+        (individual ? [] : draft.isGroup ? draft.companies : draft.companies.slice(0, 1)).forEach((c, i) => form.append(companyFields(c, i)));
         if (draft.isGroup) form.append(button('+ Adicionar empresa', () => { draft.companies.push(newCompany(crypto.randomUUID())); changed(true); }, 'secondary'));
-        form.append(el('h2', '', 'Contato e identificação'), grid(field('Responsável do cliente', draft.contact, v => draft.contact = v), field('E-mail do contato', draft.email, v => draft.email = v, 'email'), field('Número da proposta *', draft.number, v => draft.number = v), field('Data de emissão *', draft.date, v => draft.date = v, 'date'), field('Responsável EngMarq', draft.author, v => draft.author = v)));
+        form.append(el('h2', '', 'Contato e identificação'), grid(...(individual ? [] : [field('Responsável do cliente', draft.contact, v => draft.contact = v), field('E-mail do contato', draft.email, v => draft.email = v, 'email')]), field('Número da proposta *', draft.number, v => draft.number = v), field('Data de emissão *', draft.date, v => draft.date = v, 'date'), field('Responsável EngMarq', draft.author, v => draft.author = v)));
     }
     if (step === 1) scopeFields();
     if (step === 2) {
-        form.append(select('Tipo de cobrança', draft.charge, { once: 'Valor único', monthly: 'Mensalidade', both: 'Valor único + mensalidade' }, v => draft.charge = v as typeof draft.charge, true), el('p', 'hint', 'Valores totais por empresa. Quantidades e parcelas não multiplicam automaticamente o investimento. Use reais, por exemplo 1500,00.'));
-        for (const c of draft.isGroup ? draft.companies : draft.companies.slice(0, 1)) {
-            const card = el('section', 'form-card'); card.append(el('h2', '', c.legalName || 'Empresa sem nome')); const fields = grid();
+        form.append(select('Tipo de cobrança', draft.charge, { once: 'Valor único', monthly: 'Mensalidade', both: 'Valor único + mensalidade' }, v => draft.charge = v as typeof draft.charge, true), el('p', 'hint', `${individual ? 'Investimento do cliente.' : 'Valores totais por empresa.'} Quantidades e parcelas não multiplicam automaticamente o investimento. Use reais, por exemplo 1500,00.`));
+        for (const c of individual ? [draft.individualPricing] : draft.isGroup ? draft.companies : draft.companies.slice(0, 1)) {
+            const card = el('section', 'form-card'); card.append(el('h2', '', individual ? draft.individualClient.fullName || 'Cliente' : ('legalName' in c ? String(c.legalName) : '') || 'Empresa sem nome')); const fields = grid();
             if (draft.charge !== 'monthly') fields.append(field('Investimento único (R$) *', c.once, v => c.once = v));
             if (draft.charge !== 'once') fields.append(field('Mensalidade (R$) *', c.monthly, v => c.monthly = v)); card.append(fields); form.append(card);
         }
         form.append(grid(field('Quantidade de parcelas *', draft.installments, v => draft.installments = v, 'number'), field('Validade da proposta (dias) *', draft.validity, v => draft.validity = v, 'number'), field('Condições de pagamento *', draft.payment, v => draft.payment = v, 'textarea'), field('Condições de execução', draft.execution, v => draft.execution = v, 'textarea')));
-        form.append(el('h2', '', 'Valores exibidos no documento'), toggle('Exibir mensalidade', draft.showMonthlyValue, v => draft.showMonthlyValue = v, false), toggle('Exibir valor total do contrato', draft.showContractTotal, v => draft.showContractTotal = v, false), toggle('Exibir total agregado', draft.showAggregateTotal, v => draft.showAggregateTotal = v, false), toggle('Exibir valores por empresa', draft.showPerCompanyPricing, v => draft.showPerCompanyPricing = v, false), el('p', 'hint', 'Você pode contratar 12 mensalidades sem exibir o valor total do contrato ou do grupo.'));
+        form.append(el('h2', '', 'Valores exibidos no documento'), toggle('Exibir mensalidade', draft.showMonthlyValue, v => draft.showMonthlyValue = v, false), toggle('Exibir valor total do contrato', draft.showContractTotal, v => draft.showContractTotal = v, false), toggle('Exibir total agregado', draft.showAggregateTotal, v => draft.showAggregateTotal = v, false), toggle(individual ? 'Exibir valores por serviço' : 'Exibir valores por empresa', draft.showPerCompanyPricing, v => draft.showPerCompanyPricing = v, false), el('p', 'hint', 'Você pode contratar 12 mensalidades sem exibir o valor total do contrato ou do grupo.'));
     }
     if (step === 3) {
-        const summary = el('section', 'form-card'); summary.append(el('h2', '', draft.isGroup ? draft.groupName || 'Grupo empresarial' : draft.companies[0].legalName || 'Cliente não informado'), el('p', '', `${draft.isGroup ? draft.companies.length : 1} empresa(s) · ${Object.keys(draft.selections).length} serviço(s) selecionado(s)${draft.assistance ? ' · Assessoria SST' : ''}`), el('p', '', 'Confira nomes, quantidades, valores e condições nas páginas ao lado.'));
+        const summary = el('section', 'form-card'); summary.append(el('h2', '', individual ? draft.individualClient.fullName || 'Cliente não informado' : draft.isGroup ? draft.groupName || 'Grupo empresarial' : draft.companies[0].legalName || 'Cliente não informado'), el('p', '', `${individual ? 'Pessoa física' : `${draft.isGroup ? draft.companies.length : 1} empresa(s)`} · ${Object.keys(draft.selections).length} serviço(s) selecionado(s)${draft.assistance ? ' · Assessoria SST' : ''}`), el('p', '', 'Confira nomes, quantidades, valores e condições nas páginas ao lado.'));
         form.append(summary, el('div', 'review-issues'), el('p', 'hint', 'Para salvar: escolha “Salvar como PDF”, papel A4, escala 100% e desative os cabeçalhos e rodapés do navegador.'));
     }
     bottom.replaceChildren(button('← Voltar', () => { step--; render(); form.scrollTop = 0; }, 'secondary'), el('span', '', `${step + 1} / 4`), button(step === 3 ? 'Conferir documento' : 'Continuar →', () => { if (step < 3) { step++; render(); form.scrollTop = 0; } else { void prepare(); workspace.classList.add('show-preview'); mobileToggle.textContent = 'Voltar ao formulário'; } }, 'primary'));

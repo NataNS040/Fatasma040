@@ -1,3 +1,4 @@
+import { formatCpf } from '../utils/cpf';
 import type { ProposalDocument, VisibleAmounts } from '../domain/document';
 import { element, section, featureList, dataTable } from '../components/document';
 import { editorialContent, serviceHeader } from '../components/editorial';
@@ -23,9 +24,10 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
     const header = element('header', 'page-header', `ENGMARQ SOLUTION · ${model.metadata.number}`);
     const footer = element('footer', 'page-footer', 'Engenharia de Segurança e Medicina do Trabalho');
     if (!model.blocks.some(block => block.kind === 'cover')) root.append(header, footer);
+    const individual = model.blocks.find(block => block.kind === 'individual');
     const companies = model.blocks.find(block => block.kind === 'companies');
     const serviceNames = new Map(model.blocks.flatMap(block => block.kind === 'technical-section' ? block.services.map(service => [service.itemId, service.shortName] as const) : []));
-    const companyName = (id: string): string => companies?.kind === 'companies' ? companies.companies.find(c => c.id === id)?.legalName ?? id : id;
+    const companyName = (id: string): string => individual?.kind === 'individual' ? individual.client.fullName : companies?.kind === 'companies' ? companies.companies.find(c => c.id === id)?.legalName ?? id : id;
     for (const block of model.blocks) {
         let node: HTMLElement;
         switch (block.kind) {
@@ -34,6 +36,13 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                 const logo = element('img', 'cover-logo'); logo.src = logoUrl; logo.alt = 'EngMarq Solution';
                 const clientName = model.isGroup ? model.groupName || block.clientName : (companies?.kind === 'companies' ? companies.companies[0]?.legalName : undefined) || block.clientName;
                 node.append(logo, element('p', 'cover-code', model.metadata.number), element('p', 'eyebrow', 'PROPOSTA COMERCIAL'), element('h1', '', block.title), element('p', 'cover-caption', 'ELABORADA PARA'), element('p', 'cover-client', clientName), element('p', 'cover-date', `${model.metadata.issuedOn.split('-').reverse().join('/')} · Revisão ${model.metadata.revision}`), element('p', 'cover-brand', 'EngMarq Solution\nEngenharia de Segurança e Medicina do Trabalho'));
+                break;
+            }
+            case 'individual': {
+                node = section('Identificação do cliente');
+                const identification = element('div', 'info-box');
+                identification.append(element('p', '', `Nome completo: ${block.client.fullName}`), element('p', '', `CPF: ${formatCpf(block.client.cpf)}`));
+                node.append(identification);
                 break;
             }
             case 'companies':
@@ -114,13 +123,13 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                 break;
             case 'additional-scope':
                 node = section(block.title);
-                node.append(dataTable(['Empresa / medição', 'Quantidade', 'Condição'], block.measurements.map(m => [`${companyName(m.companyId)}\n${m.title}`, `${m.quantity} ${translate(m.unit)}`, `Orçamento separado. ${m.notes ?? ''}`]), 'measurement-table'));
+                node.append(dataTable([individual ? 'Cliente / medição' : 'Empresa / medição', 'Quantidade', 'Condição'], block.measurements.map(m => [`${companyName(m.companyId)}\n${m.title}`, `${m.quantity} ${translate(m.unit)}`, `Orçamento separado. ${m.notes ?? ''}`]), 'measurement-table'));
                 break;
             case 'investment':
                 node = section('Condições comerciais');
                 node.querySelector('h2')!.prepend(documentIcon('money'));
                 if (block.companyRows?.length) node.append(dataTable(['Empresa', 'Investimento', 'Pagamento'], block.companyRows.map(row => [row.companyName, amounts(row), row.billing.map(b => [b.installmentCount ? `${b.installmentCount} parcelas` : '', ...(b.paymentTerms ?? [])].filter(Boolean).join(' · ')).join('\n')]), 'commercial-table'));
-                else node.append(dataTable(['Serviço / empresa', 'Condição'], block.rows.map(row => [`${row.title}\n${companyName(row.companyId)}`, amounts(row.price) || (row.price.mode === 'included' ? 'Incluído no pacote' : row.price.mode === 'separate-quote' ? 'Orçamento separado' : 'Conforme condições comerciais')]), 'commercial-table'));
+                else node.append(dataTable([individual ? 'Serviço / cliente' : 'Serviço / empresa', 'Condição'], block.rows.map(row => [`${row.title}\n${companyName(row.companyId)}`, amounts(row.price) || (row.price.mode === 'included' ? 'Incluído no pacote' : row.price.mode === 'separate-quote' ? 'Orçamento separado' : 'Conforme condições comerciais')]), 'commercial-table'));
                 if (block.totals && amounts(block.totals)) node.append(element('p', 'info-box', `Consolidado\n${amounts(block.totals)}`));
                 node.append(element('p', '', `Validade da proposta: ${block.terms.validityDays} dias.`));
                 if (block.terms.installmentCount) node.append(element('p', '', `Parcelamento: ${block.terms.installmentCount} parcelas.`));
@@ -136,13 +145,14 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                 node.append(intro);
                 const pair = element('div', 'signature-pair');
                 const contact = companies?.kind === 'companies' ? companies.contact : undefined;
-                const signature = (label: string, company: string, name?: string, role?: string): HTMLElement => {
+                const signature = (label: string, company: string, name?: string): HTMLElement => {
                     const card = element('div', 'signature'); card.dataset.atomic = 'signature';
-                    card.append(element('h3', '', label), element('div', 'signature-line'), element('p', 'signature-company', company), element('p', 'signature-field', name?.trim() || 'Nome: __________________________'), element('p', 'signature-field', role?.trim() || 'Cargo: __________________________'));
+                    card.append(element('h3', '', label), element('div', 'signature-line'), element('p', 'signature-company', company), element('p', 'signature-field', name?.trim() || 'Nome: __________________________'));
                     return card;
                 };
-                pair.append(signature('ENGMARQ SOLUTION', 'EngMarq Solution', block.author.name, block.author.role));
-                pair.append(signature('CONTRATANTE', model.isGroup ? model.groupName || block.companyIds.map(companyName).join(' · ') : companyName(block.companyIds[0]), contact?.name, contact?.role));
+                pair.append(signature('ENGMARQ SOLUTION', 'EngMarq Solution', block.author.name));
+                if (individual?.kind === 'individual') pair.append(signature('CLIENTE', individual.client.fullName, `CPF: ${formatCpf(individual.client.cpf)}`));
+                else pair.append(signature('CONTRATANTE', model.isGroup ? model.groupName || block.companyIds.map(companyName).join(' · ') : companyName(block.companyIds[0]), contact?.name));
                 node.append(pair);
                 if (model.isGroup) node.append(element('p', 'applies-to', `Empresas abrangidas pelo aceite: ${block.companyIds.map(companyName).join(' · ')}`));
                 break;

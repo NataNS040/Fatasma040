@@ -1,9 +1,28 @@
 import { getCatalogEntry } from '../catalog/services';
 import { createProgramKit } from '../presets/program-kit';
-import { proposalItems, type Proposal } from '../domain/proposal';
+import { INDIVIDUAL_CLIENT_ID, proposalItems, type Proposal } from '../domain/proposal';
 import { createCatalogItem } from '../catalog/select-service';
 import { instantiatePreset } from '../presets/catalog-presets';
 export { tm136AssistanceProposal, tm137GroupProposal } from './assistance';
+
+/** Cliente e CPF fictícios, usados apenas nos testes. */
+export function individualProposal(training = false): Proposal {
+    const p = singleProposal();
+    p.metadata.id = 'fixture-individual';
+    p.client = { kind: 'individual', displayName: 'Maria de Souza Exemplo' };
+    p.individualClient = { fullName: p.client.displayName, cpf: '529.982.247-25' };
+    p.isGroup = false;
+    p.companies = [];
+    p.scope.objective = 'Prestação do serviço contratado para o cliente identificado.';
+    const item = createCatalogItem(training ? 'nr06' : 'lip', {
+        id: 'individual-service', companyId: INDIVIDUAL_CLIENT_ID,
+        parameters: training ? { modality: 'onsite', participants: 1, classes: 1, hoursPerClass: 2, occurrences: 1, audience: 'Cliente contratante' } : {}
+    });
+    p.services = item.kind === 'training' ? [] : [item as Proposal['services'][number]];
+    p.trainings = item.kind === 'training' ? [item] : [];
+    p.commercial.lines = [{ itemId: item.id, price: { mode: 'charge', cadence: 'once', amountCents: 150000 } }];
+    return p;
+}
 
 /** Dados fictícios: cenários inspirados nas fontes, sem reprodução comercial integral. */
 export function singleProposal(): Proposal {

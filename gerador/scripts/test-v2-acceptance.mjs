@@ -39,11 +39,12 @@ try {
     for (const result of results) {
         assert.ok(result.ready && result.samePage && result.final && result.newPage, JSON.stringify(result));
         assert.equal(result.signatures, 2);
-        assert.match(result.text, /Consultora de Teste/); assert.match(result.text, /Consultora Comercial/);
-        if (result.scenario === 'missing-contact') { assert.match(result.text, /Nome: _/); assert.match(result.text, /Cargo: _/); }
-        else { assert.match(result.text, /Responsável de Teste/); assert.match(result.text, /Diretoria/); }
+        assert.match(result.text, /Consultora de Teste/);
+        assert.doesNotMatch(result.text, /Cargo:|Consultora Comercial|Diretoria/);
+        if (result.scenario === 'missing-contact') assert.match(result.text, /Nome: _/);
+        else assert.match(result.text, /Responsável de Teste/);
         if (result.scenario === 'group-contact') assert.match(result.text, /Empresas abrangidas pelo aceite/);
         assert.equal(result.cover, result.scenario !== 'without-cover');
     }
-    console.log('PASS: aceite com autor/cargo, cliente informado/ausente, grupo e documento sem capa.');
+    console.log('PASS: aceite sem campo de cargo, cliente informado/ausente, grupo e documento sem capa.');
 } finally { await browser.close(); await server.close(); }

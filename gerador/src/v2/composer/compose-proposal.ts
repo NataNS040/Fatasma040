@@ -28,7 +28,8 @@ export function composeProposal(input: Proposal, options: CompositionOptions = {
     const items = proposalItems(p);
     const blocks: DocumentBlock[] = [];
     if (p.options.includeCover) blocks.push({ id: 'cover', kind: 'cover', title: p.metadata.title, clientName: p.client.displayName });
-    blocks.push({ id: 'companies', kind: 'companies', companies: p.companies, contact: p.client.contact });
+    if (p.client.kind === 'individual') blocks.push({ id: 'individual', kind: 'individual', client: p.individualClient! });
+    else blocks.push({ id: 'companies', kind: 'companies', companies: p.companies, contact: p.client.contact });
     blocks.push({ id: 'scope', kind: 'scope', scope: p.scope });
     const separateIds = new Set(p.commercial.lines.filter(line => line.price.mode === 'separate-quote').map(line => line.itemId));
     const mode = p.options.documentMode ?? 'standard';

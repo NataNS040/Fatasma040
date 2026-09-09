@@ -19,7 +19,7 @@ export function composeInvestment(p: Proposal): { block: InvestmentBlock; issues
     const items = proposalItems(p);
     const rows: InvestmentRow[] = [];
     const emptyAmounts = (): VisibleAmounts => ({ onceCents: 0, ...(visibility.showMonthlyValue ? { monthlyCents: 0 } : {}), ...(visibility.showContractTotal ? { contractTotalCents: 0 } : {}) });
-    const companies = visibility.showPerCompanyPricing ? p.companies.map(company => ({ ...emptyAmounts(), companyId: company.id, companyName: company.tradeName ?? company.legalName, billing: [] as BillingTerms[] })) : undefined;
+    const companies = visibility.showPerCompanyPricing && p.client.kind !== 'individual' ? p.companies.map(company => ({ ...emptyAmounts(), companyId: company.id, companyName: company.tradeName ?? company.legalName, billing: [] as BillingTerms[] })) : undefined;
     const totals: InvestmentTotals | undefined = visibility.showAggregateTotal ? emptyAmounts() : undefined;
     const add = (target: VisibleAmounts, key: keyof VisibleAmounts, value: number): void => {
         const sum = (target[key] ?? 0) + value;
@@ -41,6 +41,10 @@ export function composeInvestment(p: Proposal): { block: InvestmentBlock; issues
         };
         row.billing = billing;
         const company: CompanyPricingRow | undefined = companies?.find(candidate => candidate.companyId === item.companyId);
+        if (p.client.kind === 'individual' && visibility.showPerCompanyPricing) {
+            row.price.onceCents = once;
+            if (visibility.showMonthlyValue) row.price.monthlyCents = monthly;
+        }
         if (company) {
             if (!company.billing.some(terms => JSON.stringify(terms) === JSON.stringify(billing))) company.billing.push(billing);
             row.price.onceCents = once;
@@ -52,7 +56,7 @@ export function composeInvestment(p: Proposal): { block: InvestmentBlock; issues
             if (visibility.showMonthlyValue) add(totals, 'monthlyCents', monthly);
         }
         // Não calcula mensalidade × vigência quando a projeção contratual está desligada.
-        if (visibility.showContractTotal && (company || totals)) {
+        if (visibility.showContractTotal && (company || totals || p.client.kind === 'individual' && visibility.showPerCompanyPricing)) {
             if (monthly > 0 && (!Number.isSafeInteger(billing.termMonths) || billing.termMonths! < 1)) {
                 issues.push({ severity: 'error', code: 'contract-term-required', path: `commercial.lines.${line.itemId}`, message: 'Total contratual exige vigência explícita para cada cobrança recorrente.' });
                 continue;
@@ -62,6 +66,7 @@ export function composeInvestment(p: Proposal): { block: InvestmentBlock; issues
                 issues.push({ severity: 'error', code: 'unsafe-total', path: `commercial.lines.${line.itemId}`, message: 'Valor contratual fora da precisão segura em centavos.' });
                 continue;
             }
+            if (p.client.kind === 'individual' && visibility.showPerCompanyPricing) row.price.contractTotalCents = contract;
             if (company) { row.price.contractTotalCents = contract; add(company, 'contractTotalCents', contract); }
             if (totals) add(totals, 'contractTotalCents', contract);
         }

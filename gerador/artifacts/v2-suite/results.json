@@ -1,82 +1,89 @@
 {
-  "completedAt": "2026-09-08T03:50:50.926Z",
+  "completedAt": "2026-09-09T18:32:05.432Z",
   "results": [
     {
       "name": "unit",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 4055
+      "durationMs": 4577
     },
     {
       "name": "pagination",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 12508
+      "durationMs": 12366
     },
     {
       "name": "acceptance",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 2473
+      "durationMs": 2715
+    },
+    {
+      "name": "individual",
+      "passed": true,
+      "exitCode": 0,
+      "signal": null,
+      "durationMs": 2966
     },
     {
       "name": "commercial-access",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 13050
+      "durationMs": 13157
     },
     {
       "name": "editor",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 11219
+      "durationMs": 10815
     },
     {
       "name": "team-workflows",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 7838
+      "durationMs": 7725
     },
     {
       "name": "quality-examples",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 37261
+      "durationMs": 35269
     },
     {
       "name": "regression-lab",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 47146
+      "durationMs": 44018
     },
     {
       "name": "typecheck",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 3035
+      "durationMs": 3613
     },
     {
       "name": "build",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 3476
+      "durationMs": 4595
     },
     {
       "name": "production-isolation",
       "passed": true,
       "exitCode": 0,
       "signal": null,
-      "durationMs": 2721
+      "durationMs": 2914
     }
   ]
 }

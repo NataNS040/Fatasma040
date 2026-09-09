@@ -1,8 +1,66 @@
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { loadV2 } from '../scripts/load-v2.mjs';
-const { editor, api, dispose } = loadV2();
+const { editor, api, fixtures, dispose } = loadV2();
 after(dispose);
+test('PF: serviço, treinamento, identificação própria e investimento sem empresa fictícia', () => {
+    for (const training of [false, true]) {
+        const p = fixtures.individualProposal(training);
+        const result = api.composeProposal(p);
+        assert.equal(result.ok, true, JSON.stringify(result.issues));
+        assert.deepEqual(p.companies, []);
+        assert.equal(result.document.blocks[0].clientName, p.individualClient.fullName);
+        assert.ok(result.document.blocks.some(b => b.kind === 'individual'));
+        assert.ok(!result.document.blocks.some(b => b.kind === 'companies'));
+        const investment = result.document.blocks.find(b => b.kind === 'investment');
+        assert.equal(investment.rows[0].price.onceCents, 150000);
+        assert.equal(investment.companyRows, undefined);
+    }
+});
+test('troca Empresa → PF → Empresa ignora dados incompatíveis e restaura validação empresarial', () => {
+    const d = complete();
+    d.email = 'email inválido'; d.companies[0].taxId = '123';
+    editor.setClientKind(d, 'individual');
+    d.individualClient = { fullName: 'Maria de Souza Exemplo', cpf: '52998224725' };
+    d.individualPricing.once = '2500';
+    const result = editor.draftProposal(d);
+    assert.deepEqual(result.issues, []);
+    assert.deepEqual(result.proposal.companies, []);
+    assert.equal(result.proposal.client.contact, undefined);
+    assert.equal(result.proposal.individualClient.cpf, '529.982.247-25');
+    assert.ok(!JSON.stringify(result.proposal).includes('Empresa Exemplo'));
+    for (const cpf of ['', '123', '11111111111', '529-982-247.25', 'abc52998224725']) {
+        d.individualClient.cpf = cpf;
+        assert.ok(editor.draftProposal(d).issues.some(i => i.step === 0 && i.message === 'Informe um CPF válido.'));
+        const p = fixtures.individualProposal(); p.individualClient.cpf = cpf;
+        assert.equal(api.composeProposal(p).ok, false);
+    }
+    editor.setClientKind(d, 'single');
+    assert.ok(editor.draftProposal(d).issues.some(i => i.message.includes('CNPJ')));
+    d.email = ''; d.companies[0].taxId = '';
+    const company = editor.draftProposal(d);
+    assert.deepEqual(company.issues, []);
+    assert.equal(company.proposal.individualClient, undefined);
+    assert.equal(company.proposal.client.kind, 'single');
+});
+test('PF permite medição avulsa, treinamento e preset de assessoria', () => {
+    for (const kind of ['heat', 'nr06', 'assistance']) {
+        const d = complete(); editor.setClientKind(d, 'individual');
+        d.individualClient = { fullName: 'Maria Exemplo', cpf: '52998224725' };
+        d.individualPricing = { once: '1500', monthly: '200' };
+        d.selections = {};
+        if (kind === 'assistance') editor.applyEditorPreset(d, 'assistance');
+        else {
+            d.selections[kind] = editor.newSelection(kind);
+            Object.assign(d.selections[kind].parameters, kind === 'nr06'
+                ? { modality: 'onsite', participants: 1, classes: 1, hoursPerClass: 2, occurrences: 1, audience: 'Cliente' }
+                : { quantity: 1, workGroups: ['Local de execução'], agent: 'Calor', method: 'IBUTG' });
+        }
+        const result = editor.draftProposal(d);
+        assert.deepEqual(result.issues, [], kind);
+        assert.deepEqual(result.proposal.companies, []);
+    }
+});
 function complete() {
     const d = editor.newDraft();
     d.number = 'UI-001'; d.contact = 'Contato Exemplo';

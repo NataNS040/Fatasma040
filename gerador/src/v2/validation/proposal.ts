@@ -1,4 +1,5 @@
-import { proposalItems, type Proposal } from '../domain/proposal';
+import { isValidCpf } from '../utils/cpf';
+import { INDIVIDUAL_CLIENT_ID, proposalItems, type Proposal } from '../domain/proposal';
 import { isCivilDate, isNonNegativeInteger } from '../utils/value';
 import { validateItemParameters } from './parameters';
 import { resolveAssistanceProposal } from '../configurator/assistance';
@@ -33,11 +34,11 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
     required(p.metadata.number, 'metadata.number');
     required(p.metadata.title, 'metadata.title');
     if (!p.metadata.author.name?.trim()) warning('missing-responsible', 'metadata.author.name', 'Responsável da EngMarq não informado.');
-    if (!p.client.contact?.name?.trim()) warning('missing-contact', 'client.contact.name', 'Responsável do cliente não informado.');
+    if (p.client.kind !== 'individual' && !p.client.contact?.name?.trim()) warning('missing-contact', 'client.contact.name', 'Responsável do cliente não informado.');
     integer(p.metadata.revision, 'metadata.revision');
     if (!isCivilDate(p.metadata.issuedOn)) error('invalid-date', 'metadata.issuedOn', 'Use uma data civil válida YYYY-MM-DD.');
     required(p.client.displayName, 'client.displayName');
-    if (!['single', 'group'].includes(p.client.kind)) error('client-kind', 'client.kind', 'Tipo de cliente inválido.');
+    if (!['single', 'group', 'individual'].includes(p.client.kind)) error('client-kind', 'client.kind', 'Tipo de cliente inválido.');
     if (p.isGroup !== undefined && p.isGroup !== (p.client.kind === 'group')) error('group-identity', 'isGroup', 'isGroup deve corresponder ao tipo de cliente.');
     if (p.isGroup === true && (!p.groupName?.trim() || p.groupName !== p.client.displayName)) error('group-name', 'groupName', 'Defina o nome do grupo, igual ao destinatário da proposta.');
     if (p.client.kind === 'single' && p.groupName !== undefined) error('group-name', 'groupName', 'Empresa única não possui nome de grupo.');
@@ -45,8 +46,15 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
     const levels = ['summary', 'standard', 'full'];
     if (p.options.documentMode !== undefined && !['compact', 'standard', 'consultive'].includes(p.options.documentMode)) error('document-mode', 'options.documentMode', 'Modo de documento inválido.');
     if (p.options.detailLevel !== undefined && !levels.includes(p.options.detailLevel)) error('detail-level', 'options.detailLevel', 'Nível de apresentação inválido.');
+    const individual = p.client.kind === 'individual';
+    if (individual) {
+        required(p.individualClient?.fullName ?? '', 'individualClient.fullName');
+        if (!isValidCpf(p.individualClient?.cpf ?? '')) error('invalid-cpf', 'individualClient.cpf', 'Informe um CPF válido.');
+        if (p.individualClient?.fullName !== p.client.displayName) error('individual-name', 'individualClient.fullName', 'O destinatário deve corresponder ao nome completo.');
+        if (p.companies.length || p.groupName !== undefined || p.client.contact || p.assistanceConfiguration) error('individual-identity', 'client', 'Pessoa física não possui cadastro empresarial ou contato adicional.');
+    }
     const minCompanies = p.client.kind === 'group' ? 2 : 1;
-    if (p.companies.length < minCompanies || (p.client.kind === 'single' && p.companies.length !== 1)) {
+    if (!individual && (p.companies.length < minCompanies || (p.client.kind === 'single' && p.companies.length !== 1))) {
         error('company-count', 'companies', 'Empresa única exige um cadastro; grupo exige pelo menos dois.');
     }
     const companyIds = new Set<string>();
@@ -69,7 +77,7 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
         required(item.id, `${path}.id`);
         if (itemIds.has(item.id)) error('duplicate-id', `${path}.id`, 'ID de item duplicado.');
         itemIds.add(item.id);
-        if (!companyIds.has(item.companyId)) error('unknown-company', `${path}.companyId`, 'Empresa fora da proposta.');
+        if (individual ? item.companyId !== INDIVIDUAL_CLIENT_ID : !companyIds.has(item.companyId)) error('unknown-company', `${path}.companyId`, 'Empresa fora da proposta.');
         required(item.content.title, `${path}.content.title`);
         required(item.content.objective, `${path}.content.objective`);
         if (!item.content.deliverables.length) error('empty-deliverables', `${path}.content.deliverables`, 'Defina os entregáveis do item.');
