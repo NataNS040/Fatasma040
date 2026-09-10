@@ -141,7 +141,7 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
                 node = section('Aceite da proposta');
                 node.classList.add('acceptance-page');
                 const intro = element('div', 'acceptance-intro');
-                intro.append(node.firstElementChild!, element('p', '', 'Declaramos estar de acordo com o escopo, condições e valores apresentados nesta proposta.'), element('p', 'acceptance-date', 'LOCAL E DATA\n\n________________________________, ______ / ______ / __________'));
+                intro.append(node.firstElementChild!, element('p', '', 'Declaramos estar de acordo com o escopo, condições e valores apresentados nesta proposta.'));
                 node.append(intro);
                 const pair = element('div', 'signature-pair');
                 const contact = companies?.kind === 'companies' ? companies.contact : undefined;
