@@ -94,6 +94,10 @@
       "dest": "/landing-consultoria-gratuita.html"
     },
     {
+      "src": "/sst",
+      "dest": "/landing-consultoria-gratuita.html"
+    },
+    {
       "src": "/privacidade",
       "dest": "/politicas/politica-privacidade.html"
     },
