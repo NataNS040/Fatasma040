@@ -3,8 +3,9 @@ import { createCatalogItem } from '../catalog/select-service';
 import { createAssistanceProposal, resolveAssistanceProposal } from '../configurator/assistance';
 import { composeProposal } from '../composer/compose-proposal';
 import { INDIVIDUAL_CLIENT_ID } from '../domain/proposal';
+import { createCustomItem } from '../domain/custom-item';
 import { formatCpf, isValidCpf } from '../utils/cpf';
-import type { Company, Proposal, ProposalItem } from '../domain/proposal';
+import type { Company, Proposal, ProposalItem, Service, CustomItemDetails } from '../domain/proposal';
 import type { ParameterValues, DetailLevel, DocumentMode } from '../domain/content';
 import { getPreset, listPresets } from '../presets/catalog-presets';
 import type { AssistanceConfiguration, ServiceFrequency } from '../domain/assistance';
@@ -13,12 +14,25 @@ import { isCivilDate } from '../utils/value';
 import type { ValidationIssue } from '../validation/proposal';
 
 export interface Selection { parameters: ParameterValues; notes: string; frequency: ServiceFrequency; separate: boolean; }
+export interface DraftCustomItem {
+    id: string; companyId: string; category: 'programs' | 'management' | 'measurements' | 'trainings';
+    title: string; description: string; notes: string; parameters: ParameterValues;
+}
+export function addCustomItem(draft: EditorDraft, category: DraftCustomItem['category'], id: string): DraftCustomItem {
+    const item: DraftCustomItem = { id, category, companyId: draft.clientKind === 'individual' ? INDIVIDUAL_CLIENT_ID : draft.companies[0].id, title: '', description: '', notes: '', parameters: {} };
+    draft.customItems.push(item); return item;
+}
+export function removeCustomItem(draft: EditorDraft, id: string): void {
+    draft.customItems = draft.customItems.filter(item => item.id !== id);
+}
 export interface DraftCompany {
     id: string; legalName: string; tradeName: string; taxId: string; street: string; city: string; state: string; postalCode: string;
     employees: string; roles: string; once: string; monthly: string; overrides: Record<string, Selection>;
     visits?: { quantity: string; hours: string; frequency: ServiceFrequency; notes: string };
 }
 export interface EditorDraft {
+    customItems: DraftCustomItem[];
+    showOnceValue: boolean;
     clientKind?: 'single' | 'group' | 'individual';
     individualClient: { fullName: string; cpf: string };
     individualPricing: { once: string; monthly: string };
@@ -45,6 +59,7 @@ export function newCompany(id: string): DraftCompany {
 export function newDraft(): EditorDraft {
     const now = new Date();
     return {
+        customItems: [], showOnceValue: true,
         individualClient: { fullName: '', cpf: '' }, individualPricing: { once: '', monthly: '' },
         isGroup: false, groupName: '', companies: [newCompany('company-1')], contact: '', email: '', author: 'Equipe EngMarq',
         number: '', date: `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`,
@@ -136,7 +151,12 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
         if (d.charge !== 'monthly' && parseMoney(c.once) === undefined) add(2, `Informe o investimento de ${c.legalName || `empresa ${i + 1}`} em reais, por exemplo 1500,00.`);
         if (d.charge !== 'once' && parseMoney(c.monthly) === undefined) add(2, `Informe a mensalidade de ${c.legalName || `empresa ${i + 1}`} em reais.`);
     }
-    if (!Object.keys(d.selections).length && !d.assistance && !d.visits) add(1, 'Selecione ao menos um serviço ou ative a assessoria.');
+    if (!Object.keys(d.selections).length && !d.assistance && !d.visits && !d.customItems.length) add(1, 'Selecione ao menos um serviço ou ative a assessoria.');
+    const activeIds = individual ? [INDIVIDUAL_CLIENT_ID] : companies.map(company => company.id);
+    for (const item of d.customItems) {
+        if (!activeIds.includes(item.companyId)) add(1, `Selecione a empresa relacionada a ${item.title || 'item personalizado'}.`);
+        if (!item.title.trim()) add(1, 'Informe o nome do item personalizado.');
+    }
     if (!d.objective.trim() || !d.title.trim()) add(1, 'Preencha o título e o objetivo da proposta.');
     for (const [label, value] of [['Vigência', d.term], ['Parcelas', d.installments], ['Validade', d.validity]]) if (!Number.isSafeInteger(Number(value)) || Number(value) < 1) add(2, `${label}: informe um número inteiro maior que zero.`);
     if (!d.payment.trim()) add(2, 'Informe as condições de pagamento.');
@@ -151,6 +171,7 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
         commercial: { currency: 'BRL', lines: [], termMonths: Number(d.term), installmentCount: Number(d.installments), validityDays: Number(d.validity), paymentTerms: lines(d.payment), executionTerms: lines(d.execution), showMonthlyValue: d.showMonthlyValue, showContractTotal: d.showContractTotal, showAggregateTotal: d.showAggregateTotal, showPerCompanyPricing: d.showPerCompanyPricing },
         options: { detailLevel: d.detail, documentMode: d.documentMode ?? 'standard', includeCover: d.cover, includeAcceptance: d.acceptance }
     };
+    proposal.commercial.showOnceValue = d.showOnceValue;
     const visits: AssistanceConfiguration['visits'] = d.visits ? { included: true, quantity: Number(d.visitQuantity), durationHours: Number(d.visitHours), frequency: d.visitFrequency, notes: d.visitNotes } : { included: false };
     if (d.visits && (!Number.isSafeInteger(Number(d.visitQuantity)) || Number(d.visitQuantity) < 1 || Number(d.visitHours) <= 0 || !Number.isFinite(Number(d.visitHours)))) add(1, 'Informe a quantidade total e duração das visitas.');
     const common: AssistanceConfiguration = { visits, renewal: 'Mediante acordo entre as partes.', adjustment: 'Conforme condições contratuais.' };
@@ -199,6 +220,7 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
             visit.notes = `Frequência: ${names[companyVisits.frequency]}. ${companyVisits.notes ?? ''}`;
             items.push(visit);
         }
+        items.push(...customItemsFor(d, c.id));
         const included = items.filter(item => item.kind !== 'measurement' || item.pricingMode !== 'separate-quote');
         // Uma medição avulsa PF recebe a cobrança do pacote, sem apontar para si como inclusa.
         if (individual && included[0]?.kind === 'measurement') delete included[0].pricingMode;
@@ -218,9 +240,25 @@ export function draftProposal(d: EditorDraft): { proposal?: Proposal; issues: Dr
         const resolved = resolveAssistanceProposal(configured);
         if (!resolved.ok) return { issues: draftIssues(resolved.issues) };
         final = resolved.proposal;
+        for (const company of companies) {
+            for (const item of customItemsFor(d, company.id)) {
+                final.services.push(item);
+                final.commercial.lines.push({ itemId: item.id, price: { mode: 'included', coveredByItemId: `${company.id}:assistance` } });
+            }
+        }
     }
     const composed = composeProposal(final);
     if (!composed.ok) return { issues: draftIssues(composed.issues.filter(issue => issue.severity === 'error')) };
     return { proposal: final, issues: [], warnings: draftIssues(composed.issues.filter(issue => issue.severity === 'warning')) };
 }
 export const editorCatalog = listCatalogEntries().filter(e => !['assistance', 'technical-visit'].includes(e.id));
+
+function customItemsFor(draft: EditorDraft, companyId: string): Service[] {
+    return draft.customItems.filter(item => item.companyId === companyId).map(item => {
+        const custom: CustomItemDetails = item.category === 'trainings'
+            ? { category: item.category, description: item.description, participants: item.parameters.participants as number | undefined, classes: item.parameters.classes as number | undefined, hours: item.parameters.hours as number | undefined, modality: item.parameters.modality as 'onsite' | 'online' | 'hybrid' | undefined }
+            : item.category === 'measurements' ? { category: item.category, description: item.description, quantity: item.parameters.quantity as number | undefined, unit: item.parameters.unit as string | undefined }
+            : { category: item.category, description: item.description };
+        return createCustomItem({ id: item.id, companyId, title: item.title, notes: item.notes, custom });
+    });
+}

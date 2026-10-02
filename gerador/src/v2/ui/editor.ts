@@ -1,4 +1,7 @@
 import { formatCpf } from '../utils/cpf';
+import { buildProposalFileName } from '../utils/proposal-file-name';
+import { INDIVIDUAL_CLIENT_ID } from '../domain/proposal';
+import { addCustomItem, removeCustomItem, type DraftCustomItem } from './draft';
 import { DocumentPaginator, type ExportPreparation } from '../pagination/engine';
 import { newDraft, setClientKind, newCompany, newSelection, applyEditorPreset, draftProposal, editorPresets, availableEditorPresets, editorCatalog, type Selection, type DraftCompany } from './draft';
 import { element as el } from '../components/document';
@@ -136,6 +139,21 @@ function scopeFields(): void {
             if (draft.selections[entry.id]) { card.classList.add('selected'); card.append(el('p', 'hint', entry.content.profile.summary), selectionFields(entry.id, draft.selections[entry.id])); }
             group.append(card);
         }
+        const customCategory = category as DraftCustomItem['category'];
+        const labels = { programs: '+ Adicionar outro programa/laudo', management: '+ Adicionar outro serviço', measurements: '+ Adicionar outra medição', trainings: '+ Adicionar outro treinamento' };
+        group.append(button(labels[customCategory], () => { addCustomItem(draft, customCategory, crypto.randomUUID()); changed(true); }, 'secondary'));
+        for (const item of draft.customItems.filter(item => item.category === category)) {
+            const card = el('section', 'form-card');
+            card.append(field('Nome do item personalizado *', item.title, v => item.title = v), field('Descrição / escopo', item.description, v => item.description = v, 'textarea'));
+            const targets = draft.clientKind === 'individual' ? { [INDIVIDUAL_CLIENT_ID]: draft.individualClient.fullName || 'Cliente' } : Object.fromEntries((draft.isGroup ? draft.companies : draft.companies.slice(0, 1)).map(c => [c.id, c.tradeName || c.legalName || 'Empresa sem nome']));
+            card.append(select('Empresa relacionada *', item.companyId, { '': 'Selecione', ...targets }, v => item.companyId = v));
+            const numericFields: Record<string, string> = category === 'trainings' ? { participants: 'Participantes', classes: 'Turmas', hours: 'Carga horária (h)' } : category === 'measurements' ? { quantity: 'Quantidade' } : {};
+            for (const [id, label] of Object.entries(numericFields)) card.append(field(label, String(item.parameters[id] ?? ''), v => { if (v === '') delete item.parameters[id]; else item.parameters[id] = Number(v); }, 'number'));
+            if (category === 'trainings') card.append(select('Modalidade', String(item.parameters.modality ?? ''), { '': 'Não informada', onsite: 'Presencial', online: 'Online', hybrid: 'Híbrida' }, v => { if (v) item.parameters.modality = v; else delete item.parameters.modality; }));
+            if (category === 'measurements') card.append(field('Unidade / pontos', String(item.parameters.unit ?? ''), v => { if (v) item.parameters.unit = v; else delete item.parameters.unit; }));
+            card.append(field('Observações do item personalizado', item.notes, v => item.notes = v, 'textarea'), button('Remover item personalizado', () => { removeCustomItem(draft, item.id); changed(true); }, 'text-button danger'));
+            group.append(card);
+        }
         form.append(group);
     }
     form.append(el('h2', '', 'Visitas técnicas'), toggle('Incluir visitas', draft.visits, v => draft.visits = v));
@@ -193,7 +211,7 @@ function render(): void {
             if (draft.charge !== 'once') fields.append(field('Mensalidade (R$) *', c.monthly, v => c.monthly = v)); card.append(fields); form.append(card);
         }
         form.append(grid(field('Quantidade de parcelas *', draft.installments, v => draft.installments = v, 'number'), field('Validade da proposta (dias) *', draft.validity, v => draft.validity = v, 'number'), field('Condições de pagamento *', draft.payment, v => draft.payment = v, 'textarea'), field('Condições de execução', draft.execution, v => draft.execution = v, 'textarea')));
-        form.append(el('h2', '', 'Valores exibidos no documento'), toggle('Exibir mensalidade', draft.showMonthlyValue, v => draft.showMonthlyValue = v, false), toggle('Exibir valor total do contrato', draft.showContractTotal, v => draft.showContractTotal = v, false), toggle('Exibir total agregado', draft.showAggregateTotal, v => draft.showAggregateTotal = v, false), toggle(individual ? 'Exibir valores por serviço' : 'Exibir valores por empresa', draft.showPerCompanyPricing, v => draft.showPerCompanyPricing = v, false), el('p', 'hint', 'Você pode contratar 12 mensalidades sem exibir o valor total do contrato ou do grupo.'));
+        form.append(el('h2', '', 'Valores exibidos no documento'), toggle('Exibir valor único', draft.showOnceValue, v => draft.showOnceValue = v, false), toggle('Exibir mensalidade', draft.showMonthlyValue, v => draft.showMonthlyValue = v, false), toggle('Exibir valor total do contrato', draft.showContractTotal, v => draft.showContractTotal = v, false), toggle('Exibir total agregado', draft.showAggregateTotal, v => draft.showAggregateTotal = v, false), toggle(individual ? 'Exibir valores por serviço' : 'Exibir valores por empresa', draft.showPerCompanyPricing, v => draft.showPerCompanyPricing = v, false), el('p', 'hint', 'Você pode contratar 12 mensalidades sem exibir o valor total do contrato ou do grupo.'));
     }
     if (step === 3) {
         const summary = el('section', 'form-card'); summary.append(el('h2', '', individual ? draft.individualClient.fullName || 'Cliente não informado' : draft.isGroup ? draft.groupName || 'Grupo empresarial' : draft.companies[0].legalName || 'Cliente não informado'), el('p', '', `${individual ? 'Pessoa física' : `${draft.isGroup ? draft.companies.length : 1} empresa(s)`} · ${Object.keys(draft.selections).length} serviço(s) selecionado(s)${draft.assistance ? ' · Assessoria SST' : ''}`), el('p', '', 'Confira nomes, quantidades, valores e condições nas páginas ao lado.'));
@@ -240,7 +258,13 @@ async function prepare(print = false): Promise<void> {
         prepared = result; pages.classList.remove('stale'); placeholder.hidden = true;
         status.textContent = result.ready ? `Pronto para gerar · ${result.pages} páginas A4` : 'O documento precisa de ajustes de layout. Confira a revisão.';
         exportButton.disabled = !result.ready; validate();
-        if (print && result.ready) window.print();
+        if (print && result.ready) {
+            const previousTitle = document.title;
+            const restore = (): void => { document.title = previousTitle; };
+            window.addEventListener('afterprint', restore, { once: true });
+            document.title = buildProposalFileName(proposal);
+            try { window.print(); } catch (error) { window.removeEventListener('afterprint', restore); restore(); throw error; }
+        }
     } catch (error) {
         console.error('Falha na preparação do documento V2.', error);
         if (version !== revision || request !== preparationRequest) return;

@@ -5,6 +5,7 @@ export interface ParameterIssue { code: string; path: string; message: string }
 
 /** Bindings limitados a campos já definidos no domínio; nunca escrevem caminhos arbitrários. */
 export const supportedBindings = new Set([
+    'custom.participants', 'custom.classes', 'custom.hours', 'custom.modality', 'custom.quantity', 'custom.unit',
     'participants', 'classes', 'hoursPerClass', 'occurrences', 'modality',
     'agent', 'method', 'quantity', 'unit', 'workGroups',
     'termMonths', 'visitsPerMonth', 'hoursPerVisit', 'support', 'renewal', 'adjustment',

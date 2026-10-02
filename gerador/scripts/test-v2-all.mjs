@@ -11,6 +11,7 @@ const checks = [
     ['individual', ['scripts/test-v2-individual.mjs']],
     ['commercial-access', ['scripts/test-commercial-access.mjs']],
     ['editor', ['scripts/test-v2-editor.mjs']],
+    ['custom-items', ['scripts/test-v2-custom.mjs']],
     ['team-workflows', ['scripts/test-v2-workflows.mjs']],
     ['quality-examples', ['scripts/test-v2-quality.mjs']],
     ['regression-lab', ['scripts/test-v2-regression.mjs']],

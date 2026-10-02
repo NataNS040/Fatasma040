@@ -43,12 +43,19 @@ export interface TechnicalContent {
     profile?: ServiceProfile;
 }
 
+/** Dados locais da proposta; nunca registrados no catálogo. */
+export type CustomItemDetails =
+    | { category: 'programs' | 'management'; description: string }
+    | { category: 'trainings'; description: string; participants?: number; classes?: number; hours?: number; modality?: 'onsite' | 'online' | 'hybrid' }
+    | { category: 'measurements'; description: string; quantity?: number; unit?: string };
+
 export interface ScopeItem {
     id: string;
     /** ID da empresa ou INDIVIDUAL_CLIENT_ID para o próprio cliente PF, sem Company. */
     companyId: string;
     content: TechnicalContent;
     catalogId?: string;
+    custom?: CustomItemDetails;
     detailLevel?: DetailLevel;
     parameters?: ParameterValues;
     notes?: string;
@@ -106,6 +113,7 @@ export interface BillingTerms {
 }
 
 export interface CommercialVisibility {
+    showOnceValue: boolean;
     showMonthlyValue: boolean;
     showContractTotal: boolean;
     showAggregateTotal: boolean;

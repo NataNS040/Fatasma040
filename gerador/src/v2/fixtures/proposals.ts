@@ -3,6 +3,21 @@ import { createProgramKit } from '../presets/program-kit';
 import { INDIVIDUAL_CLIENT_ID, proposalItems, type Proposal } from '../domain/proposal';
 import { createCatalogItem } from '../catalog/select-service';
 import { instantiatePreset } from '../presets/catalog-presets';
+import { createCustomItem } from '../domain/custom-item';
+
+/** Quatro categorias locais, determinísticas e sem alteração do catálogo. */
+export function customItemsProposal(): Proposal {
+    const p = singleProposal(); p.metadata.number = 'TM0141'; p.companies[0].tradeName = 'Empresa Teste';
+    p.services = ['programs', 'management', 'measurements', 'trainings'].map((category, index) => createCustomItem({
+        id: `custom-${index}`, companyId: 'company-1', title: `Serviço personalizado ${category}`, notes: 'Condições alinhadas com o cliente.',
+        custom: category === 'trainings' ? { category, description: 'Capacitação específica', participants: 12, classes: 2, hours: 8, modality: 'onsite' }
+            : category === 'measurements' ? { category, description: 'Avaliação específica', quantity: 3, unit: 'pontos' }
+                : { category: category as 'programs' | 'management', description: 'Escopo específico desta proposta' }
+    }));
+    p.commercial.lines = p.services.map((item, index) => ({ itemId: item.id, price: index === 0 ? { mode: 'package', onceCents: 500000, monthlyCents: 30000 } : { mode: 'included', coveredByItemId: 'custom-0' } }));
+    p.commercial.showOnceValue = true; p.commercial.termMonths = 12;
+    return p;
+}
 export { tm136AssistanceProposal, tm137GroupProposal } from './assistance';
 
 /** Cliente e CPF fictícios, usados apenas nos testes. */

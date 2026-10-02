@@ -94,6 +94,18 @@ ausente/presente. Não criar exemplos que passem sem provar sua regra principal.
 
 ## Testar paginação
 
+`tests/v2-editor.test.mjs` cobre nomes, categorias locais, remoção, grupos com
+assessoria e combinações de visibilidade. `scripts/test-v2-custom.mjs`, integrado
+à suíte completa, exercita a UI em Chromium, parâmetros, ausência de preços
+ocultos/tabelas vazias, título de impressão e PDF longo com itens personalizados.
+Artefatos ficam em `artifacts/v2-custom/`; referências existentes não são atualizadas.
+
+O nome nativo do PDF é uma sugestão baseada no título, não um download controlado.
+Ver [print()](https://developer.mozilla.org/en-US/docs/Web/API/Window/print) e
+[afterprint](https://developer.mozilla.org/en-US/docs/Web/API/Window/afterprint_event).
+Os testes interceptam `print()` para verificar título e restauração; não automatizam
+o seletor de arquivos do sistema operacional.
+
 ```sh
 npm run test:v2:unit --prefix gerador
 node gerador/scripts/test-v2-pagination.mjs

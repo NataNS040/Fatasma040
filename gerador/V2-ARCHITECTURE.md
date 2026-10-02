@@ -76,6 +76,26 @@ exportados por compatibilidade: não são o motor atual nem código morto a remo
 
 ## Contratos e invariantes
 
+Personalizados usam `Service.kind='custom'`, sem `catalogId`, com `custom` tipado
+por categoria (`CustomItemDetails`), ID, `companyId`, snapshot e observações.
+São serviços locais à proposta, inclusive quando apresentados em Treinamentos
+ou Medições. Os campos técnicos opcionais ficam em `custom`, com bindings
+`custom.*`; não são duplicados em `parameters`. O perfil aponta para a seção
+normal da categoria. O renderer e o paginador existentes atendem esses itens.
+Na assessoria, o adaptador acrescenta os personalizados somente após resolver a
+configuração canônica, vinculando-os diretamente ao pacote da empresa.
+
+`CommercialVisibility.showOnceValue` tem fallback `true` para propostas antigas.
+A composição omite o componente único quando desligado, sem mutar preços, e
+suprime projeções contratuais que o revelariam. Novos rascunhos também omitem
+cadências de valor zero na apresentação; snapshots sem a nova opção conservam
+seu comportamento anterior. Tabelas financeiras só são renderizadas quando há
+valores projetados; condições textuais continuam presentes.
+
+`utils/proposal-file-name.ts` concentra a identificação e sanitização do nome.
+A UI aplica esse nome em `document.title` depois da preparação A4 e imediatamente
+antes de `window.print()`, restaurando-o em `afterprint`.
+
 - Empresa única exige um cadastro; grupo exige pelo menos dois e identidade consistente.
 - Empresas e itens têm IDs únicos. Cada item aponta para empresa da proposta.
 - Serviços, treinamentos, medições e assessorias coexistem com quantidades individuais.

@@ -79,6 +79,18 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
         itemIds.add(item.id);
         if (individual ? item.companyId !== INDIVIDUAL_CLIENT_ID : !companyIds.has(item.companyId)) error('unknown-company', `${path}.companyId`, 'Empresa fora da proposta.');
         required(item.content.title, `${path}.content.title`);
+        if (item.custom) {
+            const custom = item.custom;
+            if (item.kind !== 'custom' || item.catalogId || !['programs', 'management', 'measurements', 'trainings'].includes(custom.category)) error('custom-item', path, 'Item personalizado deve ter categoria válida e não pertencer ao catálogo.');
+            if (custom.category === 'trainings') {
+                if (custom.participants !== undefined) integer(custom.participants, `${path}.custom.participants`, 1);
+                if (custom.classes !== undefined) integer(custom.classes, `${path}.custom.classes`, 1);
+                if (custom.hours !== undefined) positive(custom.hours, `${path}.custom.hours`);
+                if (custom.classes !== undefined && custom.participants !== undefined && custom.classes > custom.participants) error('custom-training', path, 'Quantidade de turmas não pode superar participantes.');
+                if (custom.modality !== undefined && !['onsite', 'online', 'hybrid'].includes(custom.modality)) error('custom-training', path, 'Modalidade inválida.');
+            }
+            if (custom.category === 'measurements' && custom.quantity !== undefined) integer(custom.quantity, `${path}.custom.quantity`, 1);
+        }
         required(item.content.objective, `${path}.content.objective`);
         if (!item.content.deliverables.length) error('empty-deliverables', `${path}.content.deliverables`, 'Defina os entregáveis do item.');
         item.content.deliverables.forEach((text, i) => required(text, `${path}.content.deliverables[${i}]`));
@@ -141,7 +153,7 @@ export function validateProposal(input: Proposal): ValidationIssue[] {
     if (p.commercial.currency !== 'BRL') error('currency', 'commercial.currency', 'Moeda não suportada.');
     integer(p.commercial.validityDays, 'commercial.validityDays', 1);
     if (!p.commercial.paymentTerms.length || p.commercial.paymentTerms.some(term => typeof term !== 'string' || !term.trim())) error('payment-terms', 'commercial.paymentTerms', 'Defina condições de pagamento não vazias.');
-    for (const key of ['showMonthlyValue', 'showContractTotal', 'showAggregateTotal', 'showPerCompanyPricing'] as const) {
+    for (const key of ['showOnceValue', 'showMonthlyValue', 'showContractTotal', 'showAggregateTotal', 'showPerCompanyPricing'] as const) {
         if (p.commercial[key] !== undefined && typeof p.commercial[key] !== 'boolean') error('commercial-visibility', `commercial.${key}`, 'A opção de exibição deve ser booleana.');
     }
     if (p.commercial.termMonths !== undefined) integer(p.commercial.termMonths, 'commercial.termMonths', 1);

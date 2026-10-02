@@ -1,5 +1,28 @@
 # Interface do Gerador V2
 
+## Melhorias de outubro de 2026
+
+- Cada categoria oferece **+ Adicionar outro**: programa/laudo, serviço de gestão,
+  medição e treinamento. Nome é obrigatório; escopo e observações são livres.
+  Participantes, turmas, horas e modalidade de treinamentos, e quantidade/unidade
+  de medições são opcionais. Campos preenchidos são validados. É possível editar
+  e remover vários itens na mesma categoria.
+- Cada personalizado pertence a uma empresa explicitamente selecionada (ou ao
+  cliente PF). Para incluir em duas empresas, cadastre um item para cada uma.
+  Eles integram o investimento daquela empresa e, na assessoria, seu pacote.
+  Não entram no catálogo nem nos overrides do escopo comum. Remover uma empresa
+  ou mudar o tipo de cliente exige reatribuir/remover seus itens antes do PDF.
+- **Exibir valor único** começa ligado. Desligá-lo preserva o preço interno,
+  retira sua apresentação por serviço/empresa e no agregado e suprime o total
+  contratual quando este inclui valor único positivo. Os controles de mensalidade
+  e total contratual conservam sua semântica anterior. Sem valores visíveis, a
+  tabela e o consolidado são omitidos; validade, pagamento e execução permanecem.
+- O botão **Gerar PDF** define o título como `CÓDIGO - CLIENTE`: nome fantasia,
+  ou razão social; nome completo para PF; nome do grupo para grupos. Caracteres
+  inválidos são removidos, espaços normalizados e o nome limitado a 180 caracteres.
+  O título da aplicação retorna em `afterprint`. A sugestão de nome no diálogo
+  nativo depende do navegador; não há API para impor o caminho/nome salvo.
+
 Para fixtures representativas, bloqueios de exportação e regressão automatizada,
 consulte [V2-QUALITY.md](V2-QUALITY.md). O Quality Lab é exclusivo de desenvolvimento.
 Responsáveis e endereço ausentes geram avisos; os campos técnicos e comerciais
@@ -32,7 +55,7 @@ sob a base configurada. Não abrir diretamente pelo protocolo `file://`.
    serviço ou as visitas. Desativar a personalização restaura a herança do escopo comum.
 3. **Comercial:** escolha valor único, mensalidade ou ambos. Preencha o preço de
    cada empresa em reais (`1500,00` ou `1500.00`, sem separador de milhar), parcelas,
-   vigência, validade e condições. Use as quatro opções explícitas de visibilidade.
+   vigência, validade e condições. Use as cinco opções explícitas de visibilidade.
    Quantidades e parcelas não multiplicam automaticamente os valores informados.
 4. **Revisão:** confira Cliente, Escopo, Comercial e Layout, as pendências e todas
    as páginas. Clique **Gerar PDF**; o documento será novamente preparado e validado.

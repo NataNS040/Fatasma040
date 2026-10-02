@@ -266,6 +266,13 @@ npm run build --prefix gerador
 
 ## Limites preservados
 
+O editor oferece itens personalizados nas quatro categorias: Programas e laudos,
+Gestão e complementos, Medições e Treinamentos. Esses itens nunca são adicionados
+ao registro oficial. Usam snapshots locais com revisão pendente, `kind: 'custom'`
+e categoria explícita. Quantidades/modalidade opcionais são apresentadas pelos
+mesmos parâmetros e tabelas dos itens oficiais. Não inventam fundamentação,
+método técnico ou carga horária normativa. Seu ciclo de vida é o rascunho em memória.
+
 Verificação da entrega: 29 testes passaram, incluindo os testes da fundação;
 typecheck e build do pacote `gerador/` passaram. O aviso preexistente de
 `orcamento.js` sem `type="module"` permanece. Os hashes do HTML principal,

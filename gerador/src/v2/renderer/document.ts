@@ -128,8 +128,9 @@ export function renderDocument(model: ProposalDocument): HTMLElement {
             case 'investment':
                 node = section('Condições comerciais');
                 node.querySelector('h2')!.prepend(documentIcon('money'));
-                if (block.companyRows?.length) node.append(dataTable(['Empresa', 'Investimento', 'Pagamento'], block.companyRows.map(row => [row.companyName, amounts(row), row.billing.map(b => [b.installmentCount ? `${b.installmentCount} parcelas` : '', ...(b.paymentTerms ?? [])].filter(Boolean).join(' · ')).join('\n')]), 'commercial-table'));
-                else node.append(dataTable([individual ? 'Serviço / cliente' : 'Serviço / empresa', 'Condição'], block.rows.map(row => [`${row.title}\n${companyName(row.companyId)}`, amounts(row.price) || (row.price.mode === 'included' ? 'Incluído no pacote' : row.price.mode === 'separate-quote' ? 'Orçamento separado' : 'Conforme condições comerciais')]), 'commercial-table'));
+                const hasAmounts = [ ...(block.companyRows ?? []), ...block.rows.map(row => row.price), ...(block.totals ? [block.totals] : []) ].some(value => amounts(value));
+                if (hasAmounts && block.companyRows?.length) node.append(dataTable(['Empresa', 'Investimento', 'Pagamento'], block.companyRows.filter(row => amounts(row)).map(row => [row.companyName, amounts(row), row.billing.map(b => [b.installmentCount ? `${b.installmentCount} parcelas` : '', ...(b.paymentTerms ?? [])].filter(Boolean).join(' · ')).join('\n')]), 'commercial-table'));
+                else if (hasAmounts) node.append(dataTable([individual ? 'Serviço / cliente' : 'Serviço / empresa', 'Condição'], block.rows.map(row => [`${row.title}\n${companyName(row.companyId)}`, amounts(row.price) || (row.price.mode === 'included' ? 'Incluído no pacote' : row.price.mode === 'separate-quote' ? 'Orçamento separado' : 'Conforme condições comerciais')]), 'commercial-table'));
                 if (block.totals && amounts(block.totals)) node.append(element('p', 'info-box', `Consolidado\n${amounts(block.totals)}`));
                 node.append(element('p', '', `Validade da proposta: ${block.terms.validityDays} dias.`));
                 if (block.terms.installmentCount) node.append(element('p', '', `Parcelamento: ${block.terms.installmentCount} parcelas.`));

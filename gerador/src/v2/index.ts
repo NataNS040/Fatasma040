@@ -13,3 +13,6 @@ export * from './composer/compose-proposal';
 export * from './validation/proposal';
 export * from './pagination/contracts';
 export * from './renderer/theme';
+
+export { buildProposalFileName } from './utils/proposal-file-name';
+export { createCustomItem } from './domain/custom-item';
